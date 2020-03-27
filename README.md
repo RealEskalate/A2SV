@@ -1,7 +1,7 @@
 A2SV - Africa to Silicon Valley
 
 Projects
-1- Covid-19 App
+1- Covid-19 App TEST
 
 Was here list, add yourself.
 1- Emre 21/3/20
