@@ -7,6 +7,7 @@ import WelcomePage2 from "./components/welcome-page/WelcomePage2.js";
 import WelcomePage3 from "./components/welcome-page/WelcomePage3.js";
 import SignIn from "./components/sign-in-page/SignIn.js";
 import SignUp from "./components/sign-up-page/SignUp.js";
+import MainPage from "./components/main-page/MainPage.js";
 
 const Stack = createStackNavigator();
 export default function App() {
@@ -22,6 +23,7 @@ export default function App() {
         <Stack.Screen name="Page 3" component={WelcomePage3} />
         <Stack.Screen name="Page 4" component={SignIn} />
         <Stack.Screen name="Page 5" component={SignUp} />
+        <Stack.Screen name="Page 6" component={MainPage} />
       </Stack.Navigator>
     </NavigationContainer>
   );
