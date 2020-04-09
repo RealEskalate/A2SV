@@ -52,6 +52,7 @@ exports.update_location = async (req, res) => {
   try {
     await Location.findByIdAndUpdate(req.body._id, req.body);
     const location = await Location.save();
+    await Location.save();
     res.send(location);
   } catch (err) {
     res.status(500).send(err);
@@ -64,7 +65,9 @@ exports.delete_location = async (req, res) => {
     if (!location) {
       res.status(404).send("No item found");
     }
-    res.status(204).send(location);
+    else{
+      res.status(204).send(location);Z
+    }
   } catch (err) {
     res.status(500).send(err);
   }
