@@ -1,11 +1,18 @@
 var UserSchema = require("../models/UserModel.js");
 var mongoose = require("mongoose");
 const Bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 const User = UserSchema.User;
 
 // Get All Users.
 exports.get_all_users = async (req, res) => {
+  jwt.verify(req.token, 'secretkey', (err,authData) =>{
+    if (err){
+        res.status(401).send("Incorrect authentication key");
+    }
+  });
+
   const users = await User.find({});
   try {
     res.send(users);
@@ -15,6 +22,12 @@ exports.get_all_users = async (req, res) => {
 };
 // Get User by ID.
 exports.get_user_by_id = async (req, res) => {
+  jwt.verify(req.token, 'secretkey', (err,authData) =>{
+      if (err){
+          res.status(401).send("Incorrect authentication key");
+      }
+  });
+
   const user = await User.findById(req.params.id);
   try {
     res.send(user);
@@ -31,7 +44,15 @@ exports.get_user_by_credentials = async (req, res) => {
     if (!user || !Bcrypt.compareSync(req.body.password, user.password)) {
       res.status(404).send("Username and Password combination doesn't exist");
     } else {
-      res.send(user);
+
+      // jwt authentication(signing in) is  done here ...
+      jwt.sign({user}, 'secretkey', (err, token)=>{
+        res.json({
+          user: user,
+          token:token
+        });
+      })
+      
     }
   } catch (err) {
     res.status(500).send(err);
@@ -60,6 +81,12 @@ exports.post_user = async (req, res) => {
 };
 // Update User by ID.
 exports.update_user = async (req, res) => {
+  jwt.verify(req.token, 'secretkey', (err,authData) =>{
+    if (err){
+        res.status(401).send("Incorrect authentication key");
+    }
+  });
+
   try {
     if (req.body.password) {
       req.body.password = Bcrypt.hashSync(req.body.password, 10);
@@ -73,6 +100,12 @@ exports.update_user = async (req, res) => {
 };
 // Delete User by ID.
 exports.delete_user = async (req, res) => {
+  jwt.verify(req.token, 'secretkey', (err,authData) =>{
+    if (err){
+        res.status(401).send("Incorrect authentication key");
+    }
+  });
+
   try {
     const user = await User.findByIdAndRemove(req.body._id);
     if (!user) {

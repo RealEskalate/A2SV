@@ -1,7 +1,14 @@
 const { Symptom, validateSymptom } = require("../models/Symptom");
+const jwt = require("jsonwebtoken");
 
 // Display list of all locations.
 exports.get_all_symptoms = async (req, res) => {
+    jwt.verify(req.token, 'secretkey', (err,authData) =>{
+        if (err){
+            res.status(401).send("Incorrect authentication key");
+        }
+    });
+
     const symptoms = await Symptom.find({});
 
     try {
@@ -14,12 +21,22 @@ exports.get_all_symptoms = async (req, res) => {
 
 // Post a symptom
 exports.post_symptom = async (req, res) => {
+    jwt.verify(req.token, 'secretkey', (err,authData) =>{
+        if (err){
+            res.status(401).send("Incorrect authentication key");
+        }
+    });
 
     const symptom = new Symptom({
         name: req.body.name,
         relevance: req.body.relevance,
         description: req.body.description,
     });
+
+    var { error } = validateSymptom(req.body);
+    if (error) {
+        res.status(400).send("Symptom not found");
+    }
 
     try {
         await symptom.save();
@@ -32,6 +49,12 @@ exports.post_symptom = async (req, res) => {
 
 //Get a symptom by id
 exports.get_symptom_by_id = async (req, res) => {
+    jwt.verify(req.token, 'secretkey', (err,authData) =>{
+        if (err){
+            res.status(401).send("Incorrect authentication key");
+        }
+    });
+
     const symptom = await Symptom.findById(req.params.id);
     try {
         res.send(symptom);
@@ -42,6 +65,12 @@ exports.get_symptom_by_id = async (req, res) => {
 
 //Update a symptom by id
 exports.update_symptom = async (req, res) => {
+    jwt.verify(req.token, 'secretkey', (err,authData) =>{
+        if (err){
+            res.status(401).send("Incorrect authentication key");
+        }
+    });
+
     try {
         const symptom = await Symptom.findByIdAndUpdate(req.body._id, req.body);
         if (!symptom) {
@@ -55,6 +84,12 @@ exports.update_symptom = async (req, res) => {
 
 // Deleting a symptom
 exports.delete_symptom = async (req, res) => {
+    jwt.verify(req.token, 'secretkey', (err,authData) =>{
+        if (err){
+            res.status(401).send("Incorrect authentication key");
+        }
+    });
+
     try {
         const sympton = await Symptom.findByIdAndRemove(req.body._id);
         if (!symptom) {
