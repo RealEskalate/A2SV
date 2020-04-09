@@ -38,8 +38,8 @@ exports.get_location_by_id = async (req, res) => {
 //Get a specific Location by latitude and longitude
 exports.get_location_by_coordinates = async (req, res) => {
   const locations = await Location.find({
-    latitude: { $gte: req.params.latitude },
-    longitude: { $gte: req.params.longitude },
+    latitude: { $eq: req.params.latitude },
+    longitude: { $eq: req.params.longitude },
   });
   try {
     res.send(locations);
