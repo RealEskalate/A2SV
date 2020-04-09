@@ -51,7 +51,7 @@ exports.get_location_by_coordinates = async (req, res) => {
 exports.update_location = async (req, res) => {
   try {
     await Location.findByIdAndUpdate(req.body._id, req.body);
-    await Location.save();
+    const location = await Location.save();
     res.send(location);
   } catch (err) {
     res.status(500).send(err);
@@ -60,11 +60,11 @@ exports.update_location = async (req, res) => {
 //Delete a location
 exports.delete_location = async (req, res) => {
   try {
-    const location = await Location.findByIdAndDelete(req.body._id);
+    const location = await Location.findByIdAndRemove(req.body._id);
     if (!location) {
       res.status(404).send("No item found");
     }
-    res.status(200).send();
+    res.status(204).send(location);
   } catch (err) {
     res.status(500).send(err);
   }
