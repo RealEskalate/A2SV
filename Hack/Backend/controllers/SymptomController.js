@@ -14,6 +14,7 @@ exports.get_all_symptoms = async (req, res) => {
 
 // Post a symptom
 exports.post_symptom = async (req, res) => {
+
     const symptom = new Symptom({
         name: req.body.name,
         relevance: req.body.relevance,
