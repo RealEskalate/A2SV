@@ -10,7 +10,13 @@ const locationSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  place_name: {
+    type: String,
+    minlength: 3,
+  }
 });
+//Make latitude and longitude unique
+locationSchema.index({longitude: 1, latitude: 1}, {unique: true});
 
 var LocationModel = mongoose.model("Location", locationSchema);
 module.exports = LocationModel;

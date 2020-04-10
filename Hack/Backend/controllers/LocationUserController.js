@@ -1,6 +1,6 @@
 const LocationUser = require("../models/LocationUserModel");
 const Location = require("./../models/LocationModel");
-const User = require("./../models/UserModel")
+const {User} = require("./../models/UserModel");
 
 const mongoose = require('mongoose');
 const jwt = require("jsonwebtoken");
@@ -19,10 +19,14 @@ exports.post_location_user = async (req, res) => {
 
     // Check if user and location exists
     Location.findById(location_id, (err) => {
-        return res.status(400).json({ message: 'Location ID not found' });
+        if (err){
+            return res.status(400).json({ message: 'Location ID not found' });
+        }
     });
     User.findById(user_id, (err) => {
-        return res.status(400).json({ message: 'User ID not found' });
+        if (err){
+            return res.status(400).json({ message: 'User ID not found' });
+        }
     })
 
     const location_user = new LocationUser({

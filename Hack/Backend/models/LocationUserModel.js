@@ -12,6 +12,7 @@ const location_user = new schema({
     },
     TTL: {
         type: Date,
+        required: true,
         expires: 0
     }
 });
@@ -23,6 +24,9 @@ convert it to a date object */
 location_user.pre('save', function() {
     this.TTL = new Date(Date.now() + Number(this.TTL));
 });
+
+//Make location user IDs unique
+location_user.index({ user_id : 1, location_id : 1 }, { unique : 1 });
 
 const LocationUserModel = mongoose.model("LocationUser", location_user);
 module.exports = LocationUserModel;
