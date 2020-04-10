@@ -23,8 +23,8 @@ exports.post_location_user = async (req, res) => {
         TTL
         });
     try {
-        await location.save();
-        res.send(location);
+        await location_user.save();
+        res.send(location_user);
     } catch (err) {
         res.status(500).send(err);
     }
@@ -76,8 +76,8 @@ exports.delete_location_user = async (req, res) => {
 exports.update_location_user = async (req, res) => {
     try {
         await LocationUser.findByIdAndUpdate(req.body._id, req.body);
-        await LocationUser.save();
-        res.send(location);
+        const locationUser = await LocationUser.save();
+        res.send(locationUser);
       } catch (err) {
         res.status(500).send(err);
       }
