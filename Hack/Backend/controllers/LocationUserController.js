@@ -55,7 +55,7 @@ exports.get_by_location_id = async (req, res) => {
     }
 };
 
-exports.get_all_location_users = async (res, req) => {
+exports.get_all_location_users = async (req,res) => {
     jwt.verify(req.token, 'secretkey', (err,authData) =>{
         if (err){
             res.status(401).send("Incorrect authentication key");
