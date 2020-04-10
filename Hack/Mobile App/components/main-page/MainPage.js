@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import { View, Text } from "react-native";
-export default class SignIn extends Component {
+export default class Example extends Component {
   render() {
     return (
       <View>
-        <Text>Welcome to the main page!</Text>
+        <Text style={{ fontSize: 50, margin: 65, color: "#0a77aa" }}>
+          Welcome to COVID-19 Tracker!
+        </Text>
       </View>
     );
   }
