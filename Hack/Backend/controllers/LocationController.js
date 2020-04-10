@@ -1,15 +1,15 @@
 var Location = require("../models/LocationModel.js");
 var mongoose = require("mongoose");
 const LocationUser = require("./../models/LocationUserModel");
-const {SymptomUser} = require("./../models/SymptomUser");
-const {Symptom} = require("./../models/Symptom");
+const { SymptomUser } = require("./../models/SymptomUser");
+const { Symptom } = require("./../models/Symptom");
 const jwt = require("jsonwebtoken");
 
 // Display list of all locations.
 exports.get_all_locations = async (req, res) => {
-  jwt.verify(req.token, 'secretkey', (err,authData) =>{
-    if (err){
-        res.status(401).send("Incorrect authentication key");
+  jwt.verify(req.token, "secretkey", (err, authData) => {
+    if (err) {
+      res.status(401).send("Incorrect authentication key");
     }
   });
 
@@ -21,11 +21,61 @@ exports.get_all_locations = async (req, res) => {
   }
 };
 
+exports.get_all_locations_with_symptoms = async (req, res) => {
+  jwt.verify(req.token, "secretkey", (err, authData) => {
+    if (err) {
+      res.status(401).send("Incorrect authentication key");
+    }
+  });
+  let result = [];
+  const locations = await Location.find({});
+  // Get Symptoms for each user and store in Symptoms
+  for (let i = 0; i < locations.length; i++) {
+    let location = locations[i];
+    const users = await LocationUser.find({
+      location_id: { $eq: location._id }
+    });
+    for (let k = 0; k < users.length; k++) {
+      let userAtLocation = users[k];
+      console.log(userAtLocation);
+      if (userAtLocation) {
+        const symptomusers = await SymptomUser.find({
+          user_id: userAtLocation.user_id
+        });
+        let symptoms = [];
+        for (let j = 0; j < symptomusers.length; j++) {
+          if (symptomusers[j]) {
+            const symptom = await Symptom.findById(
+              symptomusers[j].symptom_id
+            );
+            if (symptom) {
+              symptoms.push(symptom);
+            }
+          }
+        }
+        if (symptoms.length > 0) {
+          result.push({
+            longitude: location.longitude,
+            latitude: location.latitude,
+            symptoms: symptoms,
+          });
+          break;
+        }
+      }
+    }
+  }
+  if (result.length > 0) {
+    res.send(result);
+  } else {
+    res.status(500).send("No locations with users and symptoms found.");
+  }
+};
+
 // Post a location
 exports.post_location = async (req, res) => {
-  jwt.verify(req.token, 'secretkey', (err,authData) =>{
-    if (err){
-        res.status(401).send("Incorrect authentication key");
+  jwt.verify(req.token, "secretkey", (err, authData) => {
+    if (err) {
+      res.status(401).send("Incorrect authentication key");
     }
   });
 
@@ -45,9 +95,9 @@ exports.post_location = async (req, res) => {
 
 //Get a specific Location by id
 exports.get_location_by_id = async (req, res) => {
-  jwt.verify(req.token, 'secretkey', (err,authData) =>{
-    if (err){
-        res.status(401).send("Incorrect authentication key");
+  jwt.verify(req.token, "secretkey", (err, authData) => {
+    if (err) {
+      res.status(401).send("Incorrect authentication key");
     }
   });
 
@@ -60,9 +110,9 @@ exports.get_location_by_id = async (req, res) => {
 };
 //Get a specific Location by latitude and longitude
 exports.get_location_by_coordinates = async (req, res) => {
-  jwt.verify(req.token, 'secretkey', (err,authData) =>{
-    if (err){
-        res.status(401).send("Incorrect authentication key");
+  jwt.verify(req.token, "secretkey", (err, authData) => {
+    if (err) {
+      res.status(401).send("Incorrect authentication key");
     }
   });
 
@@ -78,9 +128,9 @@ exports.get_location_by_coordinates = async (req, res) => {
 };
 //Update a location by id
 exports.update_location = async (req, res) => {
-  jwt.verify(req.token, 'secretkey', (err,authData) =>{
-    if (err){
-        res.status(401).send("Incorrect authentication key");
+  jwt.verify(req.token, "secretkey", (err, authData) => {
+    if (err) {
+      res.status(401).send("Incorrect authentication key");
     }
   });
 
@@ -95,18 +145,17 @@ exports.update_location = async (req, res) => {
 };
 //Delete a location
 exports.delete_location = async (req, res) => {
-  jwt.verify(req.token, 'secretkey', (err,authData) =>{
-    if (err){
-        res.status(401).send("Incorrect authentication key");
+  jwt.verify(req.token, "secretkey", (err, authData) => {
+    if (err) {
+      res.status(401).send("Incorrect authentication key");
     }
   });
-  
+
   try {
     const location = await Location.findByIdAndDelete(req.body._id);
     if (!location) {
       res.status(404).send("No item found");
-    }
-    else{
+    } else {
       res.status(204).send(location);
     }
   } catch (err) {
@@ -116,70 +165,66 @@ exports.delete_location = async (req, res) => {
 
 //Get risk factor of specific location by id
 const get_risk_by_location_id = async (id) => {
-
   //Get users at the location
   const results = await LocationUser.find({
-    location_id: {$eq: id}
+    location_id: { $eq: id },
   });
-  
+
   // Risk factor variables initiated
   let riskFactor = 0;
   const riskAssessmentModel = {
-    "HIGH": 1/2,
-    "MEDIUM": 1/4,
-    "LOW": 1/6
+    HIGH: 1 / 2,
+    MEDIUM: 1 / 4,
+    LOW: 1 / 6,
   };
   const Symptoms = {};
-  
+
   // Get Symptoms for each user and store in Symptoms
-  for (let i = 0; i < results.length; i++){
-    
+  for (let i = 0; i < results.length; i++) {
     try {
-      const symptomuser = await SymptomUser.find({ user_id: results[i].user_id });
+      const symptomuser = await SymptomUser.find({
+        user_id: results[i].user_id,
+      });
       if (!symptomuser) {
         console.log("GOT HERE 2");
         throw new Error("InternalError: Unknown UserID stored in locationUser");
       }
-      
+
       // Stores as symptom_id: frequency
       symptomuser.forEach((row) => {
         if (!(row.symptom_id in Symptoms)) {
           Symptoms[row.symptom_id] = 1;
-        }
-        else {
+        } else {
           Symptoms[row.symptom_id]++;
         }
       });
-    }
-    catch (err) {
+    } catch (err) {
       throw err;
     }
   }
 
-
   // Calculate the risk factor for each of the symptoms
   for (key in Symptoms) {
     const symptom = await Symptom.findById(key);
-    
+
     riskFactor += riskAssessmentModel[symptom.relevance] * Symptoms[key];
   }
 
   return riskFactor;
-  
 };
 
 //Get risk factor of specific location by id API
 exports.get_location_risk_by_id = async (req, res) => {
-  jwt.verify(req.token, 'secretkey', (err,authData) =>{
-    if (err){
-        res.status(401).send("Incorrect authentication key");
+  jwt.verify(req.token, "secretkey", (err, authData) => {
+    if (err) {
+      res.status(401).send("Incorrect authentication key");
     }
   });
-    
+
   try {
     let riskFactor = await get_risk_by_location_id(req.params.id);
-    
-    res.json({"risk": riskFactor});
+
+    res.json({ risk: riskFactor });
   } catch (err) {
     res.status(500).send(err.toString());
   }
