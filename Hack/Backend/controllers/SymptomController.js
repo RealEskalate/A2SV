@@ -20,10 +20,6 @@ exports.post_symptom = async (req, res) => {
         description: req.body.description,
     });
 
-    var { error } = validateSymptom(req.body);
-    if (error) {
-        res.status(400).send("Symptom not found");
-    }
     try {
         await symptom.save();
         res.send(symptom);
