@@ -10,7 +10,7 @@ export default function WelcomePage2({ navigation }) {
           source={require("../../assets/heatMap.png")}
           style={{ flex: 2 }}
         />
-        <Card.Content style={{ flex: 1 }}>
+        <Card.Content style={{ flex: 1, borderRadius: 30 }}>
           <Title style={styles.welcomeText}>Track COVID-19 expansion!</Title>
           <Paragraph>
             Coronaviruses are a type of virus that can affect our lungs. These

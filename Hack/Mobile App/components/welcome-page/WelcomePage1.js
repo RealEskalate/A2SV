@@ -11,7 +11,7 @@ export default function WelcomePage1({ navigation }) {
       <Card style={styles.container}>
         <Card.Cover
           source={require("../../assets/covid.jpg")}
-          style={{ flex: 2 }}
+          style={{ flex: 2, borderRadius: 30 }}
         />
         <Card.Content style={{ flex: 1 }}>
           <Title style={styles.welcomeText}>

@@ -10,7 +10,7 @@ export default function WelcomePage3({ navigation }) {
           source={require("../../assets/Prevention.jpg")}
           style={{ flex: 2 }}
         />
-        <Card.Content style={{ flex: 1 }}>
+        <Card.Content style={{ flex: 1, borderRadius: 30 }}>
           <Title style={styles.welcomeText}>Stay Safe and Stay Active!</Title>
           <Paragraph>
             Coronaviruses are a type of virus that can affect our lungs. These
