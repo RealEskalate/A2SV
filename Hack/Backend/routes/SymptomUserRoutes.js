@@ -6,7 +6,7 @@ const verifyToken = require("../middlewares/auth.js")
 var symptomuser_controller = require("../controllers/SymptomUserController");
 
 router.get("/api/symptomuser", verifyToken.verifyToken ,symptomuser_controller.get_all_symptomusers);
-router.get("/api/symptomuser/location/:id", verifyToken.verifyToken ,symptomuser_controller.get_symptomuser_by_symptom_id);
+router.get("/api/symptomuser/symptom/:id", verifyToken.verifyToken ,symptomuser_controller.get_symptomuser_by_symptom_id);
 router.get("/api/symptomuser/user/:id", verifyToken.verifyToken ,symptomuser_controller.get_symptomuser_by_user_id);
 
 router.post("/api/symptomuser", verifyToken.verifyToken ,symptomuser_controller.post_symptomuser);

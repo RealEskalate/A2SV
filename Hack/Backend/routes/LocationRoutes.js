@@ -6,6 +6,7 @@ const verifyToken = require("../middlewares/auth.js");
 var location_controller = require("../controllers/LocationController.js");
 
 router.get("/api/locations", verifyToken.verifyToken , location_controller.get_all_locations);
+router.get("/api/locations_symptoms", verifyToken.verifyToken , location_controller.get_all_locations_with_symptoms);
 router.get("/api/locations/:id",  verifyToken.verifyToken , location_controller.get_location_by_id);
 router.get(
   "/api/locations/:longitude/:latitude",  verifyToken.verifyToken ,
