@@ -62,7 +62,7 @@ exports.post_user = async (req, res) => {
 exports.update_user = async (req, res) => {
   try {
     if (req.body.password) {
-      req.body.password = Bcrypt.hashSync(user.password, 10);
+      req.body.password = Bcrypt.hashSync(req.body.password, 10);
     }
     await User.findByIdAndUpdate(req.body._id, req.body);
     const user = await User.save();
