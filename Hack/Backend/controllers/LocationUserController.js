@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 exports.post_location_user = async (req, res) => {
     let location_id =  req.body.location_id;
     let user_id =  req.body.user_id;
+    let TTL = req.body.TTL;
 
     // Check if user and location exists
     Location.findById(location_id, (err) => {
@@ -18,7 +19,8 @@ exports.post_location_user = async (req, res) => {
 
     const location_user = new LocationUser({
         user_id,
-        location_id
+        location_id,
+        TTL
         });
     try {
         await location.save();
