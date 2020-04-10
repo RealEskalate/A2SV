@@ -14,16 +14,13 @@ exports.get_all_symptoms = async (req, res) => {
 
 // Post a symptom
 exports.post_symptom = async (req, res) => {
+
     const symptom = new Symptom({
         name: req.body.name,
         relevance: req.body.relevance,
         description: req.body.description,
     });
 
-    var { error } = validateSymptom(req.body);
-    if (error) {
-        res.status(400).send("Symptom not found");
-    }
     try {
         await symptom.save();
         res.send(symptom);
