@@ -39,8 +39,14 @@ exports.post_symptom = async (req, res) => {
     }
 
     try {
-        await symptom.save();
-        res.send(symptom);
+        const symptomExists = await Symptom.findOne({name: symptom.name, relevance: symptom.relevance});
+        if(symptomExists){
+            res.send(symptomExists);
+        }
+        else{
+            await symptom.save();
+            res.send(symptom);    
+        }
     } catch (err) {
         res.status(500).send(err);
     }

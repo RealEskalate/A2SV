@@ -55,7 +55,7 @@ exports.get_by_location_id = async (req, res) => {
     try {
         res.send(results);
     } catch (err) {
-        res.status(500).send(err);
+        res.status(500).send('AAA');
     }
 };
 
