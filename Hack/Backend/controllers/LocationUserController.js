@@ -7,11 +7,11 @@ const jwt = require("jsonwebtoken");
 
 
 exports.post_location_user = async (req, res) => {
-    jwt.verify(req.token, 'secretkey', (err,authData) =>{
-        if (err){
-            res.status(401).send("Incorrect authentication key");
-        }
-    });
+    // jwt.verify(req.token, 'secretkey', (err,authData) =>{
+    //     if (err){
+    //         res.status(401).send("Incorrect authentication key");
+    //     }
+    // });
 
     let location_id =  req.body.location_id;
     let user_id =  req.body.user_id;
@@ -43,11 +43,11 @@ exports.post_location_user = async (req, res) => {
 };
 
 exports.get_by_location_id = async (req, res) => {
-    jwt.verify(req.token, 'secretkey', (err,authData) =>{
-        if (err){
-            res.status(401).send("Incorrect authentication key");
-        }
-    });
+    // jwt.verify(req.token, 'secretkey', (err,authData) =>{
+    //     if (err){
+    //         res.status(401).send("Incorrect authentication key");
+    //     }
+    // });
 
     const results = await LocationUser.find({
         location_id: {$eq: req.params.location_id}
@@ -60,11 +60,11 @@ exports.get_by_location_id = async (req, res) => {
 };
 
 exports.get_all_location_users = async (req,res) => {
-    jwt.verify(req.token, 'secretkey', (err,authData) =>{
-        if (err){
-            res.status(401).send("Incorrect authentication key");
-        }
-    });
+    // jwt.verify(req.token, 'secretkey', (err,authData) =>{
+    //     if (err){
+    //         res.status(401).send("Incorrect authentication key");
+    //     }
+    // });
 
     const results = await LocationUser.find({});
     try {
@@ -75,11 +75,11 @@ exports.get_all_location_users = async (req,res) => {
 };
 
 exports.get_by_user_id = async (req, res) => {
-    jwt.verify(req.token, 'secretkey', (err,authData) =>{
-        if (err){
-            res.status(401).send("Incorrect authentication key");
-        }
-    });
+    // jwt.verify(req.token, 'secretkey', (err,authData) =>{
+    //     if (err){
+    //         res.status(401).send("Incorrect authentication key");
+    //     }
+    // });
 
     const results = await LocationUser.find({
         user_id: {$eq: req.params.user_id}
@@ -92,11 +92,11 @@ exports.get_by_user_id = async (req, res) => {
 };
 
 exports.delete_location_user = async (req, res) => {
-    jwt.verify(req.token, 'secretkey', (err,authData) =>{
-        if (err){
-            res.status(401).send("Incorrect authentication key");
-        }
-    });
+    // jwt.verify(req.token, 'secretkey', (err,authData) =>{
+    //     if (err){
+    //         res.status(401).send("Incorrect authentication key");
+    //     }
+    // });
 
     try {
         const location_user = await LocationUser.findByIdAndDelete(req.body._id);
@@ -110,11 +110,11 @@ exports.delete_location_user = async (req, res) => {
 };
 
 exports.update_location_user = async (req, res) => {
-    jwt.verify(req.token, 'secretkey', (err,authData) =>{
-        if (err){
-            res.status(401).send("Incorrect authentication key");
-        }
-    });
+    // jwt.verify(req.token, 'secretkey', (err,authData) =>{
+    //     if (err){
+    //         res.status(401).send("Incorrect authentication key");
+    //     }
+    // });
 
     try {
         await LocationUser.findByIdAndUpdate(req.body._id, req.body);
