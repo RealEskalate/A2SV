@@ -9,12 +9,14 @@ import {
   Alert,
 } from "react-native";
 import { Actions } from "react-native-router-flux";
+import MainPage from "../main-page/MainPage.js";
 export default class SignIn extends Component {
   constructor(props) {
     super(props);
     this.state = {
       userName: "",
       password: "",
+      userId: "",
       invalidName: false,
       invalidPassword: false,
       userNameWarning: "Enter your user name",
@@ -48,7 +50,12 @@ export default class SignIn extends Component {
       })
         .then((response) => response.json())
         .then((json) => {
-          this.props.navigation.navigate("Page 6", { name: "Page 6" });
+          this.setState({ userId: json._id });
+
+          this.props.navigation.navigate("Page 6", {
+            name: "Page 6",
+            userId: this.state.userId,
+          });
         })
         .catch((error) => {
           Alert.alert(
