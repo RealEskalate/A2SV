@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-import { View, Text } from "react-native";
+import { ScrollView, View, Text, StyleSheet } from "react-native";
+import { Avatar, Button, Card, Title, Paragraph } from "react-native-paper";
+import CheckBox from "@react-native-community/checkbox";
 
 export default class SymptomPage extends Component {
   constructor(props) {
@@ -42,14 +44,23 @@ export default class SymptomPage extends Component {
         item &&
         item._id &&
         item.name && (
-          <View key={item._id}>
+          <Card key={item._id} style={styles.container}>
             <Text>{item.name}</Text>
-          </View>
+          </Card>
         )
       );
     });
 
   render() {
-    return <View>{this.contents()}</View>;
+    return <ScrollView>{this.contents()}</ScrollView>;
   }
 }
+const styles = StyleSheet.create({
+  container: {
+    borderColor: "#000000",
+    padding: 30,
+    margin: 5,
+    borderRadius: 15,
+    flexDirection: "row",
+  },
+});
