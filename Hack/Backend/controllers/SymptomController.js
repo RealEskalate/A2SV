@@ -3,11 +3,11 @@ const jwt = require("jsonwebtoken");
 
 // Display list of all locations.
 exports.get_all_symptoms = async (req, res) => {
-    jwt.verify(req.token, 'secretkey', (err,authData) =>{
-        if (err){
-            res.status(401).send("Incorrect authentication key");
-        }
-    });
+    // jwt.verify(req.token, 'secretkey', (err,authData) =>{
+    //     if (err){
+    //         res.status(401).send("Incorrect authentication key");
+    //     }
+    // });
 
     const symptoms = await Symptom.find({});
 
@@ -21,11 +21,11 @@ exports.get_all_symptoms = async (req, res) => {
 
 // Post a symptom
 exports.post_symptom = async (req, res) => {
-    jwt.verify(req.token, 'secretkey', (err,authData) =>{
-        if (err){
-            res.status(401).send("Incorrect authentication key");
-        }
-    });
+    // jwt.verify(req.token, 'secretkey', (err,authData) =>{
+    //     if (err){
+    //         res.status(401).send("Incorrect authentication key");
+    //     }
+    // });
 
     const symptom = new Symptom({
         name: req.body.name,
@@ -39,8 +39,14 @@ exports.post_symptom = async (req, res) => {
     }
 
     try {
-        await symptom.save();
-        res.send(symptom);
+        const symptomExists = await Symptom.findOne({name: symptom.name, relevance: symptom.relevance});
+        if(symptomExists){
+            res.send(symptomExists);
+        }
+        else{
+            await symptom.save();
+            res.send(symptom);    
+        }
     } catch (err) {
         res.status(500).send(err);
     }
@@ -49,11 +55,11 @@ exports.post_symptom = async (req, res) => {
 
 //Get a symptom by id
 exports.get_symptom_by_id = async (req, res) => {
-    jwt.verify(req.token, 'secretkey', (err,authData) =>{
-        if (err){
-            res.status(401).send("Incorrect authentication key");
-        }
-    });
+    // jwt.verify(req.token, 'secretkey', (err,authData) =>{
+    //     if (err){
+    //         res.status(401).send("Incorrect authentication key");
+    //     }
+    // });
 
     const symptom = await Symptom.findById(req.params.id);
     try {
@@ -65,11 +71,11 @@ exports.get_symptom_by_id = async (req, res) => {
 
 //Update a symptom by id
 exports.update_symptom = async (req, res) => {
-    jwt.verify(req.token, 'secretkey', (err,authData) =>{
-        if (err){
-            res.status(401).send("Incorrect authentication key");
-        }
-    });
+    // jwt.verify(req.token, 'secretkey', (err,authData) =>{
+    //     if (err){
+    //         res.status(401).send("Incorrect authentication key");
+    //     }
+    // });
 
     try {
         const symptom = await Symptom.findByIdAndUpdate(req.body._id, req.body);
@@ -84,11 +90,11 @@ exports.update_symptom = async (req, res) => {
 
 // Deleting a symptom
 exports.delete_symptom = async (req, res) => {
-    jwt.verify(req.token, 'secretkey', (err,authData) =>{
-        if (err){
-            res.status(401).send("Incorrect authentication key");
-        }
-    });
+    // jwt.verify(req.token, 'secretkey', (err,authData) =>{
+    //     if (err){
+    //         res.status(401).send("Incorrect authentication key");
+    //     }
+    // });
 
     try {
         const sympton = await Symptom.findByIdAndRemove(req.body._id);

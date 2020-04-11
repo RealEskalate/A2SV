@@ -7,11 +7,11 @@ const jwt = require("jsonwebtoken");
 
 // Display list of all locations.
 exports.get_all_locations = async (req, res) => {
-  jwt.verify(req.token, "secretkey", (err, authData) => {
-    if (err) {
-      res.status(401).send("Incorrect authentication key");
-    }
-  });
+  // jwt.verify(req.token, "secretkey", (err, authData) => {
+  //   if (err) {
+  //     res.status(401).send("Incorrect authentication key");
+  //   }
+  // });
 
   const locations = await Location.find({});
   try {
@@ -73,11 +73,11 @@ exports.get_all_locations_with_symptoms = async (req, res) => {
 
 // Post a location
 exports.post_location = async (req, res) => {
-  jwt.verify(req.token, "secretkey", (err, authData) => {
-    if (err) {
-      res.status(401).send("Incorrect authentication key");
-    }
-  });
+  // jwt.verify(req.token, "secretkey", (err, authData) => {
+  //   if (err) {
+  //     res.status(401).send("Incorrect authentication key");
+  //   }
+  // });
 
   const location = new Location({
     _id: mongoose.Types.ObjectId(),
@@ -95,11 +95,11 @@ exports.post_location = async (req, res) => {
 
 //Get a specific Location by id
 exports.get_location_by_id = async (req, res) => {
-  jwt.verify(req.token, "secretkey", (err, authData) => {
-    if (err) {
-      res.status(401).send("Incorrect authentication key");
-    }
-  });
+  // jwt.verify(req.token, "secretkey", (err, authData) => {
+  //   if (err) {
+  //     res.status(401).send("Incorrect authentication key");
+  //   }
+  // });
 
   const location = await Location.findById(req.params.id);
   try {
@@ -110,11 +110,11 @@ exports.get_location_by_id = async (req, res) => {
 };
 //Get a specific Location by latitude and longitude
 exports.get_location_by_coordinates = async (req, res) => {
-  jwt.verify(req.token, "secretkey", (err, authData) => {
-    if (err) {
-      res.status(401).send("Incorrect authentication key");
-    }
-  });
+  // jwt.verify(req.token, "secretkey", (err, authData) => {
+  //   if (err) {
+  //     res.status(401).send("Incorrect authentication key");
+  //   }
+  // });
 
   const locations = await Location.find({
     latitude: { $eq: req.params.latitude },
@@ -128,11 +128,11 @@ exports.get_location_by_coordinates = async (req, res) => {
 };
 //Update a location by id
 exports.update_location = async (req, res) => {
-  jwt.verify(req.token, "secretkey", (err, authData) => {
-    if (err) {
-      res.status(401).send("Incorrect authentication key");
-    }
-  });
+  // jwt.verify(req.token, "secretkey", (err, authData) => {
+  //   if (err) {
+  //     res.status(401).send("Incorrect authentication key");
+  //   }
+  // });
 
   try {
     await Location.findByIdAndUpdate(req.body._id, req.body);
@@ -145,11 +145,11 @@ exports.update_location = async (req, res) => {
 };
 //Delete a location
 exports.delete_location = async (req, res) => {
-  jwt.verify(req.token, "secretkey", (err, authData) => {
-    if (err) {
-      res.status(401).send("Incorrect authentication key");
-    }
-  });
+  // jwt.verify(req.token, "secretkey", (err, authData) => {
+  //   if (err) {
+  //     res.status(401).send("Incorrect authentication key");
+  //   }
+  // });
 
   try {
     const location = await Location.findByIdAndDelete(req.body._id);
@@ -215,11 +215,11 @@ const get_risk_by_location_id = async (id) => {
 
 //Get risk factor of specific location by id API
 exports.get_location_risk_by_id = async (req, res) => {
-  jwt.verify(req.token, "secretkey", (err, authData) => {
-    if (err) {
-      res.status(401).send("Incorrect authentication key");
-    }
-  });
+  // jwt.verify(req.token, "secretkey", (err, authData) => {
+  //   if (err) {
+  //     res.status(401).send("Incorrect authentication key");
+  //   }
+  // });
 
   try {
     let riskFactor = await get_risk_by_location_id(req.params.id);
