@@ -16,7 +16,7 @@ const locationSchema = new mongoose.Schema({
   }
 });
 //Make latitude and longitude unique
-locationSchema.index({longitude: 1, latitude: 1}, {unique: true});
+locationSchema.index({ longitude: 1, latitude: 1 }, { unique: true });
 
 var LocationModel = mongoose.model("Location", locationSchema);
 module.exports = LocationModel;
