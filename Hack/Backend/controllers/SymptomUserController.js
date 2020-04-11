@@ -6,11 +6,11 @@ const jwt = require("jsonwebtoken");
 
 // Display list of all locations.
 exports.get_all_symptomusers = async (req, res) => {
-    jwt.verify(req.token, 'secretkey', (err,authData) =>{
-        if (err){
-            res.status(401).send("Incorrect authentication key");
-        }
-    });
+    // jwt.verify(req.token, 'secretkey', (err,authData) =>{
+    //     if (err){
+    //         res.status(401).send("Incorrect authentication key");
+    //     }
+    // });
 
     const symptomusers = await SymptomUser.find();
 
@@ -24,11 +24,11 @@ exports.get_all_symptomusers = async (req, res) => {
 
 // Post a symptomuser
 exports.post_symptomuser = async (req, res) => {
-    jwt.verify(req.token, 'secretkey', (err,authData) =>{
-        if (err){
-            res.status(401).send("Incorrect authentication key");
-        }
-    });
+    // jwt.verify(req.token, 'secretkey', (err,authData) =>{
+    //     if (err){
+    //         res.status(401).send("Incorrect authentication key");
+    //     }
+    // });
 
     const symptomuser = new SymptomUser({
         symptom_id: req.body.symptom_id,
@@ -61,11 +61,11 @@ exports.post_symptomuser = async (req, res) => {
 
 //Get a symptomuser by symptom_id
 exports.get_symptomuser_by_symptom_id = async (req, res) => {
-    jwt.verify(req.token, 'secretkey', (err,authData) =>{
-        if (err){
-            res.status(401).send("Incorrect authentication key");
-        }
-    });
+    // jwt.verify(req.token, 'secretkey', (err,authData) =>{
+    //     if (err){
+    //         res.status(401).send("Incorrect authentication key");
+    //     }
+    // });
 
     try {
         const symptomuser = await Symptom.findOne({ symptom_id: req.params.symptom_id });
@@ -80,11 +80,11 @@ exports.get_symptomuser_by_symptom_id = async (req, res) => {
 
 //Get a symptomuser by user_id
 exports.get_symptomuser_by_user_id = async (req, res) => {
-    jwt.verify(req.token, 'secretkey', (err,authData) =>{
-        if (err){
-            res.status(401).send("Incorrect authentication key");
-        }
-    });
+    // jwt.verify(req.token, 'secretkey', (err,authData) =>{
+    //     if (err){
+    //         res.status(401).send("Incorrect authentication key");
+    //     }
+    // });
 
     try {
         const symptomuser = await Symptom.findOne({ user_id: req.params.user_id });
@@ -100,11 +100,11 @@ exports.get_symptomuser_by_user_id = async (req, res) => {
 
 //Update a symptomuser by id
 exports.update_symptomuser = async (req, res) => {
-    jwt.verify(req.token, 'secretkey', (err,authData) =>{
-        if (err){
-            res.status(401).send("Incorrect authentication key");
-        }
-    });
+    // jwt.verify(req.token, 'secretkey', (err,authData) =>{
+    //     if (err){
+    //         res.status(401).send("Incorrect authentication key");
+    //     }
+    // });
 
     try {
         const symptomuser = await Symptom.findByIdAndUpdate(req.body._id, req.body);
@@ -119,11 +119,11 @@ exports.update_symptomuser = async (req, res) => {
 
 // Deleting a symptomuser
 exports.delete_symptomuser = async (req, res) => {
-    jwt.verify(req.token, 'secretkey', (err,authData) =>{
-        if (err){
-            res.status(401).send("Incorrect authentication key");
-        }
-    });
+    // jwt.verify(req.token, 'secretkey', (err,authData) =>{
+    //     if (err){
+    //         res.status(401).send("Incorrect authentication key");
+    //     }
+    // });
     
     try {
         const symptomuser = await Symptom.findByIdAndRemove(req.body._id);
