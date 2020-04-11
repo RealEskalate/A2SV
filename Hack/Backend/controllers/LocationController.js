@@ -4,6 +4,7 @@ const LocationUser = require("./../models/LocationUserModel");
 const { SymptomUser } = require("./../models/SymptomUser");
 const { Symptom } = require("./../models/Symptom");
 const jwt = require("jsonwebtoken");
+const axios = require("axios");
 
 // Display list of all locations.
 exports.get_all_locations = async (req, res) => {
@@ -79,20 +80,42 @@ exports.post_location = async (req, res) => {
   //   }
   // });
 
-  const location = new Location({
-    _id: mongoose.Types.ObjectId(),
-    longitude: req.body.longitude,
-    latitude: req.body.latitude,
-    place_name: req.body.place_name,
+  const check = await Location.findOne({
+    longitude: { $eq: req.body.longitude },
+    latitude: { $eq: req.body.latitude },
   });
-  try {
-    await location.save();
-    res.send(location);
-  } catch (err) {
-    res.status(500).send(err);
+  if (check) {
+    res.send(check);
+  }
+  else {
+    let location = new Location({
+      _id: mongoose.Types.ObjectId(),
+      longitude: req.body.longitude,
+      latitude: req.body.latitude,
+      place_name: req.body.place_name,
+    });
+    try {
+      const result = await axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${location.longitude},${location.latitude}.json?types=poi&access_token=pk.eyJ1IjoiZmVyb3g5OCIsImEiOiJjazg0czE2ZWIwNHhrM2VtY3Y0a2JkNjI3In0.zrm7UtCEPg2mX8JCiixE4g`)
+        .then(response => {
+          if (response.data) {
+            if (response.data.features) {
+              location.longitude = response.data.features[0].center[0];
+              location.latitude = response.data.features[0].center[1];
+              location.place_name = response.data.features[0].text;
+            }
+          }
+          return location;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+      await result.save();
+      res.send(result);
+    } catch (err) {
+      res.status(500).send(err);
+    }
   }
 };
-
 //Get a specific Location by id
 exports.get_location_by_id = async (req, res) => {
   // jwt.verify(req.token, "secretkey", (err, authData) => {
