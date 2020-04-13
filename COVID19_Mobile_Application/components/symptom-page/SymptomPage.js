@@ -13,7 +13,7 @@ export default class SymptomPage extends Component {
   constructor({ route, navigation }) {
     super({ route, navigation });
     this.state = {
-      userId: route.params.userId,
+      //userId: route.params.userId,
       symptomId: "",
       symptoms: [],
     };
@@ -66,13 +66,13 @@ export default class SymptomPage extends Component {
   }
   contents = () =>
     this.state.symptoms.map((item) => {
-      //We need to return the corresponding mapping for each item too.
+      // return the corresponding mapping for each item
       return (
         item &&
         item._id &&
         item.name && (
           <TouchableOpacity
-            onPress={() => this.sendData(this.state.userId, item._id)}
+          //onPress={() => this.sendData(this.state.userId, item._id)}
           >
             <Card key={item._id} style={styles.container}>
               <Text>{item.name}</Text>

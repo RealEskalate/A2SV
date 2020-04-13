@@ -1,4 +1,28 @@
 {
-  "name": "COVID19_Mobile_Application",
-  "displayName": "COVID19_Mobile_Application"
+  "expo": {
+    "name": "A2SV-Hack-COVID-19-Mobile-App",
+    "slug": "A2SV-Hack-COVID-19-Mobile-App",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    }
+  }
 }
