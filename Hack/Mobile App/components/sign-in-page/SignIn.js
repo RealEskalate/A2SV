@@ -23,11 +23,37 @@ export default class SignIn extends Component {
       passwordWarning: "Enter your password",
     };
   }
+<<<<<<< HEAD
 
   //navigates to the next page
   navigateToNextPage = async () => {
     this.props.navigation.navigate("Page 6", {
       name: "Page 6",
+    });
+=======
+  isLoggedin() {
+    this.loadInitialState().done();
+  }
+  loadInitialState = async () => {
+    let user = await AsyncStorage.getItem("user");
+    if (user !== null) {
+      this.props.navigation.navigate("Page 6", {
+        name: "Page 6",
+        userId: this.state.userId,
+      });
+    } else {
+    }
+>>>>>>> d2f4c36... Project structure, Welcom page, sign up and sign in page completed
+  };
+  saveUserData = (userID) => {
+    AsyncStorage.setItem("userID", userID);
+  };
+
+  sendUserId = async () => {
+    let id = await AsyncStorage.getItem("userID");
+    this.props.navigation.navigate("Page 6", {
+      name: "Page 6",
+      userId: id,
     });
   };
 
@@ -47,8 +73,13 @@ export default class SignIn extends Component {
       })
         .then((response) => response.json())
         .then((json) => {
+<<<<<<< HEAD
           userIDStore.dispatch(actions.addUserId(json.user._id)); //storing the user id in redux data store
           this.navigateToNextPage(); //nagivating to the next page
+=======
+          this.saveUserData(json.user._id);
+          this.sendUserId();
+>>>>>>> d2f4c36... Project structure, Welcom page, sign up and sign in page completed
         })
         .catch((error) => {
           Alert.alert(
