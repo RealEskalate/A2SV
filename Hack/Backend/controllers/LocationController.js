@@ -3,6 +3,7 @@ var mongoose = require("mongoose");
 const LocationUser = require("./../models/LocationUserModel");
 const { SymptomUser } = require("./../models/SymptomUser");
 const { Symptom } = require("./../models/Symptom");
+const { User } = require("./../models/UserModel");
 const jwt = require("jsonwebtoken");
 const axios = require("axios");
 
@@ -38,11 +39,11 @@ exports.get_all_locations_with_symptoms = async (req, res) => {
     });
     for (let k = 0; k < users.length; k++) {
       let userAtLocation = users[k];
-      console.log(userAtLocation);
       if (userAtLocation) {
         const symptomusers = await SymptomUser.find({
           user_id: userAtLocation.user_id
         });
+        const user = await User.findById(userAtLocation.user_id);
         let symptoms = [];
         for (let j = 0; j < symptomusers.length; j++) {
           if (symptomusers[j]) {
@@ -59,7 +60,10 @@ exports.get_all_locations_with_symptoms = async (req, res) => {
             longitude: location.longitude,
             latitude: location.latitude,
             symptoms: symptoms,
+            age_group: user.age_group,
+            gender: user.gender
           });
+          //This break line will be removed later onwards.
           break;
         }
       }
