@@ -15,7 +15,7 @@ exports.get_all_local_policies = async (req, res) => {
 // Get all local policies for a country
 exports.get_country_policies = async (req, res) => {
 
-    const localPolicies = await LocalPolicy.find({ "locaion.country" : req.params.current_country });
+    const localPolicies = await LocalPolicy.find({ "location.country" : req.params.current_country });
 
     try{
         res.send(localPolicies);
