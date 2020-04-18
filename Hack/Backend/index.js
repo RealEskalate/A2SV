@@ -2,6 +2,8 @@ const express = require("express");
 const mongoose = require("./db.js");
 const locationRouter = require("./routes/LocationRoutes.js");
 const locationUserRouter = require("./routes/LocationUserRoutes");
+const medicalhistoryRouter = require("./routes/MedicalHistoryRoutes.js");
+const medicalhistoryuserRouter = require("./routes/MedicalHistoryUserRoutes.js");
 
 const symptomRouter = require("./routes/SymptomRoutes.js");
 const symptomuserRouter = require("./routes/SymptomUserRoutes.js");
@@ -18,6 +20,8 @@ app.use(userRouter);
 app.use(symptomRouter);
 app.use(symptomuserRouter);
 app.use(locationUserRouter);
+app.use(medicalhistoryRouter);
+app.use(medicalhistoryuserRouter);
 
 app.listen(3000, () => {
   console.log("Server is running...");
