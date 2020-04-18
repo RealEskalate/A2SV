@@ -16,10 +16,13 @@ const bodyParser = require("body-parser");
 
 const app = express();
 const port = process.env.PORT || 3000;
+<<<<<<< HEAD
 app.use(cors());
 
 const logger = require('./middlewares/logger');
 app.use(logger.requestLog);
+=======
+>>>>>>> 7893848... [backend] Change the way to set Port
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
