@@ -12,6 +12,8 @@ const userRouter = require("./routes/UserRoutes.js");
 const bodyParser = require("body-parser");
 
 const app = express();
+const port = process.env.PORT || 3000;
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -22,6 +24,6 @@ app.use(symptomuserRouter);
 app.use(locationUserRouter);
 app.use(newsRouter);
 
-app.listen(3000, () => {
+app.listen(port, () => {
   console.log("Server is running...");
 });
