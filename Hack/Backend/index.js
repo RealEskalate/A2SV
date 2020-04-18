@@ -8,6 +8,8 @@ const medicalhistoryuserRouter = require("./routes/MedicalHistoryUserRoutes.js")
 const symptomRouter = require("./routes/SymptomRoutes.js");
 const symptomuserRouter = require("./routes/SymptomUserRoutes.js");
 
+const newsRouter = require("./routes/NewsRoutes.js");
+
 const userRouter = require("./routes/UserRoutes.js");
 const bodyParser = require("body-parser");
 
@@ -20,8 +22,7 @@ app.use(userRouter);
 app.use(symptomRouter);
 app.use(symptomuserRouter);
 app.use(locationUserRouter);
-app.use(medicalhistoryRouter);
-app.use(medicalhistoryuserRouter);
+app.use(newsRouter);
 
 app.listen(3000, () => {
   console.log("Server is running...");
