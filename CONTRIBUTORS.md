@@ -8,3 +8,4 @@ A2SV - Africa to Silicon Valley
 6. Yisehak Bogale
 7. Feysel Mubarek
 8. Anteneh Admasu
+9. Michael Gashaw
