@@ -35,7 +35,7 @@ exports.post_symptom = async (req, res) => {
 
     var { error } = validateSymptom(req.body);
     if (error) {
-        res.status(400).send("Symptom not found");
+        res.status(400).send("Invalid request");
     }
 
     try {

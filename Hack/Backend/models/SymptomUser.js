@@ -9,7 +9,11 @@ const symptom_user_schema = new mongoose.Schema({
     user_id: {
         type: mongoose.Schema.Types.ObjectId,
         required: true
-    }
+    },
+    timestamp : { 
+        type : Date, 
+        default: Date.now 
+        }
 });
 
 function validateSymptomUser(SymptomUser) {
