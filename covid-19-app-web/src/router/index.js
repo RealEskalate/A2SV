@@ -1,24 +1,21 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
+
+const NotFound = () => import("@/views/errors/404.vue");
+const Home = () => import("@/views/Home/Home.vue");
+const About = () => import("@/views/About/About.vue");
+const News = () => import("@/views/News/News.vue");
+const HeatMap = () => import("@/views/HeatMap/HeatMap.vue");
 
 Vue.use(VueRouter);
 
 const routes = [
-  {
-    path: "/",
-    name: "Home",
-    component: Home
-  },
-  {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-        import(/* webpackChunkName: "about" */ "../views/About.vue")
-  }
+  { path: "/", name: "Home", component: Home },
+  { path: "/about", name: "About", component: About },
+  { path: "/news", name: "News", component: News },
+  { path: "/map", name: "HeatMap", component: HeatMap },
+
+  { path: "*", name: "404", component: NotFound }
 ];
 
 const router = new VueRouter({
