@@ -15,25 +15,25 @@
       </div>
     </router-link>
 
-    <v-spacer/>
+    <v-spacer />
 
     <v-btn :key="link.to" :to="link.to" text v-for="link in links">
-      <span v-text="link.text"/>
+      <span v-text="link.text" />
     </v-btn>
   </v-app-bar>
 </template>
 
 <script>
-    export default {
-        data: () => {
-            return {
-                links: [
-                    {text: "HOME", icon: "mdi-home", to: "/"},
-                    {text: "ABOUT", icon: "mdi-information", to: "/about"},
-                    {text: "NEWS", icon: "mdi-newspaper", to: "/news"},
-                    {text: "MAP", icon: "mdi-map", to: "/map"}
-                ]
-            };
-        }
+export default {
+  data: () => {
+    return {
+      links: [
+        { text: "HOME", icon: "mdi-home", to: "/" },
+        { text: "ABOUT", icon: "mdi-information", to: "/about" },
+        { text: "NEWS", icon: "mdi-newspaper", to: "/news" },
+        { text: "MAP", icon: "mdi-map", to: "/map" }
+      ]
     };
+  }
+};
 </script>

@@ -10,12 +10,12 @@ const HeatMap = () => import("@/views/HeatMap/HeatMap.vue");
 Vue.use(VueRouter);
 
 const routes = [
-  {path: "/", name: "Home", component: Home},
-  {path: "/about", name: "About", component: About},
-  {path: "/news", name: "News", component: News},
-  {path: "/map", name: "HeatMap", component: HeatMap},
+  { path: "/", name: "Home", component: Home },
+  { path: "/about", name: "About", component: About },
+  { path: "/news", name: "News", component: News },
+  { path: "/map", name: "HeatMap", component: HeatMap },
 
-  {path: "*", name: "404", component: NotFound}
+  { path: "*", name: "404", component: NotFound }
 ];
 
 const router = new VueRouter({
