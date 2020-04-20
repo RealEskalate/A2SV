@@ -9,7 +9,6 @@ const symptomRouter = require("./routes/SymptomRoutes.js");
 const symptomuserRouter = require("./routes/SymptomUserRoutes.js");
 
 const newsRouter = require("./routes/NewsRoutes.js");
-const localPolicyRouter = require("./routes/LocalPolicyRoutes.js");
 
 const userRouter = require("./routes/UserRoutes.js");
 const bodyParser = require("body-parser");
@@ -26,7 +25,6 @@ app.use(symptomRouter);
 app.use(symptomuserRouter);
 app.use(locationUserRouter);
 app.use(newsRouter);
-app.use(localPolicyRouter);
 
 app.listen(port, () => {
   console.log("Server is running...");
