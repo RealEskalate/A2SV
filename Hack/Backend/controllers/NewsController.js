@@ -84,7 +84,7 @@ exports.post_news = async (req, res) => {
 
 // populate database with data from excel sheet
 function populateDatabase(){
-    var workbook = XLSX.readFile(root + '/assets/20200416-acaps-covid-19-goverment-measures-dataset-v8.xlsx', {sheetStubs: true, cellDates: true});
+    var workbook = XLSX.readFile(path.join(root, 'assets', '20200416-acaps-covid-19-goverment-measures-dataset-v8.xlsx'), {sheetStubs: true, cellDates: true});
     
     var worksheet = workbook.Sheets["Database"];
     var headers = {};
