@@ -16,11 +16,15 @@
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
+    "express-winston": "^4.0.3",
     "joi": "^14.3.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.7",
+    "morgan": "^1.10.0",
     "nodemon": "^2.0.3",
-    "rss-parser": "^3.7.6"
+    "rss-parser": "^3.7.6",
+    "winston": "^3.2.1",
+    "winston-mongodb": "^5.0.1"
   },
   "devDependencies": {
     "eslint": "^6.8.0",
