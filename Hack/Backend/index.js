@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require('cors');
 const mongoose = require("./db.js");
 const locationRouter = require("./routes/LocationRoutes.js");
 const locationUserRouter = require("./routes/LocationUserRoutes");
@@ -15,6 +16,7 @@ const bodyParser = require("body-parser");
 
 const app = express();
 const port = process.env.PORT || 3000;
+app.use(cors());
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
