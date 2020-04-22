@@ -2,11 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="30171c75-2b90-4faa-bb30-1ecec50f5eef" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/covid-19-app-web/src/views/News/FeaturedNews.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/covid-19-app-web/src/views/News/NewsList.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/covid-19-app-web/src/views/News/TopNews.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/covid-19-app-web/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/A2SV.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/A2SV.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/covid-19-app-web/src/views/News/News.vue" beforeDir="false" afterPath="$PROJECT_DIR$/covid-19-app-web/src/views/News/News.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/covid-19-app-web/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/covid-19-app-web/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/covid-19-app-web/src/views/HeatMap/HeatMap.vue" beforeDir="false" afterPath="$PROJECT_DIR$/covid-19-app-web/src/views/HeatMap/HeatMap.vue" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
