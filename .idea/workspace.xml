@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="30171c75-2b90-4faa-bb30-1ecec50f5eef" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/covid-19-app-web/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/A2SV.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/A2SV.iml" afterDir="false" />
+    <list default="true" id="30171c75-2b90-4faa-bb30-1ecec50f5eef" name="Default Changelist" comment="[web] mapbox heatmap added">
+      <change afterPath="$PROJECT_DIR$/covid-19-app-web/assets/Untitled Diagram (1).svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/covid-19-app-web/src/views/Home/ImageSvg.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/covid-19-app-web/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/covid-19-app-web/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/covid-19-app-web/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/covid-19-app-web/src/main.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/covid-19-app-web/src/views/HeatMap/HeatMap.vue" beforeDir="false" afterPath="$PROJECT_DIR$/covid-19-app-web/src/views/HeatMap/HeatMap.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/covid-19-app-web/src/views/Home/States.vue" beforeDir="false" afterPath="$PROJECT_DIR$/covid-19-app-web/src/views/Home/States.vue" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -34,7 +35,13 @@
     <property name="Git.Branch.Popup.ShowAllRemotes" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/covid-19-app-web/src/assets" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/covid-19-app-web/src/assets" />
+      <recent name="$PROJECT_DIR$/covid-19-app-web/assets" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -62,6 +69,14 @@
       <workItem from="1587142812475" duration="888000" />
       <workItem from="1587470089853" duration="5658000" />
     </task>
+    <task id="LOCAL-00001" summary="[web] mapbox heatmap added">
+      <created>1587545660857</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1587545660857</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -79,5 +94,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="[web] mapbox heatmap added" />
+    <option name="LAST_COMMIT_MESSAGE" value="[web] mapbox heatmap added" />
   </component>
 </project>

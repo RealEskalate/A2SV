@@ -1,10 +1,20 @@
 <template>
-  <section class="states">
-    <!--    TODO Replace code here-->
-    <h1 class="text-center font-weight-thin">
-      States Demonstration Goes here
-    </h1>
-  </section>
+    <section class="states">
+        <!--    TODO Replace code here-->
+        <v-container>
+            <v-row>
+              <img-svg class="col-md-6"/>
+            </v-row>
+        </v-container>
+    </section>
 </template>
 
-<script></script>
+<script>
+    import ImageSvg from "./ImageSvg";
+
+    export default {
+        components: {
+            'img-svg': ImageSvg
+        }
+    }
+</script>
