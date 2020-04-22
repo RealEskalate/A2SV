@@ -1,5 +1,5 @@
 <template>
-    <v-container style="height: 100%">
+    <v-container>
         <map-gl-map
                 container="map-test"
                 :center.sync="center"
@@ -42,6 +42,7 @@
             return {
                 accessToken: process.env.VUE_APP_MAPBOX_API,
                 mapStyle: 'mapbox://styles/mapbox/dark-v10',
+                geojson: { /* … some geojson */},
                 layerId: 'firstLayer',
                 sourceId: 'earthquakes',
                 markerCoordinates: '[50, 50]',
