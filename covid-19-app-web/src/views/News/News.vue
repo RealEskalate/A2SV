@@ -40,7 +40,7 @@
                 >
                   Read
                 </v-btn>
-               </v-card-actions>
+              </v-card-actions>
             </v-card>
             <br />
           </div>
