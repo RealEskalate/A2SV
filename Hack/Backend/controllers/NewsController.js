@@ -1,8 +1,13 @@
 const {News} = require("./../models/NewsModel");
 
+const https = require('https');
+const fs = require('fs');
+
 const XLSX = require('xlsx');
 var path = require('path');
 var root = path.dirname(require.main.filename);
+
+const schedule = require('node-schedule');
 
 let Parser = require("rss-parser");
 const parser = new Parser({
@@ -12,11 +17,7 @@ const parser = new Parser({
 });
 
 // Get all news
-exports.get_all_news = async (req, res) => {
-    if(await News.countDocuments() == 0){ // populating database will be done only once when the database is empty
-        populateDatabase();
-    }
-    
+exports.get_all_news = async (req, res) => {    
     const news = await News.find();  // just fetches local policy
     
     //also query for news from google news
@@ -40,9 +41,6 @@ exports.get_all_news = async (req, res) => {
 
 // Get all news for a country
 exports.get_country_news = async (req, res) => {
-    if(await News.countDocuments() == 0){ // populating database will be done only once when the database is empty
-        populateDatabase();
-    }
     
     let news = await News.find({ "country" : req.params.current_country });
     // also query for news from google news
@@ -82,9 +80,30 @@ exports.post_news = async (req, res) => {
     }
 }
 
+// fetch government measures every day
+schedule.scheduleJob('0 0 * * *', function (){
+    fetchGovernmentMeasures();
+});
+
+// download government measures dataset
+async function fetchGovernmentMeasures(){
+    const file = fs.createWriteStream(path.join(root, 'assets', "government_measures_data.xlsx"));
+    
+    var request = https.get("https://data.humdata.org/dataset/e1a91ae0-292d-4434-bc75-bf863d4608ba/resource/e571077a-53b6-4941-9c02-ec3214d17714/download/20200421-acaps-covid-19-goverment-measures-dataset-v9.xlsx", function(response) {
+        var location = response.headers.location;
+
+        request = https.get(location, function(response) {
+            response.pipe(file).on('finish', function () {
+                console.log("Finished");
+                populateDatabase();
+            });
+        });
+    });    
+}
+
 // populate database with data from excel sheet
-function populateDatabase(){
-    var workbook = XLSX.readFile(path.join(root, 'assets', '20200416-acaps-covid-19-goverment-measures-dataset-v8.xlsx'), {sheetStubs: true, cellDates: true});
+async function populateDatabase(){    
+    var workbook = XLSX.readFile(path.join(root, 'assets', 'government_measures_data.xlsx'), {sheetStubs: true, cellDates: true});
     
     var worksheet = workbook.Sheets["Database"];
     var headers = {};
@@ -102,9 +121,10 @@ function populateDatabase(){
         }
 
         if(row != currentRow){
-            if(currentPolicy){
+            if(currentPolicy && !await News.findOne({"country" : currentPolicy.country, "title" : currentPolicy.title, "description" : currentPolicy.description})){
                 currentPolicy.save();
             }            
+            
             currentPolicy = new News({
                 title: " ",
                 source: " ",
@@ -139,5 +159,8 @@ function populateDatabase(){
     
     }
 
-    currentPolicy.save();
+    if(!await News.findOne({"country" : currentPolicy.country, "title" : currentPolicy.title, "description" : currentPolicy.description})){        
+        currentPolicy.save();
+    }
 }
+
