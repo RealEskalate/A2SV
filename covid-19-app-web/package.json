@@ -11,6 +11,8 @@
   "dependencies": {
     "core-js": "^3.6.4",
     "express": "^4.17.1",
+    "mapbox-gl": "^1.9.1",
+    "v-tooltip": "^2.0.3",
     "vue": "^2.6.11",
     "vue-router": "^3.1.6",
     "vuetify": "^2.2.11",
