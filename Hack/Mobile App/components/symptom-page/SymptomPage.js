@@ -7,13 +7,14 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { Avatar, Button, Card, Title, Paragraph } from "react-native-paper";
-import CheckBox from "@react-native-community/checkbox";
+import userIDStore from "../data-management/user-id-data/userIDStore";
+import symptomStore from "../data-management/user-symptom-data/symptomStore";
+import * as symptomActions from "../data-management/user-symptom-data/symptomActions";
 
 export default class SymptomPage extends Component {
   constructor({ route, navigation }) {
     super({ route, navigation });
     this.state = {
-      userId: route.params.userId,
       symptomId: "",
       symptoms: [],
     };
@@ -21,9 +22,21 @@ export default class SymptomPage extends Component {
   componentDidMount() {
     this.fetchData();
   }
+  //registers symptom on database and also stores in local data store
+  sendDataAndRegisterSymptom(userId, symptomId, symptomName) {
+    let listSymptoms = symptomStore.getState();
+    if (listSymptoms.includes(symptomName)) {
+      symptomStore.dispatch(symptomActions.removeSymptom(symptomName)); // removing symptom from local data store
+      //console.log(symptomStore.getState());
+    } else {
+      this.sendData(userId, symptomId); // sending data to database
+      symptomStore.dispatch(symptomActions.addSymptom(symptomName)); //addin symptom to local data store
+      //console.log(symptomStore.getState());
+    }
+  }
   //gets the list of symptoms from database
   fetchData() {
-    let newThis = this; // create variable for referencing this
+    let newThis = this; // create variable for referencing 'this'
     fetch("http://34.70.173.73:3000/api/symptoms", {
       method: "GET",
       headers: {
@@ -33,11 +46,10 @@ export default class SymptomPage extends Component {
     })
       .then((response) => response.json())
       .then((json) => {
-        // change this
+        // fetching symptoms from the database is successful and storing in to our state
         newThis.setState(() => ({
           symptoms: json,
         }));
-        console.log(json);
       })
       .catch((error) => {
         console.log(error);
@@ -58,7 +70,7 @@ export default class SymptomPage extends Component {
     })
       .then((response) => response.json())
       .then((json) => {
-        alert("Success!");
+        alert("Success!"); // symptom registeration is successful
       })
       .catch((error) => {
         Alert.alert("Oops :(", "Couldn't resgister, please try again!");
@@ -66,13 +78,20 @@ export default class SymptomPage extends Component {
   }
   contents = () =>
     this.state.symptoms.map((item) => {
-      //We need to return the corresponding mapping for each item too.
+      //return the corresponding mapping for each item in corresponding UI componenets.
       return (
         item &&
         item._id &&
         item.name && (
           <TouchableOpacity
-            onPress={() => this.sendData(this.state.userId, item._id)}
+            onPress={
+              () =>
+                this.sendDataAndRegisterSymptom(
+                  userIDStore.getState().userId,
+                  item._id,
+                  item.name
+                ) // handling event when that specific symptom is clicked
+            }
           >
             <Card key={item._id} style={styles.container}>
               <Text>{item.name}</Text>

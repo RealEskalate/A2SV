@@ -8,43 +8,26 @@ import {
   AsyncStorage,
   Alert,
 } from "react-native";
-import { Actions } from "react-native-router-flux";
-import MainPage from "../main-page/MainPage.js";
+import userIDStore from "../data-management/user-id-data/userIDStore";
+import * as actions from "../data-management/user-id-data/userIDActions";
+
 export default class SignIn extends Component {
   constructor(props) {
     super(props);
     this.state = {
       userName: "",
       password: "",
-      userId: "",
       invalidName: false,
       invalidPassword: false,
       userNameWarning: "Enter your user name",
       passwordWarning: "Enter your password",
     };
   }
-  isLoggedin() {
-    this.loadInitialState().done();
-  }
-  loadInitialState = async () => {
-    let user = await AsyncStorage.getItem("user");
-    if (user !== null) {
-      this.props.navigation.navigate("Page 6", {
-        name: "Page 6",
-        userId: this.state.userId,
-      });
-    } else {
-    }
-  };
-  saveUserData = (userID) => {
-    AsyncStorage.setItem("userID", userID);
-  };
 
-  sendUserId = async () => {
-    let id = await AsyncStorage.getItem("userID");
+  //navigates to the next page
+  navigateToNextPage = async () => {
     this.props.navigation.navigate("Page 6", {
       name: "Page 6",
-      userId: id,
     });
   };
 
@@ -64,8 +47,8 @@ export default class SignIn extends Component {
       })
         .then((response) => response.json())
         .then((json) => {
-          this.saveUserData(json.user._id);
-          this.sendUserId();
+          userIDStore.dispatch(actions.addUserId(json.user._id)); //storing the user id in redux data store
+          this.navigateToNextPage(); //nagivating to the next page
         })
         .catch((error) => {
           Alert.alert(
@@ -151,7 +134,7 @@ export default class SignIn extends Component {
     );
   }
 }
-
+//style of each components on this page
 const styles = StyleSheet.create({
   container: {
     marginTop: 200,
