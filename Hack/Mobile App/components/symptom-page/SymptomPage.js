@@ -15,7 +15,6 @@ export default class SymptomPage extends Component {
   constructor({ route, navigation }) {
     super({ route, navigation });
     this.state = {
-      userId: route.params.userId,
       symptomId: "",
       symptoms: [],
     };
@@ -23,7 +22,6 @@ export default class SymptomPage extends Component {
   componentDidMount() {
     this.fetchData();
   }
-<<<<<<< HEAD
   //registers symptom on database and also stores in local data store
   sendDataAndRegisterSymptom(userId, symptomId, symptomName) {
     let listSymptoms = symptomStore.getState();
@@ -36,8 +34,6 @@ export default class SymptomPage extends Component {
       //console.log(symptomStore.getState());
     }
   }
-=======
->>>>>>> d2f4c36... Project structure, Welcom page, sign up and sign in page completed
   //gets the list of symptoms from database
   fetchData() {
     let newThis = this; // create variable for referencing 'this'
@@ -54,10 +50,8 @@ export default class SymptomPage extends Component {
         newThis.setState(() => ({
           symptoms: json,
         }));
-<<<<<<< HEAD
-=======
+
         console.log(json);
->>>>>>> d2f4c36... Project structure, Welcom page, sign up and sign in page completed
       })
       .catch((error) => {
         console.log(error);
@@ -78,11 +72,7 @@ export default class SymptomPage extends Component {
     })
       .then((response) => response.json())
       .then((json) => {
-<<<<<<< HEAD
         alert("Success!"); // symptom registeration is successful
-=======
-        alert("Success!");
->>>>>>> d2f4c36... Project structure, Welcom page, sign up and sign in page completed
       })
       .catch((error) => {
         Alert.alert("Oops :(", "Couldn't resgister, please try again!");
@@ -96,7 +86,6 @@ export default class SymptomPage extends Component {
         item._id &&
         item.name && (
           <TouchableOpacity
-<<<<<<< HEAD
             onPress={
               () =>
                 this.sendDataAndRegisterSymptom(
@@ -105,9 +94,7 @@ export default class SymptomPage extends Component {
                   item.name
                 ) // handling event when that specific symptom is clicked
             }
-=======
             onPress={() => this.sendData(this.state.userId, item._id)}
->>>>>>> d2f4c36... Project structure, Welcom page, sign up and sign in page completed
           >
             <Card key={item._id} style={styles.container}>
               <Text>{item.name}</Text>
