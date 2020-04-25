@@ -1,4 +1,5 @@
 import { Bar, Line, mixins } from "vue-chartjs";
+import moment from "moment";
 const { reactiveProp } = mixins;
 
 export const BarChart = {
@@ -20,6 +21,16 @@ export const LineChart = {
 };
 
 export const ChartMixin = {
+  computed: {
+    dateRangeText() {
+      let start = this.date_range[0] || "";
+      let end = this.date_range[1] || "";
+      let arrow = "\u2192";
+      return `  ${moment(start).format("MMM DD, YYYY")}    ${arrow}    ${moment(
+        end
+      ).format("MMM DD, YYYY")}  `;
+    }
+  },
   methods: {
     makeDataSet(payload, chartType = "line") {
       let opacity = 0.07;
@@ -33,10 +44,11 @@ export const ChartMixin = {
       return {
         label: payload.label,
         data: payload.data,
-        lineTension: 0.3,
+        lineTension: 0.4,
         backgroundColor: bgColor,
         borderColor: mainColor,
-        pointRadius: 3,
+        borderWidth: 2,
+        pointRadius: 2,
         pointBackgroundColor: mainColor,
         pointBorderColor: mainColor,
         pointHoverRadius: 3,
@@ -49,32 +61,21 @@ export const ChartMixin = {
   },
   data: () => {
     return {
-      criteria: [
-        {
-          label: "Test Count",
-          color: "#477523"
-        },
-        {
-          label: "Positive Count",
-          color: "#5734e4"
-        },
-        {
-          label: "Positive Count",
-          color: "#542967"
-        },
-        {
-          label: "Hospitalization Count",
-          color: "#acb453"
-        },
-        {
-          label: "ICU Count",
-          color: "#2aa175"
-        },
-        {
-          label: "Positive Count",
-          color: "#f9a4c5"
-        }
-      ],
+      criteria: {
+        counts: [
+          { label: "Test Count", color: [121, 134, 203] },
+          { label: "Confirmed Cases", color: [255, 213, 79] },
+          { label: "Death Count", color: [240, 98, 146] },
+          { label: "Recovery Count", color: [220, 231, 117] }
+        ],
+        rates: [
+          { label: "Positive Rate", color: [255, 213, 79] },
+          { label: "Recovery Rate", color: [220, 231, 117] },
+          { label: "Hospitalization Rate", color: [220, 231, 117] },
+          { label: "ICU Rate", color: [220, 231, 117] },
+          { label: "Death Rate", color: [240, 98, 146] }
+        ]
+      },
       chartOptions: {
         maintainAspectRatio: false,
         layout: {
@@ -89,7 +90,7 @@ export const ChartMixin = {
           xAxes: [
             {
               scaleLabel: {
-                display: true,
+                display: false,
                 labelString: "Date"
               },
               type: "time",
@@ -112,7 +113,7 @@ export const ChartMixin = {
             {
               scaleLabel: {
                 display: true,
-                labelString: "Numbers"
+                labelString: "Counts"
               },
               ticks: {
                 maxTicksLimit: 5,
