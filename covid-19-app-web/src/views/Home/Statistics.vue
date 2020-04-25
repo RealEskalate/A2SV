@@ -1,12 +1,42 @@
 <template>
-  <section class="statistics">
-    <h1 class="text-center font-weight-thin">
-      Statistics Graph Goes here
-    </h1>
+  <section class="statistics py-10">
+    <v-card elevation="2">
+      <v-toolbar color="primary" dark>
+        <v-toolbar-title>Statistics</v-toolbar-title>
+      </v-toolbar>
 
-    <display />
-    <country-compare />
-    <disease-compare />
+      <v-tabs fixed-tabs dark background-color="primary">
+        <v-tab class="justify-start">
+          <v-icon left>mdi-account</v-icon>
+          Display Counts
+        </v-tab>
+        <v-tab class="justify-start">
+          <v-icon left>mdi-account</v-icon>
+          Display Rates
+        </v-tab>
+        <v-tab class="justify-start">
+          <v-icon left>mdi-lock</v-icon>
+          Compare Country Stats
+        </v-tab>
+        <v-tab class="justify-start">
+          <v-icon left>mdi-access-point</v-icon>
+          Compare Similar Diseases
+        </v-tab>
+
+        <v-tab-item>
+          <display />
+        </v-tab-item>
+        <v-tab-item>
+          <display mode="rates" />
+        </v-tab-item>
+        <v-tab-item>
+          <country-compare />
+        </v-tab-item>
+        <v-tab-item>
+          <disease-compare />
+        </v-tab-item>
+      </v-tabs>
+    </v-card>
   </section>
 </template>
 

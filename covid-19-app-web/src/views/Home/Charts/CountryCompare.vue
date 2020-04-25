@@ -1,4 +1,4 @@
 <template>
-  <v-content> </v-content>
+  <v-container> </v-container>
 </template>
 <script></script>
