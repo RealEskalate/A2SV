@@ -68,7 +68,7 @@ exports.get_symptomuser_by_symptom_id = async (req, res) => {
     // });
 
     try {
-        const symptomuser = await Symptom.findOne({ symptom_id: req.params.symptom_id });
+        const symptomuser = await SymptomUser.find({ symptom_id: req.params.symptom_id });
         if (!symptomuser) {
             res.status(400).send("Symptom User Pair not found");
         }
@@ -87,7 +87,7 @@ exports.get_symptomuser_by_user_id = async (req, res) => {
     // });
 
     try {
-        const symptomuser = await Symptom.findOne({ user_id: req.params.user_id });
+        const symptomuser = await SymptomUser.find({ user_id: req.params.user_id });
         if (!symptomuser) {
             res.status(400).send("Symptom User Pair not found");
         }
@@ -107,7 +107,7 @@ exports.update_symptomuser = async (req, res) => {
     // });
 
     try {
-        const symptomuser = await Symptom.findByIdAndUpdate(req.body._id, req.body);
+        const symptomuser = await SymptomUser.findByIdAndUpdate(req.body._id, req.body);
         if (!symptomuser) {
             res.status(400).send("Symptom not found");
         }
@@ -126,7 +126,7 @@ exports.delete_symptomuser = async (req, res) => {
     // });
     
     try {
-        const symptomuser = await Symptom.findByIdAndRemove(req.body._id);
+        const symptomuser = await SymptomUser.findByIdAndRemove(req.body._id);
         if (!symptomuser) {
             res.status(404).send("Symptom User Pair not found");
         }
