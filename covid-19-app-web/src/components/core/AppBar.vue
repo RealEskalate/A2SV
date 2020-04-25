@@ -9,25 +9,31 @@
         transition="scale-transition"
         width="40"
       />
-
-      <v-img
-        alt="Vuetify Name"
-        class="shrink mt-1 hidden-sm-and-down"
-        contain
-        min-width="100"
-        src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-        width="100"
-      />
+      <div>
+        <h3 class="white--text font-weight-light">Covid-19</h3>
+        <h3 class="white--text font-weight-light">SymTrack</h3>
+      </div>
     </router-link>
 
-    <v-spacer/>
+    <v-spacer />
 
-    <v-btn text to="/">
-      <span>Home</span>
-    </v-btn>
-
-    <v-btn text to="/about">
-      <span>About</span>
+    <v-btn :key="link.to" :to="link.to" text v-for="link in links">
+      <span v-text="link.text" />
     </v-btn>
   </v-app-bar>
 </template>
+
+<script>
+export default {
+  data: () => {
+    return {
+      links: [
+        { text: "HOME", icon: "mdi-home", to: "/" },
+        { text: "ABOUT", icon: "mdi-information", to: "/about" },
+        { text: "NEWS", icon: "mdi-newspaper", to: "/news" },
+        { text: "MAP", icon: "mdi-map", to: "/map" }
+      ]
+    };
+  }
+};
+</script>

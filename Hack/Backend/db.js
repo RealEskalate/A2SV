@@ -3,7 +3,9 @@ const url = process.env.MONGODB_URI || "mongodb+srv://dbAdmin:EOW2tr3cqUcPqp7k@s
 mongoose.connect(
   url,
   {
+    useCreateIndex: true,
     useNewUrlParser: true,
+    useUnifiedTopology: true,
     dbName: "hackathon",
   }
 );
