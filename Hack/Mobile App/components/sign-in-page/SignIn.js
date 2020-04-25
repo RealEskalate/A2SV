@@ -23,12 +23,7 @@ export default class SignIn extends Component {
       passwordWarning: "Enter your password",
     };
   }
-  //navigates to the next page
-  navigateToNextPage = async () => {
-    this.props.navigation.navigate("Page 6", {
-      name: "Page 6",
-    });
-  };
+
   isLoggedin() {
     this.loadInitialState().done();
   }
@@ -68,12 +63,6 @@ export default class SignIn extends Component {
       })
         .then((response) => response.json())
         .then((json) => {
-          userIDStore.dispatch(actions.addUserId(json.user._id)); //storing the user id in redux data store
-          this.navigateToNextPage(); //nagivating to the next page
-
-          this.saveUserData(json.user._id);
-          this.sendUserId();
-
           userIDStore.dispatch(actions.addUserId(json.user._id)); //storing the user id in redux data store
           this.navigateToNextPage(); //nagivating to the next page
         })

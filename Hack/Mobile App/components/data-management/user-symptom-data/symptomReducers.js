@@ -3,7 +3,7 @@ import * as actionTypes from "../actionTypes";
 export default function reducer(symptoms = [], action) {
   switch (action.type) {
     case actionTypes.symptomRegister:
-      return [...symptoms, action.symptom];
+      return action.symptoms;
     case actionTypes.symptomRemove:
       return symptoms.filter((symptom) => symptom !== action.symptom);
     default:

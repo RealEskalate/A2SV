@@ -3,6 +3,7 @@ import * as React from "react";
 
 import TabBarIcon from "../TabBarIcon.js";
 import SymptomPage from "../symptom-page/SymptomPage.js";
+import UserSymptomPage from "../symptom-page/UserSymptomPage.js";
 import HeatMap from "../map-service/MapService.js";
 
 const BottomTab = createBottomTabNavigator();
@@ -17,22 +18,54 @@ export default function BottomTabNavigator({ navigation, route }) {
   return (
     <BottomTab.Navigator initialRouteName={INITIAL_ROUTE_NAME}>
       <BottomTab.Screen
-        name="Links"
+        name="Home"
+        component={HeatMap}
+        options={{
+          title: "Information",
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon focused={focused} name="md-info" />
+          ),
+        }}
+      />
+
+      <BottomTab.Screen
+        name="Public Data"
+        component={HeatMap}
+        options={{
+          title: "Data Analysis",
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon focused={focused} name="md-analytics" />
+          ),
+        }}
+      />
+      <BottomTab.Screen
+        name="News"
+        component={HeatMap}
+        options={{
+          title: "News",
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon focused={focused} name="md-paper" />
+          ),
+        }}
+      />
+      <BottomTab.Screen
+        name="Symptom Tracker"
+        component={HeatMap}
+        options={{
+          title: "Symptom Tracker",
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon focused={focused} name="md-locate" />
+          ),
+        }}
+      />
+
+      <BottomTab.Screen
+        name="MySymptoms"
         component={SymptomPage}
         options={{
           title: "My Symptoms",
           tabBarIcon: ({ focused }) => (
             <TabBarIcon focused={focused} name="md-person" />
-          ),
-        }}
-      />
-      <BottomTab.Screen
-        name="Home"
-        component={HeatMap}
-        options={{
-          title: "Heat Map",
-          tabBarIcon: ({ focused }) => (
-            <TabBarIcon focused={focused} name="md-locate" />
           ),
         }}
       />
@@ -46,8 +79,14 @@ function getHeaderTitle(route) {
 
   switch (routeName) {
     case "Home":
-      return "Heat Map";
-    case "Links":
-      return "Symptoms";
+      return "Information";
+    case "Public Data":
+      return "Public Data";
+    case "News":
+      return "News";
+    case "Symptom Tracker":
+      return "Symptom Tracker";
+    case "MySymptoms":
+      return "My Symptoms";
   }
 }

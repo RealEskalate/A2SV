@@ -21,6 +21,7 @@
     "react-native-animated-multistep": "^1.0.6",
     "react-native-app-intro": "^1.1.5",
     "react-native-dropdown": "0.0.6",
+    "react-native-elements": "^1.2.7",
     "react-native-gesture-handler": "^1.6.1",
     "react-native-material-design": "^0.3.7",
     "react-native-paper": "^3.8.0",
