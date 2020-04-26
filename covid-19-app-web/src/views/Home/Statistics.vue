@@ -24,10 +24,10 @@
         </v-tab>
 
         <v-tab-item>
-          <display />
+          <display mode="counts" y_label="People" />
         </v-tab-item>
         <v-tab-item>
-          <display mode="rates" />
+          <display mode="rates" y_label="Percent" />
         </v-tab-item>
         <v-tab-item>
           <country-compare />
