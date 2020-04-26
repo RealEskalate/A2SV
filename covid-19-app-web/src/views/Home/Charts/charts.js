@@ -30,13 +30,15 @@ export const ChartMixin = {
     }
   },
   computed: {
+    countries() {
+      return ["World", "Ethiopia", "United States"];
+    },
     dateRangeText() {
       let start = this.date_range[0] || "";
       let end = this.date_range[1] || "";
       let arrow = "\u2192";
-      return `  ${moment(start).format("MMM DD, YYYY")}    ${arrow}    ${moment(
-        end
-      ).format("MMM DD, YYYY")}  `;
+      return `  ${moment(start).format("MMM DD, YYYY")}    ${arrow}    
+      ${moment(end).format("MMM DD, YYYY")}  `;
     },
     chartOptions() {
       const self = this;
@@ -98,6 +100,10 @@ export const ChartMixin = {
     }
   },
   methods: {
+    sliderColor(percentage = this.social_distancing, hue0 = 0, hue1 = 100) {
+      let hue = (percentage / 100) * (hue1 - hue0) + hue0;
+      return "hsl(" + hue + ", 100%, 45%)";
+    },
     makeDataSet(payload, chartType = "line") {
       let opacity = 0.07;
       if (chartType === "bar" || chartType === "pie") {
@@ -128,7 +134,6 @@ export const ChartMixin = {
   data: () => {
     return {
       age_ranges: ["All", "Bellow 25", "26 - 50", "Above 50"],
-      countries: ["World", "Ethiopia", "United States"],
       criteria: {
         counts: [
           { label: "Test Count", color: [121, 134, 203] },
