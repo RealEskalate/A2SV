@@ -17,16 +17,21 @@ export default class SymptomPage extends Component {
     this.state = {
       symptomId: "",
       symptoms: [],
+      userSymptoms: [],
     };
-    symptomStore.subscribe(() => {
-      this.forceUpdate();
-    });
   }
 
   componentDidMount() {
     this.fetchSymptoms();
     this.fetchUserSymptoms(userIDStore.getState().userId);
+    let interval = setInterval(() => {
+      this.fetchData();
+    }, 1000);
   }
+  fetchData() {
+    this.setState({ userSymptoms: symptomStore.getState() });
+  }
+
   //registers symptom on database and also stores in local data store
   handleSymptomAction(userId, symptomId) {
     let listSymptoms = symptomStore.getState();
@@ -98,7 +103,7 @@ export default class SymptomPage extends Component {
       .then((json) => {
         // symptom registeration is successful
         this.fetchUserSymptoms(userIDStore.getState().userId); // get the update from database and update local state
-        console.log(symptomStore.getState());
+        //console.log(symptomStore.getState());
       })
 
       .catch((error) => {
@@ -133,8 +138,9 @@ export default class SymptomPage extends Component {
 
   //check if a symptom has already been registered by user
   doesSymptomAlreadyRegistered(symptomId) {
-    let listSymptoms = symptomStore.getState();
-    let symptom = listSymptoms.find((obj) => obj.symptom_id == symptomId);
+    let symptom = this.state.userSymptoms.find(
+      (obj) => obj.symptom_id == symptomId
+    );
 
     if (symptom != null) {
       return true;

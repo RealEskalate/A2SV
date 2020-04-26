@@ -4,7 +4,6 @@ import userIDStore from "../data-management/user-id-data/userIDStore";
 import symptomStore from "../data-management/user-symptom-data/symptomStore";
 import * as symptomActions from "../data-management/user-symptom-data/symptomActions";
 import { ListItem, Button } from "react-native-elements";
-import SymptomPage from "./SymptomPage";
 
 export default class UserSymptomPage extends Component {
   constructor(props) {
@@ -19,6 +18,10 @@ export default class UserSymptomPage extends Component {
 
   componentDidMount() {
     this.fetchData();
+    this.fetchUserSymptoms(userIDStore.getState().userId);
+    let interval = setInterval(() => {
+      this.fetchData();
+    }, 1000);
   }
 
   //gets the list of symptoms from database
@@ -26,14 +29,33 @@ export default class UserSymptomPage extends Component {
     this.setState({ userSymptoms: symptomStore.getState() });
   }
 
+  //gets the list of symptoms from database
+  fetchUserSymptoms(userId) {
+    let newThis = this; // create variable for referencing 'this'
+    fetch("http://34.70.173.73:3000/api/symptomuser/user/" + userId, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        // fetching user symptoms from the database is successful and updating local state using redux
+        symptomStore.dispatch(symptomActions.addSymptom(json));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
   contents = () =>
     this.state.userSymptoms.map((symptom) => {
       //return the corresponding mapping for each item in corresponding UI componenets.
       return (
         <ListItem
           //key={i}
-          title={symptom.name}
-          subtitle={symptom.description}
+          title={symptom.Symptom.name}
+          subtitle={symptom.Symptom.description}
           bottomDivider
           style={{ marginBottom: 5 }}
         />
@@ -48,7 +70,7 @@ export default class UserSymptomPage extends Component {
           title="Manage your symptoms"
           type="outline"
           onPress={() =>
-            this.props.navigation.navigate("Page 7", {
+            this.props.navigation.navigate("Symptoms", {
               name: "Page 7",
             })
           }

@@ -42,8 +42,8 @@ export default class SignIn extends Component {
   };
   //navigates to the next page
   navigateToNextPage = async () => {
-    this.props.navigation.navigate("Page 6", {
-      name: "Page 6",
+    this.props.navigation.navigate("Main page", {
+      name: "Page 10",
     });
   };
 
@@ -63,7 +63,9 @@ export default class SignIn extends Component {
       })
         .then((response) => response.json())
         .then((json) => {
-          userIDStore.dispatch(actions.addUserId(json.user._id)); //storing the user id in redux data store
+          userIDStore.dispatch(
+            actions.addUser(json.user._id, json.user.username)
+          ); //storing the user id in redux data store
           this.navigateToNextPage(); //nagivating to the next page
         })
         .catch((error) => {
