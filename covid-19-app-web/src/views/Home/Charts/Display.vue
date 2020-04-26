@@ -62,6 +62,8 @@
       </v-col>
       <v-col cols="12" md="6">
         <v-slider
+          :color="sliderColor(social_distancing)"
+          :track-color="sliderColor(social_distancing)"
           max="100"
           hint="100% means no physical connections"
           persistent-hint
@@ -133,7 +135,7 @@ export default {
       ],
       country: "World",
       age_range: "All",
-      social_distancing: 50,
+      social_distancing: 50
     };
   },
   methods: {
