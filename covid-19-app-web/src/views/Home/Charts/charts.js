@@ -21,6 +21,14 @@ export const LineChart = {
 };
 
 export const ChartMixin = {
+  props: {
+    y_label: {
+      type: String,
+      default() {
+        return "People";
+      }
+    }
+  },
   computed: {
     dateRangeText() {
       let start = this.date_range[0] || "";
@@ -29,54 +37,10 @@ export const ChartMixin = {
       return `  ${moment(start).format("MMM DD, YYYY")}    ${arrow}    ${moment(
         end
       ).format("MMM DD, YYYY")}  `;
-    }
-  },
-  methods: {
-    makeDataSet(payload, chartType = "line") {
-      let opacity = 0.07;
-      if (chartType === "bar" || chartType === "pie") {
-        opacity = 0.75;
-      }
-      const color = payload.color || [78, 115, 223];
-      const mainColor = `rgba(${color[0]}, ${color[1]}, ${color[2]}, 0.85)`;
-      const bgColor = `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${opacity})`;
-
+    },
+    chartOptions() {
+      const self = this;
       return {
-        label: payload.label,
-        data: payload.data,
-        lineTension: 0.4,
-        backgroundColor: bgColor,
-        borderColor: mainColor,
-        borderWidth: 2,
-        pointRadius: 2,
-        pointBackgroundColor: mainColor,
-        pointBorderColor: mainColor,
-        pointHoverRadius: 3,
-        pointHoverBackgroundColor: mainColor,
-        pointHoverBorderColor: mainColor,
-        pointHitRadius: 10,
-        pointBorderWidth: 2
-      };
-    }
-  },
-  data: () => {
-    return {
-      criteria: {
-        counts: [
-          { label: "Test Count", color: [121, 134, 203] },
-          { label: "Confirmed Cases", color: [255, 213, 79] },
-          { label: "Death Count", color: [240, 98, 146] },
-          { label: "Recovery Count", color: [220, 231, 117] }
-        ],
-        rates: [
-          { label: "Positive Rate", color: [255, 213, 79] },
-          { label: "Recovery Rate", color: [220, 231, 117] },
-          { label: "Hospitalization Rate", color: [220, 231, 117] },
-          { label: "ICU Rate", color: [220, 231, 117] },
-          { label: "Death Rate", color: [240, 98, 146] }
-        ]
-      },
-      chartOptions: {
         maintainAspectRatio: false,
         layout: {
           padding: {
@@ -113,7 +77,7 @@ export const ChartMixin = {
             {
               scaleLabel: {
                 display: true,
-                labelString: "Counts"
+                labelString: self.y_label
               },
               ticks: {
                 maxTicksLimit: 5,
@@ -130,6 +94,55 @@ export const ChartMixin = {
             }
           ]
         }
+      };
+    }
+  },
+  methods: {
+    makeDataSet(payload, chartType = "line") {
+      let opacity = 0.07;
+      if (chartType === "bar" || chartType === "pie") {
+        opacity = 0.75;
+      }
+      const color = payload.color || [78, 115, 223];
+      const mainColor = `rgba(${color[0]}, ${color[1]}, ${color[2]}, 0.85)`;
+      const bgColor = `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${opacity})`;
+
+      return {
+        label: payload.label,
+        data: payload.data,
+        lineTension: 0.4,
+        backgroundColor: bgColor,
+        borderColor: mainColor,
+        borderWidth: 2,
+        pointRadius: 2,
+        pointBackgroundColor: mainColor,
+        pointBorderColor: mainColor,
+        pointHoverRadius: 3,
+        pointHoverBackgroundColor: mainColor,
+        pointHoverBorderColor: mainColor,
+        pointHitRadius: 10,
+        pointBorderWidth: 2
+      };
+    }
+  },
+  data: () => {
+    return {
+      age_ranges: ["All", "Bellow 25", "26 - 50", "Above 50"],
+      countries: ["World", "Ethiopia", "United States"],
+      criteria: {
+        counts: [
+          { label: "Test Count", color: [121, 134, 203] },
+          { label: "Confirmed Cases", color: [255, 213, 79] },
+          { label: "Death Count", color: [240, 98, 146] },
+          { label: "Recovery Count", color: [220, 231, 117] }
+        ],
+        rates: [
+          { label: "Positive Rate", color: [255, 213, 79] },
+          { label: "Recovery Rate", color: [220, 231, 117] },
+          { label: "Hospitalization Rate", color: [77, 208, 225] },
+          { label: "ICU Rate", color: [121, 134, 203] },
+          { label: "Death Rate", color: [240, 98, 146] }
+        ]
       }
     };
   }
