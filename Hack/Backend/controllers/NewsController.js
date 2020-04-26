@@ -1,5 +1,6 @@
 const {News} = require("./../models/NewsModel");
 
+const http = require('http');
 const https = require('https');
 const fs = require('fs');
 
@@ -18,7 +19,7 @@ const parser = new Parser({
 
 // Get all news
 exports.get_all_news = async (req, res) => {    
-    const news = await News.find();  // just fetches local policy
+    let news = []; 
     
     //also query for news from google news
     const news_google = await parser.parseURL(`https://news.google.com/rss/search?q=covid`);
@@ -32,6 +33,10 @@ exports.get_all_news = async (req, res) => {
             reference_link: element.link
         }));
     });
+
+    const policies = await News.find();
+    news = news.concat(policies);
+
     try{
         res.send(news);
     }catch (err){
@@ -40,9 +45,9 @@ exports.get_all_news = async (req, res) => {
 };
 
 // Get all news for a country
-exports.get_country_news = async (req, res) => {
-    
-    let news = await News.find({ "country" : req.params.current_country });
+exports.get_country_news = async (req, res) => {    
+    let news  = [];
+
     // also query for news from google news
     const news_google = await parser.parseURL(`https://news.google.com/rss/search?q=covid ${req.params.current_country}`);
     news_google.items.forEach(element => {
@@ -55,6 +60,10 @@ exports.get_country_news = async (req, res) => {
             reference_link: element.link
         }));
     });
+
+    let policies = await News.find({ "country" : req.params.current_country });
+    news = news.concat(policies);
+
     try{
         res.send(news);
     }catch (err){
@@ -89,16 +98,31 @@ schedule.scheduleJob('0 0 * * *', function (){
 async function fetchGovernmentMeasures(){
     const file = fs.createWriteStream(path.join(root, 'assets', "government_measures_data.xlsx"));
     
-    var request = https.get("https://data.humdata.org/dataset/e1a91ae0-292d-4434-bc75-bf863d4608ba/resource/e571077a-53b6-4941-9c02-ec3214d17714/download/20200421-acaps-covid-19-goverment-measures-dataset-v9.xlsx", function(response) {
-        var location = response.headers.location;
-
-        request = https.get(location, function(response) {
-            response.pipe(file).on('finish', function () {
-                console.log("Finished");
-                populateDatabase();
-            });
+    var request = https.get("https://data.humdata.org/api/3/action/package_show?id=acaps-covid19-government-measures-dataset", function(response) {
+        var result = "";
+        response.on('data', function (chunk) {
+            result += chunk;
         });
-    });    
+        
+        response.on('end', function () {
+            var download_url = JSON.parse(result).result.resources[1].download_url;
+
+            request = http.get(download_url, function(response) {
+                var location = response.headers.location;
+
+                request = https.get(location, function(response) {
+                    location = response.headers.location;
+                    
+                    request = https.get(location, function(response) {
+                        response.pipe(file).on('finish', function () {
+                            console.log("Finished");
+                            populateDatabase();
+                        });
+                    });
+                });                
+            }); 
+        }); 
+    });  
 }
 
 // populate database with data from excel sheet
