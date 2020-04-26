@@ -7,19 +7,19 @@
 
       <v-tabs fixed-tabs dark background-color="primary">
         <v-tab class="justify-start">
-          <v-icon left>mdi-account</v-icon>
+          <v-icon left>mdi-numeric</v-icon>
           Display Counts
         </v-tab>
         <v-tab class="justify-start">
-          <v-icon left>mdi-account</v-icon>
+          <v-icon left>mdi-percent-outline</v-icon>
           Display Rates
         </v-tab>
         <v-tab class="justify-start">
-          <v-icon left>mdi-lock</v-icon>
-          Compare Country Stats
+          <v-icon left>mdi-map-marker</v-icon>
+          Compare Countries
         </v-tab>
         <v-tab class="justify-start">
-          <v-icon left>mdi-access-point</v-icon>
+          <v-icon left>mdi-virus-outline</v-icon>
           Compare Similar Diseases
         </v-tab>
 
