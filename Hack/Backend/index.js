@@ -29,9 +29,13 @@ app.use(userRouter);
 app.use(symptomRouter);
 app.use(symptomuserRouter);
 app.use(locationUserRouter);
+app.use(medicalhistoryRouter);
+app.use(medicalhistoryuserRouter);
 app.use(newsRouter);
 app.use(logRouter);
 
 app.listen(port, () => {
-  console.log("Server is running...");
+  console.log("Server is running... at port " + port);
 });
+
+module.exports = app;
