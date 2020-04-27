@@ -1,5 +1,40 @@
 const axios = require("axios");
 
+const getRate = async (criteria, startDate, endDate) => {    
+    let stats = [];
+    let result = await axios.get('https://covidtracking.com/api/v1/us/daily.json')
+        .then(response => {
+            let datas = response.data;
+            datas.forEach(data => {              
+                let stat = {
+                    t: new Date(Date.parse(data.dateChecked))
+                };
+                if(criteria=="Hospitalization"){
+                    stat.y = data.hospitalizedCurrently || 0;
+                }
+                else if(criteria=="ICU"){
+                    stat.y = data.inIcuCurrently || 0;
+                }
+                stats.push(stat);
+            });
+        })
+        .catch(err=> {
+            console.log(err);
+        });
+    var filteredStats = stats.filter(function (stat) {
+        var date = new Date(stat.t);
+        console.log(date >= startDate && date <= endDate);
+        return (date >= startDate && date <= endDate);
+    });
+    return filteredStats;
+}
+exports.getCriticalStatistics = async(req) =>{
+    let startDate = new Date(Date.parse(set_start_date_for_countries(req).slice(6)+"T21:00:00.000Z"));
+    let endDate = new Date(Date.parse(set_end_date_for_countries(req).slice(4)+"T21:00:00.000Z"));
+    let results = await getRate(req.body.criteria, startDate, endDate);
+    return results;
+}
+
 exports.getHealthStatistics = async(req) =>{
     request_url= "";
 
@@ -8,7 +43,7 @@ exports.getHealthStatistics = async(req) =>{
         // still looking for api which return total world cases for each day since this one only contain data for the past 10 min.
     
     }else{
-        request_url+="https://api.covid19api.com/country/"+req.body.country.toLowerCase();
+        request_url+="https://api.covid19api.com/total/country/"+req.body.country.toLowerCase();
         request_url+= set_start_date_for_countries(req) //+"T00:00:00Z"
         request_url+= set_end_date_for_countries(req) //+"T00:00:00Z"
         let results = await do_api_call(request_url, req.body.criteria);

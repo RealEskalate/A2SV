@@ -107,50 +107,47 @@ const run_updates = () => {
 // in the future we can call this in index.js
 exports.run_updates = run_updates;
 
-
 exports.get_statistics = async (req, res) => {
-    // jwt.verify(req.token, 'secretkey', (err,authData) =>{
-    //     if (err){
-    //         res.status(401).send("Incorrect authentication key");
-    //     }
-    // });
-    
-    // Create a filter with defaults
-    let filter = {};
-    if (req.query.country !== undefined){
-        filter.country = req.query.country;
-    }else{
-        filter.country = "World"
-    }
-
-    if (req.query["start date"] !== undefined){
-        filter.date = { $gte: new Date(req.query["start date"]) };
-    }else {
-        filter.date = { $gte: new Date(new Date() - 7 * 24 * 3600 * 1000) };
-    }
-
-    if (req.query["end date"] !== undefined){
-        filter.date.$lte = new Date(req.query["end date"]);
-    }else{
-        filter.date.$lte = new Date(new Date() - 24 * 3600 * 1000);
-    }
-
-    if (req.query["criteria"] !== undefined){
-        filter.criteria = req.query.criteria;
-    }
-
-    // Apply filter and send results
-    const results = await Statstics.find(filter);
-    try {
-        res.send(results);
-    } catch (err) {
-        res.status(500).send(err);
-    }    
-}
-
-exports.get_statistics = async (req, res) => {
-    if (req.body.criteria=="Confirmed" || req.body.criteria=="Recovered" || req.body.criteria=="Death"){
+    if (req.body.criteria=="Confirmed" || req.body.criteria=="Recovered" || req.body.criteria=="Deaths"){
         result= await healthParser.getHealthStatistics(req);
         return res.send(result);
     }
+    else if (req.body.criteria=="Hospitalization" || req.body.criteria=="ICU"){
+        result = await healthParser.getCriticalStatistics(req);
+        return res.send(result);
+    }
+    else if(req.body.criteria=="Test"){        
+        let filter = {};
+        if (req.body.country !== undefined){
+            filter.country = req.body.country;
+        }else{
+            filter.country = "World"
+        }
+    
+        filter.date = {
+            $gte: req.body.start_date!==undefined ? new Date(req.body.start_date) : new Date(new Date() - 7 * 24 * 3600 * 1000),
+            $lte: req.body.end_date!==undefined ? new Date(req.body.end_date) : new Date(new Date() - 24 * 3600 * 1000)
+        }
+
+        filter.criteria = req.body.criteria.toUpperCase();    
+        // Apply filter and send results 
+        const results_from_db = await Statistics.find(filter);
+        date_formatter = new Intl.DateTimeFormat('en', { year: 'numeric', month: '2-digit', day: '2-digit' })         
+        let results = [];
+        results_from_db.forEach((element)=>{
+            date = date_formatter.formatToParts(element.date);
+            date = date[4]["value"]+"-"+date[0]["value"]+"-"+date[2]["value"];
+            results.push({
+                t: date,
+                y: element.value
+            });
+        })        
+        try {
+            res.send(results);
+        } catch (err) {
+            res.status(500).send(err);
+        }    
+    
+    }
 }
+
