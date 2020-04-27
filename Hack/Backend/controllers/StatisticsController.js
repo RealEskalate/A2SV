@@ -103,7 +103,6 @@ const run_updates = () => {
     });
 };
 
-run_updates();
 
 // in the future we can call this in index.js
 exports.run_updates = run_updates;
@@ -118,7 +117,6 @@ exports.get_statistics = async (req, res) => {
     
     // Create a filter with defaults
     let filter = {};
-    console.log(req.query);
     if (req.query.country !== undefined){
         filter.country = req.query.country;
     }else{
@@ -142,7 +140,6 @@ exports.get_statistics = async (req, res) => {
     }
 
     // Apply filter and send results
-    console.log(filter);
     const results = await Statstics.find(filter);
     try {
         res.send(results);
