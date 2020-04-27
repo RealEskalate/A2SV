@@ -27,7 +27,7 @@ export default function WelcomePage1({ navigation }) {
         </Card.Content>
         <Card.Actions>
           <Button
-            onPress={() => navigation.navigate("Page 2", { name: "Page 2" })}
+            onPress={() => navigation.navigate("WelcomePage2")}
             color="#0a77aa"
           >
             Next

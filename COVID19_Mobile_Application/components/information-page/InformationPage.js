@@ -1,82 +1,143 @@
-import { Ionicons } from "@expo/vector-icons";
-import * as WebBrowser from "expo-web-browser";
 import * as React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { RectButton, ScrollView } from "react-native-gesture-handler";
+import { View, Text, Image, ScrollView } from "react-native";
+import { Card, ListItem, Button, Icon } from "react-native-elements";
 
-export default function LinksScreen() {
+export default function InformationPage(props) {
   return (
-    <ScrollView
-      style={styles.container}
-      contentContainerStyle={styles.contentContainer}
-    >
-      <OptionButton
-        icon="md-school"
-        label="Read the Expo documentation"
-        onPress={() => WebBrowser.openBrowserAsync("https://docs.expo.io")}
-      />
-
-      <OptionButton
-        icon="md-compass"
-        label="Read the React Navigation documentation"
-        onPress={() =>
-          WebBrowser.openBrowserAsync("https://reactnavigation.org")
-        }
-      />
-
-      <OptionButton
-        icon="ios-chatboxes"
-        label="Ask a question on the forums"
-        onPress={() => WebBrowser.openBrowserAsync("https://forums.expo.io")}
-        isLastOption
-      />
+    <ScrollView>
+      <Card
+        title="What is COVID-19?"
+        containerStyle={{ borderRadius: 20, elevation: 20 }}
+        titleStyle={{ fontSize: 18 }}
+      >
+        <View style={{ flexDirection: "row" }}>
+          <Image
+            style={{
+              flex: 1,
+              width: 100,
+              height: 100,
+              marginBottom: 10,
+              marginRight: 5,
+            }}
+            resizeMode="cover"
+            source={require("../../assets/covid.jpg")}
+          />
+          <Text style={{ flex: 2, marginTop: 15 }}>
+            Coronavirus disease 2019 is an infectious disease caused by severe
+            acute respiratory syndrome coronavirus 2.
+          </Text>
+        </View>
+        <Button
+          buttonStyle={{
+            borderRadius: 20,
+            marginLeft: 0,
+            marginRight: 0,
+            marginBottom: 0,
+          }}
+          title="Read more"
+          onPress={() => props.navigation.navigate("What Is Covid-19?")}
+        />
+      </Card>
+      <Card
+        title="Symptoms"
+        containerStyle={{ borderRadius: 20, elevation: 20 }}
+        titleStyle={{ fontSize: 18 }}
+      >
+        <View style={{ flexDirection: "row" }}>
+          <Image
+            style={{
+              flex: 1,
+              width: 100,
+              height: 100,
+              marginBottom: 10,
+              marginRight: 5,
+            }}
+            resizeMode="cover"
+            source={require("../../assets/symptoms.jpg")}
+          />
+          <Text style={{ flex: 2, marginTop: 15 }}>
+            Fever, cough and shortness of breath are the common symptoms
+            reported by patients
+          </Text>
+        </View>
+        <Button
+          buttonStyle={{
+            borderRadius: 20,
+            marginLeft: 0,
+            marginRight: 0,
+            marginBottom: 0,
+          }}
+          title="Read more"
+          onPress={() => props.navigation.navigate("Covid19 Symptoms")}
+        />
+      </Card>
+      <Card
+        title="Preventions"
+        containerStyle={{ borderRadius: 20, elevation: 20 }}
+        titleStyle={{ fontSize: 18 }}
+      >
+        <View style={{ flexDirection: "row" }}>
+          <Image
+            style={{
+              flex: 1,
+              width: 100,
+              height: 100,
+              marginBottom: 10,
+              marginRight: 5,
+            }}
+            resizeMode="cover"
+            source={require("../../assets/prevention.jpg")}
+          />
+          <Text style={{ flex: 2, marginTop: 15 }}>
+            Follow the guidelines to help protect yourself from catching,
+            carrying and passing on SARS-CoV-2.
+          </Text>
+        </View>
+        <Button
+          buttonStyle={{
+            borderRadius: 20,
+            marginLeft: 0,
+            marginRight: 0,
+            marginBottom: 0,
+          }}
+          title="Read more"
+          onPress={() => props.navigation.navigate("Preventions")}
+        />
+      </Card>
+      <Card
+        title="Treatment"
+        containerStyle={{ borderRadius: 20, elevation: 20 }}
+        titleStyle={{ fontSize: 18 }}
+      >
+        <View style={{ flexDirection: "row" }}>
+          <Image
+            style={{
+              flex: 1,
+              width: 100,
+              height: 100,
+              marginBottom: 10,
+              marginRight: 5,
+            }}
+            resizeMode="cover"
+            source={require("../../assets/treatment.jpg")}
+          />
+          <Text style={{ flex: 2, marginTop: 15 }}>
+            There currently isn’t a vaccine against developing COVID-19.
+            Antibiotics are also ineffective because COVID-19 is a viral
+            infection and not bacterial.
+          </Text>
+        </View>
+        <Button
+          buttonStyle={{
+            borderRadius: 20,
+            marginLeft: 0,
+            marginRight: 0,
+            marginBottom: 0,
+          }}
+          title="Read more"
+          onPress={() => props.navigation.navigate("Treatments")}
+        />
+      </Card>
     </ScrollView>
   );
 }
-
-function OptionButton({ icon, label, onPress, isLastOption }) {
-  return (
-    <RectButton
-      style={[styles.option, isLastOption && styles.lastOption]}
-      onPress={onPress}
-    >
-      <View style={{ flexDirection: "row" }}>
-        <View style={styles.optionIconContainer}>
-          <Ionicons name={icon} size={22} color="rgba(0,0,0,0.35)" />
-        </View>
-        <View style={styles.optionTextContainer}>
-          <Text style={styles.optionText}>{label}</Text>
-        </View>
-      </View>
-    </RectButton>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fafafa",
-  },
-  contentContainer: {
-    paddingTop: 15,
-  },
-  optionIconContainer: {
-    marginRight: 12,
-  },
-  option: {
-    backgroundColor: "#fdfdfd",
-    paddingHorizontal: 15,
-    paddingVertical: 15,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderBottomWidth: 0,
-    borderColor: "#ededed",
-  },
-  lastOption: {
-    borderBottomWidth: StyleSheet.hairlineWidth,
-  },
-  optionText: {
-    fontSize: 15,
-    alignSelf: "flex-start",
-    marginTop: 1,
-  },
-});

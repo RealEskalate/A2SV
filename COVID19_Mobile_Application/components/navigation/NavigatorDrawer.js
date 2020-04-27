@@ -1,12 +1,11 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, AsyncStorage } from "react-native";
 import { DrawerItem, DrawerContentScrollView } from "@react-navigation/drawer";
 import { Avatar, Title, Caption, Drawer } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import Image from "../../assets/man.png";
 import userIDStore from "../data-management/user-id-data/userIDStore";
 import * as actions from "../data-management/user-id-data/userIDActions";
-import symptomStore from "../data-management/user-symptom-data/symptomStore";
 
 const NavigatorDrawer = (props) => {
   return (
@@ -42,27 +41,15 @@ const NavigatorDrawer = (props) => {
               label="My Profile"
               onPress={() => props.navigation.closeDrawer()}
             />
-            <DrawerItem
-              icon={({ color, size }) => (
-                <Icon
-                  name="frequently-asked-questions"
-                  color={color}
-                  size={size}
-                />
-              )}
-              label="Information"
-              //   onPress={() => {
-              //     props.navigation.navigate("page 11");
-              //   }}
-            />
+
             <DrawerItem
               icon={({ color, size }) => (
                 <Icon name="newspaper" color={color} size={size} />
               )}
               label="News"
-              //   onPress={() => {
-              //     props.navigation.navigate("page 10");
-              //   }}
+              onPress={() => {
+                props.navigation.navigate("News");
+              }}
             />
             <DrawerItem
               icon={({ color, size }) => (
@@ -83,22 +70,27 @@ const NavigatorDrawer = (props) => {
           )}
           label="Sign Out"
           onPress={() => {
-            userIDStore.dispatch(actions.removeUser());
-            // props.navigation.navigate("Page 4");
-            console.log(
-              userIDStore.getState().userId +
-                " , " +
-                userIDStore.getState().userName
-            );
+            removeUserData("userID", "userName"); //remove user id from async state
+            userIDStore.dispatch(actions.removeUser()); //remove user id from redux state
           }}
         />
       </Drawer.Section>
     </View>
   );
 };
+//remove user data from save async storage
+const removeUserData = async (userId, userName) => {
+  try {
+    await AsyncStorage.removeItem(userId);
+    await AsyncStorage.removeItem(userName);
+    return true;
+  } catch (exception) {
+    return false;
+  }
+};
 
 export default NavigatorDrawer;
-
+//styles of navigator drawer
 const styles = StyleSheet.create({
   draweContent: {
     flex: 1,

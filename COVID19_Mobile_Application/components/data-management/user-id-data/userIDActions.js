@@ -7,5 +7,5 @@ export const addUser = (userId, name) => ({
 });
 //removes symptom from local data store
 export const removeUser = () => ({
-  type: actionTypes.removeUserID,
+  type: actionTypes.removeUser,
 });

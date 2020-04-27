@@ -24,13 +24,13 @@ export default function WelcomePage2({ navigation }) {
           style={{ flexDirection: "row", justifyContent: "space-between" }}
         >
           <Button
-            onPress={() => navigation.navigate("Page 1", { name: "Page 1" })}
+            onPress={() => navigation.navigate("WelcomePage1")}
             color="#0a77aa"
           >
             Previous
           </Button>
           <Button
-            onPress={() => navigation.navigate("Page 3", { name: "Page 3" })}
+            onPress={() => navigation.navigate("WelcomePage3")}
             color="#0a77aa"
           >
             Next

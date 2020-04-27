@@ -7,7 +7,7 @@ export default function WelcomePage3({ navigation }) {
     <View style={styles.mainBackground}>
       <Card style={styles.container}>
         <Card.Cover
-          source={require("../../assets/Prevention.jpg")}
+          source={require("../../assets/prevention.jpg")}
           style={{ flex: 2 }}
         />
         <Card.Content style={{ flex: 1, borderRadius: 30 }}>
@@ -24,15 +24,12 @@ export default function WelcomePage3({ navigation }) {
           style={{ flexDirection: "row", justifyContent: "space-between" }}
         >
           <Button
-            onPress={() => navigation.navigate("Page 2", { name: "Page 2" })}
+            onPress={() => navigation.navigate("WelcomePage2")}
             color="#0a77aa"
           >
             Previous
           </Button>
-          <Button
-            onPress={() => navigation.navigate("Page 4", { name: "Page 4" })}
-            color="#0a77aa"
-          >
+          <Button onPress={() => navigation.navigate("SignIn")} color="#0a77aa">
             Done
           </Button>
         </Card.Actions>

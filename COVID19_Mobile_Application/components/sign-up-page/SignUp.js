@@ -51,7 +51,7 @@ export default class SignIn extends Component {
       })
         .then((response) => response.json())
         .then((json) => {
-          this.props.navigation.navigate("Page 4", { name: "Page 4" });
+          this.props.navigation.navigate("SignIn");
         })
         .catch((error) => {
           Alert.alert(
