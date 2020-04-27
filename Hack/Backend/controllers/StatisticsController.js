@@ -1,5 +1,11 @@
+const axios = require("axios");
+let Statistics = require("../models/StatisticsModel");
+const healthParser = require("../services/HealthApiParser");
 
 
-//TODO - Fetch from Testing CSV and update db at a certain time interval
-
-//TODO - Based on the request passed in the request, filter and return a result
+exports.get_statistics = async (req, res) => {
+    if (req.body.criteria=="Confirmed" || req.body.criteria=="Recovered" || req.body.criteria=="Death"){
+        result= await healthParser.getHealthStatistics(req);
+        return res.send(result);
+    }
+}
