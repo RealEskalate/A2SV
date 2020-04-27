@@ -25,7 +25,13 @@ export const ChartMixin = {
     y_label: {
       type: String,
       default() {
-        return "People";
+        return "Value";
+      }
+    },
+    x_axis_type: {
+      type: String,
+      default() {
+        return "time";
       }
     }
   },
@@ -36,6 +42,18 @@ export const ChartMixin = {
     dateRangeText() {
       let start = this.date_range[0] || "";
       let end = this.date_range[1] || "";
+      let arrow = "\u2192";
+      return `  ${moment(start).format("MMM DD, YYYY")}    ${arrow}    ${moment(end).format("MMM DD, YYYY")}  `;
+    },
+    dateRangeText1() {
+      let start = this.date_range_1[0] || "";
+      let end = this.date_range_1[1] || "";
+      let arrow = "\u2192";
+      return `  ${moment(start).format("MMM DD, YYYY")}    ${arrow}    ${moment(end).format("MMM DD, YYYY")}  `;
+    },
+    dateRangeText2() {
+      let start = this.date_range_2[0] || "";
+      let end = this.date_range_2[1] || "";
       let arrow = "\u2192";
       return `  ${moment(start).format("MMM DD, YYYY")}    ${arrow}    
       ${moment(end).format("MMM DD, YYYY")}  `;
@@ -59,7 +77,7 @@ export const ChartMixin = {
                 display: false,
                 labelString: "Date"
               },
-              type: "time",
+              type: self.x_axis_type,
               time: {
                 unit: "day"
               },

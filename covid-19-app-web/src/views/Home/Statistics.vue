@@ -5,7 +5,7 @@
         <v-toolbar-title>Statistics</v-toolbar-title>
       </v-toolbar>
 
-      <v-tabs fixed-tabs dark background-color="primary">
+      <v-tabs centered fixed-tabs dark background-color="primary">
         <v-tab class="justify-start">
           <v-icon left>mdi-numeric</v-icon>
           Display Counts
@@ -23,17 +23,17 @@
           Compare Similar Diseases
         </v-tab>
 
-        <v-tab-item>
+        <v-tab-item style="height: 750px">
           <display mode="counts" y_label="People" />
         </v-tab-item>
-        <v-tab-item>
+        <v-tab-item style="height: 750px">
           <display mode="rates" y_label="Percent" />
         </v-tab-item>
-        <v-tab-item>
+        <v-tab-item style="height: 750px">
           <country-compare />
         </v-tab-item>
-        <v-tab-item>
-          <disease-compare />
+        <v-tab-item style="height: 750px">
+          <disease-compare x_axis_type="category" />
         </v-tab-item>
       </v-tabs>
     </v-card>

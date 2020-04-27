@@ -77,6 +77,7 @@
     <v-row>
       <v-col cols="12" md="9">
         <line-chart
+          :height="480"
           :chart-data="mode === 'counts' ? counts : rates"
           :options="chartOptions"
         />
