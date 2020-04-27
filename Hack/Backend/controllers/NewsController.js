@@ -182,7 +182,14 @@ function paginateAndFilter(data, req){
         );
     }
 
-    return data.slice((page - 1) * size, page * size);
+    let result = {
+        data_count : data.length,
+        page_size : size,
+        current_page : page,
+        data : data.slice((page - 1) * size, page * size)
+    }
+
+    return result;
 
 }
 
