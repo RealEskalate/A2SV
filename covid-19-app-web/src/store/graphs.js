@@ -71,7 +71,7 @@ export default {
     },
     setDiseaseCompare(state, payload) {
       state.diseaseCompare = {
-        labels: ["Confirmed Cases", "Death Count", "Recovered Count", "Hospitalization Count"],
+        labels: ["Confirmed Cases", "Death Count", "Recovered Count", "Affected Countries", "Fatality Rate"],
         datasets: payload
       };
     }
@@ -321,19 +321,36 @@ export default {
           { x: "Confirmed Cases", y: 234 },
           { x: "Death Count", y: 134 },
           { x: "Recovered Count", y: 100 },
-          { x: "Hospitalization Count", y: 100 }
+          { x: "Affected Countries", y: 185 },
+          { x: "Fatality Rate", y: 10 }
         ],
         SARS: [
           { x: "Confirmed Cases", y: 500 },
           { x: "Death Count", y: 235 },
           { x: "Recovered Count", y: 72 },
-          { x: "Hospitalization Count", y: 234 }
+          { x: "Affected Countries", y: 80 },
+          { x: "Fatality Rate", y: 5 }
         ],
         MERS: [
           { x: "Confirmed Cases", y: 435 },
           { x: "Death Count", y: 523 },
           { x: "Recovered Count", y: 234 },
-          { x: "Hospitalization Count", y: 252 }
+          { x: "Affected Countries", y: 100 },
+          { x: "Fatality Rate", y: 7 }
+        ],
+        AIDS: [
+          { x: "Confirmed Cases", y: 745 },
+          { x: "Death Count", y: 532 },
+          { x: "Recovered Count", y: 231 },
+          { x: "Affected Countries", y: 53 },
+          { x: "Fatality Rate", y: 2 }
+        ],
+        Ebola: [
+          { x: "Confirmed Cases", y: 524 },
+          { x: "Death Count", y: 324 },
+          { x: "Recovered Count", y: 563 },
+          { x: "Affected Countries", y: 234 },
+          { x: "Fatality Rate", y: 64 }
         ]
       };
 

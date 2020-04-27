@@ -23,7 +23,9 @@ export default {
       diseases: [
         { name: "Corona", color: [121, 134, 203] },
         { name: "SARS", color: [77, 208, 225] },
-        { name: "MERS", color: [240, 98, 146] }
+        { name: "MERS", color: [240, 98, 146] },
+        { name: "AIDS", color: [255, 213, 79] },
+        { name: "Ebola", color: [220, 231, 117] }
       ],
     };
   },
