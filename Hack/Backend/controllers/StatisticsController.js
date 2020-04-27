@@ -23,7 +23,7 @@ let update_db = async function(){
     */
    
     // Updates for dates after this
-    const update_from_date = new Date(new Date() - 24 * 3600 * 1000);
+    const update_from_date = new Date(new Date() - 7 * 24 * 3600 * 1000);
 
     var workbook = XLSX.readFile(path.join(__dirname, 'assets', 'owid-covid-data.xlsx'), {sheetStubs: true, cellDates: true});
     
@@ -75,8 +75,11 @@ let update_db = async function(){
                     value: parseInt(value),
                     date: curr_date,
                 } 
-            )
-            new_stat.save();
+            );
+            if (curr_location === "World"){
+                console.log("YAYYY");
+            }
+            await new_stat.save();
         }
     }
     console.log("Finished uploading testing stat");
@@ -91,6 +94,7 @@ let fetchTestingInfo = async function() {
         });
     });
 }
+update_db();
 
 // Schedules fetching everyday
 const run_updates = () => {
@@ -114,31 +118,32 @@ exports.get_statistics = async (req, res) => {
     
     // Create a filter with defaults
     let filter = {};
-
-    if (req.params.country !== undefined){
-        filter.country = req.params.country;
+    console.log(req.query);
+    if (req.query.country !== undefined){
+        filter.country = req.query.country;
     }else{
         filter.country = "World"
     }
 
-    if (req.params["start date"] !== undefined){
-        filter.date = { $gte: new Date(req.params["start date"]) };
+    if (req.query["start date"] !== undefined){
+        filter.date = { $gte: new Date(req.query["start date"]) };
     }else {
         filter.date = { $gte: new Date(new Date() - 7 * 24 * 3600 * 1000) };
     }
 
-    if (req.params["end date"] !== undefined){
-        filter.date.$lte = new Date(req.params["end date"]);
+    if (req.query["end date"] !== undefined){
+        filter.date.$lte = new Date(req.query["end date"]);
     }else{
         filter.date.$lte = new Date(new Date() - 24 * 3600 * 1000);
     }
 
-    if (req.params["criteria"] !== undefined){
-        filter.criteria = req.params.criteria;
+    if (req.query["criteria"] !== undefined){
+        filter.criteria = req.query.criteria;
     }
 
     // Apply filter and send results
-    const results = await Symptom.find(filter);
+    console.log(filter);
+    const results = await Statstics.find(filter);
     try {
         res.send(results);
     } catch (err) {
