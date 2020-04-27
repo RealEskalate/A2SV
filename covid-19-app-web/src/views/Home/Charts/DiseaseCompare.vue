@@ -26,7 +26,7 @@ export default {
         { name: "MERS", color: [240, 98, 146] },
         { name: "AIDS", color: [255, 213, 79] },
         { name: "Ebola", color: [220, 231, 117] }
-      ],
+      ]
     };
   },
   methods: {
