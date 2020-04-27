@@ -35,6 +35,20 @@ exports.get_all_news = async (req, res) => {
     }
 };
 
+exports.get_sources = async (req, res) => {
+    let sources = await News.find().distinct('source');
+    let googleNews = await fetchGoogleNews(req);
+    let googleNewsSources = [...new Set(googleNews.map(item => item.source))];
+    sources = sources.concat(googleNewsSources);
+    sources.push("CDC Newsroom");
+
+    try{
+        res.send(sources);
+    }catch (err){
+        res.status(500).send(err.toString());
+    }
+}
+
 // Post a news (only for testing....)
 exports.post_news = async (req, res) => {
     const news = new News({
