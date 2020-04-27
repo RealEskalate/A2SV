@@ -95,7 +95,7 @@ let fetchTestingInfo = async function() {
 // Schedules fetching everyday
 const run_updates = () => {
     schedule.scheduleJob('0 0 * * *', async function (){
-        fetchTestingInfo();
+        await fetchTestingInfo();
     });
 };
 
@@ -112,19 +112,27 @@ exports.get_statistics = async (req, res) => {
     //     }
     // });
     
-    // Create a filter
+    // Create a filter with defaults
     let filter = {};
 
     if (req.params.country !== undefined){
         filter.country = req.params.country;
+    }else{
+        filter.country = "World"
     }
+
     if (req.params["start date"] !== undefined){
         filter.date = { $gte: new Date(req.params["start date"]) };
+    }else {
+        filter.date = { $gte: new Date(new Date() - 7 * 24 * 3600 * 1000) };
     }
+
     if (req.params["end date"] !== undefined){
-        if (filter.date === undefined) filter.date = {};
         filter.date.$lte = new Date(req.params["end date"]);
+    }else{
+        filter.date.$lte = new Date(new Date() - 24 * 3600 * 1000);
     }
+
     if (req.params["criteria"] !== undefined){
         filter.criteria = req.params.criteria;
     }
