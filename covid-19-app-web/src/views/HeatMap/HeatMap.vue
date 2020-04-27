@@ -1,6 +1,6 @@
 <template>
     <div id="app" class="mx-auto">
-        <v-select :items="countryCode" item-text="country_name" item-value="alpha_3" multiple clearable
+        <v-select :items="getCountries" item-text="country_name" item-value="alpha_3" multiple clearable
                   v-model="select" @input="filterCountry">
         </v-select>
         <mapbox :access-token="mapToken" :map-options="mapOptions" @map-load="loaded"
@@ -10,13 +10,12 @@
 
 <script>
   import Mapbox from 'mapbox-gl-vue'
-  import * as axios from "axios";
+import store from "@/store/"
 
   export default {
     components: {Mapbox},
     data() {
       return {
-        countryCode: null,
         select: ["ETH", "USA"],
         map: null,
         mapOptions: {
@@ -93,55 +92,6 @@
             ]
           }
         },
-        earthQuake: {
-          'id': 'earthquakes-point',
-          'type': 'circle',
-          'source': 'earthquakes',
-          'minzoom': 7,
-          'label': 'waterway-label',
-          'paint': {
-// Size circle radius by earthquake magnitude and zoom level
-            'circle-radius': [
-              'interpolate',
-              ['linear'],
-              ['zoom'],
-              7,
-              ['interpolate', ['linear'], ['get', 'mag'], 1, 1, 6, 4],
-              16,
-              ['interpolate', ['linear'], ['get', 'mag'], 1, 5, 6, 50]
-            ],
-// Color circle by earthquake magnitude
-            'circle-color': [
-              'interpolate',
-              ['linear'],
-              ['get', 'mag'],
-              1,
-              'rgba(33,102,172,0)',
-              2,
-              'rgb(103,169,207)',
-              3,
-              'rgb(209,229,240)',
-              4,
-              'rgb(253,219,199)',
-              5,
-              'rgb(239,138,98)',
-              6,
-              'rgb(178,24,43)'
-            ],
-            'circle-stroke-color': 'white',
-            'circle-stroke-width': 1,
-// Transition from heatmap to circle layer by zoom level
-            'circle-opacity': [
-              'interpolate',
-              ['linear'],
-              ['zoom'],
-              7,
-              0,
-              8,
-              1
-            ]
-          }
-        },
       }
     },
     methods: {
@@ -149,8 +99,7 @@
       loaded(map) {
         map.addSource('earthquakes', {
           'type': 'geojson',
-          'data':
-              'https://docs.mapbox.com/mapbox-gl-js/assets/earthquakes.geojson'
+          'data': this.getHeatMap
         });
         map.addLayer({ //here we are adding a layer containing the tileset we just uploaded
           'id': 'countries',//this is the name of our layer, which we will need later
@@ -165,7 +114,6 @@
             'fill-outline-color': '#F2F2F2' //this helps us distinguish individual countries a bit better by giving them an outline
           }
         });
-        map.addLayer(this.earthQuake);
         map.addLayer(this.geoJsonLayer);
         console.log(this.select);
         this.filterCountry();
@@ -183,21 +131,19 @@
       },
       selectedCountries() {
         return this.select;
+      },
+      getHeatMap () {
+        return store.getters.getHeatMap;
+      },
+      getCountries() {
+        return store.getters.getCountries;
       }
 
     },
     mounted() {
-      axios.get('https://res.cloudinary.com/geotargetly/raw/upload/v1579830286/data/iso_3166_country_codes.json')
-          .then(
-              res => {
-                this.countryCode = res.data;
-                console.log(res.data);
-              },
-              error => {
-                console.log(error);
-              }
-          )
-    }
+        store.dispatch('setHeatMap');
+        store.dispatch('setCountries');
+    },
   }
 </script>
 <style scoped>
