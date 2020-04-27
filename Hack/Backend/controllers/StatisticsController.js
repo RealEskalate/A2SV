@@ -2,9 +2,10 @@ const https = require("https");
 const XLSX = require('xlsx');
 const fs = require('fs');
 const path = require('path');
-const Statstics = require("./../models/StatisticsModel");
 const schedule = require('node-schedule');
-
+const axios = require("axios");
+let Statistics = require("../models/StatisticsModel");
+const healthParser = require("../services/HealthApiParser");
 
 
 // Updates db with the latest csv
@@ -94,7 +95,6 @@ let fetchTestingInfo = async function() {
         });
     });
 }
-update_db();
 
 // Schedules fetching everyday
 const run_updates = () => {
@@ -146,4 +146,11 @@ exports.get_statistics = async (req, res) => {
     } catch (err) {
         res.status(500).send(err);
     }    
-} 
+}
+
+exports.get_statistics = async (req, res) => {
+    if (req.body.criteria=="Confirmed" || req.body.criteria=="Recovered" || req.body.criteria=="Death"){
+        result= await healthParser.getHealthStatistics(req);
+        return res.send(result);
+    }
+}
