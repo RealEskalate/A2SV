@@ -1,7 +1,9 @@
 const state = {
   displayCounts: null,
   displayRates: null,
-  countryResources: null
+  countryResources: null,
+  countryCompare: null,
+  diseaseCompare: null
 };
 
 export default {
@@ -15,6 +17,12 @@ export default {
     },
     getCountryResources() {
       return state.countryResources;
+    },
+    getCountryCompare() {
+      return state.countryCompare;
+    },
+    getDiseaseCompare() {
+      return state.diseaseCompare;
     }
   },
   mutations: {
@@ -30,6 +38,42 @@ export default {
     },
     setCountryResources(state, payload) {
       state.countryResources = payload;
+    },
+    setCountryOne(state, payload) {
+      if (!state.countryCompare) {
+        state.countryCompare = {
+          datasets: [payload]
+        };
+      } else if (state.countryCompare.datasets.length === 1) {
+        state.countryCompare = {
+          datasets: [payload, state.countryCompare.datasets[0]]
+        };
+      } else {
+        state.countryCompare = {
+          datasets: [payload, state.countryCompare.datasets[1]]
+        };
+      }
+    },
+    setCountryTwo(state, payload) {
+      if (!state.countryCompare) {
+        state.countryCompare = {
+          datasets: [payload]
+        };
+      } else if (state.countryCompare.datasets.length === 1) {
+        state.countryCompare = {
+          datasets: [state.countryCompare.datasets[0], payload]
+        };
+      } else {
+        state.countryCompare = {
+          datasets: [state.countryCompare.datasets[0], payload]
+        };
+      }
+    },
+    setDiseaseCompare(state, payload) {
+      state.diseaseCompare = {
+        labels: ["Confirmed Cases", "Death Count", "Recovered Count", "Hospitalization Count"],
+        datasets: payload
+      };
     }
   },
   actions: {
@@ -123,6 +167,187 @@ export default {
         { key: "Protection Gears", value: 262 }
       ];
       commit("setCountryResources", info);
+    },
+    setCountryCompare(
+      { commit },
+      { criteria, makeDataSet, country, color, mode }
+    ) {
+      const info = {
+        "Test Count": {
+          Ethiopia: [
+            { t: "2018-11-24", y: 400 },
+            { t: "2019-10-02", y: 356 }
+          ],
+          "United States": [
+            { t: "2019-01-29", y: 32 },
+            { t: "2019-11-11", y: 452 }
+          ],
+          World: [
+            { t: "2019-01-29", y: 532 },
+            { t: "2019-11-11", y: 346 }
+          ]
+        },
+        "Confirmed Cases": {
+          Ethiopia: [
+            { t: "2018-11-24", y: 362 },
+            { t: "2019-10-02", y: 434 }
+          ],
+          "United States": [
+            { t: "2019-01-29", y: 234 },
+            { t: "2019-11-11", y: 235 }
+          ],
+          World: [
+            { t: "2019-01-29", y: 23 },
+            { t: "2019-11-11", y: 42 }
+          ]
+        },
+        "Death Count": {
+          Ethiopia: [
+            { t: "2018-11-24", y: 44 },
+            { t: "2019-10-02", y: 323 }
+          ],
+          "United States": [
+            { t: "2019-01-29", y: 530 },
+            { t: "2019-11-11", y: 323 }
+          ],
+          World: [
+            { t: "2019-01-29", y: 234 },
+            { t: "2019-11-11", y: 424 }
+          ]
+        },
+        "Recovery Count": {
+          Ethiopia: [
+            { t: "2018-11-24", y: 346 },
+            { t: "2019-10-02", y: 234 }
+          ],
+          "United States": [
+            { t: "2019-01-29", y: 456 },
+            { t: "2019-11-11", y: 123 }
+          ],
+          World: [
+            { t: "2019-01-29", y: 77 },
+            { t: "2019-11-11", y: 93 }
+          ]
+        },
+
+        "Positive Rate": {
+          Ethiopia: [
+            { t: "2018-11-24", y: 34 },
+            { t: "2019-10-02", y: 64 }
+          ],
+          "United States": [
+            { t: "2019-01-29", y: 23 },
+            { t: "2019-11-11", y: 61 }
+          ],
+          World: [
+            { t: "2019-01-29", y: 30 },
+            { t: "2019-11-11", y: 78 }
+          ]
+        },
+        "Recovery Rate": {
+          Ethiopia: [
+            { t: "2018-11-24", y: 34 },
+            { t: "2019-10-02", y: 64 }
+          ],
+          "United States": [
+            { t: "2019-01-29", y: 23 },
+            { t: "2019-11-11", y: 61 }
+          ],
+          World: [
+            { t: "2019-01-29", y: 30 },
+            { t: "2019-11-11", y: 78 }
+          ]
+        },
+        "Hospitalization Rate": {
+          Ethiopia: [
+            { t: "2018-11-24", y: 34 },
+            { t: "2019-10-02", y: 64 }
+          ],
+          "United States": [
+            { t: "2019-01-29", y: 23 },
+            { t: "2019-11-11", y: 61 }
+          ],
+          World: [
+            { t: "2019-01-29", y: 30 },
+            { t: "2019-11-11", y: 78 }
+          ]
+        },
+        "ICU Rate": {
+          Ethiopia: [
+            { t: "2018-11-24", y: 34 },
+            { t: "2019-10-02", y: 64 }
+          ],
+          "United States": [
+            { t: "2019-01-29", y: 62 },
+            { t: "2019-11-11", y: 32 }
+          ],
+          World: [
+            { t: "2019-01-29", y: 62 },
+            { t: "2019-11-11", y: 46 }
+          ]
+        },
+        "Death Rate": {
+          Ethiopia: [
+            { t: "2018-11-24", y: 32 },
+            { t: "2019-10-02", y: 9 }
+          ],
+          "United States": [
+            { t: "2019-01-29", y: 59 },
+            { t: "2019-11-11", y: 67 }
+          ],
+          World: [
+            { t: "2019-01-29", y: 42 },
+            { t: "2019-11-11", y: 42 }
+          ]
+        }
+      };
+      // TODO fetch country Comparison here
+      let input = {
+        label: country,
+        color: color,
+        data: info[criteria][country]
+      };
+
+      if (mode === "one") {
+        commit("setCountryOne", makeDataSet(input));
+      } else {
+        commit("setCountryTwo", makeDataSet(input));
+      }
+    },
+
+    setDiseaseCompare({ commit }, { diseases, makeDataSet }) {
+      let info = {
+        Corona: [
+          { x: "Confirmed Cases", y: 234 },
+          { x: "Death Count", y: 134 },
+          { x: "Recovered Count", y: 100 },
+          { x: "Hospitalization Count", y: 100 }
+        ],
+        SARS: [
+          { x: "Confirmed Cases", y: 500 },
+          { x: "Death Count", y: 235 },
+          { x: "Recovered Count", y: 72 },
+          { x: "Hospitalization Count", y: 234 }
+        ],
+        MERS: [
+          { x: "Confirmed Cases", y: 435 },
+          { x: "Death Count", y: 523 },
+          { x: "Recovered Count", y: 234 },
+          { x: "Hospitalization Count", y: 252 }
+        ]
+      };
+
+      let collection = [];
+      diseases.forEach(function(d) {
+        let input = {
+          label: d.name,
+          color: d.color,
+          data: info[d.name]
+        };
+        // TODO fetch the data from API here
+        collection.push(makeDataSet(input, "bar"));
+      });
+      commit("setDiseaseCompare", collection);
     }
   }
 };
