@@ -68,6 +68,10 @@ exports.post_user = async (req, res) => {
     age_group: req.body.age_group,
   });
   try {
+    const check = await User.findOne({username: user.username});
+    if(check){
+      return res.status(500).send("Username and Password combination already exists");
+    }
     if (user.password.length < 5) {
       res.status(500).send("Password Length Too Short");
     } else {
@@ -88,11 +92,19 @@ exports.update_user = async (req, res) => {
   });
 
   try {
+    let exists = await User.findOne({username: req.body.username});
+    if(exists && exists._id!==req.body._id){
+      return res.status.send(500).send("Username already exists");
+    }
     if (req.body.password) {
+      if(req.body.password.length<5){
+        return res.status(500).send("Password Length Too Short");
+      }
       req.body.password = Bcrypt.hashSync(req.body.password, 10);
     }
-    await User.findByIdAndUpdate(req.body._id, req.body);
-    const user = await User.save();
+    let user = await User.findById(req.body._id);
+    user.set(req.body);
+    await user.save();
     res.send(user);
   } catch (err) {
     res.status(500).send(err);
@@ -107,9 +119,9 @@ exports.delete_user = async (req, res) => {
   });
 
   try {
-    const user = await User.findByIdAndRemove(req.body._id);
+    const user = await User.findByIdAndDelete(req.body._id);
     if (!user) {
-      res.status(404).send("No item found");
+      return res.status(404).send("No item found");
     }
     res.status(201).send(user);
   } catch (err) {
