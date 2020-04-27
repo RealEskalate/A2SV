@@ -43,13 +43,17 @@ export const ChartMixin = {
       let start = this.date_range[0] || "";
       let end = this.date_range[1] || "";
       let arrow = "\u2192";
-      return `  ${moment(start).format("MMM DD, YYYY")}    ${arrow}    ${moment(end).format("MMM DD, YYYY")}  `;
+      return `  ${moment(start).format("MMM DD, YYYY")}    ${arrow}    ${moment(
+        end
+      ).format("MMM DD, YYYY")}  `;
     },
     dateRangeText1() {
       let start = this.date_range_1[0] || "";
       let end = this.date_range_1[1] || "";
       let arrow = "\u2192";
-      return `  ${moment(start).format("MMM DD, YYYY")}    ${arrow}    ${moment(end).format("MMM DD, YYYY")}  `;
+      return `  ${moment(start).format("MMM DD, YYYY")}    ${arrow}    ${moment(
+        end
+      ).format("MMM DD, YYYY")}  `;
     },
     dateRangeText2() {
       let start = this.date_range_2[0] || "";
