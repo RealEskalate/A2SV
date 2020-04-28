@@ -74,9 +74,7 @@
             <v-tab-item>
               <v-card flat tile>
                 <v-card-text>
-                  <p>{{ sources }}</p>
-
-                  <v-checkbox
+                   <v-checkbox
                     v-for="(sourceItem, index) in sourcelist"
                     :key="index"
                     v-model="sources"
