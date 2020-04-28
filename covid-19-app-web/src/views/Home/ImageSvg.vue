@@ -1,5 +1,6 @@
 <template>
   <svg
+    class="mx-auto"
     xmlns="http://www.w3.org/2000/svg"
     xmlns:xlink="http://www.w3.org/1999/xlink"
     version="1.1"
@@ -13,11 +14,7 @@
       <filter id="dropShadow">
         <feGaussianBlur in="SourceAlpha" stdDeviation="1.7" result="blur" />
         <feOffset in="blur" dx="3" dy="3" result="offsetBlur" />
-        <feFlood
-          flood-color="#3D4574"
-          flood-opacity="0.4"
-          result="offsetColor"
-        />
+        <feFlood flood-color="#000" flood-opacity="0.3" result="offsetColor" />
         <feComposite
           in="offsetColor"
           in2="offsetBlur"
@@ -47,15 +44,15 @@
       <path
         d="M 396 190 Q 611 190 611 339.9"
         fill="none"
-        stroke="#ea6b66"
+        stroke="rgb(240, 98, 146)"
         stroke-width="3"
         stroke-miterlimit="10"
         pointer-events="stroke"
       />
       <path
         d="M 611 346.65 L 606.5 337.65 L 611 339.9 L 615.5 337.65 Z"
-        fill="#ea6b66"
-        stroke="#ea6b66"
+        fill="rgb(240, 98, 146)"
+        stroke="rgb(240, 98, 146)"
         stroke-width="3"
         stroke-miterlimit="10"
         pointer-events="all"
@@ -65,20 +62,10 @@
         cy="190"
         rx="60"
         ry="40"
-        fill="#000000"
-        stroke="none"
-        transform="translate(2,3)"
-        opacity="0.25"
-      />
-      <ellipse
-        cx="336"
-        cy="190"
-        rx="60"
-        ry="40"
-        fill="#ffe6cc"
+        fill="rgb(121, 134, 203)"
         stroke="none"
         pointer-events="all"
-        v-tooltip="getToolTip(mild)"
+        v-tooltip="getToolTip(states.mild)"
       />
       <g transform="translate(-0.5 -0.5)">
         <switch>
@@ -97,43 +84,33 @@
                 style="box-sizing: border-box; font-size: 0; text-align: center; "
               >
                 <div
-                  style="display: inline-block; font-size: 12px; font-family: Verdana; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; "
+                  style="display: inline-block; font-size: 12px; font-family: Roboto; color: #fff; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; "
                 >
                   <span
                     id="docs-internal-guid-866c777f-7fff-93b4-6baa-9a2faff79d20"
                     ><span
                       style="font-size: 11pt ; font-weight: 700 ; vertical-align: baseline"
-                      >Mild or no symptoms</span
+                      >MILD OR NO SYMPTOMS</span
                     ></span
                   >
                 </div>
               </div>
             </div>
           </foreignObject>
-          <text
-            x="336"
-            y="194"
-            fill="#000000"
-            font-family="Verdana"
-            font-size="12px"
-            text-anchor="middle"
-          >
-            Mild or no symptoms
-          </text>
         </switch>
       </g>
       <path
         d="M 551 390 Q 551 390 406.1 390"
         fill="none"
-        stroke="#ea6b66"
+        stroke="rgb(240, 98, 146)"
         stroke-width="3"
         stroke-miterlimit="10"
         pointer-events="stroke"
       />
       <path
         d="M 399.35 390 L 408.35 385.5 L 406.1 390 L 408.35 394.5 Z"
-        fill="#ea6b66"
-        stroke="#ea6b66"
+        fill="rgb(240, 98, 146)"
+        stroke="rgb(240, 98, 146)"
         stroke-width="3"
         stroke-miterlimit="10"
         pointer-events="all"
@@ -141,31 +118,31 @@
       <path
         d="M 611 430 Q 611 630 407.97 630"
         fill="none"
-        stroke="#ea6b66"
-        stroke-width="4"
+        stroke="rgb(240, 98, 146)"
+        stroke-width="3"
         stroke-miterlimit="10"
         pointer-events="stroke"
       />
       <path
         d="M 400.47 630 L 410.47 625 L 407.97 630 L 410.47 635 Z"
-        fill="#ea6b66"
-        stroke="#ea6b66"
-        stroke-width="4"
+        fill="rgb(240, 98, 146)"
+        stroke="rgb(240, 98, 146)"
+        stroke-width="3"
         stroke-miterlimit="10"
         pointer-events="all"
       />
       <path
         d="M 611 350 Q 611 290 473.5 290 Q 336 290 336 240.1"
         fill="none"
-        stroke="#006600"
+        stroke="#009900"
         stroke-width="3"
         stroke-miterlimit="10"
         pointer-events="stroke"
       />
       <path
         d="M 336 233.35 L 340.5 242.35 L 336 240.1 L 331.5 242.35 Z"
-        fill="#006600"
-        stroke="#006600"
+        fill="#009900"
+        stroke="#009900"
         stroke-width="3"
         stroke-miterlimit="10"
         pointer-events="all"
@@ -175,20 +152,10 @@
         cy="390"
         rx="60"
         ry="40"
-        fill="#000000"
-        stroke="none"
-        transform="translate(2,3)"
-        opacity="0.25"
-      />
-      <ellipse
-        cx="611"
-        cy="390"
-        rx="60"
-        ry="40"
-        fill="#f8d49f"
+        fill="rgb(121, 134, 203)"
         stroke="none"
         pointer-events="all"
-        v-tooltip="getToolTip(heavy)"
+        v-tooltip="getToolTip(states.heavy)"
       />
       <g transform="translate(-0.5 -0.5)">
         <switch>
@@ -207,13 +174,13 @@
                 style="box-sizing: border-box; font-size: 0; text-align: center; "
               >
                 <div
-                  style="display: inline-block; font-size: 12px; font-family: Verdana; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; "
+                  style="display: inline-block; font-size: 12px; font-family: Roboto; color: #fff; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; "
                 >
                   <span
                     id="docs-internal-guid-8132d71f-7fff-2e0f-6b61-d2264aad7718"
                     ><span
                       style="font-size: 11pt ; font-weight: 700 ; vertical-align: baseline"
-                      >Heavy symptoms</span
+                      >HEAVY SYMPTOMS</span
                     ></span
                   >
                 </div>
@@ -224,7 +191,7 @@
             x="611"
             y="394"
             fill="#000000"
-            font-family="Verdana"
+            font-family="Roboto"
             font-size="12px"
             text-anchor="middle"
           >
@@ -235,32 +202,32 @@
       <path
         d="M 336 590 Q 336 590 336 441.97"
         fill="none"
-        stroke="#ea6b66"
-        stroke-width="4"
+        stroke="rgb(240, 98, 146)"
+        stroke-width="3"
         stroke-miterlimit="10"
         pointer-events="stroke"
       />
       <path
         d="M 336 434.47 L 341 444.47 L 336 441.97 L 331 444.47 Z"
-        fill="#ea6b66"
-        stroke="#ea6b66"
-        stroke-width="4"
+        fill="rgb(240, 98, 146)"
+        stroke="rgb(240, 98, 146)"
+        stroke-width="3"
         stroke-miterlimit="10"
         pointer-events="all"
       />
       <path
         d="M 276 630 Q 81 630 81 441.97"
         fill="none"
-        stroke="#ea6b66"
-        stroke-width="4"
+        stroke="rgb(240, 98, 146)"
+        stroke-width="3"
         stroke-miterlimit="10"
         pointer-events="stroke"
       />
       <path
         d="M 81 434.47 L 86 444.47 L 81 441.97 L 76 444.47 Z"
-        fill="#ea6b66"
-        stroke="#ea6b66"
-        stroke-width="4"
+        fill="rgb(240, 98, 146)"
+        stroke="rgb(240, 98, 146)"
+        stroke-width="3"
         stroke-miterlimit="10"
         pointer-events="all"
       />
@@ -285,20 +252,10 @@
         cy="630"
         rx="60"
         ry="40"
-        fill="#000000"
-        stroke="none"
-        transform="translate(2,3)"
-        opacity="0.25"
-      />
-      <ellipse
-        cx="336"
-        cy="630"
-        rx="60"
-        ry="40"
-        fill="#ffbf87"
+        fill="rgb(121, 134, 203)"
         stroke="none"
         pointer-events="all"
-        v-tooltip="getToolTip(hospitalization)"
+        v-tooltip="getToolTip(states.hospitalization)"
       />
       <g transform="translate(-0.5 -0.5)">
         <switch>
@@ -317,13 +274,13 @@
                 style="box-sizing: border-box; font-size: 0; text-align: center; "
               >
                 <div
-                  style="display: inline-block; font-size: 12px; font-family: Verdana; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; "
+                  style="display: inline-block; font-size: 12px; font-family: Roboto; color: #fff; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; "
                 >
                   <span
                     id="docs-internal-guid-252f80f8-7fff-d25d-9b1a-71f1ec292fb8"
                     ><span
-                      style="font-size: 11pt ; font-weight: 700 ; vertical-align: baseline"
-                      ><font color="#ffffff">Hospitalization</font></span
+                      style="font-size: 10pt ; font-weight: 700 ; vertical-align: baseline"
+                      >HOSPITALIZATION</span
                     ></span
                   >
                 </div>
@@ -333,8 +290,8 @@
           <text
             x="336"
             y="634"
-            fill="#000000"
-            font-family="Verdana"
+            fill="#fff"
+            font-family="Roboto"
             font-size="12px"
             text-anchor="middle"
           >
@@ -345,15 +302,15 @@
       <path
         d="M 141 390 Q 141 390 265.9 390"
         fill="none"
-        stroke="#ea6b66"
+        stroke="rgb(240, 98, 146)"
         stroke-width="3"
         stroke-miterlimit="10"
         pointer-events="stroke"
       />
       <path
         d="M 272.65 390 L 263.65 394.5 L 265.9 390 L 263.65 385.5 Z"
-        fill="#ea6b66"
-        stroke="#ea6b66"
+        fill="rgb(240, 98, 146)"
+        stroke="rgb(240, 98, 146)"
         stroke-width="3"
         stroke-miterlimit="10"
         pointer-events="all"
@@ -361,16 +318,16 @@
       <path
         d="M 141 390 Q 293.6 390 293.58 589.74"
         fill="none"
-        stroke="#006600"
-        stroke-width="4"
+        stroke="#009900"
+        stroke-width="3"
         stroke-miterlimit="10"
         pointer-events="stroke"
       />
       <path
         d="M 293.57 597.24 L 288.58 587.24 L 293.58 589.74 L 298.58 587.24 Z"
-        fill="#006600"
-        stroke="#006600"
-        stroke-width="4"
+        fill="#009900"
+        stroke="#009900"
+        stroke-width="3"
         stroke-miterlimit="10"
         pointer-events="all"
       />
@@ -379,20 +336,10 @@
         cy="390"
         rx="60"
         ry="40"
-        fill="#000000"
-        stroke="none"
-        transform="translate(2,3)"
-        opacity="0.25"
-      />
-      <ellipse
-        cx="81"
-        cy="390"
-        rx="60"
-        ry="40"
-        fill="#ffac75"
+        fill="rgb(121, 134, 203)"
         stroke="none"
         pointer-events="all"
-        v-tooltip="getToolTip(icu)"
+        v-tooltip="getToolTip(states.icu)"
       />
       <g transform="translate(-0.5 -0.5)">
         <switch>
@@ -416,7 +363,7 @@
                   <span
                     id="docs-internal-guid-0a722c08-7fff-1658-3a6b-8dd855d43165"
                     ><span
-                      style="font-size: 11pt ; font-weight: 700 ; vertical-align: baseline"
+                      style="font-size: 12pt ; font-weight: 700 ; vertical-align: baseline"
                       ><font color="#ffffff">ICU</font></span
                     ></span
                   >
@@ -428,8 +375,8 @@
             x="81"
             y="394"
             fill="#000000"
-            font-family="Comic Sans MS"
-            font-size="12px"
+            font-family="Roboto"
+            font-size="12pt"
             text-anchor="middle"
           >
             ICU
@@ -441,17 +388,7 @@
         cy="390"
         rx="60"
         ry="40"
-        fill="#000000"
-        stroke="none"
-        transform="translate(2,3)"
-        opacity="0.25"
-      />
-      <ellipse
-        cx="336"
-        cy="390"
-        rx="60"
-        ry="40"
-        fill="#ff9787"
+        fill="rgb(240, 98, 146)"
         stroke="none"
         pointer-events="all"
       />
@@ -472,7 +409,7 @@
                 style="box-sizing: border-box; font-size: 0; text-align: center; "
               >
                 <div
-                  style="display: inline-block; font-size: 12px; font-family: Comic Sans MS; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; "
+                  style="display: inline-block; font-size: 12pt; font-family: Roboto, sans-serif; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; "
                 >
                   <b><font color="#ffffff">DEATH</font></b>
                 </div>
@@ -496,17 +433,7 @@
         cy="40"
         rx="60"
         ry="40"
-        fill="#000000"
-        stroke="none"
-        transform="translate(2,3)"
-        opacity="0.25"
-      />
-      <ellipse
-        cx="441"
-        cy="40"
-        rx="60"
-        ry="40"
-        fill="#009900"
+        fill="rgb(121, 134, 203)"
         stroke="none"
         pointer-events="all"
       />
@@ -527,7 +454,7 @@
                 style="box-sizing: border-box; font-size: 0; text-align: center; "
               >
                 <div
-                  style="display: inline-block; font-size: 12px; font-family: Comic Sans MS; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; "
+                  style="display: inline-block; font-size: 12pt; font-family: Roboto, sans-serif; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; "
                 >
                   <b><font color="#ffffff">RECOVERY</font></b>
                 </div>
@@ -549,15 +476,15 @@
       <path
         d="M 241 80 Q 241 110 288.5 110 Q 336 110 336 139.9"
         fill="none"
-        stroke="#000000"
+        stroke="rgb(240, 98, 146)"
         stroke-width="3"
         stroke-miterlimit="10"
         pointer-events="stroke"
       />
       <path
         d="M 336 146.65 L 331.5 137.65 L 336 139.9 L 340.5 137.65 Z"
-        fill="#000000"
-        stroke="#000000"
+        fill="rgb(240, 98, 146)"
+        stroke="rgb(240, 98, 146)"
         stroke-width="3"
         stroke-miterlimit="10"
         pointer-events="all"
@@ -567,20 +494,10 @@
         cy="40"
         rx="60"
         ry="40"
-        fill="#000000"
-        stroke="none"
-        transform="translate(2,3)"
-        opacity="0.25"
-      />
-      <ellipse
-        cx="241"
-        cy="40"
-        rx="60"
-        ry="40"
-        fill="#fff2cc"
+        fill="rgb(121, 134, 203)"
         stroke="none"
         pointer-events="all"
-        v-tooltip="getToolTip(incubation)"
+        v-tooltip="getToolTip(states.incubation)"
       />
       <g transform="translate(-0.5 -0.5)">
         <switch>
@@ -597,16 +514,16 @@
             >
               <div
                 style="box-sizing: border-box; font-size: 0; text-align: center;"
-                v-tooltip="getToolTip(incubation)"
+                v-tooltip="getToolTip(states.incubation)"
               >
                 <div
-                  style="display: inline-block; font-size: 12px; font-family: Lucida Console; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; "
+                  style="display: inline-block; font-size: 12px; font-family: Lucida Console; color: #fff; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; "
                 >
                   <span
                     id="docs-internal-guid-bbfade3a-7fff-70cb-7443-5425a3b80c55"
                     ><span
-                      style="font-size: 11pt ; font-weight: 700 ; vertical-align: baseline"
-                      >Incubation</span
+                      style="font-size: 11pt ; font-weight: 700 ; vertical-align: baseline; font-family: Roboto, sans-serif"
+                      >INCUBATION</span
                     ></span
                   >
                 </div>
@@ -617,7 +534,7 @@
             x="241"
             y="44"
             fill="#000000"
-            font-family="Lucida Console"
+            font-family="Roboto"
             font-size="12px"
             text-anchor="middle"
           >
@@ -643,49 +560,21 @@
 
 <script>
 import VTooltip from "v-tooltip";
+import store from "@/store/";
+
 // Set custom CSS class
 VTooltip.options.defaultClass = "tooltip";
 
 export default {
   name: "ImageSvg",
   data() {
-    return {
-      hospitalization: {
-        title: "Hospitalization",
-        description:
-          "When the oxygen level in the blood goes below a certain threshold, COVID-19 patients " +
-          "require hospitalization. In case of not having a capacity in ICU, some patients may die due to a lack of materials."
-      },
-      incubation: {
-        title: "Incubation",
-        description:
-          "The patient just got infected, the virus amount is not much so it goes unnoticed. "
-      },
-      mild: {
-        title: "Mild or no symptoms",
-        description:
-          " Now that the virus has reached the throat and/or the lungs, some patients start " +
-          "showing mild symptoms, some are asymptomatic."
-      },
-      heavy: {
-        title: "Heavy symptoms",
-        description:
-          "As the virus continues to replicate itself, some patients develop heavy symptoms and " +
-          "require hospitalization, some have strong enough immune systems that can beat the virus without hospitalization.\n"
-      },
-      icu: {
-        title: "ICU",
-        description:
-          "Unfortunately some patients’ immune systems can’t cope up with the virus well and the " +
-          "patients need to be taken to intensive care units."
-      }
-    };
+    return {};
   },
   methods: {
     getToolTip(item) {
       return {
         content:
-          '<div style="width: 25rem">' +
+          '<div class="primary" style="width: 25rem">' +
           '<h3 class="title">' +
           item.title +
           "  </h3>" +
@@ -697,6 +586,15 @@ export default {
         trigger: "hover"
       };
     }
+  },
+  mounted() {
+    store.dispatch("setStates");
+  },
+  computed: {
+    states() {
+      console.log(store.getters.getStates);
+      return store.getters.getStates;
+    }
   }
 };
 </script>
@@ -704,23 +602,25 @@ export default {
 <style>
 .tooltip {
   display: block !important;
-  background: #3059a4;
   z-index: 10000;
-  box-shadow: 0 5px 30px 0 #000000;
+  box-shadow: 0 5px 50px 0 #000000;
   border-radius: 10px;
 }
+
 .tooltip .title {
   margin: 3px auto;
   text-align: center;
   font-family: "Roboto", sans-serif !important;
 }
+
 .tooltip p {
   margin-top: 5px;
   font-size: 0.8em !important;
   text-justify: auto;
 }
+
 .tooltip .tooltip-inner {
-  background: #3059a4;
+  background: #1976d2;
   color: #fcfcfc;
   padding: 10px;
   border-radius: 10px 0 10px 0;
@@ -732,7 +632,7 @@ export default {
   border-style: solid;
   position: absolute;
   margin: 5px;
-  border-color: #3059a4;
+  border-color: #1976d2;
   z-index: 1;
 }
 
