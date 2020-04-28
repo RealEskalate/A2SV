@@ -9,3 +9,4 @@ A2SV - Africa to Silicon Valley
 7. Feysel Mubarek
 8. Anteneh Admasu
 9. Michael Gashaw
+10. Süha Tanrıverdi

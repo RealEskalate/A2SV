@@ -5,6 +5,7 @@ import { Card, ListItem, Button, Icon } from 'react-native-elements';
 export default function InformationPage(props) {
   return (
     <ScrollView>
+
       <Card
         title='What is COVID-19?'
         containerStyle={{ borderRadius: 20, elevation: 20 }}
@@ -37,6 +38,7 @@ export default function InformationPage(props) {
           onPress={() => props.navigation.navigate('What Is Covid-19?')}
         />
       </Card>
+
       <Card
         title='Symptoms'
         containerStyle={{ borderRadius: 20, elevation: 20 }}
@@ -69,6 +71,7 @@ export default function InformationPage(props) {
           onPress={() => props.navigation.navigate('Covid19 Symptoms')}
         />
       </Card>
+
       <Card
         title='Preventions'
         containerStyle={{ borderRadius: 20, elevation: 20 }}
@@ -101,6 +104,7 @@ export default function InformationPage(props) {
           onPress={() => props.navigation.navigate('Preventions')}
         />
       </Card>
+
       <Card
         title='Treatment'
         containerStyle={{ borderRadius: 20, elevation: 20 }}
@@ -134,6 +138,7 @@ export default function InformationPage(props) {
           onPress={() => props.navigation.navigate('Treatments')}
         />
       </Card>
+      
     </ScrollView>
   );
 }
