@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <app-bar />
-    <v-content>
+    <v-content style="font-family: 'Nunito',sans-serif">
       <router-view />
     </v-content>
     <app-footer />
