@@ -75,16 +75,13 @@
               <v-card flat tile>
                 <v-card-text>
                   <p>{{ sources }}</p>
+
                   <v-checkbox
+                    v-for="(sourceItem, index) in sourcelist"
+                    :key="index"
                     v-model="sources"
-                    label="CNN"
-                    value="CNN"
-                    @change="sourceChange"
-                  ></v-checkbox>
-                  <v-checkbox
-                    v-model="sources"
-                    label="NPR"
-                    value="NPR"
+                    :label="sourceItem"
+                    :value="sourceItem"
                     @change="sourceChange"
                   ></v-checkbox>
                 </v-card-text>
@@ -107,6 +104,7 @@ export default {
     selected: "Global",
     items: ["Global", "Local"],
     sources: [],
+    sourcelist: [],
     news: [],
     baseUrl: "http://sym-track.herokuapp.com/api/news?country=Global",
     country: ""
@@ -167,10 +165,19 @@ export default {
       await axios.get("http://ip-api.com/json").then(response => {
         this.country = response.data.country;
       });
+    },
+    getSources() {
+      axios
+        .get("http://sym-track.herokuapp.com/api/news/sources")
+        .then(response => {
+          this.sourcelist = response.data;
+          console.log(this.sourcelist);
+        });
     }
   },
   mounted() {
     this.getNewsByPage(this.page);
+    this.getSources();
   }
 };
 </script>
