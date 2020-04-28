@@ -148,7 +148,7 @@ async function populateDatabase(){
             case "COMMENTS":
                 currentPolicy.description = value;
                 break;
-            case "DATE_IMPLEMENTED":
+            case "ENTRY_DATE":
                 currentPolicy.date = value;
                 break;
             case "SOURCE":
@@ -181,6 +181,8 @@ function paginateAndFilter(data, req){
             (item) => item.source === req.query.source
         );
     }
+
+    data.sort((a,b) => (a.date < b.date) ? 1 : ((b.date < a.date) ? -1 : 0)); 
 
     let result = {
         data_count : data.length,
