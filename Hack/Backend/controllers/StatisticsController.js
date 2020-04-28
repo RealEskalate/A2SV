@@ -112,7 +112,7 @@ exports.get_statistics = async (req, res) => {
         result = await healthParser.getHealthStatistics(req);
         return res.send(result);
     } else if (req.body.criteria == "Confirmed_Rate" || req.body.criteria == "Recovered_Rate" || req.body.criteria == "Deaths_Rate") {
-        req.body.criteria = "Confirmed";
+        req.body.criteria = req.body.criteria.split("_")[0];
         result = await healthParser.getHealthStatistics(req);
         let rateResult = calculate_rate(result);
         return res.send(rateResult);
