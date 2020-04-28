@@ -111,9 +111,6 @@ export default {
     baseUrl: "http://sym-track.herokuapp.com/api/news?country=Global",
     country: ""
   }),
-  mounted() {
-    this.getNewsByPage(this.page);
-  },
   methods: {
     async scopeChange() {
       if (this.selected == this.items[0]) {
@@ -156,12 +153,12 @@ export default {
     getNewsByPage(page_num) {
       if (this.selected == "Global") {
         axios.get(this.baseUrl + "&page=" + page_num).then(response => {
-          this.news = response.data;
+          this.news = response.data.data;
           return this.news;
         });
       } else {
         axios.get(this.baseUrl + "&page=" + page_num).then(response => {
-          this.news = response.data;
+          this.news = response.data.data;
           return this.news;
         });
       }
@@ -172,7 +169,9 @@ export default {
       });
     }
   },
-  computed: {}
+  mounted() {
+    this.getNewsByPage(this.page);
+  }
 };
 </script>
 
