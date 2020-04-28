@@ -1,6 +1,5 @@
-import { createStore } from "redux";
-import reducer from "./symptomReducers";
-import SymptomPage from "../../symptom-page/SymptomPage";
+import { createStore } from 'redux';
+import reducer from './symptomReducers';
 
 const symptomStore = createStore(reducer);
 
