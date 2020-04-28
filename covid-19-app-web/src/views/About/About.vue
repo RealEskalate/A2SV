@@ -85,25 +85,27 @@
     <br />
     <br />
     <section class="my-12">
-      <v-container>
-        <h1 class="display-1 font-weight-thin mb-5">Our Partners</h1>
-        <v-row class="justify-content-center">
-          <v-col lg="2" cols="4" :key="i" v-for="(partner, i) in partners">
-            <v-tooltip bottom>
-              <template v-slot:activator="{ on }">
-                <a :href="partner.link" target="_blank" v-on="on">
-                  <v-img
-                    :aspect-ratio="1"
-                    transition="scale-transition"
-                    alt="partner.name"
-                    :lazy-src="partner.image_url"
-                  />
-                </a>
-              </template>
-              <span>{{ partner.name }}</span>
-            </v-tooltip>
-          </v-col>
-        </v-row>
+      <v-container class="text-center">
+        <h1 class="display-2 font-weight-thin mb-12">Our Partners</h1>
+        <span
+          class="d-inline-block my-5 mx-2"
+          :key="i"
+          v-for="(partner, i) in partners"
+        >
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on }">
+              <a :href="partner.link" target="_blank" v-on="on">
+                <img
+                  height="180px"
+                  alt="partner.name"
+                  style="opacity: 0.7"
+                  :src="partner.image_url"
+                />
+              </a>
+            </template>
+            <span>{{ partner.name }}</span>
+          </v-tooltip>
+        </span>
       </v-container>
     </section>
     <br />
@@ -115,35 +117,10 @@
 export default {
   data: () => {
     return {
-      actions: [
-        {
-          icon: "mdi-cloud",
-          title: "A2SV Website",
-          description:
-            "Check out our website for this and that and this as well for this and that and this as well for this and that and this as well",
-          links: [{ text: "Visit Website", href: "#" }]
-        },
-        {
-          icon: "mdi-check",
-          title: "Download The App",
-          description:
-            "The App will have this and that and thisThe App will have this and that and thisThe App will have this and that and this and that",
-          links: [
-            { text: "Get on Play Store", href: "#" },
-            { text: "Get on App Store", href: "#" }
-          ]
-        },
-        {
-          icon: "mdi-youtube",
-          title: "Understand the Goal",
-          description: "Learn more about the app and why it exists.",
-          links: [{ text: "Go to Youtube", href: "#" }]
-        }
-      ],
       descriptions: [
         {
           title: "Corona App",
-          content: `<p> COVID-19 symptom tracking app is a non-commercial app that uses crowd-sourcing to collect and visualize the density of the relevant symptoms. Registration only asks about age and gender to be used for data science purposes. Users can anonymously report symptoms and choose a location to see the density of symptoms in a map view. The data is aggregated by places, therefore, the app can help people avoid visiting a grocery store or a gas station that is heavily used by symptomatic people. </p>
+          content: `<p> <strong> COVID-19 Symptom Tracker </strong> is a non-commercial app that uses crowd-sourcing to collect and visualize the density of the relevant symptoms. Registration only asks about age and gender to be used for data science purposes. Users can anonymously report symptoms and choose a location to see the density of symptoms in a map view. The data is aggregated by places, therefore, the app can help people avoid visiting a grocery store or a gas station that is heavily used by symptomatic people. </p>
                     <p> By filling out simple questionnaires about your health and symptoms every day you can help tackle the spread of the virus and ending the pandemic. Moreover, by looking or searching places you want to go, maybe to run errands or to grab groceries, you can find out how symptomatic the place is and what kinda measure you should take. </p>`
         },
         {
@@ -156,12 +133,37 @@ export default {
           content: `<p> Your data will be used anonymously for the purpose of data science and statistics being open source meaning any info generated isn’t traced back to a single user. This is a non-commercial project with no intention of profit. </p>`
         }
       ],
+      actions: [
+        {
+          icon: "mdi-search-web",
+          title: "A2SV Website",
+          description:
+            "Check out our website for this and that and this as well for this and that and this as well for this and that and this as well",
+          links: [{ text: "Visit Website", href: "http://a2sv.org/" }]
+        },
+        {
+          icon: "mdi-cloud-download-outline",
+          title: "Download The App",
+          description:
+            "The App will have this and that and thisThe App will have this and that and thisThe App will have this and that and this and that",
+          links: [
+            { text: "Get on Play Store", href: "#" },
+            { text: "Get on App Store", href: "#" }
+          ]
+        },
+        {
+          icon: "mdi-youtube",
+          title: "Watch the Video",
+          description: "Learn more about the app and why it exists.",
+          links: [{ text: "Go to Youtube", href: "#" }]
+        }
+      ],
       partners: [
         {
           name: "Addis Ababa University",
           image_url:
-            "https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png",
-          link: "#"
+            "https://upload.wikimedia.org/wikipedia/en/thumb/d/dc/Addis_Ababa_University_logo.png/220px-Addis_Ababa_University_logo.png",
+          link: "http://www.aau.edu.et/"
         },
         {
           name: "This Organization",
@@ -172,7 +174,7 @@ export default {
         {
           name: "This Other Organization",
           image_url:
-            "https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png",
+            "https://images.theconversation.com/files/93616/original/image-20150902-6700-t2axrz.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=1000&fit=clip",
           link: "#"
         }
       ]
