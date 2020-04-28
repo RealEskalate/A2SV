@@ -9,7 +9,7 @@ const healthParser = require("../services/HealthApiParser");
 
 
 // Updates db with the latest csv
-let update_db = async function(){
+let update_db = async function () {
     console.log("got here");
 
     /* -Unknown bug here (commented out because feature not necessary)-
@@ -22,31 +22,31 @@ let update_db = async function(){
     console.log(update_from_date);
     
     */
-   
+
     // Updates for dates after this
     const update_from_date = new Date(new Date() - 7 * 24 * 3600 * 1000);
 
-    var workbook = XLSX.readFile(path.join(__dirname, 'assets', 'owid-covid-data.xlsx'), {sheetStubs: true, cellDates: true});
-    
+    var workbook = XLSX.readFile(path.join(__dirname, 'assets', 'owid-covid-data.xlsx'), { sheetStubs: true, cellDates: true });
+
     var worksheet = workbook.Sheets["Sheet1"];
     var headers = {};
     var curr_location;
     var curr_date;
 
-    for(z in worksheet) {
-        if(z[0] === '!' || worksheet[z].v == undefined) continue;
+    for (z in worksheet) {
+        if (z[0] === '!' || worksheet[z].v == undefined) continue;
         var criteria = '';
         var row = parseInt(z.substring(1));
         var value = worksheet[z].v;
         var col = z[0];
 
         // Populate headers dictonary if first row
-        if(row == 1 && value) {
+        if (row == 1 && value) {
             headers[col] = value;
             continue;
         }
 
-        switch(headers[col]){
+        switch (headers[col]) {
             // If cell is location or date update relavant fields
             // If cell is other necessary fields, specify the criteria to save later
             case "location":
@@ -66,18 +66,18 @@ let update_db = async function(){
                 criteria = "TEST";
                 break;
         }
-        
+
         // Create stat and save it in the db
-        if (criteria !== '' && curr_date > update_from_date){
+        if (criteria !== '' && curr_date > update_from_date) {
             var new_stat = new Statstics({
-                    country: curr_location,
-                    age_group: "ALL",
-                    criteria: criteria,
-                    value: parseInt(value),
-                    date: curr_date,
-                } 
+                country: curr_location,
+                age_group: "ALL",
+                criteria: criteria,
+                value: parseInt(value),
+                date: curr_date,
+            }
             );
-            if (curr_location === "World"){
+            if (curr_location === "World") {
                 console.log("YAYYY");
             }
             await new_stat.save();
@@ -86,9 +86,9 @@ let update_db = async function(){
     console.log("Finished uploading testing stat");
 }
 // Fetchs the latest csv
-let fetchTestingInfo = async function() {
+let fetchTestingInfo = async function () {
     const file = fs.createWriteStream(path.join(__dirname, 'assets', "owid-covid-data.xlsx"));
-    https.get("https://covid.ourworldindata.org/data/owid-covid-data.xlsx", async function(response) {
+    https.get("https://covid.ourworldindata.org/data/owid-covid-data.xlsx", async function (response) {
         response.pipe(file).on('finish', async function () {
             console.log("Finished downloading covid testing data");
             await update_db();
@@ -98,7 +98,7 @@ let fetchTestingInfo = async function() {
 
 // Schedules fetching everyday
 const run_updates = () => {
-    schedule.scheduleJob('0 0 * * *', async function (){
+    schedule.scheduleJob('0 0 * * *', async function () {
         await fetchTestingInfo();
     });
 };
@@ -108,46 +108,73 @@ const run_updates = () => {
 exports.run_updates = run_updates;
 
 exports.get_statistics = async (req, res) => {
-    if (req.body.criteria=="Confirmed" || req.body.criteria=="Recovered" || req.body.criteria=="Deaths"){
-        result= await healthParser.getHealthStatistics(req);
+    if (req.body.criteria == "Confirmed" || req.body.criteria == "Recovered" || req.body.criteria == "Deaths") {
+        result = await healthParser.getHealthStatistics(req);
         return res.send(result);
+    } else if (req.body.criteria == "Confirmed_Rate" || req.body.criteria == "Recovered_Rate" || req.body.criteria == "Deaths_Rate") {
+        req.body.criteria = "Confirmed";
+        result = await healthParser.getHealthStatistics(req);
+        let rateResult = calculate_rate(result);
+        return res.send(rateResult);
     }
-    else if (req.body.criteria=="Hospitalization" || req.body.criteria=="ICU"){
+    else if (req.body.criteria == "Hospitalization" || req.body.criteria == "ICU") {
         result = await healthParser.getCriticalStatistics(req);
         return res.send(result);
     }
-    else if(req.body.criteria=="Test"){        
+    else if (req.body.criteria == "Test") {
         let filter = {};
-        if (req.body.country !== undefined){
+        if (req.body.country !== undefined) {
             filter.country = req.body.country;
-        }else{
+        } else {
             filter.country = "World"
         }
-    
+
         filter.date = {
-            $gte: req.body.start_date!==undefined ? new Date(req.body.start_date) : new Date(new Date() - 7 * 24 * 3600 * 1000),
-            $lte: req.body.end_date!==undefined ? new Date(req.body.end_date) : new Date(new Date() - 24 * 3600 * 1000)
+            $gte: req.body.start_date !== undefined ? new Date(req.body.start_date) : new Date(new Date() - 7 * 24 * 3600 * 1000),
+            $lte: req.body.end_date !== undefined ? new Date(req.body.end_date) : new Date(new Date() - 24 * 3600 * 1000)
         }
 
-        filter.criteria = req.body.criteria.toUpperCase();    
+        filter.criteria = req.body.criteria.toUpperCase();
         // Apply filter and send results 
         const results_from_db = await Statistics.find(filter);
-        date_formatter = new Intl.DateTimeFormat('en', { year: 'numeric', month: '2-digit', day: '2-digit' })         
+        date_formatter = new Intl.DateTimeFormat('en', { year: 'numeric', month: '2-digit', day: '2-digit' })
         let results = [];
-        results_from_db.forEach((element)=>{
+        results_from_db.forEach((element) => {
             date = date_formatter.formatToParts(element.date);
-            date = date[4]["value"]+"-"+date[0]["value"]+"-"+date[2]["value"];
+            date = date[4]["value"] + "-" + date[0]["value"] + "-" + date[2]["value"];
             results.push({
                 t: date,
                 y: element.value
             });
-        })        
+        })
         try {
             res.send(results);
         } catch (err) {
             res.status(500).send(err);
-        }    
-    
+        }
+
     }
 }
 
+
+calculate_rate = (result) => {
+    let rateArray = [];
+    for (let index = 1; index < result.length; index++) {
+        const upto_yesterday = result[index - 1].y;
+        const upto_today = result[index].y;
+        let todaysDeath = upto_today - upto_yesterday;
+        let rate = (todaysDeath / upto_today) * 100;
+        rate = (Math.round(rate * 100) / 100).toFixed(2);
+        rateArray.push({
+            t: result[index].t,
+            y: rate
+        });
+        if (index == 1) {
+            rateArray.push({
+                t: result[index].t,
+                y: rate
+            });
+        }
+    }
+    return rateArray;
+};
