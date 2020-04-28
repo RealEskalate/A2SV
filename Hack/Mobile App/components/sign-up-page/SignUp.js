@@ -168,7 +168,7 @@ export default class SignIn extends Component {
     );
   }
 }
-
+//style of each components on this page
 const styles = StyleSheet.create({
   container: {
     marginTop: 200,

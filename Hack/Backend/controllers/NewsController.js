@@ -22,54 +22,34 @@ exports.get_all_news = async (req, res) => {
     let news = []; 
     
     //also query for news from google news
-    const news_google = await parser.parseURL(`https://news.google.com/rss/search?q=covid`);
+    let news_google;
+    if(req.query.country){
+        news_google = await parser.parseURL(`https://news.google.com/rss/search?q=covid ${req.query.country}`);
+    }else{
+        news_google = await parser.parseURL(`https://news.google.com/rss/search?q=covid`);
+    }
+    
     news_google.items.forEach(element => {
         news.push(new News({
             title: element.title,
             source: element.source,
             description: element.description,
             date: element.pubDate,
-            country: "Global",
+            country: req.query.country || "Global",
             reference_link: element.link
         }));
     });
 
+    // const policies = await News.find()
     const policies = await News.find();
     news = news.concat(policies);
 
     try{
-        res.send(news);
+        res.send(paginateAndFilter(news, req));
     }catch (err){
         res.status(500).send(err.toString());
     }
 };
-
-// Get all news for a country
-exports.get_country_news = async (req, res) => {    
-    let news  = [];
-
-    // also query for news from google news
-    const news_google = await parser.parseURL(`https://news.google.com/rss/search?q=covid ${req.params.current_country}`);
-    news_google.items.forEach(element => {
-        news.push(new News({
-            title: element.title,
-            source: element.source,
-            description: element.description,
-            date: element.pubDate,
-            country: req.params.current_country,
-            reference_link: element.link
-        }));
-    });
-
-    let policies = await News.find({ "country" : req.params.current_country });
-    news = news.concat(policies);
-
-    try{
-        res.send(news);
-    }catch (err){
-        res.status(500).send(err.toString());
-    }
-}
 
 // Post a news (only for testing....)
 exports.post_news = async (req, res) => {
@@ -188,3 +168,22 @@ async function populateDatabase(){
     }
 }
 
+function paginateAndFilter(data, req){
+    var page = parseInt(req.query.page) || 1;
+    var size = parseInt(req.query.size) || 15;
+
+    if(req.query.country){
+        data = data.filter(
+            (item) => item.country === req.query.country
+        );
+    }
+
+    if(req.query.source){
+        data = data.filter(
+            (item) => item.source === req.query.source
+        );
+    }
+
+    return data.slice((page - 1) * size, page * size);
+
+}
