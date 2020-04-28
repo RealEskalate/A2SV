@@ -77,13 +77,15 @@
                   <p>{{ sources }}</p>
                   <v-checkbox
                     v-model="sources"
-                    label="John"
-                    value="John"
+                    label="CNN"
+                    value="CNN"
+                    @change="sourceChange"
                   ></v-checkbox>
                   <v-checkbox
                     v-model="sources"
-                    label="Jacob"
-                    value="Jacob"
+                    label="NPR"
+                    value="NPR"
+                    @change="sourceChange"
                   ></v-checkbox>
                 </v-card-text>
               </v-card>
@@ -106,23 +108,46 @@ export default {
     items: ["Global", "Local"],
     sources: [],
     news: [],
-    baseUrl: "http://sym-track.herokuapp.com/api/news"
+    baseUrl: "http://sym-track.herokuapp.com/api/news?country=Global",
+    country: ""
   }),
   mounted() {
-    this.getNewsByPage(this.page)
+    this.getNewsByPage(this.page);
   },
   methods: {
-    scopeChange() {
+    async scopeChange() {
       if (this.selected == this.items[0]) {
         this.page = 1;
-        this.baseUrl = "http://sym-track.herokuapp.com/api/news";
-        this.getNewsByPage(this.page)
+        this.baseUrl = "http://sym-track.herokuapp.com/api/news?country=Global";
+        this.getNewsByPage(this.page);
       } else {
-        this.page = 1;
-        this.baseUrl =
-          "http://sym-track.herokuapp.com/api/news?country=Ethiopia";
-        this.getNewsByPage(this.page)
+        if (this.country == "") {
+          await axios.get("http://ip-api.com/json").then(response => {
+            this.country = response.data.country;
+            this.baseUrl =
+              "http://sym-track.herokuapp.com/api/news?country=" + this.country;
+            this.getNewsByPage(this.page);
+          });
+        } else {
+          this.baseUrl =
+            "http://sym-track.herokuapp.com/api/news?country=" + this.country;
+          this.getNewsByPage(this.page);
+        }
       }
+    },
+    sourceChange() {
+      if (this.sources.length !== 0) {
+        this.baseUrl += "&source=" + this.sources[0];
+      } else {
+        if (this.selected == "Global") {
+          this.baseUrl =
+            "http://sym-track.herokuapp.com/api/news?country=Global";
+        } else {
+          this.baseUrl =
+            "http://sym-track.herokuapp.com/api/news?country=Ethiopia";
+        }
+      }
+      this.getNewsByPage(this.page);
     },
     getTime(postDate) {
       postDate = moment(String(postDate)).format("MM/DD/YYYY hh:mm");
@@ -130,7 +155,7 @@ export default {
     },
     getNewsByPage(page_num) {
       if (this.selected == "Global") {
-        axios.get(this.baseUrl + "?page=" + page_num).then(response => {
+        axios.get(this.baseUrl + "&page=" + page_num).then(response => {
           this.news = response.data;
           return this.news;
         });
@@ -141,17 +166,13 @@ export default {
         });
       }
     },
-    getCountry(page_num) {
-      axios.get(this.baseUrl + "?country=Ethiopia").then(response => {
-        this.localnews = response.data;
-        console.log(page_num);
-        return this.localnews;
+    async getCountry() {
+      await axios.get("http://ip-api.com/json").then(response => {
+        this.country = response.data.country;
       });
     }
   },
-  computed: {
-    
-  }
+  computed: {}
 };
 </script>
 
