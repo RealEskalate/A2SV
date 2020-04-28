@@ -6,8 +6,8 @@ export default function Symptoms() {
   return (
     <ScrollView>
       <Card
-        title="Symptoms"
-        image={require("../../assets/symptoms.jpg")}
+        // title="Symptoms"
+        image={require("./icons/sneezing.gif")}
         containerStyle={{ margin: 0 }}
       >
         <ScrollView>

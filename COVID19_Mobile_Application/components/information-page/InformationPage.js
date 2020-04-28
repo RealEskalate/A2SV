@@ -2,25 +2,24 @@ import * as React from 'react';
 import { View, Text, Image, ScrollView } from 'react-native';
 import { Card, ListItem, Button, Icon } from 'react-native-elements';
 
+import Shadow from './styles/Shadow'
+import BorderRadius from './styles/BorderRadius'
+import ButtonStyle from './styles/ButtonStyle'
+import ImageStyle from './styles/ImageStyle'
+
 export default function InformationPage(props) {
   return (
     <ScrollView>
 
       <Card
-        title='What is COVID-19?'
-        containerStyle={{ borderRadius: 20, elevation: 20 }}
-        titleStyle={{ fontSize: 18 }}>
+        title='What is Corona Virus?'
+        containerStyle={ [Shadow.shadow, BorderRadius.borderRadius] }
+        titleStyle={{ fontSize: 20, fontWeight: 'bold' }}>
         <View style={{ flexDirection: 'row' }}>
           <Image
-            style={{
-              flex: 1,
-              width: 100,
-              height: 100,
-              marginBottom: 10,
-              marginRight: 5,
-            }}
+            style={ ImageStyle.imageStyle }
             resizeMode='cover'
-            source={require('../../assets/covid.jpg')}
+            source={require('./icons/corona-blue.gif')}
           />
           <Text style={{ flex: 2, marginTop: 15 }}>
             Coronavirus disease 2019 is an infectious disease caused by severe
@@ -28,12 +27,7 @@ export default function InformationPage(props) {
           </Text>
         </View>
         <Button
-          buttonStyle={{
-            borderRadius: 20,
-            marginLeft: 0,
-            marginRight: 0,
-            marginBottom: 0,
-          }}
+          buttonStyle={ [ButtonStyle.buttonStyle, BorderRadius.borderRadius] }
           title='Read more'
           onPress={() => props.navigation.navigate('What Is Covid-19?')}
         />
@@ -41,19 +35,13 @@ export default function InformationPage(props) {
 
       <Card
         title='Symptoms'
-        containerStyle={{ borderRadius: 20, elevation: 20 }}
+        containerStyle={ [Shadow.shadow, BorderRadius.borderRadius] }
         titleStyle={{ fontSize: 18 }}>
         <View style={{ flexDirection: 'row' }}>
           <Image
-            style={{
-              flex: 1,
-              width: 100,
-              height: 100,
-              marginBottom: 10,
-              marginRight: 5,
-            }}
+            style={ ImageStyle.imageStyle }
             resizeMode='cover'
-            source={require('../../assets/symptoms.jpg')}
+            source={require('./icons/sneezing.gif')}
           />
           <Text style={{ flex: 2, marginTop: 15 }}>
             Fever, cough and shortness of breath are the common symptoms
@@ -61,12 +49,7 @@ export default function InformationPage(props) {
           </Text>
         </View>
         <Button
-          buttonStyle={{
-            borderRadius: 20,
-            marginLeft: 0,
-            marginRight: 0,
-            marginBottom: 0,
-          }}
+          buttonStyle={ [ButtonStyle.buttonStyle, BorderRadius.borderRadius] }
           title='Read more'
           onPress={() => props.navigation.navigate('Covid19 Symptoms')}
         />
@@ -74,19 +57,13 @@ export default function InformationPage(props) {
 
       <Card
         title='Preventions'
-        containerStyle={{ borderRadius: 20, elevation: 20 }}
+        containerStyle={ [Shadow.shadow, BorderRadius.borderRadius] }
         titleStyle={{ fontSize: 18 }}>
         <View style={{ flexDirection: 'row' }}>
           <Image
-            style={{
-              flex: 1,
-              width: 100,
-              height: 100,
-              marginBottom: 10,
-              marginRight: 5,
-            }}
+            style={ ImageStyle.imageStyle }
             resizeMode='cover'
-            source={require('../../assets/Prevention.jpg')}
+            source={require('./icons/mask.gif')}
           />
           <Text style={{ flex: 2, marginTop: 15 }}>
             Follow the guidelines to help protect yourself from catching,
@@ -94,12 +71,7 @@ export default function InformationPage(props) {
           </Text>
         </View>
         <Button
-          buttonStyle={{
-            borderRadius: 20,
-            marginLeft: 0,
-            marginRight: 0,
-            marginBottom: 0,
-          }}
+          buttonStyle={ [ButtonStyle.buttonStyle, BorderRadius.borderRadius] }
           title='Read more'
           onPress={() => props.navigation.navigate('Preventions')}
         />
@@ -107,19 +79,13 @@ export default function InformationPage(props) {
 
       <Card
         title='Treatment'
-        containerStyle={{ borderRadius: 20, elevation: 20 }}
+        containerStyle={ [Shadow.shadow, BorderRadius.borderRadius] }
         titleStyle={{ fontSize: 18 }}>
         <View style={{ flexDirection: 'row' }}>
           <Image
-            style={{
-              flex: 1,
-              width: 100,
-              height: 100,
-              marginBottom: 10,
-              marginRight: 5,
-            }}
+            style={ ImageStyle.imageStyle }
             resizeMode='cover'
-            source={require('../../assets/treatment.jpg')}
+            source={require('./icons/doctors.gif')}
           />
           <Text style={{ flex: 2, marginTop: 15 }}>
             There currently isn’t a vaccine against developing COVID-19.
@@ -128,12 +94,7 @@ export default function InformationPage(props) {
           </Text>
         </View>
         <Button
-          buttonStyle={{
-            borderRadius: 20,
-            marginLeft: 0,
-            marginRight: 0,
-            marginBottom: 0,
-          }}
+          buttonStyle={ [ButtonStyle.buttonStyle, BorderRadius.borderRadius] }
           title='Read more'
           onPress={() => props.navigation.navigate('Treatments')}
         />
