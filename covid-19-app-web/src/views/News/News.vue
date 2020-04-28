@@ -8,97 +8,58 @@
             :items="items"
             :menu-props="{ top: false, offsetY: true }"
             label="Scope"
+            @change="scopeChange"
           ></v-select>
         </v-col>
       </v-row>
     </section>
     <v-row no-gutters>
       <v-col :cols="8">
-        <div v-if="selected == 'Global'">
-          <div v-for="newss in visiblePages" :key="newss._id">
-            <v-card max-width="500" class="">
-              <v-list-item>
-                <v-list-item-content>
-                  <v-list-item-title class="headline text-wrap">{{
-                    newss.title
-                  }}</v-list-item-title>
-                  <v-list-item-subtitle
-                    >by {{ newss.source }}
-                    <v-spacer></v-spacer>
-                    {{ getTime(newss.date) }}
-                  </v-list-item-subtitle>
-                </v-list-item-content>
-              </v-list-item>
+        <div v-for="newss in news" :key="newss._id">
+          <v-card max-width="500" class="">
+            <v-list-item>
+              <v-list-item-content>
+                <v-list-item-title class="headline text-wrap">{{
+                  newss.title
+                }}</v-list-item-title>
+                <v-list-item-subtitle
+                  >by {{ newss.source }}
+                  <v-spacer></v-spacer>
+                  {{ getTime(newss.date) }}
+                </v-list-item-subtitle>
+              </v-list-item-content>
+            </v-list-item>
 
-              <v-card-text v-html="newss.description" />
-              <v-card-actions>
-                <v-btn
-                  text
-                  color="deep-purple accent-4"
-                  v-bind:href="newss.reference_link"
-                  target="blank"
-                >
-                  Read
-                </v-btn>
-              </v-card-actions>
-            </v-card>
-            <br />
-          </div>
-          <v-pagination
-            class="v-paggination"
-            v-model="page"
-            :length="Math.ceil(news.length / perPage)"
-          ></v-pagination>
+            <v-card-text v-html="newss.description" />
+            <v-card-actions>
+              <v-btn
+                text
+                color="deep-purple accent-4"
+                v-bind:href="newss.reference_link"
+                target="blank"
+              >
+                Read
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+          <br />
         </div>
-        <div v-else>
-          <div v-for="newss in visiblePages.slice(0, 3)" :key="newss._id">
-            <v-card max-width="500" class="">
-              <v-list-item>
-                <v-list-item-content>
-                  <v-list-item-title class="headline text-wrap">{{
-                    newss.title
-                  }}</v-list-item-title>
-                  <v-list-item-subtitle
-                    >by {{ newss.source }}
-                    <v-spacer></v-spacer>
-                    {{ getTime(newss.date) }}
-                  </v-list-item-subtitle>
-                </v-list-item-content>
-              </v-list-item>
-
-              <v-card-text v-html="newss.description" />
-              <v-card-actions>
-                <v-btn
-                  text
-                  color="deep-purple accent-4"
-                  v-bind:href="newss.reference_link"
-                  target="blank"
-                >
-                  Read
-                </v-btn>
-              </v-card-actions>
-            </v-card>
-            <br />
-          </div>
-          <v-pagination
-            class="v-paggination"
-            v-model="page"
-            :length="Math.ceil(news.length / perPage)"
-          ></v-pagination>
-        </div>
+        <v-pagination
+          class="v-paggination"
+          v-model="page"
+          :length="10"
+          @input="getNewsByPage(page)"
+        ></v-pagination>
       </v-col>
 
       <v-col :cols="4">
         <v-card>
           <v-tabs centered grow>
             <v-tab>Recent</v-tab>
-            <v-tab>Most view</v-tab>
+            <v-tab>Source</v-tab>
             <v-tab-item>
               <v-card flat tile>
-                <div
-                  v-for="newsss in visiblePages.slice(0, 6)"
-                  :key="newsss._id"
-                >
+                <div v-for="newsss in news.slice(0, 5)" :key="newsss._id">
                   <v-list-item
                     v-bind:href="newsss.reference_link"
                     target="blank"
@@ -112,7 +73,19 @@
             </v-tab-item>
             <v-tab-item>
               <v-card flat tile>
-                <v-card-text>olllll</v-card-text>
+                <v-card-text>
+                  <p>{{ sources }}</p>
+                  <v-checkbox
+                    v-model="sources"
+                    label="John"
+                    value="John"
+                  ></v-checkbox>
+                  <v-checkbox
+                    v-model="sources"
+                    label="Jacob"
+                    value="Jacob"
+                  ></v-checkbox>
+                </v-card-text>
               </v-card>
             </v-tab-item>
           </v-tabs>
@@ -128,36 +101,56 @@ import moment from "moment";
 export default {
   data: () => ({
     page: 1,
-    perPage: 10,
+    perPage: 15,
     selected: "Global",
     items: ["Global", "Local"],
-    news: []
+    sources: [],
+    news: [],
+    baseUrl: "http://sym-track.herokuapp.com/api/news"
   }),
   mounted() {
-    axios
-      .get("http://sym-track.herokuapp.com/api/news")
-      .then(response => {
-        this.news = response.data;
-      })
-      .catch(error => {
-        console.log(error);
-        this.errored = true;
-      })
-      .finally(() => (this.loading = false));
+    this.getNewsByPage(this.page)
   },
   methods: {
+    scopeChange() {
+      if (this.selected == this.items[0]) {
+        this.page = 1;
+        this.baseUrl = "http://sym-track.herokuapp.com/api/news";
+        this.getNewsByPage(this.page)
+      } else {
+        this.page = 1;
+        this.baseUrl =
+          "http://sym-track.herokuapp.com/api/news?country=Ethiopia";
+        this.getNewsByPage(this.page)
+      }
+    },
     getTime(postDate) {
       postDate = moment(String(postDate)).format("MM/DD/YYYY hh:mm");
       return postDate;
+    },
+    getNewsByPage(page_num) {
+      if (this.selected == "Global") {
+        axios.get(this.baseUrl + "?page=" + page_num).then(response => {
+          this.news = response.data;
+          return this.news;
+        });
+      } else {
+        axios.get(this.baseUrl + "&page=" + page_num).then(response => {
+          this.news = response.data;
+          return this.news;
+        });
+      }
+    },
+    getCountry(page_num) {
+      axios.get(this.baseUrl + "?country=Ethiopia").then(response => {
+        this.localnews = response.data;
+        console.log(page_num);
+        return this.localnews;
+      });
     }
   },
   computed: {
-    visiblePages() {
-      return this.news.slice(
-        (this.page - 1) * this.perPage,
-        this.page * this.perPage
-      );
-    }
+    
   }
 };
 </script>
