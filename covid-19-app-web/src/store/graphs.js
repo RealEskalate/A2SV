@@ -71,7 +71,13 @@ export default {
     },
     setDiseaseCompare(state, payload) {
       state.diseaseCompare = {
-        labels: ["Confirmed Cases", "Death Count", "Recovered Count", "Affected Countries", "Fatality Rate"],
+        labels: [
+          "Confirmed Cases",
+          "Death Count",
+          "Recovered Count",
+          "Affected Countries",
+          "Fatality Rate"
+        ],
         datasets: payload
       };
     }
