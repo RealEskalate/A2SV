@@ -5,7 +5,7 @@ const locationRouter = require("./routes/LocationRoutes.js");
 const locationUserRouter = require("./routes/LocationUserRoutes");
 const medicalhistoryRouter = require("./routes/MedicalHistoryRoutes.js");
 const medicalhistoryuserRouter = require("./routes/MedicalHistoryUserRoutes.js");
-
+const publicResourceRouter = require("./routes/PublicResourcesRoutes");
 const symptomRouter = require("./routes/SymptomRoutes.js");
 const symptomuserRouter = require("./routes/SymptomUserRoutes.js");
 const mapRouter = require("./routes/MapDataRoutes");
@@ -23,7 +23,7 @@ app.use(logger.requestLog);
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
+app.use(publicResourceRouter);
 app.use(locationRouter);
 app.use(userRouter);
 app.use(symptomRouter);
