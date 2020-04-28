@@ -2,6 +2,7 @@ const Papa = require("papaparse")
 const axios = require("axios");
 const {MapData} = require("../models/MapDataModel");
 
+const schedule = require('node-schedule');
 //Populate DB once
 exports.getMapData = async(req, res)=>{
     try{
