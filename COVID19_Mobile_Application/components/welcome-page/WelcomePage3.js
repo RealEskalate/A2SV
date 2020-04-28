@@ -1,13 +1,13 @@
-import React from "react";
-import { StyleSheet, Text, View, Image } from "react-native";
-import { Avatar, Button, Card, Title, Paragraph } from "react-native-paper";
+import React from 'react';
+import { StyleSheet, Text, View, Image } from 'react-native';
+import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
 
 export default function WelcomePage3({ navigation }) {
   return (
     <View style={styles.mainBackground}>
       <Card style={styles.container}>
         <Card.Cover
-          source={require("../../assets/prevention.jpg")}
+          source={require('../../assets/Prevention.jpg')}
           style={{ flex: 2 }}
         />
         <Card.Content style={{ flex: 1, borderRadius: 30 }}>
@@ -21,15 +21,13 @@ export default function WelcomePage3({ navigation }) {
           </Paragraph>
         </Card.Content>
         <Card.Actions
-          style={{ flexDirection: "row", justifyContent: "space-between" }}
-        >
+          style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           <Button
-            onPress={() => navigation.navigate("WelcomePage2")}
-            color="#0a77aa"
-          >
+            onPress={() => navigation.navigate('WelcomePage2')}
+            color='#0a77aa'>
             Previous
           </Button>
-          <Button onPress={() => navigation.navigate("SignIn")} color="#0a77aa">
+          <Button onPress={() => navigation.navigate('SignIn')} color='#0a77aa'>
             Done
           </Button>
         </Card.Actions>
@@ -45,14 +43,14 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
     paddingBottom: 20,
-    backgroundColor: "#3d4241",
+    backgroundColor: '#3d4241',
   },
   container: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: 'center',
     borderRadius: 30,
   },
   welcomeText: {
-    justifyContent: "center",
+    justifyContent: 'center',
   },
 });
