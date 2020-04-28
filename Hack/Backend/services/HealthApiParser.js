@@ -1,4 +1,5 @@
 const axios = require("axios");
+var csvjson = require('csvjson');
 
 const getRate = async (criteria, startDate, endDate) => {
     let stats = [];
@@ -39,9 +40,14 @@ exports.getHealthStatistics = async (req) => {
     request_url = "";
 
     if (req.body.country =="world"){
-        request_url+="https://covid-api.com/api/reports/total?date=";
-        let results = await calculate_with_date_for_world(req,request_url)
-        return results;
+        request_url="https://datahub.io/core/covid-19/r/worldwide-aggregated.csv"
+        // request_url="https://datahub.io/core/covid-19/r/worldwide-aggregated.json"
+        start_date= new Date(Date.parse(set_start_date_for_countries(req).slice(6)));
+        end_date= new Date(Date.parse(set_end_date_for_countries(req).slice(4) ));
+        
+        results=[]
+        let result = await parse_csv_data(request_url,results,start_date,end_date, req.body.criteria)
+        return results
     }else{
         request_url+="https://api.covid19api.com/country/"+req.body.country.toLowerCase();
         request_url+= set_start_date_for_countries(req) //+"T00:00:00Z"
@@ -110,6 +116,34 @@ const do_api_call= async(request_url,criteria,world, results)=>{
                     "t": item.Date,
                     "y": item[`${criteria}`]
                 });
+            });
+        }).catch(error => { console.log(error); });
+    } catch (err) {
+        console.log(err);
+    }
+    return results;
+}
+
+
+
+const parse_csv_data= async(request_url,results,start_date,end_date,criteria)=>{
+    console.log(request_url)
+    try {
+        const result = await axios.get(request_url).then(response => {
+            let data = response.data;
+            if (!data) {
+                return [];
+            }
+            var options = { delimiter : ',' , quote : '"' };
+            data = csvjson.toObject(data, options);
+            data.forEach((item)=>{
+                date= new Date(item.Date)
+                if ( date >= start_date && date <= end_date) {
+                    results.push({
+                        "t": item.Date,
+                        "y": item[`${criteria}`]
+                    });
+                }
             });
         }).catch(error => { console.log(error); });
     } catch (err) {
