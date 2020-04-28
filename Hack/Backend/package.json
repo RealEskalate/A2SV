@@ -28,6 +28,7 @@
     "rss-parser": "^3.7.6",
     "winston": "^3.2.1",
     "winston-mongodb": "^5.0.1",
+    "csvjson": "^5.1.0",
     "xlsx": "^0.15.6"
   },
   "devDependencies": {
