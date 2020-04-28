@@ -20,9 +20,57 @@ exports.getMapData = async(req, res)=>{
 // Schedules fetching everyday
 const run_updates = () => {
     schedule.scheduleJob('0 0 * * *', async function () {
-        await populateDataOnce();
+        await updateDb();
     });
 };
+
+updateDb = async()=>{
+    let urls = [
+        'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv',
+        'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv',
+        'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv'
+    ];
+    let criterias = [
+        'CONFIRMED',
+        'DEATHS',
+        'RECOVERED'
+    ];
+    for(let i = 0; i<3; i++){
+        let url = urls[i];
+        let criteria = criterias[i];
+        let r = await extractResult(url);
+        let date_keys = r.meta.fields.slice(4);
+        let last_date = date_keys[date_keys.length-1];
+        let length = r.data.length;
+        for(let i = 0; i<length; i++){
+            let data = r.data[i];
+            try{
+                let map_data = await MapData.findOne({
+                    State: data["Province/State"],
+                    Country: data["Country/Region"],
+                    Status: criteria, 
+                });
+                let ts = map_data.TimeSeries;
+                ts[`${last_date}`] = data[`${last_date}`];
+                map_data.set({
+                    TimeSeries: ts
+                })
+                map_data.markModified('TimeSeries');
+                await map_data.save();
+                map_data = await MapData.findOne({
+                    State: data["Province/State"],
+                    Country: data["Country/Region"],
+                    Status: criteria, 
+                });                
+            }
+            catch(err){
+                console.log(r.data[i]);
+            }
+        }
+    }
+    console.log("Finished Updating Data");
+}
+
 
 populateDataOnce = async()=>{
     let urls = [
