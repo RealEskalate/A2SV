@@ -1,16 +1,15 @@
-import * as React from "react";
-import { View, Text, Image, ScrollView } from "react-native";
-import { Card, ListItem, Button, Icon } from "react-native-elements";
+import * as React from 'react';
+import { View, Text, Image, ScrollView } from 'react-native';
+import { Card, ListItem, Button, Icon } from 'react-native-elements';
 
 export default function InformationPage(props) {
   return (
     <ScrollView>
       <Card
-        title="What is COVID-19?"
+        title='What is COVID-19?'
         containerStyle={{ borderRadius: 20, elevation: 20 }}
-        titleStyle={{ fontSize: 18 }}
-      >
-        <View style={{ flexDirection: "row" }}>
+        titleStyle={{ fontSize: 18 }}>
+        <View style={{ flexDirection: 'row' }}>
           <Image
             style={{
               flex: 1,
@@ -19,8 +18,8 @@ export default function InformationPage(props) {
               marginBottom: 10,
               marginRight: 5,
             }}
-            resizeMode="cover"
-            source={require("../../assets/covid.jpg")}
+            resizeMode='cover'
+            source={require('../../assets/covid.jpg')}
           />
           <Text style={{ flex: 2, marginTop: 15 }}>
             Coronavirus disease 2019 is an infectious disease caused by severe
@@ -34,16 +33,15 @@ export default function InformationPage(props) {
             marginRight: 0,
             marginBottom: 0,
           }}
-          title="Read more"
-          onPress={() => props.navigation.navigate("What Is Covid-19?")}
+          title='Read more'
+          onPress={() => props.navigation.navigate('What Is Covid-19?')}
         />
       </Card>
       <Card
-        title="Symptoms"
+        title='Symptoms'
         containerStyle={{ borderRadius: 20, elevation: 20 }}
-        titleStyle={{ fontSize: 18 }}
-      >
-        <View style={{ flexDirection: "row" }}>
+        titleStyle={{ fontSize: 18 }}>
+        <View style={{ flexDirection: 'row' }}>
           <Image
             style={{
               flex: 1,
@@ -52,8 +50,8 @@ export default function InformationPage(props) {
               marginBottom: 10,
               marginRight: 5,
             }}
-            resizeMode="cover"
-            source={require("../../assets/symptoms.jpg")}
+            resizeMode='cover'
+            source={require('../../assets/symptoms.jpg')}
           />
           <Text style={{ flex: 2, marginTop: 15 }}>
             Fever, cough and shortness of breath are the common symptoms
@@ -67,16 +65,15 @@ export default function InformationPage(props) {
             marginRight: 0,
             marginBottom: 0,
           }}
-          title="Read more"
-          onPress={() => props.navigation.navigate("Covid19 Symptoms")}
+          title='Read more'
+          onPress={() => props.navigation.navigate('Covid19 Symptoms')}
         />
       </Card>
       <Card
-        title="Preventions"
+        title='Preventions'
         containerStyle={{ borderRadius: 20, elevation: 20 }}
-        titleStyle={{ fontSize: 18 }}
-      >
-        <View style={{ flexDirection: "row" }}>
+        titleStyle={{ fontSize: 18 }}>
+        <View style={{ flexDirection: 'row' }}>
           <Image
             style={{
               flex: 1,
@@ -85,8 +82,8 @@ export default function InformationPage(props) {
               marginBottom: 10,
               marginRight: 5,
             }}
-            resizeMode="cover"
-            source={require("../../assets/prevention.jpg")}
+            resizeMode='cover'
+            source={require('../../assets/Prevention.jpg')}
           />
           <Text style={{ flex: 2, marginTop: 15 }}>
             Follow the guidelines to help protect yourself from catching,
@@ -100,16 +97,15 @@ export default function InformationPage(props) {
             marginRight: 0,
             marginBottom: 0,
           }}
-          title="Read more"
-          onPress={() => props.navigation.navigate("Preventions")}
+          title='Read more'
+          onPress={() => props.navigation.navigate('Preventions')}
         />
       </Card>
       <Card
-        title="Treatment"
+        title='Treatment'
         containerStyle={{ borderRadius: 20, elevation: 20 }}
-        titleStyle={{ fontSize: 18 }}
-      >
-        <View style={{ flexDirection: "row" }}>
+        titleStyle={{ fontSize: 18 }}>
+        <View style={{ flexDirection: 'row' }}>
           <Image
             style={{
               flex: 1,
@@ -118,8 +114,8 @@ export default function InformationPage(props) {
               marginBottom: 10,
               marginRight: 5,
             }}
-            resizeMode="cover"
-            source={require("../../assets/treatment.jpg")}
+            resizeMode='cover'
+            source={require('../../assets/treatment.jpg')}
           />
           <Text style={{ flex: 2, marginTop: 15 }}>
             There currently isn’t a vaccine against developing COVID-19.
@@ -134,8 +130,8 @@ export default function InformationPage(props) {
             marginRight: 0,
             marginBottom: 0,
           }}
-          title="Read more"
-          onPress={() => props.navigation.navigate("Treatments")}
+          title='Read more'
+          onPress={() => props.navigation.navigate('Treatments')}
         />
       </Card>
     </ScrollView>
