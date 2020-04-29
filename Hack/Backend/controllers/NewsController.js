@@ -178,7 +178,7 @@ function paginateAndFilter(data, req){
 
     if(req.query.source){
         data = data.filter(
-            (item) => item.source === req.query.source
+            (item) => req.query.source.split(",").includes(item.source)
         );
     }
 
