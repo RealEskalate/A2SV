@@ -20,6 +20,14 @@ const newsRouter = require("./routes/NewsRoutes.js");
 const symptomRouter = require("./routes/SymptomRoutes.js");
 const symptomuserRouter = require("./routes/SymptomUserRoutes.js");
 const userRouter = require("./routes/UserRoutes.js");
+const newsRouter = require("./routes/NewsRoutes.js");
+const symptomRouter = require("./routes/SymptomRoutes.js");
+const symptomuserRouter = require("./routes/SymptomUserRoutes.js");
+const userRouter = require("./routes/UserRoutes.js");
+
+
+const logger = require('./middlewares/logger');
+const bodyParser = require("body-parser");
 
 
 const logger = require('./middlewares/logger');
