@@ -7,7 +7,6 @@ const alertRouter = require("./routes/AlertRoutes");
 const alertUserRouter = require("./routes/AlertUserRoutes");
 const locationRouter = require("./routes/LocationRoutes.js");
 const locationUserRouter = require("./routes/LocationUserRoutes");
-const logRouter = require("./routes/LogRoutes");
 const medicalhistoryRouter = require("./routes/MedicalHistoryRoutes.js");
 const medicalhistoryuserRouter = require("./routes/MedicalHistoryUserRoutes.js");
 const publicResourceRouter = require("./routes/PublicResourcesRoutes");
@@ -16,23 +15,13 @@ const symptomuserRouter = require("./routes/SymptomUserRoutes.js");
 const mapRouter = require("./routes/MapDataRoutes");
 const newsRouter = require("./routes/NewsRoutes.js");
 const logRouter = require("./routes/LogRoutes");
-const newsRouter = require("./routes/NewsRoutes.js");
-const symptomRouter = require("./routes/SymptomRoutes.js");
-const symptomuserRouter = require("./routes/SymptomUserRoutes.js");
 const userRouter = require("./routes/UserRoutes.js");
-const newsRouter = require("./routes/NewsRoutes.js");
-const symptomRouter = require("./routes/SymptomRoutes.js");
-const symptomuserRouter = require("./routes/SymptomUserRoutes.js");
-const userRouter = require("./routes/UserRoutes.js");
-
-
-const logger = require('./middlewares/logger');
-const bodyParser = require("body-parser");
-
-
-const logger = require('./middlewares/logger');
-const bodyParser = require("body-parser");
 const statisticsRouter = require("./routes/StatisticsRoutes");
+
+const logger = require('./middlewares/logger');
+const bodyParser = require("body-parser");
+
+
 const app = express();
 const port = process.env.PORT || 3000;
 app.use(cors());
