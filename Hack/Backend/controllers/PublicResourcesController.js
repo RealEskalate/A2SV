@@ -8,25 +8,14 @@ var root = path.dirname(require.main.filename);
 const schedule = require("node-schedule");
 
 exports.getPublicResources = async (req, res) => {
-    let result;
-    try{
-        switch(req.params.criteria){
-            case "Hospital_Beds":
-                result = await PublicResourcesData.find({Indicator : "Hospital beds (per 1,000 people)"});
-                return res.send(result);
-            case "Nurses":
-                result = await PublicResourcesData.find({Indicator : "Nurses and midwives (per 1,000 people)"});
-                return res.send(result);
-            case "Physicians":
-                result = await PublicResourcesData.find({Indicator : "UHC service coverage index"});
-                return res.send(result);
-            default:
-                break;
-        }
-    }
-    catch(err){
-        res.status(500).send(err);
-    }
+  let result;
+  try{
+    result = await PublicResourcesData.find({Country : req.params.country});
+    return res.send(result);
+  }
+  catch(err){
+      res.status(500).send(err);
+  }
 }
 
 // fetch public resources every day
@@ -104,7 +93,17 @@ async function populateDatabase(filePath) {
     if (row != currentRow) {
       // Save the previous resource
       if(currentResource){
-          await currentResource.save();
+          let check = await PublicResourcesData.findOne({Country: currentResource.Country, Indicator: currentResource.Indicator});
+          if(!check){
+            await currentResource.save();
+          }
+          else{
+            check.set({
+              TimeSeries: currentResource.TimeSeries
+            })
+            check.markModified('TimeSeries')
+            await check.save();
+          }
       }
       currentResource = new PublicResourcesData({
         Country: " ",
@@ -133,7 +132,17 @@ async function populateDatabase(filePath) {
     }
   }
   if(currentResource){
+    let check = await PublicResourcesData.findOne({Country: currentResource.Country, Indicator: currentResource.Indicator});
+    if(!check){
       await currentResource.save();
-  }
+    }
+    else{
+      check.set({
+        TimeSeries: currentResource.TimeSeries
+      })
+      check.markModified('TimeSeries')
+      await check.save();
+    }
+}
   return 0;
 }
