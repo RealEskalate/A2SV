@@ -14,6 +14,7 @@ const logRouter = require("./routes/LogRoutes");
 const userRouter = require("./routes/UserRoutes.js");
 const bodyParser = require("body-parser");
 const statisticsRouter = require("./routes/StatisticsRoutes");
+const diseasesRouter = require("./routes/DiseasesRoutes");
 const app = express();
 const port = process.env.PORT || 3000;
 app.use(cors());
@@ -33,6 +34,7 @@ app.use(newsRouter);
 app.use(logRouter);
 app.use(statisticsRouter);
 app.use(mapRouter);
+app.use(diseasesRouter);
 app.listen(port, () => {
   console.log("Server is running...");
 });
