@@ -116,7 +116,7 @@
       return postDate;
     },
     getNewsByPage(page) {
-      store.dispatch('setNews', {page: page, country: this.scope, source: this.selectedSources});
+      store.dispatch('setNews', {page: page, country: this.country, source: this.selectedSources});
     },
   },
   mounted() {
