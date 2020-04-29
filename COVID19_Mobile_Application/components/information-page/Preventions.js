@@ -1,15 +1,14 @@
-import * as React from "react";
-import { View, Text, Image, ScrollView } from "react-native";
-import { Card, ListItem, Button, Icon } from "react-native-elements";
+import * as React from 'react';
+import { View, Text, Image, ScrollView } from 'react-native';
+import { Card, ListItem, Button, Icon } from 'react-native-elements';
 
 export default function Preventions() {
   return (
     <ScrollView>
       <Card
-        title="Preventions"
-        image={require("../../assets/prevention.jpg")}
-        containerStyle={{ margin: 0 }}
-      >
+        // title='Preventions'
+        image={require('./icons/handWash.gif')}
+        containerStyle={{ margin: 0 }}>
         <ScrollView>
           <Text style={{ marginBottom: 10 }}>
             Tips for prevention Follow the guidelines to help protect yourself

@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const schedule = require('node-schedule');
 const axios = require("axios");
-let Statistics = require("../models/StatisticsModel");
+const Statistics = require("../models/StatisticsModel");
 const healthParser = require("../services/HealthApiParser");
 
 
@@ -24,7 +24,7 @@ let update_db = async function () {
     */
 
     // Updates for dates after this
-    const update_from_date = new Date(new Date() - 7 * 24 * 3600 * 1000);
+    const update_from_date = new Date(new Date() - 24 * 3600 * 1000);
 
     var workbook = XLSX.readFile(path.join(__dirname, 'assets', 'owid-covid-data.xlsx'), { sheetStubs: true, cellDates: true });
 
@@ -106,13 +106,14 @@ const run_updates = () => {
 
 // in the future we can call this in index.js
 exports.run_updates = run_updates;
+run_updates();
 
 exports.get_statistics = async (req, res) => {
     if (req.body.criteria == "Confirmed" || req.body.criteria == "Recovered" || req.body.criteria == "Deaths") {
         result = await healthParser.getHealthStatistics(req);
         return res.send(result);
     } else if (req.body.criteria == "Confirmed_Rate" || req.body.criteria == "Recovered_Rate" || req.body.criteria == "Deaths_Rate") {
-        req.body.criteria = "Confirmed";
+        req.body.criteria = req.body.criteria.split("_")[0];
         result = await healthParser.getHealthStatistics(req);
         let rateResult = calculate_rate(result);
         return res.send(rateResult);
