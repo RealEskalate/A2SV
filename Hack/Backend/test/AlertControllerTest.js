@@ -20,6 +20,7 @@ describe("Alerts API", () => {
         content: "Random Non Sequitor",
       });
       await alert.save();
+      console.log("alert saved");
     });
     afterEach(async () => {
       await Alert.collection.drop();
@@ -32,6 +33,7 @@ describe("Alerts API", () => {
           "Authorization",
           "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6IkZFTUFMRSIsImFnZV9ncm91cCI6IlVOREVSXzMwIiwiX2lkIjoiNWU5MDRjY2U3YTFjNmI2MjdhZTlmNWY3IiwidXNlcm5hbWUiOiJUZXN0aW5nIiwicGFzc3dvcmQiOiIkMmEkMTAkZWZteG01bzF2LmluSS5lU3RHR3hnTzF6SGsuTDZVb0E5TEV5WXJSUGhXa21UUVBYOC5OS08iLCJfX3YiOjB9LCJpYXQiOjE1ODczNjUxMTJ9.QUPJHBixUI7nu2CJGi1a6vBPOInmYuO4lVPIryHM2go"
         );
+      console.log("response from all alerts");
       expect(response).to.have.status(200);
     });
   });
@@ -65,7 +67,7 @@ describe("Alerts API", () => {
   describe("GET /api/alerts/:id", () => {
     let alert;
     beforeEach(async () => {
-        alert = new Alert({
+      alert = new Alert({
         _id: mongoose.Types.ObjectId(),
         title: "Testing",
         type: "UPDATES",
@@ -80,7 +82,7 @@ describe("Alerts API", () => {
     it("It should not Get all alerts", async () => {
       let response = await chai
         .request(server)
-        .get("/api/alerts/"+alert._id)
+        .get("/api/alerts/" + alert._id)
         .set(
           "Authorization",
           "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6IkZFTUFMRSIsImFnZV9ncm91cCI6IlVOREVSXzMwIiwiX2lkIjoiNWU5MDRjY2U3YTFjNmI2MjdhZTlmNWY3IiwidXNlcm5hbWUiOiJUZXN0aW5nIiwicGFzc3dvcmQiOiIkMmEkMTAkZWZteG01bzF2LmluSS5lU3RHR3hnTzF6SGsuTDZVb0E5TEV5WXJSUGhXa21UUVBYOC5OS08iLCJfX3YiOjB9LCJpYXQiOjE1ODczNjUxMTJ9.QUPJHBixUI7nu2CJGi1a6vBPOInmYuO4lVPIryHM2go"
@@ -96,7 +98,7 @@ describe("Alerts API", () => {
   describe("GET /api/alerts/:id", () => {
     let alert;
     beforeEach(async () => {
-        alert = new Alert({
+      alert = new Alert({
         _id: mongoose.Types.ObjectId(),
         title: "Testing",
         type: "UPDATES",
@@ -121,10 +123,10 @@ describe("Alerts API", () => {
   });
 
   //Post Alert - Valid Alert
-  describe("POST /api/alerts", ()=>{
+  describe("POST /api/alerts", () => {
     let alert;
     beforeEach(async () => {
-        alert = new Alert({
+      alert = new Alert({
         _id: mongoose.Types.ObjectId(),
         title: "Testing",
         type: "UPDATES",
@@ -151,19 +153,19 @@ describe("Alerts API", () => {
           degree: "URGENT",
           content: "Random Non Sequitor2",
         });
-        expect(response).to.have.status(200);
-        expect(response.body).to.be.a("object");
-        expect(response.body).to.have.property("title");
-        expect(response.body).to.have.property("type");
-        expect(response.body).to.have.property("degree");
-        expect(response.body).to.have.property("content");
+      expect(response).to.have.status(200);
+      expect(response.body).to.be.a("object");
+      expect(response.body).to.have.property("title");
+      expect(response.body).to.have.property("type");
+      expect(response.body).to.have.property("degree");
+      expect(response.body).to.have.property("content");
     });
   });
   //Post Alert - Invalid Alert
-  describe("POST /api/alerts", ()=>{
+  describe("POST /api/alerts", () => {
     let alert;
     beforeEach(async () => {
-        alert = new Alert({
+      alert = new Alert({
         _id: mongoose.Types.ObjectId(),
         title: "Testing",
         type: "UPDATES",
@@ -190,17 +192,17 @@ describe("Alerts API", () => {
           degree: "URGENT222222",
           content: "Random Non Sequitor2",
         });
-        expect(response).to.have.status(500);
+      expect(response).to.have.status(500);
     });
   });
 
 
 
   //Patch Alert - Valid Alert
-  describe("PATCH /api/alerts", ()=>{
+  describe("PATCH /api/alerts", () => {
     let alert;
     beforeEach(async () => {
-        alert = new Alert({
+      alert = new Alert({
         _id: mongoose.Types.ObjectId(),
         title: "Testing",
         type: "UPDATES",
@@ -227,20 +229,20 @@ describe("Alerts API", () => {
           degree: "URGENT",
           content: "Random Non Sequitor2",
         });
-        expect(response).to.have.status(200);
-        expect(response.body).to.be.a("object");
-        expect(response.body).to.have.property("title");
-        expect(response.body).to.have.property("type");
-        expect(response.body).to.have.property("degree");
-        expect(response.body).to.have.property("content");
+      expect(response).to.have.status(200);
+      expect(response.body).to.be.a("object");
+      expect(response.body).to.have.property("title");
+      expect(response.body).to.have.property("type");
+      expect(response.body).to.have.property("degree");
+      expect(response.body).to.have.property("content");
     });
   });
 
   //Patch Alert - Invalid Entry on Enum
-  describe("PATCH /api/alerts", ()=>{
+  describe("PATCH /api/alerts", () => {
     let alert;
     beforeEach(async () => {
-        alert = new Alert({
+      alert = new Alert({
         _id: mongoose.Types.ObjectId(),
         title: "Testing",
         type: "UPDATES",
@@ -267,16 +269,16 @@ describe("Alerts API", () => {
           degree: "URGENT",
           content: "Random Non Sequitor2",
         });
-        expect(response).to.have.status(500);
+      expect(response).to.have.status(500);
     });
   });
 
-  
+
   //Delete Alert - Valid Alert
   describe("DELETE /api/alerts/", () => {
     let alert;
     beforeEach(async () => {
-        alert = new Alert({
+      alert = new Alert({
         _id: mongoose.Types.ObjectId(),
         title: "Testing",
         type: "UPDATES",
@@ -306,7 +308,7 @@ describe("Alerts API", () => {
   describe("DELETE /api/alerts/", () => {
     let alert;
     beforeEach(async () => {
-        alert = new Alert({
+      alert = new Alert({
         _id: mongoose.Types.ObjectId(),
         title: "Testing",
         type: "UPDATES",

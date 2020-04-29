@@ -93,7 +93,7 @@ describe("Symptom Users API", () => {
     });
 
 
-    // Should get symptom by symptom id
+    // Should get symptom user  by symptom id
     describe("Get /api/symptomuser/symptom/:id", () => {
         let symptom_user;
         let symptom;
@@ -183,7 +183,7 @@ describe("Symptom Users API", () => {
     });
 
 
-    // Post Medicalhistory User 
+    // Post Symptom User 
     describe("POST /api/symptomuser", () => {
         let symptom_user;
         let symptom;
@@ -235,7 +235,7 @@ describe("Symptom Users API", () => {
         });
     });
 
-    // Patch MedicalHistory
+    // Patch Symptom User
     describe("PATCH /api/symptomuser/", () => {
         let symptom_user;
         let symptom;
@@ -278,9 +278,8 @@ describe("Symptom Users API", () => {
         });
     });
 
-    // Delete medicalhistoryuser
+    // Delete Symptom User
     describe("DELETE /api/symptomuser/", () => {
-        let medicalhistory_user;
         beforeEach(async () => {
             symptom_user = new SymptomUser({
                 _id: mongoose.Types.ObjectId(),
