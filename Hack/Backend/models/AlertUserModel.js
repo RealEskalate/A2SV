@@ -4,10 +4,12 @@ const alertUserSchema = new mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
   user_id: {
     type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
     required: true,
   },
   alert_id: {
     type: mongoose.Schema.Types.ObjectId,
+    ref: 'Alert',
     required: true,
   },
   resolved: {
