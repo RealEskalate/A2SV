@@ -48,7 +48,7 @@ export default class SymptomPage extends Component {
   //gets the list of symptoms from database
   fetchSymptoms() {
     let newThis = this; // create variable for referencing 'this'
-    fetch("http://34.70.173.73:3000/api/symptoms", {
+    fetch("https://sym-track.herokuapp.com/api/symptoms", {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -70,7 +70,7 @@ export default class SymptomPage extends Component {
   //gets the list of symptoms from database
   fetchUserSymptoms(userId) {
     let newThis = this; // create variable for referencing 'this'
-    fetch("http://34.70.173.73:3000/api/symptomuser/user/" + userId, {
+    fetch("https://sym-track.herokuapp.com/api/symptomuser/user/" + userId, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -88,7 +88,7 @@ export default class SymptomPage extends Component {
   }
   //Registers symptom with the user id
   registerSymptom(userId, symptomId) {
-    fetch("http://34.70.173.73:3000/api/symptomuser", {
+    fetch("https://sym-track.herokuapp.com/api/symptomuser", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -113,7 +113,7 @@ export default class SymptomPage extends Component {
 
   //removes symptom with the user id
   removeSymptom(userId, randomId, symptomId) {
-    fetch("http://34.70.173.73:3000/api/symptomuser", {
+    fetch("https://sym-track.herokuapp.com/api/symptomuser", {
       method: "DELETE",
       headers: {
         Accept: "application/json",
