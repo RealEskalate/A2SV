@@ -1,17 +1,20 @@
 const mongoose = require("mongoose");
-const config = require('./test/_config');
-const express = require('express');
-const app = express();
-// const url = process.env.MONGODB_URI || "mongodb+srv://dbAdmin:EOW2tr3cqUcPqp7k@symtrack-zokm9.gcp.mongodb.net/test?retryWrites=true&w=majority";
-// console.log("env is " + app.settings.env);
-console.log("Database connection to " + config.mongoURI[app.settings.env]);
+const config = require("./config");
+const app = require('./index');
 mongoose.connect(
-  config.mongoURI[app.settings.env],
+  process.env.MONGODB_URI || config.mongoURI[process.env.NODE_ENV || 'development'],
   {
     useCreateIndex: true,
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    dbName: "hackathon",
+  },
+  function (err, res) {
+    if (err) {
+      console.log('Error connecting to database. ' + err);
+    }
+    else {
+      console.log('Connceted to Database! ' + config.mongoURI[process.env.NODE_ENV || 'development']);
+    }
   }
 );
 
