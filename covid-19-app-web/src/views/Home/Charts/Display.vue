@@ -18,17 +18,6 @@
         />
       </v-col>
       <v-col cols="12" md="6">
-        <v-select
-          v-model="age_range"
-          :items="age_ranges"
-          label="Age Group"
-          hint="Age Group"
-          persistent-hint
-          solo
-          @input="fetchData"
-        />
-      </v-col>
-      <v-col cols="12" md="6">
         <v-menu
           :close-on-content-click="false"
           transition="scale-transition"
@@ -38,9 +27,9 @@
           <template v-slot:activator="{ on }">
             <v-text-field
               solo
-              v-model="dateRangeText"
-              label="Date Range"
-              hint="Date Range"
+              v-model="start_date"
+              label="Start Date"
+              hint="Start Date"
               persistent-hint
               prepend-inner-icon="mdi-calendar"
               readonly
@@ -48,31 +37,68 @@
             />
           </template>
           <v-date-picker
-            range
-            no-title
-            v-model="date_range"
-            @input="
-              () => {
-                if (date_range.length === 2 && date_range[0] && date_range[1])
-                  fetchData();
-              }
-            "
+            @input="fetchData"
+            v-model="start_date"
+            :max="maxDate"
           />
         </v-menu>
       </v-col>
-      <v-col cols="12" md="6">
-        <v-slider
-          :color="sliderColor(social_distancing)"
-          :track-color="sliderColor(social_distancing)"
-          max="100"
-          hint="100% means no physical connections"
-          persistent-hint
-          label="Physical Distancing Percentage"
-          v-model="social_distancing"
-          thumb-label
-          @input="fetchData"
-        />
-      </v-col>
+      <!--      <v-col cols="12" md="6">-->
+      <!--        <v-select-->
+      <!--          v-model="age_range"-->
+      <!--          :items="age_ranges"-->
+      <!--          label="Age Group"-->
+      <!--          hint="Age Group"-->
+      <!--          persistent-hint-->
+      <!--          solo-->
+      <!--          @input="fetchData"-->
+      <!--        />-->
+      <!--      </v-col>-->
+      <!--      <v-col cols="12" md="6">-->
+      <!--        <v-menu-->
+      <!--          :close-on-content-click="false"-->
+      <!--          transition="scale-transition"-->
+      <!--          max-width="290px"-->
+      <!--          min-width="290px"-->
+      <!--        >-->
+      <!--          <template v-slot:activator="{ on }">-->
+      <!--            <v-text-field-->
+      <!--              solo-->
+      <!--              v-model="dateRangeText"-->
+      <!--              label="Date Range"-->
+      <!--              hint="Date Range"-->
+      <!--              persistent-hint-->
+      <!--              prepend-inner-icon="mdi-calendar"-->
+      <!--              readonly-->
+      <!--              v-on="on"-->
+      <!--            />-->
+      <!--          </template>-->
+      <!--          <v-date-picker-->
+      <!--            range-->
+      <!--            no-title-->
+      <!--            v-model="date_range"-->
+      <!--            @input="-->
+      <!--              () => {-->
+      <!--                if (date_range.length === 2 && date_range[0] && date_range[1])-->
+      <!--                  fetchData();-->
+      <!--              }-->
+      <!--            "-->
+      <!--          />-->
+      <!--        </v-menu>-->
+      <!--      </v-col>-->
+      <!--      <v-col cols="12" md="6">-->
+      <!--        <v-slider-->
+      <!--          :color="sliderColor(social_distancing)"-->
+      <!--          :track-color="sliderColor(social_distancing)"-->
+      <!--          max="100"-->
+      <!--          hint="100% means no physical connections"-->
+      <!--          persistent-hint-->
+      <!--          label="Physical Distancing Percentage"-->
+      <!--          v-model="social_distancing"-->
+      <!--          thumb-label-->
+      <!--          @input="fetchData"-->
+      <!--        />-->
+      <!--      </v-col>-->
     </v-row>
     <v-row>
       <v-col cols="12" md="9">
@@ -126,6 +152,9 @@ export default {
   },
   data() {
     return {
+      start_date: moment(new Date())
+        .subtract(1, "month")
+        .format("YYYY-MM-DD"),
       date_range: [
         moment(new Date())
           .subtract(1, "month")
@@ -160,7 +189,8 @@ export default {
   computed: {
     counts: () => store.getters.getDisplayCounts,
     rates: () => store.getters.getDisplayRates,
-    countryResources: () => store.getters.getCountryResources
+    countryResources: () => store.getters.getCountryResources,
+    maxDate: () => moment(new Date()).format("YYYY-MM-DD")
   }
 };
 </script>

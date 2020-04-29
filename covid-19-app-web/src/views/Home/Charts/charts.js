@@ -33,6 +33,12 @@ export const ChartMixin = {
       default() {
         return "time";
       }
+    },
+    y_axis_type: {
+      type: String,
+      default() {
+        return "linear";
+      }
     }
   },
   computed: {
@@ -99,12 +105,13 @@ export const ChartMixin = {
           ],
           yAxes: [
             {
+              type: self.y_axis_type,
               scaleLabel: {
                 display: true,
                 labelString: self.y_label
               },
               ticks: {
-                maxTicksLimit: 5,
+                maxTicksLimit: 10,
                 padding: 10,
                 beginAtZero: true
               },
@@ -165,9 +172,9 @@ export const ChartMixin = {
         ],
         rates: [
           { label: "Positive Rate", color: [255, 213, 79] },
-          { label: "Recovery Rate", color: [220, 231, 117] },
-          { label: "Hospitalization Rate", color: [77, 208, 225] },
-          { label: "ICU Rate", color: [121, 134, 203] },
+          { label: "Recovery Rate", color: [121, 134, 203] },
+          // { label: "Hospitalization Rate", color: [77, 208, 225] },
+          // { label: "ICU Rate", color: [220, 231, 117] },
           { label: "Death Rate", color: [240, 98, 146] }
         ]
       }

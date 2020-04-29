@@ -1,7 +1,7 @@
 <template>
   <v-container class="py-8">
     <v-row class="mx-md-5" dense>
-      <v-col cols="12" md="4">
+      <v-col cols="12" md="6">
         <v-select
           v-model="country_1"
           :items="countries"
@@ -12,58 +12,7 @@
           @input="fetchData1"
         />
       </v-col>
-      <v-col cols="12" md="4">
-        <v-menu
-          :close-on-content-click="false"
-          transition="scale-transition"
-          max-width="290px"
-          min-width="290px"
-        >
-          <template v-slot:activator="{ on }">
-            <v-text-field
-              solo
-              v-model="dateRangeText1"
-              label="Date Range 1"
-              hint="Date Range 1"
-              persistent-hint
-              prepend-inner-icon="mdi-calendar"
-              readonly
-              v-on="on"
-            />
-          </template>
-          <v-date-picker
-            range
-            no-title
-            v-model="date_range_1"
-            @input="
-              () => {
-                if (
-                  date_range_1.length === 2 &&
-                  date_range_1[0] &&
-                  date_range_1[1]
-                )
-                  fetchData1();
-              }
-            "
-          />
-        </v-menu>
-      </v-col>
-      <v-col cols="12" md="4">
-        <v-slider
-          :color="sliderColor(social_distancing_1)"
-          :track-color="sliderColor(social_distancing_1)"
-          max="100"
-          hint="100% means no physical connections"
-          persistent-hint
-          label="Physical Distancing 1"
-          v-model="social_distancing_1"
-          thumb-label
-          @input="fetchData1"
-        />
-      </v-col>
-    </v-row>
-    <v-row class="mx-md-5" dense>
-      <v-col cols="12" md="4">
+      <v-col cols="12" md="6">
         <v-select
           v-model="country_2"
           :items="countries"
@@ -74,58 +23,120 @@
           @input="fetchData2"
         />
       </v-col>
-      <v-col cols="12" md="4">
-        <v-menu
-          :close-on-content-click="false"
-          transition="scale-transition"
-          max-width="290px"
-          min-width="290px"
-        >
-          <template v-slot:activator="{ on }">
-            <v-text-field
-              solo
-              v-model="dateRangeText2"
-              label="Date Range 2"
-              hint="Date Range 2"
-              persistent-hint
-              prepend-inner-icon="mdi-calendar"
-              readonly
-              v-on="on"
-            />
-          </template>
-          <v-date-picker
-            range
-            no-title
-            v-model="date_range_2"
-            @input="
-              () => {
-                if (
-                  date_range_2.length === 2 &&
-                  date_range_2[0] &&
-                  date_range_2[1]
-                )
-                  fetchData2();
-              }
-            "
-          />
-        </v-menu>
-      </v-col>
-      <v-col cols="12" md="4">
-        <v-slider
-          :color="sliderColor(social_distancing_2)"
-          :track-color="sliderColor(social_distancing_2)"
-          max="100"
-          hint="100% means no physical connections"
-          persistent-hint
-          label="Physical Distancing 2"
-          v-model="social_distancing_2"
-          thumb-label
-          @input="fetchData2"
-        />
-      </v-col>
+      <!--      <v-col cols="12" md="4">-->
+      <!--        <v-menu-->
+      <!--          :close-on-content-click="false"-->
+      <!--          transition="scale-transition"-->
+      <!--          max-width="290px"-->
+      <!--          min-width="290px"-->
+      <!--        >-->
+      <!--          <template v-slot:activator="{ on }">-->
+      <!--            <v-text-field-->
+      <!--              solo-->
+      <!--              v-model="dateRangeText1"-->
+      <!--              label="Date Range 1"-->
+      <!--              hint="Date Range 1"-->
+      <!--              persistent-hint-->
+      <!--              prepend-inner-icon="mdi-calendar"-->
+      <!--              readonly-->
+      <!--              v-on="on"-->
+      <!--            />-->
+      <!--          </template>-->
+      <!--          <v-date-picker-->
+      <!--            range-->
+      <!--            no-title-->
+      <!--            v-model="date_range_1"-->
+      <!--            @input="-->
+      <!--              () => {-->
+      <!--                if (-->
+      <!--                  date_range_1.length === 2 &&-->
+      <!--                  date_range_1[0] &&-->
+      <!--                  date_range_1[1]-->
+      <!--                )-->
+      <!--                  fetchData1();-->
+      <!--              }-->
+      <!--            "-->
+      <!--          />-->
+      <!--        </v-menu>-->
+      <!--      </v-col>-->
+      <!--      <v-col cols="12" md="4">-->
+      <!--        <v-slider-->
+      <!--          :color="sliderColor(social_distancing_1)"-->
+      <!--          :track-color="sliderColor(social_distancing_1)"-->
+      <!--          max="100"-->
+      <!--          hint="100% means no physical connections"-->
+      <!--          persistent-hint-->
+      <!--          label="Physical Distancing 1"-->
+      <!--          v-model="social_distancing_1"-->
+      <!--          thumb-label-->
+      <!--          @input="fetchData1"-->
+      <!--        />-->
+      <!--      </v-col>-->
+      <!--    </v-row>-->
+      <!--    <v-row class="mx-md-5" dense>-->
+      <!--      <v-col cols="12" md="4">-->
+      <!--        <v-select-->
+      <!--          v-model="country_2"-->
+      <!--          :items="countries"-->
+      <!--          label="Country 2"-->
+      <!--          hint="Country 2"-->
+      <!--          persistent-hint-->
+      <!--          solo-->
+      <!--          @input="fetchData2"-->
+      <!--        />-->
+      <!--      </v-col>-->
+      <!--      <v-col cols="12" md="4">-->
+      <!--        <v-menu-->
+      <!--          :close-on-content-click="false"-->
+      <!--          transition="scale-transition"-->
+      <!--          max-width="290px"-->
+      <!--          min-width="290px"-->
+      <!--        >-->
+      <!--          <template v-slot:activator="{ on }">-->
+      <!--            <v-text-field-->
+      <!--              solo-->
+      <!--              v-model="dateRangeText2"-->
+      <!--              label="Date Range 2"-->
+      <!--              hint="Date Range 2"-->
+      <!--              persistent-hint-->
+      <!--              prepend-inner-icon="mdi-calendar"-->
+      <!--              readonly-->
+      <!--              v-on="on"-->
+      <!--            />-->
+      <!--          </template>-->
+      <!--          <v-date-picker-->
+      <!--            range-->
+      <!--            no-title-->
+      <!--            v-model="date_range_2"-->
+      <!--            @input="-->
+      <!--              () => {-->
+      <!--                if (-->
+      <!--                  date_range_2.length === 2 &&-->
+      <!--                  date_range_2[0] &&-->
+      <!--                  date_range_2[1]-->
+      <!--                )-->
+      <!--                  fetchData2();-->
+      <!--              }-->
+      <!--            "-->
+      <!--          />-->
+      <!--        </v-menu>-->
+      <!--      </v-col>-->
+      <!--      <v-col cols="12" md="4">-->
+      <!--        <v-slider-->
+      <!--          :color="sliderColor(social_distancing_2)"-->
+      <!--          :track-color="sliderColor(social_distancing_2)"-->
+      <!--          max="100"-->
+      <!--          hint="100% means no physical connections"-->
+      <!--          persistent-hint-->
+      <!--          label="Physical Distancing 2"-->
+      <!--          v-model="social_distancing_2"-->
+      <!--          thumb-label-->
+      <!--          @input="fetchData2"-->
+      <!--        />-->
+      <!--      </v-col>-->
     </v-row>
     <v-row class="mx-md-5" dense>
-      <v-col cols="12" md="6">
+      <v-col cols="12">
         <v-select
           v-model="criterion"
           :items="criteriaList"
@@ -141,22 +152,22 @@
           "
         />
       </v-col>
-      <v-col cols="12" md="6">
-        <v-select
-          v-model="age_range"
-          :items="age_ranges"
-          label="Common Age Range"
-          hint="Common Age Range"
-          persistent-hint
-          solo
-          @input="
-            () => {
-              fetchData1();
-              fetchData2();
-            }
-          "
-        />
-      </v-col>
+      <!--      <v-col cols="12" md="6">-->
+      <!--        <v-select-->
+      <!--          v-model="age_range"-->
+      <!--          :items="age_ranges"-->
+      <!--          label="Common Age Range"-->
+      <!--          hint="Common Age Range"-->
+      <!--          persistent-hint-->
+      <!--          solo-->
+      <!--          @input="-->
+      <!--            () => {-->
+      <!--              fetchData1();-->
+      <!--              fetchData2();-->
+      <!--            }-->
+      <!--          "-->
+      <!--        />-->
+      <!--      </v-col>-->
     </v-row>
     <v-row>
       <v-col cols="12" md="12">
