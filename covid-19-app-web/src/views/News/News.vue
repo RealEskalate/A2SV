@@ -4,7 +4,7 @@
       <v-row align="center">
         <v-col cols="6">
           <v-select
-            v-model="selected"
+            v-model="scope"
             :items="items"
             :menu-props="{ top: false, offsetY: true }"
             label="Scope"
@@ -15,27 +15,27 @@
     </section>
     <v-row no-gutters>
       <v-col :cols="8">
-        <div v-for="newss in news" :key="newss._id">
+        <div v-for="_news in news" :key="_news._id">
           <v-card max-width="500" class="">
             <v-list-item>
               <v-list-item-content>
                 <v-list-item-title class="headline text-wrap">{{
-                  newss.title
+                  _news.title
                 }}</v-list-item-title>
                 <v-list-item-subtitle
-                  >by {{ newss.source }}
+                  >by {{ _news.source }}
                   <v-spacer></v-spacer>
-                  {{ getTime(newss.date) }}
+                  {{ getTime(_news.date) }}
                 </v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
 
-            <v-card-text v-html="newss.description" />
+            <v-card-text v-html="_news.description" />
             <v-card-actions>
               <v-btn
                 text
                 color="deep-purple accent-4"
-                v-bind:href="newss.reference_link"
+                v-bind:href="_news.reference_link"
                 target="blank"
               >
                 Read
@@ -59,12 +59,12 @@
             <v-tab>Source</v-tab>
             <v-tab-item>
               <v-card flat tile>
-                <div v-for="newsss in news.slice(0, 5)" :key="newsss._id">
+                <div v-for="_news in news.slice(0, 5)" :key="_news._id">
                   <v-list-item
-                    v-bind:href="newsss.reference_link"
+                    v-bind:href="_news.reference_link"
                     target="blank"
                   >
-                    <v-card-text>{{ newsss.title }}</v-card-text>
+                    <v-card-text>{{ _news.title }}</v-card-text>
                   </v-list-item>
 
                   <hr class="recent-v-card-text" />
@@ -75,7 +75,7 @@
               <v-card flat tile>
                 <v-card-text>
                    <v-checkbox
-                    v-for="(sourceItem, index) in sourcelist"
+                    v-for="(sourceItem, index) in sourceList"
                     :key="index"
                     v-model="sources"
                     :label="sourceItem"
@@ -93,89 +93,50 @@
 </template>
 
 <script>
-import axios from "axios";
-import moment from "moment";
-export default {
+  import moment from "moment";
+  import store from "@/store/";
+
+  export default {
   data: () => ({
     page: 1,
     perPage: 15,
-    selected: "Global",
+    scope: "Global",
     items: ["Global", "Local"],
-    sources: [],
-    sourcelist: [],
-    news: [],
-    baseUrl: "http://sym-track.herokuapp.com/api/news?country=Global",
-    country: ""
+    sources: []
   }),
   methods: {
     async scopeChange() {
-      if (this.selected == this.items[0]) {
-        this.page = 1;
-        this.baseUrl = "http://sym-track.herokuapp.com/api/news?country=Global";
-        this.getNewsByPage(this.page);
-      } else {
-        if (this.country == "") {
-          await axios.get("http://ip-api.com/json").then(response => {
-            this.country = response.data.country;
-            this.baseUrl =
-              "http://sym-track.herokuapp.com/api/news?country=" + this.country;
-            this.getNewsByPage(this.page);
-          });
-        } else {
-          this.baseUrl =
-            "http://sym-track.herokuapp.com/api/news?country=" + this.country;
-          this.getNewsByPage(this.page);
-        }
-      }
+      this.getNewsByPage(this.page);
     },
     sourceChange() {
-      if (this.sources.length !== 0) {
-        this.baseUrl += "&source=" + this.sources[0];
-      } else {
-        if (this.selected == "Global") {
-          this.baseUrl =
-            "http://sym-track.herokuapp.com/api/news?country=Global";
-        } else {
-          this.baseUrl =
-            "http://sym-track.herokuapp.com/api/news?country=Ethiopia";
-        }
-      }
       this.getNewsByPage(this.page);
     },
     getTime(postDate) {
       postDate = moment(String(postDate)).format("MM/DD/YYYY hh:mm");
       return postDate;
     },
-    getNewsByPage(page_num) {
-      if (this.selected == "Global") {
-        axios.get(this.baseUrl + "&page=" + page_num).then(response => {
-          this.news = response.data.data;
-          return this.news;
-        });
-      } else {
-        axios.get(this.baseUrl + "&page=" + page_num).then(response => {
-          this.news = response.data.data;
-          return this.news;
-        });
-      }
+    getNewsByPage(page) {
+      store.dispatch('setNews', {page: page, country: this.scope, source: this.selectedSources});
     },
-    async getCountry() {
-      await axios.get("http://ip-api.com/json").then(response => {
-        this.country = response.data.country;
-      });
-    },
-    getSources() {
-      axios
-        .get("http://sym-track.herokuapp.com/api/news/sources")
-        .then(response => {
-          this.sourcelist = response.data;
-          console.log(this.sourcelist);
-        });
-    }
   },
   mounted() {
     this.getNewsByPage(this.page);
-    this.getSources();
+    store.dispatch('setCountry');
+    store.dispatch('setSources');
+  },
+  computed: {
+    country() {
+      return this.scope === 'Global' ? 'Global' : store.getters.getCountry;
+    },
+    sourceList() {
+      return store.getters.getSources;
+    },
+    news() {
+      return store.getters.getNews;
+    },
+    selectedSources() {
+      return this.sources.length === 0 ? '' : this.sources[0];
+    }
   }
 };
 </script>
