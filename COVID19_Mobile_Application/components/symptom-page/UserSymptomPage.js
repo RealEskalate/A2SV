@@ -32,7 +32,7 @@ export default class UserSymptomPage extends Component {
   //gets the list of symptoms from database
   fetchUserSymptoms(userId) {
     let newThis = this; // create variable for referencing 'this'
-    fetch("http://34.70.173.73:3000/api/symptomuser/user/" + userId, {
+    fetch("https://sym-track.herokuapp.com/api/symptomuser/user/" + userId, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -53,7 +53,7 @@ export default class UserSymptomPage extends Component {
       //return the corresponding mapping for each item in corresponding UI componenets.
       return (
         <ListItem
-          //key={i}
+          key={symptom.Symptom._id}
           title={symptom.Symptom.name}
           subtitle={symptom.Symptom.description}
           bottomDivider
