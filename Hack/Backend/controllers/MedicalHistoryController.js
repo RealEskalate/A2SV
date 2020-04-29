@@ -1,7 +1,6 @@
 const { MedicalHistory } = require("../models/MedicalHistory.js");
 
 exports.get_all_medicalhistory = async (req, res) => {
-    console.log("GEtting all histories");
     const medicalhistories = await MedicalHistory.find({});
     try {
         res.status(200).send(medicalhistories);
@@ -25,16 +24,16 @@ exports.post_medicalhistory = async (req, res) => {
             res.status(200).send(medicalhistory);
         }
     } catch (error) {
+        console.log("error isss " + error);
         res.status(500).send("Invalid request " + error);
     }
 };
 
 // Get medical history by id
 exports.get_medicalhistory_by_id = async (req, res) => {
-    console.log("Getting by id");
     try {
-        let medicalhistory = await MedicalHistory.findById({ _id: ObjectId(req.params.id) });
-        res.send(200).send(medicalhistory);
+        let medicalhistory = await MedicalHistory.findById({ _id: req.params.id });
+        res.status(200).send(medicalhistory);
     } catch (error) {
         res.status(500).send(error);
     }
@@ -42,10 +41,9 @@ exports.get_medicalhistory_by_id = async (req, res) => {
 
 //  Get medical history by name
 exports.get_medicalhistory_by_name = async (req, res) => {
-    console.log("getting by name");
     try {
-        let medicalhistory = await MedicalHistory.find({ name: req.params.name });
-        res.send(200).send(medicalhistory);
+        let medicalhistory = await MedicalHistory.findOne({ name: req.params.name });
+        res.status(200).send(medicalhistory);
     } catch (error) {
         res.status(500).send(error);
     }
@@ -53,13 +51,15 @@ exports.get_medicalhistory_by_name = async (req, res) => {
 
 exports.update_medicalhistory = async (req, res) => {
     try {
-        let medicalHistory = await MedicalHistory.findByIdAndUpdate(req.body._id, req.body);
+        let medicalHistory = await MedicalHistory.findOneAndUpdate(req.params._id, req.body);
         if (medicalHistory) {
             let updatedMedicalHistory = await MedicalHistory.findById(medicalHistory._id);
             res.send(updatedMedicalHistory);
+        } else {
+            res.send("Medical History not found");
         }
-        res.send("Medical History not found");
     } catch (error) {
+        console.log("error is " + error);
         res.status(500).send(error);
     }
 };
@@ -67,11 +67,12 @@ exports.update_medicalhistory = async (req, res) => {
 exports.delete_medicalhistory = async (req, res) => {
     try {
         let medicalhistory = await MedicalHistory.findByIdAndRemove(req.body._id);
-        if (!medicalHistory) {
+        if (!medicalhistory) {
             res.status(404).send("Medical history not found");
         }
         res.status(200).send(medicalhistory);
     } catch (error) {
+        console.log("Encountered an error " + error);
         res.status(500).send(error);
     }
 };
