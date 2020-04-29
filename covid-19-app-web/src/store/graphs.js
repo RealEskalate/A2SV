@@ -104,7 +104,7 @@ export default {
           // axios.get(`${process.env.VUE_APP_BASE_URL}/statistics`).then(
           axios
             .get(
-              `http://localhost:3000/api/statistics?criteria=${converter[cr.label]}&country=${country}`
+              `${process.env.VUE_APP_BASE_URL}/statistics?criteria=${converter[cr.label]}&country=${country}`,
             )
             .then(response => {
               commit("setSources", response.data);
