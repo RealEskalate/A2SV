@@ -84,75 +84,46 @@ export default {
     }
   },
   actions: {
-    setDisplayData({ commit }, { criteria, makeDataSet, mode }) {
-      const info = {
-        "Test Count": [
-          { t: "2018-11-24", y: 400 },
-          { t: "2019-01-29", y: 530 },
-          { t: "2019-10-02", y: 780 },
-          { t: "2019-11-11", y: 120 }
-        ],
-        "Confirmed Cases": [
-          { t: "2018-11-25", y: 343 },
-          { t: "2019-03-30", y: 653 },
-          { t: "2019-05-06", y: 212 },
-          { t: "2020-01-13", y: 32 }
-        ],
-        "Death Count": [
-          { t: "2018-11-25", y: 636 },
-          { t: "2019-02-03", y: 356 },
-          { t: "2019-10-06", y: 136 },
-          { t: "2020-01-13", y: 145 }
-        ],
-        "Recovery Count": [
-          { t: "2018-11-25", y: 457 },
-          { t: "2019-05-30", y: 533 },
-          { t: "2019-08-06", y: 234 },
-          { t: "2020-01-13", y: 346 }
-        ],
+    setDisplayData({ commit }, { criteria, country, makeDataSet, mode }) {
+      const converter = {
+        "Test Count": "Test_Count",
+        "Confirmed Cases": "Confirmed",
+        "Death Count": "Deaths",
+        "Recovery Count": "Recovered",
 
-        "Positive Rate": [
-          { t: "2018-11-24", y: 40 },
-          { t: "2019-01-29", y: 53 },
-          { t: "2019-10-02", y: 78 },
-          { t: "2019-11-11", y: 12 }
-        ],
-        "Recovery Rate": [
-          { t: "2018-11-25", y: 62 },
-          { t: "2019-03-30", y: 53 },
-          { t: "2019-05-06", y: 43 },
-          { t: "2020-01-13", y: 24 }
-        ],
-        "Hospitalization Rate": [
-          { t: "2018-11-25", y: 86 },
-          { t: "2019-02-03", y: 45 },
-          { t: "2019-10-06", y: 23 },
-          { t: "2020-01-13", y: 31 }
-        ],
-        "ICU Rate": [
-          { t: "2018-11-25", y: 34 },
-          { t: "2019-05-30", y: 43 },
-          { t: "2019-08-06", y: 55 },
-          { t: "2020-01-13", y: 78 }
-        ],
-        "Death Rate": [
-          { t: "2018-11-25", y: 97 },
-          { t: "2019-05-30", y: 43 },
-          { t: "2019-08-06", y: 11 },
-          { t: "2020-01-13", y: 41 }
-        ]
+        "Positive Rate": "Confirmed_Rate",
+        "Recovery Rate": "Recovered_Rate",
+        "Death Rate": "Deaths_Rate",
+        "Hospitalization Rate": "Hospitalization",
+        "ICU Rate": "ICU"
       };
 
       let collection = [];
-      criteria.forEach(function(cr) {
-        let input = {
-          label: cr.label,
-          color: cr.color,
-          data: info[cr.label]
-        };
-        // TODO fetch the data from API here
-        collection.push(makeDataSet(input));
-      });
+      criteria.forEach(
+        function(cr) {
+          // axios.get(`${process.env.VUE_APP_BASE_URL}/statistics`).then(
+          axios
+            .get(
+              `http://localhost:3000/api/statistics?criteria=${converter[cr.label]}&country=${country}`
+            )
+            .then(response => {
+              commit("setSources", response.data);
+              // commit('setNewsMeta', response.meta);
+
+              let input = {
+                label: cr.label,
+                color: cr.color,
+                data: response.data
+              };
+
+              collection.push(makeDataSet(input, "line"));
+            });
+          commit("setDiseaseCompare", collection);
+        },
+        error => {
+          console.log(error);
+        }
+      );
 
       if (mode === "rates") {
         commit("setDisplayRates", collection);
@@ -332,8 +303,6 @@ export default {
 
       axios.get(`${process.env.VUE_APP_BASE_URL}/diseases`).then(
         response => {
-          commit("setSources", response.data);
-          // commit('setNewsMeta', response.meta);
           let collection = [];
           response.data.forEach(function(load) {
             let input = {
