@@ -30,7 +30,7 @@
           <display mode="rates" y_label="Percent" />
         </v-tab-item>
         <v-tab-item style="min-height: 700px">
-          <country-compare x_axis_type="category" />
+          <country-compare />
         </v-tab-item>
         <v-tab-item style="min-height: 700px">
           <disease-compare
