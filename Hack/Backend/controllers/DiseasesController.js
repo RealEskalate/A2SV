@@ -27,7 +27,6 @@ exports.get_diseases = async (req, res) => {
         deaths: deaths,
         recovered: recovered,
         affected: affected_countries,
-        fatality: (deaths / confirmed) * 100,
       });
       diseases.push(covid);
     })
@@ -42,7 +41,6 @@ exports.get_diseases = async (req, res) => {
       deaths: 11310,
       recovered: 17300,
       affected: 19,
-      fatality: (11310 / 28610) * 100,
     })
   );
   //Sars
@@ -53,7 +51,6 @@ exports.get_diseases = async (req, res) => {
       deaths: 774,
       recovered: 7324,
       affected: 29,
-      fatality: (774 / 8098) * 100,
     })
   );
   //Mers
@@ -64,7 +61,6 @@ exports.get_diseases = async (req, res) => {
       deaths: 858,
       recovered: 1636,
       affected: 27,
-      fatality: (858 / 2494) * 100,
     })
   );
   res.send(diseases);

@@ -22,10 +22,6 @@ const diseasesSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  fatality: {
-    type: Number,
-    required: true,
-  },
 });
 
 var DiseaseModel = mongoose.model("Disease", diseasesSchema);
