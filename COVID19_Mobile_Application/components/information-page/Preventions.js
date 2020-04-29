@@ -6,8 +6,8 @@ export default function Preventions() {
   return (
     <ScrollView>
       <Card
-        title='Preventions'
-        image={require('../../assets/Prevention.jpg')}
+        // title='Preventions'
+        image={require('./icons/handWash.gif')}
         containerStyle={{ margin: 0 }}>
         <ScrollView>
           <Text style={{ marginBottom: 10 }}>

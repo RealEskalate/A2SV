@@ -21,27 +21,11 @@ const parser = new Parser({
 exports.get_all_news = async (req, res) => {    
     let news = []; 
     
-    //also query for news from google news
-    let news_google;
-    if(req.query.country){
-        news_google = await parser.parseURL(`https://news.google.com/rss/search?q=covid ${req.query.country}`);
-    }else{
-        news_google = await parser.parseURL(`https://news.google.com/rss/search?q=covid`);
-    }
-    
-    news_google.items.forEach(element => {
-        news.push(new News({
-            title: element.title,
-            source: element.source,
-            description: element.description,
-            date: element.pubDate,
-            country: req.query.country || "Global",
-            reference_link: element.link
-        }));
-    });
+    // query for news from other sources
+    news = news.concat(await fetchGoogleNews(req));
+    news = news.concat(await fetchCDCNews());
 
-    // const policies = await News.find()
-    const policies = await News.find();
+    const policies = await News.find(); 
     news = news.concat(policies);
 
     try{
@@ -50,6 +34,20 @@ exports.get_all_news = async (req, res) => {
         res.status(500).send(err.toString());
     }
 };
+
+exports.get_sources = async (req, res) => {
+    let sources = await News.find().distinct('source');
+    let googleNews = await fetchGoogleNews(req);
+    let googleNewsSources = [...new Set(googleNews.map(item => item.source))];
+    sources = sources.concat(googleNewsSources);
+    sources.push("CDC Newsroom");
+
+    try{
+        res.send(sources);
+    }catch (err){
+        res.status(500).send(err.toString());
+    }
+}
 
 // Post a news (only for testing....)
 exports.post_news = async (req, res) => {
@@ -150,7 +148,7 @@ async function populateDatabase(){
             case "COMMENTS":
                 currentPolicy.description = value;
                 break;
-            case "DATE_IMPLEMENTED":
+            case "ENTRY_DATE":
                 currentPolicy.date = value;
                 break;
             case "SOURCE":
@@ -184,6 +182,64 @@ function paginateAndFilter(data, req){
         );
     }
 
-    return data.slice((page - 1) * size, page * size);
+    data.sort((a,b) => (a.date < b.date) ? 1 : ((b.date < a.date) ? -1 : 0)); 
+
+    let result = {
+        data_count : data.length,
+        page_size : size,
+        current_page : page,
+        data : data.slice((page - 1) * size, page * size)
+    }
+
+    return result;
 
 }
+
+async function fetchGoogleNews(req){
+    let news = [];    
+    
+    let news_google;
+    if(req.query.country){
+        news_google = await parser.parseURL(`https://news.google.com/rss/search?q=covid ${req.query.country}`);
+    }else{
+        news_google = await parser.parseURL(`https://news.google.com/rss/search?q=covid`);
+    }
+
+    news_google.items.forEach(element => {
+        news.push(new News({
+            title: element.title,
+            source: element.source,
+            description: element.description,
+            date: element.pubDate,
+            country: req.query.country || "Global",
+            reference_link: element.link
+        }));
+    });
+
+    return news;
+}
+
+
+async function fetchCDCNews(){
+    let news = []; 
+    
+    let news_cdc;
+
+    news_cdc = await parser.parseURL(`https://tools.cdc.gov/api/v2/resources/media/132608.rss`);
+    
+    news_cdc.items.forEach(element => {
+        if(element.categories.includes("COVID-19")){
+            news.push(new News({
+                title: element.title,
+                source: "CDC Newsroom",
+                description: element.description,
+                date: element.pubDate,
+                country: "Global",
+                reference_link: element.link
+            }));
+        }        
+    });
+
+    return news;
+}
+

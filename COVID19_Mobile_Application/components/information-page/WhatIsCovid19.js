@@ -1,13 +1,16 @@
 import * as React from "react";
 import { View, Text, Image, ScrollView } from "react-native";
 import { Card, ListItem, Button, Icon } from "react-native-elements";
+import ImageStyle from './styles/ImageStyle'
 
 export default function WhatIsCovid19() {
   return (
     <ScrollView>
       <Card
-        title="What is COVID-19?"
-        image={require("../../assets/covid.jpg")}
+        // title="What is COVID-19?"
+        image={
+          require("./icons/corona-red.gif")
+        }
         containerStyle={{ margin: 0 }}
       >
         <ScrollView>
