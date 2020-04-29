@@ -32,28 +32,28 @@ const getRate = async (criteria, startDate, endDate) => {
 exports.getCriticalStatistics = async (req) => {
     let startDate = new Date(Date.parse(set_start_date_for_countries(req).slice(6) + "T21:00:00.000Z"));
     let endDate = new Date(Date.parse(set_end_date_for_countries(req).slice(4) + "T21:00:00.000Z"));
-    let results = await getRate(req.body.criteria, startDate, endDate);
+    let results = await getRate(req.query.criteria, startDate, endDate);
     return results;
 }
 
 exports.getHealthStatistics = async (req) => {
     request_url = "";
 
-    if (req.body.country =="world"){
+    if (req.query.country.toLowerCase() =="world"){
         request_url="https://datahub.io/core/covid-19/r/worldwide-aggregated.csv"
         // request_url="https://datahub.io/core/covid-19/r/worldwide-aggregated.json"
         start_date= new Date(Date.parse(set_start_date_for_countries(req).slice(6)));
         end_date= new Date(Date.parse(set_end_date_for_countries(req).slice(4) ));
-        
+
         results=[]
-        let result = await parse_csv_data(request_url,results,start_date,end_date, req.body.criteria)
+        let result = await parse_csv_data(request_url,results,start_date,end_date, req.query.criteria)
         return results
     }else{
-        request_url+="https://api.covid19api.com/country/"+req.body.country.toLowerCase();
+        request_url+="https://api.covid19api.com/country/"+req.query.country.toLowerCase();
         request_url+= set_start_date_for_countries(req) //+"T00:00:00Z"
         request_url+= set_end_date_for_countries(req) //+"T00:00:00Z"
         results=[]
-        let result = await do_api_call(request_url, req.body.criteria,false,results);
+        let result = await do_api_call(request_url, req.query.criteria,false,results);
         return results;
     }
 
@@ -65,13 +65,13 @@ calculate_with_date_for_world = async(req, url) =>{
 
     end_date= new Date(set_end_date_for_countries(req).slice(4))
     end_date.setDate(end_date.getDate()-1)
-    
+
     console.log(startDate,end_date.toISOString().slice(0,10))
 
     result=[]
     while (start_date <= end_date){
         request_url=url+start_date.toISOString().slice(0,10)
-        let current_result= await do_api_call(request_url, req.body.criteria.toLowerCase(),true, result);
+        let current_result= await do_api_call(request_url, req.query.criteria.toLowerCase(),true, result);
         start_date.setDate(start_date.getDate()+1)
     }
 
@@ -79,8 +79,8 @@ calculate_with_date_for_world = async(req, url) =>{
 }
 
 function set_start_date_for_countries(req) {
-    if (req.body.start_date != null) {
-        return "?from=" + req.body.start_date;
+    if (req.query.start_date != null) {
+        return "?from=" + req.query.start_date;
     } else {
         date = new Date()
         date.setDate(date.getDate()-7)
@@ -91,9 +91,13 @@ function set_start_date_for_countries(req) {
 
 function set_end_date_for_countries(req) {
     // let set the end date for today since we are not yet able to do projection
-    date = new Date();
-    date.setHours( date.getHours() -7 + (date.getTimezoneOffset()/ 60) );
-    return "&to="+date.toISOString().slice(0,10)
+    if (req.query.end_date != null) {
+        return "&to=" + req.query.end_date;
+    } else {
+        date = new Date();
+        date.setHours(date.getHours() - 7 + (date.getTimezoneOffset() / 60));
+        return "&to=" + date.toISOString().slice(0, 10)
+    }
 }
 
 
