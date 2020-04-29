@@ -17,6 +17,8 @@ const parser = new Parser({
     }
 });
 
+let default_sources = ["CNN", "BBC News", "NPR", "EU News", "World Health Organization", "The Guardian", "Global News", "Science Daily", "MIT News"]
+
 // Get all news
 exports.get_all_news = async (req, res) => {    
     let news = []; 
@@ -40,7 +42,8 @@ exports.get_sources = async (req, res) => {
     let googleNews = await fetchGoogleNews(req);
     let googleNewsSources = [...new Set(googleNews.map(item => item.source))];
     sources = sources.concat(googleNewsSources);
-    sources.push("CDC Newsroom");
+    sources = default_sources.filter(x => sources.includes(x));
+    sources.unshift("CDC Newsroom");
 
     try{
         res.send(sources);
@@ -178,7 +181,7 @@ function paginateAndFilter(data, req){
 
     if(req.query.source){
         data = data.filter(
-            (item) => item.source === req.query.source
+            (item) => req.query.source.split(",").includes(item.source)
         );
     }
 
