@@ -1,11 +1,11 @@
-const webpack = require('webpack')
+const webpack = require("webpack");
 
 module.exports = {
   configureWebpack: {
     plugins: [
       new webpack.ProvidePlugin({
-        mapboxgl: 'mapbox-gl',
-      }),
-    ],
-  },
-}
+        mapboxgl: "mapbox-gl"
+      })
+    ]
+  }
+};

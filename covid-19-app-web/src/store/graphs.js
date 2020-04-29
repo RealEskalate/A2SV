@@ -1,3 +1,5 @@
+import axios from "axios";
+
 const state = {
   displayCounts: null,
   displayRates: null,
@@ -75,8 +77,7 @@ export default {
           "Confirmed Cases",
           "Death Count",
           "Recovered Count",
-          "Affected Countries",
-          "Fatality Rate"
+          "Affected Countries"
         ],
         datasets: payload
       };
@@ -321,56 +322,38 @@ export default {
       }
     },
 
-    setDiseaseCompare({ commit }, { diseases, makeDataSet }) {
-      let info = {
-        Corona: [
-          { x: "Confirmed Cases", y: 234 },
-          { x: "Death Count", y: 134 },
-          { x: "Recovered Count", y: 100 },
-          { x: "Affected Countries", y: 185 },
-          { x: "Fatality Rate", y: 10 }
-        ],
-        SARS: [
-          { x: "Confirmed Cases", y: 500 },
-          { x: "Death Count", y: 235 },
-          { x: "Recovered Count", y: 72 },
-          { x: "Affected Countries", y: 80 },
-          { x: "Fatality Rate", y: 5 }
-        ],
-        MERS: [
-          { x: "Confirmed Cases", y: 435 },
-          { x: "Death Count", y: 523 },
-          { x: "Recovered Count", y: 234 },
-          { x: "Affected Countries", y: 100 },
-          { x: "Fatality Rate", y: 7 }
-        ],
-        AIDS: [
-          { x: "Confirmed Cases", y: 745 },
-          { x: "Death Count", y: 532 },
-          { x: "Recovered Count", y: 231 },
-          { x: "Affected Countries", y: 53 },
-          { x: "Fatality Rate", y: 2 }
-        ],
-        Ebola: [
-          { x: "Confirmed Cases", y: 524 },
-          { x: "Death Count", y: 324 },
-          { x: "Recovered Count", y: 563 },
-          { x: "Affected Countries", y: 234 },
-          { x: "Fatality Rate", y: 64 }
-        ]
+    setDiseaseCompare({ commit }, { makeDataSet }) {
+      let diseaseColors = {
+        "COVID-19": [121, 134, 203],
+        EBOLA: [220, 231, 117],
+        SARS: [77, 208, 225],
+        MERS: [240, 98, 146]
       };
 
-      let collection = [];
-      diseases.forEach(function(d) {
-        let input = {
-          label: d.name,
-          color: d.color,
-          data: info[d.name]
-        };
-        // TODO fetch the data from API here
-        collection.push(makeDataSet(input, "bar"));
-      });
-      commit("setDiseaseCompare", collection);
+      axios.get(`${process.env.VUE_APP_BASE_URL}/diseases`).then(
+        response => {
+          commit("setSources", response.data);
+          // commit('setNewsMeta', response.meta);
+          let collection = [];
+          response.data.forEach(function(load) {
+            let input = {
+              label: load.title,
+              color: diseaseColors[load.title],
+              data: [
+                { x: "Confirmed Cases", y: load.confirmed },
+                { x: "Death Count", y: load.deaths },
+                { x: "Recovered Count", y: load.recovered },
+                { x: "Affected Countries", y: load.affected }
+              ]
+            };
+            collection.push(makeDataSet(input, "bar"));
+          });
+          commit("setDiseaseCompare", collection);
+        },
+        error => {
+          console.log(error);
+        }
+      );
     }
   }
 };
