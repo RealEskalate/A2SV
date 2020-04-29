@@ -13,7 +13,7 @@ mongoose.connect(
       console.log('Error connecting to database. ' + err);
     }
     else {
-      console.log('Connceted to Database! ' + config.mongoURI[process.env.NODE_ENV || 'development']);
+      console.log('Connected to Database! ' + config.mongoURI[process.env.NODE_ENV || 'development']);
     }
   }
 );
