@@ -178,7 +178,8 @@ export default {
       store.dispatch("setDisplayData", {
         criteria: this.criteria[this.mode],
         makeDataSet: this.makeDataSet,
-        mode: this.mode
+        mode: this.mode,
+        country: this.country
       });
     }
   },
