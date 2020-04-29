@@ -97,6 +97,7 @@ exports.get_symptomuser_by_symptom_id = async (req, res) => {
   } catch (err) {
     res.status(500).send(err);
   }
+
 };
 
 //Get a symptomuser by user_id
@@ -128,6 +129,7 @@ exports.get_symptomuser_by_user_id = async (req, res) => {
   } catch (err) {
     res.status(500).send(err);
   }
+
 };
 
 //Update a symptomuser by id
@@ -159,6 +161,7 @@ exports.update_symptomuser = async (req, res) => {
   } catch (err) {
     res.status(500).send(err);
   }
+
 };
 
 // Deleting a symptomuser

@@ -83,7 +83,9 @@ exports.post_location = async (req, res) => {
   //     res.status(401).send("Incorrect authentication key");
   //   }
   // });
-
+  if(!req.body.longitude||!req.body.latitude){
+    return res.status(500).send("Coordinates not given");
+  }
   const check = await Location.findOne({
     longitude: { $eq: req.body.longitude },
     latitude: { $eq: req.body.latitude },
@@ -102,7 +104,7 @@ exports.post_location = async (req, res) => {
       const result = await axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${location.longitude},${location.latitude}.json?types=poi&access_token=pk.eyJ1IjoiZmVyb3g5OCIsImEiOiJjazg0czE2ZWIwNHhrM2VtY3Y0a2JkNjI3In0.zrm7UtCEPg2mX8JCiixE4g`)
         .then(response => {
           if (response.data) {
-            if (response.data.features) {
+            if (response.data.features && response.data.features.length>0) {
               location.longitude = response.data.features[0].center[0];
               location.latitude = response.data.features[0].center[1];
               location.place_name = response.data.features[0].text;
@@ -128,8 +130,11 @@ exports.get_location_by_id = async (req, res) => {
   //   }
   // });
 
-  const location = await Location.findById(req.params.id);
   try {
+    const location = await Location.findById(req.params.id);
+    if(!location){
+      return res.status(500).send("Location not found");
+    }
     res.send(location);
   } catch (err) {
     res.status(500).send(err);
@@ -143,11 +148,14 @@ exports.get_location_by_coordinates = async (req, res) => {
   //   }
   // });
 
-  const locations = await Location.find({
-    latitude: { $eq: req.params.latitude },
-    longitude: { $eq: req.params.longitude },
-  });
   try {
+    const locations = await Location.find({
+      latitude: { $eq: req.params.latitude },
+      longitude: { $eq: req.params.longitude },
+    });
+    if(!locations || locations.length<1){
+      return res.status(500).send("Location not found with the given coordinates");
+    }
     res.send(locations);
   } catch (err) {
     res.status(500).send(err);
@@ -162,10 +170,18 @@ exports.update_location = async (req, res) => {
   // });
 
   try {
-    await Location.findByIdAndUpdate(req.body._id, req.body);
-    const location = await Location.save();
-    await Location.save();
-    res.send(location);
+    let location = await Location.findById(req.body._id);
+    if(!location){
+      return res.status(500).send("Location doesnot exist");      
+    }
+    location.set(req.body);
+    let check = await Location.findOne({latitude: location.latitude, longitude: location.longitude});
+    if(!check){
+      await location.save();
+      return res.send(location);
+    }
+    await Location.findByIdAndDelete(location._id);
+    res.send(check);
   } catch (err) {
     res.status(500).send(err);
   }
