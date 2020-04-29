@@ -16,11 +16,11 @@ let update_db = async function () {
 
     // find the most recent date to start filling after the date
     const recent_doc = await Statstics.findOne({}, {}, {sort: {date: -1}});
-       
+
     // set update from date to yesterday if statistics db is empty
     const update_from_date = (recent_doc == undefined) ? new Date(new Date() - 24 * 3600 * 1000) : recent_doc.date;
     console.log(update_from_date);
-    
+
     */
 
     // Updates for dates after this
@@ -109,34 +109,34 @@ exports.run_updates = run_updates;
 run_updates();
 
 exports.get_statistics = async (req, res) => {
-    if (req.body.criteria == "Confirmed" || req.body.criteria == "Recovered" || req.body.criteria == "Deaths") {
+    if (req.query.criteria == "Confirmed" || req.query.criteria == "Recovered" || req.query.criteria == "Deaths") {
         result = await healthParser.getHealthStatistics(req);
         return res.send(result);
-    } else if (req.body.criteria == "Confirmed_Rate" || req.body.criteria == "Recovered_Rate" || req.body.criteria == "Deaths_Rate") {
-        req.body.criteria = req.body.criteria.split("_")[0];
+    } else if (req.query.criteria == "Confirmed_Rate" || req.query.criteria == "Recovered_Rate" || req.query.criteria == "Deaths_Rate") {
+        req.query.criteria = req.query.criteria.split("_")[0];
         result = await healthParser.getHealthStatistics(req);
         let rateResult = calculate_rate(result);
         return res.send(rateResult);
     }
-    else if (req.body.criteria == "Hospitalization" || req.body.criteria == "ICU") {
+    else if (req.query.criteria == "Hospitalization" || req.query.criteria == "ICU") {
         result = await healthParser.getCriticalStatistics(req);
         return res.send(result);
     }
-    else if (req.body.criteria == "Test") {
+    else if (req.query.criteria == "Test") {
         let filter = {};
-        if (req.body.country !== undefined) {
-            filter.country = req.body.country;
+        if (req.query.country !== undefined) {
+            filter.country = req.query.country;
         } else {
             filter.country = "World"
         }
 
         filter.date = {
-            $gte: req.body.start_date !== undefined ? new Date(req.body.start_date) : new Date(new Date() - 7 * 24 * 3600 * 1000),
-            $lte: req.body.end_date !== undefined ? new Date(req.body.end_date) : new Date(new Date() - 24 * 3600 * 1000)
+            $gte: req.query.start_date !== undefined ? new Date(req.query.start_date) : new Date(new Date() - 7 * 24 * 3600 * 1000),
+            $lte: req.query.end_date !== undefined ? new Date(req.query.end_date) : new Date(new Date() - 24 * 3600 * 1000)
         }
 
-        filter.criteria = req.body.criteria.toUpperCase();
-        // Apply filter and send results 
+        filter.criteria = req.query.criteria.toUpperCase();
+        // Apply filter and send results
         const results_from_db = await Statistics.find(filter);
         date_formatter = new Intl.DateTimeFormat('en', { year: 'numeric', month: '2-digit', day: '2-digit' })
         let results = [];
@@ -154,6 +154,12 @@ exports.get_statistics = async (req, res) => {
             res.status(500).send(err);
         }
 
+    } else {
+        try {
+            res.send([]);
+        } catch (err) {
+            res.status(500).send(err);
+        }
     }
 }
 
