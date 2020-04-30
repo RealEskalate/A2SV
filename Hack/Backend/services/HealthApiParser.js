@@ -41,7 +41,6 @@ exports.getHealthStatistics = async (req) => {
 
     if (req.query.country.toLowerCase() =="world"){
         request_url="https://datahub.io/core/covid-19/r/worldwide-aggregated.csv"
-        // request_url="https://datahub.io/core/covid-19/r/worldwide-aggregated.json"
         start_date= new Date(Date.parse(set_start_date_for_countries(req).slice(6)));
         end_date= new Date(Date.parse(set_end_date_for_countries(req).slice(4) ));
 
@@ -49,34 +48,16 @@ exports.getHealthStatistics = async (req) => {
         let result = await parse_csv_data(request_url,results,start_date,end_date, req.query.criteria)
         return results
     }else{
-        request_url+="https://api.covid19api.com/country/"+req.query.country.toLowerCase();
-        request_url+= set_start_date_for_countries(req) //+"T00:00:00Z"
-        request_url+= set_end_date_for_countries(req) //+"T00:00:00Z"
+        request_url+="https://api.covid19api.com/total/country/"+req.query.country.toLowerCase();
+        start_date= new Date(Date.parse(set_start_date_for_countries(req).slice(6)));
+        end_date= new Date(Date.parse(set_end_date_for_countries(req).slice(4)));
         results=[]
-        let result = await do_api_call(request_url, req.query.criteria,false,results);
+        let result = await do_api_call(request_url, req.query.criteria,start_date, end_date,results);
         return results;
     }
 
 }
 
-calculate_with_date_for_world = async(req, url) =>{
-    startDate= set_start_date_for_countries(req).slice(6)
-    start_date= new Date(startDate)
-
-    end_date= new Date(set_end_date_for_countries(req).slice(4))
-    end_date.setDate(end_date.getDate()-1)
-
-    console.log(startDate,end_date.toISOString().slice(0,10))
-
-    result=[]
-    while (start_date <= end_date){
-        request_url=url+start_date.toISOString().slice(0,10)
-        let current_result= await do_api_call(request_url, req.query.criteria.toLowerCase(),true, result);
-        start_date.setDate(start_date.getDate()+1)
-    }
-
-    return result
-}
 
 function set_start_date_for_countries(req) {
     if (req.query.start_date != null) {
@@ -91,17 +72,19 @@ function set_start_date_for_countries(req) {
 
 function set_end_date_for_countries(req) {
     // let set the end date for today since we are not yet able to do projection
-    if (req.query.end_date != null) {
+    end_date= new Date(req.query.end_date)
+    date = new Date();
+    date.setHours(date.getHours() - 7 + (date.getTimezoneOffset() / 60));
+
+    if (req.query.end_date != null && end_date < date) {
         return "&to=" + req.query.end_date;
     } else {
-        date = new Date();
-        date.setHours(date.getHours() - 7 + (date.getTimezoneOffset() / 60));
         return "&to=" + date.toISOString().slice(0, 10)
     }
 }
 
 
-const do_api_call= async(request_url,criteria,world, results)=>{
+const do_api_call= async(request_url,criteria,start_date, end_date, results)=>{
     console.log(criteria,request_url)
     try {
         const result = await axios.get(request_url).then(response => {
@@ -109,17 +92,15 @@ const do_api_call= async(request_url,criteria,world, results)=>{
             if (!data) {
                 return [];
             }
-            else if(world){
-                entry= { "t":response.data["data"]["date"],
-                        "y":response.data["data"][criteria]}
-                results.push(entry);
-                return results
-            }
             data.forEach((item)=>{
-                results.push({
-                    "t": item.Date,
-                    "y": item[`${criteria}`]
-                });
+                date= new Date(item.Date)
+
+                if ( date >= start_date && date <= end_date){
+                    results.push({
+                        "t": item.Date,
+                        "y": item[`${criteria}`]
+                    });
+                }
             });
         }).catch(error => { console.log(error); });
     } catch (err) {
