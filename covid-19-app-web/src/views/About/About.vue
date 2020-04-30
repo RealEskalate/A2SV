@@ -138,14 +138,14 @@ export default {
           icon: "mdi-search-web",
           title: "A2SV Website",
           description:
-            "Check out our website for this and that and this as well for this and that and this as well for this and that and this as well",
+            "Check out the team's website to learn more about our team, our program, our team members and how we started our journey.",
           links: [{ text: "Visit Website", href: "http://a2sv.org/" }]
         },
         {
           icon: "mdi-cloud-download-outline",
           title: "Download The App",
           description:
-            "The App will have this and that and thisThe App will have this and that and thisThe App will have this and that and this and that",
+            "Download our Symptom-tracking app, easily locate areas with a high density of symptoms using real-time data, and keep each other safe.",
           links: [
             { text: "Get on Play Store", href: "#" },
             { text: "Get on App Store", href: "#" }
@@ -154,7 +154,8 @@ export default {
         {
           icon: "mdi-youtube",
           title: "Watch the Video",
-          description: "Learn more about the app and why it exists.",
+          description:
+            "Learn how our app help mitigate the spread of COVID-19 and flatten the curve especially in countries with limited testing capacity.",
           links: [{ text: "Go to Youtube", href: "#" }]
         }
       ],

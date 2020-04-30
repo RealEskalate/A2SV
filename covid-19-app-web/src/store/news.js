@@ -44,7 +44,6 @@ const actions = {
         response => {
           commit('setSources', response.data);
           // commit('setNewsMeta', response.meta);
-          console.log(response);
         },
         error => {
           console.log(error);
@@ -61,7 +60,6 @@ const actions = {
         response => {
           commit('setNews', response.data.data);
           // commit('setNewsMeta', response.meta);
-          console.log(response);
         },
         error => {
           console.log(error);
