@@ -109,7 +109,7 @@ exports.run_updates = run_updates;
 run_updates();
 
 exports.get_statistics = async (req, res) => {
-    if (req.query.criteria == "Confirmed" || req.query.criteria == "Recovered" || req.query.criteria == "Deaths") {
+    if (req.query.criteria == "Confirmed" || req.query.criteria == "Recovered" || req.query.criteria == "Deaths" || req.query.criteria == "All") {
         result = await healthParser.getHealthStatistics(req);
         return res.send(result);
     } else if (req.query.criteria == "Confirmed_Rate" || req.query.criteria == "Recovered_Rate" || req.query.criteria == "Deaths_Rate") {
