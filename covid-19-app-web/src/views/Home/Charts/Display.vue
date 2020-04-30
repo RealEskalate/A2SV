@@ -27,9 +27,9 @@
           <template v-slot:activator="{ on }">
             <v-text-field
               solo
-              v-model="start_date"
-              label="Start Date"
-              hint="Start Date"
+              v-model="dateRangeText"
+              label="Date Range"
+              hint="Date Range"
               persistent-hint
               prepend-inner-icon="mdi-calendar"
               readonly
@@ -37,11 +37,42 @@
             />
           </template>
           <v-date-picker
-            @input="fetchData"
-            v-model="start_date"
             :max="maxDate"
+            range
+            no-title
+            v-model="date_range"
+            @input="
+              () => {
+                if (date_range.length === 2 && date_range[0] && date_range[1])
+                  fetchData();
+              }
+            "
           />
         </v-menu>
+        <!--        <v-menu-->
+        <!--          :close-on-content-click="false"-->
+        <!--          transition="scale-transition"-->
+        <!--          max-width="290px"-->
+        <!--          min-width="290px"-->
+        <!--        >-->
+        <!--          <template v-slot:activator="{ on }">-->
+        <!--            <v-text-field-->
+        <!--              solo-->
+        <!--              v-model="start_date"-->
+        <!--              label="Start Date"-->
+        <!--              hint="Start Date"-->
+        <!--              persistent-hint-->
+        <!--              prepend-inner-icon="mdi-calendar"-->
+        <!--              readonly-->
+        <!--              v-on="on"-->
+        <!--            />-->
+        <!--          </template>-->
+        <!--          <v-date-picker-->
+        <!--            @input="fetchData"-->
+        <!--            v-model="start_date"-->
+        <!--            :max="maxDate"-->
+        <!--          />-->
+        <!--        </v-menu>-->
       </v-col>
       <!--      <v-col cols="12" md="6">-->
       <!--        <v-select-->
@@ -102,11 +133,7 @@
     </v-row>
     <v-row>
       <v-col cols="12" md="9">
-        <line-chart
-          :height="480"
-          :chart-data="mode === 'counts' ? counts : rates"
-          :options="chartOptions"
-        />
+        <line-chart :height="480" :chart-data="data" :options="chartOptions" />
       </v-col>
       <v-col cols="12" md="3">
         <v-card flat tile>
@@ -152,16 +179,15 @@ export default {
   },
   data() {
     return {
+      data: null,
       start_date: moment(new Date())
-        .subtract(1, "month")
+        .subtract(3, "month")
         .format("YYYY-MM-DD"),
       date_range: [
         moment(new Date())
-          .subtract(1, "month")
+          .subtract(3, "month")
           .format("YYYY-MM-DD"),
-        moment(new Date())
-          .add(1, "week")
-          .format("YYYY-MM-DD")
+        moment(new Date()).format("YYYY-MM-DD")
       ],
       country: "World",
       age_range: "All",
@@ -174,13 +200,48 @@ export default {
         country: this.country
       });
     },
+    fillGraph() {
+      let datasets = [];
+      let load = this.mode === "counts" ? this.counts : this.rates;
+      this.criteria[this.mode].forEach(cr => {
+        let input = {
+          label: cr.label,
+          color: cr.color,
+          data: load[cr.label]
+        };
+        datasets.push(this.makeDataSet(input));
+      });
+      this.data = {
+        datasets: datasets
+      };
+    },
     fetchData() {
       store.dispatch("setDisplayData", {
         criteria: this.criteria[this.mode],
         makeDataSet: this.makeDataSet,
         mode: this.mode,
-        country: this.country
+        country: this.country,
+        start_date:
+          this.date_range[0] ||
+          moment(new Date())
+            .subtract(3, "month")
+            .format("YYYY-MM-DD"),
+        end_date: this.date_range[1] || moment(new Date()).format("YYYY-MM-DD")
       });
+    }
+  },
+  watch: {
+    counts: {
+      deep: true,
+      handler() {
+        this.fillGraph();
+      }
+    },
+    rates: {
+      deep: true,
+      handler() {
+        this.fillGraph();
+      }
     }
   },
   mounted() {
