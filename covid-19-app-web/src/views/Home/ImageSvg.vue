@@ -587,12 +587,11 @@ export default {
       };
     }
   },
-  mounted() {
+  created() {
     store.dispatch("setStates");
   },
   computed: {
     states() {
-      console.log(store.getters.getStates);
       return store.getters.getStates;
     }
   }
