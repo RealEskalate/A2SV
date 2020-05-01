@@ -20,6 +20,7 @@ const logRouter = require("./routes/LogRoutes");
 const userRouter = require("./routes/UserRoutes.js");
 const statisticsRouter = require("./routes/StatisticsRoutes");
 const diseasesRouter = require("./routes/DiseasesRoutes");
+const messageRouter = require("./routes/MessageRoutes.js");
 
 const logger = require('./middlewares/logger');
 const bodyParser = require("body-parser");
@@ -48,9 +49,10 @@ app.use(newsRouter);
 app.use(symptomRouter);
 app.use(symptomuserRouter);
 app.use(userRouter);
+app.use(messageRouter);
 
 app.listen(port, () => {
-  console.log("Server is running... at port " + port);
+    console.log("Server is running... at port " + port);
 });
 
 module.exports = app;

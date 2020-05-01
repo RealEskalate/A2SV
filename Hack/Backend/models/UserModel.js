@@ -32,6 +32,10 @@ const userSchema = new mongoose.Schema({
     default: "UNDER_30",
     required: true,
   },
+  current_country : {
+    type: String,
+    required: false
+  }
 });
 
 function validateUser(user) {

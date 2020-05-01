@@ -102,9 +102,26 @@ export default {
   methods: {
     async scopeChange() {
       this.getNewsByPage(this.page);
+      },
+      sourceChange() {
+        this.getNewsByPage(this.page);
+      },
+      getTime(postDate) {
+        postDate = moment(String(postDate)).format('LLLL');
+        return postDate;
+      },
+      getNewsByPage(page) {
+        store.dispatch("setNews", {
+          page: page,
+          country: this.country,
+          source: this.selectedSources
+        });
+      }
     },
-    sourceChange() {
+    mounted() {
       this.getNewsByPage(this.page);
+      store.dispatch("setCountry");
+      store.dispatch("setSources");
     },
     getTime(postDate) {
       postDate = moment(String(postDate)).format("MM/DD/YYYY hh:mm");
@@ -136,20 +153,29 @@ export default {
     selectedSources() {
       return this.sources.length === 0 ? [] : [this.sources];
     }
-  }
-};
+  };
 </script>
 
 <style scoped>
-.wrap-text {
-  -webkit-line-clamp: unset !important;
-  font-size: 1.15rem !important;
-  line-height: 1.5rem;
-}
-.recent-v-card-text {
-  color: darkgray;
-}
-.v-paggination {
-  justify-content: start;
-}
+    .wrap-text {
+        -webkit-line-clamp: unset !important;
+        font-size: 1.15rem !important;
+        line-height: 1.5rem;
+    }
+
+    .recent-v-card-text {
+        color: darkgray;
+    }
+
+    .v-paggination {
+        justify-content: start;
+    }
+
+    .shadow {
+        box-shadow: 0 5px 15px 10px #eae6e6;
+    }
+
+    .headline {
+      font-family: Nunito, Roboto, sans-serif;
+    }
 </style>
