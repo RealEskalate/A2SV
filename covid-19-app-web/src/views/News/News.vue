@@ -135,7 +135,7 @@
       return store.getters.getNews;
     },
     selectedSources() {
-      return this.sources.length === 0 ? '' : this.sources[0];
+      return this.sources.length === 0 ? [] : [this.sources];
     }
   }
 };
