@@ -18,7 +18,7 @@ const getRate = (criteria, startDate, endDate, res, respond) => {
                 stats.push(stat);
             });
 
-            let filteredStats = stats.filter(function(stat) {
+            let filteredStats = stats.filter(function (stat) {
                 let date = new Date(stat.t);
                 console.log(date >= startDate && date <= endDate);
                 return (date >= startDate && date <= endDate);
@@ -138,10 +138,19 @@ const parse_csv_data = (request_url, start_date, end_date, criteria, res, respon
                 data.forEach((item) => {
                     const date = new Date(item.Date);
                     if (date >= start_date && date <= end_date) {
-                        results.push({
-                            t: item.Date,
-                            y: item[criteria]
-                        });
+                        if (criteria == "All") {
+                            results.push({
+                                t: item.Date,
+                                Confirmed: item['Confirmed'],
+                                Recovered: item['Recovered'],
+                                Deaths: item['Deaths']
+                            });
+                        } else {
+                            results.push({
+                                t: item.Date,
+                                y: item[criteria]
+                            });
+                        }
                     }
                 });
                 respond(res, results, rates)
@@ -154,7 +163,7 @@ const parse_csv_data = (request_url, start_date, end_date, criteria, res, respon
 };
 
 
-exports.countrySlugList = async(request_url, name, field, res, respond) => {
+exports.countrySlugList = async (request_url, name, field, res, respond) => {
     console.log(field, request_url);
     try {
         let results = []
