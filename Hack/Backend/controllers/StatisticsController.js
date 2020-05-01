@@ -3,7 +3,6 @@ const XLSX = require('xlsx');
 const fs = require('fs');
 const path = require('path');
 const schedule = require('node-schedule');
-const axios = require("axios");
 const Statistics = require("../models/StatisticsModel");
 const healthParser = require("../services/HealthApiParser");
 
@@ -16,32 +15,32 @@ let update_db = async function () {
 
     // find the most recent date to start filling after the date
     const recent_doc = await Statstics.findOne({}, {}, {sort: {date: -1}});
-       
+
     // set update from date to yesterday if statistics db is empty
     const update_from_date = (recent_doc == undefined) ? new Date(new Date() - 24 * 3600 * 1000) : recent_doc.date;
     console.log(update_from_date);
-    
+
     */
 
     // Updates for dates after this
     const update_from_date = new Date(new Date() - 24 * 3600 * 1000);
 
-    var workbook = XLSX.readFile(path.join(__dirname, 'assets', 'owid-covid-data.xlsx'), { sheetStubs: true, cellDates: true });
+    let workbook = XLSX.readFile(path.join(__dirname, 'assets', 'owid-covid-data.xlsx'), { sheetStubs: true, cellDates: true });
 
-    var worksheet = workbook.Sheets["Sheet1"];
-    var headers = {};
-    var curr_location;
-    var curr_date;
+    let worksheet = workbook.Sheets["Sheet1"];
+    let headers = {};
+    let curr_location;
+    let curr_date;
 
-    for (z in worksheet) {
-        if (z[0] === '!' || worksheet[z].v == undefined) continue;
-        var criteria = '';
-        var row = parseInt(z.substring(1));
-        var value = worksheet[z].v;
-        var col = z[0];
+    for (let z in worksheet) {
+        if (z[0] === '!' || worksheet[z].v === undefined) continue;
+        let criteria = '';
+        let row = parseInt(z.substring(1));
+        let value = worksheet[z].v;
+        let col = z[0];
 
         // Populate headers dictonary if first row
-        if (row == 1 && value) {
+        if (row === 1 && value) {
             headers[col] = value;
             continue;
         }
@@ -69,7 +68,7 @@ let update_db = async function () {
 
         // Create stat and save it in the db
         if (criteria !== '' && curr_date > update_from_date) {
-            var new_stat = new Statstics({
+            let new_stat = new Statistics({
                 country: curr_location,
                 age_group: "ALL",
                 criteria: criteria,
@@ -84,7 +83,7 @@ let update_db = async function () {
         }
     }
     console.log("Finished uploading testing stat");
-}
+};
 // Fetchs the latest csv
 let fetchTestingInfo = async function () {
     const file = fs.createWriteStream(path.join(__dirname, 'assets', "owid-covid-data.xlsx"));
@@ -94,7 +93,7 @@ let fetchTestingInfo = async function () {
             await update_db();
         });
     });
-}
+};
 
 // Schedules fetching everyday
 const run_updates = () => {
@@ -109,56 +108,50 @@ exports.run_updates = run_updates;
 run_updates();
 
 exports.get_statistics = async (req, res) => {
-    if (req.body.criteria == "Confirmed" || req.body.criteria == "Recovered" || req.body.criteria == "Deaths") {
-        result = await healthParser.getHealthStatistics(req);
-        return res.send(result);
-    } else if (req.body.criteria == "Confirmed_Rate" || req.body.criteria == "Recovered_Rate" || req.body.criteria == "Deaths_Rate") {
-        req.body.criteria = req.body.criteria.split("_")[0];
-        result = await healthParser.getHealthStatistics(req);
-        let rateResult = calculate_rate(result);
-        return res.send(rateResult);
+    if (["Confirmed", "Recovered", "Deaths", "All"].includes(req.query.criteria)) {
+        healthParser.getHealthStatistics(req, res, respond);
+    } else if (["Confirmed_Rate", "Recovered_Rate", "Deaths_Rate"].includes(req.query.criteria)) {
+        req.query.criteria = req.query.criteria.split("_")[0];
+        healthParser.getHealthStatistics(req, res, respond, true);
     }
-    else if (req.body.criteria == "Hospitalization" || req.body.criteria == "ICU") {
-        result = await healthParser.getCriticalStatistics(req);
-        return res.send(result);
+    else if (["Hospitalization", "ICU"].includes(req.query.criteria)) {
+        healthParser.getCriticalStatistics(req, res, respond);
     }
-    else if (req.body.criteria == "Test") {
-        let filter = {};
-        if (req.body.country !== undefined) {
-            filter.country = req.body.country;
-        } else {
-            filter.country = "World"
-        }
+    else if (req.query.criteria === "Test") {
+        let filter = {
+            country: req.query.country || "World",
+            date: {
+                $gte: req.query.start_date !== undefined ? new Date(req.query.start_date) : new Date(new Date() - 7 * 24 * 3600 * 1000),
+                $lte: req.query.end_date !== undefined ? new Date(req.query.end_date) : new Date(new Date() - 24 * 3600 * 1000)
+            },
+            criteria: req.query.criteria.toUpperCase()
+        };
 
-        filter.date = {
-            $gte: req.body.start_date !== undefined ? new Date(req.body.start_date) : new Date(new Date() - 7 * 24 * 3600 * 1000),
-            $lte: req.body.end_date !== undefined ? new Date(req.body.end_date) : new Date(new Date() - 24 * 3600 * 1000)
-        }
-
-        filter.criteria = req.body.criteria.toUpperCase();
-        // Apply filter and send results 
+        // Apply filter and send results
         const results_from_db = await Statistics.find(filter);
-        date_formatter = new Intl.DateTimeFormat('en', { year: 'numeric', month: '2-digit', day: '2-digit' })
+        const date_formatter = new Intl.DateTimeFormat('en', { year: 'numeric', month: '2-digit', day: '2-digit' })
         let results = [];
         results_from_db.forEach((element) => {
-            date = date_formatter.formatToParts(element.date);
+            let date = date_formatter.formatToParts(element.date);
             date = date[4]["value"] + "-" + date[0]["value"] + "-" + date[2]["value"];
             results.push({
                 t: date,
                 y: element.value
             });
-        })
+        });
         try {
-            res.send(results);
+            respond(res, results)
         } catch (err) {
-            res.status(500).send(err);
+            respond(res, err, false, 500);
         }
 
+    } else {
+        respond(res, null, false, 400);
     }
-}
+};
 
 
-calculate_rate = (result) => {
+const calculate_rate = (result) => {
     let rateArray = [];
     for (let index = 1; index < result.length; index++) {
         const upto_yesterday = result[index - 1].y;
@@ -170,7 +163,7 @@ calculate_rate = (result) => {
             t: result[index].t,
             y: rate
         });
-        if (index == 1) {
+        if (index === 1) {
             rateArray.push({
                 t: result[index].t,
                 y: rate
@@ -179,3 +172,10 @@ calculate_rate = (result) => {
     }
     return rateArray;
 };
+
+function respond(res, payload, rates = false, status = 200) {
+    if (rates) {
+        payload = calculate_rate(payload)
+    }
+    res.status(status).send(payload);
+}

@@ -16,11 +16,6 @@ const map_data_schema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    Status: {
-        type: String,
-        enum: ["CONFIRMED", "RECOVERED", "DEATHS"],
-        required: true
-    },
     TimeSeries: {
         type: Object,
         required: true
