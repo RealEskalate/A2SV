@@ -129,8 +129,12 @@ export default {
           let data = [];
           for (let i in response.data) {
             let val = response.data[i];
-            let one = val.TimeSeries["2017"] ? val.TimeSeries["2017"].toFixed(2): null;
-            let two = val.TimeSeries["2015"] ? val.TimeSeries["2015"].toFixed(2): null;
+            let one = val.TimeSeries["2017"]
+              ? val.TimeSeries["2017"].toFixed(2)
+              : null;
+            let two = val.TimeSeries["2015"]
+              ? val.TimeSeries["2015"].toFixed(2)
+              : null;
             data.push({
               key: val.Indicator.split("(")[0],
               value: one || two
