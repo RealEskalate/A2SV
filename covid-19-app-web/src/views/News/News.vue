@@ -19,7 +19,7 @@
           <v-toolbar color="primary" dark>
             <v-toolbar-title>News</v-toolbar-title>
 
-            <v-spacer/>
+            <v-spacer />
           </v-toolbar>
 
           <v-list two-line>
@@ -42,16 +42,11 @@
                     />
 
                     <v-list-item-subtitle v-text="item.source" />
-                    <v-list-item-subtitle
-                      v-text="getTime(item.date)"
-                    />
+                    <v-list-item-subtitle v-text="getTime(item.date)" />
                   </v-list-item-content>
                 </v-list-item>
 
-                <v-divider
-                  v-if="index + 1 < news.length"
-                  :key="index"
-                />
+                <v-divider v-if="index + 1 < news.length" :key="index" />
               </template>
             </v-list-item-group>
           </v-list>
