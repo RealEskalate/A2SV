@@ -14,7 +14,7 @@
             </v-row>
         </section>
         <v-row no-gutters>
-            <v-col :cols="8">
+            <v-col md="8" sm="12">
                 <div v-for="_news in news" :key="_news._id">
                     <v-card max-width="650" class="shadow">
                         <v-list-item>
@@ -52,7 +52,7 @@
                 ></v-pagination>
             </v-col>
 
-            <v-col :cols="4">
+            <v-col md="4" sm="12" class="mt-sm-5">
                 <v-card class="shadow">
                     <v-tabs centered grow>
                         <v-tab>Recent</v-tab>
