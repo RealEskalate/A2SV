@@ -252,7 +252,9 @@ export default {
     counts: () => store.getters.getDisplayCounts,
     rates: () => store.getters.getDisplayRates,
     countryResources: () => store.getters.getCountryResources,
-    maxDate: () => moment(new Date()).format("YYYY-MM-DD")
+    dateRangeText() {
+      return this.rangeToText(this.date_range[0], this.date_range[1]);
+    }
   }
 };
 </script>

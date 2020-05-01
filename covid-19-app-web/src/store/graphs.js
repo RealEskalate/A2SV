@@ -1,38 +1,53 @@
 import axios from "axios";
+import moment from "moment";
 
-const state = {
-  displayCounts: {
-    "Test Count": [],
-    "Confirmed Cases": [],
-    "Death Count": [],
-    "Recovery Count": []
-  },
-  displayRates: {
-    "Positive Rate": [],
-    "Recovery Rate": [],
-    "Death Rate": []
-  },
-  countryResources: null,
-  countryCompare: null,
-  diseaseCompare: null
+const converter = {
+  "Test Count": "Test",
+  "Confirmed Cases": "Confirmed",
+  "Death Count": "Deaths",
+  "Recovery Count": "Recovered",
+
+  "Positive Rate": "Confirmed_Rate",
+  "Recovery Rate": "Recovered_Rate",
+  "Death Rate": "Deaths_Rate",
+  "Hospitalization Rate": "Hospitalization",
+  "ICU Rate": "ICU"
 };
 
 export default {
-  state,
+  state: {
+    displayCounts: {
+      "Test Count": [],
+      "Confirmed Cases": [],
+      "Death Count": [],
+      "Recovery Count": []
+    },
+    displayRates: {
+      "Positive Rate": [],
+      "Recovery Rate": [],
+      "Death Rate": []
+    },
+    countryCompare: {
+      one: [],
+      two: []
+    },
+    countryResources: null,
+    diseaseCompare: null
+  },
   getters: {
-    getDisplayCounts() {
+    getDisplayCounts(state) {
       return state.displayCounts;
     },
-    getDisplayRates() {
+    getDisplayRates(state) {
       return state.displayRates;
     },
-    getCountryResources() {
-      return state.countryResources;
-    },
-    getCountryCompare() {
+    getCountryCompare(state) {
       return state.countryCompare;
     },
-    getDiseaseCompare() {
+    getCountryResources(state) {
+      return state.countryResources;
+    },
+    getDiseaseCompare(state) {
       return state.diseaseCompare;
     }
   },
@@ -46,35 +61,8 @@ export default {
     setCountryResources(state, payload) {
       state.countryResources = payload;
     },
-    setCountryOne(state, payload) {
-      if (!state.countryCompare) {
-        state.countryCompare = {
-          datasets: [payload]
-        };
-      } else if (state.countryCompare.datasets.length === 1) {
-        state.countryCompare = {
-          datasets: [payload, state.countryCompare.datasets[0]]
-        };
-      } else {
-        state.countryCompare = {
-          datasets: [payload, state.countryCompare.datasets[1]]
-        };
-      }
-    },
-    setCountryTwo(state, payload) {
-      if (!state.countryCompare) {
-        state.countryCompare = {
-          datasets: [payload]
-        };
-      } else if (state.countryCompare.datasets.length === 1) {
-        state.countryCompare = {
-          datasets: [state.countryCompare.datasets[0], payload]
-        };
-      } else {
-        state.countryCompare = {
-          datasets: [state.countryCompare.datasets[0], payload]
-        };
-      }
+    setCountryCompare(state, { key, payload }) {
+      state.countryCompare[key] = payload;
     },
     setDiseaseCompare(state, payload) {
       state.diseaseCompare = {
@@ -93,23 +81,10 @@ export default {
       { commit },
       { criteria, country, start_date, end_date, mode }
     ) {
-      const converter = {
-        "Test Count": "Test",
-        "Confirmed Cases": "Confirmed",
-        "Death Count": "Deaths",
-        "Recovery Count": "Recovered",
-
-        "Positive Rate": "Confirmed_Rate",
-        "Recovery Rate": "Recovered_Rate",
-        "Death Rate": "Deaths_Rate",
-        "Hospitalization Rate": "Hospitalization",
-        "ICU Rate": "ICU"
-      };
-
       for (let i = 0; i < criteria.length; i++) {
         let cr = criteria[i];
         axios
-          .get(`http://localhost:3000/api/statistics`, {
+          .get(`${process.env.VUE_APP_BASE_URL}/statistics`, {
             params: {
               criteria: converter[cr.label],
               country: country,
@@ -152,38 +127,27 @@ export default {
     },
     setCountryCompare(
       { commit },
-      { criteria, makeDataSet, country, color, mode }
+      { criteria, country, start_date, end_date, mode }
     ) {
-      const converter = {
-        "Test Count": "Test",
-        "Confirmed Cases": "Confirmed",
-        "Death Count": "Deaths",
-        "Recovery Count": "Recovered",
-
-        "Positive Rate": "Confirmed_Rate",
-        "Recovery Rate": "Recovered_Rate",
-        "Death Rate": "Deaths_Rate",
-        "Hospitalization Rate": "Hospitalization",
-        "ICU Rate": "ICU"
-      };
       axios
         .get(`${process.env.VUE_APP_BASE_URL}/statistics`, {
           params: {
             criteria: converter[criteria],
-            country: country
+            country: country,
+            start_date: start_date,
+            end_date: end_date
           }
         })
         .then(response => {
-          let input = {
-            label: country,
-            color: color,
-            data: response.data
-          };
-          if (mode === "one") {
-            commit("setCountryOne", makeDataSet(input));
-          } else {
-            commit("setCountryTwo", makeDataSet(input));
+          let data = [];
+          for (let i in response.data) {
+            let val = response.data[i];
+            data.push({
+              x: `Day ${moment(val.t).diff(moment(start_date), "days")}`,
+              y: val.y
+            });
           }
+          commit("setCountryCompare", { key: mode, payload: data });
         })
         .catch(error => {
           console.log(error);

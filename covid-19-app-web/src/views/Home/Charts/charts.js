@@ -1,4 +1,5 @@
 import { Bar, Line, mixins } from "vue-chartjs";
+import store from "@/store/index.js";
 import moment from "moment";
 const { reactiveProp } = mixins;
 
@@ -42,32 +43,8 @@ export const ChartMixin = {
     }
   },
   computed: {
-    countries() {
-      return ["World", "Ethiopia", "United States"];
-    },
-    dateRangeText() {
-      let start = this.date_range[0] || "";
-      let end = this.date_range[1] || "";
-      let arrow = "\u2192";
-      return `  ${moment(start).format("MMM DD, YYYY")}    ${arrow}    ${moment(
-        end
-      ).format("MMM DD, YYYY")}  `;
-    },
-    dateRangeText1() {
-      let start = this.date_range_1[0] || "";
-      let end = this.date_range_1[1] || "";
-      let arrow = "\u2192";
-      return `  ${moment(start).format("MMM DD, YYYY")}    ${arrow}    ${moment(
-        end
-      ).format("MMM DD, YYYY")}  `;
-    },
-    dateRangeText2() {
-      let start = this.date_range_2[0] || "";
-      let end = this.date_range_2[1] || "";
-      let arrow = "\u2192";
-      return `  ${moment(start).format("MMM DD, YYYY")}    ${arrow}    
-      ${moment(end).format("MMM DD, YYYY")}  `;
-    },
+    maxDate: () => moment(new Date()).format("YYYY-MM-DD"),
+    countries: () => store.getters.getAllCountries,
     chartOptions() {
       const self = this;
       return {
@@ -129,6 +106,12 @@ export const ChartMixin = {
     }
   },
   methods: {
+    rangeToText(start, end) {
+      let arrow = "\u2192";
+      return `  ${moment(start || "").format(
+        "MMM DD, YYYY"
+      )}    ${arrow}    ${moment(end || "").format("MMM DD, YYYY")}  `;
+    },
     sliderColor(percentage = this.social_distancing, hue0 = 0, hue1 = 100) {
       let hue = (percentage / 100) * (hue1 - hue0) + hue0;
       return "hsl(" + hue + ", 100%, 45%)";
