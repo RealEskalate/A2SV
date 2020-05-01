@@ -2,8 +2,8 @@
   <v-container class="home">
     <statistics />
     <v-row>
-      <actions class="col-md-7 col-sm-12"/>
-      <states class="col-md-5  col-sm-12"/>
+      <actions class="col-md-7 col-sm-12" />
+      <states class="col-md-5  col-sm-12" />
     </v-row>
   </v-container>
 </template>

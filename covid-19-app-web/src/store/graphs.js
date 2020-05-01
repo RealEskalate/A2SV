@@ -111,19 +111,40 @@ export default {
       }
     },
     setCountryResources({ commit }, { country }) {
-      // TODO fetch country resources here
-      console.log(country);
-      const info = [
-        { key: "Testing Strategy", value: "Test Homes" },
-        { key: "Hospitals", value: 10000 },
-        { key: "Doctors", value: 423 },
-        { key: "Medical Workers", value: 26322 },
-        { key: "Ventilators", value: 262 },
-        { key: "Hospital Beds", value: 262 },
-        { key: "ICU Beds", value: 262 },
-        { key: "Protection Gears", value: 262 }
-      ];
-      commit("setCountryResources", info);
+      // const info = [
+      //   { key: "Testing Strategy", value: "Test Homes" },
+      //   { key: "Hospitals", value: 10000 },
+      //   { key: "Doctors", value: 423 },
+      //   { key: "Medical Workers", value: 26322 },
+      //   { key: "Ventilators", value: 262 },
+      //   { key: "Hospital Beds", value: 262 },
+      //   { key: "ICU Beds", value: 262 },
+      //   { key: "Protection Gears", value: 262 }
+      // ];
+      //
+
+      axios
+        .get(`${process.env.VUE_APP_BASE_URL}/publicResources/${country}`)
+        .then(response => {
+          let data = [];
+          for (let i in response.data) {
+            let val = response.data[i];
+            let one = val.TimeSeries["2017"]
+              ? val.TimeSeries["2017"].toFixed(2)
+              : null;
+            let two = val.TimeSeries["2015"]
+              ? val.TimeSeries["2015"].toFixed(2)
+              : null;
+            data.push({
+              key: val.Indicator.split("(")[0],
+              value: one || two
+            });
+          }
+          commit("setCountryResources", data);
+        })
+        .catch(error => {
+          console.log(error);
+        });
     },
     setCountryCompare(
       { commit },
@@ -159,7 +180,8 @@ export default {
         "COVID-19": [121, 134, 203],
         EBOLA: [220, 231, 117],
         SARS: [77, 208, 225],
-        MERS: [240, 98, 146]
+        MERS: [240, 98, 146],
+        "Seasonal flu": [220, 231, 117]
       };
 
       axios.get(`${process.env.VUE_APP_BASE_URL}/diseases`).then(

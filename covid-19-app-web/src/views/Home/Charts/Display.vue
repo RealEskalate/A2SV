@@ -138,8 +138,8 @@
       <v-col cols="12" md="3">
         <v-card flat tile>
           <v-list disabled dense>
-            <v-card-title class="grey--text text--darken-2">
-              Resources - <em v-text="country" />
+            <v-card-title class="small grey--text text--darken-2">
+              Resources / 1K People
             </v-card-title>
             <v-divider class="mx-4" />
             <v-list-item-group color="primary">

@@ -7,7 +7,7 @@
         :menu-props="{ top: false, offsetY: true }"
         label="Scope"
         @change="scopeChange"
-      ></v-select>
+      />
 
       <span v-if="scope === 'Local'" class="font-weight-medium">
         Country: {{ country }}</span
@@ -19,7 +19,7 @@
           <v-toolbar color="primary" dark>
             <v-toolbar-title>News</v-toolbar-title>
 
-            <v-spacer></v-spacer>
+            <v-spacer/>
           </v-toolbar>
 
           <v-list two-line>
@@ -35,25 +35,23 @@
                       :elevation="24"
                       v-text="item.title"
                       class="text-wrap black--text font-weight-medium"
-                    ></v-list-item-title>
+                    />
                     <v-list-item-subtitle
                       class="text-wrap"
                       v-html="item.description"
-                    ></v-list-item-subtitle>
+                    />
 
-                    <v-list-item-subtitle
-                      v-text="item.source"
-                    ></v-list-item-subtitle>
+                    <v-list-item-subtitle v-text="item.source" />
                     <v-list-item-subtitle
                       v-text="getTime(item.date)"
-                    ></v-list-item-subtitle>
+                    />
                   </v-list-item-content>
                 </v-list-item>
 
                 <v-divider
                   v-if="index + 1 < news.length"
                   :key="index"
-                ></v-divider>
+                />
               </template>
             </v-list-item-group>
           </v-list>
@@ -64,22 +62,43 @@
           v-model="page"
           :length="10"
           @input="getNewsByPage(page)"
-        ></v-pagination>
+        />
       </v-col>
-      <v-spacer></v-spacer>
-      <v-col :cols="3">
-        <v-card tile :elevation="10">
-          <v-card-title>Source</v-card-title>
-          <v-card-text>
-            <v-checkbox
-              v-for="(sourceItem, index) in sourceList"
-              :key="index"
-              v-model="sources"
-              :label="sourceItem"
-              :value="sourceItem"
-              @change="sourceChange"
-            ></v-checkbox>
-          </v-card-text>
+
+      <v-col :cols="4">
+        <v-card>
+          <v-tabs centered grow>
+            <v-tab>Recent</v-tab>
+            <v-tab>Source</v-tab>
+            <v-tab-item>
+              <v-card flat tile>
+                <div v-for="_news in news.slice(0, 5)" :key="_news._id">
+                  <v-list-item
+                    v-bind:href="_news.reference_link"
+                    target="blank"
+                  >
+                    <v-card-text>{{ _news.title }}</v-card-text>
+                  </v-list-item>
+
+                  <hr class="recent-v-card-text" />
+                </div>
+              </v-card>
+            </v-tab-item>
+            <v-tab-item>
+              <v-card flat tile>
+                <v-card-text>
+                  <v-checkbox
+                    v-for="(sourceItem, index) in sourceList"
+                    :key="index"
+                    v-model="sources"
+                    :label="sourceItem"
+                    :value="sourceItem"
+                    @change="sourceChange"
+                  />
+                </v-card-text>
+              </v-card>
+            </v-tab-item>
+          </v-tabs>
         </v-card>
       </v-col>
     </v-row>
@@ -102,29 +121,12 @@ export default {
   methods: {
     async scopeChange() {
       this.getNewsByPage(this.page);
-      },
-      sourceChange() {
-        this.getNewsByPage(this.page);
-      },
-      getTime(postDate) {
-        postDate = moment(String(postDate)).format('LLLL');
-        return postDate;
-      },
-      getNewsByPage(page) {
-        store.dispatch("setNews", {
-          page: page,
-          country: this.country,
-          source: this.selectedSources
-        });
-      }
     },
-    mounted() {
+    sourceChange() {
       this.getNewsByPage(this.page);
-      store.dispatch("setCountry");
-      store.dispatch("setSources");
     },
     getTime(postDate) {
-      postDate = moment(String(postDate)).format("MM/DD/YYYY hh:mm");
+      postDate = moment(String(postDate)).format("LLLL");
       return postDate;
     },
     getNewsByPage(page) {
@@ -140,6 +142,17 @@ export default {
     store.dispatch("setCountry");
     store.dispatch("setSources");
   },
+  getTime(postDate) {
+    postDate = moment(String(postDate)).format("MM/DD/YYYY hh:mm");
+    return postDate;
+  },
+  getNewsByPage(page) {
+    store.dispatch("setNews", {
+      page: page,
+      country: this.country,
+      source: this.selectedSources
+    });
+  },
   computed: {
     country() {
       return this.scope === "Global" ? "Global" : store.getters.getCountry;
@@ -153,29 +166,30 @@ export default {
     selectedSources() {
       return this.sources.length === 0 ? [] : [this.sources];
     }
-  };
+  }
+};
 </script>
 
 <style scoped>
-    .wrap-text {
-        -webkit-line-clamp: unset !important;
-        font-size: 1.15rem !important;
-        line-height: 1.5rem;
-    }
+.wrap-text {
+  -webkit-line-clamp: unset !important;
+  font-size: 1.15rem !important;
+  line-height: 1.5rem;
+}
 
-    .recent-v-card-text {
-        color: darkgray;
-    }
+.recent-v-card-text {
+  color: darkgray;
+}
 
-    .v-paggination {
-        justify-content: start;
-    }
+.v-paggination {
+  justify-content: start;
+}
 
-    .shadow {
-        box-shadow: 0 5px 15px 10px #eae6e6;
-    }
+.shadow {
+  box-shadow: 0 5px 15px 10px #eae6e6;
+}
 
-    .headline {
-      font-family: Nunito, Roboto, sans-serif;
-    }
+.headline {
+  font-family: Nunito, Roboto, sans-serif;
+}
 </style>
