@@ -8,7 +8,7 @@ const healthParser = require("../services/HealthApiParser");
 
 
 // Updates db with the latest csv
-let update_db = async function () {
+let update_db = async function() {
     console.log("got here");
 
     /* -Unknown bug here (commented out because feature not necessary)-
@@ -74,8 +74,7 @@ let update_db = async function () {
                 criteria: criteria,
                 value: parseInt(value),
                 date: curr_date,
-            }
-            );
+            });
             if (curr_location === "World") {
                 console.log("YAYYY");
             }
@@ -85,10 +84,10 @@ let update_db = async function () {
     console.log("Finished uploading testing stat");
 };
 // Fetchs the latest csv
-let fetchTestingInfo = async function () {
+let fetchTestingInfo = async function() {
     const file = fs.createWriteStream(path.join(__dirname, 'assets', "owid-covid-data.xlsx"));
-    https.get("https://covid.ourworldindata.org/data/owid-covid-data.xlsx", async function (response) {
-        response.pipe(file).on('finish', async function () {
+    https.get("https://covid.ourworldindata.org/data/owid-covid-data.xlsx", async function(response) {
+        response.pipe(file).on('finish', async function() {
             console.log("Finished downloading covid testing data");
             await update_db();
         });
@@ -97,7 +96,7 @@ let fetchTestingInfo = async function () {
 
 // Schedules fetching everyday
 const run_updates = () => {
-    schedule.scheduleJob('0 0 * * *', async function () {
+    schedule.scheduleJob('0 0 * * *', async function() {
         await fetchTestingInfo();
     });
 };
@@ -107,17 +106,15 @@ const run_updates = () => {
 exports.run_updates = run_updates;
 run_updates();
 
-exports.get_statistics = async (req, res) => {
+exports.get_statistics = async(req, res) => {
     if (["Confirmed", "Recovered", "Deaths", "All"].includes(req.query.criteria)) {
         healthParser.getHealthStatistics(req, res, respond);
     } else if (["Confirmed_Rate", "Recovered_Rate", "Deaths_Rate"].includes(req.query.criteria)) {
         req.query.criteria = req.query.criteria.split("_")[0];
         healthParser.getHealthStatistics(req, res, respond, true);
-    }
-    else if (["Hospitalization", "ICU"].includes(req.query.criteria)) {
+    } else if (["Hospitalization", "ICU"].includes(req.query.criteria)) {
         healthParser.getCriticalStatistics(req, res, respond);
-    }
-    else if (req.query.criteria === "Test") {
+    } else if (req.query.criteria === "Test") {
         let filter = {
             country: req.query.country || "World",
             date: {
@@ -178,4 +175,16 @@ function respond(res, payload, rates = false, status = 200) {
         payload = calculate_rate(payload)
     }
     res.status(status).send(payload);
+}
+
+
+
+exports.get_country_slugs = async(req, res) => {
+    // if (["Confirmed", "Recovered", "Deaths", "All"].includes(req.query.criteria)) {
+
+    url = "https://api.covid19api.com/countries"
+    name = "Country"
+    field = "Slug"
+    await healthParser.countrySlugList(url, name, field, res, respond);
+
 }

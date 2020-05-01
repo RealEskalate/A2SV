@@ -2,7 +2,7 @@ var UserSchema = require("../models/UserModel.js");
 var mongoose = require("mongoose");
 const Bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-
+const axios = require('axios');
 const User = UserSchema.User;
 
 // Get All Users.
@@ -37,14 +37,32 @@ exports.get_user_by_id = async (req, res) => {
 };
 // Get User by Username and Password.
 exports.get_user_by_credentials = async (req, res) => {
-  const user = await User.findOne({
+  let user = await User.findOne({
     username: { $eq: req.body.username },
   });
   try {
     if (!user || !Bcrypt.compareSync(req.body.password, user.password)) {
       res.status(404).send("Username and Password combination doesn't exist");
     } else {
-
+      let country = '';
+      try{
+        const result = await axios.get('http://www.geoplugin.net/json.gp?ip='+req.connection.remoteAddress.substring(2))
+        .then(response => {
+          if (response.data) {
+            country = response.data.geoplugin_countryName
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });      
+        user.set({
+          current_country: country
+        });
+        await user.save();
+      }
+      catch(err){
+        console.log(err);
+      }
       // jwt authentication(signing in) is  done here ...
       jwt.sign({user}, 'secretkey', (err, token)=>{
         res.json({
@@ -102,10 +120,9 @@ exports.update_user = async (req, res) => {
       }
       req.body.password = Bcrypt.hashSync(req.body.password, 10);
     }
-    let user = await User.findById(req.body._id);
-    user.set(req.body);
-    await user.save();
-    res.send(user);
+    exists.set(req.body);
+    await exists.save();
+    res.send(exists);
   } catch (err) {
     res.status(500).send(err);
   }
