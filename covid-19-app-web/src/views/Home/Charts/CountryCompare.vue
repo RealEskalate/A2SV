@@ -310,19 +310,19 @@ export default {
     },
     fillGraph() {
       console.log("graph updating");
-      let input1 = {
+      let input1 = this.makeDataSet({
         label: this.country_1,
         color: [121, 134, 203],
         data: this.countriesData.one
-      };
-      let input2 = {
+      });
+      let input2 = this.makeDataSet({
         label: this.country_2,
         color: [255, 213, 79],
         data: this.countriesData.two
-      };
+      });
       this.data = {
         labels: this.labels(),
-        datasets: [this.makeDataSet(input1), this.makeDataSet(input2)]
+        datasets: [input1, input2]
       };
     },
     fetchData1() {
