@@ -2,7 +2,7 @@ import axios from "axios";
 
 const state = {
   news: [],
-  newsMeta: '',
+  newsMeta: "",
   sources: [],
   country: []
 };
@@ -16,7 +16,7 @@ const getters = {
     return state.newsMeta;
   },
   getSources: state => {
-    return state.sources
+    return state.sources;
   },
   getCountry: state => {
     return state.country;
@@ -39,33 +39,37 @@ const mutations = {
 };
 
 const actions = {
-  setSources: ({commit}) => {
+  setSources: ({ commit }) => {
     axios.get(`${process.env.VUE_APP_BASE_URL}/news/sources`).then(
-        response => {
-          commit('setSources', response.data);
-          // commit('setNewsMeta', response.meta);
-        },
-        error => {
-          console.log(error);
-        }
+      response => {
+        commit("setSources", response.data);
+        // commit('setNewsMeta', response.meta);
+      },
+      error => {
+        console.log(error);
+      }
     );
   },
-  setCountry: ({commit}) => {
+  setCountry: ({ commit }) => {
     axios.get("http://ip-api.com/json").then(response => {
-      commit('setCountry', response.data.country);
+      commit("setCountry", response.data.country);
     });
   },
-  setNews: ({commit}, {page, country, source}) => {
-    axios.get(`${process.env.VUE_APP_BASE_URL}/news/?page=${page}&country=${country}&source=${source}`).then(
+  setNews: ({ commit }, { page, country, source }) => {
+    axios
+      .get(
+        `${process.env.VUE_APP_BASE_URL}/news/?page=${page}&country=${country}&source=${source}`
+      )
+      .then(
         response => {
-          commit('setNews', response.data.data);
+          commit("setNews", response.data.data);
           // commit('setNewsMeta', response.meta);
         },
         error => {
           console.log(error);
         }
-    );
-  },
+      );
+  }
 };
 
 export default {
@@ -73,4 +77,4 @@ export default {
   getters,
   mutations,
   actions
-}
+};

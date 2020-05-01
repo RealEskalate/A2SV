@@ -74,7 +74,7 @@
             <v-tab-item>
               <v-card flat tile>
                 <v-card-text>
-                   <v-checkbox
+                  <v-checkbox
                     v-for="(sourceItem, index) in sourceList"
                     :key="index"
                     v-model="sources"
@@ -93,10 +93,10 @@
 </template>
 
 <script>
-  import moment from "moment";
-  import store from "@/store/";
+import moment from "moment";
+import store from "@/store/";
 
-  export default {
+export default {
   data: () => ({
     page: 1,
     perPage: 15,
@@ -116,17 +116,21 @@
       return postDate;
     },
     getNewsByPage(page) {
-      store.dispatch('setNews', {page: page, country: this.country, source: this.selectedSources});
-    },
+      store.dispatch("setNews", {
+        page: page,
+        country: this.country,
+        source: this.selectedSources
+      });
+    }
   },
   mounted() {
     this.getNewsByPage(this.page);
-    store.dispatch('setCountry');
-    store.dispatch('setSources');
+    store.dispatch("setCountry");
+    store.dispatch("setSources");
   },
   computed: {
     country() {
-      return this.scope === 'Global' ? 'Global' : store.getters.getCountry;
+      return this.scope === "Global" ? "Global" : store.getters.getCountry;
     },
     sourceList() {
       return store.getters.getSources;
