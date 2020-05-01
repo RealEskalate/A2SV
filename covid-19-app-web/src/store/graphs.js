@@ -176,7 +176,8 @@ export default {
         "COVID-19": [121, 134, 203],
         EBOLA: [220, 231, 117],
         SARS: [77, 208, 225],
-        MERS: [240, 98, 146]
+        MERS: [240, 98, 146],
+        "Seasonal flu": [255, 213, 79]
       };
 
       axios.get(`${process.env.VUE_APP_BASE_URL}/diseases`).then(
