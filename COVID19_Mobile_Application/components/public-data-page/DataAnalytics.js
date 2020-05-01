@@ -8,6 +8,7 @@ import {
   KeyboardAvoidingView,
   TouchableOpacity,
   ScrollView,
+  ActivityIndicator,
 } from "react-native";
 import { LineChart } from "react-native-chart-kit";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -15,7 +16,7 @@ import * as criterias from "./Criterias.js";
 
 export default class StaticsPage extends React.Component {
   state = {
-    selected_filter: criterias.confirmed, // sets the current filtering parameter on the graph
+    selected_filter: criterias.confirmedRate, // sets the current filtering parameter on the graph
     graph_label: [""],
     data_set: [0],
     searchedCountry: "Ethiopia",
@@ -25,15 +26,34 @@ export default class StaticsPage extends React.Component {
     Death: 0,
     Recovered: 0,
     Total: 0,
+    Months: [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ],
+    totalLoading: true,
   };
 
   componentDidMount() {
+    this.GetTotalData();
     let interval = setInterval(() => {
-      this.populateData();
+      this.fetchStatistics();
     }, 1000);
     let interval2 = setInterval(() => {
       this.GetTotalData();
-    }, 30000);
+    }, 1000);
+  }
+  componentWillMount() {
+    this.state.totalLoading = true;
   }
 
   populate(objList) {
@@ -44,26 +64,31 @@ export default class StaticsPage extends React.Component {
     });
     let graphLebel_counter = 0;
     objList.map((data) => {
-      this.state.graph_label[graphLebel_counter] = data.t;
+      this.state.graph_label[graphLebel_counter] = this.dateConverter(
+        data.t.split("T")[0]
+      );
       graphLebel_counter += 1;
     });
   }
 
-  fetchNumberOfDeath() {
-    fetch("https://sym-track.herokuapp.com/api/statistics", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        country: this.state.searchedCountry,
-        criteria: criterias.deaths,
-      }),
-    })
+  fetchStatistics() {
+    fetch(
+      "https://sym-track.herokuapp.com/api/statistics?criteria=" +
+        this.state.selected_filter +
+        "&country=" +
+        this.state.searchedCountry.toLowerCase(),
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }
+    )
       .then((response) => response.json())
       .then((json) => {
         this.populate(json);
+
         this.forceUpdate();
       })
       .catch((error) => {
@@ -71,193 +96,39 @@ export default class StaticsPage extends React.Component {
       });
   }
 
-  fetchNumberOfRecovered() {
-    fetch("https://sym-track.herokuapp.com/api/statistics", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        country: this.state.searchedCountry,
-        criteria: criterias.recoveries,
-      }),
-    })
-      .then((response) => response.json())
-      .then((json) => {
-        this.populate(json);
-        this.forceUpdate();
-      })
-      .catch((error) => {
-        alert("Couldn't connect", "Error in connection..");
-      });
-  }
-
-  fetchNumberOfConfirmed() {
-    fetch("https://sym-track.herokuapp.com/api/statistics", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        country: this.state.searchedCountry,
-        criteria: criterias.confirmed,
-      }),
-    })
-      .then((response) => response.json())
-      .then((json) => {
-        this.populate(json);
-        this.forceUpdate();
-      })
-      .catch((error) => {
-        alert("Couldn't connect", "Error in connection..");
-      });
-  }
-
-  fetchNumberOfTests() {
-    fetch("https://sym-track.herokuapp.com/api/statistics", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        country: this.state.searchedCountry,
-        criteria: criterias.numberOfTests,
-      }),
-    })
-      .then((response) => response.json())
-      .then((json) => {
-        this.populate(json);
-        this.forceUpdate();
-      })
-      .catch((error) => {
-        alert("Couldn't connect", "Error in connection..");
-      });
-  }
-
-  fetchNumberOfDeathRate() {
-    fetch("https://sym-track.herokuapp.com/api/statistics", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        country: this.state.searchedCountry,
-        criteria: criterias.deathRate,
-      }),
-    })
-      .then((response) => response.json())
-      .then((json) => {
-        this.populate(json);
-        this.forceUpdate();
-      })
-      .catch((error) => {
-        alert("Couldn't connect", "Error in connection..");
-      });
-  }
-
-  fetchNumberOfConfirmedRate() {
-    fetch("https://sym-track.herokuapp.com/api/statistics", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        country: this.state.searchedCountry,
-        criteria: criterias.confirmedRate,
-      }),
-    })
-      .then((response) => response.json())
-      .then((json) => {
-        this.populate(json);
-        this.forceUpdate();
-      })
-      .catch((error) => {
-        alert("Couldn't connect", "Error in connection..");
-      });
-  }
-
-  fetchNumberOfRecoveredRate() {
-    fetch("https://sym-track.herokuapp.com/api/statistics", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        country: this.state.searchedCountry,
-        criteria: criterias.recoveryRate,
-      }),
-    })
-      .then((response) => response.json())
-      .then((json) => {
-        this.populate(json);
-        this.forceUpdate();
-      })
-      .catch((error) => {
-        alert("Couldn't connect", "Error in connection..");
-      });
-  }
-
-  populateData() {
-    switch (this.state.selected_filter) {
-      case criterias.confirmed:
-        this.fetchNumberOfConfirmed();
-        break;
-      case criterias.deaths:
-        this.fetchNumberOfDeath();
-        break;
-      case criterias.recoveries:
-        this.fetchNumberOfRecovered();
-        break;
-      case criterias.numberOfTests:
-        this.fetchNumberOfTests();
-        break;
-    }
+  dateConverter(date) {
+    let dateList = date.split("-");
+    let month = parseInt(dateList[1]);
+    let monthInWord = this.state.Months[month - 1];
+    return monthInWord + " " + dateList[2];
   }
 
   GetTotalData = async () => {
-    await fetch("https://sym-track.herokuapp.com/api/diseases", {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    })
+    await fetch(
+      "https://sym-track.herokuapp.com/api/statistics?criteria=All&country=" +
+        this.state.searchedCountry.toLowerCase(),
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }
+    )
       .then((response) => response.json())
       .then((json) => {
-        this.setState({
-          TotalStatisticsData: json,
-        });
-        this.forceUpdate();
+        if (json !== undefined && json.length !== 0) {
+          this.setState({
+            TotalStatisticsData: json,
+            totalLoading: false,
+          });
+          console.log(this.state.TotalStatisticsData);
+        }
       })
       .catch((error) => {
         alert("Couldn't connect", "Error in connection..");
       });
-
-    //filter out data
-    this.state.StatisticsData = this.state.TotalStatisticsData.find(
-      (obj) => obj.title == "COVID-19"
-    );
   };
-
-  dataset() {
-    return [
-      Math.random() * 10,
-      Math.random() * 10,
-      Math.random() * 10,
-      Math.random() * 10,
-      Math.random() * 10,
-    ];
-  }
-
-  label() {
-    return ["mar 8", "mar 15", "mar 20", "apr 1", "apr 10", "apr 15", "apr 27"];
-  }
 
   render() {
     const HIEGHT = Dimensions.get("window").height;
@@ -294,29 +165,53 @@ export default class StaticsPage extends React.Component {
                     margin: 10,
                   }}
                 >
-                  World's Statistics
+                  {this.state.searchedCountry}'s Statistics
                 </Text>
                 <View style={{ flexDirection: "row" }}>
                   <TouchableOpacity style={styles.cards_total} disabled={true}>
                     <Text style={styles.cards_header}>Total</Text>
-                    <Text style={styles.cards_content}>
-                      {this.state.StatisticsData.confirmed}
-                    </Text>
+                    {this.state.totalLoading ? (
+                      <ActivityIndicator size="small" color="#ffffff" />
+                    ) : (
+                      <Text style={styles.cards_content}>
+                        {
+                          this.state.TotalStatisticsData[
+                            this.state.TotalStatisticsData.length - 1
+                          ].Confirmed
+                        }
+                      </Text>
+                    )}
                   </TouchableOpacity>
 
                   <TouchableOpacity style={styles.cards_active} disabled={true}>
                     <Text style={styles.cards_header}>Recovered</Text>
-                    <Text style={styles.cards_content}>
-                      {this.state.StatisticsData.recovered}
-                    </Text>
+                    {this.state.totalLoading ? (
+                      <ActivityIndicator size="small" color="#ffffff" />
+                    ) : (
+                      <Text style={styles.cards_content}>
+                        {
+                          this.state.TotalStatisticsData[
+                            this.state.TotalStatisticsData.length - 1
+                          ].Recovered
+                        }
+                      </Text>
+                    )}
                   </TouchableOpacity>
                 </View>
                 <View style={{ flexDirection: "row" }}>
                   <TouchableOpacity style={styles.cards_death} disabled={true}>
                     <Text style={styles.cards_header}>Death</Text>
-                    <Text style={styles.cards_content}>
-                      {this.state.StatisticsData.deaths}
-                    </Text>
+                    {this.state.totalLoading ? (
+                      <ActivityIndicator size="small" color="#ffffff" />
+                    ) : (
+                      <Text style={styles.cards_content}>
+                        {
+                          this.state.TotalStatisticsData[
+                            this.state.TotalStatisticsData.length - 1
+                          ].Deaths
+                        }
+                      </Text>
+                    )}
                   </TouchableOpacity>
                 </View>
               </View>
@@ -330,7 +225,6 @@ export default class StaticsPage extends React.Component {
               >
                 {this.state.searchedCountry}'s Statistics
               </Text>
-
               <LineChart
                 data={{
                   labels: this.state.graph_label,
@@ -360,19 +254,19 @@ export default class StaticsPage extends React.Component {
             <View style={{ flexDirection: "row" }}>
               <TouchableOpacity
                 style={
-                  this.state.selected_filter === criterias.confirmed
+                  this.state.selected_filter === criterias.confirmedRate
                     ? styles.touchable_buttons
                     : styles.touchable_buttons_pressed
                 }
                 onPress={() => {
                   this.setState({
-                    selected_filter: criterias.confirmed,
+                    selected_filter: criterias.confirmedRate,
                   });
                 }}
               >
                 <Text
                   style={
-                    this.state.selected_filter === criterias.confirmed
+                    this.state.selected_filter === criterias.confirmedRate
                       ? styles.text_style
                       : styles.text_style_pressed
                   }
@@ -383,19 +277,19 @@ export default class StaticsPage extends React.Component {
 
               <TouchableOpacity
                 style={
-                  this.state.selected_filter === criterias.recoveries
+                  this.state.selected_filter === criterias.recoveryRate
                     ? styles.touchable_buttons
                     : styles.touchable_buttons_pressed
                 }
                 onPress={() => {
                   this.setState({
-                    selected_filter: criterias.recoveries,
+                    selected_filter: criterias.recoveryRate,
                   });
                 }}
               >
                 <Text
                   style={
-                    this.state.selected_filter === criterias.recoveries
+                    this.state.selected_filter === criterias.recoveryRate
                       ? styles.text_style
                       : styles.text_style_pressed
                   }
@@ -406,19 +300,19 @@ export default class StaticsPage extends React.Component {
 
               <TouchableOpacity
                 style={
-                  this.state.selected_filter === criterias.deaths
+                  this.state.selected_filter === criterias.deathRate
                     ? styles.touchable_buttons
                     : styles.touchable_buttons_pressed
                 }
                 onPress={() => {
                   this.setState({
-                    selected_filter: criterias.deaths,
+                    selected_filter: criterias.deathRate,
                   });
                 }}
               >
                 <Text
                   style={
-                    this.state.selected_filter === criterias.deaths
+                    this.state.selected_filter === criterias.deathRate
                       ? styles.text_style
                       : styles.text_style_pressed
                   }
@@ -426,7 +320,7 @@ export default class StaticsPage extends React.Component {
                   Death
                 </Text>
               </TouchableOpacity>
-
+              {/* 
               <TouchableOpacity
                 style={
                   this.state.selected_filter === criterias.numberOfTests
@@ -448,7 +342,7 @@ export default class StaticsPage extends React.Component {
                 >
                   Testes performed
                 </Text>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
           </View>
         </SafeAreaView>
