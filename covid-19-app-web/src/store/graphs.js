@@ -177,7 +177,7 @@ export default {
         EBOLA: [220, 231, 117],
         SARS: [77, 208, 225],
         MERS: [240, 98, 146],
-        "Seasonal flu": [255, 213, 79]
+        "Seasonal flu": [220, 231, 117]
       };
 
       axios.get(`${process.env.VUE_APP_BASE_URL}/diseases`).then(
