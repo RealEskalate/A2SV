@@ -31,6 +31,26 @@ exports.post_location_user = async (req, res) => {
     if (!user) {
       return res.status(400).send("User ID not found");
     }
+
+    let country = '';
+    try{
+      const result = await axios.get('http://www.geoplugin.net/json.gp?ip='+req.connection.remoteAddress.substring(2))
+      .then(response => {
+        if (response.data) {
+          country = response.data.geoplugin_countryName
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });      
+      user.set({
+        current_country: country
+      });
+      await user.save();
+    }
+    catch(err){
+      console.log(err);
+    }
     await location_user.save();
     res.send(location_user);
   } catch (err) {

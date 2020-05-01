@@ -10,7 +10,7 @@ const public_resources_schema = new mongoose.Schema({
         required: true,
     },
     TimeSeries: {
-        type: Object,
+        type: Number,
         required: true,
     },
 });
