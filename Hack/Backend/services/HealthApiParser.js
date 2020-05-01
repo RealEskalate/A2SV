@@ -168,6 +168,7 @@ exports.countrySlugList = async(request_url, name, field, res, respond) => {
                 });
             });
         }
+        results.sort((a, b) => (a.name > b.name) ? 1 : -1)
         return respond(res, results)
 
 
