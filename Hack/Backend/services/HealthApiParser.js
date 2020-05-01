@@ -3,31 +3,31 @@ const csvjson = require('csvjson');
 
 const getRate = (criteria, startDate, endDate, res, respond) => {
     axios.get('https://covidtracking.com/api/v1/us/daily.json')
-      .then(response => {
-          let stats = [];
-          let datas = response.data;
-          datas.forEach(data => {
-              let stat = {
-                  t: new Date(Date.parse(data.dateChecked))
-              };
-              if (criteria === "Hospitalization") {
-                  stat.y = data.hospitalizedCurrently || 0;
-              } else if (criteria === "ICU") {
-                  stat.y = data.inIcuCurrently || 0;
-              }
-              stats.push(stat);
-          });
+        .then(response => {
+            let stats = [];
+            let datas = response.data;
+            datas.forEach(data => {
+                let stat = {
+                    t: new Date(Date.parse(data.dateChecked))
+                };
+                if (criteria === "Hospitalization") {
+                    stat.y = data.hospitalizedCurrently || 0;
+                } else if (criteria === "ICU") {
+                    stat.y = data.inIcuCurrently || 0;
+                }
+                stats.push(stat);
+            });
 
-          let filteredStats = stats.filter(function (stat) {
-              let date = new Date(stat.t);
-              console.log(date >= startDate && date <= endDate);
-              return (date >= startDate && date <= endDate);
-          });
-          respond(res, filteredStats, true)
-      })
-      .catch(err => {
-          console.log(err);
-      });
+            let filteredStats = stats.filter(function(stat) {
+                let date = new Date(stat.t);
+                console.log(date >= startDate && date <= endDate);
+                return (date >= startDate && date <= endDate);
+            });
+            respond(res, filteredStats, true)
+        })
+        .catch(err => {
+            console.log(err);
+        });
 };
 
 exports.getCriticalStatistics = (req, res, respond) => {
@@ -81,42 +81,42 @@ const do_api_call = (request_url, criteria, start_date, end_date, res, respond, 
     console.log(criteria, request_url);
     try {
         axios.get(request_url)
-          .then(response => {
-              if (!response.data) {
-                  respond(res, [], needRates)
-              } else if (criteria === "All") {
-                  let results = [];
-                  response.data.forEach((item) => {
-                      const date = new Date(item.Date);
+            .then(response => {
+                if (!response.data) {
+                    respond(res, [], needRates)
+                } else if (criteria === "All") {
+                    let results = [];
+                    response.data.forEach((item) => {
+                        const date = new Date(item.Date);
 
-                      if (date >= start_date && date <= end_date) {
-                          results.push({
-                              "t": item.Date,
-                              "Confirmed": item['Confirmed'],
-                              "Recovered": item['Recovered'],
-                              "Deaths": item['Deaths']
-                          });
-                      }
-                  });
-                  console.log("Fetched everything " + results);
-                  respond(res, results, needRates)
-              } else {
-                  let results = [];
-                  response.data.forEach((item) => {
-                      const date = new Date(item.Date);
-                      if (date >= start_date && date <= end_date) {
-                          results.push({
-                              "t": item.Date,
-                              "y": item[`${criteria}`]
-                          });
-                      }
-                  });
-                  respond(res, results, needRates)
-              }
-          })
-          .catch(error => {
-              console.log(error);
-          });
+                        if (date >= start_date && date <= end_date) {
+                            results.push({
+                                "t": item.Date,
+                                "Confirmed": item['Confirmed'],
+                                "Recovered": item['Recovered'],
+                                "Deaths": item['Deaths']
+                            });
+                        }
+                    });
+                    console.log("Fetched everything " + results);
+                    respond(res, results, needRates)
+                } else {
+                    let results = [];
+                    response.data.forEach((item) => {
+                        const date = new Date(item.Date);
+                        if (date >= start_date && date <= end_date) {
+                            results.push({
+                                "t": item.Date,
+                                "y": item[`${criteria}`]
+                            });
+                        }
+                    });
+                    respond(res, results, needRates)
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
     } catch (err) {
         console.log(err);
     }
@@ -127,28 +127,52 @@ const parse_csv_data = (request_url, start_date, end_date, criteria, res, respon
     console.log(request_url);
     try {
         axios.get(request_url)
-          .then(response => {
-              let data = response.data;
-              if (!data) {
-                  respond(res, [], rates)
-              }
-              let results = [];
-              const options = {delimiter: ',', quote: '"'};
-              data = csvjson.toObject(data, options);
-              data.forEach((item) => {
-                  const date = new Date(item.Date);
-                  if (date >= start_date && date <= end_date) {
-                      results.push({
-                          t: item.Date,
-                          y: item[criteria]
-                      });
-                  }
-              });
-              respond(res, results, rates)
-          }).catch(error => {
-            console.log(error);
-        });
+            .then(response => {
+                let data = response.data;
+                if (!data) {
+                    respond(res, [], rates)
+                }
+                let results = [];
+                const options = { delimiter: ',', quote: '"' };
+                data = csvjson.toObject(data, options);
+                data.forEach((item) => {
+                    const date = new Date(item.Date);
+                    if (date >= start_date && date <= end_date) {
+                        results.push({
+                            t: item.Date,
+                            y: item[criteria]
+                        });
+                    }
+                });
+                respond(res, results, rates)
+            }).catch(error => {
+                console.log(error);
+            });
     } catch (err) {
         console.log(err);
     }
+};
+
+
+exports.countrySlugList = async(request_url, name, field, res, respond) => {
+    console.log(field, request_url);
+    try {
+        let results = []
+        let response = await axios.get(request_url)
+
+        if (response.data) {
+            response.data.forEach((item) => {
+                results.push({
+                    'name': item[name],
+                    'slug': item[field]
+                });
+            });
+        }
+        return respond(res, results)
+
+
+    } catch (err) {
+        console.log(err);
+    }
+    respond(res, [])
 };
