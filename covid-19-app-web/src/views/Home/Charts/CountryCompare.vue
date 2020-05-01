@@ -272,6 +272,7 @@ export default {
   mixins: [ChartMixin],
   data() {
     return {
+      data: null,
       criterion: "Confirmed Cases",
       date_range_1: [
         moment(new Date())
@@ -309,7 +310,6 @@ export default {
       return result;
     },
     fillGraph() {
-      console.log("graph updating");
       let input1 = this.makeDataSet({
         label: this.country_1,
         color: [121, 134, 203],
