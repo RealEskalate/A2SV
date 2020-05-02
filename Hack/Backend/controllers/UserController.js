@@ -123,7 +123,6 @@ exports.update_user = async (req, res) => {
     }
     exists.set(req.body);
     await exists.save();
-    this.delete_user(req);
     res.send(exists);
   } catch (err) {
     console.log("error is " + err);
