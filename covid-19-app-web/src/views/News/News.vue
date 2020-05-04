@@ -1,4 +1,5 @@
 <template>
+
   <v-container class="news">
     <section class="col-lg-6">
       <v-select
