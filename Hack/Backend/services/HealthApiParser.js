@@ -1,5 +1,6 @@
 const axios = require("axios");
 const csvjson = require('csvjson');
+const { MapData } = require("../models/MapDataModel");
 
 const getRate = (criteria, startDate, endDate, res, respond) => {
     axios.get('https://covidtracking.com/api/v1/us/daily.json')
@@ -163,30 +164,74 @@ const parse_csv_data = (request_url, start_date, end_date, criteria, res, respon
 };
 
 
-exports.countrySlugList = async (request_url, name, field, res, respond) => {
-    console.log(field, request_url);
+exports.countrySlugList = async (res, respond) => {
     try {
-        let results = []
-        let response = await axios.get(request_url)
-
-        if (response.data) {
-            response.data.forEach((item) => {
-                results.push({
-                    'name': item[name],
-                    'slug': item[field]
-                });
-            });
-        }
-        results.push({
-            'name': "World",
-            'slug': "world"
-        });
-        results.sort((a, b) => (a.name > b.name) ? 1 : -1)
+        let results = await MapData.distinct('Country')
         return respond(res, results)
-
-
     } catch (err) {
         console.log(err);
     }
     respond(res, [])
 };
+
+
+exports.fetch_criteria = async(req, res, respond, needRates=false) => {
+    let country = req.query.country;
+    let start_date = new Date(Date.parse(set_start_date_for_countries(req).substring(6)));
+    let end_date = new Date(Date.parse(set_end_date_for_countries(req).substring(4)));
+    let stats_by_country = await MapData.find({Country: country});    
+    let result = {};
+    let criterions = {
+        "Confirmed": 0,
+        "Deaths": 1,
+        "Recovered": 2
+    }
+    let chosen_criteria = req.query.criteria==='All' ? -1: criterions[`${req.query.criteria}`];
+    for(let i = 0; i<stats_by_country.length;i++){
+        let country_stats = stats_by_country[i];
+        let timeseries = country_stats.TimeSeries;
+        Object.keys(timeseries).forEach((date)=>{
+            let check_date = new Date(Date.parse(date));
+            if (check_date >= start_date && check_date <= end_date){
+                if(chosen_criteria==-1){       
+                    if(!result[`${date}`]){
+                        result[`${date}`] = {
+                            Confirmed : 0,
+                            Deaths: 0,
+                            Recovered: 0
+                        }
+                    }
+                    result[`${date}`].Confirmed += timeseries[`${date}`][0];
+                    result[`${date}`].Deaths += timeseries[`${date}`][1];
+                    result[`${date}`].Recovered += timeseries[`${date}`][2];
+                }
+                else{
+                    if(!result[`${date}`]){
+                        result[`${date}`] = 0
+                    }
+                    result[`${date}`] += timeseries[`${date}`][chosen_criteria]
+                }
+            }
+        });
+    }
+    const keys = Object.keys(result);
+    let return_result = [];
+    keys.forEach((key)=>{
+        if(chosen_criteria==-1){
+            return_result.push( {
+                t: `${key}`,
+                Confirmed: result[key].Confirmed, 
+                Recovered: result[key].Recovered, 
+                Deaths: result[key].Deaths, 
+            })    
+        }
+        else{
+            return_result.push( {
+                t: `${key}`,
+                y: result[key]            
+            })
+        }
+    })
+    respond(res, return_result, needRates)
+}
+

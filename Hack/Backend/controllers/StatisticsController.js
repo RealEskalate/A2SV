@@ -5,7 +5,7 @@ const path = require('path');
 const schedule = require('node-schedule');
 const Statistics = require("../models/StatisticsModel");
 const healthParser = require("../services/HealthApiParser");
-
+const {MapData} = require("../models/MapDataModel");
 
 // Updates db with the latest csv
 let update_db = async function() {
@@ -108,10 +108,10 @@ run_updates();
 
 exports.get_statistics = async(req, res) => {
     if (["Confirmed", "Recovered", "Deaths", "All"].includes(req.query.criteria)) {
-        healthParser.getHealthStatistics(req, res, respond);
+        healthParser.fetch_criteria(req, res, respond);
     } else if (["Confirmed_Rate", "Recovered_Rate", "Deaths_Rate"].includes(req.query.criteria)) {
         req.query.criteria = req.query.criteria.split("_")[0];
-        healthParser.getHealthStatistics(req, res, respond, true);
+        healthParser.fetch_criteria(req, res, respond, true);
     } else if (["Hospitalization", "ICU"].includes(req.query.criteria)) {
         healthParser.getCriticalStatistics(req, res, respond);
     } else if (req.query.criteria === "Test") {
@@ -180,11 +180,6 @@ function respond(res, payload, rates = false, status = 200) {
 
 
 exports.get_country_slugs = async(req, res) => {
-    // if (["Confirmed", "Recovered", "Deaths", "All"].includes(req.query.criteria)) {
-
-    url = "https://api.covid19api.com/countries"
-    name = "Country"
-    field = "Slug"
-    await healthParser.countrySlugList(url, name, field, res, respond);
-
+    await healthParser.countrySlugList( res, respond);
 }
+

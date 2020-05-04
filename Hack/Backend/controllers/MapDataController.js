@@ -1,7 +1,6 @@
 const Papa = require("papaparse");
 const axios = require("axios");
 const { MapData } = require("../models/MapDataModel");
-
 const schedule = require("node-schedule");
 //Populate DB once
 exports.getMapData = async (req, res) => {
@@ -19,10 +18,16 @@ exports.getMapData = async (req, res) => {
 
 // Schedules fetching everyday
 const run_updates = () => {
-  schedule.scheduleJob("0 0 * * *", async function () {
+  var rule = new schedule.RecurrenceRule();
+  rule.hour = 12;
+  rule.minute = 0;
+  schedule.scheduleJob(rule, async function () {
     await updateDb();
   });
 };
+// in the future we can call this in index.js
+exports.run_updates = run_updates;
+run_updates();
 
 updateDb = async () => {
   let urls = [
@@ -47,7 +52,7 @@ updateDb = async () => {
         });
         if (map_data) {
           let ts = map_data.TimeSeries;
-          if (ts[`${last_date}`] && ts[`${last_date}`].length == 3) continue;
+          // if (ts[`${last_date}`] && ts[`${last_date}`].length == 3) continue;
           if (ts[`${last_date}`] && ts[`${last_date}`].length < 3) {
             ts[`${last_date}`].push(data[`${last_date}`]);
           } else {
