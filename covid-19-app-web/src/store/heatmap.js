@@ -2,7 +2,7 @@ import axios from "axios";
 
 const state = {
   heatmap: [],
-  countries: [],
+  countries: []
 };
 
 const getters = {
@@ -24,20 +24,26 @@ const mutations = {
 };
 
 const actions = {
-  setHeatMap: ({commit}) => {
-    commit('setHeatMap', 'https://docs.mapbox.com/mapbox-gl-js/assets/earthquakes.geojson');
+  setHeatMap: ({ commit }) => {
+    commit(
+      "setHeatMap",
+      "https://docs.mapbox.com/mapbox-gl-js/assets/earthquakes.geojson"
+    );
   },
-  setCountries: ({commit}) => {
-    axios.get('https://res.cloudinary.com/geotargetly/raw/upload/v1579830286/data/iso_3166_country_codes.json')
-        .then(
-            res => {
-              commit('setCountries', res.data);
-              console.log(res.data);
-            },
-            error => {
-              console.log(error);
-            }
-        )
+  setCountries: ({ commit }) => {
+    axios
+      .get(
+        "https://res.cloudinary.com/geotargetly/raw/upload/v1579830286/data/iso_3166_country_codes.json"
+      )
+      .then(
+        res => {
+          commit("setCountries", res.data);
+          console.log(res.data);
+        },
+        error => {
+          console.log(error);
+        }
+      );
   }
 };
 
@@ -46,4 +52,4 @@ export default {
   getters,
   mutations,
   actions
-}
+};

@@ -2,18 +2,19 @@ var UserSchema = require("../models/UserModel.js");
 var mongoose = require("mongoose");
 const Bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-
+const axios = require('axios');
 const User = UserSchema.User;
 
 // Get All Users.
 exports.get_all_users = async (req, res) => {
-  jwt.verify(req.token, 'secretkey', (err,authData) =>{
-    if (err){
-        res.status(401).send("Incorrect authentication key");
+  jwt.verify(req.token, 'secretkey', (err, authData) => {
+    if (err) {
+      res.status(401).send("Incorrect authentication key");
     }
   });
 
   const users = await User.find({});
+  console.log(users.length);
   try {
     res.send(users);
   } catch (err) {
@@ -22,10 +23,10 @@ exports.get_all_users = async (req, res) => {
 };
 // Get User by ID.
 exports.get_user_by_id = async (req, res) => {
-  jwt.verify(req.token, 'secretkey', (err,authData) =>{
-      if (err){
-          res.status(401).send("Incorrect authentication key");
-      }
+  jwt.verify(req.token, 'secretkey', (err, authData) => {
+    if (err) {
+      res.status(401).send("Incorrect authentication key");
+    }
   });
 
   const user = await User.findById(req.params.id);
@@ -37,22 +38,40 @@ exports.get_user_by_id = async (req, res) => {
 };
 // Get User by Username and Password.
 exports.get_user_by_credentials = async (req, res) => {
-  const user = await User.findOne({
+  let user = await User.findOne({
     username: { $eq: req.body.username },
   });
   try {
     if (!user || !Bcrypt.compareSync(req.body.password, user.password)) {
       res.status(404).send("Username and Password combination doesn't exist");
     } else {
-
+      let country = '';
+      try {
+        const result = await axios.get('http://www.geoplugin.net/json.gp?ip=' + req.connection.remoteAddress.substring(2))
+          .then(response => {
+            if (response.data) {
+              country = response.data.geoplugin_countryName
+            }
+          })
+          .catch(error => {
+            console.log(error);
+          });
+        user.set({
+          current_country: country
+        });
+        await user.save();
+      }
+      catch (err) {
+        console.log(err);
+      }
       // jwt authentication(signing in) is  done here ...
-      jwt.sign({user}, 'secretkey', (err, token)=>{
+      jwt.sign({ user }, 'secretkey', (err, token) => {
         res.json({
           user: user,
-          token:token
+          token: token
         });
       })
-      
+
     }
   } catch (err) {
     res.status(500).send(err);
@@ -68,8 +87,8 @@ exports.post_user = async (req, res) => {
     age_group: req.body.age_group,
   });
   try {
-    const check = await User.findOne({username: user.username});
-    if(check){
+    const check = await User.findOne({ username: user.username });
+    if (check) {
       return res.status(500).send("Username and Password combination already exists");
     }
     if (user.password.length < 5) {
@@ -85,36 +104,37 @@ exports.post_user = async (req, res) => {
 };
 // Update User by ID.
 exports.update_user = async (req, res) => {
-  jwt.verify(req.token, 'secretkey', (err,authData) =>{
-    if (err){
-        res.status(401).send("Incorrect authentication key");
+  jwt.verify(req.token, 'secretkey', (err, authData) => {
+    if (err) {
+      res.status(401).send("Incorrect authentication key");
     }
   });
 
   try {
-    let exists = await User.findOne({username: req.body.username});
-    if(exists && exists._id!==req.body._id){
-      return res.status.send(500).send("Username already exists");
+    let exists = await User.findOne({ username: req.body.username });
+    if (exists && exists._id != req.body._id) {
+      return res.status(400).send("Username already exists ");
     }
     if (req.body.password) {
-      if(req.body.password.length<5){
+      if (req.body.password.length < 5) {
         return res.status(500).send("Password Length Too Short");
       }
       req.body.password = Bcrypt.hashSync(req.body.password, 10);
     }
-    let user = await User.findById(req.body._id);
-    user.set(req.body);
-    await user.save();
-    res.send(user);
+    exists.set(req.body);
+    await exists.save();
+    res.send(exists);
   } catch (err) {
+    console.log("error is " + err);
     res.status(500).send(err);
   }
 };
 // Delete User by ID.
 exports.delete_user = async (req, res) => {
-  jwt.verify(req.token, 'secretkey', (err,authData) =>{
-    if (err){
-        res.status(401).send("Incorrect authentication key");
+  console.log("delete user is called");
+  jwt.verify(req.token, 'secretkey', (err, authData) => {
+    if (err) {
+      res.status(401).send("Incorrect authentication key");
     }
   });
 

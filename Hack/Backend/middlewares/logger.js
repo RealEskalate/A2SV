@@ -17,7 +17,7 @@ const requestLog = expressWinston.logger({
   ],
   meta: true,
   baseMeta: true,
-  msg: "Request: HTTP {{req.method}} {{req.url}}; ipAddress: {{req.connection.remoteAddress}}; ",
+  msg: "ip: {{req.connection.remoteAddress}}",
   requestWhitelist: [
     "url",
     "method",

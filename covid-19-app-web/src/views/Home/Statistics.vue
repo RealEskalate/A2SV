@@ -23,17 +23,21 @@
           Compare Similar Diseases
         </v-tab>
 
-        <v-tab-item style="height: 750px">
+        <v-tab-item style="min-height: 700px">
           <display mode="counts" y_label="People" />
         </v-tab-item>
-        <v-tab-item style="height: 750px">
+        <v-tab-item style="min-height: 700px">
           <display mode="rates" y_label="Percent" />
         </v-tab-item>
-        <v-tab-item style="height: 750px">
-          <country-compare />
+        <v-tab-item style="min-height: 700px">
+          <country-compare x_axis_type="category" />
         </v-tab-item>
-        <v-tab-item style="height: 750px">
-          <disease-compare x_axis_type="category" />
+        <v-tab-item style="min-height: 700px">
+          <disease-compare
+            y_label="Logarithmic Value"
+            y_axis_type="logarithmic"
+            x_axis_type="category"
+          />
         </v-tab-item>
       </v-tabs>
     </v-card>

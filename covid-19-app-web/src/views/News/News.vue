@@ -1,5 +1,4 @@
 <template>
-
   <v-container class="news">
     <section class="col-lg-6">
       <v-select
@@ -8,7 +7,7 @@
         :menu-props="{ top: false, offsetY: true }"
         label="Scope"
         @change="scopeChange"
-      ></v-select>
+      />
 
       <span v-if="scope === 'Local'" class="font-weight-medium">
         Country: {{ country }}</span
@@ -20,7 +19,7 @@
           <v-toolbar color="primary" dark>
             <v-toolbar-title>News</v-toolbar-title>
 
-            <v-spacer></v-spacer>
+            <v-spacer />
           </v-toolbar>
 
           <v-list two-line>
@@ -36,25 +35,18 @@
                       :elevation="24"
                       v-text="item.title"
                       class="text-wrap black--text font-weight-medium"
-                    ></v-list-item-title>
+                    />
                     <v-list-item-subtitle
                       class="text-wrap"
                       v-html="item.description"
-                    ></v-list-item-subtitle>
+                    />
 
-                    <v-list-item-subtitle
-                      v-text="item.source"
-                    ></v-list-item-subtitle>
-                    <v-list-item-subtitle
-                      v-text="getTime(item.date)"
-                    ></v-list-item-subtitle>
+                    <v-list-item-subtitle v-text="item.source" />
+                    <v-list-item-subtitle v-text="getTime(item.date)" />
                   </v-list-item-content>
                 </v-list-item>
 
-                <v-divider
-                  v-if="index + 1 < news.length"
-                  :key="index"
-                ></v-divider>
+                <v-divider v-if="index + 1 < news.length" :key="index" />
               </template>
             </v-list-item-group>
           </v-list>
@@ -65,7 +57,7 @@
           v-model="page"
           :length="10"
           @input="getNewsByPage(page)"
-        ></v-pagination>
+        />
       </v-col>
       <v-spacer></v-spacer>
       <v-col :cols="3">
@@ -108,7 +100,7 @@ export default {
       this.getNewsByPage(this.page);
     },
     getTime(postDate) {
-      postDate = moment(String(postDate)).format("MM/DD/YYYY hh:mm");
+      postDate = moment(String(postDate)).format("LLLL");
       return postDate;
     },
     getNewsByPage(page) {
@@ -147,10 +139,20 @@ export default {
   font-size: 1.15rem !important;
   line-height: 1.5rem;
 }
+
 .recent-v-card-text {
   color: darkgray;
 }
+
 .v-paggination {
   justify-content: start;
+}
+
+.shadow {
+  box-shadow: 0 5px 15px 10px #eae6e6;
+}
+
+.headline {
+  font-family: Nunito, Roboto, sans-serif;
 }
 </style>

@@ -1,73 +1,68 @@
-const state = {
-  displayCounts: null,
-  displayRates: null,
-  countryResources: null,
-  countryCompare: null,
-  diseaseCompare: null
+import axios from "axios";
+import moment from "moment";
+
+const converter = {
+  "Test Count": "Test",
+  "Confirmed Cases": "Confirmed",
+  "Death Count": "Deaths",
+  "Recovery Count": "Recovered",
+
+  "Positive Rate": "Confirmed_Rate",
+  "Recovery Rate": "Recovered_Rate",
+  "Death Rate": "Deaths_Rate",
+  "Hospitalization Rate": "Hospitalization",
+  "ICU Rate": "ICU"
 };
 
 export default {
-  state,
+  state: {
+    displayCounts: {
+      "Test Count": [],
+      "Confirmed Cases": [],
+      "Death Count": [],
+      "Recovery Count": []
+    },
+    displayRates: {
+      "Positive Rate": [],
+      "Recovery Rate": [],
+      "Death Rate": []
+    },
+    countryCompare: {
+      one: [],
+      two: []
+    },
+    countryResources: null,
+    diseaseCompare: null
+  },
   getters: {
-    getDisplayCounts() {
+    getDisplayCounts(state) {
       return state.displayCounts;
     },
-    getDisplayRates() {
+    getDisplayRates(state) {
       return state.displayRates;
     },
-    getCountryResources() {
-      return state.countryResources;
-    },
-    getCountryCompare() {
+    getCountryCompare(state) {
       return state.countryCompare;
     },
-    getDiseaseCompare() {
+    getCountryResources(state) {
+      return state.countryResources;
+    },
+    getDiseaseCompare(state) {
       return state.diseaseCompare;
     }
   },
   mutations: {
-    setDisplayCounts(state, payload) {
-      state.displayCounts = {
-        datasets: payload
-      };
+    setDisplayCounts(state, { key, payload }) {
+      state.displayCounts[key] = payload;
     },
-    setDisplayRates(state, payload) {
-      state.displayRates = {
-        datasets: payload
-      };
+    setDisplayRates(state, { key, payload }) {
+      state.displayRates[key] = payload;
     },
     setCountryResources(state, payload) {
       state.countryResources = payload;
     },
-    setCountryOne(state, payload) {
-      if (!state.countryCompare) {
-        state.countryCompare = {
-          datasets: [payload]
-        };
-      } else if (state.countryCompare.datasets.length === 1) {
-        state.countryCompare = {
-          datasets: [payload, state.countryCompare.datasets[0]]
-        };
-      } else {
-        state.countryCompare = {
-          datasets: [payload, state.countryCompare.datasets[1]]
-        };
-      }
-    },
-    setCountryTwo(state, payload) {
-      if (!state.countryCompare) {
-        state.countryCompare = {
-          datasets: [payload]
-        };
-      } else if (state.countryCompare.datasets.length === 1) {
-        state.countryCompare = {
-          datasets: [state.countryCompare.datasets[0], payload]
-        };
-      } else {
-        state.countryCompare = {
-          datasets: [state.countryCompare.datasets[0], payload]
-        };
-      }
+    setCountryCompare(state, { key, payload }) {
+      state.countryCompare[key] = payload;
     },
     setDiseaseCompare(state, payload) {
       state.diseaseCompare = {
@@ -75,302 +70,142 @@ export default {
           "Confirmed Cases",
           "Death Count",
           "Recovered Count",
-          "Affected Countries",
-          "Fatality Rate"
+          "Affected Countries"
         ],
         datasets: payload
       };
     }
   },
   actions: {
-    setDisplayData({ commit }, { criteria, makeDataSet, mode }) {
-      const info = {
-        "Test Count": [
-          { t: "2018-11-24", y: 400 },
-          { t: "2019-01-29", y: 530 },
-          { t: "2019-10-02", y: 780 },
-          { t: "2019-11-11", y: 120 }
-        ],
-        "Confirmed Cases": [
-          { t: "2018-11-25", y: 343 },
-          { t: "2019-03-30", y: 653 },
-          { t: "2019-05-06", y: 212 },
-          { t: "2020-01-13", y: 32 }
-        ],
-        "Death Count": [
-          { t: "2018-11-25", y: 636 },
-          { t: "2019-02-03", y: 356 },
-          { t: "2019-10-06", y: 136 },
-          { t: "2020-01-13", y: 145 }
-        ],
-        "Recovery Count": [
-          { t: "2018-11-25", y: 457 },
-          { t: "2019-05-30", y: 533 },
-          { t: "2019-08-06", y: 234 },
-          { t: "2020-01-13", y: 346 }
-        ],
-
-        "Positive Rate": [
-          { t: "2018-11-24", y: 40 },
-          { t: "2019-01-29", y: 53 },
-          { t: "2019-10-02", y: 78 },
-          { t: "2019-11-11", y: 12 }
-        ],
-        "Recovery Rate": [
-          { t: "2018-11-25", y: 62 },
-          { t: "2019-03-30", y: 53 },
-          { t: "2019-05-06", y: 43 },
-          { t: "2020-01-13", y: 24 }
-        ],
-        "Hospitalization Rate": [
-          { t: "2018-11-25", y: 86 },
-          { t: "2019-02-03", y: 45 },
-          { t: "2019-10-06", y: 23 },
-          { t: "2020-01-13", y: 31 }
-        ],
-        "ICU Rate": [
-          { t: "2018-11-25", y: 34 },
-          { t: "2019-05-30", y: 43 },
-          { t: "2019-08-06", y: 55 },
-          { t: "2020-01-13", y: 78 }
-        ],
-        "Death Rate": [
-          { t: "2018-11-25", y: 97 },
-          { t: "2019-05-30", y: 43 },
-          { t: "2019-08-06", y: 11 },
-          { t: "2020-01-13", y: 41 }
-        ]
-      };
-
-      let collection = [];
-      criteria.forEach(function(cr) {
-        let input = {
-          label: cr.label,
-          color: cr.color,
-          data: info[cr.label]
-        };
-        // TODO fetch the data from API here
-        collection.push(makeDataSet(input));
-      });
-
-      if (mode === "rates") {
-        commit("setDisplayRates", collection);
-      } else {
-        commit("setDisplayCounts", collection);
+    setDisplayData(
+      { commit },
+      { criteria, country, start_date, end_date, mode }
+    ) {
+      for (let i = 0; i < criteria.length; i++) {
+        let cr = criteria[i];
+        axios
+          .get(`${process.env.VUE_APP_BASE_URL}/statistics`, {
+            params: {
+              criteria: converter[cr.label],
+              country: country,
+              start_date: start_date,
+              end_date: end_date
+            }
+          })
+          .then(response => {
+            if (mode === "rates") {
+              commit("setDisplayRates", {
+                key: cr.label,
+                payload: response.data
+              });
+            } else {
+              commit("setDisplayCounts", {
+                key: cr.label,
+                payload: response.data
+              });
+            }
+          })
+          .catch(error => {
+            console.log(error);
+          });
       }
     },
     setCountryResources({ commit }, { country }) {
-      // TODO fetch country resources here
-      console.log(country);
-      const info = [
-        { key: "Testing Strategy", value: "Test Homes" },
-        { key: "Hospitals", value: 10000 },
-        { key: "Doctors", value: 423 },
-        { key: "Medical Workers", value: 26322 },
-        { key: "Ventilators", value: 262 },
-        { key: "Hospital Beds", value: 262 },
-        { key: "ICU Beds", value: 262 },
-        { key: "Protection Gears", value: 262 }
-      ];
-      commit("setCountryResources", info);
+      // const info = [
+      //   { key: "Testing Strategy", value: "Test Homes" },
+      //   { key: "Hospitals", value: 10000 },
+      //   { key: "Doctors", value: 423 },
+      //   { key: "Medical Workers", value: 26322 },
+      //   { key: "Ventilators", value: 262 },
+      //   { key: "Hospital Beds", value: 262 },
+      //   { key: "ICU Beds", value: 262 },
+      //   { key: "Protection Gears", value: 262 }
+      // ];
+      //
+
+      axios
+        .get(`${process.env.VUE_APP_BASE_URL}/publicResources/${country}`)
+        .then(response => {
+          let data = [];
+          for (let i in response.data) {
+            let val = response.data[i];
+            let one = val.TimeSeries["2017"]
+              ? val.TimeSeries["2017"].toFixed(2)
+              : null;
+            let two = val.TimeSeries["2015"]
+              ? val.TimeSeries["2015"].toFixed(2)
+              : null;
+            data.push({
+              key: val.Indicator.split("(")[0],
+              value: one || two
+            });
+          }
+          commit("setCountryResources", data);
+        })
+        .catch(error => {
+          console.log(error);
+        });
     },
     setCountryCompare(
       { commit },
-      { criteria, makeDataSet, country, color, mode }
+      { criteria, country, start_date, end_date, mode }
     ) {
-      const info = {
-        "Test Count": {
-          Ethiopia: [
-            { t: "2018-11-24", y: 400 },
-            { t: "2019-10-02", y: 356 }
-          ],
-          "United States": [
-            { t: "2019-01-29", y: 32 },
-            { t: "2019-11-11", y: 452 }
-          ],
-          World: [
-            { t: "2019-01-29", y: 532 },
-            { t: "2019-11-11", y: 346 }
-          ]
-        },
-        "Confirmed Cases": {
-          Ethiopia: [
-            { t: "2018-11-24", y: 362 },
-            { t: "2019-10-02", y: 434 }
-          ],
-          "United States": [
-            { t: "2019-01-29", y: 234 },
-            { t: "2019-11-11", y: 235 }
-          ],
-          World: [
-            { t: "2019-01-29", y: 23 },
-            { t: "2019-11-11", y: 42 }
-          ]
-        },
-        "Death Count": {
-          Ethiopia: [
-            { t: "2018-11-24", y: 44 },
-            { t: "2019-10-02", y: 323 }
-          ],
-          "United States": [
-            { t: "2019-01-29", y: 530 },
-            { t: "2019-11-11", y: 323 }
-          ],
-          World: [
-            { t: "2019-01-29", y: 234 },
-            { t: "2019-11-11", y: 424 }
-          ]
-        },
-        "Recovery Count": {
-          Ethiopia: [
-            { t: "2018-11-24", y: 346 },
-            { t: "2019-10-02", y: 234 }
-          ],
-          "United States": [
-            { t: "2019-01-29", y: 456 },
-            { t: "2019-11-11", y: 123 }
-          ],
-          World: [
-            { t: "2019-01-29", y: 77 },
-            { t: "2019-11-11", y: 93 }
-          ]
-        },
-
-        "Positive Rate": {
-          Ethiopia: [
-            { t: "2018-11-24", y: 34 },
-            { t: "2019-10-02", y: 64 }
-          ],
-          "United States": [
-            { t: "2019-01-29", y: 23 },
-            { t: "2019-11-11", y: 61 }
-          ],
-          World: [
-            { t: "2019-01-29", y: 30 },
-            { t: "2019-11-11", y: 78 }
-          ]
-        },
-        "Recovery Rate": {
-          Ethiopia: [
-            { t: "2018-11-24", y: 34 },
-            { t: "2019-10-02", y: 64 }
-          ],
-          "United States": [
-            { t: "2019-01-29", y: 23 },
-            { t: "2019-11-11", y: 61 }
-          ],
-          World: [
-            { t: "2019-01-29", y: 30 },
-            { t: "2019-11-11", y: 78 }
-          ]
-        },
-        "Hospitalization Rate": {
-          Ethiopia: [
-            { t: "2018-11-24", y: 34 },
-            { t: "2019-10-02", y: 64 }
-          ],
-          "United States": [
-            { t: "2019-01-29", y: 23 },
-            { t: "2019-11-11", y: 61 }
-          ],
-          World: [
-            { t: "2019-01-29", y: 30 },
-            { t: "2019-11-11", y: 78 }
-          ]
-        },
-        "ICU Rate": {
-          Ethiopia: [
-            { t: "2018-11-24", y: 34 },
-            { t: "2019-10-02", y: 64 }
-          ],
-          "United States": [
-            { t: "2019-01-29", y: 62 },
-            { t: "2019-11-11", y: 32 }
-          ],
-          World: [
-            { t: "2019-01-29", y: 62 },
-            { t: "2019-11-11", y: 46 }
-          ]
-        },
-        "Death Rate": {
-          Ethiopia: [
-            { t: "2018-11-24", y: 32 },
-            { t: "2019-10-02", y: 9 }
-          ],
-          "United States": [
-            { t: "2019-01-29", y: 59 },
-            { t: "2019-11-11", y: 67 }
-          ],
-          World: [
-            { t: "2019-01-29", y: 42 },
-            { t: "2019-11-11", y: 42 }
-          ]
-        }
-      };
-      // TODO fetch country Comparison here
-      let input = {
-        label: country,
-        color: color,
-        data: info[criteria][country]
-      };
-
-      if (mode === "one") {
-        commit("setCountryOne", makeDataSet(input));
-      } else {
-        commit("setCountryTwo", makeDataSet(input));
-      }
+      axios
+        .get(`${process.env.VUE_APP_BASE_URL}/statistics`, {
+          params: {
+            criteria: converter[criteria],
+            country: country,
+            start_date: start_date,
+            end_date: end_date
+          }
+        })
+        .then(response => {
+          let data = [];
+          for (let i in response.data) {
+            let val = response.data[i];
+            data.push({
+              x: `Day ${moment(val.t).diff(moment(start_date), "days")}`,
+              y: val.y
+            });
+          }
+          commit("setCountryCompare", { key: mode, payload: data });
+        })
+        .catch(error => {
+          console.log(error);
+        });
     },
 
-    setDiseaseCompare({ commit }, { diseases, makeDataSet }) {
-      let info = {
-        Corona: [
-          { x: "Confirmed Cases", y: 234 },
-          { x: "Death Count", y: 134 },
-          { x: "Recovered Count", y: 100 },
-          { x: "Affected Countries", y: 185 },
-          { x: "Fatality Rate", y: 10 }
-        ],
-        SARS: [
-          { x: "Confirmed Cases", y: 500 },
-          { x: "Death Count", y: 235 },
-          { x: "Recovered Count", y: 72 },
-          { x: "Affected Countries", y: 80 },
-          { x: "Fatality Rate", y: 5 }
-        ],
-        MERS: [
-          { x: "Confirmed Cases", y: 435 },
-          { x: "Death Count", y: 523 },
-          { x: "Recovered Count", y: 234 },
-          { x: "Affected Countries", y: 100 },
-          { x: "Fatality Rate", y: 7 }
-        ],
-        AIDS: [
-          { x: "Confirmed Cases", y: 745 },
-          { x: "Death Count", y: 532 },
-          { x: "Recovered Count", y: 231 },
-          { x: "Affected Countries", y: 53 },
-          { x: "Fatality Rate", y: 2 }
-        ],
-        Ebola: [
-          { x: "Confirmed Cases", y: 524 },
-          { x: "Death Count", y: 324 },
-          { x: "Recovered Count", y: 563 },
-          { x: "Affected Countries", y: 234 },
-          { x: "Fatality Rate", y: 64 }
-        ]
+    setDiseaseCompare({ commit }, { makeDataSet }) {
+      let diseaseColors = {
+        "COVID-19": [121, 134, 203],
+        EBOLA: [220, 231, 117],
+        SARS: [77, 208, 225],
+        MERS: [240, 98, 146],
+        "Seasonal flu": [220, 231, 117]
       };
 
-      let collection = [];
-      diseases.forEach(function(d) {
-        let input = {
-          label: d.name,
-          color: d.color,
-          data: info[d.name]
-        };
-        // TODO fetch the data from API here
-        collection.push(makeDataSet(input, "bar"));
-      });
-      commit("setDiseaseCompare", collection);
+      axios.get(`${process.env.VUE_APP_BASE_URL}/diseases`).then(
+        response => {
+          let collection = [];
+          response.data.forEach(function(load) {
+            let input = {
+              label: load.title,
+              color: diseaseColors[load.title],
+              data: [
+                { x: "Confirmed Cases", y: load.confirmed },
+                { x: "Death Count", y: load.deaths },
+                { x: "Recovered Count", y: load.recovered },
+                { x: "Affected Countries", y: load.affected }
+              ]
+            };
+            collection.push(makeDataSet(input, "bar"));
+          });
+          commit("setDiseaseCompare", collection);
+        },
+        error => {
+          console.log(error);
+        }
+      );
     }
   }
 };
