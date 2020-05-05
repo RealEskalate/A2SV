@@ -28,6 +28,7 @@ export default class SymptomPage extends Component {
       this.fetchData();
     }, 1000);
   }
+  //fetches symptoms that user has already registered
   fetchData() {
     this.setState({ userSymptoms: symptomStore.getState() });
   }
@@ -156,6 +157,7 @@ export default class SymptomPage extends Component {
         item._id &&
         item.name && (
           <CheckBox
+            key={item._id}
             title={item.name}
             checked={this.doesSymptomAlreadyRegistered(item._id)}
             onPress={() =>

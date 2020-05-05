@@ -4,6 +4,7 @@ import SymptomPage from "../symptom-page/SymptomPage.js";
 import UserSymptomPage from "../symptom-page/UserSymptomPage.js";
 import DataAnalytics from "../public-data-page/DataAnalytics.js";
 import InformationPage from "../information-page/InformationPage";
+import News from "../news-page/News";
 import MapService from "../map-service/MapService.js";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 const Tab = createMaterialBottomTabNavigator();
@@ -24,6 +25,16 @@ export default function MyTabs({ navigation, route }) {
               color={color}
               size={26}
             />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="News"
+        component={News}
+        options={{
+          tabBarLabel: "News",
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="newspaper" color={color} size={26} />
           ),
         }}
       />
@@ -76,6 +87,8 @@ function getHeaderTitle(route) {
   switch (routeName) {
     case "Information":
       return "Information";
+    case "News":
+      return "Top News";
     case "Data Analytics":
       return "Data Analytics";
     case "Symptom Tracker":

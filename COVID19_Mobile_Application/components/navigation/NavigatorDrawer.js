@@ -42,7 +42,7 @@ const NavigatorDrawer = (props) => {
               onPress={() => props.navigation.closeDrawer()}
             />
 
-            <DrawerItem
+            {/* <DrawerItem
               icon={({ color, size }) => (
                 <Icon name="newspaper" color={color} size={size} />
               )}
@@ -50,7 +50,7 @@ const NavigatorDrawer = (props) => {
               onPress={() => {
                 props.navigation.navigate("News");
               }}
-            />
+            /> */}
             <DrawerItem
               icon={({ color, size }) => (
                 <Icon name="information-outline" color={color} size={size} />
