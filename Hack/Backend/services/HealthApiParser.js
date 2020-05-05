@@ -190,3 +190,29 @@ exports.countrySlugList = async (request_url, name, field, res, respond) => {
     }
     respond(res, [])
 };
+exports.populate_db_daily = async() => {
+    let today = new Date(new Date() - 24 * 3600);
+    let request_url = "https://api.covid19api.com/summary";
+    let response = await axios.get(request_url)
+
+    if (response.data) {
+        response.data.Countries.forEach((c_cases) => {
+            c_case_date = new Date(c_cases.Date);
+            // fill db if new data is today's
+            if ( c_case_date <= today){
+                let c = new Cases({
+                    _id: mongoose.Types.ObjectId(),
+                    country: c_cases['Country'],
+                    country_slug: c_cases['CountryCode'],
+                    confirmed: c_cases['NewConfirmed'],
+                    deaths: c_cases['NewDeaths'],
+                    recovered: c_cases['NewRecovered'],
+                    date: c_case_date
+                });
+                await c.save();
+            }
+        });
+    }
+
+    console.log("Done filling db for country stats...");
+};
