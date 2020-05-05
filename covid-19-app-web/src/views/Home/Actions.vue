@@ -11,11 +11,24 @@
           v-model="selectedAction"
           style="min-height: 300px"
         >
-          <v-expansion-panel v-for="(action, i) in actions" :key="i">
-            <v-expansion-panel-header class="font-weight-bold" hide-actions>
+          <v-expansion-panel
+            @change="value = 0"
+            v-for="(action, i) in actions"
+            :key="i"
+          >
+            <v-expansion-panel-header
+              class="font-weight-bold"
+              hide-actions
+              @mouseover="auto = false"
+              @mouseleave="auto = true"
+            >
               <div class="text--primary">
-                <v-progress-circular :value="20" :size="20">
-                </v-progress-circular>
+                <v-progress-circular
+                  :value="selectedAction === i ? value : 100"
+                  :width="7"
+                  :size="20"
+                  color="primary"
+                />
                 <h3
                   class="text--primary d-inline-block mx-3"
                   v-text="action.title"
@@ -23,8 +36,16 @@
               </div>
             </v-expansion-panel-header>
             <v-expansion-panel-content>
-              <div v-html="action.description" />
-              <v-img class="my-5 mx-auto d-md-none" :src="action.image" />
+              <div
+                v-html="action.description"
+                @mouseover="auto = false"
+                @mouseleave="auto = true"
+              />
+              <v-img
+                class="my-5 mx-auto d-md-none"
+                :lazy-src="action.image"
+                :src="action.image"
+              />
             </v-expansion-panel-content>
             <v-divider />
           </v-expansion-panel>
@@ -36,6 +57,7 @@
           transition="fade-transition"
           class="my-5 mx-auto"
           max-height="350px"
+          :lazy-src="actions[selectedAction].image"
           :src="actions[selectedAction].image"
         />
       </v-col>
@@ -46,6 +68,9 @@
 export default {
   data: () => {
     return {
+      auto: true,
+      interval: 0,
+      value: 0,
       selectedAction: 0,
       actions: [
         {
@@ -73,8 +98,22 @@ export default {
           Weather you are a child, a teenager or a senior, we have something for you.`,
           image: "/img/actions/book_reading.svg"
         }
-      ],
-    }
+      ]
+    };
+  },
+  beforeDestroy() {
+    clearInterval(this.interval);
+  },
+  mounted() {
+    this.interval = setInterval(() => {
+      if (this.value >= 100) {
+        this.selectedAction = (this.selectedAction + 1) % this.actions.length;
+        return (this.value = 0);
+      }
+      if (this.auto) {
+        this.value += 15;
+      }
+    }, 1000);
   }
 };
 </script>
