@@ -9,6 +9,7 @@
             v-text="'Learn About Covid-19'"
           />
           <carousel-3d
+            :border="0"
             :perspective="20"
             :inverse-scaling="50"
             :space="350"
@@ -21,9 +22,9 @@
               :key="i"
               v-for="(item, i) in information"
               :index="i"
-              style="height: auto"
+              style="height: auto; background-color: transparent"
             >
-              <v-card class="mx-auto">
+              <v-card class="mx-auto" outlined shaped>
                 <v-img
                   class="white--text align-end"
                   height="200px"
@@ -42,8 +43,8 @@
 
                 <v-card-actions>
                   <v-btn
-                    color="primary"
                     text
+                    color="primary"
                     @click.stop="
                       () => {
                         dialog = true;
@@ -66,11 +67,7 @@
           <v-card-text v-text="selectedInfo.description" />
           <v-card-actions>
             <v-spacer />
-            <v-btn
-              color="primary"
-              text
-              @click="dialog = false"
-            >
+            <v-btn color="primary" text @click="dialog = false">
               Close
             </v-btn>
           </v-card-actions>
@@ -78,10 +75,10 @@
       </v-dialog>
     </section>
     <section class="my-12 text-justify">
-      <actions />
+      <actions class="my-12" />
     </section>
     <section class="my-12 text-justify">
-      <states />
+      <states class="my-12" />
     </section>
   </v-content>
 </template>
