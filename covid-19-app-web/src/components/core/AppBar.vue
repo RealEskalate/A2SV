@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-app-bar app class="white bg-transparent" flat v-bind:class="{raised: raise}">
+    <v-app-bar app color="primary" dark v-on:scroll="scrollFunction" :flat="raise" class="white bg-transparent">
       <v-app-bar-nav-icon
         v-if="$vuetify.breakpoint.smAndDown"
         @click.stop="drawer = !drawer"
@@ -22,11 +22,11 @@
       <v-spacer />
 
       <v-btn
-              :key="link.to"
-              :to="link.to"
-              text
-              v-for="link in links"
-              class="nav-item hidden-sm-and-down"
+        :key="link.to"
+        :to="link.to"
+        text
+        v-for="link in links"
+        class="nav-item hidden-sm-and-down"
       >
         <span class="text-capitalize"> {{ link.text }}</span>
       </v-btn>
@@ -74,7 +74,7 @@ export default {
       locationY: 0,
       links: [
         {text: "Home", icon: "mdi-home", to: "/"},
-        {text: "LEARN", icon: "mdi-search", to: "/information" },
+        {text: "Learn", icon: "mdi-search", to: "/information" },
         {text: "About", icon: "mdi-information", to: "/about"},
         {text: "News", icon: "mdi-newspaper", to: "/news"},
         {text: "Map", icon: "mdi-map", to: "/map"}
@@ -96,29 +96,19 @@ export default {
   },
   computed: {
     raise() {
-      return this.locationY > 100;
+      return this.locationY < 100;
     }
   }
 };
 </script>
 
 <style scoped>
-  .nav-item span {
+  .nav-item {
     font-family: 'Open Sans', sans-serif;
-    font-weight: 600;
-    color: #47536E !important;
+    font-weight: 700;
   }
-
   .bg-transparent {
-    opacity: 0.95;
-  }
-
-  .no-decoration {
-    text-decoration: none !important;
-  }
-
-  .raised {
-    box-shadow: 5px 0 15px 5px #eee;
-    z-index: 997;
+    opacity: 0.85;
+    border-color: transparent!important;
   }
 </style>
