@@ -28,7 +28,7 @@
                 <v-img
                   class="white--text align-end"
                   height="200px"
-                  :src="item.image"
+                  :lazy-src="item.image"
                 >
                   <v-card-title
                     class="text-truncate mr-3"
@@ -61,8 +61,12 @@
         </v-row>
       </v-container>
       <v-dialog v-model="dialog" width="500">
-        <v-card>
-          <v-img height="150px" :src="selectedInfo.image" />
+        <v-card shaped>
+          <v-img
+            height="150px"
+            :lazy-src="selectedInfo.image"
+            :src="selectedInfo.image"
+          />
           <v-card-title class="headline" v-text="selectedInfo.title" />
           <v-card-text v-text="selectedInfo.description" />
           <v-card-actions>

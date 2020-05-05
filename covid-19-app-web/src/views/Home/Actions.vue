@@ -41,6 +41,22 @@
                 @mouseover="auto = false"
                 @mouseleave="auto = true"
               />
+              <div
+                v-if="action.learning"
+                @mouseover="auto = false"
+                @mouseleave="auto = true"
+              >
+                <v-chip
+                  small
+                  color="primary lighten-1"
+                  target="_blank"
+                  :key="ind"
+                  v-for="(path, ind) in learningPaths"
+                  class="mx-1 my-2"
+                  :href="path.link"
+                  v-text="path.text"
+                />
+              </div>
               <v-img
                 class="my-5 mx-auto d-md-none"
                 :lazy-src="action.image"
@@ -74,7 +90,7 @@ export default {
       selectedAction: 0,
       actions: [
         {
-          title: "Don't Panic",
+          title: "Stay Calm",
           description: `Pandemic does not refer to the lethality of a virus but to its transmission and geographical extension.
           So Stay mindful and be the help instead of creating more problems in fear.`,
           image: "/img/actions/mindfulness.svg"
@@ -95,8 +111,31 @@ export default {
         {
           title: "Learn Even More",
           description: `Go through our Learning paths to explore more about Covid 19.
-          Weather you are a child, a teenager or a senior, we have something for you.`,
-          image: "/img/actions/book_reading.svg"
+          Whatever age you are, we have something for you.`,
+          image: "/img/actions/book_reading.svg",
+          learning: true
+        }
+      ],
+      learningPaths: [
+        {
+          text: "For Kids",
+          link:
+            "https://docs.google.com/spreadsheets/d/1O19GX2m7a_OY-F0O0wx62wpacRDwbUWHA0JAplojpnE/edit#gid=0"
+        },
+        {
+          text: "For Teenagers",
+          link:
+            "https://docs.google.com/spreadsheets/d/1O19GX2m7a_OY-F0O0wx62wpacRDwbUWHA0JAplojpnE/edit#gid=1774735521"
+        },
+        {
+          text: "For Adults",
+          link:
+            "https://docs.google.com/spreadsheets/d/1O19GX2m7a_OY-F0O0wx62wpacRDwbUWHA0JAplojpnE/edit#gid=1786371463"
+        },
+        {
+          text: "For Seniors",
+          link:
+            "https://docs.google.com/spreadsheets/d/1O19GX2m7a_OY-F0O0wx62wpacRDwbUWHA0JAplojpnE/edit#gid=683871385"
         }
       ]
     };
