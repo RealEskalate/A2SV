@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row>
-      <h3 class="display-1 font-weight-thin mb-10" v-text="'What now?'" />
+      <h3 class="display-1 font-weight-thin mb-10" v-text="'What Then?'" />
     </v-row>
     <v-row>
       <v-col class="pr-12" md="5" cols="12">

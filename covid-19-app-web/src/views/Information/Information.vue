@@ -69,13 +69,7 @@
             <v-btn
               color="primary"
               text
-              @click="
-                selectedInfo = {
-                  title: null,
-                  description: null,
-                  image: null
-                }
-              "
+              @click="dialog = false"
             >
               Close
             </v-btn>
