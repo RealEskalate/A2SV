@@ -43,7 +43,6 @@ export default class StaticsPage extends React.Component {
   };
 
   componentDidMount() {
-    console.log("Refreshing");
     this.GetTotalData();
     this.fetchStatistics();
     this.getCountryList();
