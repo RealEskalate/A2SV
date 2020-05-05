@@ -4,6 +4,7 @@ import graphs from "./graphs";
 import heatmap from "./heatmap";
 import covidStates from "./covid-states";
 import news from "./news";
+import loaders from "./loaders";
 
 Vue.use(Vuex);
 
@@ -251,6 +252,7 @@ export default new Vuex.Store({
     graphs,
     heatmap,
     covidStates,
-    news
+    news,
+    loaders
   }
 });

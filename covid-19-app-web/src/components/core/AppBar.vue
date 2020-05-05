@@ -74,6 +74,7 @@ export default {
       drawer: false,
       links: [
         { text: "HOME", icon: "mdi-home", to: "/" },
+        { text: "LEARN", icon: "mdi-search", to: "/information" },
         { text: "ABOUT", icon: "mdi-information", to: "/about" },
         { text: "NEWS", icon: "mdi-newspaper", to: "/news" },
         { text: "MAP", icon: "mdi-map", to: "/map" }

@@ -52,7 +52,8 @@
         </v-img>
         <br />
         <span class="v-tab-item-span">
-          When people cough there cough cannot reach 10ft.
+          Limiting face-to-face contact with others is the best way to reduce
+          the spread of the disease.
         </span>
       </v-card>
     </v-tab-item>
