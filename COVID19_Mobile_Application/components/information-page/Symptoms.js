@@ -4,10 +4,10 @@ import { Card, ListItem, Button, Icon } from "react-native-elements";
 
 export default function Symptoms() {
   return (
-    <ScrollView>
+    <ScrollView style={{ padding: 5 }}>
       <Card
         // title="Symptoms"
-        image={require("./icons/sneezing.gif")}
+        image={require("./icons/sneezing.png")}
         containerStyle={{ margin: 0 }}
       >
         <ScrollView>

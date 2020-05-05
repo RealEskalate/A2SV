@@ -19,13 +19,14 @@ export default function InformationPage(props) {
           <Image
             style={ImageStyle.imageStyle}
             resizeMode="cover"
-            source={require("../../assets/covid.jpg")}
+            source={require("./icons/corona-blue.png")}
           />
           <Text style={{ flex: 2, marginTop: 15 }}>
             Coronavirus disease 2019 is an infectious disease caused by severe
             acute respiratory syndrome coronavirus 2.
           </Text>
         </View>
+
         <Button
           buttonStyle={[ButtonStyle.buttonStyle, BorderRadius.borderRadius]}
           title="Read more"
@@ -42,7 +43,7 @@ export default function InformationPage(props) {
           <Image
             style={ImageStyle.imageStyle}
             resizeMode="cover"
-            source={require("../../assets/symptoms.jpg")}
+            source={require("./icons/sneezing.png")}
           />
           <Text style={{ flex: 2, marginTop: 15 }}>
             Fever, cough and shortness of breath are the common symptoms
@@ -65,7 +66,7 @@ export default function InformationPage(props) {
           <Image
             style={ImageStyle.imageStyle}
             resizeMode="cover"
-            source={require("../../assets/Prevention.jpg")}
+            source={require("./icons/handWash.png")}
           />
           <Text style={{ flex: 2, marginTop: 15 }}>
             Follow the guidelines to help protect yourself from catching,
@@ -88,7 +89,7 @@ export default function InformationPage(props) {
           <Image
             style={ImageStyle.imageStyle}
             resizeMode="cover"
-            source={require("../../assets/treatment.jpg")}
+            source={require("./icons/doctors.png")}
           />
           <Text style={{ flex: 2, marginTop: 15 }}>
             There currently isn’t a vaccine against developing COVID-19.

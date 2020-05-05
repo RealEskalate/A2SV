@@ -4,10 +4,10 @@ import { Card, ListItem, Button, Icon } from 'react-native-elements';
 
 export default function Preventions() {
   return (
-    <ScrollView>
+    <ScrollView style={{ padding: 5 }}>
       <Card
         // title='Preventions'
-        image={require('./icons/handWash.gif')}
+        image={require('./icons/handWash.png')}
         containerStyle={{ margin: 0 }}>
         <ScrollView>
           <Text style={{ marginBottom: 10 }}>

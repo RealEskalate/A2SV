@@ -4,10 +4,10 @@ import { Card, ListItem, Button, Icon } from "react-native-elements";
 
 export default function Treatments() {
   return (
-    <ScrollView>
+    <ScrollView style={{ padding: 5 }}>
       <Card
         // title="Treatment"
-        image={require("./icons/doctors.gif")}
+        image={require("./icons/doctors.png")}
         containerStyle={{ margin: 0 }}
       >
         <ScrollView>

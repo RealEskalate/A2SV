@@ -5,11 +5,11 @@ import ImageStyle from './styles/ImageStyle'
 
 export default function WhatIsCovid19() {
   return (
-    <ScrollView>
+    <ScrollView style={{ padding: 5 }}>
       <Card
         // title="What is COVID-19?"
         image={
-          require("./icons/corona-red.gif")
+          require("./icons/corona-red.png")
         }
         containerStyle={{ margin: 0 }}
       >
