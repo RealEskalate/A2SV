@@ -2,6 +2,7 @@ const Papa = require("papaparse");
 const axios = require("axios");
 const { MapData } = require("../models/MapDataModel");
 const schedule = require("node-schedule");
+const countries = require("./StatisticsController").countries
 //Populate DB once
 exports.getMapData = async (req, res) => {
   try {
@@ -48,7 +49,7 @@ updateDb = async () => {
       try {
         let map_data = await MapData.findOne({
           State: data["Province/State"] || " ",
-          Country: data["Country/Region"],
+          Country: countries[`${data["Country/Region"]}`],
         });
         if (map_data) {
           let ts = map_data.TimeSeries;
@@ -92,7 +93,7 @@ populateDataOnce = async () => {
       let data = r.data[i];
       let item = new MapData({
         State: data["Province/State"] || " ",
-        Country: data["Country/Region"],
+        Country: countries[`${data["Country/Region"]}`],
         Lat: data["Lat"],
         Long: data["Long"],
       });
