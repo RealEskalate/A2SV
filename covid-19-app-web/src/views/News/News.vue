@@ -25,24 +25,37 @@
           <v-list two-line>
             <v-list-item-group>
               <template v-for="(item, index) in news">
-                <v-list-item
-                  :key="item.title"
-                  v-bind:href="item.reference_link"
-                  target="blank"
-                >
+                <v-list-item :key="item.title" target="blank">
                   <v-list-item-content class="py-6">
                     <v-list-item-title
                       :elevation="24"
                       v-text="item.title"
                       class="text-wrap black--text font-weight-medium"
-                    />
-                    <v-list-item-subtitle
-                      class="text-wrap"
-                      v-html="item.description"
-                    />
+                    ></v-list-item-title>
+                    <v-list-item-subtitle>
+                      <v-btn
+                        class="my-3"
+                        v-bind:href="item.reference_link"
+                        target="blank"
+                        small
+                        outlined
+                        >read more</v-btn
+                      >
+                    </v-list-item-subtitle>
 
-                    <v-list-item-subtitle v-text="item.source" />
-                    <v-list-item-subtitle v-text="getTime(item.date)" />
+                    <div>
+                      <v-list-item-subtitle
+                        v-text="getTime(item.date)"
+                        style="display:inline"
+                      >
+                      </v-list-item-subtitle>
+                      <v-icon class="mx-1" size="20px"
+                        >mdi-clock-outline</v-icon
+                      >
+                    </div>
+                    <v-list-item-subtitle
+                      >by {{ item.source }}</v-list-item-subtitle
+                    >
                   </v-list-item-content>
                 </v-list-item>
 
@@ -71,7 +84,7 @@
               :label="sourceItem"
               :value="sourceItem"
               @change="sourceChange"
-            ></v-checkbox>
+            />
           </v-card-text>
         </v-card>
       </v-col>
