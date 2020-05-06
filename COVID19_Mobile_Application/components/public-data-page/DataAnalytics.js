@@ -11,9 +11,9 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { LineChart } from "react-native-chart-kit";
+import { SafeAreaView } from "react-native-safe-area-context";
 import * as criterias from "./Criterias";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-
 import SearchableDropdown from "react-native-searchable-dropdown";
 export default class DataAnalytics extends React.Component {
   state = {
@@ -211,7 +211,7 @@ export default class DataAnalytics extends React.Component {
               this.getTotalData();
               this.fetchStatistics();
             }}
-            containerStyle={{ padding: 5, flex: 2 }}
+            containerStyle={{ padding: 5, flex: 6 }}
             textInputStyle={{
               padding: 12,
               borderWidth: 1,
@@ -233,13 +233,14 @@ export default class DataAnalytics extends React.Component {
             underlineColorAndroid="transparent"
           />
           <TouchableOpacity
-            style={{ margin: 10, alignContent: "center" }}
+            style={{ margin: 10, flex: 1 }}
             onPress={() => this.componentDidMount()}
           >
             <MaterialCommunityIcons name="reload" color="#0080ff" size={30} />
             <Text>Refresh</Text>
           </TouchableOpacity>
         </View>
+
         <ScrollView>
           <View style={styles.container}>
             <View
@@ -475,7 +476,7 @@ export default class DataAnalytics extends React.Component {
                 Daily New Cases
               </Text>
               <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
-                Country : {this.state.search}
+                Country : {this.state.searchedCountry}
               </Text>
 
               <LineChart
@@ -512,7 +513,7 @@ export default class DataAnalytics extends React.Component {
                 Recovered Rate vs Death Rate
               </Text>
               <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
-                Country : {this.state.search}
+                Country : {this.state.searchedCountry}
               </Text>
               <LineChart
                 data={{
