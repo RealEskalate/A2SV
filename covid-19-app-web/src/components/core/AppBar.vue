@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-app-bar app color="primary" dark v-on:scroll="scrollFunction" :flat="raise" class="white bg-transparent">
+    <v-app-bar app class="white bg-transparent" flat v-bind:class="{raised: raise}">
       <v-app-bar-nav-icon
         v-if="$vuetify.breakpoint.smAndDown"
         @click.stop="drawer = !drawer"
@@ -96,19 +96,29 @@ export default {
   },
   computed: {
     raise() {
-      return this.locationY < 100;
+      return this.locationY > 100;
     }
   }
 };
 </script>
 
 <style scoped>
-  .nav-item {
+  .nav-item span {
     font-family: 'Open Sans', sans-serif;
     font-weight: 700;
+    color: #47536E !important;
   }
+
   .bg-transparent {
-    opacity: 0.85;
-    border-color: transparent!important;
+    opacity: 0.95;
+  }
+
+  .no-decoration {
+    text-decoration: none !important;
+  }
+
+  .raised {
+    box-shadow: 5px 0 15px 5px #eee;
+    z-index: 997;
   }
 </style>
