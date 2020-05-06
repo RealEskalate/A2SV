@@ -62,7 +62,7 @@ export default function App() {
   if (isLoading) {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <ActivityIndicator size="large" />
+        <ActivityIndicator size="large" color="#1976d2" />
       </View>
     );
   }
@@ -100,15 +100,13 @@ export default function App() {
             ),
           }}
         />
-        <Stack.Screen name="Symptoms" component={SymptomPage} />
-        <Stack.Screen name="Page 8" component={MapService} />
-        <Stack.Screen name="Page 9" component={UserSymptomPage} />
-        <Stack.Screen name="Page 11" component={Information} />
-        <Stack.Screen name="Page 12" component={NavigatorDrawer} />
+
         <Stack.Screen name="What Is Covid-19?" component={WhatIsCovid19} />
         <Stack.Screen name="Covid19 Symptoms" component={Symptoms} />
         <Stack.Screen name="Preventions" component={Preventions} />
         <Stack.Screen name="Treatments" component={Treatments} />
+        <Stack.Screen name="Symptoms" component={SymptomPage} />
+
         <Stack.Screen name="News" component={News} />
       </Stack.Navigator>
     );
