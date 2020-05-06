@@ -45,6 +45,7 @@ export default class DataAnalytics extends React.Component {
   };
 
   componentDidMount() {
+
     this.GetTotalData()
       .then(this.fetchStatistics())
       .then(this.getCountryList())
