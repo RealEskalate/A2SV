@@ -162,7 +162,7 @@ export default {
 </script>
 
 <style scoped>
-  @import "https://unpkg.com/vue-loaders/dist/vue-loaders.css";
+@import "https://unpkg.com/vue-loaders/dist/vue-loaders.css";
 .wrap-text {
   -webkit-line-clamp: unset !important;
   font-size: 1.15rem !important;

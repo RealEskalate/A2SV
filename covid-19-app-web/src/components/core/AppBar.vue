@@ -1,18 +1,23 @@
 <template>
   <div>
-    <v-app-bar app class="white bg-transparent" flat v-bind:class="{raised: raise}">
+    <v-app-bar
+      app
+      class="white bg-transparent"
+      flat
+      v-bind:class="{ raised: raise }"
+    >
       <v-app-bar-nav-icon
         v-if="$vuetify.breakpoint.smAndDown"
         @click.stop="drawer = !drawer"
       />
       <router-link class="d-flex align-center no-decoration" to="/">
         <v-img
-                alt="Vuetify Logo"
-                class="shrink mr-2"
-                contain
-                src="@/assets/logo-v1.png"
-                transition="scale-transition"
-                width="40"
+          alt="Vuetify Logo"
+          class="shrink mr-2"
+          contain
+          src="@/assets/logo-v1.png"
+          transition="scale-transition"
+          width="40"
         />
         <div>
           <h3 class="blue--text">Covid-19</h3>
@@ -73,24 +78,23 @@ export default {
       drawer: false,
       locationY: 0,
       links: [
-        {text: "Home", icon: "mdi-home", to: "/"},
-        {text: "Learn", icon: "mdi-search", to: "/information" },
-        {text: "About", icon: "mdi-information", to: "/about"},
-        {text: "News", icon: "mdi-newspaper", to: "/news"},
-        {text: "Map", icon: "mdi-map", to: "/map"}
+        { text: "Home", icon: "mdi-home", to: "/" },
+        { text: "Learn", icon: "mdi-search", to: "/information" },
+        { text: "About", icon: "mdi-information", to: "/about" },
+        { text: "News", icon: "mdi-newspaper", to: "/news" },
+        { text: "Map", icon: "mdi-map", to: "/map" }
       ]
     };
   },
   created() {
-    window.addEventListener('scroll', this.handleScroll);
+    window.addEventListener("scroll", this.handleScroll);
   },
   destroyed() {
-    window.removeEventListener('scroll', this.handleScroll);
+    window.removeEventListener("scroll", this.handleScroll);
   },
   methods: {
     handleScroll() {
       // Any code to be executed when the window is scrolled
-      console.log(window.scrollY);
       this.locationY = window.scrollY;
     }
   },
@@ -103,22 +107,22 @@ export default {
 </script>
 
 <style scoped>
-  .nav-item span {
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 700;
-    color: #47536E !important;
-  }
+.nav-item span {
+  font-family: "Open Sans", sans-serif;
+  font-weight: 700;
+  color: #47536e !important;
+}
 
-  .bg-transparent {
-    opacity: 0.95;
-  }
+.bg-transparent {
+  opacity: 0.95;
+}
 
-  .no-decoration {
-    text-decoration: none !important;
-  }
+.no-decoration {
+  text-decoration: none !important;
+}
 
-  .raised {
-    box-shadow: 5px 0 15px 5px #eee;
-    z-index: 997;
-  }
+.raised {
+  box-shadow: 5px 0 15px 5px #eee;
+  z-index: 997;
+}
 </style>
