@@ -192,41 +192,42 @@ exports.countrySlugList = async (request_url, name, field, res, respond) => {
     }
     respond(res, [])
 };
-let populate_db_daily = async () => {
+
+exports.populate_db_daily = async () => {
     let request_url = "https://api.covid19api.com/summary";
     let response = await axios.get(request_url)
-    console.log("Hi");
-    
 
     if (response.data) {
-        response.data.Countries.forEach(async (c_cases) => {
-            c_case_date = new Date(c_cases.Date);
-            // fill db if new data is not already in the db
-            console.log("HI");
-            
-            let record = await Cases.find({
-                country: {$eq: c_cases['Country']}, 
-                date: {$eq: c_case_date}
-            });           
-            console.log("JELLLo");
-            
-            if ( !record || record.length == 0 ){
-                let c = new Cases({
-                    _id: mongoose.Types.ObjectId(),
-                    country: c_cases['Country'],
-                    country_slug: c_cases['CountryCode'],
-                    confirmed: c_cases['NewConfirmed'],
-                    deaths: c_cases['NewDeaths'],
-                    recovered: c_cases['NewRecovered'],
-                    date: c_case_date
-                });
-                await c.save();
-                console.log(c);
+        for(let i = 0; i<response.data.Countries.length;i++){
+            try{
+                let c_cases = response.data.Countries[i];
+                c_case_date = new Date(Date.parse(c_cases.Date.substring(0,10)));
+                // fill db if new data is not already in the db
+                // console.log(c_case_date.toUTCString());
                 
+                let record = await Cases.find({
+                    country: {$eq: c_cases['Country']}, 
+                    date: {$eq: c_case_date}
+                });           
+                
+                if ( !record || record.length == 0 ){
+                    let c = new Cases({
+                        _id: mongoose.Types.ObjectId(),
+                        country: c_cases['Country'],
+                        country_slug: c_cases['CountryCode'],
+                        confirmed: c_cases['NewConfirmed'],
+                        deaths: c_cases['NewDeaths'],
+                        recovered: c_cases['NewRecovered'],
+                        date: c_case_date
+                    });
+                    await c.save();
+                }
             }
-        });
+            catch(err){
+                console.log(err);
+            }
+        }
     }
 
     console.log("Done filling db for country stats...");
 };
-(async () => await populate_db_daily())()
