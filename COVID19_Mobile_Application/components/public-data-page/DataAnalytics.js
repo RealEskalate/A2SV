@@ -5,7 +5,7 @@ import {
   Text,
   View,
   Dimensions,
-  KeyboardAvoidingView,
+  Alert,
   TouchableOpacity,
   ScrollView,
   ActivityIndicator,
@@ -44,17 +44,19 @@ export default class DataAnalytics extends React.Component {
     totalLoading: true,
   };
 
-  componentDidMount() {
-    this.GetTotalData()
-      .then(this.fetchStatistics())
+  componentDidMount = async () => {
+    await this.getTotalData()
+      .then(async () => {
+        await this.fetchStatistics();
+        this.fetchDailyNewsCases();
+      })
       .then(this.getCountryList())
-      .then(this.fetchDailyNewsCases())
       .catch((error) => {
-        alert("Something wrong with tasks");
+        Alert.alert("Concurrency Issue");
       });
-  }
+  };
 
-  //Populates data in to our stat
+  //Populates data in to our state
   populate = (objList) => {
     let dataSet_counter = 0;
     objList.map((data) => {
@@ -87,19 +89,20 @@ export default class DataAnalytics extends React.Component {
       }
     )
       .then((response) => response.json())
-      .then((json) => {
+      .then(async (json) => {
         if (json !== undefined && json.length !== 0) {
-          newThis.populate(json);
+          await newThis.populate(json);
           newThis.forceUpdate(); //refresh page
         } else {
           newThis.fetchStatistics();
         }
       })
       .catch((error) => {
-        alert("Couldn't connect", "Error in connection..");
+        Alert.alert("Couldn't connect", "Error in connection..");
       });
+    console.log(2);
   };
-  //Converts data in to appropriate format
+  //Converts date in to appropriate format
   dateConverter(date) {
     let dateList = date.split("-");
     let month = parseInt(dateList[1]);
@@ -107,7 +110,7 @@ export default class DataAnalytics extends React.Component {
     return monthInWord + " " + dateList[2];
   }
   //get total numbers of the specified country and populate UI
-  GetTotalData = async () => {
+  getTotalData = async () => {
     this.setState({
       totalLoading: true,
     });
@@ -124,20 +127,21 @@ export default class DataAnalytics extends React.Component {
       }
     )
       .then((response) => response.json())
-      .then((json) => {
+      .then(async (json) => {
         if (json !== undefined && json.length !== 0) {
-          newThis.setState({
+          await newThis.setState({
             TotalStatisticsData: json,
             totalLoading: false,
           });
           newThis.forceUpdate(); //refresh page
         } else {
-          newThis.GetTotalData();
+          newThis.getTotalData();
         }
       })
       .catch((error) => {
-        alert("Couldn't connect", "Error in connection..");
+        Alert.alert("Couldn't connect - getTotalData", "Error in connection..");
       });
+    console.log(1);
   };
   //fetch list of countries available
   getCountryList = async () => {
@@ -150,24 +154,22 @@ export default class DataAnalytics extends React.Component {
       },
     })
       .then((response) => response.json())
-      .then((json) => {
+      .then(async (json) => {
         if (json !== undefined && json.length !== 0) {
-          newThis.setState({
+          await newThis.setState({
             countries: json,
           });
         } else {
-          console.log("Total data" + json);
           newThis.getCountryList();
         }
       })
       .catch((error) => {
-        alert("Couldn't connect", "Error in connection..");
+        Alert.alert("Couldn't connect", "Error in connection..");
       });
   };
   //fetch daily new cases reported
   fetchDailyNewsCases = async () => {
-    console.log(this.state.TotalStatisticsData);
-    console.log(this.state.graph_label);
+    console.log(3);
     for (
       let dataSet_counter = 1;
       dataSet_counter < this.state.TotalStatisticsData.length;
@@ -189,6 +191,7 @@ export default class DataAnalytics extends React.Component {
         graphLebel_counter - 1
       ] = this.state.graph_label[graphLebel_counter];
     }
+    this.forceUpdate();
   };
 
   render() {
@@ -204,7 +207,7 @@ export default class DataAnalytics extends React.Component {
               searchedCountry: item.slug,
               search: item.name,
             });
-            this.GetTotalData();
+            this.getTotalData();
             this.fetchStatistics();
           }}
           containerStyle={{ padding: 5 }}
@@ -498,7 +501,7 @@ export default class DataAnalytics extends React.Component {
               <Text
                 style={{ fontSize: 20, fontWeight: "bold", marginLeft: 10 }}
               >
-                Confirmed vs Recovered vs Death Rate
+                Recovered Rate vs Death Rate
               </Text>
               <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
                 Country : {this.state.searchedCountry}
