@@ -1,0 +1,268 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.a2svhackcovid19mobileapp"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="16"
+9        android:targetSdkVersion="28" />
+10
+11    <uses-permission android:name="android.permission.INTERNET" />
+11-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:4:5-67
+11-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:4:22-64
+12    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+12-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:16:5-81
+12-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:16:22-78
+13    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+13-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:17:5-79
+13-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:17:22-76
+14
+15    <uses-feature android:name="android.hardware.location.gps" />
+15-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\debug\AndroidManifest.xml:7:5-65
+15-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\debug\AndroidManifest.xml:7:19-63
+16
+17    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+17-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:5:5-77
+17-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:5:22-75
+18    <!-- OPTIONAL PERMISSIONS, REMOVE WHATEVER YOU DO NOT NEED -->
+19    <uses-permission android:name="android.permission.MANAGE_DOCUMENTS" />
+19-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:8:5-75
+19-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:8:22-72
+20    <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
+20-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:9:5-80
+20-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:9:22-77
+21    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+21-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:10:5-75
+21-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:10:22-72
+22    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
+22-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:11:5-74
+22-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:11:22-71
+23    <uses-permission android:name="android.permission.VIBRATE" />
+23-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:12:5-66
+23-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:12:22-63
+24    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+24-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:13:5-80
+24-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:13:22-77
+25    <uses-permission android:name="android.permission.CAMERA" />
+25-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:18:5-65
+25-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:18:22-62
+26    <uses-permission android:name="android.permission.READ_CONTACTS" />
+26-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:19:5-72
+26-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:19:22-69
+27    <uses-permission android:name="android.permission.READ_CALENDAR" />
+27-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:20:5-72
+27-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:20:22-69
+28    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
+28-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:21:5-73
+28-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:21:22-70
+29    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+29-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:22:5-80
+29-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:22:22-77
+30    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+30-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:23:5-71
+30-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:23:22-68
+31    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+31-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:24:5-81
+31-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:24:22-78
+32    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+32-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:25:5-73
+32-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:25:22-70
+33    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+33-->[:expo-updates] F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-updates\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:11:5-79
+33-->[:expo-updates] F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-updates\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:11:22-76
+34    <uses-permission android:name="android.permission.STORAGE" />
+34-->[:expo-file-system] F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-file-system\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:15:5-66
+34-->[:expo-file-system] F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-file-system\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:15:22-63
+35    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+35-->[:expo-location] F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-location\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:13:5-77
+35-->[:expo-location] F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-location\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:13:22-74
+36
+37    <uses-feature
+37-->[com.mapbox.mapboxsdk:mapbox-android-sdk:9.1.0] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\07ba8d177b58f9bff15145f7f911bfb8\jetified-mapbox-android-sdk-9.1.0\AndroidManifest.xml:9:5-11:35
+38        android:glEsVersion="0x00020000"
+38-->[com.mapbox.mapboxsdk:mapbox-android-sdk:9.1.0] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\07ba8d177b58f9bff15145f7f911bfb8\jetified-mapbox-android-sdk-9.1.0\AndroidManifest.xml:10:9-41
+39        android:required="true" />
+39-->[com.mapbox.mapboxsdk:mapbox-android-sdk:9.1.0] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\07ba8d177b58f9bff15145f7f911bfb8\jetified-mapbox-android-sdk-9.1.0\AndroidManifest.xml:11:9-32
+40    <uses-feature
+40-->[com.mapbox.mapboxsdk:mapbox-android-sdk:9.1.0] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\07ba8d177b58f9bff15145f7f911bfb8\jetified-mapbox-android-sdk-9.1.0\AndroidManifest.xml:12:5-14:36
+41        android:name="android.hardware.wifi"
+41-->[com.mapbox.mapboxsdk:mapbox-android-sdk:9.1.0] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\07ba8d177b58f9bff15145f7f911bfb8\jetified-mapbox-android-sdk-9.1.0\AndroidManifest.xml:13:9-45
+42        android:required="false" />
+42-->[com.mapbox.mapboxsdk:mapbox-android-sdk:9.1.0] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\07ba8d177b58f9bff15145f7f911bfb8\jetified-mapbox-android-sdk-9.1.0\AndroidManifest.xml:14:9-33
+43
+44    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- Required for CrashReporterJobIntentService on API levels below 25 -->
+44-->[com.mapbox.mapboxsdk:mapbox-android-sdk:9.1.0] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\07ba8d177b58f9bff15145f7f911bfb8\jetified-mapbox-android-sdk-9.1.0\AndroidManifest.xml:18:5-76
+44-->[com.mapbox.mapboxsdk:mapbox-android-sdk:9.1.0] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\07ba8d177b58f9bff15145f7f911bfb8\jetified-mapbox-android-sdk-9.1.0\AndroidManifest.xml:18:22-73
+45    <uses-permission android:name="android.permission.WAKE_LOCK" />
+45-->[com.mapbox.mapboxsdk:mapbox-android-telemetry:5.0.0] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\1e98f6ef11ee57d7fa46be6fc18461d6\jetified-mapbox-android-telemetry-5.0.0\AndroidManifest.xml:12:5-68
+45-->[com.mapbox.mapboxsdk:mapbox-android-telemetry:5.0.0] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\1e98f6ef11ee57d7fa46be6fc18461d6\jetified-mapbox-android-telemetry-5.0.0\AndroidManifest.xml:12:22-65
+46    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+46-->[io.nlopez.smartlocation:library:3.2.11] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\474aa44b6827e0a997f331e63e482362\jetified-library-3.2.11\AndroidManifest.xml:15:5-98
+46-->[io.nlopez.smartlocation:library:3.2.11] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\474aa44b6827e0a997f331e63e482362\jetified-library-3.2.11\AndroidManifest.xml:15:22-95
+47    <uses-permission android:name="com.google.android.gms.permission.ACTIVITY_RECOGNITION" />
+47-->[io.nlopez.smartlocation:library:3.2.11] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\474aa44b6827e0a997f331e63e482362\jetified-library-3.2.11\AndroidManifest.xml:16:5-94
+47-->[io.nlopez.smartlocation:library:3.2.11] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\474aa44b6827e0a997f331e63e482362\jetified-library-3.2.11\AndroidManifest.xml:16:22-91
+48
+49    <application
+49-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:28:5-51:19
+50        android:name="com.a2svhackcovid19mobileapp.MainApplication"
+50-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:29:7-38
+51        android:allowBackup="false"
+51-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:33:7-34
+52        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+52-->[androidx.core:core:1.1.0] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\7dfdda3e9b1f3eac70960d59b5d8c75a\core-1.1.0\AndroidManifest.xml:24:18-86
+53        android:debuggable="true"
+54        android:icon="@mipmap/ic_launcher"
+54-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:31:7-41
+55        android:label="@string/app_name"
+55-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:30:7-39
+56        android:roundIcon="@mipmap/ic_launcher_round"
+56-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:32:7-52
+57        android:theme="@style/AppTheme"
+57-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:34:7-38
+58        android:usesCleartextTraffic="true" >
+58-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\debug\AndroidManifest.xml:11:18-53
+59        <meta-data
+59-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:36:7-106
+60            android:name="expo.modules.updates.EXPO_UPDATE_URL"
+60-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:36:18-69
+61            android:value="YOUR-APP-URL-HERE" />
+61-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:36:70-103
+62        <meta-data
+62-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:37:7-115
+63            android:name="expo.modules.updates.EXPO_SDK_VERSION"
+63-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:37:18-70
+64            android:value="YOUR-APP-SDK-VERSION-HERE" />
+64-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:37:71-112
+65
+66        <activity
+66-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:39:7-49:18
+67            android:name="com.a2svhackcovid19mobileapp.MainActivity"
+67-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:40:9-37
+68            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+68-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:42:9-79
+69            android:label="@string/app_name"
+69-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:41:9-41
+70            android:launchMode="singleTask"
+70-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:43:9-40
+71            android:windowSoftInputMode="adjustResize" >
+71-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:44:9-51
+72            <intent-filter>
+72-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:45:9-48:25
+73                <action android:name="android.intent.action.MAIN" />
+73-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:46:13-65
+73-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:46:21-62
+74
+75                <category android:name="android.intent.category.LAUNCHER" />
+75-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:47:13-73
+75-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:47:23-70
+76            </intent-filter>
+77        </activity>
+78        <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
+78-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:50:7-84
+78-->F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\AndroidManifest.xml:50:17-81
+79
+80        <provider
+80-->[:react-native-webview] F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\react-native-webview\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:12:9-20:20
+81            android:name="com.reactnativecommunity.webview.RNCWebViewFileProvider"
+81-->[:react-native-webview] F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\react-native-webview\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:13:13-83
+82            android:authorities="com.a2svhackcovid19mobileapp.fileprovider"
+82-->[:react-native-webview] F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\react-native-webview\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:14:13-64
+83            android:exported="false"
+83-->[:react-native-webview] F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\react-native-webview\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:15:13-37
+84            android:grantUriPermissions="true" >
+84-->[:react-native-webview] F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\react-native-webview\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:16:13-47
+85            <meta-data
+85-->[:react-native-webview] F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\react-native-webview\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:17:13-19:63
+86                android:name="android.support.FILE_PROVIDER_PATHS"
+86-->[:react-native-webview] F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\react-native-webview\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:18:17-67
+87                android:resource="@xml/file_provider_paths" />
+87-->[:react-native-webview] F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\react-native-webview\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:19:17-60
+88        </provider>
+89        <provider
+89-->[:expo-file-system] F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-file-system\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:18:9-27:20
+90            android:name="expo.modules.filesystem.FileSystemFileProvider"
+90-->[:expo-file-system] F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-file-system\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:19:13-74
+91            android:authorities="com.a2svhackcovid19mobileapp.FileSystemFileProvider"
+91-->[:expo-file-system] F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-file-system\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:20:13-74
+92            android:exported="false"
+92-->[:expo-file-system] F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-file-system\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:21:13-37
+93            android:grantUriPermissions="true" >
+93-->[:expo-file-system] F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-file-system\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:22:13-47
+94            <meta-data
+94-->[:react-native-webview] F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\react-native-webview\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:17:13-19:63
+95                android:name="android.support.FILE_PROVIDER_PATHS"
+95-->[:react-native-webview] F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\react-native-webview\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:18:17-67
+96                android:resource="@xml/file_system_provider_paths" />
+96-->[:react-native-webview] F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\react-native-webview\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:19:17-60
+97        </provider>
+98
+99        <service
+99-->[:expo-location] F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-location\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:16:9-18:40
+100            android:name="expo.modules.location.services.LocationTaskService"
+100-->[:expo-location] F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-location\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:17:13-78
+101            android:exported="false" />
+101-->[:expo-location] F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-location\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:18:13-37
+102
+103        <provider
+103-->[com.mapbox.mapboxsdk:mapbox-android-telemetry:5.0.0] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\1e98f6ef11ee57d7fa46be6fc18461d6\jetified-mapbox-android-telemetry-5.0.0\AndroidManifest.xml:18:9-22:39
+104            android:name="com.mapbox.android.telemetry.provider.MapboxTelemetryInitProvider"
+104-->[com.mapbox.mapboxsdk:mapbox-android-telemetry:5.0.0] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\1e98f6ef11ee57d7fa46be6fc18461d6\jetified-mapbox-android-telemetry-5.0.0\AndroidManifest.xml:19:13-93
+105            android:authorities="com.a2svhackcovid19mobileapp.mapboxtelemetryinitprovider"
+105-->[com.mapbox.mapboxsdk:mapbox-android-telemetry:5.0.0] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\1e98f6ef11ee57d7fa46be6fc18461d6\jetified-mapbox-android-telemetry-5.0.0\AndroidManifest.xml:20:13-79
+106            android:exported="false"
+106-->[com.mapbox.mapboxsdk:mapbox-android-telemetry:5.0.0] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\1e98f6ef11ee57d7fa46be6fc18461d6\jetified-mapbox-android-telemetry-5.0.0\AndroidManifest.xml:21:13-37
+107            android:initOrder="100" />
+107-->[com.mapbox.mapboxsdk:mapbox-android-telemetry:5.0.0] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\1e98f6ef11ee57d7fa46be6fc18461d6\jetified-mapbox-android-telemetry-5.0.0\AndroidManifest.xml:22:13-36
+108
+109        <service
+109-->[com.mapbox.mapboxsdk:mapbox-android-telemetry:5.0.0] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\1e98f6ef11ee57d7fa46be6fc18461d6\jetified-mapbox-android-telemetry-5.0.0\AndroidManifest.xml:24:9-26:72
+110            android:name="com.mapbox.android.telemetry.crash.CrashReporterJobIntentService"
+110-->[com.mapbox.mapboxsdk:mapbox-android-telemetry:5.0.0] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\1e98f6ef11ee57d7fa46be6fc18461d6\jetified-mapbox-android-telemetry-5.0.0\AndroidManifest.xml:25:13-92
+111            android:permission="android.permission.BIND_JOB_SERVICE" />
+111-->[com.mapbox.mapboxsdk:mapbox-android-telemetry:5.0.0] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\1e98f6ef11ee57d7fa46be6fc18461d6\jetified-mapbox-android-telemetry-5.0.0\AndroidManifest.xml:26:13-69
+112
+113        <activity
+113-->[com.google.android.gms:play-services-base:16.0.1] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\e459fedd645a066bedb34622bc4b29e2\jetified-play-services-base-16.0.1\AndroidManifest.xml:23:9-26:75
+114            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+114-->[com.google.android.gms:play-services-base:16.0.1] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\e459fedd645a066bedb34622bc4b29e2\jetified-play-services-base-16.0.1\AndroidManifest.xml:24:13-79
+115            android:exported="false"
+115-->[com.google.android.gms:play-services-base:16.0.1] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\e459fedd645a066bedb34622bc4b29e2\jetified-play-services-base-16.0.1\AndroidManifest.xml:25:13-37
+116            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+116-->[com.google.android.gms:play-services-base:16.0.1] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\e459fedd645a066bedb34622bc4b29e2\jetified-play-services-base-16.0.1\AndroidManifest.xml:26:13-72
+117
+118        <meta-data
+118-->[com.google.android.gms:play-services-basement:16.0.1] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\8bc27b0c1e1edeaf681b9927a24b2404\jetified-play-services-basement-16.0.1\AndroidManifest.xml:23:9-25:69
+119            android:name="com.google.android.gms.version"
+119-->[com.google.android.gms:play-services-basement:16.0.1] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\8bc27b0c1e1edeaf681b9927a24b2404\jetified-play-services-basement-16.0.1\AndroidManifest.xml:24:13-58
+120            android:value="@integer/google_play_services_version" />
+120-->[com.google.android.gms:play-services-basement:16.0.1] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\8bc27b0c1e1edeaf681b9927a24b2404\jetified-play-services-basement-16.0.1\AndroidManifest.xml:25:13-66
+121
+122        <service
+122-->[androidx.room:room-runtime:2.1.0] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\dd7893f26029167e3adbacf60755e755\room-runtime-2.1.0\AndroidManifest.xml:25:9-27:40
+123            android:name="androidx.room.MultiInstanceInvalidationService"
+123-->[androidx.room:room-runtime:2.1.0] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\dd7893f26029167e3adbacf60755e755\room-runtime-2.1.0\AndroidManifest.xml:26:13-74
+124            android:exported="false" />
+124-->[androidx.room:room-runtime:2.1.0] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\dd7893f26029167e3adbacf60755e755\room-runtime-2.1.0\AndroidManifest.xml:27:13-37
+125        <service
+125-->[io.nlopez.smartlocation:library:3.2.11] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\474aa44b6827e0a997f331e63e482362\jetified-library-3.2.11\AndroidManifest.xml:19:9-21:40
+126            android:name="io.nlopez.smartlocation.activity.providers.ActivityGooglePlayServicesProvider$ActivityRecognitionService"
+126-->[io.nlopez.smartlocation:library:3.2.11] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\474aa44b6827e0a997f331e63e482362\jetified-library-3.2.11\AndroidManifest.xml:20:13-132
+127            android:exported="false" />
+127-->[io.nlopez.smartlocation:library:3.2.11] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\474aa44b6827e0a997f331e63e482362\jetified-library-3.2.11\AndroidManifest.xml:21:13-37
+128        <service
+128-->[io.nlopez.smartlocation:library:3.2.11] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\474aa44b6827e0a997f331e63e482362\jetified-library-3.2.11\AndroidManifest.xml:22:9-24:40
+129            android:name="io.nlopez.smartlocation.geofencing.providers.GeofencingGooglePlayServicesProvider$GeofencingService"
+129-->[io.nlopez.smartlocation:library:3.2.11] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\474aa44b6827e0a997f331e63e482362\jetified-library-3.2.11\AndroidManifest.xml:23:13-127
+130            android:exported="false" />
+130-->[io.nlopez.smartlocation:library:3.2.11] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\474aa44b6827e0a997f331e63e482362\jetified-library-3.2.11\AndroidManifest.xml:24:13-37
+131        <service
+131-->[io.nlopez.smartlocation:library:3.2.11] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\474aa44b6827e0a997f331e63e482362\jetified-library-3.2.11\AndroidManifest.xml:25:9-27:40
+132            android:name="io.nlopez.smartlocation.geocoding.providers.AndroidGeocodingProvider$AndroidGeocodingService"
+132-->[io.nlopez.smartlocation:library:3.2.11] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\474aa44b6827e0a997f331e63e482362\jetified-library-3.2.11\AndroidManifest.xml:26:13-120
+133            android:exported="false" />
+133-->[io.nlopez.smartlocation:library:3.2.11] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\474aa44b6827e0a997f331e63e482362\jetified-library-3.2.11\AndroidManifest.xml:27:13-37
+134    </application>
+135
+136</manifest>
