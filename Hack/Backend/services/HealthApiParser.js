@@ -1,6 +1,6 @@
 const axios = require("axios");
 const csvjson = require('csvjson');
-const {Cases} = require("./../models/CasesModel");
+const { Cases } = require("./../models/CasesModel");
 const mongoose = require("mongoose");
 
 const getRate = (criteria, startDate, endDate, res, respond) => {
@@ -20,12 +20,12 @@ const getRate = (criteria, startDate, endDate, res, respond) => {
                 stats.push(stat);
             });
 
-            let filteredStats = stats.filter(function (stat) {
+            let filteredStats = stats.filter(function(stat) {
                 let date = new Date(stat.t);
                 console.log(date >= startDate && date <= endDate);
                 return (date >= startDate && date <= endDate);
             });
-            respond(res, filteredStats, true)
+            respond(res, filteredStats)
         })
         .catch(err => {
             console.log(err);
@@ -33,119 +33,143 @@ const getRate = (criteria, startDate, endDate, res, respond) => {
 };
 
 exports.getCriticalStatistics = (req, res, respond) => {
-    let startDate = new Date(Date.parse(set_start_date_for_countries(req).slice(6) + "T21:00:00.000Z"));
-    let endDate = new Date(Date.parse(set_end_date_for_countries(req).slice(4) + "T21:00:00.000Z"));
+    let startDate = new Date(Date.parse(setStartDate(req) + "T21:00:00.000Z"));
+    let endDate = new Date(Date.parse(setEndDate(req) + "T21:00:00.000Z"));
     getRate(req.query.criteria, startDate, endDate, res, respond);
 };
 
 exports.getHealthStatistics = (req, res, respond, rates = false) => {
+    let startDate = new Date(Date.parse(setStartDate(req)));
+    let endDate = new Date(Date.parse(setEndDate(req)));
+
     if (req.query.country.toLowerCase() === "world") {
-        // request_url="https://datahub.io/core/covid-19/r/worldwide-aggregated.json"
         let request_url = "https://datahub.io/core/covid-19/r/worldwide-aggregated.csv";
-        let start_date = new Date(Date.parse(set_start_date_for_countries(req).slice(6)));
-        let end_date = new Date(Date.parse(set_end_date_for_countries(req).slice(4)));
-        parse_csv_data(request_url, start_date, end_date, req.query.criteria, res, respond, rates);
+        getWorldStat(request_url, startDate, endDate, req, res, respond, rates);
     } else {
-        const request_url = `https://api.covid19api.com/total/country/${req.query.country.toLowerCase()}`;
-        const start_date = new Date(Date.parse(set_start_date_for_countries(req).slice(6)));
-        const end_date = new Date(Date.parse(set_end_date_for_countries(req).slice(4)));
-        do_api_call(request_url, req.query.criteria, start_date, end_date, res, respond, rates);
+        getCountryStat(startDate, endDate, req, res, respond, rates);
     }
 
 };
 
-function set_start_date_for_countries(req) {
+function setStartDate(req) {
     if (req.query.start_date != null) {
-        return "?from=" + req.query.start_date;
+        return "" + new Date(req.query.start_date).toISOString().slice(0, 10);
     } else {
         const date = new Date();
         date.setDate(date.getDate() - 7);
-        return "?from=" + date.toISOString().slice(0, 10)
+        return "" + date.toISOString().slice(0, 10);
     }
 }
 
 
-function set_end_date_for_countries(req) {
-    // let set the end date for today since we are not yet able to do projection
+function setEndDate(req) {
     let end_date = new Date(req.query.end_date);
     let date = new Date();
     date.setHours(date.getHours() - 7 + (date.getTimezoneOffset() / 60));
 
     if (req.query.end_date != null && end_date < date) {
-        return "&to=" + req.query.end_date;
+        return "" + end_date.toISOString().slice(0, 10);
     } else {
-        return "&to=" + date.toISOString().slice(0, 10)
+        return "" + date.toISOString().slice(0, 10)
     }
 }
 
 
-const do_api_call = (request_url, criteria, start_date, end_date, res, respond, needRates) => {
-    console.log(criteria, request_url);
-    try {
-        axios.get(request_url)
-            .then(response => {
-                if (!response.data) {
-                    respond(res, [], needRates)
-                } else if (criteria === "All") {
-                    let results = [];
-                    response.data.forEach((item) => {
-                        const date = new Date(item.Date);
+const getCountryStat = async(startDate, endDate, req, res, respond, rates) => {
+    criteria = req.query.criteria
+    country = req.query.country
 
-                        if (date >= start_date && date <= end_date) {
-                            results.push({
-                                "t": item.Date,
-                                "Confirmed": item['Confirmed'],
-                                "Recovered": item['Recovered'],
-                                "Deaths": item['Deaths']
-                            });
-                        }
-                    });
-                    console.log("Fetched everything " + results);
-                    respond(res, results, needRates)
-                } else {
-                    let results = [];
-                    response.data.forEach((item) => {
-                        const date = new Date(item.Date);
-                        if (date >= start_date && date <= end_date) {
-                            results.push({
-                                "t": item.Date,
-                                "y": item[`${criteria}`]
-                            });
-                        }
-                    });
-                    respond(res, results, needRates)
-                }
-            })
-            .catch(error => {
-                console.log(error);
-            });
+    try {
+        let caseData = []
+        let dailyConifrmed = {}
+
+        let results = await Cases.find({
+            date: {
+                $gte: new Date(new Date(startDate).setHours(00, 00, 00)),
+                $lte: new Date(new Date(endDate).setHours(23, 59, 59))
+            },
+            country_slug: country
+        })
+
+        results.forEach((item) => {
+
+            if (criteria == "All") {
+                caseData.push({
+                    t: item["date"],
+                    Confirmed: item['confirmed'],
+                    Recovered: item['recovered'],
+                    Deaths: item['deaths']
+                });
+            } else if (criteria == "Active") {
+                caseData.push({
+                    t: item.date,
+                    y: (item['confirmed'] - item['recovered'] - item['deaths'])
+                });
+            } else {
+                caseData.push({
+                    t: item.date,
+                    y: item[criteria.toLowerCase()]
+                });
+            }
+
+            if (rates) {
+                dailyConifrmed[item["date"]] = item['confirmed']
+            }
+
+        });
+
+        if (criteria != "All") {
+            if (req.query.daily) {
+                caseData = calculateDaily(caseData)
+            }
+            if (rates) {
+                caseData = calculateRate(caseData, dailyConifrmed)
+            }
+        }
+
+        respond(res, caseData)
+
     } catch (err) {
         console.log(err);
     }
 };
 
 
-const parse_csv_data = (request_url, start_date, end_date, criteria, res, respond, rates) => {
+const getWorldStat = (request_url, startDate, endDate, req, res, respond, rates) => {
     console.log(request_url);
+    criteria = req.query.criteria
     try {
         axios.get(request_url)
             .then(response => {
                 let data = response.data;
                 if (!data) {
-                    respond(res, [], rates)
+                    respond(res, [])
                 }
+
                 let results = [];
+                let dailyConifrmed = {}
+
                 const options = { delimiter: ',', quote: '"' };
                 data = csvjson.toObject(data, options);
+
                 data.forEach((item) => {
                     const date = new Date(item.Date);
-                    if (date >= start_date && date <= end_date) {
+                    if (date >= startDate && date <= endDate) {
+                        if (rates) {
+                            dailyConifrmed[item.Date] = item['Confirmed'];
+                        }
                         if (criteria == "All") {
                             results.push({
                                 t: item.Date,
                                 Confirmed: item['Confirmed'],
                                 Recovered: item['Recovered'],
                                 Deaths: item['Deaths']
+                            });
+                        } else if (criteria == "Active") {
+
+                            results.push({
+                                t: item.Date,
+                                y: (item['Confirmed'] - item['Recovered'] - item['Deaths'])
                             });
                         } else {
                             results.push({
@@ -155,7 +179,17 @@ const parse_csv_data = (request_url, start_date, end_date, criteria, res, respon
                         }
                     }
                 });
-                respond(res, results, rates)
+
+                if (criteria != "All") {
+                    if (req.query.daily) {
+                        results = calculateDaily(results)
+                    }
+                    if (rates) {
+                        results = calculateRate(results, dailyConifrmed)
+                    }
+                }
+
+                respond(res, results)
             }).catch(error => {
                 console.log(error);
             });
@@ -165,7 +199,7 @@ const parse_csv_data = (request_url, start_date, end_date, criteria, res, respon
 };
 
 
-exports.countrySlugList = async (request_url, name, field, res, respond) => {
+exports.countrySlugList = async(request_url, name, field, res, respond) => {
     console.log(field, request_url);
     try {
         let results = []
@@ -193,24 +227,24 @@ exports.countrySlugList = async (request_url, name, field, res, respond) => {
     respond(res, [])
 };
 
-exports.populate_db_daily = async () => {
+exports.populate_db_daily = async() => {
     let request_url = "https://api.covid19api.com/summary";
     let response = await axios.get(request_url)
 
     if (response.data) {
-        for(let i = 0; i<response.data.Countries.length;i++){
-            try{
+        for (let i = 0; i < response.data.Countries.length; i++) {
+            try {
                 let c_cases = response.data.Countries[i];
-                c_case_date = new Date(Date.parse(c_cases.Date.substring(0,10)));
+                c_case_date = new Date(Date.parse(c_cases.Date.substring(0, 10)));
                 // fill db if new data is not already in the db
                 // console.log(c_case_date.toUTCString());
-                
+
                 let record = await Cases.findOne({
-                    country: {$eq: c_cases['Country']}, 
-                    date: {$eq: c_case_date}
-                });           
-                
-                if (!record){
+                    country: { $eq: c_cases['Country'] },
+                    date: { $eq: c_case_date }
+                });
+
+                if (!record) {
                     let c = new Cases({
                         _id: mongoose.Types.ObjectId(),
                         country: c_cases['Country'],
@@ -222,20 +256,58 @@ exports.populate_db_daily = async () => {
                     });
                     await c.save();
                     console.log('Saved' + c.country)
-                }
-                else{
-                    record.confirmed = c_cases['TotalConfirmed']>0 ? c_cases['TotalConfirmed'] : record.confirmed
-                    record.deaths = c_cases['TotalDeaths']>0 ? c_cases['TotalDeaths'] : record.deaths
-                    record.recovered = c_cases['TotalRecovered']>0 ? c_cases['TotalRecovered'] : record.recovered
+                } else {
+                    record.confirmed = c_cases['TotalConfirmed'] > 0 ? c_cases['TotalConfirmed'] : record.confirmed
+                    record.deaths = c_cases['TotalDeaths'] > 0 ? c_cases['TotalDeaths'] : record.deaths
+                    record.recovered = c_cases['TotalRecovered'] > 0 ? c_cases['TotalRecovered'] : record.recovered
                     await record.save();
                     console.log('Updated' + record.country)
                 }
-            }
-            catch(err){
+            } catch (err) {
                 console.log(err);
             }
         }
     }
 
     console.log("Done filling db for country stats...");
+};
+
+
+
+const calculateRate = (caseData, dailyConifrmed) => {
+    let rateData = []
+
+    caseData.forEach((data) => {
+        rateData.push({
+            t: data.t,
+            y: ((data.y / dailyConifrmed[data.t]) * 100).toFixed(2)
+        })
+    });
+
+    return rateData;
+}
+
+const calculateDaily = (result) => {
+    let dailyCaseArray = [];
+
+    for (let index = 1; index < result.length; index++) {
+        const uptoYesterday = result[index - 1].y;
+        const uptoToday = result[index].y;
+
+        let todays = uptoToday - uptoYesterday;
+
+
+        dailyCaseArray.push({
+            t: result[index].t,
+            y: todays
+        });
+
+        if (result.length === 1) {
+            dailyCaseArray.push({
+                t: result[index].t,
+                y: todays
+            });
+        }
+    }
+    return dailyCaseArray;
 };

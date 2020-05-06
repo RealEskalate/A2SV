@@ -103,7 +103,7 @@ const run_updates = () => {
 
 const run_updates_on_country = () => {
     // update by the hour
-    schedule.scheduleJob('0 * * * *', async function () {
+    schedule.scheduleJob('0 * * * *', async function() {
         await healthParser.populate_db_daily();
     });
 };
@@ -114,9 +114,9 @@ run_updates();
 run_updates_on_country();
 
 exports.get_statistics = async(req, res) => {
-    if (["Confirmed", "Recovered", "Deaths", "All"].includes(req.query.criteria)) {
+    if (["Confirmed", "Recovered", "Deaths", "Active", "All"].includes(req.query.criteria)) {
         healthParser.getHealthStatistics(req, res, respond);
-    } else if (["Confirmed_Rate", "Recovered_Rate", "Deaths_Rate"].includes(req.query.criteria)) {
+    } else if (["Confirmed_Rate", "Recovered_Rate", "Deaths_Rate", "Active_Rate"].includes(req.query.criteria)) {
         req.query.criteria = req.query.criteria.split("_")[0];
         healthParser.getHealthStatistics(req, res, respond, true);
     } else if (["Hospitalization", "ICU"].includes(req.query.criteria)) {
@@ -146,41 +146,17 @@ exports.get_statistics = async(req, res) => {
         try {
             respond(res, results)
         } catch (err) {
-            respond(res, err, false, 500);
+            respond(res, err, 500);
         }
 
     } else {
-        respond(res, null, false, 400);
+        respond(res, null, 400);
     }
 };
 
 
-const calculate_rate = (result) => {
-    let rateArray = [];
-    for (let index = 1; index < result.length; index++) {
-        const upto_yesterday = result[index - 1].y;
-        const upto_today = result[index].y;
-        let todaysDeath = upto_today - upto_yesterday;
-        let rate = (todaysDeath / upto_today) * 100;
-        rate = (Math.round(rate * 100) / 100).toFixed(2);
-        rateArray.push({
-            t: result[index].t,
-            y: rate
-        });
-        if (index === 1) {
-            rateArray.push({
-                t: result[index].t,
-                y: rate
-            });
-        }
-    }
-    return rateArray;
-};
 
-function respond(res, payload, rates = false, status = 200) {
-    if (rates) {
-        payload = calculate_rate(payload)
-    }
+function respond(res, payload, status = 200) {
     res.status(status).send(payload);
 }
 
@@ -191,7 +167,7 @@ exports.get_country_slugs = async(req, res) => {
 
     url = "https://api.covid19api.com/countries"
     name = "Country"
-    field = "Slug"
+    field = "ISO2"
     await healthParser.countrySlugList(url, name, field, res, respond);
 
 }
