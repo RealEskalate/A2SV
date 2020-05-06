@@ -1,6 +1,6 @@
 <template>
   <v-content class="about">
-    <section class="mb-12 mt-10 text-justify">
+    <section class="mb-12 text-justify">
       <v-container>
         <v-row>
           <v-col class="px-md-10" cols="12" md="7">
