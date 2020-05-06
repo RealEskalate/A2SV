@@ -20,18 +20,18 @@ exports.get_all_locations = async (req, res) => {
   try {
     res.send(locations);
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send(err.toString());
   }
 };
 
 exports.get_all_locations_with_symptoms = async (req, res) => {
-  jwt.verify(req.token, "secretkey", (err, authData) => {
-    if (err) {
-      res.status(401).send("Incorrect authentication key");
-    }
-  });
+  // jwt.verify(req.token, "secretkey", (err, authData) => {
+  //   if (err) {
+  //     res.status(401).send("Incorrect authentication key");
+  //   }
+  // });
   if(!req.body.longitude || !req.body.latitude){
-    return res.status(500).send("Coordinates are not given");
+    return res.status(400).send("Coordinates are not given");
   }
   let lat = req.body.latitude;
   let long = req.body.longitude;
@@ -134,7 +134,7 @@ exports.post_location = async (req, res) => {
       await result.save();
       res.send(result);
     } catch (err) {
-      res.status(500).send(err);
+      res.status(500).send(err.toString());
     }
   }
 };
@@ -153,7 +153,7 @@ exports.get_location_by_id = async (req, res) => {
     }
     res.send(location);
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send(err.toString());
   }
 };
 //Get a specific Location by latitude and longitude
@@ -174,7 +174,7 @@ exports.get_location_by_coordinates = async (req, res) => {
     }
     res.send(locations);
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send(err.toString());
   }
 };
 //Update a location by id
@@ -199,7 +199,7 @@ exports.update_location = async (req, res) => {
     await Location.findByIdAndDelete(location._id);
     res.send(check);
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send(err.toString());
   }
 };
 //Delete a location
@@ -218,7 +218,7 @@ exports.delete_location = async (req, res) => {
       res.status(204).send(location);
     }
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send(err.toString());
   }
 };
 

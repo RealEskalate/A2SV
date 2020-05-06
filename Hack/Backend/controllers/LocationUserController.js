@@ -5,6 +5,7 @@ const axios = require("axios");
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 
+//Post a user location
 exports.post_location_user = async (req, res) => {
   // jwt.verify(req.token, 'secretkey', (err,authData) =>{
   //     if (err){
@@ -13,7 +14,7 @@ exports.post_location_user = async (req, res) => {
   // });
 
   if(!req.body.longitude||!req.body.latitude){
-    return res.status(500).send("Coordinates not given");
+    return res.status(400).send("Coordinates not given");
   }
   let latitude = req.body.latitude;
   let longitude = req.body.longitude;
@@ -61,7 +62,7 @@ exports.post_location_user = async (req, res) => {
       }    
     } catch (err) {
       console.log(err);
-      return res.status(500).send(err);
+      return res.status(500).send(err.toString());
     }
   }
 
@@ -117,10 +118,30 @@ exports.post_location_user = async (req, res) => {
     return res.send(location_user);
   } catch (err) {
     console.log(err);
-    return res.status(500).send(err);
+    return res.status(500).send(err.toString());
   }
 };
 
+//Get specific location_user by id
+exports.get_location_user_by_id = async(req, res) => {
+  // jwt.verify(req.token, "secretkey", (err, authData) => {
+  //   if (err) {
+  //     res.status(401).send("Incorrect authentication key");
+  //   }
+  // });
+
+  try {
+    const locationUser = await LocationUser.findById(req.params.id);
+    if(!locationUser){
+      return res.status(500).send("User Location not found");
+    }
+    res.send(locationUser);
+  } catch (err) {
+    res.status(500).send(err.toString());
+  }
+}
+
+//Get location_user by location_id
 exports.get_by_location_id = async (req, res) => {
   // jwt.verify(req.token, 'secretkey', (err,authData) =>{
   //     if (err){
@@ -140,6 +161,7 @@ exports.get_by_location_id = async (req, res) => {
   }
 };
 
+//Get all location_users
 exports.get_all_location_users = async (req, res) => {
   // jwt.verify(req.token, 'secretkey', (err,authData) =>{
   //     if (err){
@@ -151,10 +173,11 @@ exports.get_all_location_users = async (req, res) => {
   try {
     res.send(results);
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send(err.toString());
   }
 };
 
+//Get location_user by location_id
 exports.get_by_user_id = async (req, res) => {
   // jwt.verify(req.token, 'secretkey', (err,authData) =>{
   //     if (err){
@@ -171,10 +194,11 @@ exports.get_by_user_id = async (req, res) => {
     }
     res.send(results);
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send(err.toString());
   }
 };
 
+//Delete location_user with id
 exports.delete_location_user = async (req, res) => {
   // jwt.verify(req.token, 'secretkey', (err,authData) =>{
   //     if (err){
@@ -189,10 +213,11 @@ exports.delete_location_user = async (req, res) => {
     }
     res.status(201).send(location_user);
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send(err.toString());
   }
 };
 
+//Update location_user with id
 exports.update_location_user = async (req, res) => {
   // jwt.verify(req.token, 'secretkey', (err,authData) =>{
   //     if (err){
@@ -209,6 +234,6 @@ exports.update_location_user = async (req, res) => {
     await locationUser.save();
     res.send(locationUser);
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send(err.toString());
   }
 };

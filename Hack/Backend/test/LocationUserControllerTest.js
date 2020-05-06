@@ -88,6 +88,7 @@ describe("Location Users API", () => {
         );
       expect(response).to.have.status(200);
       expect(response.body).to.be.a('array');
+      expect(response.body[0].user_id).to.equal(""+user_location.user_id);
     });
   });
 
@@ -169,7 +170,59 @@ describe("GET /api/user_locations/user/:user_id", () => {
   });
 });  
 
-  //Post Location User - Valid Location User
+//Get Location User by ID - valid Location User
+describe("GET /api/user_locations/:id", () => {
+  let location_user;
+  beforeEach(async() =>{
+    location_user = new LocationUser({
+      _id: mongoose.Types.ObjectId(),
+      location_id: mongoose.Types.ObjectId(),
+      user_id: mongoose.Types.ObjectId(),
+      TTL: 50000
+    });
+    await location_user.save();
+  });
+  afterEach(async() => await LocationUser.collection.drop());
+  it("It should send location_user", async () => {
+    let response = await chai
+    .request(server)
+    .get("/api/user_locations/"+location_user._id)
+    .set(
+      "Authorization",
+      "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6IkZFTUFMRSIsImFnZV9ncm91cCI6IlVOREVSXzMwIiwiX2lkIjoiNWU5MDRjY2U3YTFjNmI2MjdhZTlmNWY3IiwidXNlcm5hbWUiOiJUZXN0aW5nIiwicGFzc3dvcmQiOiIkMmEkMTAkZWZteG01bzF2LmluSS5lU3RHR3hnTzF6SGsuTDZVb0E5TEV5WXJSUGhXa21UUVBYOC5OS08iLCJfX3YiOjB9LCJpYXQiOjE1ODczNjUxMTJ9.QUPJHBixUI7nu2CJGi1a6vBPOInmYuO4lVPIryHM2go"
+    );
+    
+    expect(response).to.have.status(200);
+    expect(response.body).to.have.property("_id");
+  });
+});
+//Get Location User by ID - valid Location User
+describe("GET /api/user_locations/:id", () => {
+  let location_user;
+  beforeEach(async() =>{
+    location_user = new LocationUser({
+      _id: mongoose.Types.ObjectId(),
+      location_id: mongoose.Types.ObjectId(),
+      user_id: mongoose.Types.ObjectId(),
+      TTL: 50000
+    });
+    await location_user.save();
+  });
+  afterEach(async() => await LocationUser.collection.drop());
+  it("It should not send location_user", async () => {
+    let response = await chai
+    .request(server)
+    .get("/api/user_locations/" + mongoose.Types.ObjectId())
+    .set(
+      "Authorization",
+      "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6IkZFTUFMRSIsImFnZV9ncm91cCI6IlVOREVSXzMwIiwiX2lkIjoiNWU5MDRjY2U3YTFjNmI2MjdhZTlmNWY3IiwidXNlcm5hbWUiOiJUZXN0aW5nIiwicGFzc3dvcmQiOiIkMmEkMTAkZWZteG01bzF2LmluSS5lU3RHR3hnTzF6SGsuTDZVb0E5TEV5WXJSUGhXa21UUVBYOC5OS08iLCJfX3YiOjB9LCJpYXQiOjE1ODczNjUxMTJ9.QUPJHBixUI7nu2CJGi1a6vBPOInmYuO4lVPIryHM2go"
+    );
+    
+    expect(response).to.have.status(500);
+  });
+});
+
+  //Post Location User - Old API Location User - Invalid
   describe("POST /api/user_locations", () => {
     let location_user;
     let location;
@@ -191,7 +244,7 @@ describe("GET /api/user_locations/user/:user_id", () => {
         username:"Testing",
         password:"$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
         gender:"FEMALE",
-        age_group:"UNDER_30",
+        age_group:"21-30",
       });
       await newUser.save();
       await location_user.save();
@@ -202,7 +255,7 @@ describe("GET /api/user_locations/user/:user_id", () => {
       await Location.collection.drop();
       await User.collection.drop();
     });
-    it("It should insert user location", async () => {
+    it("It should not insert user location now", async () => {
       let response = await chai
         .request(server)
         .post("/api/user_locations/")
@@ -215,13 +268,46 @@ describe("GET /api/user_locations/user/:user_id", () => {
           user_id: newUser._id,
           TTL:10000
         });
+      expect(response).to.have.status(400);
+    });
+  });
+
+  //Post Location User - New API Location User - Valid
+  describe("POST /api/user_locations", () => {
+    let newUser;
+    beforeEach(async () => {
+      newUser = new User({
+        _id : mongoose.Types.ObjectId(),
+        username:"Testing",
+        password:"$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
+        gender:"FEMALE",
+        age_group:"21-30",
+      });
+      await newUser.save();
+    });
+    afterEach(async () => {
+      await User.collection.drop();
+    });
+    it("It should insert user location", async () => {
+      let response = await chai
+        .request(server)
+        .post("/api/user_locations/")
+        .set(
+          "Authorization",
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6IkZFTUFMRSIsImFnZV9ncm91cCI6IlVOREVSXzMwIiwiX2lkIjoiNWU5MDRjY2U3YTFjNmI2MjdhZTlmNWY3IiwidXNlcm5hbWUiOiJUZXN0aW5nIiwicGFzc3dvcmQiOiIkMmEkMTAkZWZteG01bzF2LmluSS5lU3RHR3hnTzF6SGsuTDZVb0E5TEV5WXJSUGhXa21UUVBYOC5OS08iLCJfX3YiOjB9LCJpYXQiOjE1ODczNjUxMTJ9.QUPJHBixUI7nu2CJGi1a6vBPOInmYuO4lVPIryHM2go"
+        )
+        .send({
+          latitude: 10,
+          longitude: 21,
+          user_id: newUser._id,
+          TTL:10000
+        });
       expect(response).to.have.status(200);
       expect(response.body).to.be.a('object');
       expect(response.body).to.have.property('location_id');
       expect(response.body).to.have.property('user_id');
     });
   });
-
   //Post Location User - Invalid Location User
   describe("POST /api/user_locations", () => {
     let user_location;
