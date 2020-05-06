@@ -1,16 +1,19 @@
 import React from "react";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
-import SymptomPage from "../symptom-page/SymptomPage.js";
 import UserSymptomPage from "../symptom-page/UserSymptomPage.js";
 import DataAnalytics from "../public-data-page/DataAnalytics.js";
 import InformationPage from "../information-page/InformationPage";
+import News from "../news-page/News";
 import MapService from "../map-service/MapService.js";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 const Tab = createMaterialBottomTabNavigator();
 const INITIAL_ROUTE_NAME = "Home";
 
 export default function MyTabs({ navigation, route }) {
-  navigation.setOptions({ headerTitle: getHeaderTitle(route) });
+  navigation.setOptions({
+    headerTitle: getHeaderTitle(route),
+    headerRight: () => getHeaderIcon(navigation, route),
+  });
   return (
     <Tab.Navigator>
       <Tab.Screen
@@ -24,6 +27,16 @@ export default function MyTabs({ navigation, route }) {
               color={color}
               size={26}
             />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="News"
+        component={News}
+        options={{
+          tabBarLabel: "News",
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="newspaper" color={color} size={26} />
           ),
         }}
       />
@@ -43,10 +56,10 @@ export default function MyTabs({ navigation, route }) {
         }}
       />
       <Tab.Screen
-        name="Symptom Tracker"
+        name="Symptom Map"
         component={MapService}
         options={{
-          tabBarLabel: "Symptom Tracker",
+          tabBarLabel: "Symptom Map",
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="map" color={color} size={26} />
           ),
@@ -76,11 +89,40 @@ function getHeaderTitle(route) {
   switch (routeName) {
     case "Information":
       return "Information";
+    case "News":
+      return "Top News";
     case "Data Analytics":
       return "Data Analytics";
-    case "Symptom Tracker":
-      return "Symptom Tracker";
+    case "Symptom Map":
+      return "Symptom Map";
     case "My Symptoms":
       return "My Symptoms";
+  }
+}
+
+function getHeaderIcon(navigation, route) {
+  const routeName =
+    route.state?.routes[route.state.index]?.name ?? INITIAL_ROUTE_NAME;
+
+  switch (routeName) {
+    case "Data Analytics":
+      return (
+        <MaterialCommunityIcons
+          name="map-search"
+          color="#fff"
+          size={25}
+          style={{ marginRight: 15 }}
+        />
+      );
+    case "My Symptoms":
+      return (
+        <MaterialCommunityIcons
+          name="tooltip-edit"
+          color="#fff"
+          size={25}
+          style={{ marginRight: 15 }}
+          onPress={() => navigation.navigate("Symptoms", {})}
+        />
+      );
   }
 }

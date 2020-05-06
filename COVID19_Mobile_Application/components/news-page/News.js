@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   Text,
   View,
@@ -9,29 +9,29 @@ import {
   TouchableOpacity,
   Linking,
   Platform,
-} from 'react-native';
-import { SearchBar } from 'react-native-elements';
+} from "react-native";
+import { SearchBar } from "react-native-elements";
 
 class News extends Component {
   state = {
     data: [],
     isLoading: true,
-    searchedCountry: '',
+    searchedCountry: "",
     searching: false,
     refreshing: false,
   };
 
   componentDidMount() {
-    this.fetchNews('');
+    this.fetchNews("");
   }
 
   fetchNews = (country) => {
-    if (country === '') {
-      fetch('https://sym-track.herokuapp.com/api/news/', {
-        method: 'GET',
+    if (country === "") {
+      fetch("https://sym-track.herokuapp.com/api/news/", {
+        method: "GET",
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
+          Accept: "application/json",
+          "Content-Type": "application/json",
         },
       })
         .then((response) => response.json())
@@ -45,13 +45,13 @@ class News extends Component {
     } else {
       alert(country);
       fetch(
-        'https://sym-track.herokuapp.com/api/news?country=' +
+        "https://sym-track.herokuapp.com/api/news?country=" +
           this.state.searchedCountry,
         {
-          method: 'GET',
+          method: "GET",
           headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
+            Accept: "application/json",
+            "Content-Type": "application/json",
           },
         }
       )
@@ -68,20 +68,20 @@ class News extends Component {
         .catch((error) => {
           Alert.alert(
             "Couldn't connect",
-            'Unable to connect to server, please try again!'
+            "Unable to connect to server, please try again!"
           );
         });
     }
   };
 
   getMyTitle = (title) => {
-    var array = title.split('-');
-    var _title = '';
+    var array = title.split("-");
+    var _title = "";
 
     for (let index = 0; index < array.length - 1; index++) {
       _title += array[index];
       if (index != array.length - 2) {
-        _title += '-';
+        _title += "-";
       }
     }
 
@@ -97,13 +97,13 @@ class News extends Component {
     var mins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
 
     if (days > 0) {
-      return days + ' days ago';
+      return days + " days ago";
     }
     if (hrs == 0) {
-      return mins + ' min ago';
+      return mins + " min ago";
     }
 
-    return hrs + ' hr : ' + mins + ' min ago';
+    return hrs + " hr : " + mins + " min ago";
   };
 
   onCountryChange = (country) => {
@@ -121,19 +121,20 @@ class News extends Component {
   };
 
   goToNews = (reference_link) => {
-    if(Platform.Version > 22){
-      this.props.navigation.navigate('NewsView', {uri: reference_link});
-    }else{
+    if (Platform.Version > 22) {
+      this.props.navigation.navigate("NewsView", { uri: reference_link });
+    } else {
       Linking.openURL(reference_link);
     }
-  }
+  };
 
   render() {
     if (this.state.isLoading) {
       return (
         <View
-          style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <ActivityIndicator size='large' />
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        >
+          <ActivityIndicator size="large" color="#1976d2" />
         </View>
       );
     }
@@ -141,7 +142,7 @@ class News extends Component {
     return (
       <View style={styles.container}>
         <SearchBar
-          placeholder='Search a country...'
+          placeholder="Search a country..."
           lightTheme={true}
           onChangeText={(country) => {
             this.onCountryChange(country);
@@ -158,26 +159,28 @@ class News extends Component {
             <View
               style={{
                 flex: 1,
-                flexDirection: 'row',
+                flexDirection: "row",
                 padding: 10,
                 borderBottomWidth: 1,
-                borderBottomColor: '#ccc',
-              }}>
+                borderBottomColor: "#ccc",
+              }}
+            >
               <Image
-                source={require('../../assets/news/people.png')}
-                resizeMethod='auto'
+                source={require("../../assets/news/people.png")}
+                resizeMethod="auto"
                 style={{ width: 60, height: 60 }}
               />
               <View style={{ flex: 1 }}>
                 <View
                   style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                  }}>
-                  <Text style={{ color: 'grey', fontSize: 10 }}>
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <Text style={{ color: "grey", fontSize: 10 }}>
                     {item.source}
                   </Text>
-                  <Text style={{ color: 'grey', fontSize: 10 }}>
+                  <Text style={{ color: "grey", fontSize: 10 }}>
                     {this.getNewsDate(item.date)}
                   </Text>
                 </View>
@@ -186,18 +189,20 @@ class News extends Component {
                 </View>
                 <View
                   style={{
-                    flexDirection: 'row',
+                    flexDirection: "row",
                     flex: 1,
-                    justifyContent: 'flex-end',
-                  }}>
+                    justifyContent: "flex-end",
+                  }}
+                >
                   <TouchableOpacity
                     style={{
-                      backgroundColor: '#bbdefb',
+                      backgroundColor: "#bbdefb",
                       padding: 5,
                       borderRadius: 5,
                     }}
-                    onPress={() => this.goToNews(item.reference_link)}>
-                    <Text style={{ color: '#1565c0', fontSize: 10 }}>
+                    onPress={() => this.goToNews(item.reference_link)}
+                  >
+                    <Text style={{ color: "#1565c0", fontSize: 10 }}>
                       GO TO NEWS
                     </Text>
                   </TouchableOpacity>
@@ -216,7 +221,7 @@ export default News;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'space-between',
-    alignItems: 'stretch',
+    justifyContent: "space-between",
+    alignItems: "stretch",
   },
 });
