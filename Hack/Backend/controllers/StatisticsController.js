@@ -102,7 +102,8 @@ const run_updates = () => {
 };
 
 const run_updates_on_country = () => {
-    schedule.scheduleJob('0 0 * * *', async function () {
+    // update by the hour
+    schedule.scheduleJob('0 * * * *', async function () {
         await healthParser.populate_db_daily();
     });
 };
