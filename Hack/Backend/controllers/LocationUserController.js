@@ -1,7 +1,7 @@
 const LocationUser = require("../models/LocationUserModel");
 const Location = require("./../models/LocationModel");
 const { User } = require("./../models/UserModel");
-
+const axios = require("axios");
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 
@@ -12,7 +12,50 @@ exports.post_location_user = async (req, res) => {
   //     }
   // });
 
-  let location_id = req.body.location_id;
+  if(!req.body.longitude||!req.body.latitude){
+    return res.status(500).send("Coordinates not given");
+  }
+  let latitude = req.body.latitude;
+  let longitude = req.body.longitude;
+
+  const check = await Location.findOne({
+    longitude: { $eq: longitude },
+    latitude: { $eq: latitude },
+  });
+  let location_id;
+  if (check) {
+    location_id = check._id
+  }
+  else{
+    let location = new Location({
+      _id: mongoose.Types.ObjectId(),
+      longitude: req.body.longitude,
+      latitude: req.body.latitude,
+      place_name: req.body.place_name,
+    });
+    try {
+      let result1 = await axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${location.longitude},${location.latitude}.json?types=poi&access_token=pk.eyJ1IjoiZmVyb3g5OCIsImEiOiJjazg0czE2ZWIwNHhrM2VtY3Y0a2JkNjI3In0.zrm7UtCEPg2mX8JCiixE4g`)
+        .then(response => {
+          if (response.data) {
+            if (response.data.features && response.data.features.length>0) {
+              location.longitude = response.data.features[0].center[0];
+              location.latitude = response.data.features[0].center[1];
+              location.place_name = response.data.features[0].text;
+            }
+          }
+          return location;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+      await result1.save();
+      location_id = result1._id;
+    } catch (err) {
+      console.log(err);
+      return res.status(500).send(err);
+    }
+  }
+
   let user_id = req.body.user_id;
   let TTL = req.body.TTL;
 
@@ -52,9 +95,10 @@ exports.post_location_user = async (req, res) => {
       console.log(err);
     }
     await location_user.save();
-    res.send(location_user);
+    return res.send(location_user);
   } catch (err) {
-    res.status(500).send(err);
+    console.log(err);
+    return res.status(500).send(err);
   }
 };
 

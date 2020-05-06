@@ -14,6 +14,7 @@ import { LineChart } from "react-native-chart-kit";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as criterias from "./Criterias";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+
 import SearchableDropdown from "react-native-searchable-dropdown";
 export default class DataAnalytics extends React.Component {
   state = {

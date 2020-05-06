@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import {
-  Image,
   ScrollView,
   StyleSheet,
-  TouchableOpacity,
+  View,
   Alert,
+  ActivityIndicator,
 } from "react-native";
 import userIDStore from "../data-management/user-id-data/userIDStore";
 import symptomStore from "../data-management/user-symptom-data/symptomStore";
@@ -18,6 +18,8 @@ export default class SymptomPage extends Component {
       symptomId: "",
       symptoms: [],
       userSymptoms: [],
+      loading: true,
+      registerLoading: false,
     };
   }
 
@@ -48,6 +50,7 @@ export default class SymptomPage extends Component {
 
   //gets the list of symptoms from database
   fetchSymptoms() {
+    this.setState({ loading: true });
     let newThis = this; // create variable for referencing 'this'
     fetch("https://sym-track.herokuapp.com/api/symptoms", {
       method: "GET",
@@ -61,6 +64,7 @@ export default class SymptomPage extends Component {
         // fetching symptoms from the database is successful and storing in to our state
         newThis.setState(() => ({
           symptoms: json,
+          loading: false,
         }));
         //console.log(json);
       })
@@ -70,6 +74,7 @@ export default class SymptomPage extends Component {
   }
   //gets the list of symptoms from database
   fetchUserSymptoms(userId) {
+    this.setState({ registerLoading: true });
     let newThis = this; // create variable for referencing 'this'
     fetch("https://sym-track.herokuapp.com/api/symptomuser/user/" + userId, {
       method: "GET",
@@ -82,6 +87,7 @@ export default class SymptomPage extends Component {
       .then((json) => {
         // fetching user symptoms from the database is successful and updating local state using redux
         symptomStore.dispatch(symptomActions.addSymptom(json));
+        this.setState({ registerLoading: false });
       })
       .catch((error) => {
         console.log(error);
@@ -89,6 +95,7 @@ export default class SymptomPage extends Component {
   }
   //Registers symptom with the user id
   registerSymptom(userId, symptomId) {
+    this.setState({ registerLoading: true });
     fetch("https://sym-track.herokuapp.com/api/symptomuser", {
       method: "POST",
       headers: {
@@ -104,6 +111,7 @@ export default class SymptomPage extends Component {
       .then((json) => {
         // symptom registeration is successful
         this.fetchUserSymptoms(userIDStore.getState().userId); // get the update from database and update local state
+        this.setState({ registerLoading: false });
         //console.log(symptomStore.getState());
       })
 
@@ -114,6 +122,7 @@ export default class SymptomPage extends Component {
 
   //removes symptom with the user id
   removeSymptom(userId, randomId, symptomId) {
+    this.setState({ registerLoading: true });
     fetch("https://sym-track.herokuapp.com/api/symptomuser", {
       method: "DELETE",
       headers: {
@@ -130,6 +139,7 @@ export default class SymptomPage extends Component {
       .then((json) => {
         // symptom removal is successful
         this.fetchUserSymptoms(userIDStore.getState().userId); // get the update from database and update local state
+        this.setState({ registerLoading: false });
         //console.log(json);
       })
       .catch((error) => {
@@ -169,7 +179,24 @@ export default class SymptomPage extends Component {
     });
 
   render() {
-    return <ScrollView>{this.contents()}</ScrollView>;
+    return (
+      <ScrollView>
+        {this.state.loading ? (
+          <View
+            style={{
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "center",
+              marginTop: 80,
+            }}
+          >
+            <ActivityIndicator size="large" color="#1976d2" />
+          </View>
+        ) : (
+          this.contents()
+        )}
+      </ScrollView>
+    );
   }
 }
 const styles = StyleSheet.create({
