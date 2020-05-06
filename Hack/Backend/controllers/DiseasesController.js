@@ -66,7 +66,7 @@ exports.get_diseases = async(req, res) => {
 
     diseases.push(
         new Disease({
-            title: "Seasonal flu",
+            title: "SEASONAL FLU",
             confirmed: 4000000,
             deaths: 470000,
             recovered: 3530000,
