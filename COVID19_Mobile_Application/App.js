@@ -10,9 +10,6 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 import MainPage from "./components/main-page/MainPage.js";
 import SymptomPage from "./components/symptom-page/SymptomPage.js";
-import UserSymptomPage from "./components/symptom-page/UserSymptomPage.js";
-import MapService from "./components/map-service/MapService.js";
-import Information from "./components/information-page/InformationPage.js";
 import WhatIsCovid19 from "./components/information-page/WhatIsCovid19.js";
 import Symptoms from "./components/information-page/Symptoms.js";
 import Preventions from "./components/information-page/Preventions.js";
@@ -24,6 +21,7 @@ import userIDStore from "./components/data-management/user-id-data/userIDStore";
 import * as actions from "./components/data-management/user-id-data/userIDActions";
 import { Header } from "react-native-elements";
 import NewsStack from "./components/news-page/NewsStack.js";
+import DataAnalyticsMap from "./components/public-data-page/DataAnalyticsMap.js";
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -106,6 +104,7 @@ export default function App() {
         <Stack.Screen name="Preventions" component={Preventions} />
         <Stack.Screen name="Treatments" component={Treatments} />
         <Stack.Screen name="Symptoms" component={SymptomPage} />
+        <Stack.Screen name="Data Analytics Map" component={DataAnalyticsMap} />
 
         <Stack.Screen name="News" component={News} />
       </Stack.Navigator>
