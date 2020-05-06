@@ -2,7 +2,7 @@
   <div>
     <v-app-bar
       app
-      class="white bg-transparent"
+      class="white"
       flat
       v-bind:class="{ raised: raise }"
     >
@@ -100,7 +100,7 @@ export default {
   },
   computed: {
     raise() {
-      return this.locationY > 100;
+      return this.locationY > 5;
     }
   }
 };
@@ -122,7 +122,7 @@ export default {
 }
 
 .raised {
-  box-shadow: 5px 0 15px 5px #eee;
+  box-shadow: 5px 0 15px 5px #ddd;
   z-index: 997;
 }
 </style>
