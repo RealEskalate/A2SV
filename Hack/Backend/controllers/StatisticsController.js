@@ -101,10 +101,17 @@ const run_updates = () => {
     });
 };
 
+const run_updates_on_country = () => {
+    // update by the hour
+    schedule.scheduleJob('0 * * * *', async function () {
+        await healthParser.populate_db_daily();
+    });
+};
 
 // in the future we can call this in index.js
 exports.run_updates = run_updates;
 run_updates();
+run_updates_on_country();
 
 exports.get_statistics = async(req, res) => {
     if (["Confirmed", "Recovered", "Deaths", "All"].includes(req.query.criteria)) {

@@ -1,5 +1,7 @@
 const axios = require("axios");
 const csvjson = require('csvjson');
+const {Cases} = require("./../models/CasesModel");
+const mongoose = require("mongoose");
 
 const getRate = (criteria, startDate, endDate, res, respond) => {
     axios.get('https://covidtracking.com/api/v1/us/daily.json')
@@ -189,4 +191,51 @@ exports.countrySlugList = async (request_url, name, field, res, respond) => {
         console.log(err);
     }
     respond(res, [])
+};
+
+exports.populate_db_daily = async () => {
+    let request_url = "https://api.covid19api.com/summary";
+    let response = await axios.get(request_url)
+
+    if (response.data) {
+        for(let i = 0; i<response.data.Countries.length;i++){
+            try{
+                let c_cases = response.data.Countries[i];
+                c_case_date = new Date(Date.parse(c_cases.Date.substring(0,10)));
+                // fill db if new data is not already in the db
+                // console.log(c_case_date.toUTCString());
+                
+                let record = await Cases.findOne({
+                    country: {$eq: c_cases['Country']}, 
+                    date: {$eq: c_case_date}
+                });           
+                
+                if (!record){
+                    let c = new Cases({
+                        _id: mongoose.Types.ObjectId(),
+                        country: c_cases['Country'],
+                        country_slug: c_cases['CountryCode'],
+                        confirmed: c_cases['TotalConfirmed'],
+                        deaths: c_cases['TotalDeaths'],
+                        recovered: c_cases['TotalRecovered'],
+                        date: c_case_date
+                    });
+                    await c.save();
+                    console.log('Saved' + c.country)
+                }
+                else{
+                    record.confirmed = c_cases['TotalConfirmed']>0 ? c_cases['TotalConfirmed'] : record.confirmed
+                    record.deaths = c_cases['TotalDeaths']>0 ? c_cases['TotalDeaths'] : record.deaths
+                    record.recovered = c_cases['TotalRecovered']>0 ? c_cases['TotalRecovered'] : record.recovered
+                    await record.save();
+                    console.log('Updated' + record.country)
+                }
+            }
+            catch(err){
+                console.log(err);
+            }
+        }
+    }
+
+    console.log("Done filling db for country stats...");
 };
