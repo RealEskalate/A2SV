@@ -1,14 +1,10 @@
 <template>
-  <section class="states shadow">
+  <v-card class="shadow">
     <h1 class="display-1 text-center font-weight-thin mb-6">
       The States of Transition for Covid-19
     </h1>
-    <v-container>
-      <v-row>
-        <img-svg />
-      </v-row>
-    </v-container>
-  </section>
+    <img-svg class="col-md-12" />
+  </v-card>
 </template>
 
 <script>
@@ -21,8 +17,8 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .shadow {
-  box-shadow: 0 0 15px 0 #eae6e6;
+  box-shadow: 5px 15px 15px 5px #eae6e6;
 }
 </style>
