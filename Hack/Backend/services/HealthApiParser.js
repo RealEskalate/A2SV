@@ -205,22 +205,30 @@ exports.populate_db_daily = async () => {
                 // fill db if new data is not already in the db
                 // console.log(c_case_date.toUTCString());
                 
-                let record = await Cases.find({
+                let record = await Cases.findOne({
                     country: {$eq: c_cases['Country']}, 
                     date: {$eq: c_case_date}
                 });           
                 
-                if ( !record || record.length == 0 ){
+                if (!record){
                     let c = new Cases({
                         _id: mongoose.Types.ObjectId(),
                         country: c_cases['Country'],
                         country_slug: c_cases['CountryCode'],
-                        confirmed: c_cases['NewConfirmed'],
-                        deaths: c_cases['NewDeaths'],
-                        recovered: c_cases['NewRecovered'],
+                        confirmed: c_cases['TotalConfirmed'],
+                        deaths: c_cases['TotalDeaths'],
+                        recovered: c_cases['TotalRecovered'],
                         date: c_case_date
                     });
                     await c.save();
+                    console.log('Saved' + c.country)
+                }
+                else{
+                    record.confirmed = c_cases['TotalConfirmed']>0 ? c_cases['TotalConfirmed'] : record.confirmed
+                    record.deaths = c_cases['TotalDeaths']>0 ? c_cases['TotalDeaths'] : record.deaths
+                    record.recovered = c_cases['TotalRecovered']>0 ? c_cases['TotalRecovered'] : record.recovered
+                    await record.save();
+                    console.log('Updated' + record.country)
                 }
             }
             catch(err){
