@@ -22,6 +22,17 @@
             <v-spacer />
           </v-toolbar>
 
+          <div class="d-block mx-auto" style="max-width: 50px">
+            <vue-loaders
+              v-if="news.length === 0"
+              class="mx-auto mt-5"
+              name="line-scale"
+              color="blue"
+              scale="1.2"
+            >
+            </vue-loaders>
+          </div>
+
           <v-list two-line>
             <v-list-item-group>
               <template v-for="(item, index) in news">
@@ -79,6 +90,16 @@
               :value="sourceItem"
               @change="sourceChange"
             />
+            <div class="d-block mx-auto" style="max-width: 50px">
+              <vue-loaders
+                v-if="sourceList.length === 0"
+                class="mx-auto mt-5"
+                name="line-scale"
+                color="blue"
+                scale="1.2"
+              >
+              </vue-loaders>
+            </div>
           </v-card-text>
         </v-card>
       </v-col>
@@ -141,6 +162,7 @@ export default {
 </script>
 
 <style scoped>
+@import "https://unpkg.com/vue-loaders/dist/vue-loaders.css";
 .wrap-text {
   -webkit-line-clamp: unset !important;
   font-size: 1.15rem !important;

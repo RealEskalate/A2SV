@@ -9,7 +9,6 @@ const state = {
 
 const getters = {
   getNews: state => {
-    console.log(state.news);
     return state.news;
   },
   getNewsMeta: state => {

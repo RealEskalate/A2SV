@@ -15,7 +15,7 @@
         </v-flex>
         <v-flex xs4 md3 class="mx-2">
           <p class="font-weight-bold text-center">Get our App</p>
-          <v-divider class="mx-4"></v-divider>
+          <v-divider class="mx-4" />
           <v-list class="list">
             <v-list-item-group color="primary">
               <v-list-item
@@ -48,7 +48,7 @@
         </v-flex>
         <v-flex xs4 md3 class="text-center mx-4">
           <p class="font-weight-bold text-center">Navigation</p>
-          <v-divider class="mx-4"></v-divider>
+          <v-divider class="mx-4" />
           <v-list class="list">
             <v-list-item-group color="primary">
               <v-list-item href="/">
@@ -77,11 +77,11 @@
 
         <v-flex xs4 md2 class="mx-2">
           <p class="font-weight-bold text-center">More info</p>
-          <v-divider class="mx-4"></v-divider>
+          <v-divider class="mx-4" />
           <v-col class="text-center">
             <v-btn
               v-for="icon in icons"
-              :key="icon"
+              :key="icon[1]"
               class="mx-2 black--text"
               icon
               v-bind:href="icon[1]"
