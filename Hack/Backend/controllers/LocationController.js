@@ -6,6 +6,7 @@ const { Symptom } = require("./../models/Symptom");
 const { User } = require("./../models/UserModel");
 const jwt = require("jsonwebtoken");
 const axios = require("axios");
+const geolib = require("geolib");
 
 // Display list of all locations.
 exports.get_all_locations = async (req, res) => {
@@ -29,11 +30,26 @@ exports.get_all_locations_with_symptoms = async (req, res) => {
       res.status(401).send("Incorrect authentication key");
     }
   });
+  if(!req.body.longitude || !req.body.latitude){
+    return res.status(500).send("Coordinates are not given");
+  }
+  let lat = req.body.latitude;
+  let long = req.body.longitude;
+
   let result = [];
-  const locations = await Location.find({});
+  const locations = await Location.find({});  
   // Get Symptoms for each user and store in Symptoms
   for (let i = 0; i < locations.length; i++) {
     let location = locations[i];
+    let isInRadius = geolib.isPointWithinRadius(
+      { latitude: location.latitude, longitude: location.longitude },
+      { latitude: lat, longitude: long },      
+      10000*0.621371
+    )
+    if(!isInRadius){
+      continue;
+    }
+
     const users = await LocationUser.find({
       location_id: { $eq: location._id }
     });
