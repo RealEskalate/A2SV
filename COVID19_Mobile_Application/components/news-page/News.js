@@ -43,7 +43,6 @@ class News extends Component {
           });
         });
     } else {
-      alert(country);
       fetch(
         "https://sym-track.herokuapp.com/api/news?country=" +
           this.state.searchedCountry,
@@ -63,10 +62,9 @@ class News extends Component {
             refreshing: false,
             searching: false,
           });
-          //console.log(json);
         })
         .catch((error) => {
-          Alert.alert(
+          alert(
             "Couldn't connect",
             "Unable to connect to server, please try again!"
           );
@@ -91,7 +89,7 @@ class News extends Component {
   getNewsDate = (date) => {
     var today = new Date();
     var newsDate = new Date(date);
-    var diffMs = today - newsDate; // milliseconds between now & Christmas
+    var diffMs = today - newsDate; // milliseconds between now & the news date
     var days = Math.floor(diffMs / 86400000); // days
     var hrs = Math.floor((diffMs % 86400000) / 3600000); // hours
     var mins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
@@ -107,9 +105,9 @@ class News extends Component {
   };
 
   onCountryChange = (country) => {
-    const result = this.setState({
-      searchedCountry: country,
-      searching: true,
+      this.setState({
+        searchedCountry: country,
+        searching: country !== '' ? true : false,
     });
 
     this.fetchNews(country);
@@ -144,11 +142,11 @@ class News extends Component {
         <SearchBar
           placeholder="Search a country..."
           lightTheme={true}
+          value={this.state.searchedCountry}
+          showLoading={this.state.searching}
           onChangeText={(country) => {
             this.onCountryChange(country);
           }}
-          value={this.state.searchedCountry}
-          showLoading={this.state.searching}
         />
         <FlatList
           refreshing={this.state.refreshing}
@@ -165,6 +163,9 @@ class News extends Component {
                 borderBottomColor: "#ccc",
               }}
             >
+
+              style={styles.newsRow}>
+
               <Image
                 source={require("../../assets/news/people.png")}
                 resizeMethod="auto"
@@ -224,4 +225,11 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "stretch",
   },
+  newsRow: {
+    flex: 1,
+    flexDirection: 'row',
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+  }
 });

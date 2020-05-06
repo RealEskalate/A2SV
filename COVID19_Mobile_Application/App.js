@@ -106,6 +106,8 @@ export default function App() {
         <Stack.Screen name="Preventions" component={Preventions} />
         <Stack.Screen name="Treatments" component={Treatments} />
         <Stack.Screen name="Symptoms" component={SymptomPage} />
+
+        <Stack.Screen name="News" component={News} />
       </Stack.Navigator>
     );
   };
