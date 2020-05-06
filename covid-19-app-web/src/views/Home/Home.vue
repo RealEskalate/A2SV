@@ -11,7 +11,7 @@ import Statistics from "@/views/Home/Statistics.vue";
 export default {
   name: "Home",
   components: {
-    Statistics,
+    Statistics
   }
 };
 </script>
