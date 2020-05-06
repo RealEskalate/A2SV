@@ -1,7 +1,7 @@
 <!--suppress HtmlUnknownTarget -->
 <template>
   <v-content class="information">
-    <section class="my-12 text-justify">
+    <section class="mb-12 text-justify">
       <v-container>
         <v-row>
           <h3
@@ -61,7 +61,7 @@
         </v-row>
       </v-container>
       <v-dialog v-model="dialog" width="500">
-        <v-card shaped>
+        <v-card shaped style="overflow: hidden">
           <v-img
             height="150px"
             :lazy-src="selectedInfo.image"
@@ -84,19 +84,24 @@
     <section class="my-12 text-justify">
       <states class="my-12" />
     </section>
+    <section class="my-12 text-justify">
+      <learning-paths class="my-12" />
+    </section>
   </v-content>
 </template>
 
 <script>
-import States from "@/views/Home/States.vue";
+import States from "./States.vue";
+import LearningPaths from "./LearningPaths.vue";
 import { Carousel3d, Slide } from "vue-carousel-3d";
-import Actions from "../Home/Actions";
+import Actions from "./Actions";
 
 export default {
   name: "Information",
   components: {
     Actions,
     States,
+    LearningPaths,
     Slide,
     "carousel-3d": Carousel3d
   },
