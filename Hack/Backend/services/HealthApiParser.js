@@ -198,8 +198,9 @@ exports.populate_db_daily = async() => {
     if (response.data) {
         response.data.Countries.forEach((c_cases) => {
             c_case_date = new Date(c_cases.Date);
-            // fill db if new data is today's
-            if ( c_case_date <= today){
+            // fill db if new data is not already in the db
+            let record = Cases.find({country: c_cases['Country'], date: c_case_date})
+            if ( !record || record.length == 0 ){
                 let c = new Cases({
                     _id: mongoose.Types.ObjectId(),
                     country: c_cases['Country'],
