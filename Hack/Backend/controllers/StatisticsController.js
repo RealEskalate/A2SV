@@ -106,10 +106,11 @@ const run_updates_on_country = () => {
         await healthParser.populate_db_daily();
     });
 };
-run_updates_on_country();
+
 // in the future we can call this in index.js
 exports.run_updates = run_updates;
 run_updates();
+run_updates_on_country();
 
 exports.get_statistics = async(req, res) => {
     if (["Confirmed", "Recovered", "Deaths", "All"].includes(req.query.criteria)) {

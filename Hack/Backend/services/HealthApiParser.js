@@ -1,5 +1,7 @@
 const axios = require("axios");
 const csvjson = require('csvjson');
+const {Cases} = require("./../models/CasesModel");
+const mongoose = require("mongoose");
 
 const getRate = (criteria, startDate, endDate, res, respond) => {
     axios.get('https://covidtracking.com/api/v1/us/daily.json')
@@ -190,16 +192,24 @@ exports.countrySlugList = async (request_url, name, field, res, respond) => {
     }
     respond(res, [])
 };
-exports.populate_db_daily = async() => {
-    let today = new Date(new Date() - 24 * 3600);
+let populate_db_daily = async () => {
     let request_url = "https://api.covid19api.com/summary";
     let response = await axios.get(request_url)
+    console.log("Hi");
+    
 
     if (response.data) {
-        response.data.Countries.forEach((c_cases) => {
+        response.data.Countries.forEach(async (c_cases) => {
             c_case_date = new Date(c_cases.Date);
             // fill db if new data is not already in the db
-            let record = Cases.find({country: c_cases['Country'], date: c_case_date})
+            console.log("HI");
+            
+            let record = await Cases.find({
+                country: {$eq: c_cases['Country']}, 
+                date: {$eq: c_case_date}
+            });           
+            console.log("JELLLo");
+            
             if ( !record || record.length == 0 ){
                 let c = new Cases({
                     _id: mongoose.Types.ObjectId(),
@@ -211,9 +221,12 @@ exports.populate_db_daily = async() => {
                     date: c_case_date
                 });
                 await c.save();
+                console.log(c);
+                
             }
         });
     }
 
     console.log("Done filling db for country stats...");
 };
+(async () => await populate_db_daily())()
