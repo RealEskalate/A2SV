@@ -1,11 +1,6 @@
 <template>
   <div>
-    <v-app-bar
-      app
-      class="white"
-      flat
-      v-bind:class="{ raised: raise }"
-    >
+    <v-app-bar app class="white" flat v-bind:class="{ raised: raise }">
       <v-app-bar-nav-icon
         v-if="$vuetify.breakpoint.smAndDown"
         @click.stop="drawer = !drawer"

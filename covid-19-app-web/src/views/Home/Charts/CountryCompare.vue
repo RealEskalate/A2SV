@@ -312,12 +312,12 @@ export default {
     fillGraph() {
       let input1 = this.makeDataSet({
         label: this.country_1,
-        color: [121, 134, 203],
+        color: [77, 208, 225],
         data: this.countriesData.one
       });
       let input2 = this.makeDataSet({
         label: this.country_2,
-        color: [255, 213, 79],
+        color: [220, 231, 117],
         data: this.countriesData.two
       });
       this.data = {

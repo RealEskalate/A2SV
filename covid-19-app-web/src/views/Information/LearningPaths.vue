@@ -13,7 +13,8 @@
       </v-col>
       <v-col cols="12" md="5" class="pl-md-12">
         <v-select
-          outlined dense
+          outlined
+          dense
           :items="age_groups"
           label="Learning Path for"
           v-model="selected_age"
@@ -42,7 +43,9 @@
                 <td class="text-left py-2" width="33%">{{ path.why }}</td>
                 <td class="text-left py-2" width="5%">{{ path.time }}</td>
                 <td width="12%">
-                  <v-btn rounded style="width: 100%"
+                  <v-btn
+                    rounded
+                    style="width: 100%"
                     small
                     color="primary"
                     v-text="path.action || 'View'"
@@ -104,7 +107,8 @@ export default {
             why:
               "It's nicely written with drawings and dialogues. It explains the basics in concise and easily understandable manner.",
             time: "5 mins",
-            how: "https://www.npr.org/sections/goatsandsoda/2020/02/28/809580453/just-for-kids-a-comic-exploring-the-new-coronavirus",
+            how:
+              "https://www.npr.org/sections/goatsandsoda/2020/02/28/809580453/just-for-kids-a-comic-exploring-the-new-coronavirus",
             action: "Read Comic"
           },
           {
@@ -139,10 +143,8 @@ export default {
           },
           {
             name: "Why Soap?",
-            what:
-              "Cool short video on why soap is important.",
-            why:
-              "The video speaks for itself",
+            what: "Cool short video on why soap is important.",
+            why: "The video speaks for itself",
             time: "1 mins",
             how: "https://youtu.be/yn-q4S3GoyU",
             action: "Watch Video"
@@ -159,8 +161,7 @@ export default {
           },
           {
             name: "The World Map",
-            what:
-              "Visualize tthe spread of Covid-19 on the world map.",
+            what: "Visualize tthe spread of Covid-19 on the world map.",
             why:
               "This series of maps and charts tracks the spread of the virus since it emerged in China in December last year.",
             time: "2 mins",
