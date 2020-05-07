@@ -1,7 +1,7 @@
 <template>
   <v-footer
     class="shadow-lg v-sheet v-sheet--tile theme--light"
-    style="background: url('https://www.toptal.com/designers/subtlepatterns/patterns/memphis-mini.png')"
+    style="background: url('https://lh5.googleusercontent.com/proxy/nAm2UTt8kjupZFGWD4iPSIYLhJ7ZyhjHTSkzi-4kEzNBhI0NNx1RvJYSh89lgahLNWnp2Wii51RyzYTuxvHibai7tlpBI68_RLauPSwuSyl_abO2bNSfSkQeopmtBKiaMNlifi9aTkiC')"
   >
     <v-container class="my-2">
       <v-layout row wrap>
@@ -46,33 +46,19 @@
             </v-list-item-group>
           </v-list>
         </v-flex>
-        <v-flex xs4 md3 class="text-center mx-4">
-          <p class="font-weight-bold text-center">Navigation</p>
+        <v-flex xs4 md3 class="mx-4">
+          <p class="font-weight-bold text-center">About</p>
           <v-divider class="mx-4"></v-divider>
-          <v-list class="list">
-            <v-list-item-group color="primary">
-              <v-list-item href="/">
-                <v-list-item-content>
-                  <v-list-item-title> Home</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-              <v-list-item href="/learn">
-                <v-list-item-content>
-                  <v-list-item-title>Learn</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-              <v-list-item href="/news">
-                <v-list-item-content>
-                  <v-list-item-title>News</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-              <v-list-item href="/map">
-                <v-list-item-content>
-                  <v-list-item-title>Map</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-            </v-list-item-group>
-          </v-list>
+          <v-col>
+            <span class="">
+              Our App is a non-commercial app that uses crowd-sourcing to
+              collect and visualize the density of the relevant Covid-19
+              symptoms.
+              <br />
+              In addition it provide Play-ground for the Data and News related
+              to Covid-19 by country.
+            </span>
+          </v-col>
         </v-flex>
 
         <v-flex xs4 md2 class="mx-2">
@@ -110,6 +96,8 @@ export default {
     ]
     //https://www.ctech.co.ke/wp-content/uploads/2019/09/Home-Page_Layer-Slider-BG-1024x426.png
     //https://www.toptal.com/designers/subtlepatterns/patterns/memphis-mini.png
+    //https://www.toptal.com/designers/subtlepatterns/patterns/memphis-mini.png
+    //https://www.designbolts.com/wp-content/uploads/2012/12/Triangle-White-Seamless-Patterns.jpg
   })
 };
 </script>
