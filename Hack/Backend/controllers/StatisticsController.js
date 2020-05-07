@@ -164,6 +164,6 @@ function respond(res, payload, status = 200) {
 
 exports.get_country_slugs = async(req, res) => {
 
-    await healthParser.countrySlugList(res, respond);
+    healthParser.countrySlugList(res, respond);
 
 };

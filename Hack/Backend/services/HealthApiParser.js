@@ -22,13 +22,13 @@ const getRate = (criteria, startDate, endDate, res, respond) => {
 
             let filteredStats = stats.filter(function(stat) {
                 let date = new Date(stat.t);
-                console.log(date >= startDate && date <= endDate);
                 return (date >= startDate && date <= endDate);
             });
             respond(res, filteredStats)
         })
         .catch(err => {
             console.log(err);
+            respond(res, null, 500)
         });
 };
 
@@ -133,7 +133,6 @@ const getCountryStat = (startDate, endDate, req, res, respond, rates) => {
 
 
 const getWorldStat = (request_url, startDate, endDate, req, res, respond, rates) => {
-    console.log(request_url);
     const criteria = req.query.criteria;
     try {
         axios.get(request_url)
@@ -189,6 +188,7 @@ const getWorldStat = (request_url, startDate, endDate, req, res, respond, rates)
                 respond(res, results)
             }).catch(error => {
                 console.log(error);
+                respond(res, null, 500)
             });
     } catch (err) {
         console.log(err);
@@ -248,13 +248,11 @@ exports.populate_db_daily = async() => {
                         date: c_case_date
                     });
                     await c.save();
-                    console.log('Saved' + c.country)
                 } else {
                     record.confirmed = c_cases['TotalConfirmed'] > 0 ? c_cases['TotalConfirmed'] : record.confirmed;
                     record.deaths = c_cases['TotalDeaths'] > 0 ? c_cases['TotalDeaths'] : record.deaths;
                     record.recovered = c_cases['TotalRecovered'] > 0 ? c_cases['TotalRecovered'] : record.recovered;
                     await record.save();
-                    console.log('Updated' + record.country)
                 }
             } catch (err) {
                 console.log(err);
