@@ -13,15 +13,12 @@
       <router-link class="d-flex align-center no-decoration" to="/">
         <v-img
           alt="Vuetify Logo"
-          class="shrink mr-2"
+          class="shrink ml-3"
           contain
-          src="@/assets/logo-v1.png"
+          src="/img/brand/blue.png"
           transition="scale-transition"
-          width="40"
+          width="140"
         />
-        <div>
-          <h3 class="blue--text">Covid-19</h3>
-        </div>
       </router-link>
 
       <v-spacer />
