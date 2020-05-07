@@ -196,32 +196,28 @@ const getWorldStat = (request_url, startDate, endDate, req, res, respond, rates)
 };
 
 
-exports.countrySlugList = async(request_url, name, field, res, respond) => {
-    console.log(field, request_url);
-    try {
-        let results = [];
-        let response = await axios.get(request_url);
+exports.countrySlugList = (res, respond) => {
+    let dayQuery = new Date()
+    dayQuery.setDate(dayQuery.getDate() - 1)
+    dayQuery = new Date(dayQuery.toISOString().slice(0, 10))
 
-        if (response.data) {
-            response.data.forEach((item) => {
-                results.push({
-                    'name': item[name],
-                    'slug': item[field]
-                });
-            });
-        }
-        results.push({
-            'name': "World",
-            'slug': "world"
+    Cases.find({ date: dayQuery })
+        .then((countryData) => {
+            let countries = [{ 'name': "World", 'slug': "world" }]
+            if (countryData) {
+                countryData.sort((a, b) => (a.confirmed > b.confirmed) ? -1 : 1)
+                for (var index in countryData) {
+                    let countryValue = countryData[index]
+                    countries.push({ "name": countryValue.country, "slug": countryValue.country })
+                }
+            }
+            respond(res, countries)
+        })
+        .catch(e => {
+            respond(res, [])
         });
-        results.sort((a, b) => (a.name > b.name) ? 1 : -1);
-        return respond(res, results)
 
 
-    } catch (err) {
-        console.log(err);
-    }
-    respond(res, [])
 };
 
 exports.populate_db_daily = async() => {

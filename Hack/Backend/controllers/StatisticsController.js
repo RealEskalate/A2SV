@@ -163,11 +163,7 @@ function respond(res, payload, status = 200) {
 
 
 exports.get_country_slugs = async(req, res) => {
-    // if (["Confirmed", "Recovered", "Deaths", "All"].includes(req.query.criteria)) {
 
-    const url = "https://api.covid19api.com/countries";
-    const name = "Country";
-    const field = "ISO2";
-    await healthParser.countrySlugList(url, name, field, res, respond);
+    await healthParser.countrySlugList(res, respond);
 
 };
