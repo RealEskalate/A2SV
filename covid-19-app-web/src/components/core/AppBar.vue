@@ -97,7 +97,7 @@ export default {
   },
   computed: {
     raise() {
-      return this.locationY > 5;
+      return this.locationY > 50;
     }
   }
 };

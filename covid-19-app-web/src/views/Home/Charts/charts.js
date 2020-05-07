@@ -201,7 +201,7 @@ export const ChartMixin = {
           { label: "Daily Recovery", color: [220, 231, 117] }
         ],
         rates: [
-          // { label: "Positive Rate", color: [255, 213, 79] },
+          { label: "Positive Rate", color: [255, 213, 79] },
           { label: "Recovery Rate", color: [220, 231, 117] },
           { label: "Active Rate", color: [176, 190, 197] },
           // { label: "Hospitalization Rate", color: [77, 208, 225] },
