@@ -1,5 +1,43 @@
 <template>
   <section class="statistics py-10">
+    <v-row class="my-3 ml-1">
+      <v-dialog v-model="dialog" width="900px">
+        <template v-slot:activator="{ on }">
+          <v-btn color="orange" icon v-on="on"
+            ><v-icon>mdi-information</v-icon></v-btn
+          >
+        </template>
+        <template>
+          <v-card class="">
+            <v-card-title class="headline my-2 mx-1"
+              >Graph Display Info
+              </v-card-title>
+            <v-list>
+              <v-list-group
+                v-for="item in items"
+                :key="item.title"
+                v-model="item.active"
+                no-action
+              >
+                <template v-slot:activator>
+                  <v-list-item-content>
+                    <v-list-item-title v-text="item.title"></v-list-item-title>
+                  </v-list-item-content>
+                </template>
+
+                <v-list-item v-for="subItem in item.items" :key="subItem.title">
+                  <v-list-item-content>
+                    <v-list-item-title
+                      v-text="subItem.title"
+                    ></v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list-group>
+            </v-list>
+          </v-card>
+        </template>
+      </v-dialog>
+    </v-row>
     <v-card elevation="2">
       <v-toolbar color="primary" dark>
         <v-toolbar-title>Statistics</v-toolbar-title>
@@ -50,6 +88,33 @@ import CountryCompare from "./Charts/CountryCompare.vue";
 import DiseaseCompare from "./Charts/DiseaseCompare.vue";
 
 export default {
+  data() {
+    return {
+      items: [
+        {
+          action: "local_activity",
+          title: "Display Counts",
+          items: [{ title: "List Item" }]
+        },
+        {
+          action: "local_activity",
+          title: "Display Rates",
+          items: [{ title: "List Item" }]
+        },
+        {
+          action: "local_activity",
+          title: "Compare Countries",
+          items: [{ title: "List Item" }]
+        },
+
+        {
+          action: "local_activity",
+          title: "Compare Similar Diseases",
+          items: [{ title: "List Item" }]
+        }
+      ]
+    };
+  },
   components: {
     Display,
     CountryCompare,
