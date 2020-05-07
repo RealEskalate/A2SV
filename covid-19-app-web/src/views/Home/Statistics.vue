@@ -8,7 +8,11 @@
       <v-tabs centered fixed-tabs dark background-color="primary">
         <v-tab class="justify-start">
           <v-icon left>mdi-numeric</v-icon>
-          Display Counts
+          Total Counts
+        </v-tab>
+        <v-tab class="justify-start">
+          <v-icon left>mdi-numeric</v-icon>
+          Daily Counts
         </v-tab>
         <v-tab class="justify-start">
           <v-icon left>mdi-percent-outline</v-icon>
@@ -25,6 +29,9 @@
 
         <v-tab-item style="min-height: 700px">
           <display mode="counts" y_label="People" />
+        </v-tab-item>
+        <v-tab-item style="min-height: 700px">
+          <daily-display y_label="People" />
         </v-tab-item>
         <v-tab-item style="min-height: 700px">
           <display mode="rates" y_label="Percent" />
@@ -46,12 +53,14 @@
 
 <script>
 import Display from "./Charts/Display.vue";
+import DailyDisplay from "./Charts/DailyDisplay.vue";
 import CountryCompare from "./Charts/CountryCompare.vue";
 import DiseaseCompare from "./Charts/DiseaseCompare.vue";
 
 export default {
   components: {
     Display,
+    DailyDisplay,
     CountryCompare,
     DiseaseCompare
   }
