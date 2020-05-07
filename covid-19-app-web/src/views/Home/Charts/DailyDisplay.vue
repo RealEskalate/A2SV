@@ -1,7 +1,7 @@
 <template>
   <v-container class="py-8">
     <v-row class="mx-md-5" dense>
-      <v-col cols="12" md="6">
+      <v-col cols="12" md="4">
         <v-select
           v-model="country"
           :items="countries"
@@ -17,7 +17,7 @@
           "
         />
       </v-col>
-      <v-col cols="12" md="6">
+      <v-col cols="12" md="4">
         <v-menu
           :close-on-content-click="false"
           transition="scale-transition"
@@ -50,10 +50,22 @@
           />
         </v-menu>
       </v-col>
+      <v-col cols="12" md="4">
+        <v-select
+          item-text="label"
+          v-model="criterion"
+          :items="criteria.daily"
+          label="Criteria"
+          hint="Criteria"
+          persistent-hint
+          solo
+          @input="fetchData"
+        />
+      </v-col>
     </v-row>
     <v-row>
       <v-col cols="12" md="9">
-        <line-chart :height="480" :chart-data="data" :options="chartOptions" />
+        <bar-chart :height="480" :chart-data="data" :options="chartOptions" />
       </v-col>
       <v-col cols="12" md="3">
         <v-card flat tile>
@@ -82,12 +94,12 @@
   </v-container>
 </template>
 <script>
-import { LineChart, ChartMixin } from "./charts.js";
+import { BarChart, ChartMixin } from "./charts.js";
 import store from "@/store/index.js";
 import moment from "moment";
 
 export default {
-  components: { LineChart },
+  components: { BarChart },
   mixins: [ChartMixin],
   props: {
     mode: {
@@ -100,6 +112,13 @@ export default {
   data() {
     return {
       data: null,
+      converter: {
+        "Daily Test": { label: "Daily Test", color: [121, 134, 203] },
+        "Daily Confirmed": { label: "Daily Confirmed", color: [255, 213, 79] },
+        "Daily Deaths": { label: "Daily Deaths", color: [240, 98, 146] },
+        "Daily Recovery": { label: "Daily Recovery", color: [220, 231, 117] }
+      },
+      criterion: "Daily Confirmed",
       start_date: moment(new Date())
         .subtract(3, "month")
         .format("YYYY-MM-DD"),
@@ -121,25 +140,20 @@ export default {
       });
     },
     fillGraph() {
-      let datasets = [];
-      let load = this.mode === "counts" ? this.counts : this.rates;
-      this.criteria[this.mode].forEach(cr => {
-        let input = {
-          label: cr.label,
-          color: cr.color,
-          data: load[cr.label]
-        };
-        datasets.push(this.makeDataSet(input));
-      });
+      const cr = this.converter[this.criterion];
+      let input = {
+        label: cr.label,
+        color: cr.color,
+        data: this.daily[cr.label]
+      };
+      let d = this.makeDataSet(input, "bar");
       this.data = {
-        datasets: datasets
+        datasets: [d]
       };
     },
     fetchData() {
-      store.dispatch("setDisplayData", {
-        criteria: this.criteria[this.mode],
-        makeDataSet: this.makeDataSet,
-        mode: this.mode,
+      store.dispatch("setDailyCounts", {
+        criteria: this.criterion,
         country: this.country,
         start_date:
           this.date_range[0] ||
@@ -151,13 +165,7 @@ export default {
     }
   },
   watch: {
-    counts: {
-      deep: true,
-      handler() {
-        this.fillGraph();
-      }
-    },
-    rates: {
+    daily: {
       deep: true,
       handler() {
         this.fillGraph();
@@ -169,11 +177,17 @@ export default {
     this.fetchCountryResources();
   },
   computed: {
-    counts: () => store.getters.getDisplayCounts,
-    rates: () => store.getters.getDisplayRates,
+    daily: () => store.getters.getDailyCounts,
     countryResources: () => store.getters.getCountryResources,
     dateRangeText() {
       return this.rangeToText(this.date_range[0], this.date_range[1]);
+    },
+    criteriaList() {
+      let result = [];
+      this.criteria.daily.forEach(function(item) {
+        result.push(item.label);
+      });
+      return result;
     }
   }
 };
