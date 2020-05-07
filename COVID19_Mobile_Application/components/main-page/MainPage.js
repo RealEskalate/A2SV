@@ -112,6 +112,7 @@ function getHeaderIcon(navigation, route) {
           color="#fff"
           size={25}
           style={{ marginRight: 15 }}
+          onPress={() => navigation.navigate("Data Analytics Map", {})}
         />
       );
     case "My Symptoms":
