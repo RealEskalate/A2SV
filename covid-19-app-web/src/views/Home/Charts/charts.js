@@ -115,7 +115,7 @@ export const ChartMixin = {
       this.criteria.counts.forEach(function(item) {
         counts.push(item.label);
       });
-      return counts.includes(this.criterion)
+      return counts.includes(this.criterion);
     },
     isRate() {
       let rates = [];
@@ -125,12 +125,15 @@ export const ChartMixin = {
       this.criteria.rates.forEach(function(item) {
         rates.push(item.label);
       });
-      return rates.includes(this.criterion)
+      return rates.includes(this.criterion);
     },
-    yTicks(value, index, values) {
+    yTicks(value) {
       if (this.y_label === "Percent" || this.isRate()) {
         return `${value} %`;
-      } else if (this.y_label === "People" || this.isCount()) {
+      } else if (
+        ["Logarithmic Value", "People"].includes(this.y_label) ||
+        this.isCount()
+      ) {
         if (value >= 1000000000) {
           return `${value / 1000000000} B`;
         } else if (value >= 1000000) {
