@@ -19,8 +19,8 @@ exports.post_location_user = async (req, res) => {
   let longitude = req.body.longitude;
 
   const check = await Location.findOne({
-    longitude: { $eq: longitude },
-    latitude: { $eq: latitude },
+    longitude: longitude,
+    latitude: latitude 
   });
   let location_id;
   if (check) {
@@ -48,8 +48,17 @@ exports.post_location_user = async (req, res) => {
         .catch(error => {
           console.log(error);
         });
-      await result1.save();
-      location_id = result1._id;
+      const check_2 = await Location.findOne({
+        longitude: location.longitude,
+        latitude: location.latitude 
+      });
+      if (check_2) {
+        location_id = check_2._id
+      }
+      else{
+        await result1.save();
+        location_id = result1._id;
+      }    
     } catch (err) {
       console.log(err);
       return res.status(500).send(err);
@@ -93,6 +102,16 @@ exports.post_location_user = async (req, res) => {
     }
     catch(err){
       console.log(err);
+    }
+
+    let check = await LocationUser.findOne({
+      location_id: location_id,
+      user_id: user_id
+    })
+    if(check){
+      check.TTL = TTL
+      await check.save()
+      return res.send(check);
     }
     await location_user.save();
     return res.send(location_user);
