@@ -10,15 +10,24 @@ import {
   ScrollView,
   ActivityIndicator,
 } from "react-native";
-import { LineChart } from "react-native-chart-kit";
+import { LineChart, BarChart } from "react-native-chart-kit";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as criterias from "./Criterias";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-
+import DatePicker from "react-native-datepicker";
+import { ApplicationProvider, Datepicker, Layout } from "@ui-kitten/components";
+import * as eva from "@eva-design/eva";
 import SearchableDropdown from "react-native-searchable-dropdown";
-export default class DataAnalytics extends React.Component {
+
+class DataAnalytics extends React.Component {
   state = {
-    selected_filter: criterias.recoveries, // sets the current filtering parameter on the graph
+    selected_filter: criterias.confirmed, // sets the current filtering parameter on the graph
+    selected_filter_daily_status: criterias.confirmed,
+
+    selected_daily_start_date: "",
+    selected_daily_end_date: "",
+    selected_total_start_date: "",
+    selected_total_end_date: "",
     graph_label: [""],
     data_set: [0],
     daily_newCases_label: [""],
@@ -47,48 +56,74 @@ export default class DataAnalytics extends React.Component {
 
   componentDidMount = async () => {
     await this.getTotalData()
-      .then(async () => {
-        await this.fetchStatistics();
-        this.fetchDailyNewsCases();
-      })
+      .then(this.fetchStatistics())
+      .then(this.fetchDailyNewsCases())
       .then(this.getCountryList())
       .catch((error) => {
         Alert.alert("Concurrency Issue");
       });
   };
 
-  //Populates data in to our state
+  //Populates statistics data in to our state
   populate = (objList) => {
+    this.state.graph_label = [""]; //reseting data label
+    this.state.data_set = [0]; // reseting data set
+
     let dataSet_counter = 0;
     objList.map((data) => {
-      this.state.data_set[dataSet_counter] =
-        data.y / this.state.TotalStatisticsData[dataSet_counter].Confirmed;
+      this.state.data_set[dataSet_counter] = data.y;
       dataSet_counter += 1;
     });
-    let graphLebel_counter = 0;
-    objList.map((data) => {
-      this.state.graph_label[graphLebel_counter] = this.dateConverter(
-        data.t.split("T")[0]
+
+    //generating interval
+    let graphLebel_counter = 1;
+    let indexCounter = 0;
+    var interval = Math.floor(objList.length / 5);
+    var remainder = objList.length % 5;
+    if (interval === 0) {
+      interval = 1;
+      remainder = 0;
+    }
+    while (graphLebel_counter < objList.length) {
+      this.state.graph_label[indexCounter] = this.dateConverter(
+        objList[graphLebel_counter].t.split("T")[0]
       );
-      graphLebel_counter += 1;
-    });
+      indexCounter += 1;
+      if (
+        remainder > 0 &&
+        graphLebel_counter + remainder - 1 === objList.length
+      ) {
+        graphLebel_counter += remainder - 1;
+        continue;
+      }
+      graphLebel_counter += interval;
+    }
   };
   //gets statistics data based on selected criteria and populate UI
   fetchStatistics = async () => {
     let newThis = this;
-    await fetch(
-      "https://sym-track.herokuapp.com/api/statistics?criteria=" +
-        this.state.selected_filter +
-        "&country=" +
-        this.state.searchedCountry.toLowerCase(),
-      {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      }
-    )
+    var query =
+      this.state.selected_total_start_date.length > 1 &&
+      this.state.selected_total_end_date.length > 1
+        ? "https://sym-track.herokuapp.com/api/statistics?criteria=" +
+          this.state.selected_filter +
+          "&country=" +
+          this.state.searchedCountry.toLowerCase() +
+          "&start_date=" +
+          this.state.selected_total_start_date +
+          "&end_date=" +
+          this.state.selected_total_end_date
+        : "https://sym-track.herokuapp.com/api/statistics?criteria=" +
+          this.state.selected_filter +
+          "&country=" +
+          this.state.searchedCountry.toLowerCase();
+    await fetch(query, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
       .then((response) => response.json())
       .then(async (json) => {
         if (json !== undefined && json.length !== 0) {
@@ -99,9 +134,9 @@ export default class DataAnalytics extends React.Component {
         }
       })
       .catch((error) => {
-        Alert.alert("Couldn't connect", "Error in connection..");
+        console.log(error);
+        Alert.alert("Connection proble", "Couldn't connect to server");
       });
-    console.log(2);
   };
   //Converts date in to appropriate format
   dateConverter(date) {
@@ -142,7 +177,6 @@ export default class DataAnalytics extends React.Component {
       .catch((error) => {
         Alert.alert("Couldn't connect - getTotalData", "Error in connection..");
       });
-    console.log(1);
   };
   //fetch list of countries available
   getCountryList = async () => {
@@ -165,34 +199,91 @@ export default class DataAnalytics extends React.Component {
         }
       })
       .catch((error) => {
-        Alert.alert("Couldn't connect", "Error in connection..");
+        Alert.alert("Connection proble", "Couldn't connect to server");
       });
   };
   //fetch daily new cases reported
   fetchDailyNewsCases = async () => {
-    console.log(3);
-    for (
-      let dataSet_counter = 1;
-      dataSet_counter < this.state.TotalStatisticsData.length;
-      dataSet_counter += 1
-    ) {
-      {
-        this.state.daily_newCases_data_set[dataSet_counter - 1] =
-          this.state.TotalStatisticsData[dataSet_counter].Confirmed -
-          this.state.TotalStatisticsData[dataSet_counter - 1].Confirmed;
-      }
-    }
+    let newThis = this;
+    var query =
+      this.state.selected_daily_start_date.length > 1 &&
+      this.state.selected_daily_end_date.length > 1
+        ? "https://sym-track.herokuapp.com/api/statistics?criteria=" +
+          this.state.selected_filter_daily_status +
+          "&country=" +
+          this.state.searchedCountry.toLowerCase() +
+          "&start_date=" +
+          this.state.selected_daily_start_date +
+          "&end_date=" +
+          this.state.selected_daily_end_date
+        : "https://sym-track.herokuapp.com/api/statistics?criteria=" +
+          this.state.selected_filter_daily_status +
+          "&country=" +
+          this.state.searchedCountry.toLowerCase();
+    await fetch(query, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then(async (json) => {
+        if (json !== undefined && json.length !== 0) {
+          await newThis.populateDailyData(json);
+          newThis.forceUpdate(); //refresh page
+        } else {
+          newThis.fetchDailyNewsCases();
+        }
+      })
+      .catch((error) => {
+        Alert.alert("Connection proble", "Couldn't connect to server");
+      });
+  };
+  //populate daily data
+  populateDailyData = (objList) => {
+    this.state.daily_newCases_label = [""]; //reseting all data point labels
+    this.state.daily_newCases_data_set = [0]; //reseting all data point labels
 
-    for (
-      let graphLebel_counter = 1;
-      graphLebel_counter < this.state.graph_label.length;
-      graphLebel_counter += 1
-    ) {
-      this.state.daily_newCases_label[
-        graphLebel_counter - 1
-      ] = this.state.graph_label[graphLebel_counter];
+    let dataSet_counter = 0;
+    let previousStat = 0;
+    let indexCounterDataSet = 0;
+    objList.map((data) => {
+      if (indexCounterDataSet !== 0) {
+        this.state.daily_newCases_data_set[dataSet_counter] =
+          data.y - previousStat;
+        previousStat = data.y;
+        dataSet_counter += 1;
+      } else {
+        previousStat = data.y;
+        indexCounterDataSet += 1;
+      }
+    });
+
+    let graphLebel_counter = 1;
+    let indexCounter = 0;
+
+    //generating interval
+    var interval = Math.floor(objList.length / 5);
+    var remainder = objList.length % 5;
+    if (interval === 0) {
+      interval = 1;
+      remainder = 0;
     }
-    this.forceUpdate();
+    while (graphLebel_counter < objList.length) {
+      this.state.daily_newCases_label[indexCounter] = this.dateConverter(
+        objList[graphLebel_counter].t.split("T")[0]
+      );
+      indexCounter += 1;
+      if (
+        remainder > 0 &&
+        graphLebel_counter + remainder - 1 === objList.length
+      ) {
+        graphLebel_counter += remainder - 1;
+        continue;
+      }
+      graphLebel_counter += interval;
+    }
   };
 
   render() {
@@ -209,8 +300,7 @@ export default class DataAnalytics extends React.Component {
                 searchedCountry: item.slug,
                 search: item.name,
               });
-              this.getTotalData();
-              this.fetchStatistics();
+              this.componentDidMount();
             }}
             containerStyle={{ padding: 5, flex: 6 }}
             textInputStyle={{
@@ -256,7 +346,6 @@ export default class DataAnalytics extends React.Component {
                 Case Update
               </Text>
             </View>
-
             <View
               style={{
                 flexDirection: "row",
@@ -370,7 +459,6 @@ export default class DataAnalytics extends React.Component {
                 Total Data
               </Text>
             </View>
-
             <View
               style={{
                 flexDirection: "row",
@@ -480,19 +568,288 @@ export default class DataAnalytics extends React.Component {
                 Country : {this.state.searchedCountry}
               </Text>
 
-              <LineChart
+              <View
+                style={{
+                  flexDirection: "row",
+                  marginLeft: 10,
+                  marginTop: 5,
+                  alignSelf: "center",
+                }}
+              >
+                <View style={{ flexDirection: "row", marginRight: 20 }}>
+                  <DatePicker
+                    date={this.state.selected_daily_start_date}
+                    mode="date" //The enum of date, datetime and
+                    placeholder="Select start date"
+                    format="YYYY-MM-DD"
+                    customStyles={{
+                      dateIcon: {
+                        position: "absolute",
+                        left: 0,
+                        top: 4,
+                        marginLeft: 0,
+                      },
+                      dateInput: {
+                        marginLeft: 36,
+                        borderRadius: 20,
+                      },
+                    }}
+                    onDateChange={(date) => {
+                      this.setState({ selected_daily_start_date: date });
+                    }}
+                  />
+                </View>
+                <View style={{ flexDirection: "row" }}>
+                  <DatePicker
+                    date={this.state.selected_daily_end_date}
+                    mode="date" //The enum of date, datetime and time
+                    placeholder="Select end date"
+                    format="YYYY-MM-DD"
+                    confirmBtnText="Confirm"
+                    cancelBtnText="Cancel"
+                    customStyles={{
+                      dateIcon: {
+                        position: "absolute",
+                        left: 0,
+                        top: 4,
+                        marginLeft: 0,
+                      },
+                      dateInput: {
+                        marginLeft: 36,
+                        borderRadius: 20,
+                      },
+                    }}
+                    onDateChange={async (date) => {
+                      await this.setState({ selected_daily_end_date: date });
+                      this.fetchDailyNewsCases();
+                    }}
+                  />
+                </View>
+              </View>
+
+              <BarChart
                 data={{
                   labels: this.state.daily_newCases_label,
-                  datasets: [{ data: this.state.daily_newCases_data_set }],
+                  datasets: [
+                    {
+                      data: this.state.daily_newCases_data_set,
+                    },
+                  ],
                 }}
-                width={Dimensions.get("window").width} // from react-native
+                verticalLabelRotation={30}
+                width={Dimensions.get("window").width} // from react-nativ
                 height={HIEGHT / 2}
+                fromZero={true}
                 chartConfig={{
                   backgroundColor: "#0080ff",
                   backgroundGradientFrom: "#0080ff",
                   backgroundGradientTo: "#0080ff",
                   scrollableDotFill: "#ffffff",
+                  decimalPlaces: 0,
+                  barPercentage: 0.1,
+                  fillShadowGradient: "#ffffff",
+                  fillShadowGradientOpacity: 0.4,
+                  color: (opacity = 0) => `rgba(255, 266, 255, ${opacity})`,
+                  style: {
+                    borderRadius: 10,
+                  },
+                }}
+                bezier
+                style={{
+                  margin: 5,
+                  borderRadius: 10,
+                }}
+              />
+            </View>
 
+            <View style={{ flexDirection: "row" }}>
+              <TouchableOpacity
+                style={
+                  this.state.selected_filter_daily_status ===
+                  criterias.confirmed
+                    ? styles.touchable_buttons
+                    : styles.touchable_buttons_pressed
+                }
+                onPress={async () => {
+                  await this.setState({
+                    selected_filter_daily_status: criterias.confirmed,
+                  });
+                  this.fetchDailyNewsCases();
+                }}
+              >
+                <Text
+                  style={
+                    this.state.selected_filter_daily_status ===
+                    criterias.confirmed
+                      ? styles.text_style
+                      : styles.text_style_pressed
+                  }
+                >
+                  Confirmed
+                </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={
+                  this.state.selected_filter_daily_status ===
+                  criterias.recoveries
+                    ? styles.touchable_buttons
+                    : styles.touchable_buttons_pressed
+                }
+                onPress={async () => {
+                  await this.setState({
+                    selected_filter_daily_status: criterias.recoveries,
+                  });
+                  this.fetchDailyNewsCases();
+                }}
+              >
+                <Text
+                  style={
+                    this.state.selected_filter_daily_status ===
+                    criterias.recoveries
+                      ? styles.text_style
+                      : styles.text_style_pressed
+                  }
+                >
+                  Recovered
+                </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={
+                  this.state.selected_filter_daily_status === criterias.deaths
+                    ? styles.touchable_buttons
+                    : styles.touchable_buttons_pressed
+                }
+                onPress={async () => {
+                  await this.setState({
+                    selected_filter_daily_status: criterias.deaths,
+                  });
+                  this.fetchDailyNewsCases();
+                }}
+              >
+                <Text
+                  style={
+                    this.state.selected_filter_daily_status === criterias.deaths
+                      ? styles.text_style
+                      : styles.text_style_pressed
+                  }
+                >
+                  Death
+                </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={
+                  this.state.selected_filter_daily_status ===
+                  criterias.numberOfTests
+                    ? styles.touchable_buttons
+                    : styles.touchable_buttons_pressed
+                }
+                onPress={async () => {
+                  await this.setState({
+                    selected_filter_daily_status: criterias.numberOfTests,
+                  });
+                  this.fetchDailyNewsCases();
+                }}
+              >
+                <Text
+                  style={
+                    this.state.selected_filter_daily_status ===
+                    criterias.numberOfTests
+                      ? styles.text_style
+                      : styles.text_style_pressed
+                  }
+                >
+                  Test Counts
+                </Text>
+              </TouchableOpacity>
+            </View>
+
+            <View style={styles.container_graph}>
+              <Text
+                style={{ fontSize: 20, fontWeight: "bold", marginLeft: 10 }}
+              >
+                Total Data
+              </Text>
+              <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
+                Country : {this.state.searchedCountry}
+              </Text>
+
+              <View
+                style={{
+                  flexDirection: "row",
+                  marginLeft: 10,
+                  marginTop: 5,
+                  alignSelf: "center",
+                }}
+              >
+                <View style={{ flexDirection: "row", marginRight: 20 }}>
+                  <DatePicker
+                    date={this.state.selected_total_start_date}
+                    mode="date" //The enum of date, datetime and
+                    placeholder="Select start date"
+                    format="YYYY-MM-DD"
+                    customStyles={{
+                      dateIcon: {
+                        position: "absolute",
+                        left: 0,
+                        top: 4,
+                        marginLeft: 0,
+                      },
+                      dateInput: {
+                        marginLeft: 36,
+                        borderRadius: 20,
+                      },
+                    }}
+                    onDateChange={(date) => {
+                      this.setState({ selected_total_start_date: date });
+                    }}
+                  />
+                </View>
+                <View style={{ flexDirection: "row" }}>
+                  <DatePicker
+                    date={this.state.selected_total_end_date}
+                    mode="date" //The enum of date, datetime and time
+                    placeholder="Select end date"
+                    format="YYYY-MM-DD"
+                    confirmBtnText="Confirm"
+                    cancelBtnText="Cancel"
+                    customStyles={{
+                      dateIcon: {
+                        position: "absolute",
+                        left: 0,
+                        top: 4,
+                        marginLeft: 0,
+                      },
+                      dateInput: {
+                        marginLeft: 36,
+                        borderRadius: 20,
+                      },
+                    }}
+                    onDateChange={async (date) => {
+                      await this.setState({ selected_total_end_date: date });
+                      this.fetchStatistics();
+                    }}
+                  />
+                </View>
+              </View>
+
+              <LineChart
+                data={{
+                  labels: this.state.graph_label,
+                  datasets: [{ data: this.state.data_set }],
+                }}
+                verticalLabelRotation={30}
+                width={Dimensions.get("window").width} // from react-native
+                height={HIEGHT / 2}
+                fromZero={true}
+                chartConfig={{
+                  backgroundColor: "#0080ff",
+                  backgroundGradientFrom: "#0080ff",
+                  backgroundGradientTo: "#0080ff",
+                  scrollableDotFill: "#ffffff",
+                  barPercentage: 0.1,
                   decimalPlaces: 0, // optional, defaults to 2dp
                   color: (opacity = 0) => `rgba(255, 266, 255, ${opacity})`,
                   style: {
@@ -507,43 +864,30 @@ export default class DataAnalytics extends React.Component {
               />
             </View>
 
-            <View style={styles.container_graph}>
-              <Text
-                style={{ fontSize: 20, fontWeight: "bold", marginLeft: 10 }}
-              >
-                Recovered Rate vs Death Rate
-              </Text>
-              <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
-                Country : {this.state.searchedCountry}
-              </Text>
-              <LineChart
-                data={{
-                  labels: this.state.graph_label,
-                  datasets: [{ data: this.state.data_set }],
-                }}
-                width={Dimensions.get("window").width} // from react-native
-                height={HIEGHT / 2}
-                chartConfig={{
-                  backgroundColor: "#0080ff",
-                  backgroundGradientFrom: "#0080ff",
-                  backgroundGradientTo: "#0080ff",
-                  scrollableDotFill: "#ffffff",
-
-                  decimalPlaces: 3, // optional, defaults to 2dp
-                  color: (opacity = 0) => `rgba(255, 266, 255, ${opacity})`,
-                  style: {
-                    borderRadius: 10,
-                  },
-                }}
-                bezier
-                style={{
-                  margin: 5,
-                  borderRadius: 10,
-                }}
-              />
-            </View>
-
             <View style={{ flexDirection: "row", marginBottom: 80 }}>
+              <TouchableOpacity
+                style={
+                  this.state.selected_filter === criterias.confirmed
+                    ? styles.touchable_buttons
+                    : styles.touchable_buttons_pressed
+                }
+                onPress={async () => {
+                  await this.setState({
+                    selected_filter: criterias.confirmed,
+                  });
+                  this.fetchDailyNewsCases();
+                }}
+              >
+                <Text
+                  style={
+                    this.state.selected_filter === criterias.confirmed
+                      ? styles.text_style
+                      : styles.text_style_pressed
+                  }
+                >
+                  Confirmed
+                </Text>
+              </TouchableOpacity>
               <TouchableOpacity
                 style={
                   this.state.selected_filter === criterias.recoveries
@@ -589,6 +933,29 @@ export default class DataAnalytics extends React.Component {
                   }
                 >
                   Death
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={
+                  this.state.selected_filter === criterias.numberOfTests
+                    ? styles.touchable_buttons
+                    : styles.touchable_buttons_pressed
+                }
+                onPress={async () => {
+                  await this.setState({
+                    selected_filter: criterias.numberOfTests,
+                  });
+                  this.fetchDailyNewsCases();
+                }}
+              >
+                <Text
+                  style={
+                    this.state.selected_filter === criterias.numberOfTests
+                      ? styles.text_style
+                      : styles.text_style_pressed
+                  }
+                >
+                  Test Counts
                 </Text>
               </TouchableOpacity>
             </View>
@@ -672,3 +1039,9 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 });
+
+export default () => (
+  <ApplicationProvider {...eva} theme={eva.light}>
+    <DataAnalytics />
+  </ApplicationProvider>
+);
