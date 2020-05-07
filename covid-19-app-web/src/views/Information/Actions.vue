@@ -107,7 +107,7 @@ export default {
           description: `Limiting face-to-face contact with others is the best way to reduce
           the spread of the disease.`,
           image: "/img/actions/social_distancing.svg"
-        },
+        }
         // {
         //   title: "Learn Even More",
         //   description: `Go through our Learning paths to explore more about Covid 19.

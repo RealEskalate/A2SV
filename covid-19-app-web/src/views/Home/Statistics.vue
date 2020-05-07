@@ -94,7 +94,10 @@
       </v-row>
       <v-dialog v-model="dialog" width="400">
         <v-card class="px-2" shaped style="overflow: hidden">
-          <v-card-title class="headline mt-2" v-text="graphs[selectedGraph].title" />
+          <v-card-title
+            class="headline mt-2"
+            v-text="graphs[selectedGraph].title"
+          />
           <v-card-text v-text="graphs[selectedGraph].description" />
           <v-divider />
           <v-card-text v-if="graphs[selectedGraph].fields.length > 0">
@@ -143,7 +146,8 @@ export default {
       graphs: [
         {
           title: "Total Counts",
-          description: "this is the description for total countsthis is the description for total countsthis is the description for total countsthis is the description for total countsthis is the description for total counts",
+          description:
+            "this is the description for total countsthis is the description for total countsthis is the description for total countsthis is the description for total countsthis is the description for total counts",
           fields: [
             {
               name: "Country",
