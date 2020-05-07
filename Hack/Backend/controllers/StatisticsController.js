@@ -133,7 +133,7 @@ exports.get_statistics = async(req, res) => {
 
         // Apply filter and send results
         const results_from_db = await Statistics.find(filter);
-        const date_formatter = new Intl.DateTimeFormat('en', { year: 'numeric', month: '2-digit', day: '2-digit' })
+        const date_formatter = new Intl.DateTimeFormat('en', { year: 'numeric', month: '2-digit', day: '2-digit' });
         let results = [];
         results_from_db.forEach((element) => {
             let date = date_formatter.formatToParts(element.date);
@@ -165,9 +165,9 @@ function respond(res, payload, status = 200) {
 exports.get_country_slugs = async(req, res) => {
     // if (["Confirmed", "Recovered", "Deaths", "All"].includes(req.query.criteria)) {
 
-    url = "https://api.covid19api.com/countries"
-    name = "Country"
-    field = "ISO2"
+    const url = "https://api.covid19api.com/countries";
+    const name = "Country";
+    const field = "ISO2";
     await healthParser.countrySlugList(url, name, field, res, respond);
 
-}
+};

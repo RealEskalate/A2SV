@@ -75,32 +75,29 @@ function setEndDate(req) {
 }
 
 
-const getCountryStat = async(startDate, endDate, req, res, respond, rates) => {
-    criteria = req.query.criteria
-    country = req.query.country
+const getCountryStat = (startDate, endDate, req, res, respond, rates) => {
+    const criteria = req.query.criteria;
+    const country = req.query.country;
 
-    try {
-        let caseData = []
-        let dailyConifrmed = {}
+    let caseData = [];
+    let dailyConfirmed = {};
 
-        let results = await Cases.find({
-            date: {
-                $gte: new Date(new Date(startDate).setHours(00, 00, 00)),
-                $lte: new Date(new Date(endDate).setHours(23, 59, 59))
-            },
-            country_slug: country
-        })
-
+    Cases.find({
+        date: {
+            $gte: new Date(new Date(startDate).setHours(0, 0, 0)),
+            $lte: new Date(new Date(endDate).setHours(23, 59, 59))
+        },
+        country: country
+    }).then((results) => {
         results.forEach((item) => {
-
-            if (criteria == "All") {
+            if (criteria === "All") {
                 caseData.push({
                     t: item["date"],
                     Confirmed: item['confirmed'],
                     Recovered: item['recovered'],
                     Deaths: item['deaths']
                 });
-            } else if (criteria == "Active") {
+            } else if (criteria === "Active") {
                 caseData.push({
                     t: item.date,
                     y: (item['confirmed'] - item['recovered'] - item['deaths'])
@@ -113,31 +110,31 @@ const getCountryStat = async(startDate, endDate, req, res, respond, rates) => {
             }
 
             if (rates) {
-                dailyConifrmed[item["date"]] = item['confirmed']
+                dailyConfirmed[item["date"]] = item['confirmed']
             }
 
         });
 
-        if (criteria != "All") {
-            if (req.query.daily) {
+        if (criteria !== "All") {
+            if (req.query.daily && req.query.daily === "true") {
                 caseData = calculateDaily(caseData)
             }
             if (rates) {
-                caseData = calculateRate(caseData, dailyConifrmed)
+                caseData = calculateRate(caseData, dailyConfirmed)
             }
         }
-
         respond(res, caseData)
-
-    } catch (err) {
+    }).catch(err => {
         console.log(err);
-    }
+        respond(res, null, 500)
+    });
+
 };
 
 
 const getWorldStat = (request_url, startDate, endDate, req, res, respond, rates) => {
     console.log(request_url);
-    criteria = req.query.criteria
+    const criteria = req.query.criteria;
     try {
         axios.get(request_url)
             .then(response => {
@@ -147,7 +144,7 @@ const getWorldStat = (request_url, startDate, endDate, req, res, respond, rates)
                 }
 
                 let results = [];
-                let dailyConifrmed = {}
+                let dailyConfirmed = {};
 
                 const options = { delimiter: ',', quote: '"' };
                 data = csvjson.toObject(data, options);
@@ -156,16 +153,16 @@ const getWorldStat = (request_url, startDate, endDate, req, res, respond, rates)
                     const date = new Date(item.Date);
                     if (date >= startDate && date <= endDate) {
                         if (rates) {
-                            dailyConifrmed[item.Date] = item['Confirmed'];
+                            dailyConfirmed[item.Date] = item['Confirmed'];
                         }
-                        if (criteria == "All") {
+                        if (criteria === "All") {
                             results.push({
                                 t: item.Date,
                                 Confirmed: item['Confirmed'],
                                 Recovered: item['Recovered'],
                                 Deaths: item['Deaths']
                             });
-                        } else if (criteria == "Active") {
+                        } else if (criteria === "Active") {
 
                             results.push({
                                 t: item.Date,
@@ -180,12 +177,12 @@ const getWorldStat = (request_url, startDate, endDate, req, res, respond, rates)
                     }
                 });
 
-                if (criteria != "All") {
-                    if (req.query.daily) {
+                if (criteria !== "All") {
+                    if (req.query.daily && req.query.daily === "true") {
                         results = calculateDaily(results)
                     }
                     if (rates) {
-                        results = calculateRate(results, dailyConifrmed)
+                        results = calculateRate(results, dailyConfirmed)
                     }
                 }
 
@@ -202,8 +199,8 @@ const getWorldStat = (request_url, startDate, endDate, req, res, respond, rates)
 exports.countrySlugList = async(request_url, name, field, res, respond) => {
     console.log(field, request_url);
     try {
-        let results = []
-        let response = await axios.get(request_url)
+        let results = [];
+        let response = await axios.get(request_url);
 
         if (response.data) {
             response.data.forEach((item) => {
@@ -217,7 +214,7 @@ exports.countrySlugList = async(request_url, name, field, res, respond) => {
             'name': "World",
             'slug': "world"
         });
-        results.sort((a, b) => (a.name > b.name) ? 1 : -1)
+        results.sort((a, b) => (a.name > b.name) ? 1 : -1);
         return respond(res, results)
 
 
@@ -229,13 +226,13 @@ exports.countrySlugList = async(request_url, name, field, res, respond) => {
 
 exports.populate_db_daily = async() => {
     let request_url = "https://api.covid19api.com/summary";
-    let response = await axios.get(request_url)
+    let response = await axios.get(request_url);
 
     if (response.data) {
         for (let i = 0; i < response.data.Countries.length; i++) {
             try {
-                let c_cases = response.data.Countries[i];
-                c_case_date = new Date(Date.parse(c_cases.Date.substring(0, 10)));
+                const c_cases = response.data.Countries[i];
+                const c_case_date = new Date(Date.parse(c_cases.Date.substring(0, 10)));
                 // fill db if new data is not already in the db
                 // console.log(c_case_date.toUTCString());
 
@@ -257,9 +254,9 @@ exports.populate_db_daily = async() => {
                     await c.save();
                     console.log('Saved' + c.country)
                 } else {
-                    record.confirmed = c_cases['TotalConfirmed'] > 0 ? c_cases['TotalConfirmed'] : record.confirmed
-                    record.deaths = c_cases['TotalDeaths'] > 0 ? c_cases['TotalDeaths'] : record.deaths
-                    record.recovered = c_cases['TotalRecovered'] > 0 ? c_cases['TotalRecovered'] : record.recovered
+                    record.confirmed = c_cases['TotalConfirmed'] > 0 ? c_cases['TotalConfirmed'] : record.confirmed;
+                    record.deaths = c_cases['TotalDeaths'] > 0 ? c_cases['TotalDeaths'] : record.deaths;
+                    record.recovered = c_cases['TotalRecovered'] > 0 ? c_cases['TotalRecovered'] : record.recovered;
                     await record.save();
                     console.log('Updated' + record.country)
                 }
@@ -275,7 +272,7 @@ exports.populate_db_daily = async() => {
 
 
 const calculateRate = (caseData, dailyConifrmed) => {
-    let rateData = []
+    let rateData = [];
 
     caseData.forEach((data) => {
         rateData.push({
@@ -285,7 +282,7 @@ const calculateRate = (caseData, dailyConifrmed) => {
     });
 
     return rateData;
-}
+};
 
 const calculateDaily = (result) => {
     let dailyCaseArray = [];
