@@ -114,44 +114,48 @@ run_updates();
 run_updates_on_country();
 
 exports.get_statistics = async(req, res) => {
-    if (["Confirmed", "Recovered", "Deaths", "Active", "All"].includes(req.query.criteria)) {
+    if (req.query.criteria == "Confirmed_Rate") {
+        req.query.criteria = "Tests_Rate";
+    }
+    if (["Confirmed", "Recovered", "Deaths", "Active", "Tests", "All"].includes(req.query.criteria)) {
         healthParser.getHealthStatistics(req, res, respond);
-    } else if (["Confirmed_Rate", "Recovered_Rate", "Deaths_Rate", "Active_Rate"].includes(req.query.criteria)) {
+    } else if (["Tests_Rate", "Recovered_Rate", "Deaths_Rate", "Active_Rate"].includes(req.query.criteria)) {
         req.query.criteria = req.query.criteria.split("_")[0];
         healthParser.getHealthStatistics(req, res, respond, true);
     } else if (["Hospitalization", "ICU"].includes(req.query.criteria)) {
         healthParser.getCriticalStatistics(req, res, respond);
-    } else if (req.query.criteria === "Test") {
-        let filter = {
-            country: req.query.country || "World",
-            date: {
-                $gte: req.query.start_date !== undefined ? new Date(req.query.start_date) : new Date(new Date() - 7 * 24 * 3600 * 1000),
-                $lte: req.query.end_date !== undefined ? new Date(req.query.end_date) : new Date(new Date() - 24 * 3600 * 1000)
-            },
-            criteria: req.query.criteria.toUpperCase()
-        };
-
-        // Apply filter and send results
-        const results_from_db = await Statistics.find(filter);
-        const date_formatter = new Intl.DateTimeFormat('en', { year: 'numeric', month: '2-digit', day: '2-digit' });
-        let results = [];
-        results_from_db.forEach((element) => {
-            let date = date_formatter.formatToParts(element.date);
-            date = date[4]["value"] + "-" + date[0]["value"] + "-" + date[2]["value"];
-            results.push({
-                t: date,
-                y: element.value
-            });
-        });
-        try {
-            respond(res, results)
-        } catch (err) {
-            respond(res, err, 500);
-        }
-
     } else {
         respond(res, null, 400);
     }
+    // else if (req.query.criteria === "Test") {
+    //     let filter = {
+    //         country: req.query.country || "World",
+    //         date: {
+    //             $gte: req.query.start_date !== undefined ? new Date(req.query.start_date) : new Date(new Date() - 7 * 24 * 3600 * 1000),
+    //             $lte: req.query.end_date !== undefined ? new Date(req.query.end_date) : new Date(new Date() - 24 * 3600 * 1000)
+    //         },
+    //         criteria: req.query.criteria.toUpperCase()
+    //     };
+
+    //     // Apply filter and send results
+    //     const results_from_db = await Statistics.find(filter);
+    //     const date_formatter = new Intl.DateTimeFormat('en', { year: 'numeric', month: '2-digit', day: '2-digit' });
+    //     let results = [];
+    //     results_from_db.forEach((element) => {
+    //         let date = date_formatter.formatToParts(element.date);
+    //         date = date[4]["value"] + "-" + date[0]["value"] + "-" + date[2]["value"];
+    //         results.push({
+    //             t: date,
+    //             y: element.value
+    //         });
+    //     });
+    //     try {
+    //         respond(res, results)
+    //     } catch (err) {
+    //         respond(res, err, 500);
+    //     }
+
+    // }
 };
 
 

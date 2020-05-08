@@ -2,7 +2,8 @@ const axios = require("axios");
 const csvjson = require('csvjson');
 const { Cases } = require("./../models/CasesModel");
 const mongoose = require("mongoose");
-const Statistics = require("../models/StatisticsModel");
+
+const isoDict = { "AFG": "AF", "ALB": "AL", "DZA": "DZ", "ASM": "AS", "AND": "AD", "AGO": "AO", "AIA": "AI", "ATA": "AQ", "ATG": "AG", "ARG": "AR", "ARM": "AM", "ABW": "AW", "AUS": "AU", "AUT": "AT", "AZE": "AZ", "BHS": "BS", "BHR": "BH", "BGD": "BD", "BRB": "BB", "BLR": "BY", "BEL": "BE", "BLZ": "BZ", "BEN": "BJ", "BMU": "BM", "BTN": "BT", "BOL": "BO", "BES": "BQ", "BIH": "BA", "BWA": "BW", "BVT": "BV", "BRA": "BR", "IOT": "IO", "BRN": "BN", "BGR": "BG", "BFA": "BF", "BDI": "BI", "CPV": "CV", "KHM": "KH", "CMR": "CM", "CAN": "CA", "CYM": "KY", "CAF": "CF", "TCD": "TD", "CHL": "CL", "CHN": "CN", "CXR": "CX", "CCK": "CC", "COL": "CO", "COM": "KM", "COD": "CD", "COG": "CG", "COK": "CK", "CRI": "CR", "HRV": "HR", "CUB": "CU", "CUW": "CW", "CYP": "CY", "CZE": "CZ", "CIV": "CI", "DNK": "DK", "DJI": "DJ", "DMA": "DM", "DOM": "DO", "ECU": "EC", "EGY": "EG", "SLV": "SV", "GNQ": "GQ", "ERI": "ER", "EST": "EE", "SWZ": "SZ", "ETH": "ET", "FLK": "FK", "FRO": "FO", "FJI": "FJ", "FIN": "FI", "FRA": "FR", "GUF": "GF", "PYF": "PF", "ATF": "TF", "GAB": "GA", "GMB": "GM", "GEO": "GE", "DEU": "DE", "GHA": "GH", "GIB": "GI", "GRC": "GR", "GRL": "GL", "GRD": "GD", "GLP": "GP", "GUM": "GU", "GTM": "GT", "GGY": "GG", "GIN": "GN", "GNB": "GW", "GUY": "GY", "HTI": "HT", "HMD": "HM", "VAT": "VA", "HND": "HN", "HKG": "HK", "HUN": "HU", "ISL": "IS", "IND": "IN", "IDN": "ID", "IRN": "IR", "IRQ": "IQ", "IRL": "IE", "IMN": "IM", "ISR": "IL", "ITA": "IT", "JAM": "JM", "JPN": "JP", "JEY": "JE", "JOR": "JO", "KAZ": "KZ", "KEN": "KE", "KIR": "KI", "PRK": "KP", "KOR": "KR", "KWT": "KW", "KGZ": "KG", "LAO": "LA", "LVA": "LV", "LBN": "LB", "LSO": "LS", "LBR": "LR", "LBY": "LY", "LIE": "LI", "LTU": "LT", "LUX": "LU", "MAC": "MO", "MDG": "MG", "MWI": "MW", "MYS": "MY", "MDV": "MV", "MLI": "ML", "MLT": "MT", "MHL": "MH", "MTQ": "MQ", "MRT": "MR", "MUS": "MU", "MYT": "YT", "MEX": "MX", "FSM": "FM", "MDA": "MD", "MCO": "MC", "MNG": "MN", "MNE": "ME", "MSR": "MS", "MAR": "MA", "MOZ": "MZ", "MMR": "MM", "NAM": "NA", "NRU": "NR", "NPL": "NP", "NLD": "NL", "NCL": "NC", "NZL": "NZ", "NIC": "NI", "NER": "NE", "NGA": "NG", "NIU": "NU", "NFK": "NF", "MNP": "MP", "NOR": "NO", "OMN": "OM", "PAK": "PK", "PLW": "PW", "PSE": "PS", "PAN": "PA", "PNG": "PG", "PRY": "PY", "PER": "PE", "PHL": "PH", "PCN": "PN", "POL": "PL", "PRT": "PT", "PRI": "PR", "QAT": "QA", "MKD": "MK", "ROU": "RO", "RUS": "RU", "RWA": "RW", "REU": "RE", "BLM": "BL", "SHN": "SH", "KNA": "KN", "LCA": "LC", "MAF": "MF", "SPM": "PM", "VCT": "VC", "WSM": "WS", "SMR": "SM", "STP": "ST", "SAU": "SA", "SEN": "SN", "SRB": "RS", "SYC": "SC", "SLE": "SL", "SGP": "SG", "SXM": "SX", "SVK": "SK", "SVN": "SI", "SLB": "SB", "SOM": "SO", "ZAF": "ZA", "SGS": "GS", "SSD": "SS", "ESP": "ES", "LKA": "LK", "SDN": "SD", "SUR": "SR", "SJM": "SJ", "SWE": "SE", "CHE": "CH", "SYR": "SY", "TWN": "TW", "TJK": "TJ", "TZA": "TZ", "THA": "TH", "TLS": "TL", "TGO": "TG", "TKL": "TK", "TON": "TO", "TTO": "TT", "TUN": "TN", "TUR": "TR", "TKM": "TM", "TCA": "TC", "TUV": "TV", "UGA": "UG", "UKR": "UA", "ARE": "AE", "GBR": "GB", "UMI": "UM", "USA": "US", "URY": "UY", "UZB": "UZ", "VUT": "VU", "VEN": "VE", "VNM": "VN", "VGB": "VG", "VIR": "VI", "WLF": "WF", "ESH": "EH", "YEM": "YE", "ZMB": "ZM", "ZWE": "ZW", "ALA": "AX" }
 
 const getRate = (criteria, startDate, endDate, res, respond) => {
     axios.get('https://covidtracking.com/api/v1/us/daily.json')
@@ -104,10 +105,12 @@ const getCountryStat = (startDate, endDate, req, res, respond, rates) => {
                     y: (item['confirmed'] - item['recovered'] - item['deaths'])
                 });
             } else {
-                caseData.push({
-                    t: item.date,
-                    y: item[criteria.toLowerCase()]
-                });
+                if (item[criteria.toLowerCase()]) {
+                    caseData.push({
+                        t: item.date,
+                        y: item[criteria.toLowerCase()]
+                    });
+                }
             }
 
             if (rates) {
@@ -120,13 +123,11 @@ const getCountryStat = (startDate, endDate, req, res, respond, rates) => {
             if (req.query.daily && req.query.daily === "true") {
                 caseData = calculateDaily(caseData)
             }
-            if (rates && criteria == "Confirmed") {
-                return calculateConfirmedRate(country, startDate, endDate, dailyConfirmed, res, respond)
-            }
             if (rates) {
                 caseData = calculateRate(caseData, dailyConfirmed)
             }
         }
+        caseData.sort((a, b) => (a.confirmed > b.confirmed) ? 1 : -1)
         respond(res, caseData)
     }).catch(err => {
         console.log(err);
@@ -172,10 +173,12 @@ const getWorldStat = (request_url, startDate, endDate, req, res, respond, rates)
                                 y: (item['Confirmed'] - item['Recovered'] - item['Deaths'])
                             });
                         } else {
-                            results.push({
-                                t: item.Date,
-                                y: item[criteria]
-                            });
+                            if (item[criteria.toLowerCase()]) {
+                                results.push({
+                                    t: item.Date,
+                                    y: item[criteria]
+                                });
+                            }
                         }
                     }
                 });
@@ -188,7 +191,7 @@ const getWorldStat = (request_url, startDate, endDate, req, res, respond, rates)
                         results = calculateRate(results, dailyConfirmed)
                     }
                 }
-
+                results.sort((a, b) => (a.confirmed > b.confirmed) ? 1 : -1)
                 respond(res, results)
             }).catch(error => {
                 console.log(error);
@@ -264,9 +267,28 @@ exports.populate_db_daily = async() => {
         }
     }
 
+    request_url = "https://covid.ourworldindata.org/data/owid-covid-data.csv";
+    let testData = await axios.get(request_url);
+    let data = testData.data;
+    if (data) {
+        let options = { delimiter: ',', quote: '"' };
+        data = csvjson.toObject(data, options);
+
+        for (var index = 0; index < data.length; index++) {
+            let item = data[index]
+            if (item.total_tests) {
+
+                let caseData = await Cases.findOne({ date: new Date(item.date), country_slug: isoDict[item.iso_code] })
+                if (caseData) {
+                    caseData.tests = item.total_tests;
+                    await caseData.save()
+                }
+            }
+        }
+    }
+    console.log("Finished...")
     console.log("Done filling db for country stats...");
 };
-
 
 
 const calculateRate = (caseData, dailyConifrmed) => {
@@ -306,31 +328,3 @@ const calculateDaily = (result) => {
     }
     return dailyCaseArray;
 };
-
-
-const calculateConfirmedRate = (countryName, startDate, endDate, confimedData, res, respond) => {
-    let filter = {
-        country: countryName,
-        date: { $gte: startDate, $lte: endDate },
-        criteria: "TEST"
-    };
-
-    Statistics.find(filter)
-        .then(testData => {
-            let results = [];
-            // if (testData) {
-
-            //     testData.forEach((testCase) => {
-            //         date_value = new Date(testCase.date).toISOString().slice(0, 10)
-            //         confirmedRate = ((testCase.value / confimedData[new Date(date_value)]) * 100).toFixed(2)
-            //         results.push({
-            //             t: date_value,
-            //             y: confirmedRate
-            //         })
-            //     })
-            // }
-            respond(res, results)
-        }).catch(e => {
-            respond(res, null, 500)
-        });
-}
