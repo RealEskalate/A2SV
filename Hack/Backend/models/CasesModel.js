@@ -23,8 +23,7 @@ const casesSchema = new mongoose.Schema({
         required: true,
     },
     tests: {
-        type: Number,
-        required: true,
+        type: Number
     },
     date: {
         type: Date,
