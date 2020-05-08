@@ -2,7 +2,7 @@ import axios from "axios";
 import moment from "moment";
 
 const converter = {
-  "Test Count": "Test",
+  "Test Count": "Tests",
   "Confirmed Cases": "Confirmed",
   "Death Count": "Deaths",
   "Recovery Count": "Recovered",

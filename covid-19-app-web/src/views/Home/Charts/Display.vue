@@ -111,7 +111,7 @@ export default {
           .format("YYYY-MM-DD"),
         moment(new Date()).format("YYYY-MM-DD")
       ],
-      country: "world",
+      country: "World",
       age_range: "All",
       social_distancing: 50
     };
