@@ -88,6 +88,7 @@ export const ChartMixin = {
                 labelString: self.y_label
               },
               ticks: {
+                callback: self.yTicks,
                 maxTicksLimit: 10,
                 padding: 10,
                 beginAtZero: true
@@ -106,6 +107,45 @@ export const ChartMixin = {
     }
   },
   methods: {
+    isCount() {
+      let counts = [];
+      if (!this.criteria) {
+        return false;
+      }
+      this.criteria.counts.forEach(function(item) {
+        counts.push(item.label);
+      });
+      return counts.includes(this.criterion);
+    },
+    isRate() {
+      let rates = [];
+      if (!this.criteria) {
+        return false;
+      }
+      this.criteria.rates.forEach(function(item) {
+        rates.push(item.label);
+      });
+      return rates.includes(this.criterion);
+    },
+    yTicks(value) {
+      if (this.y_label === "Percent" || this.isRate()) {
+        return `${value} %`;
+      } else if (
+        ["Logarithmic Value", "People"].includes(this.y_label) ||
+        this.isCount()
+      ) {
+        if (value >= 1000000000) {
+          return `${value / 1000000000} B`;
+        } else if (value >= 1000000) {
+          return `${value / 1000000} M`;
+        } else if (value >= 1000) {
+          return `${value / 1000} K`;
+        }
+        return value;
+      } else {
+        return value;
+      }
+    },
     rangeToText(start, end) {
       let arrow = "\u2192";
       return `  ${moment(start || "").format(
@@ -119,7 +159,7 @@ export const ChartMixin = {
     makeDataSet(payload, chartType = "line") {
       let opacity = 0.07;
       if (chartType === "bar" || chartType === "pie") {
-        opacity = 0.75;
+        opacity = 1;
       }
       const color = payload.color || [78, 115, 223];
       const mainColor = `rgba(${color[0]}, ${color[1]}, ${color[2]}, 0.85)`;
@@ -151,13 +191,21 @@ export const ChartMixin = {
           { label: "Test Count", color: [121, 134, 203] },
           { label: "Confirmed Cases", color: [255, 213, 79] },
           { label: "Death Count", color: [240, 98, 146] },
-          { label: "Recovery Count", color: [220, 231, 117] }
+          { label: "Recovery Count", color: [220, 231, 117] },
+          { label: "Active Cases", color: [176, 190, 197] }
+        ],
+        daily: [
+          { label: "Daily Test", color: [121, 134, 203] },
+          { label: "Daily Confirmed", color: [255, 213, 79] },
+          { label: "Daily Deaths", color: [240, 98, 146] },
+          { label: "Daily Recovery", color: [220, 231, 117] }
         ],
         rates: [
           { label: "Positive Rate", color: [255, 213, 79] },
-          { label: "Recovery Rate", color: [121, 134, 203] },
+          { label: "Recovery Rate", color: [220, 231, 117] },
+          { label: "Active Rate", color: [176, 190, 197] },
           // { label: "Hospitalization Rate", color: [77, 208, 225] },
-          // { label: "ICU Rate", color: [220, 231, 117] },
+          // { label: "ICU Rate", color: [121, 134, 203] },
           { label: "Death Rate", color: [240, 98, 146] }
         ]
       }

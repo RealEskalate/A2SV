@@ -20,7 +20,6 @@ describe("Alerts API", () => {
         content: "Random Non Sequitor",
       });
       await alert.save();
-      console.log("alert saved");
     });
     afterEach(async () => {
       await Alert.collection.drop();
@@ -33,7 +32,6 @@ describe("Alerts API", () => {
           "Authorization",
           "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6IkZFTUFMRSIsImFnZV9ncm91cCI6IlVOREVSXzMwIiwiX2lkIjoiNWU5MDRjY2U3YTFjNmI2MjdhZTlmNWY3IiwidXNlcm5hbWUiOiJUZXN0aW5nIiwicGFzc3dvcmQiOiIkMmEkMTAkZWZteG01bzF2LmluSS5lU3RHR3hnTzF6SGsuTDZVb0E5TEV5WXJSUGhXa21UUVBYOC5OS08iLCJfX3YiOjB9LCJpYXQiOjE1ODczNjUxMTJ9.QUPJHBixUI7nu2CJGi1a6vBPOInmYuO4lVPIryHM2go"
         );
-      console.log("response from all alerts");
       expect(response).to.have.status(200);
     });
   });
@@ -177,7 +175,7 @@ describe("Alerts API", () => {
     afterEach(async () => {
       await Alert.collection.drop();
     });
-    it("It should insert alert", async () => {
+    it("It should not insert alert", async () => {
       let response = await chai
         .request(server)
         .post("/api/alerts/")
@@ -235,6 +233,7 @@ describe("Alerts API", () => {
       expect(response.body).to.have.property("type");
       expect(response.body).to.have.property("degree");
       expect(response.body).to.have.property("content");
+      expect(response.body.content).to.equal("Random Non Sequitor2");
     });
   });
 
@@ -272,6 +271,43 @@ describe("Alerts API", () => {
       expect(response).to.have.status(500);
     });
   });
+
+
+  //Patch Alert - Invalid ObjectId
+  describe("PATCH /api/alerts", () => {
+    let alert;
+    beforeEach(async () => {
+      alert = new Alert({
+        _id: mongoose.Types.ObjectId(),
+        title: "Testing",
+        type: "UPDATES",
+        degree: "URGENT",
+        content: "Random Non Sequitor",
+      });
+      await alert.save();
+    });
+    afterEach(async () => {
+      await Alert.collection.drop();
+    });
+    it("It should not update alert different ObjectId", async () => {
+      let response = await chai
+        .request(server)
+        .patch("/api/alerts/")
+        .set(
+          "Authorization",
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6IkZFTUFMRSIsImFnZV9ncm91cCI6IlVOREVSXzMwIiwiX2lkIjoiNWU5MDRjY2U3YTFjNmI2MjdhZTlmNWY3IiwidXNlcm5hbWUiOiJUZXN0aW5nIiwicGFzc3dvcmQiOiIkMmEkMTAkZWZteG01bzF2LmluSS5lU3RHR3hnTzF6SGsuTDZVb0E5TEV5WXJSUGhXa21UUVBYOC5OS08iLCJfX3YiOjB9LCJpYXQiOjE1ODczNjUxMTJ9.QUPJHBixUI7nu2CJGi1a6vBPOInmYuO4lVPIryHM2go"
+        )
+        .send({
+          _id: mongoose.Types.ObjectId(),
+          title: "Testing2",
+          type: "UPDATESSSS",
+          degree: "URGENT",
+          content: "Random Non Sequitor2",
+        });
+        
+      expect(response).to.have.status(400);
+    });
+  })
 
 
   //Delete Alert - Valid Alert

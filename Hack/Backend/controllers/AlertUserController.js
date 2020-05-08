@@ -27,17 +27,17 @@ exports.post_alert_user = async (req, res) => {
     } else {
       const alertCheck = await Alert.findById(req.body.alert_id);
       if (!alertCheck) {
-        return res.status(500).send("Alert doesnot exist");
+        return res.status(400).send("Alert does not exist");
       }
       const userCheck = await User.findById(req.body.user_id);
       if (!userCheck) {
-        return res.status(500).send("User doesnot exist");
+        return res.status(400).send("User does not exist");
       }
       await alert_user.save();
       res.send(alert_user);
     }
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send(err.toString());
   }
 };
 // Patch an alert
@@ -52,20 +52,20 @@ exports.patch_alert_user = async (req, res) => {
     if (req.body.alert_id) {
       const alertCheck = await Alert.findById(req.body.alert_id);
       if (!alertCheck) {
-        return res.status(500).send("Alert doesnot exist");
+        return res.status(400).send("Alert does not exist");
       }
     }
     if (req.body.user_id) {
       const userCheck = await User.findById(req.body.user_id);
       if (!userCheck) {
-        return res.status(500).send("User doesnot exist");
+        return res.status(400).send("User does not exist");
       }
     }
     check.set(req.body);
     await check.save();
     res.send(check);
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send(err.toString());
   }
 };
 // Delete an alert
@@ -82,7 +82,7 @@ exports.delete_alert_user = async (req, res) => {
     }
     res.status(201).send(alert_user);
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send(err.toString());
   }
 };
 //Get an alert_users
@@ -97,7 +97,7 @@ exports.get_alert_user = async (req, res) => {
   try {
     res.send(alert_users);
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send(err.toString());
   }
 };
 
@@ -111,11 +111,11 @@ exports.get_alert_user_by_id = async (req, res) => {
   try {
     const alert_user = await AlertUser.findById(req.params.id);
     if(!alert_user){
-      return res.status(500).send("Alert User Not Found");
+      return res.status(400).send("Alert User Not Found");
     }
     res.send(alert_user);
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send(err.toString());
   }
 };
 
@@ -133,14 +133,13 @@ exports.get_alerts_by_user_id = async (req, res) => {
       const alerts = [];
       for (var i = 0; i < alert_user.length; i++) {
         const alert = await Alert.findById(alert_user[i].alert_id);
-        console.log(alert);
         alerts.push(alert);
       }
       res.send({ alerts: alerts, user_id: req.params.user_id });
     } else {
-      res.status(500).send(err);
+      res.send({ alerts: [], user_id: req.params.user_id });
     }
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send(err.toString());
   }
 };

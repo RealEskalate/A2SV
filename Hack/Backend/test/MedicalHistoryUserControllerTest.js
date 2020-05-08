@@ -91,7 +91,7 @@ describe("Medical history Users API", () => {
                 username: "Testing",
                 password: "$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
                 gender: "FEMALE",
-                age_group: "UNDER_30",
+                age_group: "21-30",
             });
             await user.save();
             await medicalhistory_user.save();
@@ -135,7 +135,7 @@ describe("Medical history Users API", () => {
                 username: "Testing",
                 password: "$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
                 gender: "FEMALE",
-                age_group: "UNDER_30",
+                age_group: "21-30",
             });
             await user.save();
             await medicalhistory_user.save();
@@ -179,7 +179,7 @@ describe("Medical history Users API", () => {
                 username: "Testing",
                 password: "$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
                 gender: "FEMALE",
-                age_group: "UNDER_30",
+                age_group: "21-30",
             });
             await user.save();
             await medicalhistory_user.save();

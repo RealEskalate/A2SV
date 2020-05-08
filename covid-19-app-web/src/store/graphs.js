@@ -6,9 +6,17 @@ const converter = {
   "Confirmed Cases": "Confirmed",
   "Death Count": "Deaths",
   "Recovery Count": "Recovered",
+  "Active Cases": "Active",
+
+  "Daily Test": "Test",
+  "Daily Confirmed": "Confirmed",
+  "Daily Deaths": "Deaths",
+  "Daily Recovery": "Recovered",
+  "Daily Active": "Active",
 
   "Positive Rate": "Confirmed_Rate",
   "Recovery Rate": "Recovered_Rate",
+  "Active Rate": "Active_Rate",
   "Death Rate": "Deaths_Rate",
   "Hospitalization Rate": "Hospitalization",
   "ICU Rate": "ICU"
@@ -20,7 +28,14 @@ export default {
       "Test Count": [],
       "Confirmed Cases": [],
       "Death Count": [],
-      "Recovery Count": []
+      "Recovery Count": [],
+      "Active Counts": []
+    },
+    dailyCounts: {
+      "Daily Test": [],
+      "Daily Confirmed": [],
+      "Daily Deaths": [],
+      "Daily Recovery": []
     },
     displayRates: {
       "Positive Rate": [],
@@ -38,6 +53,9 @@ export default {
     getDisplayCounts(state) {
       return state.displayCounts;
     },
+    getDailyCounts(state) {
+      return state.dailyCounts;
+    },
     getDisplayRates(state) {
       return state.displayRates;
     },
@@ -54,6 +72,9 @@ export default {
   mutations: {
     setDisplayCounts(state, { key, payload }) {
       state.displayCounts[key] = payload;
+    },
+    setDailyCounts(state, { key, payload }) {
+      state.dailyCounts[key] = payload;
     },
     setDisplayRates(state, { key, payload }) {
       state.displayRates[key] = payload;
@@ -111,18 +132,6 @@ export default {
       }
     },
     setCountryResources({ commit }, { country }) {
-      // const info = [
-      //   { key: "Testing Strategy", value: "Test Homes" },
-      //   { key: "Hospitals", value: 10000 },
-      //   { key: "Doctors", value: 423 },
-      //   { key: "Medical Workers", value: 26322 },
-      //   { key: "Ventilators", value: 262 },
-      //   { key: "Hospital Beds", value: 262 },
-      //   { key: "ICU Beds", value: 262 },
-      //   { key: "Protection Gears", value: 262 }
-      // ];
-      //
-
       axios
         .get(`${process.env.VUE_APP_BASE_URL}/publicResources/${country}`)
         .then(response => {
@@ -141,6 +150,24 @@ export default {
             });
           }
           commit("setCountryResources", data);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    setDailyCounts({ commit }, { criteria, country, start_date, end_date }) {
+      axios
+        .get(`${process.env.VUE_APP_BASE_URL}/statistics`, {
+          params: {
+            criteria: converter[criteria],
+            country: country,
+            start_date: start_date,
+            end_date: end_date,
+            daily: true
+          }
+        })
+        .then(response => {
+          commit("setDailyCounts", { key: criteria, payload: response.data });
         })
         .catch(error => {
           console.log(error);
@@ -181,7 +208,7 @@ export default {
         EBOLA: [220, 231, 117],
         SARS: [77, 208, 225],
         MERS: [240, 98, 146],
-        "Seasonal flu": [220, 231, 117]
+        "Seasonal flu": [176, 190, 197]
       };
 
       axios.get(`${process.env.VUE_APP_BASE_URL}/diseases`).then(
