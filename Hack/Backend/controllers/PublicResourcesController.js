@@ -14,7 +14,7 @@ exports.getPublicResources = async (req, res) => {
     return res.send(result);
   }
   catch(err){
-      res.status(500).send(err);
+      res.status(500).send(err.toString());
   }
 }
 

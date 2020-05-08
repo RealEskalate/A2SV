@@ -16,7 +16,7 @@ exports.get_log_by_id = async (req, res) => {
         }
         res.send(log);
     } catch (err) {
-        res.status(500).send(err);
+        res.status(500).send(err.toString());
     }
 };
 
@@ -43,7 +43,7 @@ exports.get_logs = async(req, res)=>{
     try {
         res.send(logs);
     } catch (err) {
-        res.status(500).send(err);
+        res.status(500).send(err.toString());
     }
 }
 
