@@ -2,13 +2,18 @@ import * as React from 'react';
 import { View, Text, Image, ScrollView } from 'react-native';
 import { Card, ListItem, Button, Icon } from 'react-native-elements';
 
+// Lottie library GIF to JSON
+import LottieView from 'lottie-react-native';
+
 export default function Preventions() {
   return (
     <ScrollView>
       <Card
-        // title='Preventions'
-        image={require('./icons/handWash.gif')}
-        containerStyle={{ margin: 0 }}>
+      // title='Preventions'
+      // image={require('./icons/handWash.gif')}
+      // containerStyle={{ margin: 0 }}
+      >
+        <LottieView style={{ height: 300, marginBottom: -30, marginTop: -20, marginLeft: 10 }} source={require('./animations/wash-your-hands.json')} autoPlay loop />
         <ScrollView>
           <Text style={{ marginBottom: 10 }}>
             Tips for prevention Follow the guidelines to help protect yourself
