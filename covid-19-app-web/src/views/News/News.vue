@@ -14,7 +14,7 @@
       >
     </section>
     <v-row no-gutters>
-      <v-col class="pr-12" cols="8">
+      <v-col class="pr-md-12" cols="8">
         <div>
           <v-toolbar color="primary" dark>
             <v-toolbar-title>News</v-toolbar-title>
@@ -78,7 +78,7 @@
         />
       </v-col>
       <v-spacer />
-      <v-col class="pl-10" cols="4">
+      <v-col class="pl-md-10" cols="4">
         <v-card tile :elevation="10">
           <v-card-title>Source</v-card-title>
           <v-card-text>

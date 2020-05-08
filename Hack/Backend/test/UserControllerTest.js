@@ -17,7 +17,7 @@ describe("Users API", () => {
         username:"Testing",
         password:"$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
         gender:"FEMALE",
-        age_group:"UNDER_30",
+        age_group:"21-30",
       });
       await newUser.save();
     });
@@ -32,6 +32,7 @@ describe("Users API", () => {
           "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6IkZFTUFMRSIsImFnZV9ncm91cCI6IlVOREVSXzMwIiwiX2lkIjoiNWU5MDRjY2U3YTFjNmI2MjdhZTlmNWY3IiwidXNlcm5hbWUiOiJUZXN0aW5nIiwicGFzc3dvcmQiOiIkMmEkMTAkZWZteG01bzF2LmluSS5lU3RHR3hnTzF6SGsuTDZVb0E5TEV5WXJSUGhXa21UUVBYOC5OS08iLCJfX3YiOjB9LCJpYXQiOjE1ODczNjUxMTJ9.QUPJHBixUI7nu2CJGi1a6vBPOInmYuO4lVPIryHM2go"
         );
       expect(response).to.have.status(200);
+      
     });
   });    
   describe("GET /api/userss", () => {
@@ -41,7 +42,7 @@ describe("Users API", () => {
         username:"Testing",
         password:"$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
         gender:"FEMALE",
-        age_group:"UNDER_30",
+        age_group:"21-30",
       });
       await newUser.save();
     });
@@ -65,7 +66,7 @@ describe("Users API", () => {
         username:"Testing",
         password:"$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
         gender:"FEMALE",
-        age_group:"UNDER_30",
+        age_group:"21-30",
       });
       await newUser.save();
     });
@@ -96,7 +97,7 @@ describe("Users API", () => {
         username:"Testing",
         password:"$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
         gender:"FEMALE",
-        age_group:"UNDER_30",
+        age_group:"21-30",
       });
       await newUser.save();
     });
@@ -122,7 +123,7 @@ describe("Users API", () => {
         username:"Testing",
         password:"$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
         gender:"FEMALE",
-        age_group:"UNDER_30",
+        age_group:"21-30",
       });
       await newUser.save();
     });
@@ -153,7 +154,7 @@ describe("Users API", () => {
         username:"Testing",
         password:"$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
         gender:"FEMALE",
-        age_group:"UNDER_30",
+        age_group:"21-30",
       });
       await newUser.save();
     });
@@ -179,7 +180,7 @@ describe("Users API", () => {
         username:"Testing",
         password:"$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
         gender:"FEMALE",
-        age_group:"UNDER_30",
+        age_group:"21-30",
       });
       await newUser.save();
     });
@@ -193,7 +194,7 @@ describe("Users API", () => {
           username: "UnitTesting",
           password: "UnitTesting",
           gender: "MALE",
-          age_group: "UNDER_30",
+          age_group: "21-30",
         });
         expect(response).to.have.status(200);
         expect(response.body).to.be.a("object");
@@ -211,7 +212,7 @@ describe("Users API", () => {
         username:"Testing",
         password:"$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
         gender:"FEMALE",
-        age_group:"UNDER_30",
+        age_group:"21-30",
       });
       await newUser.save();
     });
@@ -225,7 +226,7 @@ describe("Users API", () => {
           username: "UnitTesting",
           password: "U",
           gender: "MALE",
-          age_group: "UNDER_30",
+          age_group: "21-30",
         });
         expect(response).to.have.status(500);
       });
@@ -238,7 +239,7 @@ describe("Users API", () => {
         username:"Testing",
         password:"$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
         gender:"FEMALE",
-        age_group:"UNDER_30",
+        age_group:"21-30",
       });
       await newUser.save();
     });
@@ -262,7 +263,7 @@ describe("Users API", () => {
         username:"Testing",
         password:"$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
         gender:"FEMALE",
-        age_group:"UNDER_30",
+        age_group:"21-30",
       });
       await newUser.save();
     });
@@ -289,7 +290,7 @@ describe("Users API", () => {
         username:"Testing",
         password:"$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
         gender:"FEMALE",
-        age_group:"UNDER_30",
+        age_group:"21-30",
       });
       await newUser.save();
     });
@@ -308,7 +309,7 @@ describe("Users API", () => {
           username:"Testing2",
           password:"10000",
           gender:"FEMALE",
-          age_group:"UNDER_30",  
+          age_group:"21-30",  
         });
         expect(response).to.have.status(200);
         expect(response.body).to.be.a("object");
@@ -329,7 +330,7 @@ describe("Users API", () => {
         username:"Testing",
         password:"$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
         gender:"FEMALE",
-        age_group:"UNDER_30",
+        age_group:"21-30",
       });
       await newUser.save();
       newUser2 = new User({
@@ -337,7 +338,7 @@ describe("Users API", () => {
         username:"Testing2",
         password:"$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
         gender:"FEMALE",
-        age_group:"UNDER_30",
+        age_group:"21-30",
       });
       await newUser2.save();
     });
@@ -356,9 +357,9 @@ describe("Users API", () => {
           username:"Testing",
           password:"10000",
           gender:"FEMALE",
-          age_group:"UNDER_30",  
+          age_group:"21-30",  
         });
-        expect(response).to.have.status(500);
+        expect(response).to.have.status(400);
       });
   });
 
@@ -370,7 +371,7 @@ describe("Users API", () => {
         username:"Testing",
         password:"$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
         gender:"FEMALE",
-        age_group:"UNDER_30",
+        age_group:"21-30",
       });
       await newUser.save();
     });
@@ -384,7 +385,7 @@ describe("Users API", () => {
           username: "UnitTesting",
           password: "UnitTesting",
           gender: "MALE",
-          age_group: "UNDER_30",
+          age_group: "21-30",
         });
       let response = await chai.request(server)
         .delete("/api/users")
@@ -406,7 +407,7 @@ describe("Users API", () => {
         username:"Testing",
         password:"$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
         gender:"FEMALE",
-        age_group:"UNDER_30",
+        age_group:"21-30",
       });
       await newUser.save();
     });

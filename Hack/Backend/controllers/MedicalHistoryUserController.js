@@ -75,7 +75,7 @@ exports.post_medicalhistory_user = async (req, res) => {
         await medicalhistory_user.save();
         res.status(200).send(medicalhistory_user);
     } catch (err) {
-        res.status(500).send(err);
+        res.status(500).send(err.toString());
     }
 };
 
@@ -88,7 +88,7 @@ exports.update_medicalhistory_user = async (req, res) => {
             res.status(200).send(medicalhistory_user);
         }
     } catch (err) {
-        res.status(500).send(err);
+        res.status(500).send(err.toString());
     }
 };
 
@@ -101,6 +101,6 @@ exports.delete_medicalhistory_user_by_pair = async (req, res) => {
             res.status(200).send(medicalhistory_user);
         }
     } catch (err) {
-        res.status(500).send(err);
+        res.status(500).send(err.toString());
     }
 };

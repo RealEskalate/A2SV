@@ -2,15 +2,19 @@ import * as React from "react";
 import { View, Text, Image, ScrollView } from "react-native";
 import { Card, ListItem, Button, Icon } from "react-native-elements";
 
+// Lottie library GIF to JSON
+import LottieView from 'lottie-react-native';
+
 export default function Treatments() {
   return (
     <ScrollView>
       <Card
-        // title="Treatment"
-        image={require("./icons/doctors.gif")}
-        containerStyle={{ margin: 0 }}
+        // // title="Treatment"
+        // image={require("./icons/doctors.gif")}
+        // containerStyle={{ margin: 0 }}
       >
         <ScrollView>
+          <LottieView style={{ height: 200, marginBottom: 40, marginTop: -25, paddingTop: 50 }} source={require('./animations/prueba-doctores-freepik.json')} autoPlay loop />
           <Text style={{ marginBottom: 10 }}>
             There’s currently no treatment specifically approved for COVID-19,
             and no cure for an infection, although treatments and vaccines are

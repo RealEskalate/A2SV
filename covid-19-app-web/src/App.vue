@@ -3,7 +3,7 @@
     <app-bar />
     <v-content style="font-family: 'Nunito',sans-serif">
       <router-view />
-      <vue-progress-bar></vue-progress-bar>
+      <vue-progress-bar />
     </v-content>
     <app-footer />
   </v-app>
@@ -37,7 +37,7 @@ export default {
       //  start the progress bar
       this.$Progress.start();
       //  continue to next page
-      setTimeout(next, 2000);
+      next();
     });
     //  hook the progress bar to finish after we've finished moving router-view
     this.$router.afterEach(() => {

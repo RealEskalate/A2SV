@@ -1,11 +1,6 @@
 <template>
   <div>
-    <v-app-bar
-      app
-      class="white bg-transparent"
-      flat
-      v-bind:class="{ raised: raise }"
-    >
+    <v-app-bar app class="white" flat v-bind:class="{ raised: raise }">
       <v-app-bar-nav-icon
         v-if="$vuetify.breakpoint.smAndDown"
         @click.stop="drawer = !drawer"
@@ -13,15 +8,12 @@
       <router-link class="d-flex align-center no-decoration" to="/">
         <v-img
           alt="Vuetify Logo"
-          class="shrink mr-2"
+          class="shrink ml-3"
           contain
-          src="@/assets/logo-v1.png"
+          src="/img/brand/blue.png"
           transition="scale-transition"
-          width="40"
+          width="130"
         />
-        <div>
-          <h3 class="blue--text">Covid-19</h3>
-        </div>
       </router-link>
 
       <v-spacer />
@@ -100,7 +92,7 @@ export default {
   },
   computed: {
     raise() {
-      return this.locationY > 100;
+      return this.locationY > 50;
     }
   }
 };
@@ -122,7 +114,7 @@ export default {
 }
 
 .raised {
-  box-shadow: 5px 0 15px 5px #eee;
+  box-shadow: 5px 0 15px 5px #ddd;
   z-index: 997;
 }
 </style>

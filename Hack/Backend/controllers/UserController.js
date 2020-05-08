@@ -7,33 +7,33 @@ const User = UserSchema.User;
 
 // Get All Users.
 exports.get_all_users = async (req, res) => {
-  jwt.verify(req.token, 'secretkey', (err, authData) => {
-    if (err) {
-      res.status(401).send("Incorrect authentication key");
-    }
-  });
+  // jwt.verify(req.token, 'secretkey', (err, authData) => {
+  //   if (err) {
+  //     res.status(401).send("Incorrect authentication key");
+  //   }
+  // });
 
   const users = await User.find({});
   console.log(users.length);
   try {
     res.send(users);
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send(err.toString());
   }
 };
 // Get User by ID.
 exports.get_user_by_id = async (req, res) => {
-  jwt.verify(req.token, 'secretkey', (err, authData) => {
-    if (err) {
-      res.status(401).send("Incorrect authentication key");
-    }
-  });
+  // jwt.verify(req.token, 'secretkey', (err, authData) => {
+  //   if (err) {
+  //     res.status(401).send("Incorrect authentication key");
+  //   }
+  // });
 
   const user = await User.findById(req.params.id);
   try {
     res.send(user);
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send(err.toString());
   }
 };
 // Get User by Username and Password.
@@ -54,7 +54,7 @@ exports.get_user_by_credentials = async (req, res) => {
             }
           })
           .catch(error => {
-            console.log(error);
+            console.log(error.toString());
           });
         user.set({
           current_country: country
@@ -74,7 +74,7 @@ exports.get_user_by_credentials = async (req, res) => {
 
     }
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send(err.toString());
   }
 };
 // Post a Use
@@ -99,19 +99,21 @@ exports.post_user = async (req, res) => {
       res.send(user);
     }
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send(err.toString());
   }
 };
 // Update User by ID.
 exports.update_user = async (req, res) => {
-  jwt.verify(req.token, 'secretkey', (err, authData) => {
-    if (err) {
-      res.status(401).send("Incorrect authentication key");
-    }
-  });
+  // jwt.verify(req.token, 'secretkey', (err, authData) => {
+  //   if (err) {
+  //     res.status(401).send("Incorrect authentication key");
+  //   }
+  // });
 
   try {
     let exists = await User.findOne({ username: req.body.username });
+    // Change user info by _id
+    let change = await User.findOne({_id: req.body._id})
     if (exists && exists._id != req.body._id) {
       return res.status(400).send("Username already exists ");
     }
@@ -120,23 +122,23 @@ exports.update_user = async (req, res) => {
         return res.status(500).send("Password Length Too Short");
       }
       req.body.password = Bcrypt.hashSync(req.body.password, 10);
-    }
-    exists.set(req.body);
-    await exists.save();
-    res.send(exists);
+    }  
+    change.set(req.body);
+    await change.save();
+    res.send(change);
   } catch (err) {
     console.log("error is " + err);
-    res.status(500).send(err);
+    res.status(500).send(err.toString());
   }
 };
 // Delete User by ID.
 exports.delete_user = async (req, res) => {
-  console.log("delete user is called");
-  jwt.verify(req.token, 'secretkey', (err, authData) => {
-    if (err) {
-      res.status(401).send("Incorrect authentication key");
-    }
-  });
+  // console.log("delete user is called");
+  // jwt.verify(req.token, 'secretkey', (err, authData) => {
+  //   if (err) {
+  //     res.status(401).send("Incorrect authentication key");
+  //   }
+  // });
 
   try {
     const user = await User.findByIdAndDelete(req.body._id);
@@ -145,6 +147,6 @@ exports.delete_user = async (req, res) => {
     }
     res.status(201).send(user);
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send(err.toString());
   }
 };
