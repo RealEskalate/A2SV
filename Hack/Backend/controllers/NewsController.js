@@ -22,6 +22,7 @@ const parser = new Parser({
 });
 
 let default_sources = [
+  "CDC Newsroom",
   "CNN",
   "BBC News",
   "NPR",
@@ -57,7 +58,9 @@ exports.get_sources = async (req, res) => {
   let googleNewsSources = [...new Set(googleNews.map((item) => item.source))];
   sources = sources.concat(googleNewsSources);
   sources = default_sources.filter((x) => sources.includes(x));
-  sources.unshift("CDC Newsroom");
+  if(!req.query.country){
+    sources.unshift("CDC Newsroom");
+  }  
 
   try {
     res.send(sources);
@@ -106,7 +109,7 @@ exports.post_news = async (req, res) => {
         console.log(err);
       }
     }
-    res.send(news);
+    res.status(201).send(news);
   } catch (err) {
     res.status(500).send(err.toString());
   }
