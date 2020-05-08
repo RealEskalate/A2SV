@@ -116,7 +116,7 @@
           .format("YYYY-MM-DD"),
         moment(new Date()).format("YYYY-MM-DD")
       ],
-      country: "World",
+      country: "world",
       age_range: "All",
       social_distancing: 50
     };
