@@ -161,7 +161,7 @@ export default {
           description:
             "Wash your hands frequently \nMaintain social distancing \nAvoid touching eyes, nose and mouth \nPractice respiratory hygiene \nStay informed and follow the advice given by your healthcare provider \nIf you have fever, cough and difficulty breathing, seek medical care early",
           image: "/img/info/prevention.jpg"
-        },
+        }
       ]
     };
   }

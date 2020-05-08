@@ -188,8 +188,9 @@ export default {
             why:
               "In case you are wondering why you should stay 6ft away from people or why you should wash your hands for 20 seconds.",
             time: "4 mins",
-            action: "Watch Video",
-          },{
+            action: "Watch Video"
+          },
+          {
             name: "Are young people safe?",
             what:
               "A video explaining the data the world has so far on the virus and how it is affecting young people.",
@@ -254,15 +255,13 @@ export default {
             what:
               "Are you stuck at home and bored due social distancing? Here's 10 things you can do",
             how: "https://www.youtube.com/watch?v=nsXMtSmAMWc",
-            why:
-              "It's helpful to keep our time in lockdown worthwhile",
+            why: "It's helpful to keep our time in lockdown worthwhile",
             time: "10 mins",
             action: "Watch Video"
           },
           {
             name: "Track the map",
-            what:
-              "Covid-19 world map and visualization",
+            what: "Covid-19 world map and visualization",
             how: "https://coronavirus.jhu.edu/map.html",
             why:
               "This series of maps and charts tracks the spread of the virus since it emerged in China in December last year.",
@@ -271,8 +270,7 @@ export default {
           },
           {
             name: "Track the outbreak",
-            what:
-              "Coronavirus mapped - using tables and map",
+            what: "Coronavirus mapped - using tables and map",
             how: "https://www.bbc.com/news/world-51235105",
             why:
               "This series of maps and charts tracks the spread of the virus since it emerged in China in December last year.",
@@ -284,8 +282,7 @@ export default {
             what:
               "An animated informative video about Covid-19, based on what scientists know about the virus so far.",
             how: "https://www.youtube.com/watch?v=BtN-goy9VOY",
-            why:
-              "We have to know what the humanity is dealing with.",
+            why: "We have to know what the humanity is dealing with.",
             time: "10 mins",
             action: "Watch Video"
           },
@@ -311,15 +308,13 @@ export default {
           },
           {
             name: "Another great article",
-            what:
-              "What You Need to Know About the Coronavirus",
-            how: "https://www.theatlantic.com/health/archive/2020/03/coronavirus-covid-19-the-atlantics-most-crucial-coverage/607906/",
-            why:
-              "The Atlantic’s guide to navigating a global pandemic",
+            what: "What You Need to Know About the Coronavirus",
+            how:
+              "https://www.theatlantic.com/health/archive/2020/03/coronavirus-covid-19-the-atlantics-most-crucial-coverage/607906/",
+            why: "The Atlantic’s guide to navigating a global pandemic",
             time: "25 mins",
             action: "Read Article"
-          },
-
+          }
         ],
         Adults: [
           {
@@ -344,11 +339,9 @@ export default {
           },
           {
             name: "How to Manage COVID-19 at Home?",
-            what:
-              "Short video with infographics on things we can do",
+            what: "Short video with infographics on things we can do",
             how: "https://www.youtube.com/watch?v=qPoptbtBjkg",
-            why:
-              "They are simple to apply but very crucial",
+            why: "They are simple to apply but very crucial",
             time: "3 mins",
             action: "Watch Video"
           },
@@ -357,8 +350,7 @@ export default {
             what:
               "A description of symptoms from a doctor who have been infected with covid-19",
             how: "https://www.youtube.com/watch?v=qPoptbtBjkg",
-            why:
-              "They are simple to apply but very crucial",
+            why: "They are simple to apply but very crucial",
             time: "2 mins",
             action: "Watch Video"
           },
@@ -374,8 +366,7 @@ export default {
           },
           {
             name: "Track the map",
-            what:
-              "Covid-19 world map and visualization",
+            what: "Covid-19 world map and visualization",
             how: "https://coronavirus.jhu.edu/map.html",
             why:
               "This series of maps and charts tracks the spread of the virus since it emerged in China in December last year.",
@@ -387,8 +378,7 @@ export default {
             what:
               "An animated informative video about Covid-19, based on what scientists know about the virus so far.",
             how: "https://www.youtube.com/watch?v=BtN-goy9VOY",
-            why:
-              "We have to know what the humanity is dealing with.",
+            why: "We have to know what the humanity is dealing with.",
             time: "10 mins",
             action: "Watch Video"
           },
@@ -414,11 +404,10 @@ export default {
           },
           {
             name: "Another great article",
-            what:
-              "What You Need to Know About the Coronavirus",
-            how: "https://www.theatlantic.com/health/archive/2020/03/coronavirus-covid-19-the-atlantics-most-crucial-coverage/607906/",
-            why:
-              "The Atlantic’s guide to navigating a global pandemic",
+            what: "What You Need to Know About the Coronavirus",
+            how:
+              "https://www.theatlantic.com/health/archive/2020/03/coronavirus-covid-19-the-atlantics-most-crucial-coverage/607906/",
+            why: "The Atlantic’s guide to navigating a global pandemic",
             time: "25 mins",
             action: "Read Article"
           },
@@ -441,16 +430,14 @@ export default {
               "since the situation childrens know before the pandemic was different we get to understand them and explain the current situation in good way.",
             time: "3 mins",
             action: "Watch Video"
-          },
+          }
         ],
         Seniors: [
           {
             name: "What Older Adults Need to Know?",
-            what:
-              "video from CDC",
+            what: "video from CDC",
             how: "https://www.youtube.com/watch?v=TjcoN9Aek24",
-            why:
-              "expert from cdc explaining what old people should do.",
+            why: "expert from cdc explaining what old people should do.",
             time: "3 mins",
             action: "Watch Video"
           },
@@ -476,8 +463,7 @@ export default {
           },
           {
             name: "Advice for seniors",
-            what:
-              "Video on self isolation",
+            what: "Video on self isolation",
             how: "https://www.youtube.com/watch?v=Q5GyWGm0YlY",
             why:
               "Understand about social distancing, what it means for older adults and how to help each other with being isolated and in lockdown.",
@@ -486,8 +472,7 @@ export default {
           },
           {
             name: "Protecting the elderly",
-            what:
-              "Things elderly are facing and how to make it better",
+            what: "Things elderly are facing and how to make it better",
             how: "https://www.youtube.com/watch?v=Q5GyWGm0YlY",
             why:
               "Since the outbreak is spreading and might tale long term, we need to take care elderly.",
@@ -506,8 +491,7 @@ export default {
           },
           {
             name: "Track the map",
-            what:
-              "Covid-19 world map and visualization",
+            what: "Covid-19 world map and visualization",
             how: "https://coronavirus.jhu.edu/map.html",
             why:
               "This series of maps and charts tracks the spread of the virus since it emerged in China in December last year.",
@@ -519,8 +503,7 @@ export default {
             what:
               "An animated informative video about Covid-19, based on what scientists know about the virus so far.",
             how: "https://www.youtube.com/watch?v=BtN-goy9VOY",
-            why:
-              "We have to know what the humanity is dealing with.",
+            why: "We have to know what the humanity is dealing with.",
             time: "10 mins",
             action: "Watch Video"
           },
@@ -563,8 +546,7 @@ export default {
               "since the situation childrens know before the pandemic was different we get to understand them and explain the current situation in good way.",
             time: "3 mins",
             action: "Watch Video"
-          },
-
+          }
         ]
       }
     };

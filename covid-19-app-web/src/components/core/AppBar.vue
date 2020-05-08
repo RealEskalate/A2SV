@@ -38,11 +38,7 @@
       right
     >
       <v-list dense nav shaped>
-        <v-list-item-group
-          v-model="curRoute"
-          justify="center"
-          class="mt-5"
-        >
+        <v-list-item-group v-model="curRoute" justify="center" class="mt-5">
           <template v-for="(item, i) in links">
             <v-list-item :key="i" :to="item.to" @click="drawer = false">
               <v-list-item-action>
