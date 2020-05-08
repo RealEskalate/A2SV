@@ -40,7 +40,7 @@ exports.getMapData = async (req, res) => {
 
 // Schedules fetching everyday
 const run_updates = () => {
-  schedule.scheduleJob({hour: 05, minute: 15}, async function () {
+  schedule.scheduleJob({hour: 12}, async function () {
     await updateDb();
   });
 };
@@ -59,12 +59,14 @@ updateDb = async () => {
   for(let i = 0; i<already_in.length; i++){
     let map_item = already_in[i]
     let map_item_data = map_item.Data
-    delete map_item_data[`${check_date}`]
-    map_item.set({
-      Data: map_item_data
-    })
-    map_item.markModified("Data");
-    await map_item.save();     
+    if(map_item_data[`${check_date}`]){
+      delete map_item_data[`${check_date}`]
+      map_item.set({
+        Data: map_item_data
+      })
+      map_item.markModified("Data");
+      await map_item.save();     
+    }
   }
   console.log("Removed and Cleared Last Date Values");
 
