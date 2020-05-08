@@ -2,6 +2,7 @@ const axios = require("axios");
 const csvjson = require('csvjson');
 const { Cases } = require("./../models/CasesModel");
 const mongoose = require("mongoose");
+const Statistics = require("../models/StatisticsModel");
 
 const getRate = (criteria, startDate, endDate, res, respond) => {
     axios.get('https://covidtracking.com/api/v1/us/daily.json')
@@ -118,6 +119,9 @@ const getCountryStat = (startDate, endDate, req, res, respond, rates) => {
         if (criteria !== "All") {
             if (req.query.daily && req.query.daily === "true") {
                 caseData = calculateDaily(caseData)
+            }
+            if (rates && criteria == "Confirmed") {
+                return calculateConfirmedRate(country, startDate, endDate, dailyConfirmed, res, respond)
             }
             if (rates) {
                 caseData = calculateRate(caseData, dailyConfirmed)
@@ -302,3 +306,31 @@ const calculateDaily = (result) => {
     }
     return dailyCaseArray;
 };
+
+
+const calculateConfirmedRate = (countryName, startDate, endDate, confimedData, res, respond) => {
+    let filter = {
+        country: countryName,
+        date: { $gte: startDate, $lte: endDate },
+        criteria: "TEST"
+    };
+
+    Statistics.find(filter)
+        .then(testData => {
+            let results = [];
+            // if (testData) {
+
+            //     testData.forEach((testCase) => {
+            //         date_value = new Date(testCase.date).toISOString().slice(0, 10)
+            //         confirmedRate = ((testCase.value / confimedData[new Date(date_value)]) * 100).toFixed(2)
+            //         results.push({
+            //             t: date_value,
+            //             y: confirmedRate
+            //         })
+            //     })
+            // }
+            respond(res, results)
+        }).catch(e => {
+            respond(res, null, 500)
+        });
+}
