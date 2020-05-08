@@ -127,7 +127,7 @@ const getCountryStat = (startDate, endDate, req, res, respond, rates) => {
                 caseData = calculateRate(caseData, dailyConfirmed, criteria)
             }
         }
-        caseData.sort((a, b) => (a.confirmed > b.confirmed) ? 1 : -1)
+        caseData.sort((a, b) => (a.t > b.t) ? 1 : -1)
         respond(res, caseData)
     }).catch(err => {
         console.log(err);
@@ -191,7 +191,7 @@ const getWorldStat = (request_url, startDate, endDate, req, res, respond, rates)
                         results = calculateRate(results, dailyConfirmed, criteria)
                     }
                 }
-                results.sort((a, b) => (a.confirmed > b.confirmed) ? 1 : -1)
+                results.sort((a, b) => (a.t > b.t) ? 1 : -1)
                 respond(res, results)
             }).catch(error => {
                 console.log(error);
