@@ -1,126 +1,239 @@
 const LocationUser = require("../models/LocationUserModel");
 const Location = require("./../models/LocationModel");
-const {User} = require("./../models/UserModel");
-
-const mongoose = require('mongoose');
+const { User } = require("./../models/UserModel");
+const axios = require("axios");
+const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 
-
+//Post a user location
 exports.post_location_user = async (req, res) => {
-    // jwt.verify(req.token, 'secretkey', (err,authData) =>{
-    //     if (err){
-    //         res.status(401).send("Incorrect authentication key");
-    //     }
-    // });
+  // jwt.verify(req.token, 'secretkey', (err,authData) =>{
+  //     if (err){
+  //         res.status(401).send("Incorrect authentication key");
+  //     }
+  // });
 
-    let location_id =  req.body.location_id;
-    let user_id =  req.body.user_id;
-    let TTL = req.body.TTL;
+  if(!req.body.longitude||!req.body.latitude){
+    return res.status(400).send("Coordinates not given");
+  }
+  let latitude = req.body.latitude;
+  let longitude = req.body.longitude;
 
-    // Check if user and location exists
-    Location.findById(location_id, (err) => {
-        if (err){
-            return res.status(400).json({ message: 'Location ID not found' });
-        }
+  const check = await Location.findOne({
+    longitude: longitude,
+    latitude: latitude 
+  });
+  let location_id;
+  if (check) {
+    location_id = check._id
+  }
+  else{
+    let location = new Location({
+      _id: mongoose.Types.ObjectId(),
+      longitude: req.body.longitude,
+      latitude: req.body.latitude,
+      place_name: req.body.place_name,
     });
-    User.findById(user_id, (err) => {
-        if (err){
-            return res.status(400).json({ message: 'User ID not found' });
-        }
-    })
-
-    const location_user = new LocationUser({
-        user_id,
-        location_id,
-        TTL
+    try {
+      let result1 = await axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${location.longitude},${location.latitude}.json?types=poi&access_token=pk.eyJ1IjoiZmVyb3g5OCIsImEiOiJjazg0czE2ZWIwNHhrM2VtY3Y0a2JkNjI3In0.zrm7UtCEPg2mX8JCiixE4g`)
+        .then(response => {
+          if (response.data) {
+            if (response.data.features && response.data.features.length>0) {
+              location.longitude = response.data.features[0].center[0];
+              location.latitude = response.data.features[0].center[1];
+              location.place_name = response.data.features[0].text;
+            }
+          }
+          return location;
+        })
+        .catch(error => {
+          console.log(error);
         });
-    try {
-        await location_user.save();
-        res.send(location_user);
+      const check_2 = await Location.findOne({
+        longitude: location.longitude,
+        latitude: location.latitude 
+      });
+      if (check_2) {
+        location_id = check_2._id
+      }
+      else{
+        await result1.save();
+        location_id = result1._id;
+      }    
     } catch (err) {
-        res.status(500).send(err);
+      console.log(err);
+      return res.status(500).send(err.toString());
     }
-};
+  }
 
-exports.get_by_location_id = async (req, res) => {
-    // jwt.verify(req.token, 'secretkey', (err,authData) =>{
-    //     if (err){
-    //         res.status(401).send("Incorrect authentication key");
-    //     }
-    // });
+  let user_id = req.body.user_id;
+  let TTL = req.body.TTL;
 
-    const results = await LocationUser.find({
-        location_id: {$eq: req.params.location_id}
-    });
-    try {
-        res.send(results);
-    } catch (err) {
-        res.status(500).send(err.toString());
+  const location_user = new LocationUser({
+    user_id,
+    location_id,
+    TTL,
+  });
+  try {
+    // Check if user and location exists
+    let location = await Location.findById(location_id);
+    if (!location) {
+      return res.status(400).send("Location ID not found");
     }
-};
-
-exports.get_all_location_users = async (req,res) => {
-    // jwt.verify(req.token, 'secretkey', (err,authData) =>{
-    //     if (err){
-    //         res.status(401).send("Incorrect authentication key");
-    //     }
-    // });
-
-    const results = await LocationUser.find({});
-    try {
-        res.send(results);
-    } catch (err) {
-        res.status(500).send(err);
+    let user = await User.findById(user_id);
+    if (!user) {
+      return res.status(400).send("User ID not found");
     }
-};
 
-exports.get_by_user_id = async (req, res) => {
-    // jwt.verify(req.token, 'secretkey', (err,authData) =>{
-    //     if (err){
-    //         res.status(401).send("Incorrect authentication key");
-    //     }
-    // });
-
-    const results = await LocationUser.find({
-        user_id: {$eq: req.params.user_id}
-    });
-    try {
-        res.send(results);
-    } catch (err) {
-        res.status(500).send(err);
-    }
-};
-
-exports.delete_location_user = async (req, res) => {
-    // jwt.verify(req.token, 'secretkey', (err,authData) =>{
-    //     if (err){
-    //         res.status(401).send("Incorrect authentication key");
-    //     }
-    // });
-
-    try {
-        const location_user = await LocationUser.findByIdAndDelete(req.body._id);
-        if (!location_user) {
-          res.status(404).send("No item found");
+    let country = '';
+    try{
+      const result = await axios.get('http://www.geoplugin.net/json.gp?ip='+req.connection.remoteAddress.substring(2))
+      .then(response => {
+        if (response.data) {
+          country = response.data.geoplugin_countryName
         }
-        res.status(200).send();
-      } catch (err) {
-        res.status(500).send(err);
-      }
+      })
+      .catch(error => {
+        console.log(error);
+      });      
+      user.set({
+        current_country: country
+      });
+      await user.save();
+    }
+    catch(err){
+      console.log(err);
+    }
+
+    let check = await LocationUser.findOne({
+      location_id: location_id,
+      user_id: user_id
+    })
+    if(check){
+      check.TTL = TTL
+      await check.save()
+      return res.send(check);
+    }
+    await location_user.save();
+    return res.send(location_user);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).send(err.toString());
+  }
 };
 
-exports.update_location_user = async (req, res) => {
-    // jwt.verify(req.token, 'secretkey', (err,authData) =>{
-    //     if (err){
-    //         res.status(401).send("Incorrect authentication key");
-    //     }
-    // });
+//Get specific location_user by id
+exports.get_location_user_by_id = async(req, res) => {
+  // jwt.verify(req.token, "secretkey", (err, authData) => {
+  //   if (err) {
+  //     res.status(401).send("Incorrect authentication key");
+  //   }
+  // });
 
-    try {
-        await LocationUser.findByIdAndUpdate(req.body._id, req.body);
-        const locationUser = await LocationUser.save();
-        res.send(locationUser);
-      } catch (err) {
-        res.status(500).send(err);
-      }
+  try {
+    const locationUser = await LocationUser.findById(req.params.id);
+    if(!locationUser){
+      return res.status(500).send("User Location not found");
+    }
+    res.send(locationUser);
+  } catch (err) {
+    res.status(500).send(err.toString());
+  }
+}
+
+//Get location_user by location_id
+exports.get_by_location_id = async (req, res) => {
+  // jwt.verify(req.token, 'secretkey', (err,authData) =>{
+  //     if (err){
+  //         res.status(401).send("Incorrect authentication key");
+  //     }
+  // });
+  try {
+    const results = await LocationUser.find({
+      location_id: { $eq: req.params.location_id },
+    });
+    if (!results || results.length<1) {
+      return res.status(500).send("No User Locations found.");
+    }
+    res.send(results);
+  } catch (err) {
+    res.status(500).send(err.toString());
+  }
+};
+
+//Get all location_users
+exports.get_all_location_users = async (req, res) => {
+  // jwt.verify(req.token, 'secretkey', (err,authData) =>{
+  //     if (err){
+  //         res.status(401).send("Incorrect authentication key");
+  //     }
+  // });
+
+  const results = await LocationUser.find({});
+  try {
+    res.send(results);
+  } catch (err) {
+    res.status(500).send(err.toString());
+  }
+};
+
+//Get location_user by location_id
+exports.get_by_user_id = async (req, res) => {
+  // jwt.verify(req.token, 'secretkey', (err,authData) =>{
+  //     if (err){
+  //         res.status(401).send("Incorrect authentication key");
+  //     }
+  // });
+
+  try {
+    const results = await LocationUser.find({
+      user_id: { $eq: req.params.user_id },
+    });
+      if (!results || results.length<1) {
+      return res.status(500).send("No User Locations found.");
+    }
+    res.send(results);
+  } catch (err) {
+    res.status(500).send(err.toString());
+  }
+};
+
+//Delete location_user with id
+exports.delete_location_user = async (req, res) => {
+  // jwt.verify(req.token, 'secretkey', (err,authData) =>{
+  //     if (err){
+  //         res.status(401).send("Incorrect authentication key");
+  //     }
+  // });
+
+  try {
+    const location_user = await LocationUser.findByIdAndDelete(req.body._id);
+    if (!location_user) {
+      return res.status(404).send("No item found");
+    }
+    res.status(201).send(location_user);
+  } catch (err) {
+    res.status(500).send(err.toString());
+  }
+};
+
+//Update location_user with id
+exports.update_location_user = async (req, res) => {
+  // jwt.verify(req.token, 'secretkey', (err,authData) =>{
+  //     if (err){
+  //         res.status(401).send("Incorrect authentication key");
+  //     }
+  // });
+
+  try {
+    let locationUser = await LocationUser.findById(req.body._id);
+    if(!locationUser){
+      return res.status(500).send("User Location Not Found");
+    }
+    locationUser.set(req.body);
+    await locationUser.save();
+    res.send(locationUser);
+  } catch (err) {
+    res.status(500).send(err.toString());
+  }
 };

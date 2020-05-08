@@ -1,32 +1,60 @@
 <template>
   <v-content class="about">
-    <section class="mb-12 mt-10 text-justify">
+    <section class="mb-12 text-justify">
       <v-container>
-        <h1 class="display-2 font-weight-thin">A2SV</h1>
-        <p class="my-5">
-          Lorem ipsum Dolor amet sit Lorem ipsum Dolor amet sit Lorem ipsum
-          Dolor amet sit Lorem ipsum Dolor amet sit Lorem ipsum Dolor amet sit
-          Lorem ipsum Dolor amet sit Lorem ipsum Dolor amet sit Lorem ipsum
-          Dolor amet sit Lorem ipsum Dolor amet sit Lorem ipsum Dolor Dolor amet
-          sit Lorem ipsum Dolor amet sit Lorem ipsum Dolor amet Lorem ipsum
-          Dolor amet sit Lorem ipsum Dolor amet sit Lorem ipsum Dolor amet sit
-          Lorem ipsum Dolor amet sit Lorem ipsum Dolor amet sit Lorem ipsum
-          Dolor amet sit Lorem ipsum Dolor amet sit Lorem ipsum Dolor amet sit
-          Lorem ipsum Dolor amet sit
-        </p>
-        <br />
-        <h1 class="display-1 font-weight-thin">Symptom Tracker</h1>
-        <p class="my-5">
-          Lorem ipsum Dolor amet sit Lorem ipsum Dolor amet sit Lorem ipsum
-          Dolor amet sit Lorem ipsum Dolor amet sit Lorem ipsum Dolor amet sit
-          Lorem ipsum Dolor amet sit Lorem ipsum Dolor amet sit Lorem ipsum
-          Dolor amet sit Lorem ipsum Dolor amet sit Lorem ipsum Dolor Dolor amet
-          sit Lorem ipsum Dolor amet sit Lorem ipsum Dolor amet Lorem ipsum
-          Dolor amet sit Lorem ipsum Dolor amet sit Lorem ipsum Dolor amet sit
-          Lorem ipsum Dolor amet sit Lorem ipsum Dolor amet sit Lorem ipsum
-          Dolor amet sit Lorem ipsum Dolor amet sit Lorem ipsum Dolor amet sit
-          Lorem ipsum Dolor amet sit
-        </p>
+        <v-row>
+          <v-col class="px-md-10" cols="12" md="7">
+            <div :key="i" v-for="(description, i) in descriptions">
+              <h3
+                class="display-1 font-weight-thin"
+                v-text="description.title"
+              />
+              <div
+                class="my-5 grey--text text--darken-2"
+                v-html="description.content"
+              />
+            </div>
+          </v-col>
+          <v-col class="px-md-10" cols="12" md="5">
+            <div>
+              <h3 class="display-1 font-weight-thin" v-text="'Who we are'" />
+              <div class="my-5 grey--text text--darken-2">
+                <p>
+                  <strong>A2SV - Africa to Silicon Valley</strong> is a team of
+                  highly motivated and talented students from Ethiopia, led by
+                  an ex-Google and Palantir Software/ML engineer. The team went
+                  through an intense 3-month preparation program in the pursuit
+                  of summer internships at top SV companies. Now A2SV dedicates
+                  all the time and energy to the war against COVID-19.
+                </p>
+              </div>
+            </div>
+            <div class="mx-auto mt-10 py-5">
+              <v-alert
+                v-if="showAlert"
+                :type="type"
+                v-text="message"
+                dismissible
+              ></v-alert>
+              <h3 class="display-1 font-weight-thin">Contact us</h3>
+              <v-form class="py-5">
+                <v-text-field label="Name" v-model="contact.name" />
+                <v-text-field label="Email" v-model="contact.email" />
+                <v-textarea
+                  rows="5"
+                  label="Message"
+                  v-model="contact.message"
+                />
+                <div class="text-center py-3">
+                  <v-btn width="100" class="primary mx-auto" @click="sendForm">
+                    Send
+                    <v-icon class="ml-2" small>mdi-send</v-icon>
+                  </v-btn>
+                </div>
+              </v-form>
+            </div>
+          </v-col>
+        </v-row>
       </v-container>
     </section>
     <br />
@@ -50,7 +78,7 @@
                 style="font-size: 4em"
                 v-text="action.icon"
               />
-              <h1 class="font-weight-thin display-1" v-text="action.title" />
+              <h1 v-text="action.title" />
               <p class="font-weight-thin my-2" v-text="action.description" />
               <a
                 :key="'links_' + link_i"
@@ -68,19 +96,27 @@
     <br />
     <br />
     <section class="my-12">
-      <v-container ali>
-        <v-card class="mx-auto px-5 py-5" width="500px">
-          <v-card-title>
-            Contact Us
-          </v-card-title>
-          <v-card-text>
-            <v-form>
-              <v-text-field label="Name" append-icon="mdi-home" />
-              <v-text-field label="Email" append-icon="mdi-mail" />
-              <v-textarea label="Message" append-icon="mdi-note" />
-            </v-form>
-          </v-card-text>
-        </v-card>
+      <v-container class="text-center">
+        <h1 class="display-2 font-weight-thin mb-12">Our Partners</h1>
+        <span
+          class="d-inline-block my-5 mx-2"
+          :key="i"
+          v-for="(partner, i) in partners"
+        >
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on }">
+              <a :href="partner.link" target="_blank" v-on="on">
+                <img
+                  height="180px"
+                  alt="partner.name"
+                  style="opacity: 0.7"
+                  :src="partner.image_url"
+                />
+              </a>
+            </template>
+            <span>{{ partner.name }}</span>
+          </v-tooltip>
+        </span>
       </v-container>
     </section>
     <br />
@@ -89,36 +125,100 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   data: () => {
     return {
-      actions: [
+      showAlert: false,
+      message: "",
+      type: "success",
+      contact: {
+        name: "",
+        email: "",
+        message: ""
+      },
+      descriptions: [
         {
-          icon: "mdi-cloud",
-          title: "A2SV Website",
-          description:
-            "Check out our website for this and that and this as well for this and that and this as well for this and that and this as well",
-          links: [{ text: "Visit Website", href: "#" }]
+          title: "Corona App",
+          content: `<p> <strong> COVID-19 Symptom Tracker </strong> is a non-commercial app that uses crowd-sourcing to collect and visualize the density of the relevant symptoms. Registration only asks about age and gender to be used for data science purposes. Users can anonymously report symptoms and choose a location to see the density of symptoms in a map view. The data is aggregated by places, therefore, the app can help people avoid visiting a grocery store or a gas station that is heavily used by symptomatic people. </p>
+                    <p> By filling out simple questionnaires about your health and symptoms every day you can help tackle the spread of the virus and ending the pandemic. Moreover, by looking or searching places you want to go, maybe to run errands or to grab groceries, you can find out how symptomatic the place is and what kinda measure you should take. </p>`
         },
         {
-          icon: "mdi-check",
+          title: "The Mission",
+          content: `<p> When you have coronavirus, you are not just afraid of dying but also about affecting your loved ones. When you go out to the local market or any other place, you fear that you might get infected. Using CoronaApp, users can easily track their movements to keep data and predict which areas are high-risk at the moment. </p>
+                    <p> We are striving to have everyone well-aware of the coronavirus and be vigilant towards it, having reliable information that’s analyzed and is ready to comprehend and make use out of. </p>`
+        },
+        {
+          title: "Your Data",
+          content: `<p> Your data will be used anonymously for the purpose of data science and statistics being open source meaning any info generated isn’t traced back to a single user. This is a non-commercial project with no intention of profit. </p>`
+        }
+      ],
+      actions: [
+        {
+          icon: "mdi-search-web",
+          title: "A2SV Website",
+          description:
+            "Check out the team's website to learn more about our team, our program, our team members and how we started our journey.",
+          links: [{ text: "Visit Website", href: "http://a2sv.org/" }]
+        },
+        {
+          icon: "mdi-cloud-download-outline",
           title: "Download The App",
           description:
-            "The App will have this and that and thisThe App will have this and that and thisThe App will have this and that and this and that",
+            "Download our Symptom-tracking app, easily locate areas with a high density of symptoms using real-time data, and keep each other safe.",
           links: [
             { text: "Get on Play Store", href: "#" },
             { text: "Get on App Store", href: "#" }
           ]
         },
         {
-          icon: "mdi-key",
-          title: "This example trial",
+          icon: "mdi-youtube",
+          title: "Watch the Video",
           description:
-            "lorem ipsum dolor amet sitlorem ipsum dolor amet sitlorem ipsum dolor amet sit",
-          links: [{ text: "Go for it", href: "#" }]
+            "Learn how our app help mitigate the spread of COVID-19 and flatten the curve especially in countries with limited testing capacity.",
+          links: [{ text: "Go to Youtube", href: "#" }]
+        }
+      ],
+      partners: [
+        {
+          name: "Addis Ababa University",
+          image_url:
+            "https://upload.wikimedia.org/wikipedia/en/thumb/d/dc/Addis_Ababa_University_logo.png/220px-Addis_Ababa_University_logo.png",
+          link: "http://www.aau.edu.et/"
+        },
+        {
+          name: "This Organization",
+          image_url:
+            "https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png",
+          link: "#"
+        },
+        {
+          name: "This Other Organization",
+          image_url:
+            "https://images.theconversation.com/files/93616/original/image-20150902-6700-t2axrz.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=1000&fit=clip",
+          link: "#"
         }
       ]
     };
+  },
+  methods: {
+    sendForm() {
+      axios.post(`${process.env.VUE_APP_BASE_URL}/messages`, this.contact).then(
+        resp => {
+          this.showAlert = true;
+          console.log(resp);
+          this.type = "success";
+          this.message = "Your feedback is successfully submitted!";
+        },
+        err => {
+          this.showAlert = true;
+          console.log(err);
+          this.type = "error";
+          this.message = "Something went wrong!";
+        }
+      );
+    }
   }
 };
 </script>

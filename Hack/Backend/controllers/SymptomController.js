@@ -14,10 +14,9 @@ exports.get_all_symptoms = async (req, res) => {
     try {
         res.send(symptoms);
     } catch (err) {
-        res.status(500).send(err);
+        res.status(500).send(err.toString());
     }
 };
-
 
 // Post a symptom
 exports.post_symptom = async (req, res) => {
@@ -39,19 +38,18 @@ exports.post_symptom = async (req, res) => {
     }
 
     try {
-        const symptomExists = await Symptom.findOne({name: symptom.name, relevance: symptom.relevance});
-        if(symptomExists){
+        const symptomExists = await Symptom.findOne({ name: symptom.name, relevance: symptom.relevance });
+        if (symptomExists) {
             res.send(symptomExists);
         }
-        else{
+        else {
             await symptom.save();
-            res.send(symptom);    
+            res.send(symptom);
         }
     } catch (err) {
-        res.status(500).send(err);
+        res.status(500).send(err.toString());
     }
 };
-
 
 //Get a symptom by id
 exports.get_symptom_by_id = async (req, res) => {
@@ -65,7 +63,7 @@ exports.get_symptom_by_id = async (req, res) => {
     try {
         res.send(symptom);
     } catch (err) {
-        res.status(500).send(err);
+        res.status(500).send(err.toString());
     }
 };
 
@@ -76,15 +74,16 @@ exports.update_symptom = async (req, res) => {
     //         res.status(401).send("Incorrect authentication key");
     //     }
     // });
-
     try {
-        const symptom = await Symptom.findByIdAndUpdate(req.body._id, req.body);
-        if (!symptom) {
+        let symptom = await Symptom.findOneAndUpdate(req.params.symptom_id, req.body);
+        if (symptom) {
+            let updatedSymptom = await Symptom.findById(symptom._id);
+            res.status(200).send(updatedSymptom);
+        } else {
             res.status(400).send("Symptom not found");
         }
-        res.send(symptom);
-    } catch (err) {
-        res.status(500).send(err);
+    } catch (error) {
+        res.status(500).send(error);
     }
 };
 
@@ -97,12 +96,13 @@ exports.delete_symptom = async (req, res) => {
     // });
 
     try {
-        const sympton = await Symptom.findByIdAndRemove(req.body._id);
+        const symptom = await Symptom.findByIdAndRemove(req.body._id);
         if (!symptom) {
-            res.status(404).send("Symptom not found found");
+            res.status(404).send("Symptom not found");
+        } else {
+            res.status(200).send(symptom);
         }
-        res.status(200).send(symptom);
     } catch (err) {
-        res.status(500).send(err);
+        res.status(500).send(err.toString());
     }
 };

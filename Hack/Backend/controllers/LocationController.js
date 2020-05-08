@@ -6,6 +6,7 @@ const { Symptom } = require("./../models/Symptom");
 const { User } = require("./../models/UserModel");
 const jwt = require("jsonwebtoken");
 const axios = require("axios");
+const geolib = require("geolib");
 
 // Display list of all locations.
 exports.get_all_locations = async (req, res) => {
@@ -19,21 +20,36 @@ exports.get_all_locations = async (req, res) => {
   try {
     res.send(locations);
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send(err.toString());
   }
 };
 
 exports.get_all_locations_with_symptoms = async (req, res) => {
-  jwt.verify(req.token, "secretkey", (err, authData) => {
-    if (err) {
-      res.status(401).send("Incorrect authentication key");
-    }
-  });
+  // jwt.verify(req.token, "secretkey", (err, authData) => {
+  //   if (err) {
+  //     res.status(401).send("Incorrect authentication key");
+  //   }
+  // });
+  if(!req.body.longitude || !req.body.latitude){
+    return res.status(400).send("Coordinates are not given");
+  }
+  let lat = req.body.latitude;
+  let long = req.body.longitude;
+
   let result = [];
-  const locations = await Location.find({});
+  const locations = await Location.find({});  
   // Get Symptoms for each user and store in Symptoms
   for (let i = 0; i < locations.length; i++) {
     let location = locations[i];
+    let isInRadius = geolib.isPointWithinRadius(
+      { latitude: location.latitude, longitude: location.longitude },
+      { latitude: lat, longitude: long },      
+      10000*0.621371
+    )
+    if(!isInRadius){
+      continue;
+    }
+
     const users = await LocationUser.find({
       location_id: { $eq: location._id }
     });
@@ -83,7 +99,9 @@ exports.post_location = async (req, res) => {
   //     res.status(401).send("Incorrect authentication key");
   //   }
   // });
-
+  if(!req.body.longitude||!req.body.latitude){
+    return res.status(500).send("Coordinates not given");
+  }
   const check = await Location.findOne({
     longitude: { $eq: req.body.longitude },
     latitude: { $eq: req.body.latitude },
@@ -102,7 +120,7 @@ exports.post_location = async (req, res) => {
       const result = await axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${location.longitude},${location.latitude}.json?types=poi&access_token=pk.eyJ1IjoiZmVyb3g5OCIsImEiOiJjazg0czE2ZWIwNHhrM2VtY3Y0a2JkNjI3In0.zrm7UtCEPg2mX8JCiixE4g`)
         .then(response => {
           if (response.data) {
-            if (response.data.features) {
+            if (response.data.features && response.data.features.length>0) {
               location.longitude = response.data.features[0].center[0];
               location.latitude = response.data.features[0].center[1];
               location.place_name = response.data.features[0].text;
@@ -116,7 +134,7 @@ exports.post_location = async (req, res) => {
       await result.save();
       res.send(result);
     } catch (err) {
-      res.status(500).send(err);
+      res.status(500).send(err.toString());
     }
   }
 };
@@ -128,11 +146,14 @@ exports.get_location_by_id = async (req, res) => {
   //   }
   // });
 
-  const location = await Location.findById(req.params.id);
   try {
+    const location = await Location.findById(req.params.id);
+    if(!location){
+      return res.status(500).send("Location not found");
+    }
     res.send(location);
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send(err.toString());
   }
 };
 //Get a specific Location by latitude and longitude
@@ -143,14 +164,17 @@ exports.get_location_by_coordinates = async (req, res) => {
   //   }
   // });
 
-  const locations = await Location.find({
-    latitude: { $eq: req.params.latitude },
-    longitude: { $eq: req.params.longitude },
-  });
   try {
+    const locations = await Location.find({
+      latitude: { $eq: req.params.latitude },
+      longitude: { $eq: req.params.longitude },
+    });
+    if(!locations || locations.length<1){
+      return res.status(500).send("Location not found with the given coordinates");
+    }
     res.send(locations);
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send(err.toString());
   }
 };
 //Update a location by id
@@ -162,12 +186,20 @@ exports.update_location = async (req, res) => {
   // });
 
   try {
-    await Location.findByIdAndUpdate(req.body._id, req.body);
-    const location = await Location.save();
-    await Location.save();
-    res.send(location);
+    let location = await Location.findById(req.body._id);
+    if(!location){
+      return res.status(500).send("Location doesnot exist");      
+    }
+    location.set(req.body);
+    let check = await Location.findOne({latitude: location.latitude, longitude: location.longitude});
+    if(!check){
+      await location.save();
+      return res.send(location);
+    }
+    await Location.findByIdAndDelete(location._id);
+    res.send(check);
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send(err.toString());
   }
 };
 //Delete a location
@@ -186,7 +218,7 @@ exports.delete_location = async (req, res) => {
       res.status(204).send(location);
     }
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send(err.toString());
   }
 };
 

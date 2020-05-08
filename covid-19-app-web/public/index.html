@@ -1,13 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta content="IE=edge" http-equiv="X-UA-Compatible">
-  <meta content="width=device-width,initial-scale=1.0" name="viewport">
-  <link href="<%= BASE_URL %>favicon.ico" rel="icon">
-  <title><%= htmlWebpackPlugin.options.title %></title>
-  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css" rel="stylesheet">
+  <meta charset="utf-8" />
+  <meta content="IE=edge" http-equiv="X-UA-Compatible" />
+  <meta content="width=device-width,initial-scale=1.0" name="viewport" />
+
+  <meta property="og:title" content="A2SV Covid-19 Symptom Tracker" />
+  <meta property="og:description" content="COVID-19 Symptom Tracker is a non-commercial app that uses crowd-sourcing to collect and visualize the density of the relevant symptoms. Registration only asks about age and gender to be used for data science purposes. Users can anonymously report symptoms and choose a location to see the density of symptoms in a map view. The data is aggregated by places, therefore, the app can help people avoid visiting a grocery store or a gas station that is heavily used by symptomatic people." />
+  <meta property="og:image" content="<%= BASE_URL %>logo.png" />
+  <meta property="og:image:width" content="100px" />
+  <meta property="og:image:height" content="100px" />
+  <meta property="og:url" content="http://a2sv-covid.herokuapp.com">
+  <meta property="og:type" content="article" />
+
+  <link href="<%= BASE_URL %>favicon.ico" rel="icon" />
+  <title>Covid-19 Symptom Tracker</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fenix&family=Nunito&family=Open+Sans&family=Roboto:wght@300&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mapbox-gl/1.9.1/mapbox-gl.min.js"></script>
 </head>
 <body>
 <noscript>
