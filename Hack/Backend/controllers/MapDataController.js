@@ -23,6 +23,8 @@ const run_updates = () => {
     await updateDb();
   });
 };
+exports.run_updates = run_updates;
+run_updates();
 
 updateDb = async () => {
   let urls = [

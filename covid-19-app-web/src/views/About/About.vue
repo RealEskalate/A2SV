@@ -30,14 +30,25 @@
               </div>
             </div>
             <div class="mx-auto mt-10 py-5">
-              <h3 class="display-1 font-weight-thin" v-text="'Contact Us'" />
+              <v-alert
+                v-if="showAlert"
+                :type="type"
+                v-text="message"
+                dismissible
+              ></v-alert>
+              <h3 class="display-1 font-weight-thin">Contact us</h3>
               <v-form class="py-5">
-                <v-text-field label="Name" />
-                <v-text-field label="Email" />
-                <v-textarea rows="5" label="Message" />
+                <v-text-field label="Name" v-model="contact.name" />
+                <v-text-field label="Email" v-model="contact.email" />
+                <v-textarea
+                  rows="5"
+                  label="Message"
+                  v-model="contact.message"
+                />
                 <div class="text-center py-3">
-                  <v-btn width="100" class="primary mx-auto">
-                    Send <v-icon class="ml-2" small>mdi-send</v-icon>
+                  <v-btn width="100" class="primary mx-auto" @click="sendForm">
+                    Send
+                    <v-icon class="ml-2" small>mdi-send</v-icon>
                   </v-btn>
                 </div>
               </v-form>
@@ -114,9 +125,19 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   data: () => {
     return {
+      showAlert: false,
+      message: "",
+      type: "success",
+      contact: {
+        name: "",
+        email: "",
+        message: ""
+      },
       descriptions: [
         {
           title: "Corona App",
@@ -180,6 +201,24 @@ export default {
         }
       ]
     };
+  },
+  methods: {
+    sendForm() {
+      axios.post(`${process.env.VUE_APP_BASE_URL}/messages`, this.contact).then(
+        resp => {
+          this.showAlert = true;
+          console.log(resp);
+          this.type = "success";
+          this.message = "Your feedback is successfully submitted!";
+        },
+        err => {
+          this.showAlert = true;
+          console.log(err);
+          this.type = "error";
+          this.message = "Something went wrong!";
+        }
+      );
+    }
   }
 };
 </script>
