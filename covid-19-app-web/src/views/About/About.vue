@@ -5,19 +5,13 @@
         <v-row>
           <v-col class="px-md-10" cols="12" md="7">
             <div :key="i" v-for="(description, i) in descriptions">
-              <h3
-                class="display-1 font-weight-thin"
-                v-text="description.title"
-              />
-              <div
-                class="my-5 grey--text text--darken-2"
-                v-html="description.content"
-              />
+              <h3 class="display-1 font-weight-thin"> {{ description.title }} </h3>
+              <div class="my-5 grey--text text--darken-2"> {{description.content}}</div>
             </div>
           </v-col>
           <v-col class="px-md-10" cols="12" md="5">
             <div>
-              <h3 class="display-1 font-weight-thin" v-text="'Who we are'" />
+              <h3 class="display-1 font-weight-thin"> Who we are </h3>
               <div class="my-5 grey--text text--darken-2">
                 <p>
                   <strong>A2SV - Africa to Silicon Valley</strong> is a team of
@@ -38,12 +32,13 @@
               ></v-alert>
               <h3 class="display-1 font-weight-thin">Contact us</h3>
               <v-form class="py-5">
-                <v-text-field label="Name" v-model="contact.name" />
-                <v-text-field label="Email" v-model="contact.email" />
+                <v-text-field label="Name" v-model="contact.name" :rules="rules.nameRules" counter="10"/>
+                <v-text-field label="Email" v-model="contact.email" :rules="rules.emailRules"/>
                 <v-textarea
-                  rows="5"
-                  label="Message"
-                  v-model="contact.message"
+                        rows="5"
+                        label="Message"
+                        :rules="rules.messageRules"
+                        v-model="contact.message"
                 />
                 <div class="text-center py-3">
                   <v-btn width="100" class="primary mx-auto" @click="sendForm">
@@ -78,16 +73,15 @@
                 style="font-size: 4em"
                 v-text="action.icon"
               />
-              <h1 v-text="action.title" />
-              <p class="font-weight-thin my-2" v-text="action.description" />
+              <h1> {{ action.title }} </h1>
+              <p class="font-weight-thin my-2"> {{ action.description }} </p>
               <a
                 :key="'links_' + link_i"
                 v-for="(link, link_i) in action.links"
                 :href="link.href"
                 class="mx-2 grey--text text--lighten-5"
                 target="_blank"
-                v-text="link.text"
-              />
+              > {{link.text}} </a>
             </v-col>
           </v-row>
         </v-container>
@@ -125,9 +119,9 @@
 </template>
 
 <script>
-import axios from "axios";
+  import axios from "axios";
 
-export default {
+  export default {
   data: () => {
     return {
       showAlert: false,
@@ -137,6 +131,20 @@ export default {
         name: "",
         email: "",
         message: ""
+      },
+      rules: {
+        nameRules: [
+          v => !!v || 'Name is required',
+          v => (v && v.length <= 10) || 'Name must be less than 10 characters',
+        ],
+        emailRules: [
+          v => !!v || 'E-mail is required',
+          v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+        ],
+        messageRules: [
+          v => !!v || 'Message is required',
+          v => (v && v.length <= 10) || 'Message must be less than 150 characters',
+        ]
       },
       descriptions: [
         {
