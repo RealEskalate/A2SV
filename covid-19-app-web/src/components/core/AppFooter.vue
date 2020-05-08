@@ -6,12 +6,20 @@
     <v-container class="my-2">
       <v-layout row wrap>
         <v-flex xs3 md3>
-          <img
-            src="/img/footer/logo.png"
-            class="center"
-            style="width: 170px;"
-          />
-          <p class="font-weight-bold ml-10">App Name</p>
+          <router-link class="d-flex align-center no-decoration" to="/">
+            <v-img
+              alt="Vuetify Logo"
+              class="shrink mr-2"
+              contain
+              src="@/assets/logo-v1.png"
+              transition="scale-transition"
+              width="100"
+            />
+            <div>
+              <h3 class="blue--text no-decoration">Covid-19</h3>
+            </div>
+          </router-link>
+          <span class="font-weight-bold ml-4">Stay Safe</span>
         </v-flex>
         <v-flex xs4 md3 class="mx-2">
           <p class="font-weight-bold text-center">Get our App</p>
