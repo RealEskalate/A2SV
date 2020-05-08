@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-container>
     <v-app-bar app class="white" flat v-bind:class="{ raised: raise }">
       <v-app-bar-nav-icon
         v-if="$vuetify.breakpoint.smAndDown"
@@ -29,21 +29,22 @@
       </v-btn>
     </v-app-bar>
     <v-navigation-drawer
-      v-if="$vuetify.breakpoint.smAndDown"
-      v-model="drawer"
-      absolute
-      temporary
+            v-if="$vuetify.breakpoint.smAndDown"
+            v-model="drawer"
+            temporary
+            app
+            overflow
     >
       <v-list dense nav shaped>
         <v-list-item-group v-model="curRoute"
-          justify="center"
-          active-class="primary--text"
-          class="mt-5"
+                           justify="center"
+                           active-class="deep-purple--text text--accent-4"
+                           class="mt-5"
         >
           <template v-for="(item, i) in links">
             <v-list-item
                     :key="i"
-                    :href="item.to"
+                    :to="item.to"
                     @click="drawer = false"
             >
               <v-list-item-action>
@@ -55,7 +56,7 @@
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
-  </div>
+  </v-container>
 </template>
 
 <script>
@@ -77,6 +78,7 @@ export default {
   },
   created() {
     window.addEventListener("scroll", this.handleScroll);
+    // alert(screen.height);
   },
   destroyed() {
     window.removeEventListener("scroll", this.handleScroll);
