@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <app-bar />
-    <v-content style="font-family: 'Nunito',sans-serif">
+    <v-content class="px-md-0 px-3" style="font-family: 'Nunito',sans-serif">
       <router-view />
       <vue-progress-bar />
     </v-content>
