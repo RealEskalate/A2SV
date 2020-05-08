@@ -6,7 +6,7 @@
           <v-col class="px-md-10" cols="12" md="7">
             <div :key="i" v-for="(description, i) in descriptions">
               <h3 class="display-1 font-weight-thin"> {{ description.title }} </h3>
-              <div class="my-5 grey--text text--darken-2"> {{description.content}}</div>
+              <div class="my-5 grey--text text--darken-2" v-html="description.content"></div>
             </div>
           </v-col>
           <v-col class="px-md-10" cols="12" md="5">
