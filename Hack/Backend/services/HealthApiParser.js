@@ -124,7 +124,7 @@ const getCountryStat = (startDate, endDate, req, res, respond, rates) => {
                 caseData = calculateDaily(caseData)
             }
             if (rates) {
-                caseData = calculateRate(caseData, dailyConfirmed)
+                caseData = calculateRate(caseData, dailyConfirmed, criteria)
             }
         }
         caseData.sort((a, b) => (a.confirmed > b.confirmed) ? 1 : -1)
@@ -188,7 +188,7 @@ const getWorldStat = (request_url, startDate, endDate, req, res, respond, rates)
                         results = calculateDaily(results)
                     }
                     if (rates) {
-                        results = calculateRate(results, dailyConfirmed)
+                        results = calculateRate(results, dailyConfirmed, criteria)
                     }
                 }
                 results.sort((a, b) => (a.confirmed > b.confirmed) ? 1 : -1)
@@ -291,14 +291,21 @@ exports.populate_db_daily = async() => {
 };
 
 
-const calculateRate = (caseData, dailyConifrmed) => {
+const calculateRate = (caseData, dailyConifrmed, criteria = null) => {
     let rateData = [];
 
     caseData.forEach((data) => {
-        rateData.push({
-            t: data.t,
-            y: ((data.y / dailyConifrmed[data.t]) * 100).toFixed(2)
-        })
+        if (criteria && criteria == "Tests") {
+            rateData.push({
+                t: data.t,
+                y: ((dailyConifrmed[data.t] / data.y) * 100).toFixed(2)
+            })
+        } else {
+            rateData.push({
+                t: data.t,
+                y: ((data.y / dailyConifrmed[data.t]) * 100).toFixed(2)
+            })
+        }
     });
 
     return rateData;
