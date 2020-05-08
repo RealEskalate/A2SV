@@ -5,6 +5,8 @@
         <v-select
           v-model="country"
           :items="countries"
+          item-text="name"
+          item-value="slug"
           label="Country"
           hint="Country"
           persistent-hint
@@ -109,7 +111,7 @@ export default {
           .format("YYYY-MM-DD"),
         moment(new Date()).format("YYYY-MM-DD")
       ],
-      country: "World",
+      country: "world",
       age_range: "All",
       social_distancing: 50
     };

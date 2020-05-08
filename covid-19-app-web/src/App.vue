@@ -12,6 +12,7 @@
 <script>
 import AppBar from "./components/core/AppBar.vue";
 import AppFooter from "./components/core/AppFooter.vue";
+import store from "@/store/";
 
 export default {
   name: "App",
@@ -24,6 +25,7 @@ export default {
     this.$Progress.finish();
   },
   created() {
+    store.dispatch("fillCountriesList");
     //  [App.vue specific] When App.vue is first loaded start the progress bar
     this.$Progress.start();
     //  hook the progress bar to start before we move router-view
