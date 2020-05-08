@@ -105,7 +105,7 @@ const getCountryStat = (startDate, endDate, req, res, respond, rates) => {
                     y: (item['confirmed'] - item['recovered'] - item['deaths'])
                 });
             } else {
-                if (item[criteria.toLowerCase()]) {
+                if (item[criteria.toLowerCase()] != undefined && item[criteria.toLowerCase()] != null) {
                     caseData.push({
                         t: item.date,
                         y: item[criteria.toLowerCase()]
@@ -173,7 +173,7 @@ const getWorldStat = (request_url, startDate, endDate, req, res, respond, rates)
                                 y: (item['Confirmed'] - item['Recovered'] - item['Deaths'])
                             });
                         } else {
-                            if (item[criteria.toLowerCase()]) {
+                            if (item[criteria.toLowerCase()] != undefined && item[criteria.toLowerCase()] != null) {
                                 results.push({
                                     t: item.Date,
                                     y: item[criteria]
