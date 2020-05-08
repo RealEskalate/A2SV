@@ -77,7 +77,7 @@
       </v-col>
       <v-spacer></v-spacer>
       <v-col :cols="3">
-        <v-card tile :elevation="1">
+        <v-card tile :elevation="0.5">
           <v-card-title>Source</v-card-title>
           <v-card-text>
             <v-checkbox
