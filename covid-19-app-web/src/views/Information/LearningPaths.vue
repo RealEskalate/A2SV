@@ -22,8 +22,8 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col>
-        <v-simple-table fixed-header style="min-width: 700px">
+      <v-col cols="12">
+        <v-simple-table fixed-header>
           <template v-slot:default>
             <thead>
               <tr>

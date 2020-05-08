@@ -7,6 +7,9 @@ import VTooltip from "v-tooltip";
 import VueProgressBar from "vue-progressbar";
 import VueLoaders from "vue-loaders";
 
+import AOS from "aos";
+import "aos/dist/aos.css";
+
 Vue.use(VTooltip);
 Vue.use(VueLoaders);
 Vue.use(VueProgressBar, {
@@ -21,5 +24,8 @@ new Vue({
   router,
   store,
   vuetify,
+  created() {
+    AOS.init();
+  },
   render: h => h(App)
 }).$mount("#app");
