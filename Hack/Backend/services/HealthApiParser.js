@@ -44,7 +44,7 @@ exports.getHealthStatistics = (req, res, respond, rates = false) => {
     let startDate = new Date(Date.parse(setStartDate(req)));
     let endDate = new Date(Date.parse(setEndDate(req)));
 
-    if (req.query.country.toLowerCase() === "world") {
+    if (req.query.country == "World") {
         let request_url = "https://datahub.io/core/covid-19/r/worldwide-aggregated.csv";
         getWorldStat(request_url, startDate, endDate, req, res, respond, rates);
     } else {
@@ -173,7 +173,7 @@ const getWorldStat = (request_url, startDate, endDate, req, res, respond, rates)
                                 y: (item['Confirmed'] - item['Recovered'] - item['Deaths'])
                             });
                         } else {
-                            if (item[criteria.toLowerCase()] != undefined && item[criteria.toLowerCase()] != null) {
+                            if (item[criteria] != undefined && item[criteria] != null) {
                                 results.push({
                                     t: item.Date,
                                     y: item[criteria]
@@ -210,7 +210,7 @@ exports.countrySlugList = (res, respond) => {
 
     Cases.find({ date: dayQuery })
         .then((countryData) => {
-            let countries = [{ 'name': "World", 'slug': "world" }]
+            let countries = [{ 'name': "World", 'slug': "World" }]
             if (countryData) {
                 countryData.sort((a, b) => (a.confirmed > b.confirmed) ? -1 : 1)
                 for (var index in countryData) {
