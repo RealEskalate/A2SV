@@ -355,6 +355,31 @@ class DataAnalytics extends React.Component {
       graphLebel_counter += interval;
     }
   };
+  //Reformat number
+  reformatNumber(nStr) {
+    var x = nStr.split(".");
+    var x1 = x[0];
+    var x2 = x.length > 1 ? "." + x[1] : "";
+    var rgx = /(\d+)(\d{3})/;
+    while (rgx.test(x1)) {
+      x1 = x1.replace(rgx, "$1" + "," + "$2");
+    }
+    return x1 + x2;
+  }
+
+  intToString(value) {
+    var suffixes = ["", "k", "m", "b", "t"];
+    var suffixNum = Math.floor(("" + value).length / 3);
+    var shortValue = parseFloat(
+      (suffixNum != 0 ? value / Math.pow(1000, suffixNum) : value).toPrecision(
+        2
+      )
+    );
+    if (shortValue % 1 != 0) {
+      shortValue = shortValue.toFixed(1);
+    }
+    return shortValue + suffixes[suffixNum];
+  }
 
   render() {
     const HIEGHT = Dimensions.get("window").height;
@@ -448,12 +473,16 @@ class DataAnalytics extends React.Component {
                   <ActivityIndicator size="small" color="gray" />
                 ) : (
                   <Text style={{ fontSize: 24, color: "gray" }}>
-                    {this.state.TotalStatisticsData[
-                      this.state.TotalStatisticsData.length - 1
-                    ].Confirmed -
-                      this.state.TotalStatisticsData[
-                        this.state.TotalStatisticsData.length - 2
-                      ].Confirmed}
+                    {this.reformatNumber(
+                      String(
+                        this.state.TotalStatisticsData[
+                          this.state.TotalStatisticsData.length - 1
+                        ].Confirmed -
+                          this.state.TotalStatisticsData[
+                            this.state.TotalStatisticsData.length - 2
+                          ].Confirmed
+                      )
+                    )}
                   </Text>
                 )}
                 <Text>New Cofirmed</Text>
@@ -477,12 +506,16 @@ class DataAnalytics extends React.Component {
                   <ActivityIndicator size="small" color="green" />
                 ) : (
                   <Text style={{ fontSize: 24, color: "green" }}>
-                    {this.state.TotalStatisticsData[
-                      this.state.TotalStatisticsData.length - 1
-                    ].Recovered -
-                      this.state.TotalStatisticsData[
-                        this.state.TotalStatisticsData.length - 2
-                      ].Recovered}
+                    {this.reformatNumber(
+                      String(
+                        this.state.TotalStatisticsData[
+                          this.state.TotalStatisticsData.length - 1
+                        ].Recovered -
+                          this.state.TotalStatisticsData[
+                            this.state.TotalStatisticsData.length - 2
+                          ].Recovered
+                      )
+                    )}
                   </Text>
                 )}
                 <Text>New Recovered</Text>
@@ -506,12 +539,16 @@ class DataAnalytics extends React.Component {
                   <ActivityIndicator size="small" color="red" />
                 ) : (
                   <Text style={{ fontSize: 24, color: "red" }}>
-                    {this.state.TotalStatisticsData[
-                      this.state.TotalStatisticsData.length - 1
-                    ].Deaths -
-                      this.state.TotalStatisticsData[
-                        this.state.TotalStatisticsData.length - 2
-                      ].Deaths}
+                    {this.reformatNumber(
+                      String(
+                        this.state.TotalStatisticsData[
+                          this.state.TotalStatisticsData.length - 1
+                        ].Deaths -
+                          this.state.TotalStatisticsData[
+                            this.state.TotalStatisticsData.length - 2
+                          ].Deaths
+                      )
+                    )}
                   </Text>
                 )}
                 <Text>New Death</Text>
@@ -561,11 +598,13 @@ class DataAnalytics extends React.Component {
                   <ActivityIndicator size="small" color="gray" />
                 ) : (
                   <Text style={{ fontSize: 24, color: "gray" }}>
-                    {
-                      this.state.TotalStatisticsData[
-                        this.state.TotalStatisticsData.length - 1
-                      ].Confirmed
-                    }
+                    {this.reformatNumber(
+                      String(
+                        this.state.TotalStatisticsData[
+                          this.state.TotalStatisticsData.length - 1
+                        ].Confirmed
+                      )
+                    )}
                   </Text>
                 )}
                 <Text>Total Cofirmed</Text>
@@ -589,11 +628,13 @@ class DataAnalytics extends React.Component {
                   <ActivityIndicator size="small" color="green" />
                 ) : (
                   <Text style={{ fontSize: 24, color: "green" }}>
-                    {
-                      this.state.TotalStatisticsData[
-                        this.state.TotalStatisticsData.length - 1
-                      ].Recovered
-                    }
+                    {this.reformatNumber(
+                      String(
+                        this.state.TotalStatisticsData[
+                          this.state.TotalStatisticsData.length - 1
+                        ].Recovered
+                      )
+                    )}
                   </Text>
                 )}
                 <Text>Total Recovered</Text>
@@ -617,11 +658,13 @@ class DataAnalytics extends React.Component {
                   <ActivityIndicator size="small" color="red" />
                 ) : (
                   <Text style={{ fontSize: 24, color: "red" }}>
-                    {
-                      this.state.TotalStatisticsData[
-                        this.state.TotalStatisticsData.length - 1
-                      ].Deaths
-                    }
+                    {this.reformatNumber(
+                      String(
+                        this.state.TotalStatisticsData[
+                          this.state.TotalStatisticsData.length - 1
+                        ].Deaths
+                      )
+                    )}
                   </Text>
                 )}
                 <Text>Total Death</Text>
@@ -914,6 +957,7 @@ class DataAnalytics extends React.Component {
                 width={Dimensions.get("window").width} // from react-native
                 height={HIEGHT / 2}
                 fromZero={true}
+                formatYLabel={(Y) => this.intToString(Number(Y))}
                 chartConfig={{
                   backgroundColor: "#0080ff",
                   backgroundGradientFrom: "#0080ff",
@@ -1114,7 +1158,7 @@ class DataAnalytics extends React.Component {
                   backgroundGradientTo: "#0080ff",
                   scrollableDotFill: "#ffffff",
                   barPercentage: 0.1,
-                  decimalPlaces: 0, // optional, defaults to 2dp
+                  decimalPlaces: 1, // optional, defaults to 2dp
                   color: (opacity = 0) => `rgba(255, 266, 255, ${opacity})`,
                   style: {
                     borderRadius: 10,
