@@ -1,5 +1,5 @@
 <template>
-  <section class="map py-10">
+  <section class="map pb-10">
     <v-container>
       <v-row>
         <v-col>

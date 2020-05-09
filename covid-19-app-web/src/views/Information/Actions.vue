@@ -19,7 +19,7 @@
             <v-expansion-panel-header
               class="font-weight-bold"
               hide-actions
-              @mouseover="auto = false"
+              @mouseenter="auto = false"
               @mouseleave="auto = true"
             >
               <div class="text--primary">
@@ -38,25 +38,9 @@
             <v-expansion-panel-content>
               <div
                 v-html="action.description"
-                @mouseover="auto = false"
+                @mouseenter="auto = false"
                 @mouseleave="auto = true"
               />
-              <div
-                v-if="action.learning"
-                @mouseover="auto = false"
-                @mouseleave="auto = true"
-              >
-                <v-chip
-                  small
-                  color="primary lighten-1"
-                  target="_blank"
-                  :key="ind"
-                  v-for="(path, ind) in learningPaths"
-                  class="mx-1 my-2"
-                  :href="path.link"
-                  v-text="path.text"
-                />
-              </div>
               <v-img
                 class="my-5 mx-auto d-md-none"
                 :lazy-src="action.image"
@@ -116,28 +100,6 @@ export default {
         //   learning: true
         // }
       ],
-      learningPaths: [
-        {
-          text: "For Kids",
-          link:
-            "https://docs.google.com/spreadsheets/d/1O19GX2m7a_OY-F0O0wx62wpacRDwbUWHA0JAplojpnE/edit#gid=0"
-        },
-        {
-          text: "For Teenagers",
-          link:
-            "https://docs.google.com/spreadsheets/d/1O19GX2m7a_OY-F0O0wx62wpacRDwbUWHA0JAplojpnE/edit#gid=1774735521"
-        },
-        {
-          text: "For Adults",
-          link:
-            "https://docs.google.com/spreadsheets/d/1O19GX2m7a_OY-F0O0wx62wpacRDwbUWHA0JAplojpnE/edit#gid=1786371463"
-        },
-        {
-          text: "For Seniors",
-          link:
-            "https://docs.google.com/spreadsheets/d/1O19GX2m7a_OY-F0O0wx62wpacRDwbUWHA0JAplojpnE/edit#gid=683871385"
-        }
-      ]
     };
   },
   beforeDestroy() {
