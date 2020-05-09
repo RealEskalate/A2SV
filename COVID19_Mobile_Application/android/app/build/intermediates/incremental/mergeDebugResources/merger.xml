@@ -5903,7 +5903,30 @@
   </style><style name="Widget.MaterialComponents.PopupMenu.ListPopupWindow" parent="Base.Widget.MaterialComponents.PopupMenu.ListPopupWindow">
     <item name="android:popupBackground">?attr/popupMenuBackground</item>
     <item name="android:popupElevation">8dp</item>
-  </style></file><file path="C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\1873fe9405c2e2a7c5fa3eda6cb1076f\material-1.1.0\res\values-v28\values-v28.xml" qualifiers="v28"><item format="float" name="mtrl_high_ripple_default_alpha" type="dimen">0.24</item><item format="float" name="mtrl_high_ripple_focused_alpha" type="dimen">0.40</item><item format="float" name="mtrl_high_ripple_hovered_alpha" type="dimen">0.40</item><item format="float" name="mtrl_high_ripple_pressed_alpha" type="dimen">0.24</item><item format="float" name="mtrl_low_ripple_default_alpha" type="dimen">0.12</item><item format="float" name="mtrl_low_ripple_focused_alpha" type="dimen">0.20</item><item format="float" name="mtrl_low_ripple_hovered_alpha" type="dimen">0.20</item><item format="float" name="mtrl_low_ripple_pressed_alpha" type="dimen">0.12</item></file><file path="C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\1873fe9405c2e2a7c5fa3eda6cb1076f\material-1.1.0\res\values-w360dp-port-v13\values-w360dp-port-v13.xml" qualifiers="w360dp-port-v13"><dimen name="mtrl_calendar_bottom_padding">4dp</dimen><dimen name="mtrl_calendar_day_corner">18dp</dimen><dimen name="mtrl_calendar_day_height">40dp</dimen><dimen name="mtrl_calendar_day_horizontal_padding">2dp</dimen><dimen name="mtrl_calendar_day_vertical_padding">2dp</dimen><dimen name="mtrl_calendar_day_width">40dp</dimen><dimen name="mtrl_calendar_days_of_week_height">40dp</dimen><dimen name="mtrl_calendar_month_horizontal_padding">4dp</dimen></file><file path="C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\1873fe9405c2e2a7c5fa3eda6cb1076f\material-1.1.0\res\values-w480dp-port-v13\values-w480dp-port-v13.xml" qualifiers="w480dp-port-v13"><dimen name="mtrl_calendar_bottom_padding">0dp</dimen><dimen name="mtrl_calendar_day_corner">22dp</dimen><dimen name="mtrl_calendar_day_height">48dp</dimen><dimen name="mtrl_calendar_day_horizontal_padding">2dp</dimen><dimen name="mtrl_calendar_day_vertical_padding">2dp</dimen><dimen name="mtrl_calendar_day_width">48dp</dimen><dimen name="mtrl_calendar_days_of_week_height">48dp</dimen><dimen name="mtrl_calendar_month_horizontal_padding">0dp</dimen></file><file name="standalone_badge" path="C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\1873fe9405c2e2a7c5fa3eda6cb1076f\material-1.1.0\res\xml\standalone_badge.xml" qualifiers="" type="xml"/><file name="standalone_badge_gravity_bottom_end" path="C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\1873fe9405c2e2a7c5fa3eda6cb1076f\material-1.1.0\res\xml\standalone_badge_gravity_bottom_end.xml" qualifiers="" type="xml"/><file name="standalone_badge_gravity_bottom_start" path="C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\1873fe9405c2e2a7c5fa3eda6cb1076f\material-1.1.0\res\xml\standalone_badge_gravity_bottom_start.xml" qualifiers="" type="xml"/><file name="standalone_badge_gravity_top_start" path="C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\1873fe9405c2e2a7c5fa3eda6cb1076f\material-1.1.0\res\xml\standalone_badge_gravity_top_start.xml" qualifiers="" type="xml"/></source></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":unimodules-sensors-interface$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\unimodules-sensors-interface\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":unimodules-sensors-interface" from-dependency="true" generated-set=":unimodules-sensors-interface$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\unimodules-sensors-interface\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":unimodules-image-loader-interface$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\unimodules-image-loader-interface\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":unimodules-image-loader-interface" from-dependency="true" generated-set=":unimodules-image-loader-interface$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\unimodules-image-loader-interface\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":unimodules-font-interface$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\unimodules-font-interface\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":unimodules-font-interface" from-dependency="true" generated-set=":unimodules-font-interface$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\unimodules-font-interface\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":unimodules-file-system-interface$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\unimodules-file-system-interface\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":unimodules-file-system-interface" from-dependency="true" generated-set=":unimodules-file-system-interface$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\unimodules-file-system-interface\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":unimodules-face-detector-interface$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\unimodules-face-detector-interface\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":unimodules-face-detector-interface" from-dependency="true" generated-set=":unimodules-face-detector-interface$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\unimodules-face-detector-interface\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":unimodules-constants-interface$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\unimodules-constants-interface\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":unimodules-constants-interface" from-dependency="true" generated-set=":unimodules-constants-interface$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\unimodules-constants-interface\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":unimodules-camera-interface$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\unimodules-camera-interface\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":unimodules-camera-interface" from-dependency="true" generated-set=":unimodules-camera-interface$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\unimodules-camera-interface\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":unimodules-barcode-scanner-interface$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\unimodules-barcode-scanner-interface\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":unimodules-barcode-scanner-interface" from-dependency="true" generated-set=":unimodules-barcode-scanner-interface$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\unimodules-barcode-scanner-interface\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":unimodules-core$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\@unimodules\core\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":unimodules-core" from-dependency="true" generated-set=":unimodules-core$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\@unimodules\core\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":unimodules-task-manager-interface$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\unimodules-task-manager-interface\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":unimodules-task-manager-interface" from-dependency="true" generated-set=":unimodules-task-manager-interface$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\unimodules-task-manager-interface\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":unimodules-permissions-interface$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\unimodules-permissions-interface\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":unimodules-permissions-interface" from-dependency="true" generated-set=":unimodules-permissions-interface$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\unimodules-permissions-interface\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":unimodules-app-loader$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\unimodules-app-loader\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":unimodules-app-loader" from-dependency="true" generated-set=":unimodules-app-loader$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\unimodules-app-loader\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":expo-web-browser$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-web-browser\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":expo-web-browser" from-dependency="true" generated-set=":expo-web-browser$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-web-browser\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":expo-sqlite$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-sqlite\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":expo-sqlite" from-dependency="true" generated-set=":expo-sqlite$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-sqlite\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":expo-permissions$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-permissions\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":expo-permissions" from-dependency="true" generated-set=":expo-permissions$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-permissions\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":expo-location$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-location\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":expo-location" from-dependency="true" generated-set=":expo-location$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-location\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":expo-linear-gradient$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-linear-gradient\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":expo-linear-gradient" from-dependency="true" generated-set=":expo-linear-gradient$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-linear-gradient\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":expo-keep-awake$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-keep-awake\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":expo-keep-awake" from-dependency="true" generated-set=":expo-keep-awake$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-keep-awake\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":expo-image-loader$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-image-loader\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":expo-image-loader" from-dependency="true" generated-set=":expo-image-loader$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-image-loader\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":expo-font$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-font\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":expo-font" from-dependency="true" generated-set=":expo-font$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-font\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":expo-file-system$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-file-system\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":expo-file-system" from-dependency="true" generated-set=":expo-file-system$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-file-system\android\build\intermediates\packaged_res\debug"><file name="file_system_provider_paths" path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-file-system\android\build\intermediates\packaged_res\debug\xml\file_system_provider_paths.xml" qualifiers="" type="xml"/></source></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":expo-error-recovery$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-error-recovery\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":expo-error-recovery" from-dependency="true" generated-set=":expo-error-recovery$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-error-recovery\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":expo-constants$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-constants\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":expo-constants" from-dependency="true" generated-set=":expo-constants$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-constants\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="com.facebook.react:react-native:0.61.5$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\302fe9d13db3193a108a847a4148cd35\jetified-react-native-0.61.5\res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="com.facebook.react:react-native:0.61.5" from-dependency="true" generated-set="com.facebook.react:react-native:0.61.5$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\302fe9d13db3193a108a847a4148cd35\jetified-react-native-0.61.5\res"><file name="catalyst_fade_in" path="C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\302fe9d13db3193a108a847a4148cd35\jetified-react-native-0.61.5\res\anim\catalyst_fade_in.xml" qualifiers="" type="anim"/><file name="catalyst_fade_out" path="C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\302fe9d13db3193a108a847a4148cd35\jetified-react-native-0.61.5\res\anim\catalyst_fade_out.xml" qualifiers="" type="anim"/><file name="catalyst_push_up_in" path="C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\302fe9d13db3193a108a847a4148cd35\jetified-react-native-0.61.5\res\anim\catalyst_push_up_in.xml" qualifiers="" type="anim"/><file name="catalyst_push_up_out" path="C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\302fe9d13db3193a108a847a4148cd35\jetified-react-native-0.61.5\res\anim\catalyst_push_up_out.xml" qualifiers="" type="anim"/><file name="catalyst_slide_down" path="C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\302fe9d13db3193a108a847a4148cd35\jetified-react-native-0.61.5\res\anim\catalyst_slide_down.xml" qualifiers="" type="anim"/><file name="catalyst_slide_up" path="C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\302fe9d13db3193a108a847a4148cd35\jetified-react-native-0.61.5\res\anim\catalyst_slide_up.xml" qualifiers="" type="anim"/><file name="redbox_top_border_background" path="C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\302fe9d13db3193a108a847a4148cd35\jetified-react-native-0.61.5\res\drawable\redbox_top_border_background.xml" qualifiers="" type="drawable"/><file name="dev_loading_view" path="C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\302fe9d13db3193a108a847a4148cd35\jetified-react-native-0.61.5\res\layout\dev_loading_view.xml" qualifiers="" type="layout"/><file name="fps_view" path="C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\302fe9d13db3193a108a847a4148cd35\jetified-react-native-0.61.5\res\layout\fps_view.xml" qualifiers="" type="layout"/><file name="redbox_item_frame" path="C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\302fe9d13db3193a108a847a4148cd35\jetified-react-native-0.61.5\res\layout\redbox_item_frame.xml" qualifiers="" type="layout"/><file name="redbox_item_title" path="C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\302fe9d13db3193a108a847a4148cd35\jetified-react-native-0.61.5\res\layout\redbox_item_title.xml" qualifiers="" type="layout"/><file name="redbox_view" path="C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\302fe9d13db3193a108a847a4148cd35\jetified-react-native-0.61.5\res\layout\redbox_view.xml" qualifiers="" type="layout"/><file path="C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\302fe9d13db3193a108a847a4148cd35\jetified-react-native-0.61.5\res\values\values.xml" qualifiers=""><color name="catalyst_redbox_background">#eecc0000</color><item name="accessibility_actions" type="id"/><item name="accessibility_hint" type="id"/><item name="accessibility_label" type="id"/><item name="accessibility_role" type="id"/><item name="accessibility_state" type="id"/><item name="accessibility_states" type="id"/><item name="react_test_id" type="id"/><item name="view_tag_instance_handle" type="id"/><item name="view_tag_native_id" type="id"/><integer name="react_native_dev_server_port">8081</integer><integer name="react_native_inspector_proxy_port">8081</integer><string name="alert_description" translatable="false">Alert</string><string name="catalyst_change_bundle_location" project="catalyst" translatable="false">Change Bundle Location</string><string name="catalyst_copy_button" project="catalyst" translatable="false">Copy\n</string><string name="catalyst_debug" project="catalyst" translatable="false">Debug</string><string name="catalyst_debug_chrome" project="catalyst" translatable="false">Debug with Chrome</string><string name="catalyst_debug_chrome_stop" project="catalyst" translatable="false">Stop Chrome Debugging</string><string name="catalyst_debug_connecting" project="catalyst" translatable="false">Connecting to debugger...</string><string name="catalyst_debug_error" project="catalyst" translatable="false">Failed to connect to debugger!</string><string name="catalyst_debug_nuclide" project="catalyst" translatable="false">Debug with Nuclide</string><string name="catalyst_debug_nuclide_error" project="catalyst" translatable="false">Failed to communicate with the bundler to enabling debugging with Nuclide.</string><string name="catalyst_debug_stop" project="catalyst" translatable="false">Stop Debugging</string><string name="catalyst_dismiss_button" project="catalyst" translatable="false">Dismiss\n(ESC)</string><string name="catalyst_heap_capture" project="catalyst" translatable="false">Capture Heap</string><string name="catalyst_hot_reloading" project="catalyst" translatable="false">Enable Fast Refresh</string><string name="catalyst_hot_reloading_auto_disable" project="catalyst" translatable="false">Disabling Fast Refresh because it requires a development bundle.</string><string name="catalyst_hot_reloading_auto_enable" project="catalyst" translatable="false">Switching to development bundle in order to enable Fast Refresh.</string><string name="catalyst_hot_reloading_stop" project="catalyst" translatable="false">Disable Fast Refresh</string><string name="catalyst_inspector" project="catalyst" translatable="false">Toggle Inspector</string><string name="catalyst_loading_from_url" project="catalyst" translatable="false">Loading from %1$s…</string><string name="catalyst_perf_monitor" project="catalyst" translatable="false">Show Perf Monitor</string><string name="catalyst_perf_monitor_stop" project="catalyst" translatable="false">Hide Perf Monitor</string><string name="catalyst_reload" project="catalyst" translatable="false">Reload</string><string name="catalyst_reload_button" project="catalyst" translatable="false">Reload\n(R,\u00A0R)</string><string name="catalyst_reload_error" project="catalyst" translatable="false">Failed to load bundle. Try restarting the bundler or reconnecting your device.</string><string name="catalyst_report_button" project="catalyst" translatable="false">Report</string><string name="catalyst_sample_profiler_disable" project="catalyst" translatable="false">Disable Sampling Profiler</string><string name="catalyst_sample_profiler_enable" project="catalyst" translatable="false">Enable Sampling Profiler</string><string name="catalyst_settings" project="catalyst" translatable="false">Settings</string><string name="catalyst_settings_title" project="catalyst" translatable="false">Debug Settings</string><string name="combobox_description" translatable="false">Combo Box</string><string name="header_description" translatable="false">Heading</string><string name="image_description" translatable="false">Image</string><string name="imagebutton_description" translatable="false">Button, Image</string><string name="link_description" translatable="false">Link</string><string name="menu_description" translatable="false">Menu</string><string name="menubar_description" translatable="false">Menu Bar</string><string name="menuitem_description" translatable="false">Menu Item</string><string name="progressbar_description" translatable="false">Progress Bar</string><string name="radiogroup_description" translatable="false">Radio Group</string><string name="rn_tab_description" translatable="false">Tab</string><string name="scrollbar_description" translatable="false">Scroll Bar</string><string name="search_description" translatable="false">Search Field</string><string name="spinbutton_description" translatable="false">Spin Button</string><string name="state_busy_description" translatable="false">busy</string><string name="state_collapsed_description" translatable="false">collapsed</string><string name="state_expanded_description" translatable="false">expanded</string><string name="state_mixed_description" translatable="false">mixed</string><string name="state_off_description" translatable="false">off</string><string name="state_on_description" translatable="false">on</string><string name="summary_description" translatable="false">Summary</string><string name="tablist_description" translatable="false">Tab List</string><string name="timer_description" translatable="false">Timer</string><string name="toolbar_description" translatable="false">Tool Bar</string><style name="Animation.Catalyst.RedBox" parent="@android:style/Animation">
+  </style></file><file path="C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\1873fe9405c2e2a7c5fa3eda6cb1076f\material-1.1.0\res\values-v28\values-v28.xml" qualifiers="v28"><item format="float" name="mtrl_high_ripple_default_alpha" type="dimen">0.24</item><item format="float" name="mtrl_high_ripple_focused_alpha" type="dimen">0.40</item><item format="float" name="mtrl_high_ripple_hovered_alpha" type="dimen">0.40</item><item format="float" name="mtrl_high_ripple_pressed_alpha" type="dimen">0.24</item><item format="float" name="mtrl_low_ripple_default_alpha" type="dimen">0.12</item><item format="float" name="mtrl_low_ripple_focused_alpha" type="dimen">0.20</item><item format="float" name="mtrl_low_ripple_hovered_alpha" type="dimen">0.20</item><item format="float" name="mtrl_low_ripple_pressed_alpha" type="dimen">0.12</item></file><file path="C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\1873fe9405c2e2a7c5fa3eda6cb1076f\material-1.1.0\res\values-w360dp-port-v13\values-w360dp-port-v13.xml" qualifiers="w360dp-port-v13"><dimen name="mtrl_calendar_bottom_padding">4dp</dimen><dimen name="mtrl_calendar_day_corner">18dp</dimen><dimen name="mtrl_calendar_day_height">40dp</dimen><dimen name="mtrl_calendar_day_horizontal_padding">2dp</dimen><dimen name="mtrl_calendar_day_vertical_padding">2dp</dimen><dimen name="mtrl_calendar_day_width">40dp</dimen><dimen name="mtrl_calendar_days_of_week_height">40dp</dimen><dimen name="mtrl_calendar_month_horizontal_padding">4dp</dimen></file><file path="C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\1873fe9405c2e2a7c5fa3eda6cb1076f\material-1.1.0\res\values-w480dp-port-v13\values-w480dp-port-v13.xml" qualifiers="w480dp-port-v13"><dimen name="mtrl_calendar_bottom_padding">0dp</dimen><dimen name="mtrl_calendar_day_corner">22dp</dimen><dimen name="mtrl_calendar_day_height">48dp</dimen><dimen name="mtrl_calendar_day_horizontal_padding">2dp</dimen><dimen name="mtrl_calendar_day_vertical_padding">2dp</dimen><dimen name="mtrl_calendar_day_width">48dp</dimen><dimen name="mtrl_calendar_days_of_week_height">48dp</dimen><dimen name="mtrl_calendar_month_horizontal_padding">0dp</dimen></file><file name="standalone_badge" path="C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\1873fe9405c2e2a7c5fa3eda6cb1076f\material-1.1.0\res\xml\standalone_badge.xml" qualifiers="" type="xml"/><file name="standalone_badge_gravity_bottom_end" path="C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\1873fe9405c2e2a7c5fa3eda6cb1076f\material-1.1.0\res\xml\standalone_badge_gravity_bottom_end.xml" qualifiers="" type="xml"/><file name="standalone_badge_gravity_bottom_start" path="C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\1873fe9405c2e2a7c5fa3eda6cb1076f\material-1.1.0\res\xml\standalone_badge_gravity_bottom_start.xml" qualifiers="" type="xml"/><file name="standalone_badge_gravity_top_start" path="C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\1873fe9405c2e2a7c5fa3eda6cb1076f\material-1.1.0\res\xml\standalone_badge_gravity_top_start.xml" qualifiers="" type="xml"/></source></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="com.airbnb.android:lottie:3.0.7$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\3313474357684448bc1fbb705a234d60\lottie-3.0.7\res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="com.airbnb.android:lottie:3.0.7" from-dependency="true" generated-set="com.airbnb.android:lottie:3.0.7$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\3313474357684448bc1fbb705a234d60\lottie-3.0.7\res"><file path="C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\3313474357684448bc1fbb705a234d60\lottie-3.0.7\res\values\values.xml" qualifiers=""><declare-styleable name="LottieAnimationView">
+        <attr format="string" name="lottie_fileName"/>
+        <attr format="reference" name="lottie_rawRes"/>
+        <attr format="string" name="lottie_url"/>
+        <attr format="boolean" name="lottie_autoPlay"/>
+        <attr format="boolean" name="lottie_loop"/>
+        <attr format="enum" name="lottie_repeatMode">
+            <enum name="restart" value="1"/>
+            <enum name="reverse" value="2"/>
+        </attr>
+        <attr format="integer" name="lottie_repeatCount"/>
+        <attr format="string" name="lottie_imageAssetsFolder"/>
+        <attr format="float" name="lottie_progress"/>
+        <attr format="boolean" name="lottie_enableMergePathsForKitKatAndAbove"/>
+        <attr format="color" name="lottie_colorFilter"/>
+        <attr format="float" name="lottie_scale"/>
+        <attr format="float" name="lottie_speed"/>
+        
+        <attr format="enum" name="lottie_renderMode">
+            <enum name="automatic" value="0"/>
+            <enum name="hardware" value="1"/>
+            <enum name="software" value="2"/>
+        </attr>
+    </declare-styleable><item name="lottie_layer_name" type="id"/></file></source></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":unimodules-sensors-interface$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\unimodules-sensors-interface\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":unimodules-sensors-interface" from-dependency="true" generated-set=":unimodules-sensors-interface$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\unimodules-sensors-interface\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":unimodules-image-loader-interface$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\unimodules-image-loader-interface\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":unimodules-image-loader-interface" from-dependency="true" generated-set=":unimodules-image-loader-interface$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\unimodules-image-loader-interface\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":unimodules-font-interface$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\unimodules-font-interface\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":unimodules-font-interface" from-dependency="true" generated-set=":unimodules-font-interface$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\unimodules-font-interface\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":unimodules-file-system-interface$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\unimodules-file-system-interface\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":unimodules-file-system-interface" from-dependency="true" generated-set=":unimodules-file-system-interface$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\unimodules-file-system-interface\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":unimodules-face-detector-interface$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\unimodules-face-detector-interface\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":unimodules-face-detector-interface" from-dependency="true" generated-set=":unimodules-face-detector-interface$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\unimodules-face-detector-interface\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":unimodules-constants-interface$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\unimodules-constants-interface\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":unimodules-constants-interface" from-dependency="true" generated-set=":unimodules-constants-interface$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\unimodules-constants-interface\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":unimodules-camera-interface$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\unimodules-camera-interface\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":unimodules-camera-interface" from-dependency="true" generated-set=":unimodules-camera-interface$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\unimodules-camera-interface\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":unimodules-barcode-scanner-interface$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\unimodules-barcode-scanner-interface\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":unimodules-barcode-scanner-interface" from-dependency="true" generated-set=":unimodules-barcode-scanner-interface$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\unimodules-barcode-scanner-interface\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":unimodules-core$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\@unimodules\core\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":unimodules-core" from-dependency="true" generated-set=":unimodules-core$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\@unimodules\core\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":unimodules-task-manager-interface$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\unimodules-task-manager-interface\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":unimodules-task-manager-interface" from-dependency="true" generated-set=":unimodules-task-manager-interface$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\unimodules-task-manager-interface\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":unimodules-permissions-interface$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\unimodules-permissions-interface\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":unimodules-permissions-interface" from-dependency="true" generated-set=":unimodules-permissions-interface$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\unimodules-permissions-interface\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":unimodules-app-loader$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\unimodules-app-loader\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":unimodules-app-loader" from-dependency="true" generated-set=":unimodules-app-loader$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\unimodules-app-loader\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":expo-web-browser$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-web-browser\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":expo-web-browser" from-dependency="true" generated-set=":expo-web-browser$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-web-browser\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":expo-sqlite$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-sqlite\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":expo-sqlite" from-dependency="true" generated-set=":expo-sqlite$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-sqlite\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":expo-permissions$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-permissions\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":expo-permissions" from-dependency="true" generated-set=":expo-permissions$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-permissions\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":expo-location$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-location\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":expo-location" from-dependency="true" generated-set=":expo-location$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-location\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":expo-linear-gradient$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-linear-gradient\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":expo-linear-gradient" from-dependency="true" generated-set=":expo-linear-gradient$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-linear-gradient\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":expo-keep-awake$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-keep-awake\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":expo-keep-awake" from-dependency="true" generated-set=":expo-keep-awake$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-keep-awake\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":expo-image-loader$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-image-loader\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":expo-image-loader" from-dependency="true" generated-set=":expo-image-loader$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-image-loader\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":expo-font$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-font\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":expo-font" from-dependency="true" generated-set=":expo-font$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-font\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":expo-file-system$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-file-system\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":expo-file-system" from-dependency="true" generated-set=":expo-file-system$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-file-system\android\build\intermediates\packaged_res\debug"><file name="file_system_provider_paths" path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-file-system\android\build\intermediates\packaged_res\debug\xml\file_system_provider_paths.xml" qualifiers="" type="xml"/></source></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":expo-error-recovery$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-error-recovery\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":expo-error-recovery" from-dependency="true" generated-set=":expo-error-recovery$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-error-recovery\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":expo-constants$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-constants\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":expo-constants" from-dependency="true" generated-set=":expo-constants$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-constants\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="com.facebook.react:react-native:0.61.5$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\302fe9d13db3193a108a847a4148cd35\jetified-react-native-0.61.5\res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="com.facebook.react:react-native:0.61.5" from-dependency="true" generated-set="com.facebook.react:react-native:0.61.5$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\302fe9d13db3193a108a847a4148cd35\jetified-react-native-0.61.5\res"><file name="catalyst_fade_in" path="C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\302fe9d13db3193a108a847a4148cd35\jetified-react-native-0.61.5\res\anim\catalyst_fade_in.xml" qualifiers="" type="anim"/><file name="catalyst_fade_out" path="C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\302fe9d13db3193a108a847a4148cd35\jetified-react-native-0.61.5\res\anim\catalyst_fade_out.xml" qualifiers="" type="anim"/><file name="catalyst_push_up_in" path="C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\302fe9d13db3193a108a847a4148cd35\jetified-react-native-0.61.5\res\anim\catalyst_push_up_in.xml" qualifiers="" type="anim"/><file name="catalyst_push_up_out" path="C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\302fe9d13db3193a108a847a4148cd35\jetified-react-native-0.61.5\res\anim\catalyst_push_up_out.xml" qualifiers="" type="anim"/><file name="catalyst_slide_down" path="C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\302fe9d13db3193a108a847a4148cd35\jetified-react-native-0.61.5\res\anim\catalyst_slide_down.xml" qualifiers="" type="anim"/><file name="catalyst_slide_up" path="C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\302fe9d13db3193a108a847a4148cd35\jetified-react-native-0.61.5\res\anim\catalyst_slide_up.xml" qualifiers="" type="anim"/><file name="redbox_top_border_background" path="C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\302fe9d13db3193a108a847a4148cd35\jetified-react-native-0.61.5\res\drawable\redbox_top_border_background.xml" qualifiers="" type="drawable"/><file name="dev_loading_view" path="C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\302fe9d13db3193a108a847a4148cd35\jetified-react-native-0.61.5\res\layout\dev_loading_view.xml" qualifiers="" type="layout"/><file name="fps_view" path="C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\302fe9d13db3193a108a847a4148cd35\jetified-react-native-0.61.5\res\layout\fps_view.xml" qualifiers="" type="layout"/><file name="redbox_item_frame" path="C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\302fe9d13db3193a108a847a4148cd35\jetified-react-native-0.61.5\res\layout\redbox_item_frame.xml" qualifiers="" type="layout"/><file name="redbox_item_title" path="C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\302fe9d13db3193a108a847a4148cd35\jetified-react-native-0.61.5\res\layout\redbox_item_title.xml" qualifiers="" type="layout"/><file name="redbox_view" path="C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\302fe9d13db3193a108a847a4148cd35\jetified-react-native-0.61.5\res\layout\redbox_view.xml" qualifiers="" type="layout"/><file path="C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\302fe9d13db3193a108a847a4148cd35\jetified-react-native-0.61.5\res\values\values.xml" qualifiers=""><color name="catalyst_redbox_background">#eecc0000</color><item name="accessibility_actions" type="id"/><item name="accessibility_hint" type="id"/><item name="accessibility_label" type="id"/><item name="accessibility_role" type="id"/><item name="accessibility_state" type="id"/><item name="accessibility_states" type="id"/><item name="react_test_id" type="id"/><item name="view_tag_instance_handle" type="id"/><item name="view_tag_native_id" type="id"/><integer name="react_native_dev_server_port">8081</integer><integer name="react_native_inspector_proxy_port">8081</integer><string name="alert_description" translatable="false">Alert</string><string name="catalyst_change_bundle_location" project="catalyst" translatable="false">Change Bundle Location</string><string name="catalyst_copy_button" project="catalyst" translatable="false">Copy\n</string><string name="catalyst_debug" project="catalyst" translatable="false">Debug</string><string name="catalyst_debug_chrome" project="catalyst" translatable="false">Debug with Chrome</string><string name="catalyst_debug_chrome_stop" project="catalyst" translatable="false">Stop Chrome Debugging</string><string name="catalyst_debug_connecting" project="catalyst" translatable="false">Connecting to debugger...</string><string name="catalyst_debug_error" project="catalyst" translatable="false">Failed to connect to debugger!</string><string name="catalyst_debug_nuclide" project="catalyst" translatable="false">Debug with Nuclide</string><string name="catalyst_debug_nuclide_error" project="catalyst" translatable="false">Failed to communicate with the bundler to enabling debugging with Nuclide.</string><string name="catalyst_debug_stop" project="catalyst" translatable="false">Stop Debugging</string><string name="catalyst_dismiss_button" project="catalyst" translatable="false">Dismiss\n(ESC)</string><string name="catalyst_heap_capture" project="catalyst" translatable="false">Capture Heap</string><string name="catalyst_hot_reloading" project="catalyst" translatable="false">Enable Fast Refresh</string><string name="catalyst_hot_reloading_auto_disable" project="catalyst" translatable="false">Disabling Fast Refresh because it requires a development bundle.</string><string name="catalyst_hot_reloading_auto_enable" project="catalyst" translatable="false">Switching to development bundle in order to enable Fast Refresh.</string><string name="catalyst_hot_reloading_stop" project="catalyst" translatable="false">Disable Fast Refresh</string><string name="catalyst_inspector" project="catalyst" translatable="false">Toggle Inspector</string><string name="catalyst_loading_from_url" project="catalyst" translatable="false">Loading from %1$s…</string><string name="catalyst_perf_monitor" project="catalyst" translatable="false">Show Perf Monitor</string><string name="catalyst_perf_monitor_stop" project="catalyst" translatable="false">Hide Perf Monitor</string><string name="catalyst_reload" project="catalyst" translatable="false">Reload</string><string name="catalyst_reload_button" project="catalyst" translatable="false">Reload\n(R,\u00A0R)</string><string name="catalyst_reload_error" project="catalyst" translatable="false">Failed to load bundle. Try restarting the bundler or reconnecting your device.</string><string name="catalyst_report_button" project="catalyst" translatable="false">Report</string><string name="catalyst_sample_profiler_disable" project="catalyst" translatable="false">Disable Sampling Profiler</string><string name="catalyst_sample_profiler_enable" project="catalyst" translatable="false">Enable Sampling Profiler</string><string name="catalyst_settings" project="catalyst" translatable="false">Settings</string><string name="catalyst_settings_title" project="catalyst" translatable="false">Debug Settings</string><string name="combobox_description" translatable="false">Combo Box</string><string name="header_description" translatable="false">Heading</string><string name="image_description" translatable="false">Image</string><string name="imagebutton_description" translatable="false">Button, Image</string><string name="link_description" translatable="false">Link</string><string name="menu_description" translatable="false">Menu</string><string name="menubar_description" translatable="false">Menu Bar</string><string name="menuitem_description" translatable="false">Menu Item</string><string name="progressbar_description" translatable="false">Progress Bar</string><string name="radiogroup_description" translatable="false">Radio Group</string><string name="rn_tab_description" translatable="false">Tab</string><string name="scrollbar_description" translatable="false">Scroll Bar</string><string name="search_description" translatable="false">Search Field</string><string name="spinbutton_description" translatable="false">Spin Button</string><string name="state_busy_description" translatable="false">busy</string><string name="state_collapsed_description" translatable="false">collapsed</string><string name="state_expanded_description" translatable="false">expanded</string><string name="state_mixed_description" translatable="false">mixed</string><string name="state_off_description" translatable="false">off</string><string name="state_on_description" translatable="false">on</string><string name="summary_description" translatable="false">Summary</string><string name="tablist_description" translatable="false">Tab List</string><string name="timer_description" translatable="false">Timer</string><string name="toolbar_description" translatable="false">Tool Bar</string><style name="Animation.Catalyst.RedBox" parent="@android:style/Animation">
     <item name="android:windowEnterAnimation">@anim/catalyst_push_up_in</item>
     <item name="android:windowExitAnimation">@anim/catalyst_push_up_out</item>
   </style><style name="CalendarDatePickerDialog" ns2:targetApi="lollipop" parent="Theme.AppCompat.Light.Dialog">
@@ -5960,95 +5983,10 @@
     <item name="android:gravity">center</item>
     <item name="android:textColor">#dddddd</item>
     <item name="android:textSize">14sp</item>
-  </style></file><file name="rn_dev_preferences" path="C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\302fe9d13db3193a108a847a4148cd35\jetified-react-native-0.61.5\res\xml\rn_dev_preferences.xml" qualifiers="" type="xml"/></source></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":react-native-webview$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\react-native-webview\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":react-native-webview" from-dependency="true" generated-set=":react-native-webview$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\react-native-webview\android\build\intermediates\packaged_res\debug"><file name="file_provider_paths" path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\react-native-webview\android\build\intermediates\packaged_res\debug\xml\file_provider_paths.xml" qualifiers="" type="xml"/></source></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":react-native-vector-icons$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\react-native-vector-icons\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":react-native-vector-icons" from-dependency="true" generated-set=":react-native-vector-icons$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\react-native-vector-icons\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":react-native-svg$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\react-native-svg\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":react-native-svg" from-dependency="true" generated-set=":react-native-svg$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\react-native-svg\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":react-native-screens$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\react-native-screens\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":react-native-screens" from-dependency="true" generated-set=":react-native-screens$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\react-native-screens\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":react-native-safe-area-context$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\react-native-safe-area-context\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":react-native-safe-area-context" from-dependency="true" generated-set=":react-native-safe-area-context$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\react-native-safe-area-context\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":react-native-reanimated$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\react-native-reanimated\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":react-native-reanimated" from-dependency="true" generated-set=":react-native-reanimated$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\react-native-reanimated\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":react-native-gesture-handler$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\react-native-gesture-handler\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":react-native-gesture-handler" from-dependency="true" generated-set=":react-native-gesture-handler$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\react-native-gesture-handler\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":react-native-mapbox-gl_maps$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\@react-native-mapbox-gl\maps\android\rctmgl\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":react-native-mapbox-gl_maps" from-dependency="true" generated-set=":react-native-mapbox-gl_maps$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\@react-native-mapbox-gl\maps\android\rctmgl\build\intermediates\packaged_res\debug"><file name="empty" path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\@react-native-mapbox-gl\maps\android\rctmgl\build\intermediates\packaged_res\debug\drawable\empty.xml" qualifiers="" type="drawable"/><file name="empty_drawable" path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\@react-native-mapbox-gl\maps\android\rctmgl\build\intermediates\packaged_res\debug\drawable\empty_drawable.png" qualifiers="" type="drawable"/><file name="red_marker" path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\@react-native-mapbox-gl\maps\android\rctmgl\build\intermediates\packaged_res\debug\drawable-xxhdpi-v4\red_marker.png" qualifiers="xxhdpi-v4" type="drawable"/><file name="annotation" path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\@react-native-mapbox-gl\maps\android\rctmgl\build\intermediates\packaged_res\debug\layout\annotation.xml" qualifiers="" type="layout"/><file path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\@react-native-mapbox-gl\maps\android\rctmgl\build\intermediates\packaged_res\debug\values\values.xml" qualifiers=""><string name="app_name">RCTMGL</string></file></source></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":react-native-community_masked-view$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\@react-native-community\masked-view\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":react-native-community_masked-view" from-dependency="true" generated-set=":react-native-community_masked-view$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\@react-native-community\masked-view\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":react-native-community_checkbox$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\@react-native-community\checkbox\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":react-native-community_checkbox" from-dependency="true" generated-set=":react-native-community_checkbox$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\@react-native-community\checkbox\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":expo-updates$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-updates\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":expo-updates" from-dependency="true" generated-set=":expo-updates$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-updates\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":unimodules-react-native-adapter$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\@unimodules\react-native-adapter\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":unimodules-react-native-adapter" from-dependency="true" generated-set=":unimodules-react-native-adapter$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\@unimodules\react-native-adapter\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":@react-native-mapbox-gl_maps$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\@react-native-mapbox-gl\maps\android\rctmgl\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":@react-native-mapbox-gl_maps" from-dependency="true" generated-set=":@react-native-mapbox-gl_maps$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\@react-native-mapbox-gl\maps\android\rctmgl\build\intermediates\packaged_res\debug"><file name="empty" path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\@react-native-mapbox-gl\maps\android\rctmgl\build\intermediates\packaged_res\debug\drawable\empty.xml" qualifiers="" type="drawable"/><file name="empty_drawable" path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\@react-native-mapbox-gl\maps\android\rctmgl\build\intermediates\packaged_res\debug\drawable\empty_drawable.png" qualifiers="" type="drawable"/><file name="red_marker" path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\@react-native-mapbox-gl\maps\android\rctmgl\build\intermediates\packaged_res\debug\drawable-xxhdpi-v4\red_marker.png" qualifiers="xxhdpi-v4" type="drawable"/><file name="annotation" path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\@react-native-mapbox-gl\maps\android\rctmgl\build\intermediates\packaged_res\debug\layout\annotation.xml" qualifiers="" type="layout"/><file path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\@react-native-mapbox-gl\maps\android\rctmgl\build\intermediates\packaged_res\debug\values\values.xml" qualifiers=""><string name="app_name">RCTMGL</string></file></source></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\res"/><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\build\generated\res\rs\debug"/><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\build\generated\res\resValues\debug"/><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\build\generated\res\react\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main" generated-set="main$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\res"><file name="ic_launcher" path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\res\mipmap-hdpi\ic_launcher.png" qualifiers="hdpi-v4" type="mipmap"/><file name="ic_launcher_round" path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\res\mipmap-hdpi\ic_launcher_round.png" qualifiers="hdpi-v4" type="mipmap"/><file name="ic_launcher" path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\res\mipmap-mdpi\ic_launcher.png" qualifiers="mdpi-v4" type="mipmap"/><file name="ic_launcher_round" path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\res\mipmap-mdpi\ic_launcher_round.png" qualifiers="mdpi-v4" type="mipmap"/><file name="ic_launcher" path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\res\mipmap-xhdpi\ic_launcher.png" qualifiers="xhdpi-v4" type="mipmap"/><file name="ic_launcher_round" path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\res\mipmap-xhdpi\ic_launcher_round.png" qualifiers="xhdpi-v4" type="mipmap"/><file name="ic_launcher" path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\res\mipmap-xxhdpi\ic_launcher.png" qualifiers="xxhdpi-v4" type="mipmap"/><file name="ic_launcher_round" path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\res\mipmap-xxhdpi\ic_launcher_round.png" qualifiers="xxhdpi-v4" type="mipmap"/><file name="ic_launcher" path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\res\mipmap-xxxhdpi\ic_launcher.png" qualifiers="xxxhdpi-v4" type="mipmap"/><file name="ic_launcher_round" path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\res\mipmap-xxxhdpi\ic_launcher_round.png" qualifiers="xxxhdpi-v4" type="mipmap"/><file path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\res\values\strings.xml" qualifiers=""><string name="app_name">A2SV-Hack-COVID-19-Mobile-App</string></file><file path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\res\values\styles.xml" qualifiers=""><style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+  </style></file><file name="rn_dev_preferences" path="C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\302fe9d13db3193a108a847a4148cd35\jetified-react-native-0.61.5\res\xml\rn_dev_preferences.xml" qualifiers="" type="xml"/></source></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":react-native-webview$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\react-native-webview\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":react-native-webview" from-dependency="true" generated-set=":react-native-webview$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\react-native-webview\android\build\intermediates\packaged_res\debug"><file name="file_provider_paths" path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\react-native-webview\android\build\intermediates\packaged_res\debug\xml\file_provider_paths.xml" qualifiers="" type="xml"/></source></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":react-native-vector-icons$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\react-native-vector-icons\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":react-native-vector-icons" from-dependency="true" generated-set=":react-native-vector-icons$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\react-native-vector-icons\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":react-native-svg$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\react-native-svg\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":react-native-svg" from-dependency="true" generated-set=":react-native-svg$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\react-native-svg\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":react-native-screens$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\react-native-screens\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":react-native-screens" from-dependency="true" generated-set=":react-native-screens$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\react-native-screens\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":react-native-safe-area-context$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\react-native-safe-area-context\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":react-native-safe-area-context" from-dependency="true" generated-set=":react-native-safe-area-context$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\react-native-safe-area-context\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":react-native-reanimated$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\react-native-reanimated\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":react-native-reanimated" from-dependency="true" generated-set=":react-native-reanimated$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\react-native-reanimated\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":react-native-gesture-handler$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\react-native-gesture-handler\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":react-native-gesture-handler" from-dependency="true" generated-set=":react-native-gesture-handler$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\react-native-gesture-handler\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":lottie-react-native$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\lottie-react-native\src\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":lottie-react-native" from-dependency="true" generated-set=":lottie-react-native$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\lottie-react-native\src\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":react-native-mapbox-gl_maps$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\@react-native-mapbox-gl\maps\android\rctmgl\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":react-native-mapbox-gl_maps" from-dependency="true" generated-set=":react-native-mapbox-gl_maps$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\@react-native-mapbox-gl\maps\android\rctmgl\build\intermediates\packaged_res\debug"><file name="empty" path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\@react-native-mapbox-gl\maps\android\rctmgl\build\intermediates\packaged_res\debug\drawable\empty.xml" qualifiers="" type="drawable"/><file name="empty_drawable" path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\@react-native-mapbox-gl\maps\android\rctmgl\build\intermediates\packaged_res\debug\drawable\empty_drawable.png" qualifiers="" type="drawable"/><file name="red_marker" path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\@react-native-mapbox-gl\maps\android\rctmgl\build\intermediates\packaged_res\debug\drawable-xxhdpi-v4\red_marker.png" qualifiers="xxhdpi-v4" type="drawable"/><file name="annotation" path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\@react-native-mapbox-gl\maps\android\rctmgl\build\intermediates\packaged_res\debug\layout\annotation.xml" qualifiers="" type="layout"/><file path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\@react-native-mapbox-gl\maps\android\rctmgl\build\intermediates\packaged_res\debug\values\values.xml" qualifiers=""><string name="app_name">RCTMGL</string></file></source></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":react-native-community_masked-view$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\@react-native-community\masked-view\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":react-native-community_masked-view" from-dependency="true" generated-set=":react-native-community_masked-view$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\@react-native-community\masked-view\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":react-native-community_checkbox$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\@react-native-community\checkbox\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":react-native-community_checkbox" from-dependency="true" generated-set=":react-native-community_checkbox$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\@react-native-community\checkbox\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":expo-updates$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-updates\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":expo-updates" from-dependency="true" generated-set=":expo-updates$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-updates\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":unimodules-react-native-adapter$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\@unimodules\react-native-adapter\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":unimodules-react-native-adapter" from-dependency="true" generated-set=":unimodules-react-native-adapter$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\@unimodules\react-native-adapter\android\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":@react-native-mapbox-gl_maps$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\@react-native-mapbox-gl\maps\android\rctmgl\build\intermediates\packaged_res\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config=":@react-native-mapbox-gl_maps" from-dependency="true" generated-set=":@react-native-mapbox-gl_maps$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\@react-native-mapbox-gl\maps\android\rctmgl\build\intermediates\packaged_res\debug"><file name="empty" path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\@react-native-mapbox-gl\maps\android\rctmgl\build\intermediates\packaged_res\debug\drawable\empty.xml" qualifiers="" type="drawable"/><file name="empty_drawable" path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\@react-native-mapbox-gl\maps\android\rctmgl\build\intermediates\packaged_res\debug\drawable\empty_drawable.png" qualifiers="" type="drawable"/><file name="red_marker" path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\@react-native-mapbox-gl\maps\android\rctmgl\build\intermediates\packaged_res\debug\drawable-xxhdpi-v4\red_marker.png" qualifiers="xxhdpi-v4" type="drawable"/><file name="annotation" path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\@react-native-mapbox-gl\maps\android\rctmgl\build\intermediates\packaged_res\debug\layout\annotation.xml" qualifiers="" type="layout"/><file path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\@react-native-mapbox-gl\maps\android\rctmgl\build\intermediates\packaged_res\debug\values\values.xml" qualifiers=""><string name="app_name">RCTMGL</string></file></source></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\res"/><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\build\generated\res\rs\debug"/><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\build\generated\res\resValues\debug"/><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\build\generated\res\react\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main" generated-set="main$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\res"><file name="ic_launcher" path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\res\mipmap-hdpi\ic_launcher.png" qualifiers="hdpi-v4" type="mipmap"/><file name="ic_launcher_round" path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\res\mipmap-hdpi\ic_launcher_round.png" qualifiers="hdpi-v4" type="mipmap"/><file name="ic_launcher" path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\res\mipmap-mdpi\ic_launcher.png" qualifiers="mdpi-v4" type="mipmap"/><file name="ic_launcher_round" path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\res\mipmap-mdpi\ic_launcher_round.png" qualifiers="mdpi-v4" type="mipmap"/><file name="ic_launcher" path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\res\mipmap-xhdpi\ic_launcher.png" qualifiers="xhdpi-v4" type="mipmap"/><file name="ic_launcher_round" path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\res\mipmap-xhdpi\ic_launcher_round.png" qualifiers="xhdpi-v4" type="mipmap"/><file name="ic_launcher" path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\res\mipmap-xxhdpi\ic_launcher.png" qualifiers="xxhdpi-v4" type="mipmap"/><file name="ic_launcher_round" path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\res\mipmap-xxhdpi\ic_launcher_round.png" qualifiers="xxhdpi-v4" type="mipmap"/><file name="ic_launcher" path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\res\mipmap-xxxhdpi\ic_launcher.png" qualifiers="xxxhdpi-v4" type="mipmap"/><file name="ic_launcher_round" path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\res\mipmap-xxxhdpi\ic_launcher_round.png" qualifiers="xxxhdpi-v4" type="mipmap"/><file path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\res\values\strings.xml" qualifiers=""><string name="app_name">A2SV-Hack-COVID-19-Mobile-App</string></file><file path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\main\res\values\styles.xml" qualifiers=""><style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         
         <item name="android:textColor">#000000</item>
-    </style></file></source><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\build\generated\res\rs\debug"/><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\build\generated\res\resValues\debug"><file path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\build\generated\res\resValues\debug\values\gradleResValues.xml" qualifiers=""><integer name="react_native_dev_server_port">8081</integer><integer name="react_native_inspector_proxy_port">8081</integer></file></source><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\build\generated\res\react\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\debug\res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug" generated-set="debug$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\debug\res"/></dataSet><mergedItems><configuration qualifiers=""><declare-styleable name="SimpleDraweeView" parent="GenericDraweeHierarchy">
-
-    
-    <attr format="string" name="actualImageUri"/>
-    
-    <attr format="reference" name="actualImageResource"/>
-
-    
-    <eat-comment/>
-
-    
-    <attr name="fadeDuration"/>
-
-    
-    <attr name="viewAspectRatio"/>
-
-    
-
-    
-    <attr name="placeholderImage"/>
-    
-    <attr name="placeholderImageScaleType"/>
-
-    
-    <attr name="retryImage"/>
-    
-    <attr name="retryImageScaleType"/>
-
-    
-    <attr name="failureImage"/>
-    
-    <attr name="failureImageScaleType"/>
-
-
-    
-    <attr name="progressBarImage"/>
-    
-    <attr name="progressBarImageScaleType"/>
-
-    
-    <attr name="progressBarAutoRotateInterval"/>
-
-    
-    <attr name="actualImageScaleType"/>
-
-    
-    <attr name="backgroundImage"/>
-
-    
-    <attr name="overlayImage"/>
-
-    
-    <attr name="pressedStateOverlayImage"/>
-
-    
-
-    
-    <attr name="roundAsCircle"/>
-    
-    <attr name="roundedCornerRadius"/>
-    
-    <attr name="roundTopLeft"/>
-    
-    <attr name="roundTopRight"/>
-    
-    <attr name="roundBottomRight"/>
-    
-    <attr name="roundBottomLeft"/>
-    
-    <attr name="roundTopStart"/>
-    
-    <attr name="roundTopEnd"/>
-    
-    <attr name="roundBottomStart"/>
-    
-    <attr name="roundBottomEnd"/>
-    
-    <attr name="roundWithOverlayColor"/>
-    
-    <attr name="roundingBorderWidth"/>
-    
-    <attr name="roundingBorderColor"/>
-    
-    <attr name="roundingBorderPadding"/>
-
-  </declare-styleable><declare-styleable name="AlertDialog">
+    </style></file></source><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\build\generated\res\rs\debug"/><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\build\generated\res\resValues\debug"><file path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\build\generated\res\resValues\debug\values\gradleResValues.xml" qualifiers=""><integer name="react_native_dev_server_port">8081</integer><integer name="react_native_inspector_proxy_port">8081</integer></file></source><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\build\generated\res\react\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\debug\res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug" generated-set="debug$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\android\app\src\debug\res"/></dataSet><mergedItems><configuration qualifiers=""><declare-styleable name="AlertDialog">
         <attr name="android:layout"/>
         <attr format="reference" name="buttonPanelSideLayout"/>
         <attr format="reference" name="listLayout"/>
@@ -6057,144 +5995,10 @@
         <attr format="reference" name="listItemLayout"/>
         <attr format="boolean" name="showTitle"/>
         <attr format="dimension" name="buttonIconDimen"/>
-    </declare-styleable><declare-styleable name="AppCompatSeekBar">
-        <attr name="android:thumb"/>
-        
-        <attr format="reference" name="tickMark"/>
-        
-        <attr format="color" name="tickMarkTint"/>
-        
-        <attr name="tickMarkTintMode">
-            
-            <enum name="src_over" value="3"/>
-            
-            <enum name="src_in" value="5"/>
-            
-            <enum name="src_atop" value="9"/>
-            
-            <enum name="multiply" value="14"/>
-            
-            <enum name="screen" value="15"/>
-            
-            <enum name="add" value="16"/>
-        </attr>
     </declare-styleable><declare-styleable name="MaterialTextView" parent="AppCompatTextView">
     <attr name="android:textAppearance"/>
     <attr name="android:lineHeight"/>
     <attr name="lineHeight"/>
-  </declare-styleable><declare-styleable name="CoordinatorLayout_Layout">
-        <attr name="android:layout_gravity"/>
-        
-        <attr format="string" name="layout_behavior"/>
-        
-        <attr format="reference" name="layout_anchor"/>
-        
-        <attr format="integer" name="layout_keyline"/>
-
-        
-        <attr name="layout_anchorGravity">
-            
-            <flag name="top" value="0x30"/>
-            
-            <flag name="bottom" value="0x50"/>
-            
-            <flag name="left" value="0x03"/>
-            
-            <flag name="right" value="0x05"/>
-            
-            <flag name="center_vertical" value="0x10"/>
-            
-            <flag name="fill_vertical" value="0x70"/>
-            
-            <flag name="center_horizontal" value="0x01"/>
-            
-            <flag name="fill_horizontal" value="0x07"/>
-            
-            <flag name="center" value="0x11"/>
-            
-            <flag name="fill" value="0x77"/>
-            
-            <flag name="clip_vertical" value="0x80"/>
-            
-            <flag name="clip_horizontal" value="0x08"/>
-            
-            <flag name="start" value="0x00800003"/>
-            
-            <flag name="end" value="0x00800005"/>
-        </attr>
-
-        
-        <attr format="enum" name="layout_insetEdge">
-            
-            <enum name="none" value="0x0"/>
-            
-            <enum name="top" value="0x30"/>
-            
-            <enum name="bottom" value="0x50"/>
-            
-            <enum name="left" value="0x03"/>
-            
-            <enum name="right" value="0x05"/>
-            
-            <enum name="start" value="0x00800003"/>
-            
-            <enum name="end" value="0x00800005"/>
-        </attr>
-        
-        <attr name="layout_dodgeInsetEdges">
-            
-            <flag name="none" value="0x0"/>
-            
-            <flag name="top" value="0x30"/>
-            
-            <flag name="bottom" value="0x50"/>
-            
-            <flag name="left" value="0x03"/>
-            
-            <flag name="right" value="0x05"/>
-            
-            <flag name="start" value="0x00800003"/>
-            
-            <flag name="end" value="0x00800005"/>
-            
-            <flag name="all" value="0x77"/>
-        </attr>
-    </declare-styleable><declare-styleable name="NavigationView">
-    <attr name="android:background"/>
-    <attr name="android:fitsSystemWindows"/>
-    <attr name="android:maxWidth"/>
-    <attr name="elevation"/>
-    
-    <attr format="reference" name="menu"/>
-    <attr format="color" name="itemIconTint"/>
-    <attr name="itemTextColor"/>
-    
-    <attr format="reference" name="itemBackground"/>
-    <attr format="reference" name="itemTextAppearance"/>
-    
-    <attr format="reference" name="headerLayout"/>
-    
-    <attr format="dimension" name="itemHorizontalPadding"/>
-    
-    <attr format="dimension" name="itemIconPadding"/>
-    
-    <attr format="dimension" name="itemIconSize"/>
-    
-    <attr format="integer" min="1" name="itemMaxLines"/>
-    
-    <attr name="itemShapeAppearance"/>
-    
-    <attr name="itemShapeAppearanceOverlay"/>
-    
-    <attr format="dimension" name="itemShapeInsetStart"/>
-    
-    <attr format="dimension" name="itemShapeInsetTop"/>
-    
-    <attr format="dimension" name="itemShapeInsetEnd"/>
-    
-    <attr format="dimension" name="itemShapeInsetBottom"/>
-    
-    <attr format="color" name="itemShapeFillColor"/>
   </declare-styleable><declare-styleable name="BottomSheetBehavior_Layout">
     
     <attr format="dimension" name="behavior_peekHeight">
@@ -6234,39 +6038,7 @@
     </attr>
     <attr name="android:elevation"/>
 
-  </declare-styleable><declare-styleable name="GradientColor">
-        
-        <attr name="android:startColor"/>
-        
-        <attr name="android:centerColor"/>
-        
-        <attr name="android:endColor"/>
-        
-        <attr name="android:type"/>
-
-        
-        
-        <attr name="android:gradientRadius"/>
-
-        
-        
-        <attr name="android:centerX"/>
-        
-        <attr name="android:centerY"/>
-
-        
-        
-        <attr name="android:startX"/>
-        
-        <attr name="android:startY"/>
-        
-        <attr name="android:endX"/>
-        
-        <attr name="android:endY"/>
-
-        
-        <attr name="android:tileMode"/>
-    </declare-styleable><declare-styleable name="ForegroundLinearLayout">
+  </declare-styleable><declare-styleable name="ForegroundLinearLayout">
     <attr name="android:foreground"/>
     <attr name="android:foregroundGravity"/>
     <attr format="boolean" name="foregroundInsidePadding"/>
@@ -6275,12 +6047,7 @@
     <attr format="dimension" name="backgroundInsetTop"/>
     <attr format="dimension" name="backgroundInsetEnd"/>
     <attr format="dimension" name="backgroundInsetBottom"/>
-  </declare-styleable><declare-styleable name="AnimatedStateListDrawableItem">
-        
-        <attr name="android:drawable"/>
-        
-        <attr name="android:id"/>
-    </declare-styleable><declare-styleable name="Fragment">
+  </declare-styleable><declare-styleable name="Fragment">
         <attr name="android:name"/>
         <attr name="android:id"/>
         <attr name="android:tag"/>
@@ -6669,24 +6436,9 @@
         
         <attr format="reference" name="listChoiceIndicatorSingleAnimated"/>
 
-    </declare-styleable><declare-styleable name="ScrollingViewBehavior_Layout">
-    
-    <attr format="dimension" name="behavior_overlapTop"/>
-  </declare-styleable><declare-styleable name="ScrimInsetsFrameLayout">
+    </declare-styleable><declare-styleable name="ScrimInsetsFrameLayout">
     <attr format="color|reference" name="insetForeground"/>
-  </declare-styleable><declare-styleable name="LoadingImageView"><attr name="imageAspectRatioAdjust">
-<enum name="none" value="0"/>
-
-<enum name="adjust_width" value="1"/>
-
-<enum name="adjust_height" value="2"/>
-
-</attr>
-
-<attr format="float" name="imageAspectRatio"/>
-
-<attr format="boolean" name="circleCrop"/>
-</declare-styleable><declare-styleable name="ExtendedFloatingActionButton_Behavior_Layout">
+  </declare-styleable><declare-styleable name="ExtendedFloatingActionButton_Behavior_Layout">
     
     <attr name="behavior_autoHide"/>
     
@@ -6802,7 +6554,1089 @@
     <attr format="reference" name="liftOnScrollTargetViewId"/>
     
     <attr format="color" name="statusBarForeground"/>
-  </declare-styleable><declare-styleable name="TextInputLayout">
+  </declare-styleable><declare-styleable name="RecycleListView">
+        
+        <attr format="dimension" name="paddingBottomNoButtons"/>
+        
+        <attr format="dimension" name="paddingTopNoTitle"/>
+    </declare-styleable><declare-styleable name="Toolbar">
+        <attr format="reference" name="titleTextAppearance"/>
+        <attr format="reference" name="subtitleTextAppearance"/>
+        <attr name="title"/>
+        <attr name="subtitle"/>
+        <attr name="android:gravity"/>
+        
+        <attr format="dimension" name="titleMargin"/>
+        
+        <attr format="dimension" name="titleMarginStart"/>
+        
+        <attr format="dimension" name="titleMarginEnd"/>
+        
+        <attr format="dimension" name="titleMarginTop"/>
+        
+        <attr format="dimension" name="titleMarginBottom"/>
+        
+        <attr format="dimension" name="titleMargins"/>
+        <attr name="contentInsetStart"/>
+        <attr name="contentInsetEnd"/>
+        <attr name="contentInsetLeft"/>
+        <attr name="contentInsetRight"/>
+        <attr name="contentInsetStartWithNavigation"/>
+        <attr name="contentInsetEndWithActions"/>
+        <attr format="dimension" name="maxButtonHeight"/>
+        <attr name="buttonGravity">
+            
+            <flag name="center_vertical" value="0x10"/>
+            
+            <flag name="top" value="0x30"/>
+            
+            <flag name="bottom" value="0x50"/>
+        </attr>
+        
+        <attr format="reference" name="collapseIcon"/>
+        
+        <attr format="string" name="collapseContentDescription"/>
+        
+        <attr name="popupTheme"/>
+        
+        <attr format="reference" name="navigationIcon"/>
+        
+        <attr format="string" name="navigationContentDescription"/>
+        
+        <attr name="logo"/>
+        
+        <attr format="string" name="logoDescription"/>
+        
+        <attr format="color" name="titleTextColor"/>
+        
+        <attr format="color" name="subtitleTextColor"/>
+        <attr name="android:minHeight"/>
+        
+        <attr format="reference" name="menu"/>
+    </declare-styleable><declare-styleable name="ExtendedFloatingActionButton">
+    
+    <attr name="elevation"/>
+    
+    <attr name="showMotionSpec"/>
+    
+    <attr name="hideMotionSpec"/>
+    
+    <attr format="reference" name="extendMotionSpec"/>
+    
+    <attr format="reference" name="shrinkMotionSpec"/>
+  </declare-styleable><declare-styleable name="StateListDrawableItem">
+        
+        <attr name="android:drawable"/>
+    </declare-styleable><declare-styleable name="AppCompatTextView">
+        
+        <attr format="reference|boolean" name="textAllCaps"/>
+        
+        <attr format="string" name="textLocale"/>
+        <attr name="android:textAppearance"/>
+        
+        <attr format="enum" name="autoSizeTextType">
+            
+            <enum name="none" value="0"/>
+            
+            <enum name="uniform" value="1"/>
+        </attr>
+        
+        <attr format="dimension" name="autoSizeStepGranularity"/>
+        
+        <attr format="reference" name="autoSizePresetSizes"/>
+        
+        <attr format="dimension" name="autoSizeMinTextSize"/>
+        
+        <attr format="dimension" name="autoSizeMaxTextSize"/>
+        
+        <attr format="string" name="fontFamily"/>
+        
+        <attr format="dimension" name="lineHeight"/>
+        
+        <attr format="dimension" name="firstBaselineToTopHeight"/>
+        
+        <attr format="dimension" name="lastBaselineToBottomHeight"/>
+        
+        <attr format="string" name="fontVariationSettings"/>
+        
+        <attr format="reference" name="drawableLeftCompat"/>
+        <attr format="reference" name="drawableTopCompat"/>
+        <attr format="reference" name="drawableRightCompat"/>
+        <attr format="reference" name="drawableBottomCompat"/>
+        <attr format="reference" name="drawableStartCompat"/>
+        <attr format="reference" name="drawableEndCompat"/>
+        
+        <attr format="color" name="drawableTint"/>
+        
+        <attr name="drawableTintMode">
+            
+            <enum name="src_over" value="3"/>
+            
+            <enum name="src_in" value="5"/>
+            
+            <enum name="src_atop" value="9"/>
+            
+            <enum name="multiply" value="14"/>
+            
+            <enum name="screen" value="15"/>
+            
+            <enum name="add" value="16"/>
+        </attr>
+    </declare-styleable><declare-styleable name="CollapsingToolbarLayout_Layout">
+    <attr name="layout_collapseMode">
+      
+      <enum name="none" value="0"/>
+      
+      <enum name="pin" value="1"/>
+      
+      <enum name="parallax" value="2"/>
+    </attr>
+
+    
+    <attr format="float" name="layout_collapseParallaxMultiplier"/>
+  </declare-styleable><declare-styleable name="mapbox_BubbleLayout">
+        <attr format="dimension|reference" name="mapbox_bl_arrowWidth"/>
+        <attr format="dimension|reference" name="mapbox_bl_cornersRadius"/>
+        <attr format="dimension|reference" name="mapbox_bl_arrowHeight"/>
+        <attr format="dimension|reference" name="mapbox_bl_arrowPosition"/>
+        <attr format="color|reference" name="mapbox_bl_bubbleColor"/>
+        <attr format="dimension|reference" name="mapbox_bl_strokeWidth"/>
+        <attr format="color|reference" name="mapbox_bl_strokeColor"/>
+
+        <attr format="enum" name="mapbox_bl_arrowDirection">
+            <enum name="left" value="0"/>
+            <enum name="right" value="1"/>
+            <enum name="top" value="2"/>
+            <enum name="bottom" value="3"/>
+        </attr>
+    </declare-styleable><declare-styleable name="PopupWindowBackgroundState">
+        
+        <attr format="boolean" name="state_above_anchor"/>
+    </declare-styleable><declare-styleable name="ActionMode">
+        
+        <attr name="titleTextStyle"/>
+        
+        <attr name="subtitleTextStyle"/>
+        
+        <attr name="background"/>
+        
+        <attr name="backgroundSplit"/>
+        
+        <attr name="height"/>
+        
+        <attr format="reference" name="closeItemLayout"/>
+    </declare-styleable><declare-styleable name="MaterialCalendarItem">
+    <attr name="android:insetLeft"/>
+    <attr name="android:insetTop"/>
+    <attr name="android:insetRight"/>
+    <attr name="android:insetBottom"/>
+    <attr format="color" name="itemFillColor"/>
+    <attr name="itemTextColor"/>
+    <attr format="color" name="itemStrokeColor"/>
+    <attr format="dimension" name="itemStrokeWidth"/>
+    <attr name="itemShapeAppearance"/>
+    <attr name="itemShapeAppearanceOverlay"/>
+  </declare-styleable><declare-styleable name="Snackbar">
+    
+    <attr format="reference" name="snackbarStyle"/>
+    
+    <attr format="reference" name="snackbarButtonStyle"/>
+  </declare-styleable><declare-styleable name="AnimatedStateListDrawableCompat">
+        
+        <attr name="android:visible"/>
+        
+        <attr name="android:variablePadding"/>
+        
+        <attr name="android:constantSize"/>
+        
+        <attr name="android:dither"/>
+        
+        <attr name="android:enterFadeDuration"/>
+        
+        <attr name="android:exitFadeDuration"/>
+        
+        
+    </declare-styleable><declare-styleable name="Spinner">
+        
+        <attr name="android:prompt"/>
+        
+        <attr name="popupTheme"/>
+        
+        <attr name="android:popupBackground"/>
+        
+        <attr name="android:dropDownWidth"/>
+        
+        <attr name="android:entries"/>
+    </declare-styleable><declare-styleable name="DrawerArrowToggle">
+        
+        <attr format="color" name="color"/>
+        
+        <attr format="boolean" name="spinBars"/>
+        
+        <attr format="dimension" name="drawableSize"/>
+        
+        <attr format="dimension" name="gapBetweenBars"/>
+        
+        <attr format="dimension" name="arrowHeadLength"/>
+        
+        <attr format="dimension" name="arrowShaftLength"/>
+        
+        <attr format="dimension" name="barLength"/>
+        
+        <attr format="dimension" name="thickness"/>
+    </declare-styleable><declare-styleable name="Badge">
+    <attr format="color" name="backgroundColor"/>
+    <attr format="color" name="badgeTextColor"/>
+    <attr format="integer" name="maxCharacterCount"/>
+    <attr format="integer" name="number"/>
+    <attr name="badgeGravity">
+      
+      <enum name="TOP_END" value="8388661"/>
+      
+      <enum name="TOP_START" value="8388659"/>
+      
+      <enum name="BOTTOM_END" value="8388693"/>
+      
+      <enum name="BOTTOM_START" value="8388691"/>
+    </attr>
+  </declare-styleable><declare-styleable name="Chip">
+    
+    <attr format="color" name="chipSurfaceColor"/>
+    
+    <attr format="color" name="chipBackgroundColor"/>
+    
+    <attr format="dimension" name="chipMinHeight"/>
+    
+    <attr format="dimension" name="chipCornerRadius"/>
+    
+    <attr format="color" name="chipStrokeColor"/>
+    
+    <attr format="dimension" name="chipStrokeWidth"/>
+    
+    <attr name="rippleColor"/>
+    
+    <attr format="dimension" name="chipMinTouchTargetSize"/>
+    
+    <attr name="ensureMinTouchTargetSize"/>
+
+    
+    <attr name="android:text"/>
+    
+    <attr name="android:textColor"/>
+    
+    <attr name="android:textAppearance"/>
+    
+    <attr name="android:ellipsize"/>
+    
+    <attr name="android:maxWidth"/>
+
+    
+    <attr format="boolean" name="chipIconVisible"/>
+    
+    <attr format="boolean" name="chipIconEnabled"/>
+    
+    <attr format="reference" name="chipIcon"/>
+    
+    <attr format="color" name="chipIconTint"/>
+    
+    <attr format="dimension" name="chipIconSize"/>
+
+    
+    <attr format="boolean" name="closeIconVisible"/>
+    
+    <attr format="boolean" name="closeIconEnabled"/>
+    
+    <attr format="reference" name="closeIcon"/>
+    
+    <attr format="color" name="closeIconTint"/>
+    
+    <attr format="dimension" name="closeIconSize"/>
+
+    
+    <attr name="android:checkable"/>
+    
+    <attr format="boolean" name="checkedIconVisible"/>
+    
+    <attr format="boolean" name="checkedIconEnabled"/>
+    
+    <attr name="checkedIcon"/>
+
+    
+    <attr name="showMotionSpec"/>
+    
+    <attr name="hideMotionSpec"/>
+
+    
+    <attr name="shapeAppearance"/>
+    
+    <attr name="shapeAppearanceOverlay"/>
+
+    
+
+    
+
+    
+    <attr format="dimension" name="chipStartPadding"/>
+    
+    <attr format="dimension" name="iconStartPadding"/>
+
+    
+
+    
+    <attr format="dimension" name="iconEndPadding"/>
+    
+    <attr format="dimension" name="textStartPadding"/>
+
+    
+
+    
+    <attr format="dimension" name="textEndPadding"/>
+    
+    <attr format="dimension" name="closeIconStartPadding"/>
+
+    
+
+    
+    <attr format="dimension" name="closeIconEndPadding"/>
+    
+    <attr format="dimension" name="chipEndPadding"/>
+
+    
+  </declare-styleable><declare-styleable name="ActionBarLayout">
+        <attr name="android:layout_gravity"/>
+    </declare-styleable><declare-styleable name="MaterialCheckBox">
+    
+    <attr name="useMaterialThemeColors"/>
+    
+    <attr name="buttonTint"/>
+  </declare-styleable><declare-styleable name="ViewPager2">
+        <attr name="android:orientation"/>
+    </declare-styleable><declare-styleable name="ViewStubCompat">
+        
+        <attr name="android:layout"/>
+        
+        <attr name="android:inflatedId"/>
+        <attr name="android:id"/>
+    </declare-styleable><declare-styleable name="SnackbarLayout">
+    <attr name="android:maxWidth"/>
+    <attr name="elevation"/>
+    <attr format="dimension" name="maxActionInlineWidth"/>
+    
+    <attr format="enum" name="animationMode">
+      
+      <enum name="slide" value="0"/>
+      
+      <enum name="fade" value="1"/>
+    </attr>
+    
+    <attr format="float" name="backgroundOverlayColorAlpha"/>
+    
+    <attr format="float" name="actionTextColorAlpha"/>
+  </declare-styleable><declare-styleable name="mapbox_MapView">
+
+        
+        <attr format="string" name="mapbox_apiBaseUrl"/>
+
+        
+        <attr format="string" name="mapbox_apiBaseUri"/>
+        <attr format="boolean" name="mapbox_localIdeographEnabled"/>
+        <attr format="string" name="mapbox_localIdeographFontFamily"/>
+        <attr format="reference" name="mapbox_localIdeographFontFamilies"/>
+        <attr format="boolean" name="mapbox_cross_source_collisions"/>
+
+        
+        <attr format="float" name="mapbox_cameraTargetLat"/>
+        <attr format="float" name="mapbox_cameraTargetLng"/>
+        <attr format="float" name="mapbox_cameraZoom"/>
+        <attr format="float" name="mapbox_cameraBearing"/>
+        <attr format="float" name="mapbox_cameraTilt"/>
+
+        
+        <attr format="float" name="mapbox_cameraZoomMax"/>
+        <attr format="float" name="mapbox_cameraZoomMin"/>
+
+        
+        <attr format="float" name="mapbox_cameraPitchMax"/>
+        <attr format="float" name="mapbox_cameraPitchMin"/>
+
+        
+        <attr format="boolean" name="mapbox_uiZoomGestures"/>
+        <attr format="boolean" name="mapbox_uiScrollGestures"/>
+        <attr format="boolean" name="mapbox_uiHorizontalScrollGestures"/>
+        <attr format="boolean" name="mapbox_uiRotateGestures"/>
+        <attr format="boolean" name="mapbox_uiTiltGestures"/>
+        <attr format="boolean" name="mapbox_uiDoubleTapGestures"/>
+        <attr format="boolean" name="mapbox_uiQuickZoomGestures"/>
+
+        
+        <attr format="boolean" name="mapbox_uiCompass"/>
+        <attr name="mapbox_uiCompassGravity">
+            <flag name="top" value="0x30"/>
+            <flag name="bottom" value="0x50"/>
+            <flag name="left" value="0x03"/>
+            <flag name="right" value="0x05"/>
+            <flag name="center_vertical" value="0x10"/>
+            <flag name="fill_vertical" value="0x70"/>
+            <flag name="center_horizontal" value="0x01"/>
+            <flag name="fill_horizontal" value="0x07"/>
+            <flag name="center" value="0x11"/>
+            <flag name="fill" value="0x77"/>
+            <flag name="clip_vertical" value="0x80"/>
+            <flag name="clip_horizontal" value="0x08"/>
+            <flag name="start" value="0x00800003"/>
+            <flag name="end" value="0x00800005"/>
+        </attr>
+        <attr format="dimension" name="mapbox_uiCompassMarginLeft"/>
+        <attr format="dimension" name="mapbox_uiCompassMarginTop"/>
+        <attr format="dimension" name="mapbox_uiCompassMarginRight"/>
+        <attr format="dimension" name="mapbox_uiCompassMarginBottom"/>
+        <attr format="boolean" name="mapbox_uiCompassFadeFacingNorth"/>
+        <attr format="reference" name="mapbox_uiCompassDrawable"/>
+
+        
+        <attr format="boolean" name="mapbox_uiLogo"/>
+        <attr name="mapbox_uiLogoGravity">
+            <flag name="top" value="0x30"/>
+            <flag name="bottom" value="0x50"/>
+            <flag name="left" value="0x03"/>
+            <flag name="right" value="0x05"/>
+            <flag name="center_vertical" value="0x10"/>
+            <flag name="fill_vertical" value="0x70"/>
+            <flag name="center_horizontal" value="0x01"/>
+            <flag name="fill_horizontal" value="0x07"/>
+            <flag name="center" value="0x11"/>
+            <flag name="fill" value="0x77"/>
+            <flag name="clip_vertical" value="0x80"/>
+            <flag name="clip_horizontal" value="0x08"/>
+            <flag name="start" value="0x00800003"/>
+            <flag name="end" value="0x00800005"/>
+        </attr>
+        <attr format="dimension" name="mapbox_uiLogoMarginLeft"/>
+        <attr format="dimension" name="mapbox_uiLogoMarginTop"/>
+        <attr format="dimension" name="mapbox_uiLogoMarginRight"/>
+        <attr format="dimension" name="mapbox_uiLogoMarginBottom"/>
+
+        
+        <attr format="boolean" name="mapbox_uiAttribution"/>
+        <attr name="mapbox_uiAttributionGravity">
+            <flag name="top" value="0x30"/>
+            <flag name="bottom" value="0x50"/>
+            <flag name="left" value="0x03"/>
+            <flag name="right" value="0x05"/>
+            <flag name="center_vertical" value="0x10"/>
+            <flag name="fill_vertical" value="0x70"/>
+            <flag name="center_horizontal" value="0x01"/>
+            <flag name="fill_horizontal" value="0x07"/>
+            <flag name="center" value="0x11"/>
+            <flag name="fill" value="0x77"/>
+            <flag name="clip_vertical" value="0x80"/>
+            <flag name="clip_horizontal" value="0x08"/>
+            <flag name="start" value="0x00800003"/>
+            <flag name="end" value="0x00800005"/>
+        </attr>
+        <attr format="dimension" name="mapbox_uiAttributionMarginLeft"/>
+        <attr format="dimension" name="mapbox_uiAttributionMarginTop"/>
+        <attr format="dimension" name="mapbox_uiAttributionMarginRight"/>
+        <attr format="dimension" name="mapbox_uiAttributionMarginBottom"/>
+        <attr format="color" name="mapbox_uiAttributionTintColor"/>
+
+        
+        <attr format="boolean" name="mapbox_renderTextureMode"/>
+        <attr format="boolean" name="mapbox_renderTextureTranslucentSurface"/>
+        <attr format="color" name="mapbox_foregroundLoadColor"/>
+
+        <attr format="boolean" name="mapbox_enableTilePrefetch"/>
+        <attr format="integer" name="mapbox_prefetchZoomDelta"/>
+        <attr format="boolean" name="mapbox_enableZMediaOverlay"/>
+        <attr format="float" name="mapbox_pixelRatio"/>
+
+    </declare-styleable><declare-styleable name="MenuGroup">
+
+        
+        <attr name="android:id"/>
+
+        
+        <attr name="android:menuCategory"/>
+
+        
+        <attr name="android:orderInCategory"/>
+
+        
+        <attr name="android:checkableBehavior"/>
+
+        
+        <attr name="android:visible"/>
+
+        
+        <attr name="android:enabled"/>
+
+    </declare-styleable><declare-styleable name="FontFamily">
+        
+        <attr format="string" name="fontProviderAuthority"/>
+        
+        <attr format="string" name="fontProviderPackage"/>
+        
+        <attr format="string" name="fontProviderQuery"/>
+        
+        <attr format="reference" name="fontProviderCerts"/>
+        
+        <attr name="fontProviderFetchStrategy">
+            
+            <enum name="blocking" value="0"/>
+            
+            <enum name="async" value="1"/>
+        </attr>
+        
+        <attr format="integer" name="fontProviderFetchTimeout">
+            
+            <enum name="forever" value="-1"/>
+        </attr>
+    </declare-styleable><declare-styleable name="ThemeEnforcement">
+    
+    <attr format="boolean" name="enforceMaterialTheme"/>
+    
+    <attr format="boolean" name="enforceTextAppearance"/>
+    
+    <attr name="android:textAppearance"/>
+  </declare-styleable><declare-styleable name="MaterialButtonToggleGroup">
+    
+    <attr name="singleSelection"/>
+    
+    <attr format="reference" name="checkedButton"/>
+  </declare-styleable><declare-styleable name="AppBarLayoutStates">
+    
+    <attr format="boolean" name="state_collapsed"/>
+    
+    <attr format="boolean" name="state_collapsible"/>
+    
+    <attr format="boolean" name="state_lifted"/>
+    
+    <attr format="boolean" name="state_liftable"/>
+  </declare-styleable><declare-styleable name="mapbox_LocationComponent">
+        <attr format="reference" name="mapbox_foregroundDrawable"/>
+        <attr format="color" name="mapbox_foregroundTintColor"/>
+        <attr format="reference" name="mapbox_backgroundDrawable"/>
+        <attr format="color" name="mapbox_backgroundTintColor"/>
+        <attr format="reference" name="mapbox_bearingDrawable"/>
+        <attr format="color" name="mapbox_bearingTintColor"/>
+        <attr format="reference" name="mapbox_gpsDrawable"/>
+
+        <attr format="reference" name="mapbox_foregroundDrawableStale"/>
+        <attr format="color" name="mapbox_foregroundStaleTintColor"/>
+        <attr format="reference" name="mapbox_backgroundDrawableStale"/>
+        <attr format="color" name="mapbox_backgroundStaleTintColor"/>
+
+        <attr format="float" name="mapbox_accuracyAlpha"/>
+        <attr format="color" name="mapbox_accuracyColor"/>
+
+        <attr format="dimension" name="mapbox_elevation"/>
+
+        
+        <attr format="boolean" name="mapbox_enableStaleState"/>
+        <attr format="integer" min="0" name="mapbox_staleStateTimeout"/>
+
+        
+        <attr format="integer" name="mapbox_iconPaddingLeft"/>
+        <attr format="integer" name="mapbox_iconPaddingTop"/>
+        <attr format="integer" name="mapbox_iconPaddingRight"/>
+        <attr format="integer" name="mapbox_iconPaddingBottom"/>
+
+        
+        <attr format="string" name="mapbox_layer_above"/>
+        <attr format="string" name="mapbox_layer_below"/>
+
+        
+        <attr format="float" name="mapbox_maxZoomIconScale"/>
+        <attr format="float" name="mapbox_minZoomIconScale"/>
+
+        
+        <attr format="boolean" name="mapbox_trackingGesturesManagement"/>
+        <attr format="dimension" name="mapbox_trackingInitialMoveThreshold"/>
+        <attr format="dimension" name="mapbox_trackingMultiFingerMoveThreshold"/>
+
+        
+        <attr format="float" name="mapbox_trackingAnimationDurationMultiplier"/>
+
+        
+        <attr format="boolean" name="mapbox_compassAnimationEnabled"/>
+
+        
+        <attr format="boolean" name="mapbox_accuracyAnimationEnabled"/>
+
+    </declare-styleable><declare-styleable name="BottomAppBar">
+    
+    <attr name="backgroundTint"/>
+    
+    <attr name="elevation"/>
+    
+    <attr name="fabAlignmentMode">
+      
+      <enum name="center" value="0"/>
+      
+      <enum name="end" value="1"/>
+    </attr>
+    
+    <attr name="fabAnimationMode">
+      
+      <enum name="scale" value="0"/>
+      
+      <enum name="slide" value="1"/>
+    </attr>
+    
+    <attr format="dimension" name="fabCradleMargin"/>
+    
+    <attr format="dimension" name="fabCradleRoundedCornerRadius"/>
+    
+    <attr format="dimension" name="fabCradleVerticalOffset"/>
+    
+    <attr format="boolean" name="hideOnScroll"/>
+  </declare-styleable><declare-styleable name="CoordinatorLayout">
+        
+        <attr format="reference" name="keylines"/>
+        
+        <attr format="color|reference" name="statusBarBackground"/>
+    </declare-styleable><declare-styleable name="FontFamilyFont">
+        
+        <attr name="fontStyle">
+            <enum name="normal" value="0"/>
+            <enum name="italic" value="1"/>
+        </attr>
+        
+        <attr format="reference" name="font"/>
+        
+        <attr format="integer" name="fontWeight"/>
+        
+        <attr format="string" name="fontVariationSettings"/>
+        
+        <attr format="integer" name="ttcIndex"/>
+        
+        <attr name="android:fontStyle"/>
+        <attr name="android:font"/>
+        <attr name="android:fontWeight"/>
+        <attr name="android:fontVariationSettings"/>
+        <attr name="android:ttcIndex"/>
+    </declare-styleable><declare-styleable name="SignInButton"><attr format="reference" name="buttonSize">
+<enum name="standard" value="0"/>
+
+<enum name="wide" value="1"/>
+
+<enum name="icon_only" value="2"/>
+
+</attr>
+<attr format="reference" name="colorScheme">
+<enum name="dark" value="0"/>
+
+<enum name="light" value="1"/>
+
+<enum name="auto" value="2"/>
+
+</attr>
+
+<attr format="reference|string" name="scopeUris"/>
+</declare-styleable><declare-styleable name="LinearLayoutCompat">
+        
+        <attr name="android:orientation"/>
+        <attr name="android:gravity"/>
+        
+        <attr name="android:baselineAligned"/>
+        
+        <attr name="android:baselineAlignedChildIndex"/>
+        
+        <attr name="android:weightSum"/>
+        
+        <attr format="boolean" name="measureWithLargestChild"/>
+        
+        <attr name="divider"/>
+        
+        <attr name="showDividers">
+            <flag name="none" value="0"/>
+            <flag name="beginning" value="1"/>
+            <flag name="middle" value="2"/>
+            <flag name="end" value="4"/>
+        </attr>
+        
+        <attr format="dimension" name="dividerPadding"/>
+    </declare-styleable><declare-styleable name="FloatingActionButton_Behavior_Layout">
+    
+    <attr format="boolean" name="behavior_autoHide"/>
+  </declare-styleable><declare-styleable name="ShapeAppearance">
+    
+    <attr format="dimension|fraction" name="cornerSize"/>
+    
+    <attr format="dimension|fraction" name="cornerSizeTopLeft"/>
+    
+    <attr format="dimension|fraction" name="cornerSizeTopRight"/>
+    
+    <attr format="dimension|fraction" name="cornerSizeBottomRight"/>
+    
+    <attr format="dimension|fraction" name="cornerSizeBottomLeft"/>
+
+    
+    <attr format="enum" name="cornerFamily">
+      <enum name="rounded" value="0"/>
+      <enum name="cut" value="1"/>
+    </attr>
+    
+    <attr format="enum" name="cornerFamilyTopLeft">
+      <enum name="rounded" value="0"/>
+      <enum name="cut" value="1"/>
+    </attr>
+    
+    <attr format="enum" name="cornerFamilyTopRight">
+      <enum name="rounded" value="0"/>
+      <enum name="cut" value="1"/>
+    </attr>
+    
+    <attr format="enum" name="cornerFamilyBottomRight">
+      <enum name="rounded" value="0"/>
+      <enum name="cut" value="1"/>
+    </attr>
+    
+    <attr format="enum" name="cornerFamilyBottomLeft">
+      <enum name="rounded" value="0"/>
+      <enum name="cut" value="1"/>
+    </attr>
+  </declare-styleable><declare-styleable name="RecyclerView">
+        
+        <attr format="string" name="layoutManager"/>
+
+        
+        
+        
+        <eat-comment/>
+
+        <attr name="android:orientation"/>
+        <attr name="android:descendantFocusability"/>
+        <attr name="android:clipToPadding"/>
+        <attr format="integer" name="spanCount"/>
+        <attr format="boolean" name="reverseLayout"/>
+        <attr format="boolean" name="stackFromEnd"/>
+        <attr format="boolean" name="fastScrollEnabled"/>
+        <attr format="reference" name="fastScrollVerticalThumbDrawable"/>
+        <attr format="reference" name="fastScrollVerticalTrackDrawable"/>
+        <attr format="reference" name="fastScrollHorizontalThumbDrawable"/>
+        <attr format="reference" name="fastScrollHorizontalTrackDrawable"/>
+    </declare-styleable><declare-styleable name="ActionMenuView">
+        
+    </declare-styleable><declare-styleable name="ChipGroup">
+
+    
+    <attr format="dimension" name="chipSpacing"/>
+    
+    <attr format="dimension" name="chipSpacingHorizontal"/>
+    
+    <attr format="dimension" name="chipSpacingVertical"/>
+
+    
+    <attr format="boolean" name="singleLine"/>
+
+    
+    <attr name="singleSelection"/>
+    
+    <attr format="reference" name="checkedChip"/>
+
+  </declare-styleable><declare-styleable name="CompoundButton">
+        <attr name="android:button"/>
+        
+        <attr format="reference" name="buttonCompat"/>
+        
+        <attr format="color" name="buttonTint"/>
+
+        
+        <attr name="buttonTintMode">
+            
+            <enum name="src_over" value="3"/>
+            
+            <enum name="src_in" value="5"/>
+            
+            <enum name="src_atop" value="9"/>
+            
+            <enum name="multiply" value="14"/>
+            
+            <enum name="screen" value="15"/>
+            
+            <enum name="add" value="16"/>
+        </attr>
+    </declare-styleable><declare-styleable name="AppCompatTextHelper">
+        <attr name="android:drawableLeft"/>
+        <attr name="android:drawableTop"/>
+        <attr name="android:drawableRight"/>
+        <attr name="android:drawableBottom"/>
+        <attr name="android:drawableStart"/>
+        <attr name="android:drawableEnd"/>
+        <attr name="android:textAppearance"/>
+    </declare-styleable><declare-styleable name="SimpleDraweeView" parent="GenericDraweeHierarchy">
+
+    
+    <attr format="string" name="actualImageUri"/>
+    
+    <attr format="reference" name="actualImageResource"/>
+
+    
+    <eat-comment/>
+
+    
+    <attr name="fadeDuration"/>
+
+    
+    <attr name="viewAspectRatio"/>
+
+    
+
+    
+    <attr name="placeholderImage"/>
+    
+    <attr name="placeholderImageScaleType"/>
+
+    
+    <attr name="retryImage"/>
+    
+    <attr name="retryImageScaleType"/>
+
+    
+    <attr name="failureImage"/>
+    
+    <attr name="failureImageScaleType"/>
+
+
+    
+    <attr name="progressBarImage"/>
+    
+    <attr name="progressBarImageScaleType"/>
+
+    
+    <attr name="progressBarAutoRotateInterval"/>
+
+    
+    <attr name="actualImageScaleType"/>
+
+    
+    <attr name="backgroundImage"/>
+
+    
+    <attr name="overlayImage"/>
+
+    
+    <attr name="pressedStateOverlayImage"/>
+
+    
+
+    
+    <attr name="roundAsCircle"/>
+    
+    <attr name="roundedCornerRadius"/>
+    
+    <attr name="roundTopLeft"/>
+    
+    <attr name="roundTopRight"/>
+    
+    <attr name="roundBottomRight"/>
+    
+    <attr name="roundBottomLeft"/>
+    
+    <attr name="roundTopStart"/>
+    
+    <attr name="roundTopEnd"/>
+    
+    <attr name="roundBottomStart"/>
+    
+    <attr name="roundBottomEnd"/>
+    
+    <attr name="roundWithOverlayColor"/>
+    
+    <attr name="roundingBorderWidth"/>
+    
+    <attr name="roundingBorderColor"/>
+    
+    <attr name="roundingBorderPadding"/>
+
+  </declare-styleable><declare-styleable name="AppCompatSeekBar">
+        <attr name="android:thumb"/>
+        
+        <attr format="reference" name="tickMark"/>
+        
+        <attr format="color" name="tickMarkTint"/>
+        
+        <attr name="tickMarkTintMode">
+            
+            <enum name="src_over" value="3"/>
+            
+            <enum name="src_in" value="5"/>
+            
+            <enum name="src_atop" value="9"/>
+            
+            <enum name="multiply" value="14"/>
+            
+            <enum name="screen" value="15"/>
+            
+            <enum name="add" value="16"/>
+        </attr>
+    </declare-styleable><declare-styleable name="CoordinatorLayout_Layout">
+        <attr name="android:layout_gravity"/>
+        
+        <attr format="string" name="layout_behavior"/>
+        
+        <attr format="reference" name="layout_anchor"/>
+        
+        <attr format="integer" name="layout_keyline"/>
+
+        
+        <attr name="layout_anchorGravity">
+            
+            <flag name="top" value="0x30"/>
+            
+            <flag name="bottom" value="0x50"/>
+            
+            <flag name="left" value="0x03"/>
+            
+            <flag name="right" value="0x05"/>
+            
+            <flag name="center_vertical" value="0x10"/>
+            
+            <flag name="fill_vertical" value="0x70"/>
+            
+            <flag name="center_horizontal" value="0x01"/>
+            
+            <flag name="fill_horizontal" value="0x07"/>
+            
+            <flag name="center" value="0x11"/>
+            
+            <flag name="fill" value="0x77"/>
+            
+            <flag name="clip_vertical" value="0x80"/>
+            
+            <flag name="clip_horizontal" value="0x08"/>
+            
+            <flag name="start" value="0x00800003"/>
+            
+            <flag name="end" value="0x00800005"/>
+        </attr>
+
+        
+        <attr format="enum" name="layout_insetEdge">
+            
+            <enum name="none" value="0x0"/>
+            
+            <enum name="top" value="0x30"/>
+            
+            <enum name="bottom" value="0x50"/>
+            
+            <enum name="left" value="0x03"/>
+            
+            <enum name="right" value="0x05"/>
+            
+            <enum name="start" value="0x00800003"/>
+            
+            <enum name="end" value="0x00800005"/>
+        </attr>
+        
+        <attr name="layout_dodgeInsetEdges">
+            
+            <flag name="none" value="0x0"/>
+            
+            <flag name="top" value="0x30"/>
+            
+            <flag name="bottom" value="0x50"/>
+            
+            <flag name="left" value="0x03"/>
+            
+            <flag name="right" value="0x05"/>
+            
+            <flag name="start" value="0x00800003"/>
+            
+            <flag name="end" value="0x00800005"/>
+            
+            <flag name="all" value="0x77"/>
+        </attr>
+    </declare-styleable><declare-styleable name="NavigationView">
+    <attr name="android:background"/>
+    <attr name="android:fitsSystemWindows"/>
+    <attr name="android:maxWidth"/>
+    <attr name="elevation"/>
+    
+    <attr format="reference" name="menu"/>
+    <attr format="color" name="itemIconTint"/>
+    <attr name="itemTextColor"/>
+    
+    <attr format="reference" name="itemBackground"/>
+    <attr format="reference" name="itemTextAppearance"/>
+    
+    <attr format="reference" name="headerLayout"/>
+    
+    <attr format="dimension" name="itemHorizontalPadding"/>
+    
+    <attr format="dimension" name="itemIconPadding"/>
+    
+    <attr format="dimension" name="itemIconSize"/>
+    
+    <attr format="integer" min="1" name="itemMaxLines"/>
+    
+    <attr name="itemShapeAppearance"/>
+    
+    <attr name="itemShapeAppearanceOverlay"/>
+    
+    <attr format="dimension" name="itemShapeInsetStart"/>
+    
+    <attr format="dimension" name="itemShapeInsetTop"/>
+    
+    <attr format="dimension" name="itemShapeInsetEnd"/>
+    
+    <attr format="dimension" name="itemShapeInsetBottom"/>
+    
+    <attr format="color" name="itemShapeFillColor"/>
+  </declare-styleable><declare-styleable name="GradientColor">
+        
+        <attr name="android:startColor"/>
+        
+        <attr name="android:centerColor"/>
+        
+        <attr name="android:endColor"/>
+        
+        <attr name="android:type"/>
+
+        
+        
+        <attr name="android:gradientRadius"/>
+
+        
+        
+        <attr name="android:centerX"/>
+        
+        <attr name="android:centerY"/>
+
+        
+        
+        <attr name="android:startX"/>
+        
+        <attr name="android:startY"/>
+        
+        <attr name="android:endX"/>
+        
+        <attr name="android:endY"/>
+
+        
+        <attr name="android:tileMode"/>
+    </declare-styleable><declare-styleable name="AnimatedStateListDrawableItem">
+        
+        <attr name="android:drawable"/>
+        
+        <attr name="android:id"/>
+    </declare-styleable><declare-styleable name="ScrollingViewBehavior_Layout">
+    
+    <attr format="dimension" name="behavior_overlapTop"/>
+  </declare-styleable><declare-styleable name="LoadingImageView"><attr name="imageAspectRatioAdjust">
+<enum name="none" value="0"/>
+
+<enum name="adjust_width" value="1"/>
+
+<enum name="adjust_height" value="2"/>
+
+</attr>
+
+<attr format="float" name="imageAspectRatio"/>
+
+<attr format="boolean" name="circleCrop"/>
+</declare-styleable><declare-styleable name="TextInputLayout">
     
     <attr name="android:textColorHint"/>
 
@@ -7049,142 +7883,14 @@
         <attr format="reference" name="popupTheme"/>
     </declare-styleable><declare-styleable name="ActionMenuItemView">
         <attr name="android:minWidth"/>
-    </declare-styleable><declare-styleable name="RecycleListView">
-        
-        <attr format="dimension" name="paddingBottomNoButtons"/>
-        
-        <attr format="dimension" name="paddingTopNoTitle"/>
     </declare-styleable><declare-styleable name="FragmentContainerView">
         <attr name="android:name"/>
         <attr name="android:tag"/>
-    </declare-styleable><declare-styleable name="Toolbar">
-        <attr format="reference" name="titleTextAppearance"/>
-        <attr format="reference" name="subtitleTextAppearance"/>
-        <attr name="title"/>
-        <attr name="subtitle"/>
-        <attr name="android:gravity"/>
-        
-        <attr format="dimension" name="titleMargin"/>
-        
-        <attr format="dimension" name="titleMarginStart"/>
-        
-        <attr format="dimension" name="titleMarginEnd"/>
-        
-        <attr format="dimension" name="titleMarginTop"/>
-        
-        <attr format="dimension" name="titleMarginBottom"/>
-        
-        <attr format="dimension" name="titleMargins"/>
-        <attr name="contentInsetStart"/>
-        <attr name="contentInsetEnd"/>
-        <attr name="contentInsetLeft"/>
-        <attr name="contentInsetRight"/>
-        <attr name="contentInsetStartWithNavigation"/>
-        <attr name="contentInsetEndWithActions"/>
-        <attr format="dimension" name="maxButtonHeight"/>
-        <attr name="buttonGravity">
-            
-            <flag name="center_vertical" value="0x10"/>
-            
-            <flag name="top" value="0x30"/>
-            
-            <flag name="bottom" value="0x50"/>
-        </attr>
-        
-        <attr format="reference" name="collapseIcon"/>
-        
-        <attr format="string" name="collapseContentDescription"/>
-        
-        <attr name="popupTheme"/>
-        
-        <attr format="reference" name="navigationIcon"/>
-        
-        <attr format="string" name="navigationContentDescription"/>
-        
-        <attr name="logo"/>
-        
-        <attr format="string" name="logoDescription"/>
-        
-        <attr format="color" name="titleTextColor"/>
-        
-        <attr format="color" name="subtitleTextColor"/>
-        <attr name="android:minHeight"/>
-        
-        <attr format="reference" name="menu"/>
     </declare-styleable><declare-styleable name="LinearLayoutCompat_Layout">
         <attr name="android:layout_width"/>
         <attr name="android:layout_height"/>
         <attr name="android:layout_weight"/>
         <attr name="android:layout_gravity"/>
-    </declare-styleable><declare-styleable name="ExtendedFloatingActionButton">
-    
-    <attr name="elevation"/>
-    
-    <attr name="showMotionSpec"/>
-    
-    <attr name="hideMotionSpec"/>
-    
-    <attr format="reference" name="extendMotionSpec"/>
-    
-    <attr format="reference" name="shrinkMotionSpec"/>
-  </declare-styleable><declare-styleable name="StateListDrawableItem">
-        
-        <attr name="android:drawable"/>
-    </declare-styleable><declare-styleable name="AppCompatTextView">
-        
-        <attr format="reference|boolean" name="textAllCaps"/>
-        
-        <attr format="string" name="textLocale"/>
-        <attr name="android:textAppearance"/>
-        
-        <attr format="enum" name="autoSizeTextType">
-            
-            <enum name="none" value="0"/>
-            
-            <enum name="uniform" value="1"/>
-        </attr>
-        
-        <attr format="dimension" name="autoSizeStepGranularity"/>
-        
-        <attr format="reference" name="autoSizePresetSizes"/>
-        
-        <attr format="dimension" name="autoSizeMinTextSize"/>
-        
-        <attr format="dimension" name="autoSizeMaxTextSize"/>
-        
-        <attr format="string" name="fontFamily"/>
-        
-        <attr format="dimension" name="lineHeight"/>
-        
-        <attr format="dimension" name="firstBaselineToTopHeight"/>
-        
-        <attr format="dimension" name="lastBaselineToBottomHeight"/>
-        
-        <attr format="string" name="fontVariationSettings"/>
-        
-        <attr format="reference" name="drawableLeftCompat"/>
-        <attr format="reference" name="drawableTopCompat"/>
-        <attr format="reference" name="drawableRightCompat"/>
-        <attr format="reference" name="drawableBottomCompat"/>
-        <attr format="reference" name="drawableStartCompat"/>
-        <attr format="reference" name="drawableEndCompat"/>
-        
-        <attr format="color" name="drawableTint"/>
-        
-        <attr name="drawableTintMode">
-            
-            <enum name="src_over" value="3"/>
-            
-            <enum name="src_in" value="5"/>
-            
-            <enum name="src_atop" value="9"/>
-            
-            <enum name="multiply" value="14"/>
-            
-            <enum name="screen" value="15"/>
-            
-            <enum name="add" value="16"/>
-        </attr>
     </declare-styleable><declare-styleable name="CardView">
         
         <attr format="color" name="cardBackgroundColor"/>
@@ -7235,19 +7941,7 @@
             
             <enum name="add" value="16"/>
         </attr>
-    </declare-styleable><declare-styleable name="CollapsingToolbarLayout_Layout">
-    <attr name="layout_collapseMode">
-      
-      <enum name="none" value="0"/>
-      
-      <enum name="pin" value="1"/>
-      
-      <enum name="parallax" value="2"/>
-    </attr>
-
-    
-    <attr format="float" name="layout_collapseParallaxMultiplier"/>
-  </declare-styleable><declare-styleable name="AppCompatImageView">
+    </declare-styleable><declare-styleable name="AppCompatImageView">
         <attr name="android:src"/>
         
         <attr format="reference" name="srcCompat"/>
@@ -7280,25 +7974,7 @@
     <attr format="reference" name="yearSelectedStyle"/>
     <attr format="reference" name="yearTodayStyle"/>
     <attr format="color" name="rangeFillColor"/>
-  </declare-styleable><declare-styleable name="mapbox_BubbleLayout">
-        <attr format="dimension|reference" name="mapbox_bl_arrowWidth"/>
-        <attr format="dimension|reference" name="mapbox_bl_cornersRadius"/>
-        <attr format="dimension|reference" name="mapbox_bl_arrowHeight"/>
-        <attr format="dimension|reference" name="mapbox_bl_arrowPosition"/>
-        <attr format="color|reference" name="mapbox_bl_bubbleColor"/>
-        <attr format="dimension|reference" name="mapbox_bl_strokeWidth"/>
-        <attr format="color|reference" name="mapbox_bl_strokeColor"/>
-
-        <attr format="enum" name="mapbox_bl_arrowDirection">
-            <enum name="left" value="0"/>
-            <enum name="right" value="1"/>
-            <enum name="top" value="2"/>
-            <enum name="bottom" value="3"/>
-        </attr>
-    </declare-styleable><declare-styleable name="PopupWindowBackgroundState">
-        
-        <attr format="boolean" name="state_above_anchor"/>
-    </declare-styleable><declare-styleable name="TabItem">
+  </declare-styleable><declare-styleable name="TabItem">
     
     <attr name="android:text"/>
     
@@ -7308,30 +7984,6 @@
   </declare-styleable><declare-styleable name="SwitchMaterial">
     
     <attr name="useMaterialThemeColors"/>
-  </declare-styleable><declare-styleable name="ActionMode">
-        
-        <attr name="titleTextStyle"/>
-        
-        <attr name="subtitleTextStyle"/>
-        
-        <attr name="background"/>
-        
-        <attr name="backgroundSplit"/>
-        
-        <attr name="height"/>
-        
-        <attr format="reference" name="closeItemLayout"/>
-    </declare-styleable><declare-styleable name="MaterialCalendarItem">
-    <attr name="android:insetLeft"/>
-    <attr name="android:insetTop"/>
-    <attr name="android:insetRight"/>
-    <attr name="android:insetBottom"/>
-    <attr format="color" name="itemFillColor"/>
-    <attr name="itemTextColor"/>
-    <attr format="color" name="itemStrokeColor"/>
-    <attr format="dimension" name="itemStrokeWidth"/>
-    <attr name="itemShapeAppearance"/>
-    <attr name="itemShapeAppearanceOverlay"/>
   </declare-styleable><declare-styleable name="SwitchCompat">
         
         <attr name="android:thumb"/>
@@ -7387,12 +8039,7 @@
         <attr format="boolean" name="splitTrack"/>
         
         <attr format="boolean" name="showText"/>
-    </declare-styleable><declare-styleable name="Snackbar">
-    
-    <attr format="reference" name="snackbarStyle"/>
-    
-    <attr format="reference" name="snackbarButtonStyle"/>
-  </declare-styleable><declare-styleable name="FlowLayout">
+    </declare-styleable><declare-styleable name="FlowLayout">
     
     <attr format="dimension" name="itemSpacing"/>
     
@@ -7562,174 +8209,11 @@
     
     <attr format="dimension" name="roundingBorderPadding"/>
 
-  </declare-styleable><declare-styleable name="AnimatedStateListDrawableCompat">
-        
-        <attr name="android:visible"/>
-        
-        <attr name="android:variablePadding"/>
-        
-        <attr name="android:constantSize"/>
-        
-        <attr name="android:dither"/>
-        
-        <attr name="android:enterFadeDuration"/>
-        
-        <attr name="android:exitFadeDuration"/>
-        
-        
-    </declare-styleable><declare-styleable name="Spinner">
-        
-        <attr name="android:prompt"/>
-        
-        <attr name="popupTheme"/>
-        
-        <attr name="android:popupBackground"/>
-        
-        <attr name="android:dropDownWidth"/>
-        
-        <attr name="android:entries"/>
-    </declare-styleable><declare-styleable name="PopupWindow">
+  </declare-styleable><declare-styleable name="PopupWindow">
         
         <attr format="boolean" name="overlapAnchor"/>
         <attr name="android:popupBackground"/>
         <attr name="android:popupAnimationStyle"/>
-    </declare-styleable><declare-styleable name="DrawerArrowToggle">
-        
-        <attr format="color" name="color"/>
-        
-        <attr format="boolean" name="spinBars"/>
-        
-        <attr format="dimension" name="drawableSize"/>
-        
-        <attr format="dimension" name="gapBetweenBars"/>
-        
-        <attr format="dimension" name="arrowHeadLength"/>
-        
-        <attr format="dimension" name="arrowShaftLength"/>
-        
-        <attr format="dimension" name="barLength"/>
-        
-        <attr format="dimension" name="thickness"/>
-    </declare-styleable><declare-styleable name="Badge">
-    <attr format="color" name="backgroundColor"/>
-    <attr format="color" name="badgeTextColor"/>
-    <attr format="integer" name="maxCharacterCount"/>
-    <attr format="integer" name="number"/>
-    <attr name="badgeGravity">
-      
-      <enum name="TOP_END" value="8388661"/>
-      
-      <enum name="TOP_START" value="8388659"/>
-      
-      <enum name="BOTTOM_END" value="8388693"/>
-      
-      <enum name="BOTTOM_START" value="8388691"/>
-    </attr>
-  </declare-styleable><declare-styleable name="Chip">
-    
-    <attr format="color" name="chipSurfaceColor"/>
-    
-    <attr format="color" name="chipBackgroundColor"/>
-    
-    <attr format="dimension" name="chipMinHeight"/>
-    
-    <attr format="dimension" name="chipCornerRadius"/>
-    
-    <attr format="color" name="chipStrokeColor"/>
-    
-    <attr format="dimension" name="chipStrokeWidth"/>
-    
-    <attr name="rippleColor"/>
-    
-    <attr format="dimension" name="chipMinTouchTargetSize"/>
-    
-    <attr name="ensureMinTouchTargetSize"/>
-
-    
-    <attr name="android:text"/>
-    
-    <attr name="android:textColor"/>
-    
-    <attr name="android:textAppearance"/>
-    
-    <attr name="android:ellipsize"/>
-    
-    <attr name="android:maxWidth"/>
-
-    
-    <attr format="boolean" name="chipIconVisible"/>
-    
-    <attr format="boolean" name="chipIconEnabled"/>
-    
-    <attr format="reference" name="chipIcon"/>
-    
-    <attr format="color" name="chipIconTint"/>
-    
-    <attr format="dimension" name="chipIconSize"/>
-
-    
-    <attr format="boolean" name="closeIconVisible"/>
-    
-    <attr format="boolean" name="closeIconEnabled"/>
-    
-    <attr format="reference" name="closeIcon"/>
-    
-    <attr format="color" name="closeIconTint"/>
-    
-    <attr format="dimension" name="closeIconSize"/>
-
-    
-    <attr name="android:checkable"/>
-    
-    <attr format="boolean" name="checkedIconVisible"/>
-    
-    <attr format="boolean" name="checkedIconEnabled"/>
-    
-    <attr name="checkedIcon"/>
-
-    
-    <attr name="showMotionSpec"/>
-    
-    <attr name="hideMotionSpec"/>
-
-    
-    <attr name="shapeAppearance"/>
-    
-    <attr name="shapeAppearanceOverlay"/>
-
-    
-
-    
-
-    
-    <attr format="dimension" name="chipStartPadding"/>
-    
-    <attr format="dimension" name="iconStartPadding"/>
-
-    
-
-    
-    <attr format="dimension" name="iconEndPadding"/>
-    
-    <attr format="dimension" name="textStartPadding"/>
-
-    
-
-    
-    <attr format="dimension" name="textEndPadding"/>
-    
-    <attr format="dimension" name="closeIconStartPadding"/>
-
-    
-
-    
-    <attr format="dimension" name="closeIconEndPadding"/>
-    
-    <attr format="dimension" name="chipEndPadding"/>
-
-    
-  </declare-styleable><declare-styleable name="ActionBarLayout">
-        <attr name="android:layout_gravity"/>
     </declare-styleable><declare-styleable name="StateListDrawable">
         
         <attr name="android:visible"/>
@@ -7795,23 +8279,10 @@
         <attr format="string" name="initialActivityCount"/>
         
         <attr format="reference" name="expandActivityOverflowButtonDrawable"/>
-    </declare-styleable><declare-styleable name="MaterialCheckBox">
-    
-    <attr name="useMaterialThemeColors"/>
-    
-    <attr name="buttonTint"/>
-  </declare-styleable><declare-styleable name="ViewPager2">
-        <attr name="android:orientation"/>
     </declare-styleable><declare-styleable name="MaterialRadioButton">
     
     <attr name="useMaterialThemeColors"/>
-  </declare-styleable><declare-styleable name="ViewStubCompat">
-        
-        <attr name="android:layout"/>
-        
-        <attr name="android:inflatedId"/>
-        <attr name="android:id"/>
-    </declare-styleable><declare-styleable name="ListPopupWindow">
+  </declare-styleable><declare-styleable name="ListPopupWindow">
         
         <attr name="android:dropDownVerticalOffset"/>
         
@@ -7983,210 +8454,38 @@
     <attr name="shapeAppearance"/>
     
     <attr name="shapeAppearanceOverlay"/>
-  </declare-styleable><declare-styleable name="SnackbarLayout">
-    <attr name="android:maxWidth"/>
-    <attr name="elevation"/>
-    <attr format="dimension" name="maxActionInlineWidth"/>
-    
-    <attr format="enum" name="animationMode">
-      
-      <enum name="slide" value="0"/>
-      
-      <enum name="fade" value="1"/>
-    </attr>
-    
-    <attr format="float" name="backgroundOverlayColorAlpha"/>
-    
-    <attr format="float" name="actionTextColorAlpha"/>
-  </declare-styleable><declare-styleable name="mapbox_MapView">
-
-        
-        <attr format="string" name="mapbox_apiBaseUrl"/>
-
-        
-        <attr format="string" name="mapbox_apiBaseUri"/>
-        <attr format="boolean" name="mapbox_localIdeographEnabled"/>
-        <attr format="string" name="mapbox_localIdeographFontFamily"/>
-        <attr format="reference" name="mapbox_localIdeographFontFamilies"/>
-        <attr format="boolean" name="mapbox_cross_source_collisions"/>
-
-        
-        <attr format="float" name="mapbox_cameraTargetLat"/>
-        <attr format="float" name="mapbox_cameraTargetLng"/>
-        <attr format="float" name="mapbox_cameraZoom"/>
-        <attr format="float" name="mapbox_cameraBearing"/>
-        <attr format="float" name="mapbox_cameraTilt"/>
-
-        
-        <attr format="float" name="mapbox_cameraZoomMax"/>
-        <attr format="float" name="mapbox_cameraZoomMin"/>
-
-        
-        <attr format="float" name="mapbox_cameraPitchMax"/>
-        <attr format="float" name="mapbox_cameraPitchMin"/>
-
-        
-        <attr format="boolean" name="mapbox_uiZoomGestures"/>
-        <attr format="boolean" name="mapbox_uiScrollGestures"/>
-        <attr format="boolean" name="mapbox_uiHorizontalScrollGestures"/>
-        <attr format="boolean" name="mapbox_uiRotateGestures"/>
-        <attr format="boolean" name="mapbox_uiTiltGestures"/>
-        <attr format="boolean" name="mapbox_uiDoubleTapGestures"/>
-        <attr format="boolean" name="mapbox_uiQuickZoomGestures"/>
-
-        
-        <attr format="boolean" name="mapbox_uiCompass"/>
-        <attr name="mapbox_uiCompassGravity">
-            <flag name="top" value="0x30"/>
-            <flag name="bottom" value="0x50"/>
-            <flag name="left" value="0x03"/>
-            <flag name="right" value="0x05"/>
-            <flag name="center_vertical" value="0x10"/>
-            <flag name="fill_vertical" value="0x70"/>
-            <flag name="center_horizontal" value="0x01"/>
-            <flag name="fill_horizontal" value="0x07"/>
-            <flag name="center" value="0x11"/>
-            <flag name="fill" value="0x77"/>
-            <flag name="clip_vertical" value="0x80"/>
-            <flag name="clip_horizontal" value="0x08"/>
-            <flag name="start" value="0x00800003"/>
-            <flag name="end" value="0x00800005"/>
+  </declare-styleable><declare-styleable name="LottieAnimationView">
+        <attr format="string" name="lottie_fileName"/>
+        <attr format="reference" name="lottie_rawRes"/>
+        <attr format="string" name="lottie_url"/>
+        <attr format="boolean" name="lottie_autoPlay"/>
+        <attr format="boolean" name="lottie_loop"/>
+        <attr format="enum" name="lottie_repeatMode">
+            <enum name="restart" value="1"/>
+            <enum name="reverse" value="2"/>
         </attr>
-        <attr format="dimension" name="mapbox_uiCompassMarginLeft"/>
-        <attr format="dimension" name="mapbox_uiCompassMarginTop"/>
-        <attr format="dimension" name="mapbox_uiCompassMarginRight"/>
-        <attr format="dimension" name="mapbox_uiCompassMarginBottom"/>
-        <attr format="boolean" name="mapbox_uiCompassFadeFacingNorth"/>
-        <attr format="reference" name="mapbox_uiCompassDrawable"/>
-
+        <attr format="integer" name="lottie_repeatCount"/>
+        <attr format="string" name="lottie_imageAssetsFolder"/>
+        <attr format="float" name="lottie_progress"/>
+        <attr format="boolean" name="lottie_enableMergePathsForKitKatAndAbove"/>
+        <attr format="color" name="lottie_colorFilter"/>
+        <attr format="float" name="lottie_scale"/>
+        <attr format="float" name="lottie_speed"/>
         
-        <attr format="boolean" name="mapbox_uiLogo"/>
-        <attr name="mapbox_uiLogoGravity">
-            <flag name="top" value="0x30"/>
-            <flag name="bottom" value="0x50"/>
-            <flag name="left" value="0x03"/>
-            <flag name="right" value="0x05"/>
-            <flag name="center_vertical" value="0x10"/>
-            <flag name="fill_vertical" value="0x70"/>
-            <flag name="center_horizontal" value="0x01"/>
-            <flag name="fill_horizontal" value="0x07"/>
-            <flag name="center" value="0x11"/>
-            <flag name="fill" value="0x77"/>
-            <flag name="clip_vertical" value="0x80"/>
-            <flag name="clip_horizontal" value="0x08"/>
-            <flag name="start" value="0x00800003"/>
-            <flag name="end" value="0x00800005"/>
-        </attr>
-        <attr format="dimension" name="mapbox_uiLogoMarginLeft"/>
-        <attr format="dimension" name="mapbox_uiLogoMarginTop"/>
-        <attr format="dimension" name="mapbox_uiLogoMarginRight"/>
-        <attr format="dimension" name="mapbox_uiLogoMarginBottom"/>
-
-        
-        <attr format="boolean" name="mapbox_uiAttribution"/>
-        <attr name="mapbox_uiAttributionGravity">
-            <flag name="top" value="0x30"/>
-            <flag name="bottom" value="0x50"/>
-            <flag name="left" value="0x03"/>
-            <flag name="right" value="0x05"/>
-            <flag name="center_vertical" value="0x10"/>
-            <flag name="fill_vertical" value="0x70"/>
-            <flag name="center_horizontal" value="0x01"/>
-            <flag name="fill_horizontal" value="0x07"/>
-            <flag name="center" value="0x11"/>
-            <flag name="fill" value="0x77"/>
-            <flag name="clip_vertical" value="0x80"/>
-            <flag name="clip_horizontal" value="0x08"/>
-            <flag name="start" value="0x00800003"/>
-            <flag name="end" value="0x00800005"/>
-        </attr>
-        <attr format="dimension" name="mapbox_uiAttributionMarginLeft"/>
-        <attr format="dimension" name="mapbox_uiAttributionMarginTop"/>
-        <attr format="dimension" name="mapbox_uiAttributionMarginRight"/>
-        <attr format="dimension" name="mapbox_uiAttributionMarginBottom"/>
-        <attr format="color" name="mapbox_uiAttributionTintColor"/>
-
-        
-        <attr format="boolean" name="mapbox_renderTextureMode"/>
-        <attr format="boolean" name="mapbox_renderTextureTranslucentSurface"/>
-        <attr format="color" name="mapbox_foregroundLoadColor"/>
-
-        <attr format="boolean" name="mapbox_enableTilePrefetch"/>
-        <attr format="integer" name="mapbox_prefetchZoomDelta"/>
-        <attr format="boolean" name="mapbox_enableZMediaOverlay"/>
-        <attr format="float" name="mapbox_pixelRatio"/>
-
-    </declare-styleable><declare-styleable name="MenuGroup">
-
-        
-        <attr name="android:id"/>
-
-        
-        <attr name="android:menuCategory"/>
-
-        
-        <attr name="android:orderInCategory"/>
-
-        
-        <attr name="android:checkableBehavior"/>
-
-        
-        <attr name="android:visible"/>
-
-        
-        <attr name="android:enabled"/>
-
-    </declare-styleable><declare-styleable name="FontFamily">
-        
-        <attr format="string" name="fontProviderAuthority"/>
-        
-        <attr format="string" name="fontProviderPackage"/>
-        
-        <attr format="string" name="fontProviderQuery"/>
-        
-        <attr format="reference" name="fontProviderCerts"/>
-        
-        <attr name="fontProviderFetchStrategy">
-            
-            <enum name="blocking" value="0"/>
-            
-            <enum name="async" value="1"/>
-        </attr>
-        
-        <attr format="integer" name="fontProviderFetchTimeout">
-            
-            <enum name="forever" value="-1"/>
+        <attr format="enum" name="lottie_renderMode">
+            <enum name="automatic" value="0"/>
+            <enum name="hardware" value="1"/>
+            <enum name="software" value="2"/>
         </attr>
     </declare-styleable><declare-styleable name="MaterialTextAppearance" parent="TextAppearance">
     
     <attr name="android:lineHeight"/>
     <attr name="lineHeight"/>
-  </declare-styleable><declare-styleable name="ThemeEnforcement">
-    
-    <attr format="boolean" name="enforceMaterialTheme"/>
-    
-    <attr format="boolean" name="enforceTextAppearance"/>
-    
-    <attr name="android:textAppearance"/>
-  </declare-styleable><declare-styleable name="MaterialButtonToggleGroup">
-    
-    <attr name="singleSelection"/>
-    
-    <attr format="reference" name="checkedButton"/>
   </declare-styleable><declare-styleable name="MaterialShape">
     
     <attr format="reference" name="shapeAppearance"/>
     
     <attr format="reference" name="shapeAppearanceOverlay"/>
-  </declare-styleable><declare-styleable name="AppBarLayoutStates">
-    
-    <attr format="boolean" name="state_collapsed"/>
-    
-    <attr format="boolean" name="state_collapsible"/>
-    
-    <attr format="boolean" name="state_lifted"/>
-    
-    <attr format="boolean" name="state_liftable"/>
   </declare-styleable><declare-styleable name="MenuItem">
 
         
@@ -8316,159 +8615,12 @@
         <attr format="reference" name="theme"/>
         
         <attr name="android:theme"/>
-    </declare-styleable><declare-styleable name="mapbox_LocationComponent">
-        <attr format="reference" name="mapbox_foregroundDrawable"/>
-        <attr format="color" name="mapbox_foregroundTintColor"/>
-        <attr format="reference" name="mapbox_backgroundDrawable"/>
-        <attr format="color" name="mapbox_backgroundTintColor"/>
-        <attr format="reference" name="mapbox_bearingDrawable"/>
-        <attr format="color" name="mapbox_bearingTintColor"/>
-        <attr format="reference" name="mapbox_gpsDrawable"/>
-
-        <attr format="reference" name="mapbox_foregroundDrawableStale"/>
-        <attr format="color" name="mapbox_foregroundStaleTintColor"/>
-        <attr format="reference" name="mapbox_backgroundDrawableStale"/>
-        <attr format="color" name="mapbox_backgroundStaleTintColor"/>
-
-        <attr format="float" name="mapbox_accuracyAlpha"/>
-        <attr format="color" name="mapbox_accuracyColor"/>
-
-        <attr format="dimension" name="mapbox_elevation"/>
-
-        
-        <attr format="boolean" name="mapbox_enableStaleState"/>
-        <attr format="integer" min="0" name="mapbox_staleStateTimeout"/>
-
-        
-        <attr format="integer" name="mapbox_iconPaddingLeft"/>
-        <attr format="integer" name="mapbox_iconPaddingTop"/>
-        <attr format="integer" name="mapbox_iconPaddingRight"/>
-        <attr format="integer" name="mapbox_iconPaddingBottom"/>
-
-        
-        <attr format="string" name="mapbox_layer_above"/>
-        <attr format="string" name="mapbox_layer_below"/>
-
-        
-        <attr format="float" name="mapbox_maxZoomIconScale"/>
-        <attr format="float" name="mapbox_minZoomIconScale"/>
-
-        
-        <attr format="boolean" name="mapbox_trackingGesturesManagement"/>
-        <attr format="dimension" name="mapbox_trackingInitialMoveThreshold"/>
-        <attr format="dimension" name="mapbox_trackingMultiFingerMoveThreshold"/>
-
-        
-        <attr format="float" name="mapbox_trackingAnimationDurationMultiplier"/>
-
-        
-        <attr format="boolean" name="mapbox_compassAnimationEnabled"/>
-
-        
-        <attr format="boolean" name="mapbox_accuracyAnimationEnabled"/>
-
-    </declare-styleable><declare-styleable name="BottomAppBar">
-    
-    <attr name="backgroundTint"/>
-    
-    <attr name="elevation"/>
-    
-    <attr name="fabAlignmentMode">
-      
-      <enum name="center" value="0"/>
-      
-      <enum name="end" value="1"/>
-    </attr>
-    
-    <attr name="fabAnimationMode">
-      
-      <enum name="scale" value="0"/>
-      
-      <enum name="slide" value="1"/>
-    </attr>
-    
-    <attr format="dimension" name="fabCradleMargin"/>
-    
-    <attr format="dimension" name="fabCradleRoundedCornerRadius"/>
-    
-    <attr format="dimension" name="fabCradleVerticalOffset"/>
-    
-    <attr format="boolean" name="hideOnScroll"/>
-  </declare-styleable><declare-styleable name="CoordinatorLayout">
-        
-        <attr format="reference" name="keylines"/>
-        
-        <attr format="color|reference" name="statusBarBackground"/>
-    </declare-styleable><declare-styleable name="FontFamilyFont">
-        
-        <attr name="fontStyle">
-            <enum name="normal" value="0"/>
-            <enum name="italic" value="1"/>
-        </attr>
-        
-        <attr format="reference" name="font"/>
-        
-        <attr format="integer" name="fontWeight"/>
-        
-        <attr format="string" name="fontVariationSettings"/>
-        
-        <attr format="integer" name="ttcIndex"/>
-        
-        <attr name="android:fontStyle"/>
-        <attr name="android:font"/>
-        <attr name="android:fontWeight"/>
-        <attr name="android:fontVariationSettings"/>
-        <attr name="android:ttcIndex"/>
-    </declare-styleable><declare-styleable name="SignInButton"><attr format="reference" name="buttonSize">
-<enum name="standard" value="0"/>
-
-<enum name="wide" value="1"/>
-
-<enum name="icon_only" value="2"/>
-
-</attr>
-<attr format="reference" name="colorScheme">
-<enum name="dark" value="0"/>
-
-<enum name="light" value="1"/>
-
-<enum name="auto" value="2"/>
-
-</attr>
-
-<attr format="reference|string" name="scopeUris"/>
-</declare-styleable><declare-styleable name="MaterialAlertDialogTheme">
+    </declare-styleable><declare-styleable name="MaterialAlertDialogTheme">
     <attr format="reference" name="materialAlertDialogTheme"/>
     <attr format="reference" name="materialAlertDialogTitlePanelStyle"/>
     <attr format="reference" name="materialAlertDialogTitleIconStyle"/>
     <attr format="reference" name="materialAlertDialogTitleTextStyle"/>
     <attr format="reference" name="materialAlertDialogBodyTextStyle"/>
-  </declare-styleable><declare-styleable name="LinearLayoutCompat">
-        
-        <attr name="android:orientation"/>
-        <attr name="android:gravity"/>
-        
-        <attr name="android:baselineAligned"/>
-        
-        <attr name="android:baselineAlignedChildIndex"/>
-        
-        <attr name="android:weightSum"/>
-        
-        <attr format="boolean" name="measureWithLargestChild"/>
-        
-        <attr name="divider"/>
-        
-        <attr name="showDividers">
-            <flag name="none" value="0"/>
-            <flag name="beginning" value="1"/>
-            <flag name="middle" value="2"/>
-            <flag name="end" value="4"/>
-        </attr>
-        
-        <attr format="dimension" name="dividerPadding"/>
-    </declare-styleable><declare-styleable name="FloatingActionButton_Behavior_Layout">
-    
-    <attr format="boolean" name="behavior_autoHide"/>
   </declare-styleable><declare-styleable name="SearchView">
         
         <attr format="reference" name="layout"/>
@@ -8503,110 +8655,4 @@
         
         <attr format="reference" name="submitBackground"/>
         <attr name="android:focusable"/>
-    </declare-styleable><declare-styleable name="ShapeAppearance">
-    
-    <attr format="dimension|fraction" name="cornerSize"/>
-    
-    <attr format="dimension|fraction" name="cornerSizeTopLeft"/>
-    
-    <attr format="dimension|fraction" name="cornerSizeTopRight"/>
-    
-    <attr format="dimension|fraction" name="cornerSizeBottomRight"/>
-    
-    <attr format="dimension|fraction" name="cornerSizeBottomLeft"/>
-
-    
-    <attr format="enum" name="cornerFamily">
-      <enum name="rounded" value="0"/>
-      <enum name="cut" value="1"/>
-    </attr>
-    
-    <attr format="enum" name="cornerFamilyTopLeft">
-      <enum name="rounded" value="0"/>
-      <enum name="cut" value="1"/>
-    </attr>
-    
-    <attr format="enum" name="cornerFamilyTopRight">
-      <enum name="rounded" value="0"/>
-      <enum name="cut" value="1"/>
-    </attr>
-    
-    <attr format="enum" name="cornerFamilyBottomRight">
-      <enum name="rounded" value="0"/>
-      <enum name="cut" value="1"/>
-    </attr>
-    
-    <attr format="enum" name="cornerFamilyBottomLeft">
-      <enum name="rounded" value="0"/>
-      <enum name="cut" value="1"/>
-    </attr>
-  </declare-styleable><declare-styleable name="RecyclerView">
-        
-        <attr format="string" name="layoutManager"/>
-
-        
-        
-        
-        <eat-comment/>
-
-        <attr name="android:orientation"/>
-        <attr name="android:descendantFocusability"/>
-        <attr name="android:clipToPadding"/>
-        <attr format="integer" name="spanCount"/>
-        <attr format="boolean" name="reverseLayout"/>
-        <attr format="boolean" name="stackFromEnd"/>
-        <attr format="boolean" name="fastScrollEnabled"/>
-        <attr format="reference" name="fastScrollVerticalThumbDrawable"/>
-        <attr format="reference" name="fastScrollVerticalTrackDrawable"/>
-        <attr format="reference" name="fastScrollHorizontalThumbDrawable"/>
-        <attr format="reference" name="fastScrollHorizontalTrackDrawable"/>
-    </declare-styleable><declare-styleable name="ActionMenuView">
-        
-    </declare-styleable><declare-styleable name="ChipGroup">
-
-    
-    <attr format="dimension" name="chipSpacing"/>
-    
-    <attr format="dimension" name="chipSpacingHorizontal"/>
-    
-    <attr format="dimension" name="chipSpacingVertical"/>
-
-    
-    <attr format="boolean" name="singleLine"/>
-
-    
-    <attr name="singleSelection"/>
-    
-    <attr format="reference" name="checkedChip"/>
-
-  </declare-styleable><declare-styleable name="CompoundButton">
-        <attr name="android:button"/>
-        
-        <attr format="reference" name="buttonCompat"/>
-        
-        <attr format="color" name="buttonTint"/>
-
-        
-        <attr name="buttonTintMode">
-            
-            <enum name="src_over" value="3"/>
-            
-            <enum name="src_in" value="5"/>
-            
-            <enum name="src_atop" value="9"/>
-            
-            <enum name="multiply" value="14"/>
-            
-            <enum name="screen" value="15"/>
-            
-            <enum name="add" value="16"/>
-        </attr>
-    </declare-styleable><declare-styleable name="AppCompatTextHelper">
-        <attr name="android:drawableLeft"/>
-        <attr name="android:drawableTop"/>
-        <attr name="android:drawableRight"/>
-        <attr name="android:drawableBottom"/>
-        <attr name="android:drawableStart"/>
-        <attr name="android:drawableEnd"/>
-        <attr name="android:textAppearance"/>
     </declare-styleable></configuration></mergedItems></merger>
