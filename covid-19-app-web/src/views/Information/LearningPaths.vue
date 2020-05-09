@@ -22,22 +22,22 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col cols="12">
-        <v-simple-table fixed-header>
+      <v-col cols="12" class="overflow-auto">
+        <v-simple-table fixed-header style="min-width: 800px">
           <template v-slot:default>
             <thead>
               <tr>
-                <th class="text-left text--primary" />
-                <th class="text-left text--primary">Task Name</th>
-                <th class="text-left text--primary">What?</th>
-                <th class="text-left text--primary">Why?</th>
-                <th class="text-left text--primary">Duration</th>
-                <th class="text-left text--primary">How?</th>
+                <th class="text-left primary--text text--darken-1" v-if="$vuetify.breakpoint.mdAndUp" />
+                <th class="text-left primary--text text--darken-1">Task Name</th>
+                <th class="text-left primary--text text--darken-1">What?</th>
+                <th class="text-left primary--text text--darken-1">Why?</th>
+                <th class="text-left primary--text text--darken-1">Duration</th>
+                <th class="text-left primary--text text--darken-1">How?</th>
               </tr>
             </thead>
             <tbody>
               <tr :key="i" v-for="(path, i) in learningPaths[selected_age]">
-                <td class="text-left py-2" width="3%">{{ i + 1 }}</td>
+                <td class="text-left py-2 primary--text text--darken-1"  v-if="$vuetify.breakpoint.mdAndUp" width="3%">{{ i + 1 }}</td>
                 <td class="text-left py-2" width="14%">{{ path.name }}</td>
                 <td class="text-left py-2" width="31%">{{ path.what }}</td>
                 <td class="text-left py-2" width="31%">{{ path.why }}</td>

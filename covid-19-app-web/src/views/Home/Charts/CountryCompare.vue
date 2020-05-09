@@ -123,8 +123,8 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col cols="12" md="12">
-        <line-chart :height="400" :chart-data="data" :options="chartOptions" />
+      <v-col cols="12" md="12" class="overflow-auto">
+        <line-chart style="min-width: 400px" :height="350" :chart-data="data" :options="chartOptions" />
       </v-col>
     </v-row>
   </v-container>

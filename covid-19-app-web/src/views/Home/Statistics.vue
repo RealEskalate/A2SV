@@ -110,7 +110,6 @@
             v-text="graphs[selectedGraph].title"
           />
           <v-card-text v-text="graphs[selectedGraph].description" />
-          <v-divider />
           <v-card-text
             v-if="
               graphs[selectedGraph].fields.length > 0 ||
@@ -118,29 +117,29 @@
             "
           >
             <v-list dense>
-              <v-list-item-subtitle v-text="'Fields'" />
+              <h4 v-text="'Fields'" />
               <v-list-item
                 :key="i"
                 v-for="(field, i) in graphs[selectedGraph].fields"
               >
                 <p>
-                  {{ field.name }}:
+                  <span v-text="field.name + ':  '" />
                   <span
-                    class="grey--text darken-3"
+                    class="grey--text text--darken-1 font-italic"
                     v-text="field.explanation"
                   />
                 </p>
               </v-list-item>
             </v-list>
             <v-list dense>
-              <v-list-item-subtitle v-text="'Criteria'" />
+              <h4 v-text="'Metrics'" />
               <v-list-item
                 :key="i"
                 v-for="(cr, i) in graphs[selectedGraph].criteria"
               >
                 <p>
-                  {{ cr.name }}:
-                  <span class="grey--text darken-3" v-text="cr.explanation" />
+                  <span v-text="cr.name + ':  '" />
+                  <span class="grey--text text--darken-1 font-italic" v-text="cr.explanation" />
                 </p>
               </v-list-item>
             </v-list>
