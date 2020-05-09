@@ -13,46 +13,6 @@ exports.get_diseases = async(req, res) => {
     // https://api.covid19api.com/world/total
     let request_url = "https://covid19api.io/api/v1/AllReports";
     let diseases = [];
-    //Mers
-    diseases.push(
-        new Disease({
-            title: "MERS",
-            confirmed: 2494,
-            deaths: 858,
-            recovered: 1636,
-            affected: 27,
-        })
-    );
-    //Sars
-    diseases.push(
-        new Disease({
-            title: "SARS",
-            confirmed: 8098,
-            deaths: 774,
-            recovered: 7324,
-            affected: 29,
-        })
-    );
-    //Ebola
-    diseases.push(
-        new Disease({
-            title: "EBOLA",
-            confirmed: 28610,
-            deaths: 11310,
-            recovered: 17300,
-            affected: 19,
-        })
-    );
-
-    diseases.push(
-        new Disease({
-            title: "SEASONAL FLU",
-            confirmed: 4000000,
-            deaths: 470000,
-            recovered: 3530000,
-            affected: 195,
-        })
-    );
     const result = await axios
         .get(request_url)
         .then((response) => {
@@ -73,5 +33,44 @@ exports.get_diseases = async(req, res) => {
         .catch((err) => {
             console.log(err);
         });
+    diseases.push(
+        new Disease({
+            title: "SEASONAL FLU",
+            confirmed: 4000000,
+            deaths: 470000,
+            recovered: 3530000,
+            affected: 195,
+        })
+    );
+    //Ebola
+    diseases.push(
+        new Disease({
+            title: "EBOLA",
+            confirmed: 28610,
+            deaths: 11310,
+            recovered: 17300,
+            affected: 19,
+        })
+    );
+    //Sars
+    diseases.push(
+        new Disease({
+            title: "SARS",
+            confirmed: 8098,
+            deaths: 774,
+            recovered: 7324,
+            affected: 29,
+        })
+    );
+    //Mers
+    diseases.push(
+        new Disease({
+            title: "MERS",
+            confirmed: 2494,
+            deaths: 858,
+            recovered: 1636,
+            affected: 27,
+        })
+    );
     res.send(diseases);
 };
