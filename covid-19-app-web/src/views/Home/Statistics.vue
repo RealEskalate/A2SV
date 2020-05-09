@@ -111,7 +111,12 @@
           />
           <v-card-text v-text="graphs[selectedGraph].description" />
           <v-divider />
-          <v-card-text v-if="graphs[selectedGraph].fields.length > 0 || graphs[selectedGraph].criteria.length > 0">
+          <v-card-text
+            v-if="
+              graphs[selectedGraph].fields.length > 0 ||
+                graphs[selectedGraph].criteria.length > 0
+            "
+          >
             <v-list dense>
               <v-list-item-subtitle v-text="'Fields'" />
               <v-list-item
@@ -120,7 +125,10 @@
               >
                 <p>
                   {{ field.name }}:
-                  <span class="grey--text darken-3" v-text="field.explanation" />
+                  <span
+                    class="grey--text darken-3"
+                    v-text="field.explanation"
+                  />
                 </p>
               </v-list-item>
             </v-list>

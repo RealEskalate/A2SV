@@ -16,7 +16,7 @@
     <v-row no-gutters>
       <v-col class="pr-md-12" md="8" sm="12">
         <div>
-          <v-toolbar color="" flat >
+          <v-toolbar color="" flat>
             <v-toolbar-title>News</v-toolbar-title>
 
             <v-spacer></v-spacer>

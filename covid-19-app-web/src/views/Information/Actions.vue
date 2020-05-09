@@ -99,7 +99,7 @@ export default {
         //   image: "/img/actions/book_reading.svg",
         //   learning: true
         // }
-      ],
+      ]
     };
   },
   beforeDestroy() {

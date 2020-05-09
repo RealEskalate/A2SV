@@ -25,7 +25,7 @@ Vue.mixin({
       let p = document.createElement("div");
       p.innerHTML = htmlString.trim();
       return p.innerText;
-    },
+    }
   }
 });
 

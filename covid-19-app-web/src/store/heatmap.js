@@ -1,5 +1,5 @@
 const state = {
-  heatmap: [],
+  heatmap: []
 };
 
 const getters = {
