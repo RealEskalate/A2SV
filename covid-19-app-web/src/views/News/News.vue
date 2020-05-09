@@ -14,7 +14,7 @@
       >
     </section>
     <v-row no-gutters>
-      <v-col :cols="7">
+      <v-col class="pr-md-12" md="8" sm="12">
         <div>
           <v-toolbar color="" flat >
             <v-toolbar-title>News</v-toolbar-title>
@@ -25,7 +25,10 @@
           <v-list two-line>
             <v-list-item-group>
               <template v-for="(item, index) in news">
-                <v-list-item :key="item.title" target="blank">
+                <v-list-item :key="item.title" data-aos="fade-up" data-aos-delay="50"
+                               data-aos-duration="1000"
+                               data-aos-easing="ease-in-out"
+                               data-aos-anchor-placement="top-bottom" data-aos-once="true">
                   <v-list-item-content class="py-6">
                     <v-list-item-title
                       :elevation="24"
@@ -75,9 +78,9 @@
           @input="getNewsByPage(page)"
         ></v-pagination>
       </v-col>
-      <v-spacer></v-spacer>
-      <v-col :cols="3">
-        <v-card tile :elevation="0.5">
+      <v-spacer />
+      <v-col class="pl-md-10 mt-sm-4" md="4" sm="12">
+        <v-card tile :elevation="10">
           <v-card-title>Source</v-card-title>
           <v-card-text>
             <v-checkbox
@@ -96,10 +99,10 @@
 </template>
 
 <script>
-import moment from "moment";
-import store from "@/store/";
+  import moment from "moment";
+  import store from "@/store/";
 
-export default {
+  export default {
   data: () => ({
     page: 1,
     perPage: 15,

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-container>
     <v-app-bar app class="white" flat v-bind:class="{ raised: raise }">
       <v-app-bar-nav-icon
         v-if="$vuetify.breakpoint.smAndDown"
@@ -29,49 +29,47 @@
       </v-btn>
     </v-app-bar>
     <v-navigation-drawer
-      v-if="$vuetify.breakpoint.smAndDown"
-      v-model="drawer"
-      absolute
-      temporary
+            v-if="$vuetify.breakpoint.smAndDown"
+            v-model="drawer"
+            temporary
+            app
+            overflow
     >
-      <v-list dense nav>
-        <v-list-item-group
-          justify="center"
-          active-class="primary--text"
-          class="mt-5"
+      <v-list dense nav shaped>
+        <v-list-item-group v-model="curRoute"
+                           justify="center"
+                           active-class="deep-purple--text text--accent-4"
+                           class="mt-5"
         >
-          <template v-for="item in links">
+          <template v-for="(item, i) in links">
             <v-list-item
-              :key="item.text"
-              :href="item.to"
-              @click="drawer = false"
-              :class="
-                currentPage === item.to
-                  ? 'primary--text v-list-item--active'
-                  : ''
-              "
+                    :key="i"
+                    :to="item.to"
+                    @click="drawer = false"
             >
               <v-list-item-action>
                 <v-icon>{{ item.icon }}</v-icon>
               </v-list-item-action>
-              <v-list-item-title>{{ item.text }}</v-list-item-title>
+              <v-list-item-title>{{ item.text}}</v-list-item-title>
             </v-list-item>
           </template>
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
-  </div>
+  </v-container>
 </template>
 
 <script>
+  // import router from "../../router";
 export default {
   data: () => {
     return {
       drawer: false,
       locationY: 0,
+      curRoute: 0,
       links: [
         { text: "Home", icon: "mdi-home", to: "/" },
-        { text: "Learn", icon: "mdi-search", to: "/information" },
+        {text: "Learn", icon: "mdi-book-open-page-variant", to: "/information"},
         { text: "About", icon: "mdi-information", to: "/about" },
         { text: "News", icon: "mdi-newspaper", to: "/news" },
         { text: "Map", icon: "mdi-map", to: "/map" }
@@ -80,6 +78,7 @@ export default {
   },
   created() {
     window.addEventListener("scroll", this.handleScroll);
+    // alert(screen.height);
   },
   destroyed() {
     window.removeEventListener("scroll", this.handleScroll);
@@ -88,13 +87,14 @@ export default {
     handleScroll() {
       // Any code to be executed when the window is scrolled
       this.locationY = window.scrollY;
-    }
+    },
   },
   computed: {
     raise() {
       return this.locationY > 50;
-    }
-  }
+    },
+
+  },
 };
 </script>
 

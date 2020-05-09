@@ -3,16 +3,20 @@ import { View, Text, Image, ScrollView } from "react-native";
 import { Card, ListItem, Button, Icon } from "react-native-elements";
 import ImageStyle from './styles/ImageStyle'
 
+// Lottie library GIF to JSON
+import LottieView from 'lottie-react-native';
+
 export default function WhatIsCovid19() {
   return (
     <ScrollView>
       <Card
-        // title="What is COVID-19?"
-        image={
-          require("./icons/corona-red.gif")
-        }
-        containerStyle={{ margin: 0 }}
+      // title="What is COVID-19?"
+      // image={
+      //   require("./icons/corona-red.gif")
+      // }
+      // containerStyle={{ margin: 0 }}
       >
+        <LottieView style={{ height: 300, marginBottom: -60, marginTop: -30, marginLeft: 10 }} source={require('./animations/covid-19-virus.json')} autoPlay loop />
         <ScrollView>
           <Text style={{ marginBottom: 10 }}>
             Coronavirus disease 2019 is an infectious disease caused by severe

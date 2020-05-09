@@ -12,9 +12,9 @@ import {
 } from "react-native";
 import { SearchBar } from "react-native-elements";
 
-class News extends Component {
+export default class News extends Component {
   state = {
-    data: [],
+    data: [0, 1],
     isLoading: true,
     searchedCountry: "",
     searching: false,
@@ -22,11 +22,12 @@ class News extends Component {
   };
 
   componentDidMount() {
-    this.fetchNews("");
+    this.fetchNews();
   }
 
-  fetchNews = (country) => {
-    if (country === "") {
+  fetchNews = () => {
+    let newThis = this;
+    if (this.state.searchedCountry === "") {
       fetch("https://sym-track.herokuapp.com/api/news/", {
         method: "GET",
         headers: {
@@ -36,11 +37,14 @@ class News extends Component {
       })
         .then((response) => response.json())
         .then((json) => {
-          this.setState({
+          newThis.setState({
             data: json.data,
             isLoading: false,
             refreshing: false,
           });
+        })
+        .catch((error) => {
+          alert("Wrong");
         });
     } else {
       fetch(
@@ -56,7 +60,7 @@ class News extends Component {
       )
         .then((response) => response.json())
         .then((json) => {
-          this.setState({
+          newThis.setState({
             data: json.data,
             isLoading: false,
             refreshing: false,
@@ -105,17 +109,17 @@ class News extends Component {
   };
 
   onCountryChange = (country) => {
-      this.setState({
-        searchedCountry: country,
-        searching: country !== '' ? true : false,
+    this.setState({
+      searchedCountry: country,
+      searching: country !== "" ? true : false,
     });
 
-    this.fetchNews(country);
+    this.fetchNews();
   };
 
-  onRefreshNews = (country) => {
+  onRefreshNews = () => {
     this.setState({ refreshing: true });
-    this.fetchNews(country);
+    this.fetchNews();
   };
 
   goToNews = (reference_link) => {
@@ -154,18 +158,7 @@ class News extends Component {
           data={this.state.data}
           keyExtractor={(item) => item._id}
           renderItem={({ item }) => (
-            <View
-              style={{
-                flex: 1,
-                flexDirection: "row",
-                padding: 10,
-                borderBottomWidth: 1,
-                borderBottomColor: "#ccc",
-              }}
-            >
-
-              style={styles.newsRow}>
-
+            <View style={styles.newsRow}>
               <Image
                 source={require("../../assets/news/people.png")}
                 resizeMethod="auto"
@@ -217,8 +210,6 @@ class News extends Component {
   }
 }
 
-export default News;
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -227,9 +218,9 @@ const styles = StyleSheet.create({
   },
   newsRow: {
     flex: 1,
-    flexDirection: 'row',
+    flexDirection: "row",
     padding: 10,
     borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-  }
+    borderBottomColor: "#ccc",
+  },
 });
