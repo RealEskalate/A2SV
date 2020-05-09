@@ -2,12 +2,12 @@
   <v-container>
     <v-app-bar app class="white" flat v-bind:class="{ raised: raise }">
       <v-app-bar-nav-icon
-        v-if="$vuetify.breakpoint.smAndDown"
+        v-if="$vuetify.breakpoint.smAndDown && navOption === '2'"
         @click.stop="drawer = !drawer"
       />
       <router-link class="d-flex align-center no-decoration" to="/">
         <v-img
-          alt="Vuetify Logo"
+          alt="Company Logo"
           class="shrink ml-3"
           contain
           src="/img/brand/blue.png"
@@ -27,20 +27,39 @@
       >
         <span class="text-capitalize"> {{ link.text }}</span>
       </v-btn>
+
+      <v-menu left bottom>
+        <template v-slot:activator="{ on }">
+          <v-btn icon v-on="on">
+            <v-icon>mdi-dots-vertical</v-icon>
+          </v-btn>
+        </template>
+
+        <v-list>
+          <v-list-item-group v-model="navType">
+            <v-list-item value="1">
+              <v-list-item-title>Bottom Navigation</v-list-item-title>
+            </v-list-item>
+            <v-list-item value="2">
+              <v-list-item-title>Navigation Drawer</v-list-item-title>
+            </v-list-item>
+          </v-list-item-group>
+        </v-list>
+      </v-menu>
     </v-app-bar>
     <v-navigation-drawer
-            v-if="$vuetify.breakpoint.smAndDown"
-            v-model="drawer"
-            temporary
-            app
-            overflow
+      v-if="$vuetify.breakpoint.smAndDown"
+      v-model="drawer"
+      temporary
+      app
+      overflow
     >
       <v-list dense nav shaped>
         <v-list-item-group
-                v-model="curRoute"
-                justify="center"
-                active-class="white--text primary lighten-1"
-                class="mt-5"
+          v-model="curRoute"
+          justify="center"
+          active-class="white--text primary lighten-1"
+          class="mt-5"
         >
           <template v-for="(item, i) in links">
             <v-list-item :key="i" :to="item.to" @click="drawer = false">
@@ -53,17 +72,32 @@
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
+
+    <v-bottom-navigation
+      app
+      :value="activeBtn"
+      grow
+      color="primary"
+      class="px-3"
+      v-if="$vuetify.breakpoint.smAndDown && navOption === '1'"
+    >
+      <v-btn v-for="(item, i) in links" :to="item.to" :key="i">
+        <span>{{ item.text }}</span>
+        <v-icon> {{ item.icon }}</v-icon>
+      </v-btn>
+    </v-bottom-navigation>
   </v-container>
 </template>
 
 <script>
-  // import router from "../../router";
 export default {
   data: () => {
     return {
       drawer: false,
+      navType: "1",
       locationY: 0,
       curRoute: 0,
+      activeBtn: 1,
       links: [
         { text: "Home", icon: "mdi-home", to: "/" },
         {
@@ -93,6 +127,9 @@ export default {
   computed: {
     raise() {
       return this.locationY > 50;
+    },
+    navOption() {
+      return this.navType;
     }
   }
 };
