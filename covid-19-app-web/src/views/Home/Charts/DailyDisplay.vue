@@ -66,8 +66,8 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col cols="12" md="9">
-        <bar-chart :height="480" :chart-data="data" :options="chartOptions" />
+      <v-col cols="12" md="9" class="overflow-auto">
+        <bar-chart style="min-width: 400px" :height="480" :chart-data="data" :options="chartOptions" />
       </v-col>
       <v-col cols="12" md="3">
         <v-card flat tile>

@@ -1,8 +1,8 @@
 <template>
   <v-container class="py-8">
     <v-row class="mx-md-5" dense>
-      <v-col cols="12">
-        <bar-chart
+      <v-col cols="12" class="overflow-auto">
+        <bar-chart style="min-width: 400px"
           :height="600"
           :chart-data="diseaseData"
           :options="chartOptions"
