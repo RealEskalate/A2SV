@@ -56,6 +56,7 @@ class DataAnalytics extends React.Component {
     ],
     countries: [],
     totalLoading: true,
+    testCountDataExist: false,
   };
 
   componentDidMount = async () => {
@@ -64,6 +65,7 @@ class DataAnalytics extends React.Component {
       .then(this.fetchDailyNewsCases())
       .then(this.fetchRateStatistics())
       .then(this.getCountryList())
+      .then(this.checkIfDataExist(criterias.numberOfTests)) //check if number of test case data exist
       .catch((error) => {
         Alert.alert("Concurrency Issue");
       });
@@ -78,7 +80,7 @@ class DataAnalytics extends React.Component {
         ? "https://sym-track.herokuapp.com/api/statistics?criteria=" +
           this.state.selected_filter +
           "&country=" +
-          this.state.searchedCountry.toLowerCase() +
+          this.state.searchedCountry +
           "&start_date=" +
           this.state.selected_total_start_date +
           "&end_date=" +
@@ -86,7 +88,7 @@ class DataAnalytics extends React.Component {
         : "https://sym-track.herokuapp.com/api/statistics?criteria=" +
           this.state.selected_filter +
           "&country=" +
-          this.state.searchedCountry.toLowerCase();
+          this.state.searchedCountry;
     await fetch(query, {
       method: "GET",
       headers: {
@@ -104,8 +106,7 @@ class DataAnalytics extends React.Component {
         }
       })
       .catch((error) => {
-        console.log(error);
-        Alert.alert("Connection proble", "Couldn't connect to server");
+        Alert.alert("Connection problem", "Couldn't connect to server");
       });
   };
   //gets rate statistics data based on selected criteria and populate UI
@@ -117,7 +118,7 @@ class DataAnalytics extends React.Component {
         ? "https://sym-track.herokuapp.com/api/statistics?criteria=" +
           this.state.selected_filter_rate +
           "&country=" +
-          this.state.searchedCountry.toLowerCase() +
+          this.state.searchedCountry +
           "&start_date=" +
           this.state.selected_rate_start_date +
           "&end_date=" +
@@ -125,7 +126,7 @@ class DataAnalytics extends React.Component {
         : "https://sym-track.herokuapp.com/api/statistics?criteria=" +
           this.state.selected_filter_rate +
           "&country=" +
-          this.state.searchedCountry.toLowerCase();
+          this.state.searchedCountry;
     await fetch(query, {
       method: "GET",
       headers: {
@@ -143,8 +144,7 @@ class DataAnalytics extends React.Component {
         }
       })
       .catch((error) => {
-        console.log(error);
-        Alert.alert("Connection proble", "Couldn't connect to server");
+        Alert.alert("Connection problem", "Couldn't connect to server");
       });
   };
   //Converts date in to appropriate format
@@ -162,7 +162,7 @@ class DataAnalytics extends React.Component {
     let newThis = this;
     await fetch(
       "https://sym-track.herokuapp.com/api/statistics?criteria=All&country=" +
-        this.state.searchedCountry.toLowerCase(),
+        this.state.searchedCountry,
       {
         method: "GET",
         headers: {
@@ -184,7 +184,7 @@ class DataAnalytics extends React.Component {
         }
       })
       .catch((error) => {
-        Alert.alert("Couldn't connect - getTotalData", "Error in connection..");
+        Alert.alert("Connection Problem", "Couldn't connect to server");
       });
   };
   //fetch list of countries available
@@ -208,7 +208,7 @@ class DataAnalytics extends React.Component {
         }
       })
       .catch((error) => {
-        Alert.alert("Connection proble", "Couldn't connect to server");
+        Alert.alert("Connection problem", "Couldn't connect to server");
       });
   };
   //fetch daily new cases reported
@@ -220,7 +220,7 @@ class DataAnalytics extends React.Component {
         ? "https://sym-track.herokuapp.com/api/statistics?criteria=" +
           this.state.selected_filter_daily_status +
           "&country=" +
-          this.state.searchedCountry.toLowerCase() +
+          this.state.searchedCountry +
           "&start_date=" +
           this.state.selected_daily_start_date +
           "&end_date=" +
@@ -229,7 +229,7 @@ class DataAnalytics extends React.Component {
         : "https://sym-track.herokuapp.com/api/statistics?criteria=" +
           this.state.selected_filter_daily_status +
           "&country=" +
-          this.state.searchedCountry.toLowerCase() +
+          this.state.searchedCountry +
           "&daily=true";
     await fetch(query, {
       method: "GET",
@@ -248,7 +248,7 @@ class DataAnalytics extends React.Component {
         }
       })
       .catch((error) => {
-        Alert.alert("Connection proble", "Couldn't connect to server");
+        Alert.alert("Connection problem", "Couldn't connect to server");
       });
   };
   //populate daily data
@@ -355,6 +355,73 @@ class DataAnalytics extends React.Component {
       graphLebel_counter += interval;
     }
   };
+  //Reformat number
+  reformatNumber(nStr) {
+    var x = nStr.split(".");
+    var x1 = x[0];
+    var x2 = x.length > 1 ? "." + x[1] : "";
+    var rgx = /(\d+)(\d{3})/;
+    while (rgx.test(x1)) {
+      x1 = x1.replace(rgx, "$1" + "," + "$2");
+    }
+    return x1 + x2;
+  }
+  //Reformat numbers with large number suffix
+  intToString(value) {
+    let newValue = value;
+    const suffixes = ["", "K", "M", "B", "T"];
+    let suffixNum = 0;
+    while (newValue >= 1000) {
+      newValue /= 1000;
+      suffixNum++;
+    }
+
+    newValue = newValue.toPrecision(3);
+
+    newValue += suffixes[suffixNum];
+    return newValue;
+  }
+  //Check if test count data is available
+  checkIfDataExist(filterCriteria) {
+    let newThis = this;
+    var query =
+      this.state.selected_daily_start_date.length > 1 &&
+      this.state.selected_daily_end_date.length > 1
+        ? "https://sym-track.herokuapp.com/api/statistics?criteria=" +
+          filterCriteria +
+          "&country=" +
+          this.state.searchedCountry +
+          "&start_date=" +
+          this.state.selected_daily_start_date +
+          "&end_date=" +
+          this.state.selected_daily_end_date +
+          "&daily=true"
+        : "https://sym-track.herokuapp.com/api/statistics?criteria=" +
+          filterCriteria +
+          "&country=" +
+          this.state.searchedCountry +
+          "&daily=true";
+    fetch(query, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        console.log(json.length);
+        if (json.length > 0) {
+          newThis.setState({
+            testCountDataExist: true,
+          });
+        }
+        newThis.forceUpdate(); //refresh page
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
   render() {
     const HIEGHT = Dimensions.get("window").height;
@@ -448,12 +515,16 @@ class DataAnalytics extends React.Component {
                   <ActivityIndicator size="small" color="gray" />
                 ) : (
                   <Text style={{ fontSize: 24, color: "gray" }}>
-                    {this.state.TotalStatisticsData[
-                      this.state.TotalStatisticsData.length - 1
-                    ].Confirmed -
-                      this.state.TotalStatisticsData[
-                        this.state.TotalStatisticsData.length - 2
-                      ].Confirmed}
+                    {this.reformatNumber(
+                      String(
+                        this.state.TotalStatisticsData[
+                          this.state.TotalStatisticsData.length - 1
+                        ].Confirmed -
+                          this.state.TotalStatisticsData[
+                            this.state.TotalStatisticsData.length - 2
+                          ].Confirmed
+                      )
+                    )}
                   </Text>
                 )}
                 <Text>New Cofirmed</Text>
@@ -477,12 +548,16 @@ class DataAnalytics extends React.Component {
                   <ActivityIndicator size="small" color="green" />
                 ) : (
                   <Text style={{ fontSize: 24, color: "green" }}>
-                    {this.state.TotalStatisticsData[
-                      this.state.TotalStatisticsData.length - 1
-                    ].Recovered -
-                      this.state.TotalStatisticsData[
-                        this.state.TotalStatisticsData.length - 2
-                      ].Recovered}
+                    {this.reformatNumber(
+                      String(
+                        this.state.TotalStatisticsData[
+                          this.state.TotalStatisticsData.length - 1
+                        ].Recovered -
+                          this.state.TotalStatisticsData[
+                            this.state.TotalStatisticsData.length - 2
+                          ].Recovered
+                      )
+                    )}
                   </Text>
                 )}
                 <Text>New Recovered</Text>
@@ -506,12 +581,16 @@ class DataAnalytics extends React.Component {
                   <ActivityIndicator size="small" color="red" />
                 ) : (
                   <Text style={{ fontSize: 24, color: "red" }}>
-                    {this.state.TotalStatisticsData[
-                      this.state.TotalStatisticsData.length - 1
-                    ].Deaths -
-                      this.state.TotalStatisticsData[
-                        this.state.TotalStatisticsData.length - 2
-                      ].Deaths}
+                    {this.reformatNumber(
+                      String(
+                        this.state.TotalStatisticsData[
+                          this.state.TotalStatisticsData.length - 1
+                        ].Deaths -
+                          this.state.TotalStatisticsData[
+                            this.state.TotalStatisticsData.length - 2
+                          ].Deaths
+                      )
+                    )}
                   </Text>
                 )}
                 <Text>New Death</Text>
@@ -561,11 +640,13 @@ class DataAnalytics extends React.Component {
                   <ActivityIndicator size="small" color="gray" />
                 ) : (
                   <Text style={{ fontSize: 24, color: "gray" }}>
-                    {
-                      this.state.TotalStatisticsData[
-                        this.state.TotalStatisticsData.length - 1
-                      ].Confirmed
-                    }
+                    {this.reformatNumber(
+                      String(
+                        this.state.TotalStatisticsData[
+                          this.state.TotalStatisticsData.length - 1
+                        ].Confirmed
+                      )
+                    )}
                   </Text>
                 )}
                 <Text>Total Cofirmed</Text>
@@ -589,11 +670,13 @@ class DataAnalytics extends React.Component {
                   <ActivityIndicator size="small" color="green" />
                 ) : (
                   <Text style={{ fontSize: 24, color: "green" }}>
-                    {
-                      this.state.TotalStatisticsData[
-                        this.state.TotalStatisticsData.length - 1
-                      ].Recovered
-                    }
+                    {this.reformatNumber(
+                      String(
+                        this.state.TotalStatisticsData[
+                          this.state.TotalStatisticsData.length - 1
+                        ].Recovered
+                      )
+                    )}
                   </Text>
                 )}
                 <Text>Total Recovered</Text>
@@ -617,11 +700,13 @@ class DataAnalytics extends React.Component {
                   <ActivityIndicator size="small" color="red" />
                 ) : (
                   <Text style={{ fontSize: 24, color: "red" }}>
-                    {
-                      this.state.TotalStatisticsData[
-                        this.state.TotalStatisticsData.length - 1
-                      ].Deaths
-                    }
+                    {this.reformatNumber(
+                      String(
+                        this.state.TotalStatisticsData[
+                          this.state.TotalStatisticsData.length - 1
+                        ].Deaths
+                      )
+                    )}
                   </Text>
                 )}
                 <Text>Total Death</Text>
@@ -662,6 +747,7 @@ class DataAnalytics extends React.Component {
                       dateInput: {
                         marginLeft: 36,
                         borderRadius: 20,
+                        height: 30,
                       },
                     }}
                     onDateChange={(date) => {
@@ -687,6 +773,7 @@ class DataAnalytics extends React.Component {
                       dateInput: {
                         marginLeft: 36,
                         borderRadius: 20,
+                        height: 30,
                       },
                     }}
                     onDateChange={async (date) => {
@@ -709,6 +796,7 @@ class DataAnalytics extends React.Component {
                 verticalLabelRotation={30}
                 width={Dimensions.get("window").width} // from react-nativ
                 height={HIEGHT / 2}
+                formatYLabel={(Y) => this.intToString(Number(Y))}
                 fromZero={true}
                 chartConfig={{
                   backgroundColor: "#0080ff",
@@ -809,31 +897,33 @@ class DataAnalytics extends React.Component {
                 </Text>
               </TouchableOpacity>
 
-              <TouchableOpacity
-                style={
-                  this.state.selected_filter_daily_status ===
-                  criterias.numberOfTests
-                    ? styles.touchable_buttons
-                    : styles.touchable_buttons_pressed
-                }
-                onPress={async () => {
-                  await this.setState({
-                    selected_filter_daily_status: criterias.numberOfTests,
-                  });
-                  this.fetchDailyNewsCases();
-                }}
-              >
-                <Text
+              {this.state.testCountDataExist ? (
+                <TouchableOpacity
                   style={
                     this.state.selected_filter_daily_status ===
                     criterias.numberOfTests
-                      ? styles.text_style
-                      : styles.text_style_pressed
+                      ? styles.touchable_buttons
+                      : styles.touchable_buttons_pressed
                   }
+                  onPress={async () => {
+                    await this.setState({
+                      selected_filter_daily_status: criterias.numberOfTests,
+                    });
+                    this.fetchDailyNewsCases();
+                  }}
                 >
-                  Test Counts
-                </Text>
-              </TouchableOpacity>
+                  <Text
+                    style={
+                      this.state.selected_filter_daily_status ===
+                      criterias.numberOfTests
+                        ? styles.text_style
+                        : styles.text_style_pressed
+                    }
+                  >
+                    Test Counts
+                  </Text>
+                </TouchableOpacity>
+              ) : null}
             </View>
 
             <View style={styles.container_graph}>
@@ -870,6 +960,7 @@ class DataAnalytics extends React.Component {
                       dateInput: {
                         marginLeft: 36,
                         borderRadius: 20,
+                        height: 30,
                       },
                     }}
                     onDateChange={(date) => {
@@ -895,6 +986,7 @@ class DataAnalytics extends React.Component {
                       dateInput: {
                         marginLeft: 36,
                         borderRadius: 20,
+                        height: 30,
                       },
                     }}
                     onDateChange={async (date) => {
@@ -914,6 +1006,7 @@ class DataAnalytics extends React.Component {
                 width={Dimensions.get("window").width} // from react-native
                 height={HIEGHT / 2}
                 fromZero={true}
+                formatYLabel={(Y) => this.intToString(Number(Y))}
                 chartConfig={{
                   backgroundColor: "#0080ff",
                   backgroundGradientFrom: "#0080ff",
@@ -1005,36 +1098,38 @@ class DataAnalytics extends React.Component {
                   Death
                 </Text>
               </TouchableOpacity>
-              <TouchableOpacity
-                style={
-                  this.state.selected_filter === criterias.numberOfTests
-                    ? styles.touchable_buttons
-                    : styles.touchable_buttons_pressed
-                }
-                onPress={async () => {
-                  await this.setState({
-                    selected_filter: criterias.numberOfTests,
-                  });
-                  this.fetchDailyNewsCases();
-                }}
-              >
-                <Text
+              {this.state.testCountDataExist ? (
+                <TouchableOpacity
                   style={
                     this.state.selected_filter === criterias.numberOfTests
-                      ? styles.text_style
-                      : styles.text_style_pressed
+                      ? styles.touchable_buttons
+                      : styles.touchable_buttons_pressed
                   }
+                  onPress={async () => {
+                    await this.setState({
+                      selected_filter: criterias.numberOfTests,
+                    });
+                    this.fetchDailyNewsCases();
+                  }}
                 >
-                  Test Counts
-                </Text>
-              </TouchableOpacity>
+                  <Text
+                    style={
+                      this.state.selected_filter === criterias.numberOfTests
+                        ? styles.text_style
+                        : styles.text_style_pressed
+                    }
+                  >
+                    Test Counts
+                  </Text>
+                </TouchableOpacity>
+              ) : null}
             </View>
 
             <View style={styles.container_graph}>
               <Text
                 style={{ fontSize: 20, fontWeight: "bold", marginLeft: 10 }}
               >
-                Rate Data
+                Rate of Cases
               </Text>
               <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
                 Country : {this.state.searchedCountry}
@@ -1064,6 +1159,7 @@ class DataAnalytics extends React.Component {
                       dateInput: {
                         marginLeft: 36,
                         borderRadius: 20,
+                        height: 30,
                       },
                     }}
                     onDateChange={(date) => {
@@ -1089,6 +1185,7 @@ class DataAnalytics extends React.Component {
                       dateInput: {
                         marginLeft: 36,
                         borderRadius: 20,
+                        height: 30,
                       },
                     }}
                     onDateChange={async (date) => {
@@ -1114,7 +1211,7 @@ class DataAnalytics extends React.Component {
                   backgroundGradientTo: "#0080ff",
                   scrollableDotFill: "#ffffff",
                   barPercentage: 0.1,
-                  decimalPlaces: 0, // optional, defaults to 2dp
+                  decimalPlaces: 1, // optional, defaults to 2dp
                   color: (opacity = 0) => `rgba(255, 266, 255, ${opacity})`,
                   style: {
                     borderRadius: 10,

@@ -175,6 +175,7 @@ com/a2svhackcovid19mobileapp/BuildConfig.class
 com/a2svhackcovid19mobileapp/MainApplication$1.class
 com/a2svhackcovid19mobileapp/MainApplication.class
 com/a2svhackcovid19mobileapp/generated/BasePackageList.class
+com/airbnb/lottie/LottieDrawable$RepeatMode.class
 com/bumptech/glide/annotation/Excludes.class
 com/bumptech/glide/annotation/GlideExtension.class
 com/bumptech/glide/annotation/GlideModule.class

@@ -12,6 +12,7 @@ MERGED from [:expo-updates] F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Applicat
 MERGED from [:react-native-community_checkbox] F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\@react-native-community\checkbox\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-11:12
 MERGED from [:react-native-community_masked-view] F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\@react-native-community\masked-view\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-9:12
 MERGED from [:react-native-mapbox-gl_maps] F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\@react-native-mapbox-gl\maps\android\rctmgl\build\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-14:12
+MERGED from [:lottie-react-native] F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\lottie-react-native\src\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-11:12
 MERGED from [:react-native-gesture-handler] F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\react-native-gesture-handler\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-11:12
 MERGED from [:react-native-reanimated] F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\react-native-reanimated\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-11:12
 MERGED from [:react-native-safe-area-context] F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\react-native-safe-area-context\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-9:12
@@ -47,6 +48,7 @@ MERGED from [org.webkit:android-jsc:r245459] C:\Users\Abela\.gradle\caches\trans
 MERGED from [com.mapbox.mapboxsdk:mapbox-android-plugin-annotation-v9:0.8.0] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\95e3b025e9cb4a3d5048e153454148cd\mapbox-android-plugin-annotation-v9-0.8.0\AndroidManifest.xml:2:1-9:12
 MERGED from [com.mapbox.mapboxsdk:mapbox-android-plugin-localization-v9:0.12.0] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\a28b1ded72a7a6a6f5cccdd77b1203d0\mapbox-android-plugin-localization-v9-0.12.0\AndroidManifest.xml:2:1-9:12
 MERGED from [com.mapbox.mapboxsdk:mapbox-android-plugin-markerview-v9:0.4.0] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\c997ff729c2231f56fe7e9d539854044\mapbox-android-plugin-markerview-v9-0.4.0\AndroidManifest.xml:2:1-9:12
+MERGED from [com.airbnb.android:lottie:3.0.7] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\3313474357684448bc1fbb705a234d60\lottie-3.0.7\AndroidManifest.xml:2:1-11:12
 MERGED from [com.google.android.material:material:1.1.0] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\1873fe9405c2e2a7c5fa3eda6cb1076f\material-1.1.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.appcompat:appcompat:1.1.0] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\6e1c3aa384c0bde2d05f603637d0bdf7\appcompat-1.1.0\AndroidManifest.xml:17:1-24:12
 MERGED from [com.facebook.fresco:fresco:2.0.0] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\1fe18aaa8bfb61f7e0aa59031b701b84\fresco-2.0.0\AndroidManifest.xml:2:1-9:12
@@ -140,6 +142,8 @@ MERGED from [:@react-native-mapbox-gl_maps] F:\Admin Docs\Documents\A2SV\COVID19
 MERGED from [:@react-native-mapbox-gl_maps] F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\@react-native-mapbox-gl\maps\android\rctmgl\build\intermediates\library_manifest\debug\AndroidManifest.xml:11:5-67
 MERGED from [:react-native-mapbox-gl_maps] F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\@react-native-mapbox-gl\maps\android\rctmgl\build\intermediates\library_manifest\debug\AndroidManifest.xml:11:5-67
 MERGED from [:react-native-mapbox-gl_maps] F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\@react-native-mapbox-gl\maps\android\rctmgl\build\intermediates\library_manifest\debug\AndroidManifest.xml:11:5-67
+MERGED from [:lottie-react-native] F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\lottie-react-native\src\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:9:5-67
+MERGED from [:lottie-react-native] F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\lottie-react-native\src\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:9:5-67
 MERGED from [:expo-file-system] F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-file-system\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:12:5-67
 MERGED from [:expo-file-system] F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-file-system\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:12:5-67
 MERGED from [com.mapbox.mapboxsdk:mapbox-android-sdk:9.1.0] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\07ba8d177b58f9bff15145f7f911bfb8\jetified-mapbox-android-sdk-9.1.0\AndroidManifest.xml:16:5-67
@@ -252,6 +256,8 @@ MERGED from [:expo-file-system] F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Appl
 MERGED from [:expo-file-system] F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-file-system\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:17:5-28:19
 MERGED from [:expo-location] F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-location\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:15:5-19:19
 MERGED from [:expo-location] F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\expo-location\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:15:5-19:19
+MERGED from [com.airbnb.android:lottie:3.0.7] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\3313474357684448bc1fbb705a234d60\lottie-3.0.7\AndroidManifest.xml:9:5-20
+MERGED from [com.airbnb.android:lottie:3.0.7] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\3313474357684448bc1fbb705a234d60\lottie-3.0.7\AndroidManifest.xml:9:5-20
 MERGED from [com.google.android.material:material:1.1.0] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\1873fe9405c2e2a7c5fa3eda6cb1076f\material-1.1.0\AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.material:material:1.1.0] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\1873fe9405c2e2a7c5fa3eda6cb1076f\material-1.1.0\AndroidManifest.xml:22:5-20
 MERGED from [com.facebook.soloader:soloader:0.8.0] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\8239f777dda302c2a95b62c2a0a8a706\soloader-0.8.0\AndroidManifest.xml:11:5-20
@@ -366,6 +372,8 @@ MERGED from [:react-native-community_masked-view] F:\Admin Docs\Documents\A2SV\C
 MERGED from [:react-native-community_masked-view] F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\@react-native-community\masked-view\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-mapbox-gl_maps] F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\@react-native-mapbox-gl\maps\android\rctmgl\build\intermediates\library_manifest\debug\AndroidManifest.xml:7:5-9:41
 MERGED from [:react-native-mapbox-gl_maps] F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\@react-native-mapbox-gl\maps\android\rctmgl\build\intermediates\library_manifest\debug\AndroidManifest.xml:7:5-9:41
+MERGED from [:lottie-react-native] F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\lottie-react-native\src\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-7:41
+MERGED from [:lottie-react-native] F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\lottie-react-native\src\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-gesture-handler] F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\react-native-gesture-handler\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:7:5-9:41
 MERGED from [:react-native-gesture-handler] F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\react-native-gesture-handler\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:7:5-9:41
 MERGED from [:react-native-reanimated] F:\Admin Docs\Documents\A2SV\COVID19_Mobile_Application\node_modules\react-native-reanimated\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:7:5-9:41
@@ -436,6 +444,8 @@ MERGED from [com.mapbox.mapboxsdk:mapbox-android-plugin-localization-v9:0.12.0] 
 MERGED from [com.mapbox.mapboxsdk:mapbox-android-plugin-localization-v9:0.12.0] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\a28b1ded72a7a6a6f5cccdd77b1203d0\mapbox-android-plugin-localization-v9-0.12.0\AndroidManifest.xml:5:5-7:41
 MERGED from [com.mapbox.mapboxsdk:mapbox-android-plugin-markerview-v9:0.4.0] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\c997ff729c2231f56fe7e9d539854044\mapbox-android-plugin-markerview-v9-0.4.0\AndroidManifest.xml:5:5-7:41
 MERGED from [com.mapbox.mapboxsdk:mapbox-android-plugin-markerview-v9:0.4.0] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\c997ff729c2231f56fe7e9d539854044\mapbox-android-plugin-markerview-v9-0.4.0\AndroidManifest.xml:5:5-7:41
+MERGED from [com.airbnb.android:lottie:3.0.7] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\3313474357684448bc1fbb705a234d60\lottie-3.0.7\AndroidManifest.xml:5:5-7:41
+MERGED from [com.airbnb.android:lottie:3.0.7] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\3313474357684448bc1fbb705a234d60\lottie-3.0.7\AndroidManifest.xml:5:5-7:41
 MERGED from [com.google.android.material:material:1.1.0] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\1873fe9405c2e2a7c5fa3eda6cb1076f\material-1.1.0\AndroidManifest.xml:20:5-44
 MERGED from [com.google.android.material:material:1.1.0] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\1873fe9405c2e2a7c5fa3eda6cb1076f\material-1.1.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.appcompat:appcompat:1.1.0] C:\Users\Abela\.gradle\caches\transforms-2\files-2.1\6e1c3aa384c0bde2d05f603637d0bdf7\appcompat-1.1.0\AndroidManifest.xml:20:5-22:41
