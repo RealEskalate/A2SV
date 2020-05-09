@@ -38,7 +38,7 @@
       <v-list dense nav shaped>
         <v-list-item-group v-model="curRoute"
                            justify="center"
-                           active-class="deep-purple--text text--accent-4"
+                           active-class="white--text primary lighten-1"
                            class="mt-5"
         >
           <template v-for="(item, i) in links">
