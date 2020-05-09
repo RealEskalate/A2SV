@@ -70,16 +70,16 @@
               </v-tab>
 
               <v-tab-item style="min-height: 700px">
-                <display mode="counts" y_label="People" />
+                <display mode="counts" y_label="People" :tab_index="selectedGraph" />
               </v-tab-item>
               <v-tab-item style="min-height: 700px">
-                <daily-display y_label="People" />
+                <daily-display y_label="People" :tab_index="selectedGraph" />
               </v-tab-item>
               <v-tab-item style="min-height: 700px">
-                <display mode="rates" y_label="Percent" />
+                <display mode="rates" y_label="Percent" :tab_index="selectedGraph" />
               </v-tab-item>
               <v-tab-item style="min-height: 700px">
-                <country-compare x_axis_type="category" />
+                <country-compare x_axis_type="category" :tab_index="selectedGraph" />
               </v-tab-item>
               <v-tab-item style="min-height: 700px">
                 <disease-compare

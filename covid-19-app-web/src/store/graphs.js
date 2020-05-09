@@ -2,7 +2,7 @@ import axios from "axios";
 import moment from "moment";
 
 const converter = {
-  "Test Count": "Test",
+  "Test Count": "Tests",
   "Confirmed Cases": "Confirmed",
   "Death Count": "Deaths",
   "Recovery Count": "Recovered",
@@ -208,7 +208,7 @@ export default {
         EBOLA: [220, 231, 117],
         SARS: [77, 208, 225],
         MERS: [240, 98, 146],
-        "Seasonal flu": [176, 190, 197]
+        "SEASONAL FLU": [176, 190, 197]
       };
 
       axios.get(`${process.env.VUE_APP_BASE_URL}/diseases`).then(
