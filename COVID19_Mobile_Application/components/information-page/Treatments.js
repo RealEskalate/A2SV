@@ -1,37 +1,137 @@
-import * as React from "react";
-import { View, Text, Image, ScrollView } from "react-native";
-import { Card, ListItem, Button, Icon } from "react-native-elements";
+import React, { Component } from "react";
+import { View, Text, Image, Dimensions, StyleSheet } from "react-native";
+import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 
-// Lottie library GIF to JSON
-import LottieView from 'lottie-react-native';
-
-export default function Treatments() {
-  return (
-    <ScrollView>
-      <Card
-        // // title="Treatment"
-        // image={require("./icons/doctors.gif")}
-        // containerStyle={{ margin: 0 }}
-      >
-        <ScrollView>
-          <LottieView style={{ height: 200, marginBottom: 40, marginTop: -25, paddingTop: 50 }} source={require('./animations/prueba-doctores-freepik.json')} autoPlay loop />
-          <Text style={{ marginBottom: 10 }}>
-            There’s currently no treatment specifically approved for COVID-19,
-            and no cure for an infection, although treatments and vaccines are
-            currently under study. Instead, treatment focuses on managing
-            symptoms as the virus runs its course. Seek medical help if you
-            think you have COVID-19. Your doctor will recommend treatment for
-            any symptoms or complications that develop, and let you know if you
-            need to seek emergency treatment. Other coronaviruses like SARS and
-            MERS are also treated by managing symptoms. In some cases,
-            experimental treatments are tested to see how effective they are.
-            Examples of therapies used for these illnesses include: antiviral or
-            retroviral medications breathing support, such as mechanical
-            ventilation steroids to reduce lung swelling blood plasma
-            transfusions
+export default class Treatments extends Component {
+  render() {
+    return (
+      <View style={{ flex: 1 }}>
+        <View style={{ height: 250 }}>
+          <Image
+            source={require("../../assets/images/prevention_methods.jpg")}
+            style={{ height: 250, width: Dimensions.get("screen").width }}
+            resizeMode="cover"
+          />
+        </View>
+        <ScrollView
+          style={{ padding: 10 }}
+          ref="_scrollView"
+          alwaysBounceVertical={true}
+        >
+          <Text
+            style={{
+              fontSize: 21,
+              color: "#37474f",
+              fontFamily: "sans-serif-light",
+              fontWeight: "bold",
+            }}
+          >
+            WHAT IS COVID-19?
           </Text>
+          <Text style={{ fontSize: 12, fontWeight: "100", color: "#37474f" }}>
+            CORONAVIRUS DESEASE 2019
+          </Text>
+          <Text
+            style={{
+              color: "#455a64",
+              marginTop: 20,
+              fontSize: 13,
+              textAlign: "justify",
+            }}
+          >
+            Coronavirus disease 2019 (COVID-19) is an infectious disease caused
+            by severe acute respiratory syndrome coronavirus 2 (SARS-CoV-2). It
+            was first identified in December 2019 in Wuhan, China, and has since
+            spread globally, resulting in an ongoing pandemic. As of 9 May 2020,
+            more than 3.93 million cases have been reported across 187 countries
+            and territories, resulting in more than 274,000 deaths. More than
+            1.31 million people have recovered.
+          </Text>
+          <View style={{ flexDirection: "row", padding: 10 }}>
+            <View>
+              <FontAwesome name="user" color="#388e3c" size={25} />
+            </View>
+            <View style={{ marginLeft: 10 }}>
+              <Text style={{ fontSize: 12, fontWeight: "bold" }}>COUGH</Text>
+              <Text style={{ fontSize: 12, color: "#607d8b" }}>
+                Coughing is one of thr major syptoms
+              </Text>
+            </View>
+          </View>
+          <View style={{ flexDirection: "row", padding: 10 }}>
+            <View>
+              <FontAwesome name="user" color="#ffb300" size={25} />
+            </View>
+            <View style={{ marginLeft: 10 }}>
+              <Text style={{ fontSize: 12, fontWeight: "bold" }}>COUGH</Text>
+              <Text style={{ fontSize: 12, color: "#607d8b" }}>
+                Coughing is one of thr major syptoms
+              </Text>
+            </View>
+          </View>
+          <View style={{ flexDirection: "row", padding: 10 }}>
+            <View>
+              <FontAwesome name="user" color="#388e3c" size={25} />
+            </View>
+            <View style={{ marginLeft: 10 }}>
+              <Text style={{ fontSize: 12, fontWeight: "bold" }}>COUGH</Text>
+              <Text style={{ fontSize: 12, color: "#607d8b" }}>
+                Coughing is one of thr major syptoms
+              </Text>
+            </View>
+          </View>
+          <Text
+            style={{
+              color: "#455a64",
+              marginTop: 20,
+              fontSize: 13,
+              textAlign: "justify",
+            }}
+          >
+            Coronavirus disease 2019 (COVID-19) is an infectious disease caused
+            by severe acute respiratory syndrome coronavirus 2 (SARS-CoV-2). It
+            was first identified in December 2019 in Wuhan, China, and has since
+            spread globally, resulting in an ongoing pandemic. As of 9 May 2020,
+            more than 3.93 million cases have been reported across 187 countries
+            and territories, resulting in more than 274,000 deaths. More than
+            1.31 million people have recovered.
+          </Text>
+          <View style={{ flexDirection: "row", padding: 10 }}>
+            <View>
+              <FontAwesome name="user" color="#388e3c" size={25} />
+            </View>
+            <View style={{ marginLeft: 10 }}>
+              <Text style={{ fontSize: 12, fontWeight: "bold" }}>COUGH</Text>
+              <Text style={{ fontSize: 12, color: "#607d8b" }}>
+                Coughing is one of thr major syptoms
+              </Text>
+            </View>
+          </View>
+          <View style={{ flexDirection: "row", padding: 10 }}>
+            <View>
+              <FontAwesome name="user" color="#ffb300" size={25} />
+            </View>
+            <View style={{ marginLeft: 10 }}>
+              <Text style={{ fontSize: 12, fontWeight: "bold" }}>COUGH</Text>
+              <Text style={{ fontSize: 12, color: "#607d8b" }}>
+                Coughing is one of thr major syptoms
+              </Text>
+            </View>
+          </View>
+          <View style={{ flexDirection: "row", padding: 10, marginBottom: 20 }}>
+            <View>
+              <FontAwesome name="user" color="#388e3c" size={25} />
+            </View>
+            <View style={{ marginLeft: 10 }}>
+              <Text style={{ fontSize: 12, fontWeight: "bold" }}>COUGH</Text>
+              <Text style={{ fontSize: 12, color: "#607d8b" }}>
+                Coughing is one of thr major syptoms
+              </Text>
+            </View>
+          </View>
         </ScrollView>
-      </Card>
-    </ScrollView>
-  );
+      </View>
+    );
+  }
 }

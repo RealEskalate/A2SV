@@ -22,6 +22,7 @@ import * as actions from "./components/data-management/user-id-data/userIDAction
 import { Header } from "react-native-elements";
 import NewsStack from "./components/news-page/NewsStack.js";
 import DataAnalyticsMap from "./components/public-data-page/DataAnalyticsMap.js";
+import About from "./components/about-page/About.js";
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -99,10 +100,26 @@ export default function App() {
           }}
         />
 
-        <Stack.Screen name="What Is Covid-19?" component={WhatIsCovid19} />
-        <Stack.Screen name="Covid19 Symptoms" component={Symptoms} />
-        <Stack.Screen name="Preventions" component={Preventions} />
-        <Stack.Screen name="Treatments" component={Treatments} />
+        <Stack.Screen
+          name="What Is Covid-19?"
+          component={WhatIsCovid19}
+          options={{ headerTransparent: true, headerTitle: "" }}
+        />
+        <Stack.Screen
+          name="Covid19 Symptoms"
+          component={Symptoms}
+          options={{ headerTransparent: true, headerTitle: "" }}
+        />
+        <Stack.Screen
+          name="Preventions"
+          component={Preventions}
+          options={{ headerTransparent: true, headerTitle: "" }}
+        />
+        <Stack.Screen
+          name="Treatments"
+          component={Treatments}
+          options={{ headerTransparent: true, headerTitle: "" }}
+        />
         <Stack.Screen name="Symptoms" component={SymptomPage} />
         <Stack.Screen name="Data Analytics Map" component={DataAnalyticsMap} />
 
@@ -118,7 +135,7 @@ export default function App() {
           drawerContent={(props) => <NavigatorDrawer {...props} />}
         >
           <Drawer.Screen name="Home" children={createSTNavigator} />
-          <Drawer.Screen name="News" component={NewsStack} />
+          <Drawer.Screen name="About" component={About} />
         </Drawer.Navigator>
       ) : (
         <GetStartedStackNavigation />

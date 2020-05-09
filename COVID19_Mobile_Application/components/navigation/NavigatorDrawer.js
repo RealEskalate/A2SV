@@ -41,24 +41,14 @@ const NavigatorDrawer = (props) => {
               label="My Profile"
               onPress={() => props.navigation.closeDrawer()}
             />
-
-            {/* <DrawerItem
-              icon={({ color, size }) => (
-                <Icon name="newspaper" color={color} size={size} />
-              )}
-              label="News"
-              onPress={() => {
-                props.navigation.navigate("News");
-              }}
-            /> */}
             <DrawerItem
               icon={({ color, size }) => (
                 <Icon name="information-outline" color={color} size={size} />
               )}
               label="About"
-              //   onPress={() => {
-              //     props.navigation.navigate("Favorite");
-              //   }}
+              onPress={() => {
+                props.navigation.navigate("About");
+              }}
             />
           </Drawer.Section>
         </View>
