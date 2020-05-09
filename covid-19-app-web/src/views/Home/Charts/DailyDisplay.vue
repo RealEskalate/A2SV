@@ -5,6 +5,8 @@
         <v-select
           v-model="country"
           :items="countries"
+          item-text="name"
+          item-value="slug"
           label="Country"
           hint="Country"
           persistent-hint

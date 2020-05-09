@@ -40,6 +40,12 @@ export const ChartMixin = {
       default() {
         return "linear";
       }
+    },
+    tab_index: {
+      type: Number,
+      default() {
+        return "linear";
+      }
     }
   },
   computed: {
@@ -55,6 +61,12 @@ export const ChartMixin = {
             right: 25,
             top: 25,
             bottom: 0
+          }
+        },
+        tooltips: {
+          callbacks: {
+            title: self.tooltipTitle,
+            label: self.tooltipLabel
           }
         },
         scales: {
@@ -135,16 +147,34 @@ export const ChartMixin = {
         this.isCount()
       ) {
         if (value >= 1000000000) {
-          return `${value / 1000000000} B`;
+          return `${(value / 1000000000).toFixed(2).toString()} B`;
         } else if (value >= 1000000) {
-          return `${value / 1000000} M`;
+          return `${(value / 1000000).toFixed(2).toString()} M`;
         } else if (value >= 1000) {
-          return `${value / 1000} K`;
+          return `${(value / 1000).toFixed(2).toString()} K`;
         }
         return value;
       } else {
         return value;
       }
+    },
+    tooltipTitle(tooltipItem) {
+      if (this.x_axis_type === "time") {
+        return moment(tooltipItem[0].label).format("MMM DD, YYYY");
+      } else if (this.date_range_1 && this.date_range_2) {
+        let starts = [this.date_range_1[0], this.date_range_2[0]];
+        return moment(starts[tooltipItem[0].datasetIndex])
+          .add(tooltipItem[0].index, "days")
+          .format("MMM DD, YYYY");
+      }
+      return tooltipItem[0].label;
+    },
+    tooltipLabel(tooltipItem, data) {
+      let label = data.datasets[tooltipItem.datasetIndex].label || "";
+      if (label) label += ": ";
+
+      label += this.yTicks(tooltipItem.yLabel);
+      return label;
     },
     rangeToText(start, end) {
       let arrow = "\u2192";
