@@ -36,10 +36,15 @@
           <v-list two-line>
             <v-list-item-group>
               <template v-for="(item, index) in news">
-                <v-list-item :key="item.title" data-aos="fade-up" data-aos-delay="50"
-                             data-aos-duration="1000"
-                             data-aos-easing="ease-in-out"
-                             data-aos-anchor-placement="top-bottom" data-aos-once="true">
+                <v-list-item
+                        :key="item.title"
+                        data-aos="fade-up"
+                        data-aos-delay="50"
+                        data-aos-duration="1000"
+                        data-aos-easing="ease-in-out"
+                        data-aos-anchor-placement="top-bottom"
+                        data-aos-once="true"
+                >
                   <v-list-item-content class="py-6">
                     <v-list-item-subtitle
                       class="overline mb-2"

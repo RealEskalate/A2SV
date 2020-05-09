@@ -36,21 +36,18 @@
             overflow
     >
       <v-list dense nav shaped>
-        <v-list-item-group v-model="curRoute"
-                           justify="center"
-                           active-class="white--text primary lighten-1"
-                           class="mt-5"
+        <v-list-item-group
+                v-model="curRoute"
+                justify="center"
+                active-class="white--text primary lighten-1"
+                class="mt-5"
         >
           <template v-for="(item, i) in links">
-            <v-list-item
-                    :key="i"
-                    :to="item.to"
-                    @click="drawer = false"
-            >
+            <v-list-item :key="i" :to="item.to" @click="drawer = false">
               <v-list-item-action>
                 <v-icon>{{ item.icon }}</v-icon>
               </v-list-item-action>
-              <v-list-item-title>{{ item.text}}</v-list-item-title>
+              <v-list-item-title>{{ item.text }}</v-list-item-title>
             </v-list-item>
           </template>
         </v-list-item-group>
@@ -69,7 +66,11 @@ export default {
       curRoute: 0,
       links: [
         { text: "Home", icon: "mdi-home", to: "/" },
-        {text: "Learn", icon: "mdi-book-open-page-variant", to: "/information"},
+        {
+          text: "Learn",
+          icon: "mdi-book-open-page-variant",
+          to: "/information"
+        },
         { text: "About", icon: "mdi-information", to: "/about" },
         { text: "News", icon: "mdi-newspaper", to: "/news" },
         { text: "Map", icon: "mdi-map", to: "/map" }
@@ -87,14 +88,13 @@ export default {
     handleScroll() {
       // Any code to be executed when the window is scrolled
       this.locationY = window.scrollY;
-    },
+    }
   },
   computed: {
     raise() {
       return this.locationY > 50;
-    },
-
-  },
+    }
+  }
 };
 </script>
 
