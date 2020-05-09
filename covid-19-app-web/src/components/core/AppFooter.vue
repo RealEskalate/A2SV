@@ -25,14 +25,14 @@
           <p class="font-weight-bold">Get our App</p>
           <v-divider class="mx-4"></v-divider>
           <v-col class="align-center">
-          <router-link to="/" target="blank">
-            <v-img src="/img/footer/kkk.png" max-width="10.5em"></v-img>
-          </router-link>
+            <router-link to="/" target="blank">
+              <v-img src="/img/footer/kkk.png" max-width="10.5em"></v-img>
+            </router-link>
           </v-col>
           <v-col>
-          <router-link to="/" target="blank">
-            <v-img src="/img/footer/njn.png" max-width="10.5em"></v-img>
-          </router-link>
+            <router-link to="/" target="blank">
+              <v-img src="/img/footer/njn.png" max-width="10.5em"></v-img>
+            </router-link>
           </v-col>
         </v-flex>
         <v-flex xs4 md3 class="mx-4">

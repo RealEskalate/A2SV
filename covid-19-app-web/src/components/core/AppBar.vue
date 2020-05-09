@@ -1,14 +1,10 @@
 <template>
   <v-container>
     <v-app-bar app class="white" flat v-bind:class="{ raised: raise }">
-      <v-app-bar-nav-icon
-        v-if="$vuetify.breakpoint.smAndDown"
-        @click.stop="drawer = !drawer"
-      />
       <router-link class="d-flex align-center no-decoration" to="/">
         <v-img
           alt="Vuetify Logo"
-          class="shrink ml-3"
+          class="shrink ml-md-3"
           contain
           src="/img/brand/blue.png"
           transition="scale-transition"
@@ -27,30 +23,28 @@
       >
         <span class="text-capitalize"> {{ link.text }}</span>
       </v-btn>
+      <v-app-bar-nav-icon
+        class="primary--text"
+        v-if="$vuetify.breakpoint.smAndDown"
+        @click.stop="drawer = !drawer"
+      />
     </v-app-bar>
     <v-navigation-drawer
-            v-if="$vuetify.breakpoint.smAndDown"
-            v-model="drawer"
-            temporary
-            app
-            overflow
+      v-if="$vuetify.breakpoint.smAndDown"
+      v-model="drawer"
+      temporary
+      app
+      overflow
+      right
     >
       <v-list dense nav shaped>
-        <v-list-item-group v-model="curRoute"
-                           justify="center"
-                           active-class="deep-purple--text text--accent-4"
-                           class="mt-5"
-        >
+        <v-list-item-group v-model="curRoute" justify="center" class="mt-5">
           <template v-for="(item, i) in links">
-            <v-list-item
-                    :key="i"
-                    :to="item.to"
-                    @click="drawer = false"
-            >
+            <v-list-item :key="i" :to="item.to" @click="drawer = false">
               <v-list-item-action>
                 <v-icon>{{ item.icon }}</v-icon>
               </v-list-item-action>
-              <v-list-item-title>{{ item.text}}</v-list-item-title>
+              <v-list-item-title>{{ item.text }}</v-list-item-title>
             </v-list-item>
           </template>
         </v-list-item-group>
@@ -60,7 +54,7 @@
 </template>
 
 <script>
-  // import router from "../../router";
+// import router from "../../router";
 export default {
   data: () => {
     return {
@@ -69,7 +63,11 @@ export default {
       curRoute: 0,
       links: [
         { text: "Home", icon: "mdi-home", to: "/" },
-        {text: "Learn", icon: "mdi-book-open-page-variant", to: "/information"},
+        {
+          text: "Learn",
+          icon: "mdi-book-open-page-variant",
+          to: "/information"
+        },
         { text: "About", icon: "mdi-information", to: "/about" },
         { text: "News", icon: "mdi-newspaper", to: "/news" },
         { text: "Map", icon: "mdi-map", to: "/map" }
@@ -87,14 +85,13 @@ export default {
     handleScroll() {
       // Any code to be executed when the window is scrolled
       this.locationY = window.scrollY;
-    },
+    }
   },
   computed: {
     raise() {
       return this.locationY > 50;
-    },
-
-  },
+    }
+  }
 };
 </script>
 
