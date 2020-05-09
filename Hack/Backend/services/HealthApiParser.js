@@ -120,13 +120,13 @@ const getCountryStat = async(startDate, endDate, req, res, respond, rates) => {
                 } else if (criteria === "All") {
                     caseData.push({
                         t: item,
-                        Confirmed: map_datas[`${item}`][0],
-                        Recovered: map_datas[`${item}`][2],
-                        Deaths: map_datas[`${item}`][1]
+                        Confirmed: map_datas["Data"][`${item}`][0],
+                        Recovered: map_datas["Data"][`${item}`][2],
+                        Deaths: map_datas["Data"][`${item}`][1]
                     });
                 } else if (criteria === "Active") {
                     caseData.push({
-                        t: item.date,
+                        t: item,
                         y: (map_datas["Data"][`${item}`][0] - map_datas["Data"][`${item}`][2] - map_datas["Data"][`${item}`][1])
                     });
                 } else {
