@@ -87,7 +87,9 @@
             >
               <template v-slot:activator="{ on }">
                 <v-text-field
-                  :color="`rgb(${colors[1][0]}, ${colors[1][1]}, ${colors[1][2]})`"
+                  :color="
+                    `rgb(${colors[1][0]}, ${colors[1][1]}, ${colors[1][2]})`
+                  "
                   outlined
                   dense
                   v-model="dateRangeText2"

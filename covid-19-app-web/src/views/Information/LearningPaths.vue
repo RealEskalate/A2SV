@@ -28,8 +28,8 @@
             <thead>
               <tr>
                 <th
-                        class="text-left primary--text text--darken-1"
-                        v-if="$vuetify.breakpoint.mdAndUp"
+                  class="text-left primary--text text--darken-1"
+                  v-if="$vuetify.breakpoint.mdAndUp"
                 />
                 <th class="text-left primary--text text--darken-1">
                   Task Name
@@ -43,9 +43,9 @@
             <tbody>
               <tr :key="i" v-for="(path, i) in learningPaths[selected_age]">
                 <td
-                        class="text-left py-2 primary--text text--darken-1"
-                        v-if="$vuetify.breakpoint.mdAndUp"
-                        width="3%"
+                  class="text-left py-2 primary--text text--darken-1"
+                  v-if="$vuetify.breakpoint.mdAndUp"
+                  width="3%"
                 >
                   {{ i + 1 }}
                 </td>

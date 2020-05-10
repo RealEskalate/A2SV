@@ -152,7 +152,7 @@ export default {
       }
     },
     tab_index() {
-      if(this.tab_index === 1) this.fillGraph();
+      if (this.tab_index === 1) this.fillGraph();
     }
   },
   computed: {
