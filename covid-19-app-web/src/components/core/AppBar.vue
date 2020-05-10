@@ -54,6 +54,13 @@
       app
       overflow
     >
+      <v-img
+              alt="Company Logo"
+              class="shrink ml-2 d-block mt-4"
+              src="/img/brand/blue.png"
+              transition="scale-transition"
+              max-width="150"
+      />
       <v-list dense nav shaped>
         <v-list-item-group
           v-model="curRoute"
