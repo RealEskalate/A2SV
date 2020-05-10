@@ -27,7 +27,7 @@
       >
         <span class="text-capitalize"> {{ link.text }}</span>
       </v-btn>
-      <v-menu left bottom>
+      <v-menu left bottom v-if="$vuetify.breakpoint.smAndDown">
         <template v-slot:activator="{ on }">
           <v-btn icon v-on="on">
             <v-icon>mdi-dots-vertical</v-icon>
@@ -35,7 +35,7 @@
         </template>
 
         <v-list>
-          <v-list-item-group v-model="navType">
+          <v-list-item-group v-model="navType" @change="onNavigationTypeChange">
             <v-list-item value="1">
               <v-list-item-title>Bottom Navigation</v-list-item-title>
             </v-list-item>
@@ -46,61 +46,64 @@
         </v-list>
       </v-menu>
     </v-app-bar>
-    <v-navigation-drawer
-      v-if="$vuetify.breakpoint.smAndDown"
-      v-model="drawer"
-      temporary
-      app
-      overflow
-    >
-      <v-img
-              alt="Company Logo"
-              class="shrink ml-2 d-block mt-4"
-              src="/img/brand/blue.png"
-              transition="scale-transition"
-              max-width="150"
-      />
-      <v-list dense nav shaped>
-        <v-list-item-group
-          v-model="curRoute"
-          justify="center"
-          active-class="white--text primary lighten-1"
-          class="mt-5"
-        >
-          <template v-for="(item, i) in links">
-            <v-list-item :key="i" :to="item.to" @click="drawer = false">
-              <v-list-item-action>
-                <v-icon>{{ item.icon }}</v-icon>
-              </v-list-item-action>
-              <v-list-item-title>{{ item.text }}</v-list-item-title>
-            </v-list-item>
-          </template>
-        </v-list-item-group>
-      </v-list>
-    </v-navigation-drawer>
-    <v-bottom-navigation
-      app
-      :value="activeBtn"
-      grow
-      color="primary"
-      class="px-3"
-      v-if="$vuetify.breakpoint.smAndDown && navOption === '1'"
-    >
-      <v-btn v-for="(item, i) in links" :to="item.to" :key="i">
-        <span>{{ item.text }}</span>
-        <v-icon> {{ item.icon }}</v-icon>
-      </v-btn>
-    </v-bottom-navigation>
+    <v-container v-if="$vuetify.breakpoint.smAndDown">
+      <v-navigation-drawer
+              v-model="drawer"
+              temporary
+              app
+              overflow
+              v-if="curNavigation === '2'"
+      >
+        <v-img
+                alt="Company Logo"
+                class="shrink ml-2 d-block mt-4"
+                src="/img/brand/blue.png"
+                transition="scale-transition"
+                max-width="150"
+        />
+        <v-list dense nav shaped>
+          <v-list-item-group
+                  v-model="curRoute"
+                  justify="center"
+                  active-class="white--text primary lighten-1"
+                  class="mt-5"
+          >
+            <template v-for="(item, i) in links">
+              <v-list-item :key="i" :to="item.to" @click="drawer = false">
+                <v-list-item-action>
+                  <v-icon>{{ item.icon }}</v-icon>
+                </v-list-item-action>
+                <v-list-item-title>{{ item.text }}</v-list-item-title>
+              </v-list-item>
+            </template>
+          </v-list-item-group>
+        </v-list>
+      </v-navigation-drawer>
+      <v-bottom-navigation
+              app
+              :value="activeBtn"
+              grow
+              color="primary"
+              class="px-3"
+              v-if="curNavigation === '1'"
+      >
+        <v-btn v-for="(item, i) in links" :to="item.to" :key="i">
+          <span>{{ item.text }}</span>
+          <v-icon> {{ item.icon }}</v-icon>
+        </v-btn>
+      </v-bottom-navigation>
+    </v-container>
   </v-container>
 </template>
 
 <script>
-// import router from "../../router";
-export default {
+  import store from "@/store/";
+
+  export default {
   data: () => {
     return {
       drawer: false,
-      navType: "1",
+      navType: store.getters.getNavigationType,
       locationY: 0,
       curRoute: 0,
       activeBtn: 1,
@@ -126,8 +129,10 @@ export default {
   },
   methods: {
     handleScroll() {
-      // Any code to be executed when the window is scrolled
       this.locationY = window.scrollY;
+    },
+    onNavigationTypeChange() {
+      store.dispatch("setNavState", {type: this.navType});
     }
   },
   computed: {
@@ -136,6 +141,9 @@ export default {
     },
     navOption() {
       return this.navType;
+    },
+    curNavigation() {
+      return store.getters.getNavigationType;
     }
   }
 };

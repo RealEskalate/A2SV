@@ -27,8 +27,13 @@
           <template v-slot:default>
             <thead>
               <tr>
-                <th class="text-left primary--text text--darken-1" v-if="$vuetify.breakpoint.mdAndUp" />
-                <th class="text-left primary--text text--darken-1">Task Name</th>
+                <th
+                        class="text-left primary--text text--darken-1"
+                        v-if="$vuetify.breakpoint.mdAndUp"
+                />
+                <th class="text-left primary--text text--darken-1">
+                  Task Name
+                </th>
                 <th class="text-left primary--text text--darken-1">What?</th>
                 <th class="text-left primary--text text--darken-1">Why?</th>
                 <th class="text-left primary--text text--darken-1">Duration</th>
@@ -37,7 +42,13 @@
             </thead>
             <tbody>
               <tr :key="i" v-for="(path, i) in learningPaths[selected_age]">
-                <td class="text-left py-2 primary--text text--darken-1"  v-if="$vuetify.breakpoint.mdAndUp" width="3%">{{ i + 1 }}</td>
+                <td
+                        class="text-left py-2 primary--text text--darken-1"
+                        v-if="$vuetify.breakpoint.mdAndUp"
+                        width="3%"
+                >
+                  {{ i + 1 }}
+                </td>
                 <td class="text-left py-2" width="14%">{{ path.name }}</td>
                 <td class="text-left py-2" width="31%">{{ path.what }}</td>
                 <td class="text-left py-2" width="31%">{{ path.why }}</td>

@@ -6,21 +6,34 @@ import covidStates from "./covid-states";
 import news from "./news";
 import loaders from "./loaders";
 import axios from "axios";
+import createPersistedState from "vuex-persistedstate";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
+  plugins: [
+    createPersistedState({
+      paths: ["navigationType"]
+    })
+  ],
   state: {
-    allCountries: []
+    allCountries: [],
+    navigationType: "1"
   },
   getters: {
     getAllCountries(state) {
       return state.allCountries;
+    },
+    getNavigationType(state) {
+      return state.navigationType;
     }
   },
   mutations: {
     setCountriesList(state, payload) {
       state.allCountries = payload;
+    },
+    setNavigationType(state, payload) {
+      state.navigationType = payload;
     }
   },
   actions: {
@@ -33,6 +46,10 @@ export default new Vuex.Store({
           console.log(error);
         }
       );
+    },
+    setNavState({commit}, {type}) {
+      commit("setNavigationType", type);
+      console.log("type", type);
     }
   },
   modules: {
