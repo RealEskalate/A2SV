@@ -139,7 +139,10 @@
               >
                 <p>
                   <span v-text="cr.name + ':  '" />
-                  <span class="grey--text text--darken-1 font-italic" v-text="cr.explanation" />
+                  <span
+                          class="grey--text text--darken-1 font-italic"
+                          v-text="cr.explanation"
+                  />
                 </p>
               </v-list-item>
             </v-list>
@@ -157,12 +160,12 @@
 </template>
 
 <script>
-import Display from "./Charts/Display.vue";
-import DailyDisplay from "./Charts/DailyDisplay.vue";
-import CountryCompare from "./Charts/CountryCompare.vue";
-import DiseaseCompare from "./Charts/DiseaseCompare.vue";
+  import Display from "./Charts/Display.vue";
+  import DailyDisplay from "./Charts/DailyDisplay.vue";
+  import CountryCompare from "./Charts/CountryCompare.vue";
+  import DiseaseCompare from "./Charts/DiseaseCompare.vue";
 
-export default {
+  export default {
   components: {
     Display,
     DailyDisplay,

@@ -9,8 +9,9 @@
                 {{ description.title }}
               </h3>
               <div
-                class="my-5 grey--text text--darken-2"
-                v-html="description.content"></div>
+                      class="my-5 grey--text text--darken-2"
+                      v-html="description.content"
+              ></div>
             </div>
           </v-col>
           <v-col class="px-md-10" cols="12" md="5">
@@ -158,7 +159,8 @@
         ],
         messageRules: [
           v => !!v || "Message is required",
-          v => (v && v.length <= 10) || "Message must be less than 150 characters"
+          v =>
+              (v && v.length <= 10) || "Message must be less than 150 characters"
         ]
       },
       descriptions: [
