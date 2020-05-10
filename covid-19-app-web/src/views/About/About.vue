@@ -9,8 +9,8 @@
                 {{ description.title }}
               </h3>
               <div
-                      class="my-5 grey--text text--darken-2"
-                      v-html="description.content"
+                class="my-5 grey--text text--darken-2"
+                v-html="description.content"
               ></div>
             </div>
           </v-col>
@@ -135,9 +135,9 @@
 </template>
 
 <script>
-  import axios from "axios";
+import axios from "axios";
 
-  export default {
+export default {
   data: () => {
     return {
       showAlert: false,
@@ -160,7 +160,7 @@
         messageRules: [
           v => !!v || "Message is required",
           v =>
-              (v && v.length <= 10) || "Message must be less than 150 characters"
+            (v && v.length <= 10) || "Message must be less than 150 characters"
         ]
       },
       descriptions: [

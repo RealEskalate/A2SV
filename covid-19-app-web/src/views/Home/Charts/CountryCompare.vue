@@ -230,7 +230,7 @@ export default {
     },
     fetchData1() {
       store.dispatch("setCountryCompare", {
-        country: this.country_1.name,
+        country: this.country_1.slug,
         criteria: this.criterion,
         mode: "one",
         start_date:
@@ -244,7 +244,7 @@ export default {
     },
     fetchData2() {
       store.dispatch("setCountryCompare", {
-        country: this.country_2.name,
+        country: this.country_2.slug,
         criteria: this.criterion,
         mode: "two",
         start_date:
@@ -257,7 +257,7 @@ export default {
       });
     }
   },
-  created() {
+  mounted() {
     this.fetchData1();
     this.fetchData2();
   },

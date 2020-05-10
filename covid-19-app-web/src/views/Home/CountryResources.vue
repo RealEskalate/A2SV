@@ -47,7 +47,6 @@ export default {
     countryResources: {
       deep: true,
       handler() {
-        console.log("resources updated");
         this.fetchCountryResources();
       }
     }

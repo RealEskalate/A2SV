@@ -35,6 +35,7 @@
             />
           </template>
           <v-date-picker
+            color="primary"
             :max="maxDate"
             range
             no-title
@@ -143,7 +144,7 @@ export default {
       }
     }
   },
-  created() {
+  mounted() {
     this.fetchData();
   },
   computed: {

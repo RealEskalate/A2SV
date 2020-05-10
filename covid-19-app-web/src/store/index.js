@@ -47,7 +47,7 @@ export default new Vuex.Store({
         }
       );
     },
-    setNavState({commit}, {type}) {
+    setNavState({ commit }, { type }) {
       commit("setNavigationType", type);
       console.log("type", type);
     }

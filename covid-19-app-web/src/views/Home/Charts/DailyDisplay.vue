@@ -35,6 +35,7 @@
             />
           </template>
           <v-date-picker
+            color="primary"
             :max="maxDate"
             range
             no-title
@@ -134,7 +135,7 @@ export default {
     fetchData() {
       store.dispatch("setDailyCounts", {
         criteria: this.criterion,
-        country: this.country.name,
+        country: this.country.slug,
         start_date:
           this.date_range[0] ||
           moment(new Date())
@@ -155,9 +156,11 @@ export default {
       if (this.tab_index === 1) this.fillGraph();
     }
   },
+  mounted() {
+    this.fetchData();
+  },
   computed: {
     daily: () => store.getters.getDailyCounts,
-    countryResources: () => store.getters.getCountryResources,
     dateRangeText() {
       return this.rangeToText(this.date_range[0], this.date_range[1]);
     },
