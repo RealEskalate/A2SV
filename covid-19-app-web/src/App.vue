@@ -51,7 +51,7 @@ export default {
 </script>
 
 <style>
-.in-shadow {
+.shadow-in {
   box-shadow: 0 0 5px #dededede inset;
 }
 </style>

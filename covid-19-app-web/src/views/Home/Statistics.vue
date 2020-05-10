@@ -94,6 +94,7 @@
               </v-tab-item>
               <v-tab-item style="min-height: 700px">
                 <disease-compare
+                  :tab_index="selectedGraph"
                   y_label="Logarithmic Value"
                   y_axis_type="logarithmic"
                   x_axis_type="category"

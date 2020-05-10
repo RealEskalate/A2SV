@@ -9,15 +9,10 @@
           hint="Search Country"
           persistent-hint
           item-text="name"
-          item-value="slug"
+          return-object
           outlined
           dense
-          @input="
-            () => {
-              fetchData();
-              fetchCountryResources();
-            }
-          "
+          @input="fetchData"
         />
       </v-col>
       <v-col class="px-2" cols="12" md="4">
@@ -69,7 +64,7 @@
     <v-row>
       <v-col cols="12" md="9" class="overflow-auto pl-md-10">
         <bar-chart
-          class="v-card--shaped grey in-shadow lighten-5 pb-6 px-1"
+          class="v-card--shaped grey lighten-5 shadow-in pb-6 px-1"
           style="min-width: 400px"
           :height="480"
           :chart-data="data"
@@ -77,38 +72,19 @@
         />
       </v-col>
       <v-col cols="12" md="3">
-        <v-card flat tile>
-          <v-list disabled dense>
-            <v-card-title class="small grey--text text--darken-2">
-              Resources / 1K People
-            </v-card-title>
-            <v-divider class="mx-4" />
-            <v-list-item-group color="primary">
-              <v-list-item v-for="(resource, i) in countryResources" :key="i">
-                <v-list-item-content>
-                  <span>
-                    <span class="d-inline" v-text="resource.key" /> :
-                    <span
-                      class="d-inline grey--text"
-                      v-text="resource.value || 'N/A'"
-                    />
-                  </span>
-                </v-list-item-content>
-              </v-list-item>
-            </v-list-item-group>
-          </v-list>
-        </v-card>
+        <country-resources :country="country" />
       </v-col>
     </v-row>
   </v-container>
 </template>
 <script>
 import { BarChart, ChartMixin } from "./charts.js";
+import CountryResources from "../CountryResources";
 import store from "@/store/index.js";
 import moment from "moment";
 
 export default {
-  components: { BarChart },
+  components: { BarChart, CountryResources },
   mixins: [ChartMixin],
   props: {
     mode: {
@@ -137,17 +113,12 @@ export default {
           .format("YYYY-MM-DD"),
         moment(new Date()).format("YYYY-MM-DD")
       ],
-      country: "World",
+      country: { name: "World", slug: "World" },
       age_range: "All",
       social_distancing: 50
     };
   },
   methods: {
-    fetchCountryResources() {
-      store.dispatch("setCountryResources", {
-        country: this.country
-      });
-    },
     fillGraph() {
       const cr = this.converter[this.criterion];
       let input = {
@@ -163,7 +134,7 @@ export default {
     fetchData() {
       store.dispatch("setDailyCounts", {
         criteria: this.criterion,
-        country: this.country,
+        country: this.country.name,
         start_date:
           this.date_range[0] ||
           moment(new Date())
@@ -179,11 +150,10 @@ export default {
       handler() {
         this.fillGraph();
       }
+    },
+    tab_index() {
+      if(this.tab_index === 1) this.fillGraph();
     }
-  },
-  mounted() {
-    this.fetchData();
-    this.fetchCountryResources();
   },
   computed: {
     daily: () => store.getters.getDailyCounts,
