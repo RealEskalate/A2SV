@@ -2,14 +2,14 @@
   <v-container class="py-8">
     <v-row class="mx-md-5" dense>
       <v-col cols="12" md="6">
-        <v-select
+        <v-autocomplete
           v-model="country_1"
           :items="countries"
+          label="Country 1"
+          hint="Search Country 1"
+          persistent-hint
           item-text="name"
           item-value="slug"
-          label="Country 1"
-          hint="Country 1"
-          persistent-hint
           solo
           @input="fetchData1"
         />
@@ -54,14 +54,14 @@
     </v-row>
     <v-row class="mx-md-5" dense>
       <v-col cols="12" md="6">
-        <v-select
+        <v-autocomplete
           v-model="country_2"
           :items="countries"
+          label="Country 2"
+          hint="Search Country 2"
+          persistent-hint
           item-text="name"
           item-value="slug"
-          label="Country 2"
-          hint="Country 2"
-          persistent-hint
           solo
           @input="fetchData2"
         />

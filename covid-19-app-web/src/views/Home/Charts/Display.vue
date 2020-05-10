@@ -2,14 +2,14 @@
   <v-container class="py-8">
     <v-row class="mx-md-5" dense>
       <v-col cols="12" md="6">
-        <v-select
+        <v-autocomplete
           v-model="country"
           :items="countries"
+          label="Country"
+          hint="Search Country"
+          persistent-hint
           item-text="name"
           item-value="slug"
-          label="Country"
-          hint="Country"
-          persistent-hint
           solo
           @input="
             () => {
