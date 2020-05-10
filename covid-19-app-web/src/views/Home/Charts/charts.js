@@ -96,7 +96,7 @@ export const ChartMixin = {
             {
               type: self.y_axis_type,
               scaleLabel: {
-                display: true,
+                display: false,
                 labelString: self.y_label
               },
               ticks: {

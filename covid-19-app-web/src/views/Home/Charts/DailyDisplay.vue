@@ -1,7 +1,7 @@
 <template>
   <v-container class="py-8">
     <v-row class="mx-md-5" dense>
-      <v-col cols="12" md="4">
+      <v-col class="px-2" cols="12" md="4">
         <v-autocomplete
           v-model="country"
           :items="countries"
@@ -10,7 +10,8 @@
           persistent-hint
           item-text="name"
           item-value="slug"
-          solo
+          outlined
+          dense
           @input="
             () => {
               fetchData();
@@ -19,7 +20,7 @@
           "
         />
       </v-col>
-      <v-col cols="12" md="4">
+      <v-col class="px-2" cols="12" md="4">
         <v-menu
           :close-on-content-click="false"
           transition="scale-transition"
@@ -28,11 +29,11 @@
         >
           <template v-slot:activator="{ on }">
             <v-text-field
-              solo
+              outlined
+              dense
               v-model="dateRangeText"
               label="Date Range"
               hint="Date Range"
-              persistent-hint
               prepend-inner-icon="mdi-calendar"
               readonly
               v-on="on"
@@ -52,26 +53,27 @@
           />
         </v-menu>
       </v-col>
-      <v-col cols="12" md="4">
+      <v-col class="px-2" cols="12" md="4">
         <v-select
           item-text="label"
           v-model="criterion"
           :items="criteria.daily"
           label="Criteria"
           hint="Criteria"
-          persistent-hint
-          solo
+          outlined
+          dense
           @input="fetchData"
         />
       </v-col>
     </v-row>
     <v-row>
-      <v-col cols="12" md="9" class="overflow-auto">
+      <v-col cols="12" md="9" class="overflow-auto pl-md-10">
         <bar-chart
-                style="min-width: 400px"
-                :height="480"
-                :chart-data="data"
-                :options="chartOptions"
+          class="v-card--shaped grey in-shadow lighten-5 pb-6 px-1"
+          style="min-width: 400px"
+          :height="480"
+          :chart-data="data"
+          :options="chartOptions"
         />
       </v-col>
       <v-col cols="12" md="3">
@@ -101,11 +103,11 @@
   </v-container>
 </template>
 <script>
-  import {BarChart, ChartMixin} from "./charts.js";
-  import store from "@/store/index.js";
-  import moment from "moment";
+import { BarChart, ChartMixin } from "./charts.js";
+import store from "@/store/index.js";
+import moment from "moment";
 
-  export default {
+export default {
   components: { BarChart },
   mixins: [ChartMixin],
   props: {

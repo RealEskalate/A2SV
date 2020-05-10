@@ -10,8 +10,7 @@
       <v-row>
         <v-col cols="12" md="7" class="pl-md-12 py-md-9 px-8 py-5">
           <img-svg
-            class="col-12 py-md-12 px-md-12 px-5 py-3 grey lighten-4 v-card--shaped"
-            style="box-shadow: 0 0 8px #DEDEDEDE inset"
+            class="col-12 py-md-12 px-md-12 px-5 py-3 grey lighten-4 v-card--shaped in-shadow"
           />
         </v-col>
         <v-col cols="12" md="5" class="pr-md-12 py-md-8 px-8 py-5">
