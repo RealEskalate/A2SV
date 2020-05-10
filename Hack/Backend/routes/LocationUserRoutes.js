@@ -6,6 +6,7 @@ const verifyToken = require("../middlewares/auth.js");
 var location_user_controller = require("../controllers/LocationUserController.js");
 
 router.get("/api/user_locations",  location_user_controller.get_all_location_users);
+router.get("/api/user_locations/:id", location_user_controller.get_location_user_by_id);
 router.get("/api/user_locations/location/:location_id", location_user_controller.get_by_location_id);
 
 router.get("/api/user_locations/user/:user_id", location_user_controller.get_by_user_id);

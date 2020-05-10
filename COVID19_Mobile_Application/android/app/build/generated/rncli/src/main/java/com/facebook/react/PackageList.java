@@ -20,6 +20,8 @@ import com.reactnativecommunity.checkbox.ReactCheckBoxPackage;
 import org.reactnative.maskedview.RNCMaskedViewPackage;
 // @react-native-mapbox-gl/maps
 import com.mapbox.rctmgl.RCTMGLPackage;
+// lottie-react-native
+import com.airbnb.android.react.lottie.LottiePackage;
 // react-native-gesture-handler
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 // react-native-reanimated
@@ -82,6 +84,7 @@ public class PackageList {
       new ReactCheckBoxPackage(),
       new RNCMaskedViewPackage(),
       new RCTMGLPackage(),
+      new LottiePackage(),
       new RNGestureHandlerPackage(),
       new ReanimatedPackage(),
       new SafeAreaContextPackage(),

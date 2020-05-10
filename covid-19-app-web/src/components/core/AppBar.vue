@@ -27,7 +27,6 @@
       >
         <span class="text-capitalize"> {{ link.text }}</span>
       </v-btn>
-
       <v-menu left bottom>
         <template v-slot:activator="{ on }">
           <v-btn icon v-on="on">
@@ -79,7 +78,6 @@
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
-
     <v-bottom-navigation
       app
       :value="activeBtn"
@@ -97,6 +95,7 @@
 </template>
 
 <script>
+// import router from "../../router";
 export default {
   data: () => {
     return {

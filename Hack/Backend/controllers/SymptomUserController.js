@@ -17,7 +17,7 @@ exports.get_all_symptomusers = async (req, res) => {
   try {
     res.send(symptomusers);
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send(err.toString());
   }
 };
 
@@ -62,7 +62,7 @@ exports.post_symptomuser = async (req, res) => {
     };
     res.send(result);
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send(err.toString());
   }
 };
 
@@ -95,7 +95,7 @@ exports.get_symptomuser_by_symptom_id = async (req, res) => {
     }
     res.status(200).send(result);
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send(err.toString());
   }
 
 };
@@ -127,7 +127,7 @@ exports.get_symptomuser_by_user_id = async (req, res) => {
     }
     res.status(200).send(result);
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send(err.toString());
   }
 
 };
@@ -159,7 +159,7 @@ exports.update_symptomuser = async (req, res) => {
     };
     res.status(200).send(result);
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send(err.toString());
   }
 
 };
@@ -188,6 +188,6 @@ exports.delete_symptomuser = async (req, res) => {
     };
     res.status(200).send(result);
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send(err.toString());
   }
 };

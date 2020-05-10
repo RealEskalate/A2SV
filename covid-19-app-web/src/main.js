@@ -19,6 +19,15 @@ Vue.use(VueProgressBar, {
 });
 
 Vue.config.productionTip = false;
+Vue.mixin({
+  methods: {
+    htmlToText(htmlString) {
+      let p = document.createElement("div");
+      p.innerHTML = htmlString.trim();
+      return p.innerText;
+    }
+  }
+});
 
 new Vue({
   router,

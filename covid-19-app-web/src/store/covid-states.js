@@ -19,12 +19,6 @@ const mutations = {
 const actions = {
   setStates: ({ commit }) => {
     commit("setStates", {
-      hospitalization: {
-        title: "Hospitalization",
-        description:
-          "When the oxygen level in the blood goes below a certain threshold, COVID-19 patients " +
-          "require hospitalization. In case of not having a capacity in ICU, some patients may die due to a lack of materials."
-      },
       incubation: {
         title: "Incubation",
         description:
@@ -41,6 +35,12 @@ const actions = {
         description:
           "As the virus continues to replicate itself, some patients develop heavy symptoms and " +
           "require hospitalization, some have strong enough immune systems that can beat the virus without hospitalization.\n"
+      },
+      hospitalization: {
+        title: "Hospitalization",
+        description:
+          "When the oxygen level in the blood goes below a certain threshold, COVID-19 patients " +
+          "require hospitalization. In case of not having a capacity in ICU, some patients may die due to a lack of materials."
       },
       icu: {
         title: "ICU",

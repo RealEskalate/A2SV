@@ -22,7 +22,7 @@ exports.post_alert = async (req, res) => {
         await alert.save();
         res.send(alert);    
     } catch (err) {
-        res.status(500).send(err);
+        res.status(500).send(err.toString());
     }
 };
 
@@ -35,11 +35,14 @@ exports.patch_alert = async (req, res) => {
     // });
     try{
         let alert = await Alert.findById(req.body._id);
+        if (!alert || alert.length < 1){
+            return res.status(400).send("Alert ID not found")
+        }
         alert.set(req.body);
         await alert.save();
         res.send(alert);    
     } catch (err) {
-        res.status(500).send(err);
+        res.status(500).send(err.toString());
     }
 };
 
@@ -57,7 +60,7 @@ exports.delete_alert = async (req, res) => {
         }
         res.status(201).send(alert);
       } catch (err) {
-        res.status(500).send(err);
+        res.status(500).send(err.toString());
       }
     };
 
@@ -73,7 +76,7 @@ exports.get_alerts = async (req, res) => {
     try {
         res.send(alerts);
     } catch (err) {
-        res.status(500).send(err);
+        res.status(500).send(err.toString());
     }
 };
 //Get an alert by id
@@ -91,6 +94,6 @@ exports.get_alert_by_id = async (req, res) => {
         }
         res.send(alert);
     } catch (err) {
-        res.status(500).send(err);
+        res.status(500).send(err.toString());
     }
 };

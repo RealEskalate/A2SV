@@ -1,87 +1,62 @@
 <template>
   <v-footer
     class="shadow-lg v-sheet v-sheet--tile theme--light"
-    style="background: url('https://www.toptal.com/designers/subtlepatterns/patterns/memphis-mini.png')"
+    style="background: url('https://lh5.googleusercontent.com/proxy/nAm2UTt8kjupZFGWD4iPSIYLhJ7ZyhjHTSkzi-4kEzNBhI0NNx1RvJYSh89lgahLNWnp2Wii51RyzYTuxvHibai7tlpBI68_RLauPSwuSyl_abO2bNSfSkQeopmtBKiaMNlifi9aTkiC')"
   >
     <v-container class="my-2">
       <v-layout row wrap>
         <v-flex xs3 md3>
-          <img
-            src="/img/footer/logo.png"
-            class="center"
-            style="width: 170px;"
-          />
-          <p class="font-weight-bold ml-10">App Name</p>
+          <router-link class="d-flex align-center no-decoration" to="/">
+            <v-img
+              alt="Vuetify Logo"
+              class="shrink mr-2"
+              contain
+              src="@/assets/logo-v1.png"
+              transition="scale-transition"
+              width="100"
+            />
+            <div>
+              <h3 class="blue--text no-decoration">Covid-19</h3>
+            </div>
+          </router-link>
+          <span class="font-weight-bold ml-4">Stay Safe</span>
         </v-flex>
-        <v-flex xs4 md3 class="mx-2">
-          <p class="font-weight-bold text-center">Get our App</p>
-          <v-divider class="mx-4" />
-          <v-list class="list">
-            <v-list-item-group color="primary">
-              <v-list-item
-                href="https://www.apple.com/ios/app-store/"
-                target="blank"
-              >
-                <v-list-item-icon>
-                  <v-icon size="40px">mdi-apple</v-icon>
-                </v-list-item-icon>
-                <v-list-item-content>
-                  <v-list-item-subtitle> App Store</v-list-item-subtitle>
-                  <v-list-item-title class="font-weight-bold">
-                    Apple</v-list-item-title
-                  >
-                </v-list-item-content>
-              </v-list-item>
-              <v-list-item href="https://play.google.com/store" target="blank">
-                <v-list-item-icon>
-                  <v-icon size="40px">mdi-google-play</v-icon>
-                </v-list-item-icon>
-                <v-list-item-content>
-                  <v-list-item-subtitle>play Store</v-list-item-subtitle>
-                  <v-list-item-title class="font-weight-bold">
-                    Google
-                  </v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-            </v-list-item-group>
-          </v-list>
+        <v-flex xs4 md3 class="mx-2 text-center">
+          <p class="font-weight-bold">Get our App</p>
+          <v-divider class="mx-4"></v-divider>
+          <v-col class="align-center">
+            <router-link to="/" target="blank">
+              <v-img src="/img/footer/kkk.png" max-width="10.5em"></v-img>
+            </router-link>
+          </v-col>
+          <v-col>
+            <router-link to="/" target="blank">
+              <v-img src="/img/footer/njn.png" max-width="10.5em"></v-img>
+            </router-link>
+          </v-col>
         </v-flex>
-        <v-flex xs4 md3 class="text-center mx-4">
-          <p class="font-weight-bold text-center">Navigation</p>
-          <v-divider class="mx-4" />
-          <v-list class="list">
-            <v-list-item-group color="primary">
-              <v-list-item href="/">
-                <v-list-item-content>
-                  <v-list-item-title> Home</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-              <v-list-item href="/learn">
-                <v-list-item-content>
-                  <v-list-item-title>Learn</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-              <v-list-item href="/news">
-                <v-list-item-content>
-                  <v-list-item-title>News</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-              <v-list-item href="/map">
-                <v-list-item-content>
-                  <v-list-item-title>Map</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-            </v-list-item-group>
-          </v-list>
+        <v-flex xs4 md3 class="mx-4">
+          <p class="font-weight-bold text-center">About</p>
+          <v-divider class="mx-4"></v-divider>
+          <v-col>
+            <span class="">
+              Our App is a non-commercial app that uses crowd-sourcing to
+              collect and visualize the density of the relevant Covid-19
+              symptoms.
+              <br />
+              In addition it provide Play-ground for the Data and News related
+              to Covid-19 by country.
+            </span>
+          </v-col>
         </v-flex>
 
         <v-flex xs4 md2 class="mx-2">
           <p class="font-weight-bold text-center">More info</p>
-          <v-divider class="mx-4" />
+          <v-divider class="mx-4"></v-divider>
           <v-col class="text-center">
             <v-btn
               v-for="icon in icons"
-              :key="icon[1]"
+              :key="icon"
               class="mx-2 black--text"
               icon
               v-bind:href="icon[1]"
@@ -110,6 +85,8 @@ export default {
     ]
     //https://www.ctech.co.ke/wp-content/uploads/2019/09/Home-Page_Layer-Slider-BG-1024x426.png
     //https://www.toptal.com/designers/subtlepatterns/patterns/memphis-mini.png
+    //https://www.toptal.com/designers/subtlepatterns/patterns/memphis-mini.png
+    //https://www.designbolts.com/wp-content/uploads/2012/12/Triangle-White-Seamless-Patterns.jpg
   })
 };
 </script>

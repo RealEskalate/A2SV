@@ -10,11 +10,26 @@ const schedule = require("node-schedule");
 exports.getPublicResources = async (req, res) => {
   let result;
   try{
-    result = await PublicResourcesData.find({Country : req.params.country});
-    return res.send(result);
+    result = await PublicResourcesData.find({Country : req.params.country});    
+    let reorderedResult = [{}, {}, {}, {}];
+    result.forEach((item)=>{
+      if(item.Indicator=='Physicians (per 1,000 people)'){
+        reorderedResult[0] = item;
+      }
+      else if(item.Indicator=='Nurses and midwives (per 1,000 people)'){
+        reorderedResult[1] = item;
+      }
+      else if(item.Indicator=='Hospital beds (per 1,000 people)'){
+        reorderedResult[2] = item;
+      }
+      else if(item.Indicator=='UHC service coverage index'){
+        reorderedResult[3] = item;
+      }
+    });
+    return res.send(reorderedResult);
   }
   catch(err){
-      res.status(500).send(err);
+      res.status(500).send(err.toString());
   }
 }
 
@@ -27,10 +42,13 @@ schedule.scheduleJob("0 0 * * *", async function () {
     "https://api.worldbank.org/v2/en/indicator/SH.MED.NUMW.P3?downloadformat=excel",
     //UHC service coverage index
     "https://api.worldbank.org/v2/en/indicator/SH.UHC.SRVS.CV.XD?downloadformat=excel",
+    //Physicians (per 1,000 people)
+    "https://api.worldbank.org/v2/en/indicator/SH.MED.PHYS.ZS?downloadformat=excel",
   ];
   for (let i = 0; i < urls.length; i++) {
     let url = urls[i];
     await fetchResources(url);
+    console.log("Finished Saving Public Resources for "+url)
   }
   console.log("Finished Saving Data");
 });

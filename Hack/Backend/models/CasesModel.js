@@ -22,6 +22,9 @@ const casesSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
+    tests: {
+        type: Number
+    },
     date: {
         type: Date,
         required: true,

@@ -1,9 +1,9 @@
 <template>
-  <section class="map py-10">
+  <section class="map pb-10">
     <v-container>
       <v-row>
         <v-col>
-          <v-responsive :aspect-ratio="16 / 12">
+          <v-responsive :aspect-ratio="$vuetify.breakpoint.smAndDown ? 12 / 16 : 16 / 12">
             <iframe
               src="https://public.domo.com/cards/bWxVg"
               width="100%"
