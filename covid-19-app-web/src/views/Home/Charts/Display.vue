@@ -144,7 +144,7 @@ export default {
       }
     }
   },
-  created() {
+  mounted() {
     this.fetchData();
   },
   computed: {
