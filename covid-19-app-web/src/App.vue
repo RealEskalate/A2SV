@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <app-bar />
-    <v-content style="font-family: 'Nunito',sans-serif">
+    <v-content class="px-md-0 px-3" style="font-family: 'Nunito',sans-serif">
       <router-view />
       <vue-progress-bar />
     </v-content>
@@ -12,6 +12,7 @@
 <script>
 import AppBar from "./components/core/AppBar.vue";
 import AppFooter from "./components/core/AppFooter.vue";
+import store from "@/store/";
 
 export default {
   name: "App",
@@ -24,6 +25,7 @@ export default {
     this.$Progress.finish();
   },
   created() {
+    store.dispatch("fillCountriesList");
     //  [App.vue specific] When App.vue is first loaded start the progress bar
     this.$Progress.start();
     //  hook the progress bar to start before we move router-view

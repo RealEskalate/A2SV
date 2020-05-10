@@ -14,10 +14,9 @@ exports.get_all_symptoms = async (req, res) => {
     try {
         res.send(symptoms);
     } catch (err) {
-        res.status(500).send(err);
+        res.status(500).send(err.toString());
     }
 };
-
 
 // Post a symptom
 exports.post_symptom = async (req, res) => {
@@ -48,10 +47,9 @@ exports.post_symptom = async (req, res) => {
             res.send(symptom);
         }
     } catch (err) {
-        res.status(500).send(err);
+        res.status(500).send(err.toString());
     }
 };
-
 
 //Get a symptom by id
 exports.get_symptom_by_id = async (req, res) => {
@@ -65,7 +63,7 @@ exports.get_symptom_by_id = async (req, res) => {
     try {
         res.send(symptom);
     } catch (err) {
-        res.status(500).send(err);
+        res.status(500).send(err.toString());
     }
 };
 
@@ -105,6 +103,6 @@ exports.delete_symptom = async (req, res) => {
             res.status(200).send(symptom);
         }
     } catch (err) {
-        res.status(500).send(err);
+        res.status(500).send(err.toString());
     }
 };

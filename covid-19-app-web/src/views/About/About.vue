@@ -9,9 +9,8 @@
                 {{ description.title }}
               </h3>
               <div
-                      class="my-5 grey--text text--darken-2"
-                      v-html="description.content"
-              ></div>
+                class="my-5 grey--text text--darken-2"
+                v-html="description.content"></div>
             </div>
           </v-col>
           <v-col class="px-md-10" cols="12" md="5">
@@ -34,25 +33,25 @@
                 :type="type"
                 v-text="message"
                 dismissible
-              ></v-alert>
+              />
               <h3 class="display-1 font-weight-thin">Contact us</h3>
               <v-form class="py-5">
                 <v-text-field
-                        label="Name"
-                        v-model="contact.name"
-                        :rules="rules.nameRules"
-                        counter="10"
+                  label="Name"
+                  v-model="contact.name"
+                  :rules="rules.nameRules"
+                  counter="10"
                 />
                 <v-text-field
-                        label="Email"
-                        v-model="contact.email"
-                        :rules="rules.emailRules"
+                  label="Email"
+                  v-model="contact.email"
+                  :rules="rules.emailRules"
                 />
                 <v-textarea
-                        rows="5"
-                        label="Message"
-                        :rules="rules.messageRules"
-                        v-model="contact.message"
+                  rows="5"
+                  label="Message"
+                  :rules="rules.messageRules"
+                  v-model="contact.message"
                 />
                 <div class="text-center py-3">
                   <v-btn width="100" class="primary mx-auto" @click="sendForm">
@@ -70,7 +69,7 @@
     <br />
     <section class="my-12">
       <v-parallax
-        height="400"
+        style="min-height: 400px; height: auto"
         src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg"
       >
         <v-container>
@@ -159,8 +158,7 @@
         ],
         messageRules: [
           v => !!v || "Message is required",
-          v =>
-              (v && v.length <= 10) || "Message must be less than 150 characters"
+          v => (v && v.length <= 10) || "Message must be less than 150 characters"
         ]
       },
       descriptions: [

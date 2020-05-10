@@ -18,7 +18,7 @@ exports.postMessage = async(req, res) => {
 
     try {
         await message.save();
-        res.status(200).send(message);
+        res.status(201).send(message);
 
     } catch (error) {
         console.log("error isss " + error);
@@ -26,6 +26,17 @@ exports.postMessage = async(req, res) => {
     }
 };
 
+exports.getMessageById = async(req, res) => {
+    try {
+        let message = await Message.findById(req.params.id);
+        if(!message){
+            return res.status(404).send("Message Not Found");
+        }
+        res.status(200).send(message);
+    } catch (error) {
+        res.status(500).send(error);
+    }
+};
 
 exports.getMessageByEmail = async(req, res) => {
     try {

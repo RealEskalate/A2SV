@@ -5,6 +5,8 @@
         <v-select
           v-model="country_1"
           :items="countries"
+          item-text="name"
+          item-value="slug"
           label="Country 1"
           hint="Country 1"
           persistent-hint
@@ -49,87 +51,14 @@
           />
         </v-menu>
       </v-col>
-      <!--      <v-col cols="12" md="4">-->
-      <!--        <v-slider-->
-      <!--          :color="sliderColor(social_distancing_1)"-->
-      <!--          :track-color="sliderColor(social_distancing_1)"-->
-      <!--          max="100"-->
-      <!--          hint="100% means no physical connections"-->
-      <!--          persistent-hint-->
-      <!--          label="Physical Distancing 1"-->
-      <!--          v-model="social_distancing_1"-->
-      <!--          thumb-label-->
-      <!--          @input="fetchData1"-->
-      <!--        />-->
-      <!--      </v-col>-->
-      <!--    </v-row>-->
-      <!--    <v-row class="mx-md-5" dense>-->
-      <!--      <v-col cols="12" md="4">-->
-      <!--        <v-select-->
-      <!--          v-model="country_2"-->
-      <!--          :items="countries"-->
-      <!--          label="Country 2"-->
-      <!--          hint="Country 2"-->
-      <!--          persistent-hint-->
-      <!--          solo-->
-      <!--          @input="fetchData2"-->
-      <!--        />-->
-      <!--      </v-col>-->
-      <!--      <v-col cols="12" md="4">-->
-      <!--        <v-menu-->
-      <!--          :close-on-content-click="false"-->
-      <!--          transition="scale-transition"-->
-      <!--          max-width="290px"-->
-      <!--          min-width="290px"-->
-      <!--        >-->
-      <!--          <template v-slot:activator="{ on }">-->
-      <!--            <v-text-field-->
-      <!--              solo-->
-      <!--              v-model="dateRangeText2"-->
-      <!--              label="Date Range 2"-->
-      <!--              hint="Date Range 2"-->
-      <!--              persistent-hint-->
-      <!--              prepend-inner-icon="mdi-calendar"-->
-      <!--              readonly-->
-      <!--              v-on="on"-->
-      <!--            />-->
-      <!--          </template>-->
-      <!--          <v-date-picker-->
-      <!--            range-->
-      <!--            no-title-->
-      <!--            v-model="date_range_2"-->
-      <!--            @input="-->
-      <!--              () => {-->
-      <!--                if (-->
-      <!--                  date_range_2.length === 2 &&-->
-      <!--                  date_range_2[0] &&-->
-      <!--                  date_range_2[1]-->
-      <!--                )-->
-      <!--                  fetchData2();-->
-      <!--              }-->
-      <!--            "-->
-      <!--          />-->
-      <!--        </v-menu>-->
-      <!--      </v-col>-->
-      <!--      <v-col cols="12" md="4">-->
-      <!--        <v-slider-->
-      <!--          :color="sliderColor(social_distancing_2)"-->
-      <!--          :track-color="sliderColor(social_distancing_2)"-->
-      <!--          max="100"-->
-      <!--          hint="100% means no physical connections"-->
-      <!--          persistent-hint-->
-      <!--          label="Physical Distancing 2"-->
-      <!--          v-model="social_distancing_2"-->
-      <!--          thumb-label-->
-      <!--          @input="fetchData2"-->
-      <!--        />-->
-      <!--      </v-col>-->
     </v-row>
     <v-row class="mx-md-5" dense>
       <v-col cols="12" md="6">
         <v-select
           v-model="country_2"
           :items="countries"
+          item-text="name"
+          item-value="slug"
           label="Country 2"
           hint="Country 2"
           persistent-hint
@@ -192,73 +121,11 @@
           "
         />
       </v-col>
-      <!--      <v-col cols="12" md="6">-->
-      <!--        <v-select-->
-      <!--          v-model="age_range"-->
-      <!--          :items="age_ranges"-->
-      <!--          label="Common Age Range"-->
-      <!--          hint="Common Age Range"-->
-      <!--          persistent-hint-->
-      <!--          solo-->
-      <!--          @input="-->
-      <!--            () => {-->
-      <!--              fetchData1();-->
-      <!--              fetchData2();-->
-      <!--            }-->
-      <!--          "-->
-      <!--        />-->
-      <!--      </v-col>-->
     </v-row>
     <v-row>
-      <v-col cols="12" md="12">
-        <line-chart :height="400" :chart-data="data" :options="chartOptions" />
+      <v-col cols="12" md="12" class="overflow-auto">
+        <line-chart style="min-width: 400px" :height="350" :chart-data="data" :options="chartOptions" />
       </v-col>
-      <!--      <v-col cols="12" md="3">-->
-      <!--        <v-card flat tile>-->
-      <!--          <v-list disabled dense>-->
-      <!--            <v-card-title class="grey&#45;&#45;text text&#45;&#45;darken-2">-->
-      <!--              Resources - <em v-text="country_1" />-->
-      <!--            </v-card-title>-->
-      <!--            <v-divider class="mx-4" />-->
-      <!--            <v-list-item-group color="primary">-->
-      <!--              <v-list-item v-for="(resource, i) in countryResources" :key="i">-->
-      <!--                <v-list-item-content>-->
-      <!--                  <span>-->
-      <!--                    <span class="d-inline" v-text="resource.key" /> :-->
-      <!--                    <span-->
-      <!--                      class="d-inline grey&#45;&#45;text"-->
-      <!--                      v-text="resource.value || 'N/A'"-->
-      <!--                    />-->
-      <!--                  </span>-->
-      <!--                </v-list-item-content>-->
-      <!--              </v-list-item>-->
-      <!--            </v-list-item-group>-->
-      <!--          </v-list>-->
-      <!--        </v-card>-->
-      <!--      </v-col>-->
-      <!--      <v-col cols="12" md="3">-->
-      <!--        <v-card flat tile>-->
-      <!--          <v-list disabled dense>-->
-      <!--            <v-card-title class="grey&#45;&#45;text text&#45;&#45;darken-2">-->
-      <!--              Resources - <em v-text="country_2" />-->
-      <!--            </v-card-title>-->
-      <!--            <v-divider class="mx-4" />-->
-      <!--            <v-list-item-group color="primary">-->
-      <!--              <v-list-item v-for="(resource, i) in countryResources" :key="i">-->
-      <!--                <v-list-item-content>-->
-      <!--                  <span>-->
-      <!--                    <span class="d-inline" v-text="resource.key" /> :-->
-      <!--                    <span-->
-      <!--                      class="d-inline grey&#45;&#45;text"-->
-      <!--                      v-text="resource.value || 'N/A'"-->
-      <!--                    />-->
-      <!--                  </span>-->
-      <!--                </v-list-item-content>-->
-      <!--              </v-list-item>-->
-      <!--            </v-list-item-group>-->
-      <!--          </v-list>-->
-      <!--        </v-card>-->
-      <!--      </v-col>-->
     </v-row>
   </v-container>
 </template>

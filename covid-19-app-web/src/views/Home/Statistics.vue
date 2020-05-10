@@ -1,5 +1,5 @@
 <template>
-  <section class="statistics py-10">
+  <section class="statistics pb-10">
     <v-container>
       <v-row>
         <v-col>
@@ -70,16 +70,27 @@
               </v-tab>
 
               <v-tab-item style="min-height: 700px">
-                <display mode="counts" y_label="People" />
+                <display
+                  mode="counts"
+                  y_label="People"
+                  :tab_index="selectedGraph"
+                />
               </v-tab-item>
               <v-tab-item style="min-height: 700px">
-                <daily-display y_label="People" />
+                <daily-display y_label="People" :tab_index="selectedGraph" />
               </v-tab-item>
               <v-tab-item style="min-height: 700px">
-                <display mode="rates" y_label="Percent" />
+                <display
+                  mode="rates"
+                  y_label="Percent"
+                  :tab_index="selectedGraph"
+                />
               </v-tab-item>
               <v-tab-item style="min-height: 700px">
-                <country-compare x_axis_type="category" />
+                <country-compare
+                  x_axis_type="category"
+                  :tab_index="selectedGraph"
+                />
               </v-tab-item>
               <v-tab-item style="min-height: 700px">
                 <disease-compare
@@ -92,25 +103,44 @@
           </v-card>
         </v-col>
       </v-row>
-      <v-dialog v-model="dialog" width="400">
+      <v-dialog v-model="dialog" width="500">
         <v-card class="px-2" shaped style="overflow: hidden">
           <v-card-title
             class="headline mt-2"
             v-text="graphs[selectedGraph].title"
           />
           <v-card-text v-text="graphs[selectedGraph].description" />
-          <v-divider />
-          <v-card-text v-if="graphs[selectedGraph].fields.length > 0">
-            <v-list two-line dense>
-              <v-list-item-subtitle v-text="'Fields'" />
+          <v-card-text
+            v-if="
+              graphs[selectedGraph].fields.length > 0 ||
+                graphs[selectedGraph].criteria.length > 0
+            "
+          >
+            <v-list dense>
+              <h4 v-text="'Fields'" />
               <v-list-item
                 :key="i"
                 v-for="(field, i) in graphs[selectedGraph].fields"
               >
-                <v-list-item-content>
-                  <v-list-item-title v-text="field.name" />
-                  <v-list-item-subtitle v-text="field.explanation" />
-                </v-list-item-content>
+                <p>
+                  <span v-text="field.name + ':  '" />
+                  <span
+                    class="grey--text text--darken-1 font-italic"
+                    v-text="field.explanation"
+                  />
+                </p>
+              </v-list-item>
+            </v-list>
+            <v-list dense>
+              <h4 v-text="'Metrics'" />
+              <v-list-item
+                :key="i"
+                v-for="(cr, i) in graphs[selectedGraph].criteria"
+              >
+                <p>
+                  <span v-text="cr.name + ':  '" />
+                  <span class="grey--text text--darken-1 font-italic" v-text="cr.explanation" />
+                </p>
               </v-list-item>
             </v-list>
           </v-card-text>
@@ -147,72 +177,203 @@ export default {
         {
           title: "Total Counts",
           description:
-            "this is the description for total countsthis is the description for total countsthis is the description for total countsthis is the description for total countsthis is the description for total counts",
+            "This graph represents the number of daily confirmed cases of the latest pandemic, COVID-19. The vertical line (y-axis) represents the daily confirmed cases and the horizontal line (x-axis) represents the date. The line represents the criteria selected.",
           fields: [
             {
               name: "Country",
-              explanation: "This is the explanation of the field"
+              explanation: " List of countries"
             },
             {
               name: "Date Range",
-              explanation: "This is the explanation of the field"
+              explanation:
+                "Number of all dates from specific start to finish date"
+            }
+          ],
+          criteria: [
+            {
+              name: "Test Count",
+              explanation:
+                "The total  number of tested people on a particular day"
+            },
+            {
+              name: "Confirmed Cases",
+              explanation:
+                "The total number of confirmed cases on a particular day"
+            },
+            {
+              name: "Death Count ",
+              explanation: "The total number of death cases on a particular day"
+            },
+            {
+              name: "Recovery Count",
+              explanation:
+                " the total number of recovered patients on a particular day"
+            },
+            {
+              name: "Active Cases",
+              explanation:
+                "the total  number of active cases on a particular day"
             }
           ]
         },
         {
           title: "Daily Counts",
-          description: "this is the description for the counts",
+          description:
+            "This graph represents the number of daily confirmed cases of the latest pandemic, COVID-19. The vertical line (y-axis) represents the daily confirmed cases and the horizontal line (x-axis) represents the date. The line represents the criteria selected.",
           fields: [
             {
               name: "Country",
-              explanation: "This is the explanation of the field"
+              explanation: "List of countries"
             },
             {
               name: "Date Range",
-              explanation: "This is the explanation of the field"
+              explanation:
+                "Number of all dates from specific start to finish date"
             },
             {
               name: "Criteria",
-              explanation: "This is the explanation of the field"
+              explanation: " List of metrics to view "
+            }
+          ],
+          criteria: [
+            {
+              name: "Daily Test",
+              explanation: "the number of tested people on a particular day"
+            },
+            {
+              name: "Daily Confirmed Cases",
+              explanation: "The number of confirmed cases on a particular day"
+            },
+            {
+              name: "Daily Death ",
+              explanation: "The number of death cases on a particular day"
+            },
+            {
+              name: "Daily Recovery",
+              explanation:
+                "The number of recovered patients on a particular day"
             }
           ]
         },
         {
           title: "View Rates",
-          description: "this is the description for the rates",
+          description:
+            "This graph represents the recovery rate, active rate, and death rate of the latest pandemic, COVID-19 of either any selected country or of the entire world. The vertical line (y-axis) represents the rate of increase and the horizontal line (x-axis) represents the date. The line represents the criteria selected.",
           fields: [
             {
               name: "Country",
-              explanation: "This is the explanation of the field"
+              explanation: "List of countries"
             },
             {
               name: "Date Range",
-              explanation: "This is the explanation of the field"
+              explanation:
+                "Number of all dates from specific start to finish date"
+            }
+          ],
+          criteria: [
+            {
+              name: "Positive Rate ",
+              explanation: "The ratio of positive count to test counts per day"
+            },
+            {
+              name: "Recovery Rate",
+              explanation: "The ratio of recovered cases per day"
+            },
+            {
+              name: "Active Rate",
+              explanation: "The ratio of active count to total count per day"
+            },
+            {
+              name: "Death Rate",
+              explanation: "The ratio of death cases to total count per day"
             }
           ]
         },
         {
           title: "Compare Countries",
-          description: "this is the description for the country comparison",
+          description:
+            "This graph represents the comparison of two selected countries regarding the latest pandemic, COVID-19 of either any selected country or of the entire world based on factors including test counts, confirmed cases, death counts, recovery counts, active cases, and others. The vertical line (y-axis) represents the rate of increase and the horizontal line (x-axis) represents the date. The two lines represent the criteria selected.",
           fields: [
             {
               name: "Country 1 & 2",
-              explanation: "This is the explanation of the field"
+              explanation: "List of countries"
             },
             {
               name: "Date Range 1 & 2",
-              explanation: "This is the explanation of the field"
+              explanation:
+                "Number of all dates from specific start to finish date"
             },
             {
-              name: "Criteria",
-              explanation: "This is the explanation of the field"
+              name: "Common Criteria",
+              explanation: "Mutual criteria to compare the chosen countries"
+            }
+          ],
+          criteria: [
+            {
+              name: "Test Count",
+              explanation:
+                "The total  number of tested people on a particular day"
+            },
+            {
+              name: "Recovery Count",
+              explanation:
+                " the total number of recovered patients on a particular day"
+            },
+            {
+              name: "Confirmed Cases",
+              explanation:
+                "The total number of confirmed cases on a particular day"
+            },
+            {
+              name: "Death Count ",
+              explanation: "The total number of death cases on a particular day"
+            },
+            {
+              name: "Active Cases",
+              explanation:
+                "the total  number of active cases on a particular day"
+            },
+            {
+              name: "Positive Rate ",
+              explanation: "The ratio of positive count to test counts per day"
+            },
+            {
+              name: "Recovery Rate",
+              explanation: "The ratio of recovered cases per day"
+            },
+            {
+              name: "Active Rate",
+              explanation: "The ratio of active count to total count per day"
+            },
+            {
+              name: "Death Rate",
+              explanation: "The ratio of death cases to total count per day"
             }
           ]
         },
         {
           title: "Compare Similar Diseases",
-          description: "this is the description for the disease comparison",
-          fields: []
+          description:
+            "This graph represents the comparison of the latest pandemic, COVID-19 with other similar epidemics of the entire world based on factors including confirmed cases, death counts, recovery counts, active cases, and others. The vertical line (y-axis) represents the rate of increase and the horizontal line (x-axis) represents the date. The two lines represent the criteria selected.",
+          fields: [],
+          criteria: [
+            {
+              name: "Confirmed  Cases",
+              explanation: "The overall number of  confirmed cases "
+            },
+            {
+              name: "Death Count",
+              explanation: "The overall number of death cases"
+            },
+            {
+              name: "Recovery Count",
+              explanation: "The overall number of recovery cases"
+            },
+            {
+              name: "Affected Countries",
+              explanation: "The overall number of countries affected"
+            }
+          ]
         }
       ]
     };

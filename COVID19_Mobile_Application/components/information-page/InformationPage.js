@@ -2,25 +2,33 @@ import * as React from "react";
 import { View, Text, Image, ScrollView } from "react-native";
 import { Card, ListItem, Button, Icon } from "react-native-elements";
 
+// Lottie library GIF to JSON
+import LottieView from 'lottie-react-native';
+
+// Styles
 import Shadow from "./styles/Shadow";
 import BorderRadius from "./styles/BorderRadius";
 import ButtonStyle from "./styles/ButtonStyle";
 import ImageStyle from "./styles/ImageStyle";
 
+// Cosider using
+// https://akveo.github.io/react-native-ui-kitten/
+
 export default function InformationPage(props) {
   return (
     <ScrollView>
       <Card
-        title="What is Corona Virus?"
+        title="What is corona virus?"
         containerStyle={[Shadow.shadow, BorderRadius.borderRadius]}
         titleStyle={{ fontSize: 20, fontWeight: "bold" }}
       >
         <View style={{ flexDirection: "row" }}>
-          <Image
+          <LottieView style={ImageStyle.imageStyle} source={require('./animations/covid-19-virus.json')} autoPlay loop />
+          {/* <Image
             style={ImageStyle.imageStyle}
             resizeMode="cover"
             source={require("../../assets/covid.jpg")}
-          />
+          /> */}
           <Text style={{ flex: 2, marginTop: 15 }}>
             Coronavirus disease 2019 is an infectious disease caused by severe
             acute respiratory syndrome coronavirus 2.
@@ -39,14 +47,15 @@ export default function InformationPage(props) {
         titleStyle={{ fontSize: 18 }}
       >
         <View style={{ flexDirection: "row" }}>
-          <Image
+          <LottieView style={ImageStyle.imageStyle} source={require('./animations/sneezing.json')} autoPlay loop />
+          {/* <Image
             style={ImageStyle.imageStyle}
             resizeMode="cover"
             source={require("../../assets/symptoms.jpg")}
-          />
+          /> */}
           <Text style={{ flex: 2, marginTop: 15 }}>
             Fever, cough and shortness of breath are the common symptoms
-            reported by patients
+            reported by patients.
           </Text>
         </View>
         <Button
@@ -62,11 +71,12 @@ export default function InformationPage(props) {
         titleStyle={{ fontSize: 18 }}
       >
         <View style={{ flexDirection: "row" }}>
-          <Image
+          <LottieView style={ImageStyle.imageStyle} source={require('./animations/wash-your-hands.json')} autoPlay loop />
+          {/* <Image
             style={ImageStyle.imageStyle}
             resizeMode="cover"
             source={require("../../assets/Prevention.jpg")}
-          />
+          /> */}
           <Text style={{ flex: 2, marginTop: 15 }}>
             Follow the guidelines to help protect yourself from catching,
             carrying and passing on SARS-CoV-2.
@@ -85,11 +95,12 @@ export default function InformationPage(props) {
         titleStyle={{ fontSize: 18 }}
       >
         <View style={{ flexDirection: "row" }}>
-          <Image
+          <LottieView style={ImageStyle.imageStyle} source={require('./animations/prueba-doctores-freepik.json')} autoPlay loop />
+          {/* <Image
             style={ImageStyle.imageStyle}
             resizeMode="cover"
             source={require("../../assets/treatment.jpg")}
-          />
+          /> */}
           <Text style={{ flex: 2, marginTop: 15 }}>
             There currently isn’t a vaccine against developing COVID-19.
             Antibiotics are also ineffective because COVID-19 is a viral

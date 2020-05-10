@@ -33,6 +33,15 @@ exports.get_diseases = async(req, res) => {
         .catch((err) => {
             console.log(err);
         });
+    diseases.push(
+        new Disease({
+            title: "SEASONAL FLU",
+            confirmed: 4000000,
+            deaths: 470000,
+            recovered: 3530000,
+            affected: 195,
+        })
+    );
     //Ebola
     diseases.push(
         new Disease({
@@ -63,16 +72,5 @@ exports.get_diseases = async(req, res) => {
             affected: 27,
         })
     );
-
-    diseases.push(
-        new Disease({
-            title: "Seasonal flu",
-            confirmed: 4000000,
-            deaths: 470000,
-            recovered: 3530000,
-            affected: 195,
-        })
-    );
-
     res.send(diseases);
 };
