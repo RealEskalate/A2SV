@@ -4,11 +4,11 @@ const verifyToken = require("../middlewares/auth.js");
 
 const MessageController = require("../controllers/MessageController.js");
 
-router.get("/api/messages/", MessageController.getAllMessages);
-router.get("/api/messages/email/:email", MessageController.getMessageByEmail);
-router.get("/api/messages/:id", MessageController.getMessageById);
+router.get("/api/messages/", verifyToken.verifyToken, MessageController.getAllMessages);
+router.get("/api/messages/email/:email", verifyToken.verifyToken, MessageController.getMessageByEmail);
+router.get("/api/messages/:id", verifyToken.verifyToken, MessageController.getMessageById);
 
-router.post("/api/messages", MessageController.postMessage);
-router.delete("/api/messages/", MessageController.deleteMessages);
+router.post("/api/messages", verifyToken.verifyToken, MessageController.postMessage);
+router.delete("/api/messages/", verifyToken.verifyToken, MessageController.deleteMessages);
 
 module.exports = router;

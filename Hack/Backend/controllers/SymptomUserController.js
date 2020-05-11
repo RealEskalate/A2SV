@@ -6,11 +6,6 @@ const jwt = require("jsonwebtoken");
 
 // Display list of all symptoms.
 exports.get_all_symptomusers = async (req, res) => {
-  // jwt.verify(req.token, 'secretkey', (err,authData) =>{
-  //     if (err){
-  //         res.status(401).send("Incorrect authentication key");
-  //     }
-  // });
 
   const symptomusers = await SymptomUser.find();
 
@@ -23,11 +18,6 @@ exports.get_all_symptomusers = async (req, res) => {
 
 // Post a symptomuser
 exports.post_symptomuser = async (req, res) => {
-  // jwt.verify(req.token, 'secretkey', (err,authData) =>{
-  //     if (err){
-  //         res.status(401).send("Incorrect authentication key");
-  //     }
-  // });
 
   let symptomuser = new SymptomUser({
     symptom_id: req.body.symptom_id,
@@ -45,10 +35,6 @@ exports.post_symptomuser = async (req, res) => {
       return res.status(400).json({ message: "User ID not found" });
     }
   });
-  // var { error } = validateSymptomUser(symptomuser);
-  // if (error) {
-  //     res.status(400).send("Symptom User Pair not found");
-  // }
   try {
     await symptomuser.save();
     let symptom = await Symptom.findById(symptomuser.symptom_id);
@@ -68,15 +54,9 @@ exports.post_symptomuser = async (req, res) => {
 
 //Get a symptomuser by symptom_id
 exports.get_symptomuser_by_symptom_id = async (req, res) => {
-  // jwt.verify(req.token, 'secretkey', (err,authData) =>{
-  //     if (err){
-  //         res.status(401).send("Incorrect authentication key");
-  //     }
-  // });
-
   try {
     const symptomuser = await SymptomUser.find({
-      symptom_id: req.params.symptom_id,
+      symptom_id: req.body.loggedInUser,
     });
     if (!symptomuser) {
       res.status(400).send("Symptom User Pair not found");
@@ -102,14 +82,10 @@ exports.get_symptomuser_by_symptom_id = async (req, res) => {
 
 //Get a symptomuser by user_id
 exports.get_symptomuser_by_user_id = async (req, res) => {
-  // jwt.verify(req.token, 'secretkey', (err,authData) =>{
-  //     if (err){
-  //         res.status(401).send("Incorrect authentication key");
-  //     }
-  // });
 
   try {
-    const symptomuser = await SymptomUser.find({ user_id: req.params.user_id });
+    console.log("logged in user " + req.body.loggedInUser);
+    const symptomuser = await SymptomUser.find({ user_id: req.body.loggedInUser });
     if (!symptomuser) {
       res.status(400).send("Symptom User Pair not found");
     }
@@ -134,11 +110,6 @@ exports.get_symptomuser_by_user_id = async (req, res) => {
 
 //Update a symptomuser by id
 exports.update_symptomuser = async (req, res) => {
-  // jwt.verify(req.token, 'secretkey', (err,authData) =>{
-  //     if (err){
-  //         res.status(401).send("Incorrect authentication key");
-  //     }
-  // });
 
   try {
     const symptomuser = await SymptomUser.findByIdAndUpdate(
@@ -166,11 +137,6 @@ exports.update_symptomuser = async (req, res) => {
 
 // Deleting a symptomuser
 exports.delete_symptomuser = async (req, res) => {
-  // jwt.verify(req.token, 'secretkey', (err,authData) =>{
-  //     if (err){
-  //         res.status(401).send("Incorrect authentication key");
-  //     }
-  // });
 
   try {
     const symptomuser = await SymptomUser.findByIdAndDelete(req.body._id);
