@@ -1,6 +1,5 @@
 var express = require("express");
 var router = express.Router();
-const verifyToken = require("../middlewares/auth.js");
 
 const MessageController = require("../controllers/MessageController.js");
 

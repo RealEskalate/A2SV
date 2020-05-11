@@ -4,14 +4,10 @@ var mongoose = require("mongoose");
 
 //Get a log by a specific id
 exports.get_log_by_id = async (req, res) => {
-    // jwt.verify(req.token, 'secretkey', (err,authData) =>{
-    //     if (err){
-    //         res.status(401).send("Incorrect authentication key");
-    //     }
-    // });
+
     const log = await Log.findById(req.params.id);
     try {
-        if(!log){
+        if (!log) {
             return res.status(404).send("Log Not Found");
         }
         res.send(log);
@@ -22,23 +18,17 @@ exports.get_log_by_id = async (req, res) => {
 
 
 //Get all logs 
-exports.get_logs = async(req, res)=>{
-    // jwt.verify(req.token, 'secretkey', (err,authData) =>{
-    //     if (err){
-    //         res.status(401).send("Incorrect authentication key");
-    //     }
-    // });
-
+exports.get_logs = async (req, res) => {
     let filter = {};
-    if(req.query.statusCode){
+    if (req.query.statusCode) {
         filter['meta.res.statusCode'] = req.query.statusCode;
-        
+
     }
 
-    if(req.query.url){
+    if (req.query.url) {
         filter['meta.req.url'] = req.query.url;
     }
-    
+
     const logs = await Log.find(filter);
     try {
         res.send(logs);

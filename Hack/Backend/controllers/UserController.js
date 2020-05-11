@@ -3,18 +3,13 @@ var mongoose = require("mongoose");
 const Bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const axios = require('axios');
+const config = require('config');
 const User = UserSchema.User;
 
 // Get All Users.
 exports.get_all_users = async (req, res) => {
-  // jwt.verify(req.token, 'secretkey', (err, authData) => {
-  //   if (err) {
-  //     res.status(401).send("Incorrect authentication key");
-  //   }
-  // });
 
-  const users = await User.find({});
-  console.log(users.length);
+  const users = await User.find();
   try {
     res.send(users);
   } catch (err) {
@@ -23,11 +18,6 @@ exports.get_all_users = async (req, res) => {
 };
 // Get User by ID.
 exports.get_user_by_id = async (req, res) => {
-  // jwt.verify(req.token, 'secretkey', (err, authData) => {
-  //   if (err) {
-  //     res.status(401).send("Incorrect authentication key");
-  //   }
-  // });
 
   const user = await User.findById(req.params.id);
   try {
@@ -65,7 +55,7 @@ exports.get_user_by_credentials = async (req, res) => {
         console.log(err);
       }
       // jwt authentication(signing in) is  done here ...
-      jwt.sign({ user }, 'secretkey', (err, token) => {
+      jwt.sign({ user }, config.get('secretkey'), (err, token) => {
         res.json({
           user: user,
           token: token
@@ -104,16 +94,11 @@ exports.post_user = async (req, res) => {
 };
 // Update User by ID.
 exports.update_user = async (req, res) => {
-  // jwt.verify(req.token, 'secretkey', (err, authData) => {
-  //   if (err) {
-  //     res.status(401).send("Incorrect authentication key");
-  //   }
-  // });
 
   try {
     let exists = await User.findOne({ username: req.body.username });
     // Change user info by _id
-    let change = await User.findOne({_id: req.body._id})
+    let change = await User.findOne({ _id: req.body._id })
     if (exists && exists._id != req.body._id) {
       return res.status(400).send("Username already exists ");
     }
@@ -122,7 +107,7 @@ exports.update_user = async (req, res) => {
         return res.status(500).send("Password Length Too Short");
       }
       req.body.password = Bcrypt.hashSync(req.body.password, 10);
-    }  
+    }
     change.set(req.body);
     await change.save();
     res.send(change);
@@ -133,12 +118,6 @@ exports.update_user = async (req, res) => {
 };
 // Delete User by ID.
 exports.delete_user = async (req, res) => {
-  // console.log("delete user is called");
-  // jwt.verify(req.token, 'secretkey', (err, authData) => {
-  //   if (err) {
-  //     res.status(401).send("Incorrect authentication key");
-  //   }
-  // });
 
   try {
     const user = await User.findByIdAndDelete(req.body._id);
