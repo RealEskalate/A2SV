@@ -18,6 +18,7 @@ import MapboxGL from "@react-native-mapbox-gl/maps";
 
 import Heat from "../../assets/images/Heat.jpg";
 import Regional from "../../assets/images/Regional.jpg";
+import userIDStore from "../data-management/user-id-data/userIDStore";
 
 MapboxGL.setAccessToken(
   "pk.eyJ1IjoiZmVyb3g5OCIsImEiOiJjazg0czE2ZWIwNHhrM2VtY3Y0a2JkNjI3In0.zrm7UtCEPg2mX8JCiixE4g"
@@ -26,16 +27,18 @@ MapboxGL.setAccessToken(
 console.disableYellowBox = true;
 
 const nycJSON = require("./data/countries.json");
-const covid = require("./data/covid.json");
+//const covid = require("./data/covid.json");
 const { height } = Dimensions.get("window");
 const screenWidth = Dimensions.get("window").width;
-
 export default class DataAnalyticsMap extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       play: false,
       pick: "",
+
+      covid: {},
+
       renderFunction: 0, // heatmaps rendered by default
       groupCollections: {},
       screenCoords: [],
@@ -53,11 +56,17 @@ export default class DataAnalyticsMap extends React.Component {
       regional_checked: false,
       heatmap_checked: true,
       visible: false,
+
+      map_type: "confirmed",
     };
     this.onPress = this.onPress.bind(this);
     this.getCheckBox = this.getCheckBox.bind(this);
     this.playMapEvent = this.playMapEvent.bind(this);
     this.pauseMapEvent = this.pauseMapEvent.bind(this);
+    this.getCovid = this.getCovid.bind(this);
+
+    this.featureToGroupCollection = this.featureToGroupCollection.bind(this);
+    this.loadDataByDate = this.loadDataByDate.bind(this);
   }
 
   _toggleBottomNavigationView = () => {
@@ -89,10 +98,48 @@ export default class DataAnalyticsMap extends React.Component {
     // }
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     const country2boundary = this.prepareBoundaries(nycJSON);
     this.setState({ country2boundary: country2boundary });
+    const covid = await this.getCovid();
+    console.log("------ Logging covid--------");
+    console.log(covid);
+    this.setState({ covid: covid });
     this.dataToGeoJson();
+  }
+
+  async getCovid() {
+    const covid = {};
+    let res = await fetch("https://sym-track.herokuapp.com/api/mapData", {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + userIDStore.getState().userToken,
+        Accept: "application/json",
+        "Content-type": "application/json",
+      },
+    });
+    let data = await res.json();
+    // do preprocessing
+    for (let i = 0; i < data.length; i++) {
+      const element = data[i];
+      const key = element.Country;
+      if (key === "us") {
+        console.log(element);
+        key = "United States of America";
+      }
+      let dates = Object.keys(element);
+      dates = dates.slice(1, dates.length - 2);
+      covid[key] = {
+        lat: element["lat"],
+        long: element["long"],
+      };
+      for (let j = 0; j < dates.length; j++) {
+        covid[key][dates[j]] = element[dates[j]];
+      }
+    }
+    console.log("-----------covid--------");
+    console.log(covid);
+    return covid;
   }
 
   getListOfSymptoms = (data, images) => {
@@ -114,22 +161,28 @@ export default class DataAnalyticsMap extends React.Component {
   };
 
   dataToGeoJson() {
+    console.log("------------data to geojson-------------");
     const featureCollection = {
       type: "FeatureCollection",
       features: [],
     };
-    let dates = Object.keys(covid["Ethiopia"]);
+    let dates = Object.keys(this.state.covid["Ethiopia"]);
     dates = dates.slice(4, dates.length); // remove the name, lat, long and get the dates only
-
+    console.log("Dates = ");
+    console.log(dates);
     const lastDate = dates[dates.length - 1];
+    console.log("Last date = " + lastDate);
     let max = 0.0;
-    for (const countryName in covid) {
-      const countryInfo = covid[countryName];
+    for (const countryName in this.state.covid) {
+      const countryInfo = this.state.covid[countryName];
+      console.log("countryInfo = " + countryInfo);
       const Lat = countryInfo["lat"];
       const Long = countryInfo["long"];
+      console.log(Lat + " , " + Long);
       const confirmed = Math.log(parseFloat(countryInfo[lastDate][0]));
       const death = Math.log(parseFloat(countryInfo[lastDate][1]));
       const recovered = Math.log(parseFloat(countryInfo[lastDate][2]));
+      console.log(confirmed + " , " + death + " , " + recovered);
       const feat = {
         type: "Feature",
         id: countryName,
@@ -149,11 +202,12 @@ export default class DataAnalyticsMap extends React.Component {
       }
       featureCollection.features.push(feat);
     }
+    console.log("max = " + max);
     this.setState({ max: max });
     this.setState({ featureCollection: featureCollection });
     this.setState({ index2date: dates });
     this.setState({ maxDateLength: dates.length - 1 });
-    this.featureToGroupCollection();
+    this.featureToGroupCollection(0);
   }
 
   featureToGroupCollection() {
@@ -171,19 +225,51 @@ export default class DataAnalyticsMap extends React.Component {
       index++
     ) {
       const element = this.state.featureCollection.features[index];
-      if (element.properties.confirmed != 0) {
-        element.properties.confirmed = parseFloat(
-          Math.log(element.properties.confirmed)
-        );
-      }
-      element.properties.confirmed =
-        element.properties.confirmed / this.state.max;
-      let groupKey = Math.round(element.properties.confirmed * 10);
-      const geoJsonElement = this.state.country2boundary[element.id];
-      if (geoJsonElement) {
-        groupCollections[groupKey].features.push(geoJsonElement);
+      if (this.state.map_type === "confirmed") {
+        // render confirmed cases
+        if (element.properties.confirmed != 0) {
+          element.properties.confirmed = parseFloat(
+            Math.log(element.properties.confirmed)
+          );
+        }
+        element.properties.confirmed =
+          element.properties.confirmed / this.state.max;
+        let groupKey = Math.round(element.properties.confirmed * 10);
+        const geoJsonElement = this.state.country2boundary[element.id];
+        if (geoJsonElement) {
+          groupCollections[groupKey].features.push(geoJsonElement);
+        }
+      } else if (this.state.map_type === "death") {
+        // deaths
+        if (element.properties.death != 0) {
+          element.properties.death = parseFloat(
+            Math.log(element.properties.death)
+          );
+        }
+        element.properties.death = element.properties.death / this.state.max;
+        let groupKey = Math.round(element.properties.death * 10);
+        console.log("group key = " + groupKey);
+        const geoJsonElement = this.state.country2boundary[element.id];
+        if (geoJsonElement) {
+          groupCollections[groupKey].features.push(geoJsonElement);
+        }
+      } else {
+        if (element.properties.recovered != 0) {
+          element.properties.recovered = parseFloat(
+            Math.log(element.properties.recovered)
+          );
+        }
+        element.properties.recovered =
+          element.properties.recovered / this.state.max;
+        console.log(element.properties.recovered);
+        let groupKey = Math.round(element.properties.recovered * 10);
+        const geoJsonElement = this.state.country2boundary[element.id];
+        if (geoJsonElement) {
+          groupCollections[groupKey].features.push(geoJsonElement);
+        }
       }
     }
+
     this.setState({ groupCollections: groupCollections });
   }
 
@@ -206,17 +292,33 @@ export default class DataAnalyticsMap extends React.Component {
   }
 
   loadDataByDate(date) {
+    console.log("maptype = " + this.state.map_type);
     const featureCollection = this.state.featureCollection;
     this.state.max = 0.0;
     for (let index = 0; index < featureCollection.features.length; index++) {
       const element = featureCollection.features[index];
-      const countryInfo = covid[element.id];
+      const countryInfo = this.state.covid[element.id];
       element.properties.confirmed = parseFloat(countryInfo[date][0]);
       element.properties.death = parseFloat(countryInfo[date][1]);
       element.properties.recovered = parseFloat(countryInfo[date][2]);
 
-      if (Math.log(element.properties.confirmed) > this.state.max)
+      if (
+        this.state.map_type === "confirmed" &&
+        Math.log(element.properties.confirmed) > this.state.max
+      ) {
         this.state.max = Math.log(element.properties.confirmed);
+      } else if (
+        this.state.map_type === "death" &&
+        Math.log(element.properties.death) > this.state.max
+      ) {
+        this.state.max = Math.log(element.properties.death);
+      } else if (
+        this.state.map_type === "recovered" &&
+        Math.log(element.properties.recovered) > this.state.max
+      ) {
+        this.state.max = Math.log(element.properties.recovered);
+        console.log("max = " + this.state.max);
+      }
     }
     this.setState({ featureCollection: featureCollection });
   }
@@ -237,13 +339,17 @@ export default class DataAnalyticsMap extends React.Component {
     );
   }
 
-  renderGroups() {
+  renderGroups(map_type) {
     console.log("Rendering regional map");
     const shapes = [];
     let k = 0;
     var gradientColors = [];
     for (var n = 0; n <= 11; n++) {
-      gradientColors.push(`rgba(${255}, ${0}, ${0}, ${n / 11.0})`);
+      if (map_type === "confirmed" || map_type === "death") {
+        gradientColors.push(`rgba(${255}, ${0}, ${0}, ${n / 11.0})`);
+      } else {
+        gradientColors.push(`rgba(${0}, ${255}, ${0}, ${n / 11.0})`);
+      }
     }
     for (let key in this.state.groupCollections) {
       const featureCollection = this.state.groupCollections[key];
@@ -260,11 +366,11 @@ export default class DataAnalyticsMap extends React.Component {
     return shapes;
   }
 
-  renderMap() {
+  renderMap(map_type) {
     if (this.state.renderFunction == 0) {
       return this.renderHeatmap();
     } else {
-      return this.renderGroups();
+      return this.renderGroups(map_type);
     }
   }
 
@@ -357,7 +463,7 @@ export default class DataAnalyticsMap extends React.Component {
   }
   playMapEvent() {
     this.setState({ play: true });
-    var refresh_rate = 250;
+    var refresh_rate = 1200;
     var slider_rate = 1;
     if (this.state.renderFunction == 1) {
       slider_rate = 5;
@@ -396,10 +502,10 @@ export default class DataAnalyticsMap extends React.Component {
         >
           <MapboxGL.Camera zoomLevel={1} centerCoordinate={[60, 40.723279]} />
 
-          {this.renderMap()}
+          {this.renderMap(this.state.map_type)}
         </MapboxGL.MapView>
         <SlidingUpPanel
-          draggableRange={{ top: 190, bottom: 20 }}
+          draggableRange={{ top: 240, bottom: 20 }}
           showBackdrop={false}
           ref={(c) => (this._panel = c)}
         >
@@ -420,6 +526,25 @@ export default class DataAnalyticsMap extends React.Component {
                 }}
               ></View>
             </View>
+            <Picker
+              placeholder="SELECT"
+              onValueChange={(itemValue, itemIndex) => {
+                this.setState({
+                  map_type: itemValue.toLowerCase(),
+                });
+              }}
+              selectedValue={this.state.map_type.toUpperCase()}
+              style={{
+                height: 50,
+                width: 220,
+                color: "#1e88e5",
+              }}
+              itemStyle={{ color: "#1e88e5" }}
+            >
+              <Picker.Item label="CONFIRMED" value="CONFIRMED" />
+              <Picker.Item label="RECOVERED" value="RECOVERED" />
+              <Picker.Item label="DEATHS" value="DEATH" />
+            </Picker>
             <View
               style={{
                 flexDirection: "row",
@@ -517,25 +642,6 @@ export default class DataAnalyticsMap extends React.Component {
                   Regional
                 )}
               </View>
-              <Picker
-                placeholder="SELECT"
-                onValueChange={(itemValue, itemIndex) =>
-                  this.setState({
-                    pick: itemValue,
-                  })
-                }
-                selectedValue={this.state.pick}
-                style={{
-                  height: 50,
-                  width: 180,
-                  color: "#1e88e5",
-                }}
-                itemStyle={{ color: "#1e88e5" }}
-              >
-                <Picker.Item label="confirmed" value="CONFIRMED" />
-                <Picker.Item label="recovered" value="RECOVERED" />
-                <Picker.Item label="deaths" value="DEATHS" />
-              </Picker>
             </View>
             <View
               style={{

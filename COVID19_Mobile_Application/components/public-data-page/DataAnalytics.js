@@ -18,12 +18,13 @@ import DatePicker from "react-native-datepicker";
 import { ApplicationProvider, Datepicker, Layout } from "@ui-kitten/components";
 import * as eva from "@eva-design/eva";
 import SearchableDropdown from "react-native-searchable-dropdown";
+import userIDStore from "../data-management/user-id-data/userIDStore";
 
 class DataAnalytics extends React.Component {
   state = {
     selected_filter: criterias.confirmed, // sets the current filtering parameter on the graph
     selected_filter_daily_status: criterias.confirmed,
-    selected_filter_rate: criterias.confirmedRate,
+    selected_filter_rate: criterias.recoveryRate,
     selected_daily_start_date: "",
     selected_daily_end_date: "",
     selected_total_start_date: "",
@@ -92,6 +93,7 @@ class DataAnalytics extends React.Component {
     await fetch(query, {
       method: "GET",
       headers: {
+        Authorization: "Bearer " + userIDStore.getState().userToken,
         Accept: "application/json",
         "Content-Type": "application/json",
       },
@@ -130,6 +132,7 @@ class DataAnalytics extends React.Component {
     await fetch(query, {
       method: "GET",
       headers: {
+        Authorization: "Bearer " + userIDStore.getState().userToken,
         Accept: "application/json",
         "Content-Type": "application/json",
       },
@@ -166,6 +169,7 @@ class DataAnalytics extends React.Component {
       {
         method: "GET",
         headers: {
+          Authorization: "Bearer " + userIDStore.getState().userToken,
           Accept: "application/json",
           "Content-Type": "application/json",
         },
@@ -193,6 +197,7 @@ class DataAnalytics extends React.Component {
     await fetch("https://sym-track.herokuapp.com/api/statistics/countries", {
       method: "GET",
       headers: {
+        Authorization: "Bearer " + userIDStore.getState().userToken,
         Accept: "application/json",
         "Content-Type": "application/json",
       },
@@ -234,6 +239,7 @@ class DataAnalytics extends React.Component {
     await fetch(query, {
       method: "GET",
       headers: {
+        Authorization: "Bearer " + userIDStore.getState().userToken,
         Accept: "application/json",
         "Content-Type": "application/json",
       },
@@ -384,6 +390,9 @@ class DataAnalytics extends React.Component {
   //Check if test count data is available
   checkIfDataExist(filterCriteria) {
     let newThis = this;
+    newThis.setState({
+      testCountDataExist: false,
+    });
     var query =
       this.state.selected_daily_start_date.length > 1 &&
       this.state.selected_daily_end_date.length > 1
@@ -404,6 +413,7 @@ class DataAnalytics extends React.Component {
     fetch(query, {
       method: "GET",
       headers: {
+        Authorization: "Bearer " + userIDStore.getState().userToken,
         Accept: "application/json",
         "Content-Type": "application/json",
       },
@@ -720,7 +730,7 @@ class DataAnalytics extends React.Component {
                 Daily New Cases
               </Text>
               <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
-                Country : {this.state.searchedCountry}
+                Country : {this.state.search}
               </Text>
 
               <View
@@ -933,7 +943,7 @@ class DataAnalytics extends React.Component {
                 Total Cases
               </Text>
               <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
-                Country : {this.state.searchedCountry}
+                Country : {this.state.search}
               </Text>
 
               <View
@@ -1132,7 +1142,7 @@ class DataAnalytics extends React.Component {
                 Rate of Cases
               </Text>
               <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
-                Country : {this.state.searchedCountry}
+                Country : {this.state.search}
               </Text>
 
               <View
@@ -1226,29 +1236,32 @@ class DataAnalytics extends React.Component {
             </View>
 
             <View style={{ flexDirection: "row", marginBottom: 80 }}>
-              <TouchableOpacity
-                style={
-                  this.state.selected_filter_rate === criterias.confirmedRate
-                    ? styles.touchable_buttons
-                    : styles.touchable_buttons_pressed
-                }
-                onPress={async () => {
-                  await this.setState({
-                    selected_filter_rate: criterias.confirmedRate,
-                  });
-                  this.fetchRateStatistics();
-                }}
-              >
-                <Text
+              {this.state.testCountDataExist ? (
+                <TouchableOpacity
                   style={
                     this.state.selected_filter_rate === criterias.confirmedRate
-                      ? styles.text_style
-                      : styles.text_style_pressed
+                      ? styles.touchable_buttons
+                      : styles.touchable_buttons_pressed
                   }
+                  onPress={async () => {
+                    await this.setState({
+                      selected_filter_rate: criterias.confirmedRate,
+                    });
+                    this.fetchRateStatistics();
+                  }}
                 >
-                  Confirmed Rate
-                </Text>
-              </TouchableOpacity>
+                  <Text
+                    style={
+                      this.state.selected_filter_rate ===
+                      criterias.confirmedRate
+                        ? styles.text_style
+                        : styles.text_style_pressed
+                    }
+                  >
+                    Confirmed Rate
+                  </Text>
+                </TouchableOpacity>
+              ) : null}
               <TouchableOpacity
                 style={
                   this.state.selected_filter_rate === criterias.recoveryRate
