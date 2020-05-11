@@ -10,12 +10,6 @@ const geolib = require("geolib");
 
 // Display list of all locations.
 exports.get_all_locations = async (req, res) => {
-  // jwt.verify(req.token, "secretkey", (err, authData) => {
-  //   if (err) {
-  //     res.status(401).send("Incorrect authentication key");
-  //   }
-  // });
-
   const locations = await Location.find({});
   try {
     res.send(locations);
@@ -25,28 +19,23 @@ exports.get_all_locations = async (req, res) => {
 };
 
 exports.get_all_locations_with_symptoms = async (req, res) => {
-  // jwt.verify(req.token, "secretkey", (err, authData) => {
-  //   if (err) {
-  //     res.status(401).send("Incorrect authentication key");
-  //   }
-  // });
-  if(!req.body.longitude || !req.body.latitude){
+  if (!req.body.longitude || !req.body.latitude) {
     return res.status(400).send("Coordinates are not given");
   }
   let lat = req.body.latitude;
   let long = req.body.longitude;
 
   let result = [];
-  const locations = await Location.find({});  
+  const locations = await Location.find({});
   // Get Symptoms for each user and store in Symptoms
   for (let i = 0; i < locations.length; i++) {
     let location = locations[i];
     let isInRadius = geolib.isPointWithinRadius(
       { latitude: location.latitude, longitude: location.longitude },
-      { latitude: lat, longitude: long },      
-      10000*0.621371
+      { latitude: lat, longitude: long },
+      10000 * 0.621371
     )
-    if(!isInRadius){
+    if (!isInRadius) {
       continue;
     }
 
@@ -94,12 +83,8 @@ exports.get_all_locations_with_symptoms = async (req, res) => {
 
 // Post a location
 exports.post_location = async (req, res) => {
-  // jwt.verify(req.token, "secretkey", (err, authData) => {
-  //   if (err) {
-  //     res.status(401).send("Incorrect authentication key");
-  //   }
-  // });
-  if(!req.body.longitude||!req.body.latitude){
+
+  if (!req.body.longitude || !req.body.latitude) {
     return res.status(500).send("Coordinates not given");
   }
   const check = await Location.findOne({
@@ -120,7 +105,7 @@ exports.post_location = async (req, res) => {
       const result = await axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${location.longitude},${location.latitude}.json?types=poi&access_token=pk.eyJ1IjoiZmVyb3g5OCIsImEiOiJjazg0czE2ZWIwNHhrM2VtY3Y0a2JkNjI3In0.zrm7UtCEPg2mX8JCiixE4g`)
         .then(response => {
           if (response.data) {
-            if (response.data.features && response.data.features.length>0) {
+            if (response.data.features && response.data.features.length > 0) {
               location.longitude = response.data.features[0].center[0];
               location.latitude = response.data.features[0].center[1];
               location.place_name = response.data.features[0].text;
@@ -140,15 +125,10 @@ exports.post_location = async (req, res) => {
 };
 //Get a specific Location by id
 exports.get_location_by_id = async (req, res) => {
-  // jwt.verify(req.token, "secretkey", (err, authData) => {
-  //   if (err) {
-  //     res.status(401).send("Incorrect authentication key");
-  //   }
-  // });
 
   try {
     const location = await Location.findById(req.params.id);
-    if(!location){
+    if (!location) {
       return res.status(500).send("Location not found");
     }
     res.send(location);
@@ -158,18 +138,13 @@ exports.get_location_by_id = async (req, res) => {
 };
 //Get a specific Location by latitude and longitude
 exports.get_location_by_coordinates = async (req, res) => {
-  // jwt.verify(req.token, "secretkey", (err, authData) => {
-  //   if (err) {
-  //     res.status(401).send("Incorrect authentication key");
-  //   }
-  // });
 
   try {
     const locations = await Location.find({
       latitude: { $eq: req.params.latitude },
       longitude: { $eq: req.params.longitude },
     });
-    if(!locations || locations.length<1){
+    if (!locations || locations.length < 1) {
       return res.status(500).send("Location not found with the given coordinates");
     }
     res.send(locations);
@@ -179,20 +154,15 @@ exports.get_location_by_coordinates = async (req, res) => {
 };
 //Update a location by id
 exports.update_location = async (req, res) => {
-  // jwt.verify(req.token, "secretkey", (err, authData) => {
-  //   if (err) {
-  //     res.status(401).send("Incorrect authentication key");
-  //   }
-  // });
 
   try {
     let location = await Location.findById(req.body._id);
-    if(!location){
-      return res.status(500).send("Location doesnot exist");      
+    if (!location) {
+      return res.status(500).send("Location doesnot exist");
     }
     location.set(req.body);
-    let check = await Location.findOne({latitude: location.latitude, longitude: location.longitude});
-    if(!check){
+    let check = await Location.findOne({ latitude: location.latitude, longitude: location.longitude });
+    if (!check) {
       await location.save();
       return res.send(location);
     }
@@ -204,11 +174,6 @@ exports.update_location = async (req, res) => {
 };
 //Delete a location
 exports.delete_location = async (req, res) => {
-  // jwt.verify(req.token, "secretkey", (err, authData) => {
-  //   if (err) {
-  //     res.status(401).send("Incorrect authentication key");
-  //   }
-  // });
 
   try {
     const location = await Location.findByIdAndDelete(req.body._id);
@@ -274,11 +239,6 @@ const get_risk_by_location_id = async (id) => {
 
 //Get risk factor of specific location by id API
 exports.get_location_risk_by_id = async (req, res) => {
-  // jwt.verify(req.token, "secretkey", (err, authData) => {
-  //   if (err) {
-  //     res.status(401).send("Incorrect authentication key");
-  //   }
-  // });
 
   try {
     let riskFactor = await get_risk_by_location_id(req.params.id);
