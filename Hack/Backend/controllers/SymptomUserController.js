@@ -56,7 +56,7 @@ exports.post_symptomuser = async (req, res) => {
 exports.get_symptomuser_by_symptom_id = async (req, res) => {
   try {
     const symptomuser = await SymptomUser.find({
-      symptom_id: req.body.loggedInUser,
+      symptom_id: req.params.symptom_id,
     });
     if (!symptomuser) {
       res.status(400).send("Symptom User Pair not found");
@@ -84,7 +84,6 @@ exports.get_symptomuser_by_symptom_id = async (req, res) => {
 exports.get_symptomuser_by_user_id = async (req, res) => {
 
   try {
-    console.log("logged in user " + req.body.loggedInUser);
     const symptomuser = await SymptomUser.find({ user_id: req.body.loggedInUser });
     if (!symptomuser) {
       res.status(400).send("Symptom User Pair not found");
