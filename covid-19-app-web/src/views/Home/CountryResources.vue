@@ -42,6 +42,12 @@
     </v-list>
     <v-dialog v-model="dialog" width="400">
       <v-card class="px-2" shaped style="overflow: hidden">
+        <v-icon
+          style="position: absolute; right: 0; top: 0"
+          class="mt-3 mr-3"
+          @click="dialog = false"
+          v-text="'mdi-close'"
+        />
         <v-card-title class="headline mt-2" v-text="description.title" />
         <v-card-text v-text="description.content" />
         <v-card-text>
@@ -58,12 +64,6 @@
             </v-list-item>
           </v-list>
         </v-card-text>
-        <v-card-actions>
-          <v-spacer />
-          <v-btn color="primary" text @click="dialog = false">
-            Close
-          </v-btn>
-        </v-card-actions>
       </v-card>
     </v-dialog>
   </v-card>
