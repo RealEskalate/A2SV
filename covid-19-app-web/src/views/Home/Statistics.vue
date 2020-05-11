@@ -11,7 +11,7 @@
       </v-row>
       <v-row>
         <v-col>
-          <v-card flat>
+          <v-card flat class="overflow-hidden">
             <v-tabs fixed-tabs v-model="selectedGraph">
               <v-tab>
                 <v-icon left>mdi-numeric</v-icon>
@@ -94,6 +94,7 @@
               </v-tab-item>
               <v-tab-item style="min-height: 700px">
                 <disease-compare
+                  :tab_index="selectedGraph"
                   y_label="Logarithmic Value"
                   y_axis_type="logarithmic"
                   x_axis_type="category"
@@ -140,8 +141,8 @@
                 <p>
                   <span v-text="cr.name + ':  '" />
                   <span
-                          class="grey--text text--darken-1 font-italic"
-                          v-text="cr.explanation"
+                    class="grey--text text--darken-1 font-italic"
+                    v-text="cr.explanation"
                   />
                 </p>
               </v-list-item>
@@ -160,12 +161,12 @@
 </template>
 
 <script>
-  import Display from "./Charts/Display.vue";
-  import DailyDisplay from "./Charts/DailyDisplay.vue";
-  import CountryCompare from "./Charts/CountryCompare.vue";
-  import DiseaseCompare from "./Charts/DiseaseCompare.vue";
+import Display from "./Charts/Display.vue";
+import DailyDisplay from "./Charts/DailyDisplay.vue";
+import CountryCompare from "./Charts/CountryCompare.vue";
+import DiseaseCompare from "./Charts/DiseaseCompare.vue";
 
-  export default {
+export default {
   components: {
     Display,
     DailyDisplay,
@@ -383,3 +384,5 @@
   }
 };
 </script>
+
+<style></style>

@@ -3,7 +3,8 @@
     <v-row class="mx-md-5" dense>
       <v-col cols="12" class="overflow-auto">
         <bar-chart
-                style="min-width: 400px"
+          class="v-card--shaped grey lighten-5 shadow-in pb-6 px-1"
+          style="min-width: 400px"
           :height="600"
           :chart-data="diseaseData"
           :options="chartOptions"
@@ -13,10 +14,10 @@
   </v-container>
 </template>
 <script>
-  import {BarChart, ChartMixin} from "./charts.js";
-  import store from "@/store/index.js";
+import { BarChart, ChartMixin } from "./charts.js";
+import store from "@/store/index.js";
 
-  export default {
+export default {
   components: { BarChart },
   mixins: [ChartMixin],
 

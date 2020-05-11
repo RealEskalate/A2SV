@@ -49,3 +49,9 @@ export default {
   }
 };
 </script>
+
+<style>
+.shadow-in {
+  box-shadow: 0 0 5px #dededede inset;
+}
+</style>

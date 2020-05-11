@@ -4,7 +4,7 @@
       <v-row>
         <v-col>
           <v-responsive
-                  :aspect-ratio="$vuetify.breakpoint.smAndDown ? 12 / 16 : 16 / 12"
+            :aspect-ratio="$vuetify.breakpoint.smAndDown ? 12 / 16 : 16 / 12"
           >
             <iframe
               src="https://public.domo.com/cards/bWxVg"

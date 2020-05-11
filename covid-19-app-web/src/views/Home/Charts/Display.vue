@@ -1,25 +1,20 @@
 <template>
   <v-container class="py-8">
     <v-row class="mx-md-5" dense>
-      <v-col cols="12" md="6">
-        <v-select
+      <v-col class="px-2" cols="12" md="6">
+        <v-autocomplete
           v-model="country"
           :items="countries"
-          item-text="name"
-          item-value="slug"
           label="Country"
-          hint="Country"
-          persistent-hint
-          solo
-          @input="
-            () => {
-              fetchData();
-              fetchCountryResources();
-            }
-          "
+          hint="Search Country"
+          item-text="name"
+          outlined
+          dense
+          return-object
+          @input="fetchData"
         />
       </v-col>
-      <v-col cols="12" md="6">
+      <v-col class="px-2" cols="12" md="6">
         <v-menu
           :close-on-content-click="false"
           transition="scale-transition"
@@ -28,17 +23,19 @@
         >
           <template v-slot:activator="{ on }">
             <v-text-field
-              solo
+              color="primary"
+              outlined
+              dense
               v-model="dateRangeText"
               label="Date Range"
               hint="Date Range"
-              persistent-hint
               prepend-inner-icon="mdi-calendar"
               readonly
               v-on="on"
             />
           </template>
           <v-date-picker
+            color="primary"
             :max="maxDate"
             range
             no-title
@@ -54,47 +51,28 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col cols="12" md="9" class="overflow-auto">
+      <v-col cols="12" md="9" class="overflow-auto pl-md-10">
         <line-chart
-                style="min-width: 400px"
-                :height="480"
-                :chart-data="data"
-                :options="chartOptions"
+          class="v-card--shaped grey lighten-5 shadow-in pb-6 px-1"
+          style="min-width: 400px; height: 480px"
+          :chart-data="data"
+          :options="chartOptions"
         />
       </v-col>
       <v-col cols="12" md="3">
-        <v-card flat tile>
-          <v-list disabled dense>
-            <v-card-title class="small grey--text text--darken-2">
-              Resources / 1K People
-            </v-card-title>
-            <v-divider class="mx-4" />
-            <v-list-item-group color="primary">
-              <v-list-item v-for="(resource, i) in countryResources" :key="i">
-                <v-list-item-content>
-                  <span>
-                    <span class="d-inline" v-text="resource.key" /> :
-                    <span
-                      class="d-inline grey--text"
-                      v-text="resource.value || 'N/A'"
-                    />
-                  </span>
-                </v-list-item-content>
-              </v-list-item>
-            </v-list-item-group>
-          </v-list>
-        </v-card>
+        <country-resources :country="country" />
       </v-col>
     </v-row>
   </v-container>
 </template>
 <script>
-  import {ChartMixin, LineChart} from "./charts.js";
-  import store from "@/store/index.js";
-  import moment from "moment";
+import { LineChart, ChartMixin } from "./charts.js";
+import CountryResources from "../CountryResources";
+import store from "@/store/index.js";
+import moment from "moment";
 
-  export default {
-  components: { LineChart },
+export default {
+  components: { LineChart, CountryResources },
   mixins: [ChartMixin],
   props: {
     mode: {
@@ -116,17 +94,12 @@
           .format("YYYY-MM-DD"),
         moment(new Date()).format("YYYY-MM-DD")
       ],
-      country: "World",
+      country: { name: "World", slug: "World" },
       age_range: "All",
       social_distancing: 50
     };
   },
   methods: {
-    fetchCountryResources() {
-      store.dispatch("setCountryResources", {
-        country: this.country
-      });
-    },
     fillGraph() {
       let datasets = [];
       let load = this.mode === "counts" ? this.counts : this.rates;
@@ -147,7 +120,7 @@
         criteria: this.criteria[this.mode],
         makeDataSet: this.makeDataSet,
         mode: this.mode,
-        country: this.country,
+        country: this.country.slug,
         start_date:
           this.date_range[0] ||
           moment(new Date())
@@ -173,7 +146,6 @@
   },
   mounted() {
     this.fetchData();
-    this.fetchCountryResources();
   },
   computed: {
     counts: () => store.getters.getDisplayCounts,
