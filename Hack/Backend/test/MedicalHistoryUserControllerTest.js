@@ -13,19 +13,20 @@ const { expect } = chai;
 chai.use(chaiHttp);
 
 //Get Medical History Users 
-describe("Medical history Users API", () => {
+describe("Medical History Users API", () => {
 
     describe("GET /api/medicalhistoryuser", () => {
         let medicalhistory_user;
         beforeEach(async () => {
             medicalhistory_user = new MedicalHistoryUser({
+                _id: mongoose.Types.ObjectId(),
                 user_id: mongoose.Types.ObjectId(),
                 medicalhistory_id: mongoose.Types.ObjectId()
             });
             await medicalhistory_user.save();
         });
         afterEach(async () => {
-            await MedicalHistoryUser.collection.drop();
+            await MedicalHistoryUser.findByIdAndDelete(medicalhistory_user._id);
         });
         it("It should Get medicalhistory users", async () => {
             let response = await chai
@@ -33,8 +34,8 @@ describe("Medical history Users API", () => {
                 .get("/api/medicalhistoryuser/")
                 .set(
                     "Authorization",
-                    "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6IkZFTUFMRSIsImFnZV9ncm91cCI6IlVOREVSXzMwIiwiX2lkIjoiNWU5MDRjY2U3YTFjNmI2MjdhZTlmNWY3IiwidXNlcm5hbWUiOiJUZXN0aW5nIiwicGFzc3dvcmQiOiIkMmEkMTAkZWZteG01bzF2LmluSS5lU3RHR3hnTzF6SGsuTDZVb0E5TEV5WXJSUGhXa21UUVBYOC5OS08iLCJfX3YiOjB9LCJpYXQiOjE1ODczNjUxMTJ9.QUPJHBixUI7nu2CJGi1a6vBPOInmYuO4lVPIryHM2go"
-                );
+                    "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6Ik1BTEUiLCJhZ2VfZ3JvdXAiOiI-OTAiLCJfaWQiOiI1ZWI3ZjMwYzNlMmE4ODRhYzgzYWE3NjAiLCJ1c2VybmFtZSI6ImF1dGh0ZXN0IiwicGFzc3dvcmQiOiIkMmEkMTAkYjJmYTZHTTJMTDlLVlJ4UzhVVEkzdS5SQ2JjUWw0WXc5OExaWVVHUHRnUVdBdVFGOERqNXUiLCJfX3YiOjAsImN1cnJlbnRfY291bnRyeSI6IiJ9LCJpYXQiOjE1ODkxODc5Mjd9.ZJQHbK7cVmDOf87uuhUttlnyAFYe5KA0Afnq0iBptF0"
+                    );
             expect(response).to.have.status(200);
             expect(response.body).to.be.a('array');
         });
@@ -53,7 +54,7 @@ describe("Medical history Users API", () => {
             await medicalhistory_user.save();
         });
         afterEach(async () => {
-            await MedicalHistoryUser.collection.drop();
+            await MedicalHistoryUser.findByIdAndDelete(medicalhistory_user._id);
         });
         it("It should Get medical history user by id", async () => {
             let response = await chai
@@ -61,8 +62,8 @@ describe("Medical history Users API", () => {
                 .get("/api/medicalhistoryuser/" + medicalhistory_user._id)
                 .set(
                     "Authorization",
-                    "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6IkZFTUFMRSIsImFnZV9ncm91cCI6IlVOREVSXzMwIiwiX2lkIjoiNWU5MDRjY2U3YTFjNmI2MjdhZTlmNWY3IiwidXNlcm5hbWUiOiJUZXN0aW5nIiwicGFzc3dvcmQiOiIkMmEkMTAkZWZteG01bzF2LmluSS5lU3RHR3hnTzF6SGsuTDZVb0E5TEV5WXJSUGhXa21UUVBYOC5OS08iLCJfX3YiOjB9LCJpYXQiOjE1ODczNjUxMTJ9.QUPJHBixUI7nu2CJGi1a6vBPOInmYuO4lVPIryHM2go"
-                );
+                    "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6Ik1BTEUiLCJhZ2VfZ3JvdXAiOiI-OTAiLCJfaWQiOiI1ZWI3ZjMwYzNlMmE4ODRhYzgzYWE3NjAiLCJ1c2VybmFtZSI6ImF1dGh0ZXN0IiwicGFzc3dvcmQiOiIkMmEkMTAkYjJmYTZHTTJMTDlLVlJ4UzhVVEkzdS5SQ2JjUWw0WXc5OExaWVVHUHRnUVdBdVFGOERqNXUiLCJfX3YiOjAsImN1cnJlbnRfY291bnRyeSI6IiJ9LCJpYXQiOjE1ODkxODc5Mjd9.ZJQHbK7cVmDOf87uuhUttlnyAFYe5KA0Afnq0iBptF0"
+                    );
             expect(response).to.have.status(200);
             expect(response.body).to.be.a('object');
             expect(response.body).to.have.property('user_id');
@@ -98,9 +99,9 @@ describe("Medical history Users API", () => {
             await medicalhistory.save();
         });
         afterEach(async () => {
-            await MedicalHistoryUser.collection.drop();
-            await MedicalHistory.collection.drop();
-            await User.collection.drop();
+            await MedicalHistoryUser.findByIdAndDelete(medicalhistory_user._id);
+            await MedicalHistory.findByIdAndDelete(medicalhistory._id);
+            await User.findByIdAndDelete(user._id);
         });
         it("It should get a new medicalhistory user pair", async () => {
             let response = await chai
@@ -108,8 +109,8 @@ describe("Medical history Users API", () => {
                 .get("/api/medicalhistoryuser/user/" + medicalhistory_user.user_id)
                 .set(
                     "Authorization",
-                    "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6IkZFTUFMRSIsImFnZV9ncm91cCI6IlVOREVSXzMwIiwiX2lkIjoiNWU5MDRjY2U3YTFjNmI2MjdhZTlmNWY3IiwidXNlcm5hbWUiOiJUZXN0aW5nIiwicGFzc3dvcmQiOiIkMmEkMTAkZWZteG01bzF2LmluSS5lU3RHR3hnTzF6SGsuTDZVb0E5TEV5WXJSUGhXa21UUVBYOC5OS08iLCJfX3YiOjB9LCJpYXQiOjE1ODczNjUxMTJ9.QUPJHBixUI7nu2CJGi1a6vBPOInmYuO4lVPIryHM2go"
-                )
+                    "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6Ik1BTEUiLCJhZ2VfZ3JvdXAiOiI-OTAiLCJfaWQiOiI1ZWI3ZjMwYzNlMmE4ODRhYzgzYWE3NjAiLCJ1c2VybmFtZSI6ImF1dGh0ZXN0IiwicGFzc3dvcmQiOiIkMmEkMTAkYjJmYTZHTTJMTDlLVlJ4UzhVVEkzdS5SQ2JjUWw0WXc5OExaWVVHUHRnUVdBdVFGOERqNXUiLCJfX3YiOjAsImN1cnJlbnRfY291bnRyeSI6IiJ9LCJpYXQiOjE1ODkxODc5Mjd9.ZJQHbK7cVmDOf87uuhUttlnyAFYe5KA0Afnq0iBptF0"
+                    )
             expect(response).to.have.status(200);
         });
     });
@@ -142,9 +143,9 @@ describe("Medical history Users API", () => {
             await medicalhistory.save();
         });
         afterEach(async () => {
-            await MedicalHistoryUser.collection.drop();
-            await MedicalHistory.collection.drop();
-            await User.collection.drop();
+            await MedicalHistoryUser.findByIdAndDelete(medicalhistory_user._id);
+            await MedicalHistory.findByIdAndDelete(medicalhistory._id);
+            await User.findByIdAndDelete(user._id);
         });
         it("It should get a new medicalhistory user pair", async () => {
             let response = await chai
@@ -152,8 +153,8 @@ describe("Medical history Users API", () => {
                 .get("/api/medicalhistoryuser/medicalhistory/" + medicalhistory_user.medicalhistory_id)
                 .set(
                     "Authorization",
-                    "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6IkZFTUFMRSIsImFnZV9ncm91cCI6IlVOREVSXzMwIiwiX2lkIjoiNWU5MDRjY2U3YTFjNmI2MjdhZTlmNWY3IiwidXNlcm5hbWUiOiJUZXN0aW5nIiwicGFzc3dvcmQiOiIkMmEkMTAkZWZteG01bzF2LmluSS5lU3RHR3hnTzF6SGsuTDZVb0E5TEV5WXJSUGhXa21UUVBYOC5OS08iLCJfX3YiOjB9LCJpYXQiOjE1ODczNjUxMTJ9.QUPJHBixUI7nu2CJGi1a6vBPOInmYuO4lVPIryHM2go"
-                )
+                    "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6Ik1BTEUiLCJhZ2VfZ3JvdXAiOiI-OTAiLCJfaWQiOiI1ZWI3ZjMwYzNlMmE4ODRhYzgzYWE3NjAiLCJ1c2VybmFtZSI6ImF1dGh0ZXN0IiwicGFzc3dvcmQiOiIkMmEkMTAkYjJmYTZHTTJMTDlLVlJ4UzhVVEkzdS5SQ2JjUWw0WXc5OExaWVVHUHRnUVdBdVFGOERqNXUiLCJfX3YiOjAsImN1cnJlbnRfY291bnRyeSI6IiJ9LCJpYXQiOjE1ODkxODc5Mjd9.ZJQHbK7cVmDOf87uuhUttlnyAFYe5KA0Afnq0iBptF0"
+                    )
             expect(response).to.have.status(200);
         });
     });
@@ -163,6 +164,7 @@ describe("Medical history Users API", () => {
         let medicalhistory_user;
         let medicalhistory;
         let user;
+        let new_medicalhistory_user;
         beforeEach(async () => {
             medicalhistory_user = new MedicalHistoryUser({
                 _id: mongoose.Types.ObjectId(),
@@ -186,9 +188,10 @@ describe("Medical history Users API", () => {
             await medicalhistory.save();
         });
         afterEach(async () => {
-            await MedicalHistoryUser.collection.drop();
-            await MedicalHistory.collection.drop();
-            await User.collection.drop();
+            await MedicalHistoryUser.findByIdAndDelete(medicalhistory_user._id);
+            await MedicalHistoryUser.findByIdAndDelete(new_medicalhistory_user._id);
+            await MedicalHistory.findByIdAndDelete(medicalhistory._id);
+            await User.findByIdAndDelete(user._id);
         });
         it("It should add a new medical history user", async () => {
             let response = await chai
@@ -196,8 +199,8 @@ describe("Medical history Users API", () => {
                 .post("/api/medicalhistoryuser/")
                 .set(
                     "Authorization",
-                    "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6IkZFTUFMRSIsImFnZV9ncm91cCI6IlVOREVSXzMwIiwiX2lkIjoiNWU5MDRjY2U3YTFjNmI2MjdhZTlmNWY3IiwidXNlcm5hbWUiOiJUZXN0aW5nIiwicGFzc3dvcmQiOiIkMmEkMTAkZWZteG01bzF2LmluSS5lU3RHR3hnTzF6SGsuTDZVb0E5TEV5WXJSUGhXa21UUVBYOC5OS08iLCJfX3YiOjB9LCJpYXQiOjE1ODczNjUxMTJ9.QUPJHBixUI7nu2CJGi1a6vBPOInmYuO4lVPIryHM2go"
-                )
+                    "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6Ik1BTEUiLCJhZ2VfZ3JvdXAiOiI-OTAiLCJfaWQiOiI1ZWI3ZjMwYzNlMmE4ODRhYzgzYWE3NjAiLCJ1c2VybmFtZSI6ImF1dGh0ZXN0IiwicGFzc3dvcmQiOiIkMmEkMTAkYjJmYTZHTTJMTDlLVlJ4UzhVVEkzdS5SQ2JjUWw0WXc5OExaWVVHUHRnUVdBdVFGOERqNXUiLCJfX3YiOjAsImN1cnJlbnRfY291bnRyeSI6IiJ9LCJpYXQiOjE1ODkxODc5Mjd9.ZJQHbK7cVmDOf87uuhUttlnyAFYe5KA0Afnq0iBptF0"
+                    )
                 .send({
                     _id: mongoose.Types.ObjectId(),
                     medicalhistory_id: medicalhistory._id,
@@ -207,6 +210,7 @@ describe("Medical history Users API", () => {
             expect(response.body).to.be.a('object');
             expect(response.body).to.have.property('medicalhistory_id');
             expect(response.body).to.have.property('user_id');
+            new_medicalhistory_user = response.body;
         });
     });
 
@@ -229,8 +233,8 @@ describe("Medical history Users API", () => {
             await medicalhistory.save();
         });
         afterEach(async () => {
-            await MedicalHistoryUser.collection.drop();
-            await MedicalHistory.collection.drop();
+            await MedicalHistoryUser.findByIdAndDelete(medicalhistory_user._id);
+            await MedicalHistory.findByIdAndDelete(medicalhistory._id);
         });
 
         it("It should update medicalhistory user", async () => {
@@ -239,8 +243,8 @@ describe("Medical history Users API", () => {
                 .patch("/api/medicalhistoryuser/")
                 .set(
                     "Authorization",
-                    "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6IkZFTUFMRSIsImFnZV9ncm91cCI6IlVOREVSXzMwIiwiX2lkIjoiNWU5MDRjY2U3YTFjNmI2MjdhZTlmNWY3IiwidXNlcm5hbWUiOiJUZXN0aW5nIiwicGFzc3dvcmQiOiIkMmEkMTAkZWZteG01bzF2LmluSS5lU3RHR3hnTzF6SGsuTDZVb0E5TEV5WXJSUGhXa21UUVBYOC5OS08iLCJfX3YiOjB9LCJpYXQiOjE1ODczNjUxMTJ9.QUPJHBixUI7nu2CJGi1a6vBPOInmYuO4lVPIryHM2go"
-                )
+                    "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6Ik1BTEUiLCJhZ2VfZ3JvdXAiOiI-OTAiLCJfaWQiOiI1ZWI3ZjMwYzNlMmE4ODRhYzgzYWE3NjAiLCJ1c2VybmFtZSI6ImF1dGh0ZXN0IiwicGFzc3dvcmQiOiIkMmEkMTAkYjJmYTZHTTJMTDlLVlJ4UzhVVEkzdS5SQ2JjUWw0WXc5OExaWVVHUHRnUVdBdVFGOERqNXUiLCJfX3YiOjAsImN1cnJlbnRfY291bnRyeSI6IiJ9LCJpYXQiOjE1ODkxODc5Mjd9.ZJQHbK7cVmDOf87uuhUttlnyAFYe5KA0Afnq0iBptF0"
+                    )
                 .send({
                     _id: medicalhistory_user._id,
                     medicalhistory_id: medicalhistory._id
@@ -265,7 +269,7 @@ describe("Medical history Users API", () => {
             await medicalhistory_user.save();
         });
         afterEach(async () => {
-            await MedicalHistoryUser.collection.drop();
+            await MedicalHistoryUser.findByIdAndDelete(medicalhistory_user._id);
         });
         it("It should delete medical history user", async () => {
             let response = await chai
@@ -273,8 +277,8 @@ describe("Medical history Users API", () => {
                 .delete("/api/medicalhistoryuser/")
                 .set(
                     "Authorization",
-                    "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6IkZFTUFMRSIsImFnZV9ncm91cCI6IlVOREVSXzMwIiwiX2lkIjoiNWU5MDRjY2U3YTFjNmI2MjdhZTlmNWY3IiwidXNlcm5hbWUiOiJUZXN0aW5nIiwicGFzc3dvcmQiOiIkMmEkMTAkZWZteG01bzF2LmluSS5lU3RHR3hnTzF6SGsuTDZVb0E5TEV5WXJSUGhXa21UUVBYOC5OS08iLCJfX3YiOjB9LCJpYXQiOjE1ODczNjUxMTJ9.QUPJHBixUI7nu2CJGi1a6vBPOInmYuO4lVPIryHM2go"
-                )
+                    "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6Ik1BTEUiLCJhZ2VfZ3JvdXAiOiI-OTAiLCJfaWQiOiI1ZWI3ZjMwYzNlMmE4ODRhYzgzYWE3NjAiLCJ1c2VybmFtZSI6ImF1dGh0ZXN0IiwicGFzc3dvcmQiOiIkMmEkMTAkYjJmYTZHTTJMTDlLVlJ4UzhVVEkzdS5SQ2JjUWw0WXc5OExaWVVHUHRnUVdBdVFGOERqNXUiLCJfX3YiOjAsImN1cnJlbnRfY291bnRyeSI6IiJ9LCJpYXQiOjE1ODkxODc5Mjd9.ZJQHbK7cVmDOf87uuhUttlnyAFYe5KA0Afnq0iBptF0"
+                    )
                 .send({
                     _id: medicalhistory_user._id
                 });
