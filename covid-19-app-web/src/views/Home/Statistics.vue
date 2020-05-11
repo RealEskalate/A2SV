@@ -185,38 +185,39 @@ export default {
           fields: [
             {
               name: "Country",
-              explanation: " List of countries"
+              explanation: "Searchable list of countries"
             },
             {
               name: "Date Range",
               explanation:
-                "Number of all dates from specific start to finish date"
+                "Specific start date and finish date for calculating the counts"
             }
           ],
           criteria: [
             {
               name: "Test Count",
               explanation:
-                "The total  number of tested people on a particular day"
+                "The total  number of tests conducted for each day in the selected range"
             },
             {
               name: "Confirmed Cases",
               explanation:
-                "The total number of confirmed cases on a particular day"
+                "The total number of confirmed cases  for each day in the selected range"
             },
             {
               name: "Death Count ",
-              explanation: "The total number of death cases on a particular day"
+              explanation:
+                "The total number of death cases  for each day in the selected range"
             },
             {
               name: "Recovery Count",
               explanation:
-                " the total number of recovered patients on a particular day"
+                "The total number of reported recoveries  for each day in the selected range"
             },
             {
               name: "Active Cases",
               explanation:
-                "the total  number of active cases on a particular day"
+                "The number of cases still active on the day for each day in the selected range"
             }
           ]
         },
@@ -227,12 +228,12 @@ export default {
           fields: [
             {
               name: "Country",
-              explanation: "List of countries"
+              explanation: "Searchable list of countries"
             },
             {
               name: "Date Range",
               explanation:
-                "Number of all dates from specific start to finish date"
+                "specific start to finish date for calculating the counts"
             },
             {
               name: "Criteria",
@@ -242,20 +243,23 @@ export default {
           criteria: [
             {
               name: "Daily Test",
-              explanation: "the number of tested people on a particular day"
+              explanation:
+                "The number of tested people for each day in the selected rangey"
             },
             {
               name: "Daily Confirmed Cases",
-              explanation: "The number of confirmed cases on a particular day"
+              explanation:
+                "The number of confirmed cases for each day in the selected range"
             },
             {
               name: "Daily Death ",
-              explanation: "The number of death cases on a particular day"
+              explanation:
+                "The number of death cases for each day in the selected range"
             },
             {
               name: "Daily Recovery",
               explanation:
-                "The number of recovered patients on a particular day"
+                "the number of recovered patients for each day in the selected range"
             }
           ]
         },
@@ -266,30 +270,34 @@ export default {
           fields: [
             {
               name: "Country",
-              explanation: "List of countries"
+              explanation: "Searchable list of countries"
             },
             {
               name: "Date Range",
               explanation:
-                "Number of all dates from specific start to finish date"
+                "Specific start to finish date for calculating the counts"
             }
           ],
           criteria: [
             {
               name: "Positive Rate ",
-              explanation: "The ratio of positive count to test counts per day"
+              explanation:
+                "The percentage of positive counts from the test counts of all days in the selected range"
             },
             {
               name: "Recovery Rate",
-              explanation: "The ratio of recovered cases per day"
+              explanation:
+                "The percentage of recovered counts from the confirmed test counts of all days in the selected range"
             },
             {
               name: "Active Rate",
-              explanation: "The ratio of active count to total count per day"
+              explanation:
+                "The percentage of active patient counts from the confirmed test counts of all days in the selected range"
             },
             {
               name: "Death Rate",
-              explanation: "The ratio of death cases to total count per day"
+              explanation:
+                "The percentage of  death counts from the test counts of all days in the selected range"
             }
           ]
         },
@@ -300,12 +308,12 @@ export default {
           fields: [
             {
               name: "Country 1 & 2",
-              explanation: "List of countries"
+              explanation: " An option to select two countries to compare"
             },
             {
               name: "Date Range 1 & 2",
               explanation:
-                "Number of all dates from specific start to finish date"
+                "Specific start to finish date in which we see the data for the respective country"
             },
             {
               name: "Common Criteria",
@@ -316,42 +324,47 @@ export default {
             {
               name: "Test Count",
               explanation:
-                "The total  number of tested people on a particular day"
+                "The total  number of tests conducted  for each day in the selected range"
             },
             {
               name: "Recovery Count",
               explanation:
-                " the total number of recovered patients on a particular day"
+                "The total number of reported recoveries  for each day in the selected range"
             },
             {
               name: "Confirmed Cases",
               explanation:
-                "The total number of confirmed cases on a particular day"
+                "The total number of confirmed cases  for each day in the selected range"
             },
             {
               name: "Death Count ",
-              explanation: "The total number of death cases on a particular day"
+              explanation:
+                "The total number of death cases  for each day in the selected range"
             },
             {
               name: "Active Cases",
               explanation:
-                "the total  number of active cases on a particular day"
+                "The number of cases still active on the day for each day in the selected range"
             },
             {
               name: "Positive Rate ",
-              explanation: "The ratio of positive count to test counts per day"
+              explanation:
+                "The percentage of positive counts from the test counts of all days in the selected range"
             },
             {
               name: "Recovery Rate",
-              explanation: "The ratio of recovered cases per day"
+              explanation:
+                "The percentage of recovered counts from the confirmed test counts of all days in the selected range"
             },
             {
               name: "Active Rate",
-              explanation: "The ratio of active count to total count per day"
+              explanation:
+                "The percentage of active patient counts from the confirmed test counts of all days in the selected range"
             },
             {
               name: "Death Rate",
-              explanation: "The ratio of death cases to total count per day"
+              explanation:
+                "The percentage of death counts from the test counts of all days in the selected range"
             }
           ]
         },
@@ -363,7 +376,7 @@ export default {
           criteria: [
             {
               name: "Confirmed  Cases",
-              explanation: "The overall number of  confirmed cases "
+              explanation: "The overall number of confirmed cases "
             },
             {
               name: "Death Count",
