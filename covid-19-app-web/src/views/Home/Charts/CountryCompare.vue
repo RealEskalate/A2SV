@@ -141,7 +141,7 @@
           </v-col>
         </v-row>
         <v-row>
-          <v-col cols="12" md="12" class="overflow-auto pl-md-10">
+          <v-col cols="12" md="12" class="overflow-auto px-md-10">
             <line-chart
               class="v-card--shaped grey lighten-5 shadow-in pb-6 px-1"
               style="min-width: 400px"

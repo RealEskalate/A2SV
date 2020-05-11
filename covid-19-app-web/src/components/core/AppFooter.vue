@@ -1,37 +1,36 @@
 <template>
   <v-footer
-    class="shadow-lg v-sheet v-sheet--tile theme--light"
-    style="background: url('https://lh5.googleusercontent.com/proxy/nAm2UTt8kjupZFGWD4iPSIYLhJ7ZyhjHTSkzi-4kEzNBhI0NNx1RvJYSh89lgahLNWnp2Wii51RyzYTuxvHibai7tlpBI68_RLauPSwuSyl_abO2bNSfSkQeopmtBKiaMNlifi9aTkiC');"
+    class="v-card--raised"
   >
     <v-container class="my-2">
       <v-layout row wrap>
         <v-flex xs12 md3 class="mx-2 sm12">
           <p class="font-weight-bold ml-3">Get our App</p>
-          <v-divider class="mx-1"></v-divider>
+          <v-divider class="mx-1" />
           <v-row>
             <v-col cols="6">
-              <router-link to="/" target="blank">
+              <router-link to="/" target="_blank">
                 <v-img
-                  class="v-card--raised"
+                  class="v-card"
                   src="/img/footer/app-store.svg"
                   max-width="10.5em"
-                ></v-img>
+                />
               </router-link>
             </v-col>
             <v-col cols="6">
-              <router-link to="/" target="blank">
+              <router-link to="/" target="_blank">
                 <v-img
-                  class="v-card--raised"
+                  class="v-card"
                   src="/img/footer/google-play.svg"
                   max-width="10.5em"
-                ></v-img>
+                />
               </router-link>
             </v-col>
           </v-row>
         </v-flex>
         <v-flex xs12 md6 class="mx-4">
           <p class="font-weight-bold text-center">About</p>
-          <v-divider class="mx-4"></v-divider>
+          <v-divider class="mx-4" />
           <v-col>
             <span class="text-justify">
               Our App is a non-commercial app that uses crowd-sourcing to
@@ -46,7 +45,7 @@
 
         <v-flex xs12 md2 class="mx-2">
           <p class="font-weight-bold text-center">More info</p>
-          <v-divider class="mx-4"></v-divider>
+          <v-divider class="mx-4" />
           <v-col class="text-center">
             <v-btn
               v-for="icon in icons"

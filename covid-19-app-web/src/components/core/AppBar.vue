@@ -106,7 +106,7 @@ export default {
       navType: store.getters.getNavigationType,
       locationY: 0,
       curRoute: 0,
-      activeBtn: 1,
+      activeBtn: 0,
       links: [
         { text: "Home", icon: "mdi-home", to: "/" },
         {
