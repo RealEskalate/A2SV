@@ -119,6 +119,13 @@ export const ChartMixin = {
     }
   },
   methods: {
+    defaultDate(mode = "start") {
+      if (mode === "start")
+        return moment(new Date())
+          .subtract(3, "month")
+          .format("YYYY-MM-DD");
+      else return moment(new Date()).format("YYYY-MM-DD");
+    },
     isCount() {
       let counts = [];
       if (!this.criteria) {
@@ -215,6 +222,8 @@ export const ChartMixin = {
   },
   data: () => {
     return {
+      default_start_date: "",
+      default_end_date: "",
       age_ranges: ["All", "Bellow 25", "26 - 50", "Above 50"],
       criteria: {
         counts: [
