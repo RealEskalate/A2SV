@@ -41,6 +41,7 @@
                 />
               </template>
               <v-date-picker
+                :min="date_range_1.length === 1 ? date_range_1[0] : null"
                 :max="maxDate"
                 :color="
                   `rgb(${colors[0][0]}, ${colors[0][1]}, ${colors[0][2]})`
@@ -104,6 +105,7 @@
                 :color="
                   `rgb(${colors[1][0]}, ${colors[1][1]}, ${colors[1][2]})`
                 "
+                :min="date_range_2.length === 1 ? date_range_2[0] : null"
                 :max="maxDate"
                 range
                 no-title
@@ -177,18 +179,8 @@ export default {
         [121, 134, 203],
         [240, 98, 146]
       ],
-      date_range_1: [
-        moment(new Date())
-          .subtract(3, "month")
-          .format("YYYY-MM-DD"),
-        moment(new Date()).format("YYYY-MM-DD")
-      ],
-      date_range_2: [
-        moment(new Date())
-          .subtract(3, "month")
-          .format("YYYY-MM-DD"),
-        moment(new Date()).format("YYYY-MM-DD")
-      ],
+      date_range_1: [this.defaultDate(), this.defaultDate("end")],
+      date_range_2: [this.defaultDate(), this.defaultDate("end")],
       country_1: { name: "World", slug: "World" },
       country_2: { name: "World", slug: "World" },
       age_range: "All",
@@ -233,13 +225,8 @@ export default {
         country: this.country_1.slug,
         criteria: this.criterion,
         mode: "one",
-        start_date:
-          this.date_range_1[0] ||
-          moment(new Date())
-            .subtract(3, "month")
-            .format("YYYY-MM-DD"),
-        end_date:
-          this.date_range_1[1] || moment(new Date()).format("YYYY-MM-DD")
+        start_date: this.date_range_1[0] || this.defaultDate(),
+        end_date: this.date_range_1[1] || this.defaultDate("end")
       });
     },
     fetchData2() {
@@ -247,13 +234,8 @@ export default {
         country: this.country_2.slug,
         criteria: this.criterion,
         mode: "two",
-        start_date:
-          this.date_range_2[0] ||
-          moment(new Date())
-            .subtract(3, "month")
-            .format("YYYY-MM-DD"),
-        end_date:
-          this.date_range_2[1] || moment(new Date()).format("YYYY-MM-DD")
+        start_date: this.date_range_2[0] || this.defaultDate(),
+        end_date: this.date_range_2[1] || this.defaultDate()
       });
     }
   },

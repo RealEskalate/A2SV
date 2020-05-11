@@ -36,6 +36,7 @@
           </template>
           <v-date-picker
             color="primary"
+            :min="date_range.length === 1 ? date_range[0] : null"
             :max="maxDate"
             range
             no-title
@@ -69,7 +70,6 @@
 import { LineChart, ChartMixin } from "./charts.js";
 import CountryResources from "../CountryResources";
 import store from "@/store/index.js";
-import moment from "moment";
 
 export default {
   components: { LineChart, CountryResources },
@@ -85,15 +85,7 @@ export default {
   data() {
     return {
       data: null,
-      start_date: moment(new Date())
-        .subtract(3, "month")
-        .format("YYYY-MM-DD"),
-      date_range: [
-        moment(new Date())
-          .subtract(3, "month")
-          .format("YYYY-MM-DD"),
-        moment(new Date()).format("YYYY-MM-DD")
-      ],
+      date_range: [this.defaultDate(), this.defaultDate("end")],
       country: { name: "World", slug: "World" },
       age_range: "All",
       social_distancing: 50
@@ -121,12 +113,8 @@ export default {
         makeDataSet: this.makeDataSet,
         mode: this.mode,
         country: this.country.slug,
-        start_date:
-          this.date_range[0] ||
-          moment(new Date())
-            .subtract(3, "month")
-            .format("YYYY-MM-DD"),
-        end_date: this.date_range[1] || moment(new Date()).format("YYYY-MM-DD")
+        start_date: this.date_range[0] || this.defaultDate(),
+        end_date: this.date_range[1] || this.defaultDate("end")
       });
     }
   },
