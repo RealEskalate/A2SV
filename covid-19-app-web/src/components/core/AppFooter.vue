@@ -1,7 +1,5 @@
 <template>
-  <v-footer
-    class="v-card--raised"
-  >
+  <v-footer class="v-card--raised">
     <v-container class="my-2">
       <v-layout row wrap>
         <v-flex xs12 md3 class="mx-2 sm12">

@@ -1,9 +1,6 @@
 <template>
   <v-card flat>
-    <v-card-title
-      class="primary--text text--darken-2"
-      v-text="country.name"
-    />
+    <v-card-title class="primary--text text--darken-2" v-text="country.name" />
     <v-card-subtitle>
       <v-row>
         <v-col cols="10" class="my-0 py-0">
