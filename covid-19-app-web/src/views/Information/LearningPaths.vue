@@ -564,9 +564,3 @@ export default {
   }
 };
 </script>
-
-<style>
-.shadow {
-  box-shadow: 5px 15px 15px 5px #eae6e6;
-}
-</style>

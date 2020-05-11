@@ -49,7 +49,7 @@
           <v-col class="text-center">
             <v-btn
               v-for="icon in icons"
-              :key="icon"
+              :key="icon[0]"
               class="mx-2 black--text"
               icon
               v-bind:href="icon[1]"
