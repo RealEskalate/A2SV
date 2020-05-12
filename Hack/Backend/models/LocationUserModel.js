@@ -4,10 +4,12 @@ const schema = mongoose.Schema;
 const location_user = new schema({
     user_id: {
         type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
         required: true
     },
     location_id: {
         type: mongoose.Schema.Types.ObjectId,
+        ref: 'Location',
         required: true
     },
     TTL: {

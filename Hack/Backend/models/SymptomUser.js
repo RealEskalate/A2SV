@@ -4,11 +4,13 @@ const Joi = require("joi");
 const symptom_user_schema = new mongoose.Schema({
     symptom_id: {
         type: mongoose.Schema.Types.ObjectId,
-        required: true
+        required: true,
+        ref: 'Symptom'
     },
     user_id: {
         type: mongoose.Schema.Types.ObjectId,
-        required: true
+        required: true,
+        ref: 'User'
     },
     timestamp : { 
         type : Date, 
