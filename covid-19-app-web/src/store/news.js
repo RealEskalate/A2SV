@@ -1,24 +1,25 @@
 import axios from "axios";
 
 const state = {
-  news: [],
+  news: null,
   newsMeta: "",
+  totalCount: 0,
   sources: [],
-  country: []
+  currentCountry: []
 };
 
 const getters = {
   getNews: state => {
     return state.news;
   },
-  getNewsMeta: state => {
-    return state.newsMeta;
+  getTotalCount: state => {
+    return state.totalCount;
   },
   getSources: state => {
     return state.sources;
   },
-  getCountry: state => {
-    return state.country;
+  getCurrentCountry: state => {
+    return state.currentCountry;
   }
 };
 
@@ -26,48 +27,62 @@ const mutations = {
   setNews: (state, payload) => {
     state.news = payload;
   },
-  setNewsMeta: (state, payload) => {
-    state.newsMeta = payload;
+  setTotalCount: (state, payload) => {
+    state.totalCount = payload;
   },
   setSources: (state, payload) => {
     state.sources = payload;
   },
-  setCountry: (state, payload) => {
-    state.country = payload;
+  setCurrentCountry: (state, payload) => {
+    state.currentCountry = payload;
   }
 };
 
 const actions = {
   setSources: ({ commit }) => {
-    axios.get(`${process.env.VUE_APP_BASE_URL}/news/sources`).then(
-      response => {
-        commit("setSources", response.data);
-        // commit('setNewsMeta', response.meta);
-      },
-      error => {
-        console.log(error);
-      }
-    );
-  },
-  setCountry: ({ commit }) => {
-    axios.get("http://ip-api.com/json").then(response => {
-      commit("setCountry", response.data.country);
-    });
-  },
-  setNews: ({ commit }, { page, country, source }) => {
+    commit("setNewsLoaders", { key: "sources", value: true });
     axios
-      .get(
-        `${process.env.VUE_APP_BASE_URL}/news/?page=${page}&country=${country}&source=${source}`
-      )
+      .get(`${process.env.VUE_APP_BASE_URL}/news/sources`)
       .then(
         response => {
-          commit("setNews", response.data.data);
-          // commit('setNewsMeta', response.meta);
+          commit("setSources", response.data);
         },
         error => {
           console.log(error);
         }
-      );
+      )
+      .finally(function() {
+        commit("setNewsLoaders", { key: "sources", value: false });
+      });
+  },
+  setCurrentCountry: ({ commit }) => {
+    axios.get("http://ip-api.com/json").then(response => {
+      commit("setCurrentCountry", response.data.country);
+    });
+  },
+  setNews: ({ commit }, { page, size, country, sources }) => {
+    commit("setNewsLoaders", { key: "list", value: true });
+    axios
+      .get(`${process.env.VUE_APP_BASE_URL}/news`, {
+        params: {
+          page: page,
+          size: size,
+          country: country,
+          source: sources.join(",")
+        }
+      })
+      .then(
+        response => {
+          commit("setNews", response.data.data);
+          commit("setTotalCount", response.data.data_count);
+        },
+        error => {
+          console.log(error);
+        }
+      )
+      .finally(function() {
+        commit("setNewsLoaders", { key: "list", value: false });
+      });
   }
 };
 
