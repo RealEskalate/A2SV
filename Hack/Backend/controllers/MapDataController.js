@@ -40,7 +40,7 @@ exports.getMapData = async (req, res) => {
 
 // Schedules fetching everyday
 const run_updates = () => {
-  schedule.scheduleJob({hour: 02, minute: 00}, async function () {
+  schedule.scheduleJob({hour: 06, minute: 00}, async function () {
     await updateDb();
   });
 };
