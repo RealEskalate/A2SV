@@ -8,13 +8,14 @@ let mongoose = require("mongoose");
 const { expect } = chai;
 chai.use(chaiHttp);
 
-describe("Users API", () => {
+describe("User API", () => {
   //Get All Users - Valid Route
   describe("GET /api/users", () => {
+    let newUser;
     beforeEach(async() => {
-      let newUser = new User({
+      newUser = new User({
         _id : mongoose.Types.ObjectId(),
-        username:"Testing",
+        username:"Testing " + Date.now(),
         password:"$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
         gender:"FEMALE",
         age_group:"21-30",
@@ -22,24 +23,25 @@ describe("Users API", () => {
       await newUser.save();
     });
     afterEach(async()=>{
-      await User.collection.drop();
+      await User.findByIdAndDelete(newUser._id);
     });  
     it("It should Get all users", async() => {
       let response = await chai.request(server)
         .get("/api/users")
         .set(
           "Authorization",
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6IkZFTUFMRSIsImFnZV9ncm91cCI6IlVOREVSXzMwIiwiX2lkIjoiNWU5MDRjY2U3YTFjNmI2MjdhZTlmNWY3IiwidXNlcm5hbWUiOiJUZXN0aW5nIiwicGFzc3dvcmQiOiIkMmEkMTAkZWZteG01bzF2LmluSS5lU3RHR3hnTzF6SGsuTDZVb0E5TEV5WXJSUGhXa21UUVBYOC5OS08iLCJfX3YiOjB9LCJpYXQiOjE1ODczNjUxMTJ9.QUPJHBixUI7nu2CJGi1a6vBPOInmYuO4lVPIryHM2go"
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6Ik1BTEUiLCJhZ2VfZ3JvdXAiOiI-OTAiLCJfaWQiOiI1ZWI3ZjMwYzNlMmE4ODRhYzgzYWE3NjAiLCJ1c2VybmFtZSI6ImF1dGh0ZXN0IiwicGFzc3dvcmQiOiIkMmEkMTAkYjJmYTZHTTJMTDlLVlJ4UzhVVEkzdS5SQ2JjUWw0WXc5OExaWVVHUHRnUVdBdVFGOERqNXUiLCJfX3YiOjAsImN1cnJlbnRfY291bnRyeSI6IiJ9LCJpYXQiOjE1ODkxODc5Mjd9.ZJQHbK7cVmDOf87uuhUttlnyAFYe5KA0Afnq0iBptF0"
         );
       expect(response).to.have.status(200);
       
     });
   });    
   describe("GET /api/userss", () => {
+    let newUser;
     beforeEach(async() => {
-      let newUser = new User({
+      newUser = new User({
         _id : mongoose.Types.ObjectId(),
-        username:"Testing",
+        username:"Testing " + Date.now(),
         password:"$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
         gender:"FEMALE",
         age_group:"21-30",
@@ -47,7 +49,7 @@ describe("Users API", () => {
       await newUser.save();
     });
     afterEach(async()=>{
-      await User.collection.drop();
+      await User.findByIdAndDelete(newUser._id);
     });  
     //Get All Users - Invalid Route
     it("It should not Get all users", async() => {
@@ -63,7 +65,7 @@ describe("Users API", () => {
     beforeEach(async() => {
       newUser = new User({
         _id : mongoose.Types.ObjectId(),
-        username:"Testing",
+        username:"Testing " + Date.now(),
         password:"$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
         gender:"FEMALE",
         age_group:"21-30",
@@ -71,14 +73,14 @@ describe("Users API", () => {
       await newUser.save();
     });
     afterEach(async()=>{
-      await User.collection.drop();
+      await User.findByIdAndDelete(newUser._id);
     });  
     it("It should Get user By ID", async() => {
       let response = await chai.request(server)
         .get("/api/users/"+newUser._id)
         .set(
           "Authorization",
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6IkZFTUFMRSIsImFnZV9ncm91cCI6IlVOREVSXzMwIiwiX2lkIjoiNWU5MDRjY2U3YTFjNmI2MjdhZTlmNWY3IiwidXNlcm5hbWUiOiJUZXN0aW5nIiwicGFzc3dvcmQiOiIkMmEkMTAkZWZteG01bzF2LmluSS5lU3RHR3hnTzF6SGsuTDZVb0E5TEV5WXJSUGhXa21UUVBYOC5OS08iLCJfX3YiOjB9LCJpYXQiOjE1ODczNjUxMTJ9.QUPJHBixUI7nu2CJGi1a6vBPOInmYuO4lVPIryHM2go"
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6Ik1BTEUiLCJhZ2VfZ3JvdXAiOiI-OTAiLCJfaWQiOiI1ZWI3ZjMwYzNlMmE4ODRhYzgzYWE3NjAiLCJ1c2VybmFtZSI6ImF1dGh0ZXN0IiwicGFzc3dvcmQiOiIkMmEkMTAkYjJmYTZHTTJMTDlLVlJ4UzhVVEkzdS5SQ2JjUWw0WXc5OExaWVVHUHRnUVdBdVFGOERqNXUiLCJfX3YiOjAsImN1cnJlbnRfY291bnRyeSI6IiJ9LCJpYXQiOjE1ODkxODc5Mjd9.ZJQHbK7cVmDOf87uuhUttlnyAFYe5KA0Afnq0iBptF0"
         );
       expect(response).to.have.status(200);
       expect(response.body).to.be.a("object");
@@ -91,10 +93,11 @@ describe("Users API", () => {
 
   //Get User by ID - Invalid User
   describe("GET /api/users/:id", () => {
+    let newUser;
     beforeEach(async() => {
-      let newUser = new User({
+      newUser = new User({
         _id : mongoose.Types.ObjectId(),
-        username:"Testing",
+        username:"Testing " + Date.now(),
         password:"$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
         gender:"FEMALE",
         age_group:"21-30",
@@ -102,14 +105,14 @@ describe("Users API", () => {
       await newUser.save();
     });
     afterEach(async()=>{
-      await User.collection.drop();
+      await User.findByIdAndDelete(newUser._id);
     });  
     it("It should not Get user By ID", async() => {
       let response = await chai.request(server)
         .get("/api/users/5e904cce7a1c6b627ae9f507")
         .set(
           "Authorization",
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6IkZFTUFMRSIsImFnZV9ncm91cCI6IlVOREVSXzMwIiwiX2lkIjoiNWU5MDRjY2U3YTFjNmI2MjdhZTlmNWY3IiwidXNlcm5hbWUiOiJUZXN0aW5nIiwicGFzc3dvcmQiOiIkMmEkMTAkZWZteG01bzF2LmluSS5lU3RHR3hnTzF6SGsuTDZVb0E5TEV5WXJSUGhXa21UUVBYOC5OS08iLCJfX3YiOjB9LCJpYXQiOjE1ODczNjUxMTJ9.QUPJHBixUI7nu2CJGi1a6vBPOInmYuO4lVPIryHM2go"
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6Ik1BTEUiLCJhZ2VfZ3JvdXAiOiI-OTAiLCJfaWQiOiI1ZWI3ZjMwYzNlMmE4ODRhYzgzYWE3NjAiLCJ1c2VybmFtZSI6ImF1dGh0ZXN0IiwicGFzc3dvcmQiOiIkMmEkMTAkYjJmYTZHTTJMTDlLVlJ4UzhVVEkzdS5SQ2JjUWw0WXc5OExaWVVHUHRnUVdBdVFGOERqNXUiLCJfX3YiOjAsImN1cnJlbnRfY291bnRyeSI6IiJ9LCJpYXQiOjE1ODkxODc5Mjd9.ZJQHbK7cVmDOf87uuhUttlnyAFYe5KA0Afnq0iBptF0"
         );
       expect(response.body).to.not.have.property("username");
     });
@@ -117,10 +120,11 @@ describe("Users API", () => {
 
   //Get User By Credentials - Valid User
   describe("GET /api/auth/login", () => {
+    let newUser;
     beforeEach(async() => {
-      let newUser = new User({
+      newUser = new User({
         _id : mongoose.Types.ObjectId(),
-        username:"Testing",
+        username:"Testing " + Date.now(),
         password:"$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
         gender:"FEMALE",
         age_group:"21-30",
@@ -128,13 +132,13 @@ describe("Users API", () => {
       await newUser.save();
     });
     afterEach(async()=>{
-      await User.collection.drop();
+      await User.findByIdAndDelete(newUser._id);
     });  
     it("It should authenticate user", async() => {
       let response = await chai.request(server)
         .post("/api/auth/login")
         .send({
-          username: "Testing",
+          username: newUser.username,
           password: "10000",
         });
       expect(response).to.have.status(200);
@@ -148,10 +152,11 @@ describe("Users API", () => {
 
   //Get User By Credentials - In Valid User
   describe("GET /api/auth/login", () => {
+    let newUser;
     beforeEach(async() => {
-      let newUser = new User({
+      newUser = new User({
         _id : mongoose.Types.ObjectId(),
-        username:"Testing",
+        username:"Testing " + Date.now(),
         password:"$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
         gender:"FEMALE",
         age_group:"21-30",
@@ -159,7 +164,7 @@ describe("Users API", () => {
       await newUser.save();
     });
     afterEach(async()=>{
-      await User.collection.drop();
+      await User.findByIdAndDelete(newUser._id);
     });  
     it("It should not authenticate user", async() => {
       let response = await chai.request(server)
@@ -174,10 +179,12 @@ describe("Users API", () => {
 
   //Post User - Valid User
   describe("POST /api/auth/register", () => {
+    let newUser;
+    let addedUser;
     beforeEach(async() => {
-      let newUser = new User({
+      newUser = new User({
         _id : mongoose.Types.ObjectId(),
-        username:"Testing",
+        username:"Testing " + Date.now(),
         password:"$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
         gender:"FEMALE",
         age_group:"21-30",
@@ -185,13 +192,14 @@ describe("Users API", () => {
       await newUser.save();
     });
     afterEach(async()=>{
-      await User.collection.drop();
+      await User.findByIdAndDelete(newUser._id);
+      await User.findByIdAndDelete(addedUser._id);
     });  
     it("It should register user", async() => {
       let response = await chai.request(server)
         .post("/api/auth/register")
         .send({
-          username: "UnitTesting",
+          username: "Testing " + Date.now(),
           password: "UnitTesting",
           gender: "MALE",
           age_group: "21-30",
@@ -202,14 +210,17 @@ describe("Users API", () => {
         expect(response.body).to.have.property("password");
         expect(response.body).to.have.property("gender");
         expect(response.body).to.have.property("age_group");
+
+        addedUser = response.body;
     });
   });
   //Post User - Invalid User (Password Length)
   describe("POST /api/auth/register", () => {
+    let newUser;
     beforeEach(async() => {
-      let newUser = new User({
+      newUser = new User({
         _id : mongoose.Types.ObjectId(),
-        username:"Testing",
+        username:"Testing " + Date.now(),
         password:"$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
         gender:"FEMALE",
         age_group:"21-30",
@@ -217,13 +228,13 @@ describe("Users API", () => {
       await newUser.save();
     });
     afterEach(async()=>{
-      await User.collection.drop();
+      await User.findByIdAndDelete(newUser._id);
     });  
     it("It should not register user due to password length", async() => {
       let response = await chai.request(server)
         .post("/api/auth/register")
         .send({
-          username: "UnitTesting",
+          username: "Testing " + Date.now(),
           password: "U",
           gender: "MALE",
           age_group: "21-30",
@@ -233,10 +244,11 @@ describe("Users API", () => {
   });
   //Post User - Missing Fields
   describe("POST /api/auth/register", () => {
+    let newUser
     beforeEach(async() => {
-      let newUser = new User({
+      newUser = new User({
         _id : mongoose.Types.ObjectId(),
-        username:"Testing",
+        username:"Testing " + Date.now(),
         password:"$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
         gender:"FEMALE",
         age_group:"21-30",
@@ -244,23 +256,24 @@ describe("Users API", () => {
       await newUser.save();
     });
     afterEach(async()=>{
-      await User.collection.drop();
+      await User.findByIdAndDelete(newUser._id);
     });  
     it("It should not register user due to missing fields", async() => {
       let response = await chai.request(server)
         .post("/api/auth/register")
         .send({
-          username: "UnitTesting",
+          username: "Testing " + Date.now(),
         });
         expect(response).to.have.status(500);
       });
   });
   //Post User - Existing User
   describe("POST /api/auth/register", () => {
+    let newUser;
     beforeEach(async() => {
-      let newUser = new User({
+      newUser = new User({
         _id : mongoose.Types.ObjectId(),
-        username:"Testing",
+        username:"Testing " + Date.now(),
         password:"$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
         gender:"FEMALE",
         age_group:"21-30",
@@ -268,13 +281,13 @@ describe("Users API", () => {
       await newUser.save();
     });
     afterEach(async()=>{
-      await User.collection.drop();
+      await User.findByIdAndDelete(newUser._id);
     });  
     it("It should not register user due to already existing user", async() => {
       let response = await chai.request(server)
         .post("/api/auth/register")
         .send({
-          username: "Testing",
+          username: newUser.username,
           password: "10000",
         });
         expect(response).to.have.status(500);
@@ -287,7 +300,7 @@ describe("Users API", () => {
     beforeEach(async() => {
       newUser = new User({
         _id : mongoose.Types.ObjectId(),
-        username:"Testing",
+        username:"Testing " + Date.now(),
         password:"$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
         gender:"FEMALE",
         age_group:"21-30",
@@ -295,18 +308,18 @@ describe("Users API", () => {
       await newUser.save();
     });
     afterEach(async()=>{
-      await User.collection.drop();
+      await User.findByIdAndDelete(newUser._id);
     });  
     it("It should update user", async() => {
       let response = await chai.request(server)
         .patch("/api/users")
         .set(
           "Authorization",
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6IkZFTUFMRSIsImFnZV9ncm91cCI6IlVOREVSXzMwIiwiX2lkIjoiNWU5MDRjY2U3YTFjNmI2MjdhZTlmNWY3IiwidXNlcm5hbWUiOiJUZXN0aW5nIiwicGFzc3dvcmQiOiIkMmEkMTAkZWZteG01bzF2LmluSS5lU3RHR3hnTzF6SGsuTDZVb0E5TEV5WXJSUGhXa21UUVBYOC5OS08iLCJfX3YiOjB9LCJpYXQiOjE1ODczNjUxMTJ9.QUPJHBixUI7nu2CJGi1a6vBPOInmYuO4lVPIryHM2go"
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6Ik1BTEUiLCJhZ2VfZ3JvdXAiOiI-OTAiLCJfaWQiOiI1ZWI3ZjMwYzNlMmE4ODRhYzgzYWE3NjAiLCJ1c2VybmFtZSI6ImF1dGh0ZXN0IiwicGFzc3dvcmQiOiIkMmEkMTAkYjJmYTZHTTJMTDlLVlJ4UzhVVEkzdS5SQ2JjUWw0WXc5OExaWVVHUHRnUVdBdVFGOERqNXUiLCJfX3YiOjAsImN1cnJlbnRfY291bnRyeSI6IiJ9LCJpYXQiOjE1ODkxODc5Mjd9.ZJQHbK7cVmDOf87uuhUttlnyAFYe5KA0Afnq0iBptF0"
         )
         .send({
           _id: newUser._id,
-          username:"Testing2",
+          username:"Testing " + Date.now(),
           password:"10000",
           gender:"FEMALE",
           age_group:"21-30",  
@@ -327,7 +340,7 @@ describe("Users API", () => {
     beforeEach(async() => {
       newUser = new User({
         _id : mongoose.Types.ObjectId(),
-        username:"Testing",
+        username:"Testing " + Date.now(),
         password:"$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
         gender:"FEMALE",
         age_group:"21-30",
@@ -335,7 +348,7 @@ describe("Users API", () => {
       await newUser.save();
       newUser2 = new User({
         _id : mongoose.Types.ObjectId(),
-        username:"Testing2",
+        username:"Testing " + Date.now(),
         password:"$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
         gender:"FEMALE",
         age_group:"21-30",
@@ -343,18 +356,19 @@ describe("Users API", () => {
       await newUser2.save();
     });
     afterEach(async()=>{
-      await User.collection.drop();
+      await User.findByIdAndDelete(newUser._id);
+      await User.findByIdAndDelete(newUser2._id);
     });  
     it("It should not update user", async() => {
       let response = await chai.request(server)
         .patch("/api/users")
         .set(
           "Authorization",
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6IkZFTUFMRSIsImFnZV9ncm91cCI6IlVOREVSXzMwIiwiX2lkIjoiNWU5MDRjY2U3YTFjNmI2MjdhZTlmNWY3IiwidXNlcm5hbWUiOiJUZXN0aW5nIiwicGFzc3dvcmQiOiIkMmEkMTAkZWZteG01bzF2LmluSS5lU3RHR3hnTzF6SGsuTDZVb0E5TEV5WXJSUGhXa21UUVBYOC5OS08iLCJfX3YiOjB9LCJpYXQiOjE1ODczNjUxMTJ9.QUPJHBixUI7nu2CJGi1a6vBPOInmYuO4lVPIryHM2go"
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6Ik1BTEUiLCJhZ2VfZ3JvdXAiOiI-OTAiLCJfaWQiOiI1ZWI3ZjMwYzNlMmE4ODRhYzgzYWE3NjAiLCJ1c2VybmFtZSI6ImF1dGh0ZXN0IiwicGFzc3dvcmQiOiIkMmEkMTAkYjJmYTZHTTJMTDlLVlJ4UzhVVEkzdS5SQ2JjUWw0WXc5OExaWVVHUHRnUVdBdVFGOERqNXUiLCJfX3YiOjAsImN1cnJlbnRfY291bnRyeSI6IiJ9LCJpYXQiOjE1ODkxODc5Mjd9.ZJQHbK7cVmDOf87uuhUttlnyAFYe5KA0Afnq0iBptF0"
         )
         .send({
           _id: newUser2._id,
-          username:"Testing",
+          username:newUser.username,
           password:"10000",
           gender:"FEMALE",
           age_group:"21-30",  
@@ -365,10 +379,11 @@ describe("Users API", () => {
 
   //Delete User - Valid User
   describe("DELETE /api/users", () => {
+    let newUser;
     beforeEach(async() => {
-      let newUser = new User({
+      newUser = new User({
         _id : mongoose.Types.ObjectId(),
-        username:"Testing",
+        username:"Testing " + Date.now(),
         password:"$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
         gender:"FEMALE",
         age_group:"21-30",
@@ -376,13 +391,13 @@ describe("Users API", () => {
       await newUser.save();
     });
     afterEach(async()=>{
-      await User.collection.drop();
+      await User.findByIdAndDelete(newUser._id);
     });  
     it("It should delete user", async() => {
       let saved_response = await chai.request(server)
         .post("/api/auth/register")
         .send({
-          username: "UnitTesting",
+          username: "Testing " + Date.now(),
           password: "UnitTesting",
           gender: "MALE",
           age_group: "21-30",
@@ -391,7 +406,7 @@ describe("Users API", () => {
         .delete("/api/users")
         .set(
           "Authorization",
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6IkZFTUFMRSIsImFnZV9ncm91cCI6IlVOREVSXzMwIiwiX2lkIjoiNWU5MDRjY2U3YTFjNmI2MjdhZTlmNWY3IiwidXNlcm5hbWUiOiJUZXN0aW5nIiwicGFzc3dvcmQiOiIkMmEkMTAkZWZteG01bzF2LmluSS5lU3RHR3hnTzF6SGsuTDZVb0E5TEV5WXJSUGhXa21UUVBYOC5OS08iLCJfX3YiOjB9LCJpYXQiOjE1ODczNjUxMTJ9.QUPJHBixUI7nu2CJGi1a6vBPOInmYuO4lVPIryHM2go"
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6Ik1BTEUiLCJhZ2VfZ3JvdXAiOiI-OTAiLCJfaWQiOiI1ZWI3ZjMwYzNlMmE4ODRhYzgzYWE3NjAiLCJ1c2VybmFtZSI6ImF1dGh0ZXN0IiwicGFzc3dvcmQiOiIkMmEkMTAkYjJmYTZHTTJMTDlLVlJ4UzhVVEkzdS5SQ2JjUWw0WXc5OExaWVVHUHRnUVdBdVFGOERqNXUiLCJfX3YiOjAsImN1cnJlbnRfY291bnRyeSI6IiJ9LCJpYXQiOjE1ODkxODc5Mjd9.ZJQHbK7cVmDOf87uuhUttlnyAFYe5KA0Afnq0iBptF0"
         )
         .send({
           _id: saved_response.body._id
@@ -401,10 +416,11 @@ describe("Users API", () => {
   });
   //Delete User - Invalid User
   describe("DELETE /api/users", () => {
+    let newUser;
     beforeEach(async() => {
-      let newUser = new User({
+      newUser = new User({
         _id : mongoose.Types.ObjectId(),
-        username:"Testing",
+        username:"Testing " + Date.now(),
         password:"$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
         gender:"FEMALE",
         age_group:"21-30",
@@ -412,14 +428,14 @@ describe("Users API", () => {
       await newUser.save();
     });
     afterEach(async()=>{
-      await User.collection.drop();
+      await User.findByIdAndDelete(newUser._id);
     });  
     it("It should not delete user", async() => {
       let response = await chai.request(server)
         .delete("/api/users")
         .set(
           "Authorization",
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6IkZFTUFMRSIsImFnZV9ncm91cCI6IlVOREVSXzMwIiwiX2lkIjoiNWU5MDRjY2U3YTFjNmI2MjdhZTlmNWY3IiwidXNlcm5hbWUiOiJUZXN0aW5nIiwicGFzc3dvcmQiOiIkMmEkMTAkZWZteG01bzF2LmluSS5lU3RHR3hnTzF6SGsuTDZVb0E5TEV5WXJSUGhXa21UUVBYOC5OS08iLCJfX3YiOjB9LCJpYXQiOjE1ODczNjUxMTJ9.QUPJHBixUI7nu2CJGi1a6vBPOInmYuO4lVPIryHM2go"
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6Ik1BTEUiLCJhZ2VfZ3JvdXAiOiI-OTAiLCJfaWQiOiI1ZWI3ZjMwYzNlMmE4ODRhYzgzYWE3NjAiLCJ1c2VybmFtZSI6ImF1dGh0ZXN0IiwicGFzc3dvcmQiOiIkMmEkMTAkYjJmYTZHTTJMTDlLVlJ4UzhVVEkzdS5SQ2JjUWw0WXc5OExaWVVHUHRnUVdBdVFGOERqNXUiLCJfX3YiOjAsImN1cnJlbnRfY291bnRyeSI6IiJ9LCJpYXQiOjE1ODkxODc5Mjd9.ZJQHbK7cVmDOf87uuhUttlnyAFYe5KA0Afnq0iBptF0"
         )
         .send({
           _id: "5e904cce7a1c6b627ae9f507"
