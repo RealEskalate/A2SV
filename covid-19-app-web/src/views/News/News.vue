@@ -44,7 +44,7 @@
                     </v-list-item-avatar>
 
                     <v-list-item-content>
-                      <span class="" v-text="item.source" />
+                      <span class="overline" v-text="item.source" />
                       <h4 class="font-weight-medium" v-html="item.title" />
                       <div class="my-1">
                         <v-list-item-subtitle
