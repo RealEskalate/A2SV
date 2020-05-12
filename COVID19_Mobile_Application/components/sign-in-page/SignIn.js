@@ -32,9 +32,12 @@ export default class SignIn extends Component {
     };
   }
 
-  saveUser = async (userID, userName) => {
+  saveUser = async (userID, userName, token, age_group, gender) => {
     await AsyncStorage.setItem("userID", userID); //save user id on async storage
     await AsyncStorage.setItem("userName", userName); //save user name on async storage
+    await AsyncStorage.setItem("token", token); //save token on async storage
+    await AsyncStorage.setItem("age_group", age_group); //save age group on async storage
+    await AsyncStorage.setItem("gender", gender); //save gender on async storage
   };
 
   //Log in authentication
@@ -55,9 +58,21 @@ export default class SignIn extends Component {
         .then((response) => response.json())
         .then((json) => {
           userIDStore.dispatch(
-            actions.addUser(json.user._id, json.user.username)
+            actions.addUser(
+              json.user._id,
+              json.user.username,
+              json.token,
+              json.user.age_group,
+              json.user.gender
+            )
           );
-          this.saveUser(json.user._id, json.user.username); //storing the user id in async storage
+          this.saveUser(
+            json.user._id,
+            json.user.username,
+            json.token,
+            json.user.age_group,
+            json.user.gender
+          ); //storing the user id in async storage
         })
         .catch((error) => {
           Alert.alert(

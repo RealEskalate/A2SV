@@ -22,6 +22,8 @@ import org.reactnative.maskedview.RNCMaskedViewPackage;
 import com.mapbox.rctmgl.RCTMGLPackage;
 // lottie-react-native
 import com.airbnb.android.react.lottie.LottiePackage;
+// react-native-geocoder
+import com.devfd.RNGeocoder.RNGeocoderPackage;
 // react-native-gesture-handler
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 // react-native-reanimated
@@ -85,6 +87,7 @@ public class PackageList {
       new RNCMaskedViewPackage(),
       new RCTMGLPackage(),
       new LottiePackage(),
+      new RNGeocoderPackage(),
       new RNGestureHandlerPackage(),
       new ReanimatedPackage(),
       new SafeAreaContextPackage(),

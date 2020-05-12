@@ -3,7 +3,14 @@ import * as actionTypes from "../actionTypes";
 export default function reducer(userId = {}, action) {
   switch (action.type) {
     case actionTypes.addUser:
-      return { ...userId, userId: action.id, userName: action.userName };
+      return {
+        ...userId,
+        userId: action.id,
+        userName: action.userName,
+        userToken: action.userToken,
+        userAgeGroup: action.userAgeGroup,
+        gender: action.userGender,
+      };
     case actionTypes.removeUser:
       return { ...userId, userId: "", userName: "" };
     default:

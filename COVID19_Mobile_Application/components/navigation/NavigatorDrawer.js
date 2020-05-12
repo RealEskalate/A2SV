@@ -39,7 +39,10 @@ const NavigatorDrawer = (props) => {
                 <Icon name="account-outline" color={color} size={size} />
               )}
               label="My Profile"
-              onPress={() => props.navigation.closeDrawer()}
+              onPress={() => {
+                props.navigation.closeDrawer();
+                props.navigation.navigate("Profile");
+              }}
             />
             <DrawerItem
               icon={({ color, size }) => (
@@ -47,6 +50,7 @@ const NavigatorDrawer = (props) => {
               )}
               label="About"
               onPress={() => {
+                props.navigation.closeDrawer();
                 props.navigation.navigate("About");
               }}
             />
@@ -61,6 +65,7 @@ const NavigatorDrawer = (props) => {
           label="Sign Out"
           onPress={() => {
             removeUserData("userID", "userName"); //remove user id from async state
+            props.navigation.closeDrawer();
             userIDStore.dispatch(actions.removeUser()); //remove user id from redux state
           }}
         />
