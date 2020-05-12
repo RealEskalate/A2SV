@@ -19,6 +19,7 @@ exports.get_all_locations = async (req, res) => {
 };
 
 exports.get_all_locations_with_symptoms = async (req, res) => {
+  console.log("locations symtpoms ep " + req.body.longitude + " " + req.body.latitude);
   if (!req.body.longitude || !req.body.latitude) {
     return res.status(400).send("Coordinates are not given");
   }
@@ -74,6 +75,7 @@ exports.get_all_locations_with_symptoms = async (req, res) => {
       }
     }
   }
+  console.log("res is " + result.length);
   if (result.length > 0) {
     res.send(result);
   } else {

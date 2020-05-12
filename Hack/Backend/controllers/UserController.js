@@ -8,7 +8,6 @@ const User = UserSchema.User;
 
 // Get All Users.
 exports.get_all_users = async (req, res) => {
-
   const users = await User.find();
   try {
     res.send(users);
@@ -32,6 +31,7 @@ exports.get_user_by_credentials = async (req, res) => {
     username: { $eq: req.body.username },
   });
   try {
+    // console.log(user.password + " " + req.body.password + " bool " + Bcrypt.compareSync(req.body.password, user.password))
     if (!user || !Bcrypt.compareSync(req.body.password, user.password)) {
       res.status(404).send("Username and Password combination doesn't exist");
     } else {
@@ -112,7 +112,7 @@ exports.update_user = async (req, res) => {
     await change.save();
     res.send(change);
   } catch (err) {
-    console.log("error is " + err);
+    // console.log("error is " + err);
     res.status(500).send(err.toString());
   }
 };

@@ -7,7 +7,8 @@ const Statistics = require("../models/StatisticsModel");
 const healthParser = require("../services/HealthApiParser");
 
 
-exports.get_statistics = async(req, res) => {
+exports.get_statistics = async (req, res) => {
+    console.log("getting statistics");
     if (req.query.criteria == "Confirmed_Rate") {
         req.query.criteria = "Tests_Rate";
     }
@@ -31,7 +32,7 @@ function respond(res, payload, status = 200) {
 
 
 
-exports.get_country_slugs = async(req, res) => {
+exports.get_country_slugs = async (req, res) => {
 
     healthParser.countrySlugList(res, respond);
 
