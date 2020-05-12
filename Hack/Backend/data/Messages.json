@@ -1,0 +1,35 @@
+[
+    {
+        "title": "Message for teens and young adults",
+        "content": {
+            "message": "It is true that the risk of dying due to COVID-19 is significantly higher for 80+ age groups(as high as 14.8%) while it’s below 1% for age groups below 40. But this doesn’t mean that teenagers or young adults won’t be affected or die of this disease either because the virus is winning over the immune system or due to the fact that a large number of people are being infected and admitted to the hospital causing a toll on health care systems resulting in some patients not getting treated as effectively as they should be. That’s why you should be careful not to get infected and stay safe. Even if you are not heavily sick, there is a big risk that you might pass it to your loved ones before the symptoms arise."
+        },
+        "tag":"MESSAGES",
+        "age_group":"TEENS"
+    },
+    {
+        "title": "Message for teens and young adults",
+        "content": {
+            "message": "It is true that the risk of dying due to COVID-19 is significantly higher for 80+ age groups(as high as 14.8%) while it’s below 1% for age groups below 40. This doesn’t mean that you should panic or be scared but rather be extra careful at the objects you touch and keep social distancing at all times. Applying hand sanitizers with alcohol content or washing with soap regularly is strongly advised. If you have access to it, use technology to stay in touch with your family and friends. Exercise and keep to a daily routine as much as you can."
+        },
+        "tag":"MESSAGES",
+        "age_group":"SENIORS"
+    },
+    {
+        "title": "Message for teens and young adults",
+        "content": {
+            "message": "If you feel sick, notify your parents and others quickly. It’s tough not being able to hang out with your friends but you can definitely call each other and keep in touch and also read books since there’s no school."
+        },
+        "tag":"MESSAGES",
+        "age_group":"KIDS",
+        "link": "https://www.youtube.com/watch?v=MVvVTDhGqaA"
+    },
+    {
+        "title": "Message for teens and young adults",
+        "content": {
+            "message": "It is true that the risk of dying due to COVID-19 is significantly higher for 80+ age groups(as high as 14.8%) while it’s below 1% for age groups below 40. But this doesn’t mean that teenagers or young adults won’t be affected or die of this disease either because the virus is winning over the immune system or due to the fact that a large number of people are being infected and admitted to the hospital causing a toll on health care systems resulting in some patients not getting treated as effectively as they should be. That’s why you should be careful not to get infected and stay safe. Even if you are not heavily sick, there is a big risk that you might pass it to your loved ones before the symptoms arise."
+        },
+        "tag":"MESSAGES",
+        "age_group":"ADULTS"
+    }
+]
