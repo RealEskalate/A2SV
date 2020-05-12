@@ -26,59 +26,63 @@ exports.get_all_locations_with_symptoms = async (req, res) => {
   let long = req.body.longitude;
 
   let dict = {};
-  const locations = await Location.find({});  
-  // Get Symptoms for each user and store in Symptoms
+  const locations = await Location.find(
+    {
+      longitude: {
+        $gte:new Number(long) - 0.3,
+        $lte:new Number(long) + 0.3
+      },
+      latitude: {
+        $gte:new Number(lat) - 0.2,
+        $lte:new Number(lat) + 0.2
+      }
+    }
+  );  
+  let nearby_locations = []
   for (let i = 0; i < locations.length; i++) {
     let location = locations[i];
-    let isInRadius = geolib.isPointWithinRadius(
-      { latitude: location.latitude, longitude: location.longitude },
-      { latitude: lat, longitude: long },      
-      10000*0.621371
-    )
-    if(!isInRadius){
-      continue;
-    }
+    if(geolib.getDistance(
+      { latitude: lat, longitude: long },
+      { latitude: location.latitude, longitude: location.longitude }
+      )<6213.712){
+        nearby_locations.push(location._id)
+      }
+  }
+  console.log(nearby_locations.length)
 
-    const users = await LocationUser.find({
-      location_id: { $eq: location._id }
-    });
-    for (let k = 0; k < users.length; k++) {
-      let userAtLocation = users[k];
-      if(dict[`${userAtLocation.user_id}`] && dict[`${userAtLocation.user_id}`].TTL<userAtLocation.TTL){
-        continue
-      }
-      if (userAtLocation) {
-        const symptomusers = await SymptomUser.find({
-          user_id: userAtLocation.user_id
-        });
-        const user = await User.findById(userAtLocation.user_id);
-        let symptoms = [];
-        for (let j = 0; j < symptomusers.length; j++) {
-          if (symptomusers[j]) {
-            const symptom = await Symptom.findById(
-              symptomusers[j].symptom_id
-            );
-            if (symptom) {
-              symptoms.push(symptom);
-            }
-          }
-        }
-        if (symptoms.length > 0) {
-          dict[`${user._id}`] = {
-            Data: {
-              longitude: location.longitude,
-              latitude: location.latitude,
-              symptoms: symptoms,
-              age_group: user.age_group,
-              gender: user.gender
-            },
-            TTL: userAtLocation.TTL
-          };
-          //This break line will be removed later onwards.
-          break;
-        }
-      }
+  let LocationUsers = await LocationUser.find({
+    location_id: {
+      $in: nearby_locations
     }
+  }).populate('location_id').populate('user_id')
+  // Get Symptoms for each user and store in Symptoms
+  for (let i = 0; i < LocationUsers.length; i++) {
+    let userAtLocation = LocationUsers[i];
+    let user = userAtLocation.user_id;
+    let location = userAtLocation.location_id;    
+    if(dict[`${user._id}`] && dict[`${user._id}`].TTL<userAtLocation.TTL){
+      continue
+    }
+    let symptoms = [];
+    const symptomusers = await SymptomUser.find({
+      user_id: user._id
+    }).populate('symptom_id');
+    if(!symptomusers || symptomusers.length==0) continue;
+    for (let j = 0; j < symptomusers.length; j++) {
+      symptoms.push(symptomusers[j].symptom_id);
+    }
+    dict[`${user._id}`] = {
+      Data: {
+        longitude: location.longitude,
+        latitude: location.latitude,
+        symptoms: symptoms,
+        age_group: user.age_group,
+        gender: user.gender
+      },
+      TTL: userAtLocation.TTL
+    };
+    //Since we only need one user at a point
+    break;
   }
   let result = []
   Object.keys(dict).forEach((item)=>{
@@ -90,7 +94,6 @@ exports.get_all_locations_with_symptoms = async (req, res) => {
       gender: dict[`${item}`].Data.gender
     })
   });
-  console.log(result.length)
   if (result.length > 0) {
     res.send(result);
   } else {
