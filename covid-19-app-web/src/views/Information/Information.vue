@@ -1,6 +1,6 @@
 <!--suppress HtmlUnknownTarget -->
 <template>
-  <v-content class="information">
+  <div class="information">
     <section class="mb-12 text-justify">
       <v-container>
         <v-row>
@@ -87,7 +87,7 @@
     <section class="my-12 text-justify">
       <learning-paths class="my-12" />
     </section>
-  </v-content>
+  </div>
 </template>
 
 <script>
@@ -130,7 +130,7 @@ export default {
           title: "Common misconception?",
           description: `<p>Common misconception regarding COVID-19 is that corona viruses affect only old people. This is far from true and is killing many people from various age groups. It is true that the risk of dying due to COVID-19 is significantly higher for 80+ age groups(as high as 14.8%) while it’s below 1% for age groups below 40. But this does not mean that teenagers won’t be affected or die of this disease either because the virus is winning over the immune system or due to the fact that a large number of people are being infected and admitted to the hospital causing a toll on health care systems resulting in some patients not getting treated as effectively as they should be.  </p>
             <p>Which is why you should be careful not to get the disease and stay safe. Even if you are not heavily sick, there is a very huge chance that you might be affected and continue to pass it to others before the symptoms arise if you go to crowded areas or don’t keep social distancing. </p>
-            Read more about the <a href="https://www.worldometers.info/coronavirus/coronavirus-age-sex-demographics/-" target="_blank">age-sex demographics</a>
+            Read more about the <a href="https://www.worldometers.info/coronavirus/coronavirus-age-sex-demographics" target="_blank">age-sex demographics</a>
             `,
           image: "/img/info/misconception.jpg"
         },
