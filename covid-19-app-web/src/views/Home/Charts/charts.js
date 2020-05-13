@@ -41,6 +41,12 @@ export const ChartMixin = {
         return "linear";
       }
     },
+    short_description: {
+      type: String,
+      default() {
+        return "";
+      }
+    },
     tab_index: {
       type: Number,
       default() {

@@ -72,6 +72,10 @@
           :chart-data="data"
           :options="chartOptions"
         />
+        <small
+          class="d-block grey--text my-3 text--darken-2"
+          v-text="short_description"
+        />
       </v-col>
       <v-col cols="12" md="3">
         <country-resources :country="country" />

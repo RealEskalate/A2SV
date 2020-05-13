@@ -151,6 +151,10 @@
               :chart-data="data"
               :options="chartOptions"
             />
+            <small
+              class="d-block grey--text my-3 text--darken-2"
+              v-text="short_description"
+            />
           </v-col>
         </v-row>
       </v-col>
