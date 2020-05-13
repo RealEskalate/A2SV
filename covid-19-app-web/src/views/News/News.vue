@@ -1,102 +1,150 @@
 <template>
   <v-container class="news">
-    <section class="col-lg-4">
-      <v-select
-        v-model="scope"
-        :items="items"
-        :menu-props="{ top: false, offsetY: true }"
-        label="Scope"
-        @change="scopeChange"
-      ></v-select>
-
-      <span v-if="scope === 'Local'" class="font-weight-medium">
-        Country: {{ country }}</span
-      >
-    </section>
     <v-row no-gutters>
       <v-col class="pr-md-12" md="8" sm="12">
-        <div>
-          <v-toolbar color="" flat>
-            <v-toolbar-title>News</v-toolbar-title>
+        <v-row>
+          <v-col cols="12" md="8">
+            <h3 class="display-1 font-weight-thin mb-10" v-text="'News'" />
+          </v-col>
+          <v-col cols="12" md="4">
+            <v-autocomplete
+              v-model="country"
+              :items="countries"
+              label="Country"
+              item-text="name"
+              item-value="name"
+              outlined
+              dense
+              @input="fetchNews"
+            />
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="12">
+            <v-fade-transition hide-on-leave>
+              <v-skeleton-loader
+                ref="skeleton"
+                type="list-item-avatar-three-line,divider"
+                class="mx-auto mb-2"
+                v-if="loaders.list"
+              />
+              <p
+                v-else-if="news && news.length === 0"
+                class="text-center grey--text text--darken-1"
+                v-text="'Found Nothing'"
+              />
+              <v-list v-else three-line>
+                <template v-for="item in news">
+                  <v-list-item :key="item.title">
+                    <v-list-item-avatar height="50" width="50">
+                      <v-img
+                        :src="imageUrl(item.source)"
+                        :lazy-src="imageUrl(item.source)"
+                      />
+                    </v-list-item-avatar>
 
-            <v-spacer></v-spacer>
-          </v-toolbar>
+                    <v-list-item-content>
+                      <span class="overline" v-text="item.source" />
+                      <h4 class="font-weight-medium" v-html="item.title" />
+                      <div class="my-1">
+                        <v-list-item-subtitle
+                          v-text="getTime(item.date)"
+                          style="display:inline"
+                        />
+                        <v-btn
+                          tile
+                          x-small
+                          outlined
+                          class="float-right"
+                          :href="item.reference_link"
+                          v-text="'Read More'"
+                          target="blank"
+                        />
+                      </div>
+                    </v-list-item-content>
+                  </v-list-item>
+                  <v-divider :key="item.id" />
+                </template>
+              </v-list>
+            </v-fade-transition>
+          </v-col>
+        </v-row>
 
-          <v-list two-line>
-            <v-list-item-group>
-              <template v-for="(item, index) in news">
-                <v-list-item
-                  :key="item.title"
-                  data-aos="fade-up"
-                  data-aos-delay="50"
-                  data-aos-duration="1000"
-                  data-aos-easing="ease-in-out"
-                  data-aos-anchor-placement="top-bottom"
-                  data-aos-once="true"
-                >
-                  <v-list-item-content class="py-6">
-                    <v-list-item-title
-                      :elevation="24"
-                      v-text="item.title"
-                      class="text-wrap black--text font-weight-medium"
-                    ></v-list-item-title>
-                    <v-list-item-subtitle>
-                      <v-btn
-                        class="my-3"
-                        v-bind:href="item.reference_link"
-                        target="blank"
-                        small
-                        outlined
-                        >read more</v-btn
-                      >
-                    </v-list-item-subtitle>
-
-                    <div>
-                      <v-list-item-subtitle
-                        v-text="getTime(item.date)"
-                        style="display:inline"
-                      >
-                      </v-list-item-subtitle>
-                      <v-icon class="mx-1" size="20px"
-                        >mdi-clock-outline</v-icon
-                      >
-                    </div>
-                    <v-list-item-subtitle
-                      >by {{ item.source }}</v-list-item-subtitle
-                    >
-                  </v-list-item-content>
-                </v-list-item>
-
-                <v-divider
-                  v-if="index + 1 < news.length"
-                  :key="index"
-                ></v-divider>
-              </template>
-            </v-list-item-group>
-          </v-list>
-        </div>
-
-        <v-pagination
-          class="v-paggination"
-          v-model="page"
-          :length="10"
-          @input="getNewsByPage(page)"
-        ></v-pagination>
+        <v-row>
+          <v-col cols="12" md="2">
+            <v-select
+              v-model="size"
+              :items="sizes"
+              label="Show"
+              outlined
+              dense
+              @input="fetchNews"
+            />
+          </v-col>
+          <v-col cols="12" md="10">
+            <v-pagination
+              class="justify-end"
+              v-model="page"
+              total-visible="7"
+              :length="Math.floor((totalCount || 0) / size)"
+              @input="fetchNews()"
+            />
+          </v-col>
+        </v-row>
       </v-col>
-      <v-spacer />
       <v-col class="pl-md-10 mt-sm-4" md="4" sm="12">
-        <v-card tile :elevation="10">
-          <v-card-title>Source</v-card-title>
-          <v-card-text>
-            <v-checkbox
-              v-for="(sourceItem, index) in sourceList"
-              :key="index"
-              v-model="sources"
-              :label="sourceItem"
-              :value="sourceItem"
-              @change="sourceChange"
-            ></v-checkbox>
-          </v-card-text>
+        <v-card shaped outlined>
+          <v-list>
+            <v-subheader v-text="'Sources'" />
+            <v-fade-transition hide-on-leave>
+              <v-skeleton-loader
+                ref="skeleton"
+                type="list-item-avatar,list-item-avatar,list-item-avatar,list-item-avatar,list-item-avatar,list-item-avatar,list-item-avatar"
+                class="mx-auto"
+                v-if="loaders.sources"
+              />
+              <p
+                class="text-muted text-center mt-3"
+                v-else-if="sourceList.length === 0"
+                v-text="'Found Nothing'"
+              />
+              <v-list-item-group
+                @change="fetchNews"
+                v-else
+                color="primary"
+                multiple
+                v-model="sources"
+              >
+                <v-list-item
+                  :key="i"
+                  class="px-5"
+                  v-for="(source, i) in sourceList"
+                  :value="source"
+                >
+                  <template v-slot:default="{ active, toggle }">
+                    <v-list-item-avatar>
+                      <v-img
+                        :src="imageUrl(source)"
+                        :lazy-src="imageUrl(source)"
+                      />
+                    </v-list-item-avatar>
+
+                    <v-list-item-content>
+                      <v-list-item-title v-text="source" />
+                    </v-list-item-content>
+
+                    <v-list-item-action>
+                      <v-checkbox
+                        :input-value="active"
+                        :true-value="source"
+                        @click="toggle"
+                      />
+                    </v-list-item-action>
+                  </template>
+                </v-list-item>
+              </v-list-item-group>
+            </v-fade-transition>
+          </v-list>
         </v-card>
       </v-col>
     </v-row>
@@ -104,69 +152,84 @@
 </template>
 
 <script>
-import moment from "moment";
+import moment from "moment/src/moment";
 import store from "@/store/";
 
 export default {
-  data: () => ({
-    page: 1,
-    perPage: 15,
-    scope: "Global",
-    items: ["Global", "Local"],
-    sources: []
-  }),
-
+  data() {
+    return {
+      page: 1,
+      size: 10,
+      sizes: [5, 10, 25, 50, 100],
+      country: "World",
+      sources: []
+    };
+  },
   methods: {
-    async scopeChange() {
-      this.getNewsByPage(this.page);
-    },
-    sourceChange() {
-      this.getNewsByPage(this.page);
+    fetchNews() {
+      store.dispatch("setNews", {
+        page: this.page,
+        size: this.size,
+        country: this.country,
+        sources: this.sources
+      });
     },
     getTime(postDate) {
-      postDate = moment(String(postDate)).format("MM/DD/YYYY hh:mm");
-      return postDate;
+      return moment(String(postDate || "")).format("hh:mm A - MMM DD, YYYY");
     },
-    getNewsByPage(page) {
-      store.dispatch("setNews", {
-        page: page,
-        country: this.country,
-        source: this.selectedSources
-      });
+    imageUrl(source) {
+      const newsImgPath = "/img/news";
+      switch (source) {
+        case "CDC Newsroom":
+          return `${newsImgPath}/cdc.png`;
+        case "CNN":
+          return `${newsImgPath}/cnn.png`;
+        case "BBC News":
+          return `${newsImgPath}/bbc.png`;
+        case "NPR":
+          return `${newsImgPath}/npr.png`;
+        case "World Health Organization":
+          return `${newsImgPath}/who.png`;
+        case "The Guardian":
+          return `${newsImgPath}/guardian.png`;
+        case "Global News":
+          return `${newsImgPath}/global-news.png`;
+        case "Bloomberg":
+          return `${newsImgPath}/bloomberg.png`;
+        case "Reuters":
+          return `${newsImgPath}/reuters.png`;
+        case "Forbes":
+          return `${newsImgPath}/forbes.png`;
+        case "The New York Times":
+          return `${newsImgPath}/new-york-times.png`;
+        case "Washington Post":
+          return `${newsImgPath}/washington-post.png`;
+        case "World Economic Forum":
+          return `${newsImgPath}/world-economic-forum.png`;
+        case "Voice of America":
+          return `${newsImgPath}/voa.png`;
+        default:
+          return `${newsImgPath}/avatar.png`;
+      }
+    }
+  },
+  watch: {
+    localCountry(newValue) {
+      this.country = newValue;
+      this.fetchNews();
     }
   },
   mounted() {
-    this.getNewsByPage(this.page);
-    store.dispatch("setCountry");
     store.dispatch("setSources");
+    store.dispatch("setCurrentCountry");
   },
   computed: {
-    country() {
-      return this.scope === "Global" ? "Global" : store.getters.getCountry;
-    },
-    sourceList() {
-      return store.getters.getSources;
-    },
-    news() {
-      return store.getters.getNews;
-    },
-    selectedSources() {
-      return this.sources.length === 0 ? [] : [this.sources];
-    }
+    news: () => store.getters.getNews,
+    countries: () => store.getters.getAllCountries,
+    localCountry: () => store.getters.getCurrentCountry,
+    totalCount: () => store.getters.getTotalCount,
+    sourceList: () => store.getters.getSources,
+    loaders: () => store.getters.getNewsLoaders
   }
 };
 </script>
-
-<style scoped>
-.wrap-text {
-  -webkit-line-clamp: unset !important;
-  font-size: 1.15rem !important;
-  line-height: 1.5rem;
-}
-.recent-v-card-text {
-  color: darkgray;
-}
-.v-paggination {
-  justify-content: start;
-}
-</style>
