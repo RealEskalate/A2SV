@@ -44,11 +44,7 @@
                     <v-list-item-avatar height="50" width="50">
                       <v-img
                         contain
-                        :src="
-                          `https://logo.clearbit.com/${getPageUrl(
-                            item.reference_link
-                          )}`
-                        "
+                        :src="clearBitLogo(item.reference_link)"
                         lazy-src="/img/news/avatar.png"
                       />
                     </v-list-item-avatar>
@@ -190,6 +186,9 @@ export default {
         country: this.country,
         sources: this.sources
       });
+    },
+    clearBitLogo(link) {
+      return `https://logo.clearbit.com/${this.getPageUrl(link)}`;
     },
     getPageUrl(link) {
       let domain = link.split("/")[2] || "";
