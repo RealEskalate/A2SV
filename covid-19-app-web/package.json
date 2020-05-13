@@ -25,7 +25,8 @@
     "vue-social-sharing": "^2.4.7",
     "vuetify": "^2.2.23",
     "vuex": "^3.2.0",
-    "vuex-persistedstate": "^3.0.1"
+    "vuex-persistedstate": "^3.0.1",
+    "compression-webpack-plugin": "latest"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.3.0",
