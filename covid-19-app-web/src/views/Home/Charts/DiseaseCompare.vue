@@ -6,6 +6,7 @@
           class="v-card--shaped grey lighten-5 shadow-in pb-6 px-1"
           style="min-width: 400px"
           :height="600"
+          ref="graph"
           :chart-data="diseaseData"
           :options="chartOptions"
         />
@@ -31,6 +32,8 @@ export default {
         makeDataSet: this.makeDataSet
       });
     }
+  },
+  watch: {
   },
   mounted() {
     this.fetchData();
