@@ -74,27 +74,35 @@
                   mode="counts"
                   y_label="People"
                   :tab_index="selectedGraph"
+                  :short_description="graphs[selectedGraph].description"
                 />
               </v-tab-item>
               <v-tab-item style="min-height: 700px">
-                <daily-display y_label="People" :tab_index="selectedGraph" />
+                <daily-display
+                  y_label="People"
+                  :tab_index="selectedGraph"
+                  :short_description="graphs[selectedGraph].description"
+                />
               </v-tab-item>
               <v-tab-item style="min-height: 700px">
                 <display
                   mode="rates"
                   y_label="Percent"
                   :tab_index="selectedGraph"
+                  :short_description="graphs[selectedGraph].description"
                 />
               </v-tab-item>
               <v-tab-item style="min-height: 700px">
                 <country-compare
                   x_axis_type="category"
                   :tab_index="selectedGraph"
+                  :short_description="graphs[selectedGraph].description"
                 />
               </v-tab-item>
               <v-tab-item style="min-height: 700px">
                 <disease-compare
                   :tab_index="selectedGraph"
+                  :short_description="graphs[selectedGraph].description"
                   y_label="Logarithmic Value"
                   y_axis_type="logarithmic"
                   x_axis_type="category"
