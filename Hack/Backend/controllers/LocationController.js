@@ -1,15 +1,32 @@
-var Location = require("../models/LocationModel.js");
+var LocationModels = require("../models/LocationModel.js");
+var Location = LocationModels.Location;
 var mongoose = require("mongoose");
-const LocationUser = require("./../models/LocationUserModel");
-const { SymptomUser } = require("./../models/SymptomUser");
+const LocationUserModels = require("./../models/LocationUserModel");
+const LocationUser = LocationUserModels.LocationUser;
+const SymptomUserModel = require("./../models/SymptomUser");
+const SymptomUser = SymptomUserModel.SymptomUser;
+const { DemoSymptomUser } = require("./../models/DemoSymptomUserModel");
 const { Symptom } = require("./../models/Symptom");
-const { User } = require("./../models/UserModel");
+const UserModels = require("./../models/UserModel");
+const User = UserModels.User;
 const jwt = require("jsonwebtoken");
 const axios = require("axios");
 const geolib = require("geolib");
 
 // Display list of all locations.
 exports.get_all_locations = async (req, res) => {
+  if (req.query.demo && req.query.demo == "true"){
+    var Location = LocationModels.DemoLocation;
+    var SymptomUser = DemoSymptomUser;
+    var LocationUser = LocationUserModels.DemoLocationUser;
+    var User = UserModels.DemoUser;
+  }else{
+    var Location = LocationModels.Location;
+    var SymptomUser = SymptomUserModel.SymptomUser;
+    var LocationUser = LocationUserModels.LocationUser;
+    var User = UserModels.User;
+  }
+  
   const locations = await Location.find({});
   try {
     res.send(locations);
@@ -19,6 +36,16 @@ exports.get_all_locations = async (req, res) => {
 };
 
 exports.get_all_locations_with_symptoms = async (req, res) => {
+  if (req.query.demo && req.query.demo == "true"){
+    var Location = LocationModels.DemoLocation;
+    var SymptomUser = DemoSymptomUser;
+    var LocationUser = LocationUserModels.DemoLocationUser;
+  }else{
+    var Location = LocationModels.Location;
+    var SymptomUser = SymptomUserModel.SymptomUser;
+    var LocationUser = LocationUserModels.LocationUser;
+  }
+
   if(!req.body.longitude || !req.body.latitude){
     return res.status(400).send("Coordinates are not given");
   }
@@ -144,6 +171,11 @@ exports.post_location = async (req, res) => {
 };
 //Get a specific Location by id
 exports.get_location_by_id = async (req, res) => {
+  if (req.query.demo && req.query.demo == "true"){
+    var Location = LocationModels.DemoLocation;
+  }else{
+    var Location = LocationModels.Location;
+  }
   try {
     const location = await Location.findById(req.params.id);
     if(!location){
@@ -156,6 +188,11 @@ exports.get_location_by_id = async (req, res) => {
 };
 //Get a specific Location by latitude and longitude
 exports.get_location_by_coordinates = async (req, res) => {
+  if (req.query.demo && req.query.demo == "true"){
+    var Location = LocationModels.DemoLocation;
+  }else{
+    var Location = LocationModels.Location;
+  }
   try {
     const locations = await Location.find({
       latitude: { $eq: req.params.latitude },
@@ -204,6 +241,13 @@ exports.delete_location = async (req, res) => {
 
 //Get risk factor of specific location by id
 const get_risk_by_location_id = async (id) => {
+  if (req.query.demo && req.query.demo == "true"){
+    var SymptomUser = DemoSymptomUser;
+    var LocationUser = LocationUserModels.DemoLocationUser;
+  }else{
+    var SymptomUser = SymptomUserModel.SymptomUser;
+    var LocationUser = LocationUserModels.LocationUser;
+  }
   //Get users at the location
   const results = await LocationUser.find({
     location_id: { $eq: id },

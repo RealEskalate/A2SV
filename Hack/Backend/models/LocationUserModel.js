@@ -33,4 +33,4 @@ location_user.index({ user_id : 1, location_id : 1 }, { unique : 1 });
 const LocationUserModel = mongoose.model("LocationUser", location_user);
 const DemoLocationUserModel = mongoose.model("Demo LocationUser", location_user);
 
-module.exports = {LocationUserModel, DemoLocationUserModel};
+module.exports = {LocationUser: LocationUserModel, DemoLocationUser: DemoLocationUserModel};

@@ -21,4 +21,4 @@ locationSchema.index({ longitude: 1, latitude: 1 }, { unique: true });
 var LocationModel = mongoose.model("Location", locationSchema);
 var DemoLocationModel = mongoose.model("Demo Location", locationSchema);
 
-module.exports = {LocationModel, DemoLocationModel};
+module.exports = {Location: LocationModel, DemoLocation: DemoLocationModel};
