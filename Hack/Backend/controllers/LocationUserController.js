@@ -9,6 +9,10 @@ const SymptomUserModels = require("../models/SymptomUser");
 const ProbabilityCalculator = require("../services/ProbabilityCalculator");
 const axios = require("axios");
 const mongoose = require("mongoose");
+const jwt = require("jsonwebtoken");
+const SymptomUserModels = require("../models/SymptomUser");
+const {Tests} = require("../models/TestModel")
+const { MapData } = require("../models/MapDataModel");
 
 //Post a user location
 exports.post_location_user = async (req, res) => {
@@ -118,6 +122,89 @@ exports.get_location_user_by_id = async (req, res) => {
     res.status(404).send("User Location not found");
   }
 }
+
+//Get location_user by location_id
+let total = 0;
+exports.location_users_many_add = async (req, res) =>{
+    var Location = LocationModels.DemoLocation;    
+    var LocationUser = LocationUserModels.DemoLocationUser;
+    var User = UserModels.DemoUser;
+    const SymptomUser = SymptomUserModels.DemoSymptomUser
+    total++;
+    let count = 0;
+    // let wc = require("which-country")
+    let documents = [];
+    let content = [];
+    for (let i = 0 ; i < req.body.listed.length; i++){
+        let element = req.body.listed[i];
+        let user_id =  element.user_id;
+        let location = element.location;
+        let probability = element.probability;
+        
+        let TTL = new Date(Date.now() + Number(element.TTL));
+    
+        // Check if user and location exists
+        // let loc = await Location.findById(location_id)      
+        // if (!loc){
+        //     return res.status(401).json({ message: 'Location ID not found' });
+        // }
+        // let user = await User.findById(user_id);
+        // if (!user){
+        //     return res.status(402).json({ message: 'User ID not found' });
+        // }
+        
+        const location_user = new LocationUser({
+            _id: mongoose.Types.ObjectId(),
+            user_id,
+            location,
+            TTL,
+            probability
+        }); 
+        let hi = await User.findByIdAndUpdate(user_id, {
+          current_country: "",
+          latest_location_user: location_user._id,
+          expiresAt: new Date(Date.now() + Number(TTL))
+        });
+
+        // let iso = wc([loc.location.coordinates[0],loc.location.coordinates[1]]);
+        // let symptomsList = await SymptomUser.find(
+        //   {user_id: user_id}
+        // ).populate('symptom_id')
+        // let symptoms = []
+        // symptomsList.forEach((item)=> symptoms.push(item.symptom_id.name))
+        // let probability = await calculateProbability(symptoms,iso)
+        // let probability = Math.random();
+        // location_user.probability = probability;
+        try {
+            documents.push(location_user);
+            content.push(location_user._id.toString());
+            console.log(++count + " in total: " + total);
+        } catch (err) {
+            console.log(err.toString());
+        }
+    } 
+    await LocationUser.insertMany(documents);
+    res.json({content});
+  }
+
+exports.get_by_location_id = async (req, res) => {
+  if (req.query.demo && req.query.demo == "true"){
+    var LocationUser = LocationUserModels.DemoLocationUser;
+  }else{
+    var LocationUser = LocationUserModels.LocationUser;
+  }
+  try {
+    const results = await LocationUser.find({
+      location_id: { $eq: req.params.location_id },
+    });
+    if (!results || results.length < 1) {
+      return res.status(500).send("No User Locations found.");
+    }
+    res.send(results);
+  } catch (err) {
+    res.status(500).send(err.toString());
+  }
+};
 
 //Get all location_users
 exports.get_all_location_users = async (req, res) => {

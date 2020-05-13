@@ -8,18 +8,19 @@ const userSchema = new mongoose.Schema({
     minlength: 3,
     maxlength: 50,
     required: true,
-    unique: true,
-    index: true
-    // index: {
-    // unique: true,
-    // dropDups: true,
-    // },
+    index: {
+      unique: true,
+      dropDups: true,
+    },
   },
   password: {
     type: String,
     minlength: 6,
     required: true,
   },
+  //   Avatar: {
+
+  //   }
   gender: {
     type: String,
     enum: ["MALE", "FEMALE", "UNDISCLOSED"],
@@ -152,7 +153,7 @@ function validateUser(user) {
     username: Joi.string().min(3).max(50).required(),
     password: Joi.string().min(3).max(50).required(),
     gender: Joi.string().valid("MALE", "FEMALE", "UNDISCLOSED"),
-    age_group: Joi.string().valid("0-10", "11-20", "21-30", "31-40", "41-50", "51-60", "61-70", "71-80", "81-90", ">90"),
+    age_group: Joi.string().valid("UNDER_30", "31_To_45", "ABOVE_45"),
   });
   return Joi.validate(user._doc, schema);
 }

@@ -6,7 +6,11 @@ exports.get_all_symptoms = async (req, res) => {
     const symptoms = await Symptom.find({});
 
     try {
-        return res.status(200).send(symptoms);
+        content = [];
+        for (let i = 0; i < symptoms.length; i++){
+            content.push(symptoms[i]._id.toString())
+        }
+        res.send({content});
     } catch (err) {
         res.status(500).send(err.toString());
     }
@@ -44,6 +48,30 @@ exports.post_symptom = async (req, res) => {
     }
 };
 
+exports.symptom_many_add = async (req, res) =>{
+    let content = []
+    for (let i = 0 ; i < req.body.listed.length; i++){
+      let element = req.body.listed[i];
+      const symptom = new Symptom({
+        name: element.name,
+        relevance: element.relevance,
+        description: element.description,
+    });
+
+    var { error } = validateSymptom(element);
+    if (error) {
+        res.status(400).send("Symptom not found");
+    }
+    try {
+        await symptom.save();
+        content.push(symptom._id.toString());
+    } catch (err) {
+        console.log(err.toString())
+    }
+      console.log(symptom);
+    }
+    res.json({content});
+}
 //Get a symptom by id
 exports.get_symptom_by_id = async (req, res) => {
 

@@ -1,14 +1,11 @@
 const express = require("express");
-const cors = require('cors');
 const mongoose = require("./db.js");
 
 //Routers
 const alertRouter = require("./routes/AlertRoutes");
 const alertUserRouter = require("./routes/AlertUserRoutes");
 const locationUserRouter = require("./routes/LocationUserRoutes");
-const medicalhistoryRouter = require("./routes/MedicalHistoryRoutes.js");
-const medicalhistoryuserRouter = require("./routes/MedicalHistoryUserRoutes.js");
-const publicResourceRouter = require("./routes/PublicResourcesRoutes");
+
 const symptomRouter = require("./routes/SymptomRoutes.js");
 const symptomuserRouter = require("./routes/SymptomUserRoutes.js");
 const mapRouter = require("./routes/MapDataRoutes");
@@ -27,7 +24,6 @@ const MobileInformationDetailRouter = require("./routes/MobileInformationDetailR
 const citiesRouter = require("./routes/CitiesRoutes");
 const ethiopiaDataRouter = require("./routes/EthiopiaDataRoutes");
 
-const logger = require('./middlewares/logger');
 const bodyParser = require("body-parser");
 const compression = require('compression');
 
@@ -40,7 +36,6 @@ app.use(compression({ filter: shouldCompress }))
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(publicResourceRouter);
 
 app.use(alertRouter);
 app.use(alertUserRouter);
@@ -67,9 +62,10 @@ app.use(ethiopiaDataRouter);
 
 app.use(express.static('public'));
 app.use('/img', express.static(__dirname + '/img'));
+app.use(locationUserRouter);
 
-app.listen(port, () => {
-    console.log("Server is running... at port " + port);
+app.listen(3000, () => {
+  console.log("Server is running...");
 });
 
 

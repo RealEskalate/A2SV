@@ -112,6 +112,40 @@ exports.post_user = async (req, res) => {
     res.status(500).send(err.toString());
   }
 };
+let total = 0;
+exports.user_many_add = async (req, res) =>{
+  var User = UserModels.DemoUser;
+  console.log("Began entering");
+  total++;
+  let count = 0;
+  let content = [];
+  let documents = [];
+  for (let i = 0 ; i < req.body.listed.length; i++){
+    let element = req.body.listed[i];
+    const user = new User({
+      _id: mongoose.Types.ObjectId(),
+      username: element.username,
+      password: element.password,
+      gender: element.gender,
+      age_group: element.age_group,
+    });
+    // console.log(user);
+    console.log(++count + " in total: " + total);
+    try {
+      if (user.password.length < 5) {
+        res.status(500).send("Password Length Too Short");
+      } else {
+        user.password = Bcrypt.hashSync(user.password, 10);
+        documents.push(user);
+        content.push(user._id.toString());
+      }
+    } catch (err) {
+      console.log(err.toString());
+    }
+  }
+  User.insertMany(documents, {ordered: false});
+  res.json({content});
+}
 // Update User by ID.
 exports.update_user = async (req, res) => {
 

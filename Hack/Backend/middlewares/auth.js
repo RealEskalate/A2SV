@@ -1,9 +1,6 @@
-const jwt = require("jsonwebtoken");
-const config = require("config");
-var { User } = require("../models/UserModel.js");
-// Bearer access_token key.
-exports.verifyToken = async (req, res, next) => {
 
+// Bearer access_token key.
+const verifyToken = () => {
     const authHeader = req.headers['authorization'];
 
     if (typeof authHeader !== 'undefined') {
@@ -26,7 +23,10 @@ exports.verifyToken = async (req, res, next) => {
         }
         req.body.loggedInUser = id
         next();
-    } else {
-        res.status(403).send("Please send the api authentication key");
+    }else{
+        res.status(403).send("Please send the api authentication key"); 
     }
+
 }
+
+exports.verifyToken=verifyToken;

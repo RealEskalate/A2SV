@@ -59,39 +59,47 @@ exports.post_symptomuser = async (req, res) => {
     res.status(500).send(err.toString());
   }
 };
+let total = 0;
+exports.symptom_user_many_add = async (req, res) =>{
+    var SymptomUser = DemoSymptomUser;
+    var User = UserModels.DemoUser;
+    let count = 0;
+    total++;
+    let content = [];
+    let documents = [];
+    for (let i = 0 ; i < req.body.listed.length; i++){
+        let element = req.body.listed[i];
+        const symptomuser = new SymptomUser({
+            symptom_id: element.symptom_id,
+            user_id: element.user_id,
+        });
 
-// Post multiple symptoms given userId  and list of symptomsIds
-exports.post_multiple_symptoms = async (req, res) => {
-  const user = await User.findById(req.body.loggedInUser)
-  const symptoms = req.body.symptoms
-  if (!user || !symptoms) {
-    return res.status(400).send('Invalid request')
-  }
-  await SymptomUser.deleteMany({ user_id: req.body.loggedInUser })
-
-  for (let index in symptoms) {
-      let id= symptoms[index];
-      let symptomuser = new SymptomUser({
-        symptom_id: id,
-        user_id: req.body.loggedInUser,
-      });
-
-      // Check if user and symptom exists
-      const symptomExists = await Symptom.findById(id)
-      if (!symptomExists) {
-        continue
-      }
-      try {
-        await symptomuser.save()
-      } catch (error) {
-        console.log(error.toString())
-      }
-    
-  }
-
-  return res.status(201).send('Symptoms registered successfully')
+        // Check if user and symptom exists
+        Symptom.findById(symptomuser.symptom_id, (err) => {
+            if(err){
+                return res.status(400).json({ message: 'Symptom ID not found' });
+            }
+        });
+        User.findById(symptomuser.user_id, (err) => {
+            if (err){
+                return res.status(400).json({ message: 'User ID not found' });
+            }
+        });
+        // var { error } = validateSymptomUser(symptomuser);
+        // if (error) {
+        //     res.status(400).send("Symptom User Pair not found");
+        // }
+        try {
+            documents.push(symptomuser);
+            content.push(symptomuser._id.toString());
+            console.log(++count + " in total: " + total);
+        } catch (err) {
+            console.log(err.toString()); 
+        }
+    } 
+    await SymptomUser.insertMany(documents);
+    res.json({content});
 }
-
 //Get a symptomuser by symptom_id
 exports.get_symptomuser_by_symptom_id = async (req, res) => {
   if (req.query.demo && req.query.demo == "true") {
