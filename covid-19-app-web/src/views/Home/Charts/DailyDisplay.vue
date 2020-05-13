@@ -69,6 +69,7 @@
           class="v-card--shaped grey lighten-5 shadow-in pb-6 px-1"
           style="min-width: 400px"
           :height="480"
+          ref="graph"
           :chart-data="data"
           :options="chartOptions"
         />
@@ -112,7 +113,8 @@ export default {
       date_range: [this.defaultDate(), this.defaultDate("end")],
       country: { name: "World", slug: "World" },
       age_range: "All",
-      social_distancing: 50
+      social_distancing: 50,
+      rendered: false
     };
   },
   methods: {
@@ -143,9 +145,6 @@ export default {
       handler() {
         this.fillGraph();
       }
-    },
-    tab_index() {
-      if (this.tab_index === 1) this.fillGraph();
     }
   },
   mounted() {

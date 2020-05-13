@@ -74,7 +74,6 @@
                   mode="counts"
                   y_label="People"
                   :tab_index="selectedGraph"
-                  :short_description="graphs[selectedGraph].description"
                 />
               </v-tab-item>
               <v-tab-item style="min-height: 700px">

@@ -56,6 +56,7 @@
         <line-chart
           class="v-card--shaped grey lighten-5 shadow-in pb-6 px-1"
           style="min-width: 400px; height: 480px"
+          ref="graph"
           :chart-data="data"
           :options="chartOptions"
         />
