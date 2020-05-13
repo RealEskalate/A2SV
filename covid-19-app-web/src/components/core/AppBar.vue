@@ -80,12 +80,12 @@
         </v-list>
       </v-navigation-drawer>
       <v-bottom-navigation
-        app
-        :value="activeBtn"
-        grow
-        color="primary"
-        class="px-3"
-        v-if="curNavigation === '1'"
+              app
+              grow
+              color="primary"
+              class="px-3"
+              v-if=" curNavigation === '1'"
+              active-class="active-bottom v-card--raised"
       >
         <v-btn v-for="(item, i) in links" :to="item.to" :key="i">
           <span>{{ item.text }}</span>
@@ -97,9 +97,9 @@
 </template>
 
 <script>
-import store from "@/store/";
+  import store from "@/store/";
 
-export default {
+  export default {
   data: () => {
     return {
       drawer: false,
@@ -167,5 +167,12 @@ export default {
 .raised {
   box-shadow: 5px 0 15px 5px #ddd;
   z-index: 997;
+}
+
+.active-bottom .v-icon {
+  transform: scale(1.3) !important;
+  -webkit-transform: scale(1.3) !important;
+  -moz-transform: scale(1.3) !important;
+  -o-transform: scale(1.3) !important;
 }
 </style>

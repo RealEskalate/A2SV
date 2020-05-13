@@ -62,7 +62,6 @@
         :fill="main_color"
         stroke="none"
         pointer-events="all"
-        v-tooltip="getToolTip(states.mild)"
       />
       <g transform="translate(-0.5 -0.5)">
         <switch>
@@ -152,7 +151,6 @@
         :fill="main_color"
         stroke="none"
         pointer-events="all"
-        v-tooltip="getToolTip(states.heavy)"
       />
       <g transform="translate(-0.5 -0.5)">
         <switch>
@@ -252,7 +250,6 @@
         :fill="main_color"
         stroke="none"
         pointer-events="all"
-        v-tooltip="getToolTip(states.hospitalization)"
       />
       <g transform="translate(-0.5 -0.5)">
         <switch>
@@ -336,7 +333,6 @@
         :fill="main_color"
         stroke="none"
         pointer-events="all"
-        v-tooltip="getToolTip(states.icu)"
       />
       <g transform="translate(-0.5 -0.5)">
         <switch>
@@ -494,7 +490,6 @@
         :fill="main_color"
         stroke="none"
         pointer-events="all"
-        v-tooltip="getToolTip(states.incubation)"
       />
       <g transform="translate(-0.5 -0.5)">
         <switch>
@@ -511,7 +506,6 @@
             >
               <div
                 style="box-sizing: border-box; font-size: 0; text-align: center;"
-                v-tooltip="getToolTip(states.incubation)"
               >
                 <div
                   style="display: inline-block; font-size: 12px; font-family: Lucida Console; color: #fff; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; "
@@ -556,13 +550,9 @@
 </template>
 
 <script>
-import VTooltip from "v-tooltip";
-import store from "@/store/";
+  import store from "@/store/";
 
-// Set custom CSS class
-VTooltip.options.defaultClass = "tooltip";
-
-export default {
+  export default {
   name: "ImageSvg",
   data() {
     return {
@@ -572,16 +562,6 @@ export default {
     };
   },
   methods: {
-    getToolTip(item) {
-      return {
-        content: `<div class="primary" style="width: 25rem">
-                    <h3 class="title"> ${item.title} </h3>
-                    <hr>
-                    <p> ${item.description} </p>
-                  </div>`,
-        trigger: null
-      };
-    }
   },
   created() {
     store.dispatch("setStates");
@@ -594,124 +574,3 @@ export default {
 };
 </script>
 
-<style>
-.tooltip {
-  display: block !important;
-  z-index: 10000;
-  box-shadow: 0 5px 50px 0 #000000;
-  border-radius: 10px;
-}
-
-.tooltip .title {
-  margin: 3px auto;
-  text-align: center;
-  font-family: "Roboto", sans-serif !important;
-}
-
-.tooltip p {
-  margin-top: 5px;
-  font-size: 0.8em !important;
-  text-justify: auto;
-}
-
-.tooltip .tooltip-inner {
-  background: #1976d2;
-  color: #fcfcfc;
-  padding: 10px;
-  border-radius: 10px 0 10px 0;
-}
-
-.tooltip .tooltip-arrow {
-  width: 0;
-  height: 0;
-  border-style: solid;
-  position: absolute;
-  margin: 5px;
-  border-color: #1976d2;
-  z-index: 1;
-}
-
-.tooltip[x-placement^="top"] {
-  margin-bottom: 5px;
-}
-
-.tooltip[x-placement^="top"] .tooltip-arrow {
-  border-width: 5px 5px 0 5px;
-  border-left-color: transparent !important;
-  border-right-color: transparent !important;
-  border-bottom-color: transparent !important;
-  bottom: -5px;
-  left: calc(50% - 5px);
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-.tooltip[x-placement^="bottom"] {
-  margin-top: 5px;
-}
-
-.tooltip[x-placement^="bottom"] .tooltip-arrow {
-  border-width: 0 5px 5px 5px;
-  border-left-color: transparent !important;
-  border-right-color: transparent !important;
-  border-top-color: transparent !important;
-  top: -5px;
-  left: calc(50% - 5px);
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-.tooltip[x-placement^="right"] {
-  margin-left: 5px;
-}
-
-.tooltip[x-placement^="right"] .tooltip-arrow {
-  border-width: 5px 5px 5px 0;
-  border-left-color: transparent !important;
-  border-top-color: transparent !important;
-  border-bottom-color: transparent !important;
-  left: -5px;
-  top: calc(50% - 5px);
-  margin-left: 0;
-  margin-right: 0;
-}
-
-.tooltip[x-placement^="left"] {
-  margin-right: 5px;
-}
-
-.tooltip[x-placement^="left"] .tooltip-arrow {
-  border-width: 5px 0 5px 5px;
-  border-top-color: transparent !important;
-  border-right-color: transparent !important;
-  border-bottom-color: transparent !important;
-  right: -5px;
-  top: calc(50% - 5px);
-  margin-left: 0;
-  margin-right: 0;
-}
-
-.tooltip.popover .popover-inner {
-  /*background: #f9f9f9;*/
-  color: black;
-  padding: 24px;
-  border-radius: 5px;
-  box-shadow: 0 5px 30px rgba(black, 0.1);
-}
-
-.tooltip.popover .popover-arrow {
-  /*border-color: #f9f9f9;*/
-}
-
-.tooltip[aria-hidden="true"] {
-  visibility: hidden;
-  opacity: 0;
-  transition: opacity 0.15s, visibility 0.15s;
-}
-
-.tooltip[aria-hidden="false"] {
-  visibility: visible;
-  opacity: 1;
-  transition: opacity 0.15s;
-}
-</style>
