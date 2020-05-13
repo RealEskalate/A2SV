@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const Joi = require("@hapi/joi");
 
 const medicalhistory_user_schema = new mongoose.Schema({
     medicalhistory_id: {

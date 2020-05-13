@@ -1,8 +1,7 @@
-const { SymptomUser, validateSymptomUser } = require("../models/SymptomUser");
-const { Symptom, validateSymptom } = require("../models/Symptom");
+const { SymptomUser } = require("../models/SymptomUser");
+const { Symptom } = require("../models/Symptom");
 const UserSchema = require("./../models/UserModel");
 const User = UserSchema.User;
-const jwt = require("jsonwebtoken");
 
 // Display list of all symptoms.
 exports.get_all_symptomusers = async (req, res) => {

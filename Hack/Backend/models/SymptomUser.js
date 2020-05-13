@@ -12,10 +12,10 @@ const symptom_user_schema = new mongoose.Schema({
         required: true,
         ref: 'User'
     },
-    timestamp : { 
-        type : Date, 
-        default: Date.now 
-        }
+    timestamp: {
+        type: Date,
+        default: Date.now
+    }
 });
 
 function validateSymptomUser(SymptomUser) {
@@ -30,7 +30,7 @@ function validateSymptomUser(SymptomUser) {
             .min(10)
             .max(100)
     }
-    return Joi.validate(symptom, schema);
+    return Joi.validate(SymptomUser, schema);
 }
 
 const SymptomUser = mongoose.model("SymptomUser", symptom_user_schema);

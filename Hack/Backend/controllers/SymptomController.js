@@ -1,5 +1,4 @@
 const { Symptom, validateSymptom } = require("../models/Symptom");
-const jwt = require("jsonwebtoken");
 
 // Display list of all locations.
 exports.get_all_symptoms = async (req, res) => {
@@ -7,7 +6,7 @@ exports.get_all_symptoms = async (req, res) => {
     const symptoms = await Symptom.find({});
 
     try {
-        res.send(symptoms);
+        res.status(201).send(symptoms);
     } catch (err) {
         res.status(500).send(err.toString());
     }

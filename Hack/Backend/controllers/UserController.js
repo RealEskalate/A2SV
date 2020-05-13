@@ -15,6 +15,7 @@ exports.get_all_users = async (req, res) => {
     res.status(500).send(err.toString());
   }
 };
+
 // Get User by ID.
 exports.get_user_by_id = async (req, res) => {
 
@@ -25,13 +26,13 @@ exports.get_user_by_id = async (req, res) => {
     res.status(500).send(err.toString());
   }
 };
+
 // Get User by Username and Password.
 exports.get_user_by_credentials = async (req, res) => {
   let user = await User.findOne({
     username: { $eq: req.body.username },
   });
   try {
-    // console.log(user.password + " " + req.body.password + " bool " + Bcrypt.compareSync(req.body.password, user.password))
     if (!user || !Bcrypt.compareSync(req.body.password, user.password)) {
       res.status(404).send("Username and Password combination doesn't exist");
     } else {
@@ -54,6 +55,7 @@ exports.get_user_by_credentials = async (req, res) => {
       catch (err) {
         console.log(err);
       }
+
       // jwt authentication(signing in) is  done here ...
       jwt.sign({ user }, config.get('secretkey'), (err, token) => {
         res.json({
@@ -67,7 +69,8 @@ exports.get_user_by_credentials = async (req, res) => {
     res.status(500).send(err.toString());
   }
 };
-// Post a Use
+
+// Post a User
 exports.post_user = async (req, res) => {
   const user = new User({
     _id: mongoose.Types.ObjectId(),
@@ -92,6 +95,7 @@ exports.post_user = async (req, res) => {
     res.status(500).send(err.toString());
   }
 };
+
 // Update User by ID.
 exports.update_user = async (req, res) => {
 
@@ -102,20 +106,22 @@ exports.update_user = async (req, res) => {
     if (exists && exists._id != req.body._id) {
       return res.status(400).send("Username already exists ");
     }
+
     if (req.body.password) {
       if (req.body.password.length < 5) {
         return res.status(500).send("Password Length Too Short");
       }
       req.body.password = Bcrypt.hashSync(req.body.password, 10);
     }
+
     change.set(req.body);
     await change.save();
     res.send(change);
   } catch (err) {
-    // console.log("error is " + err);
     res.status(500).send(err.toString());
   }
 };
+
 // Delete User by ID.
 exports.delete_user = async (req, res) => {
 
