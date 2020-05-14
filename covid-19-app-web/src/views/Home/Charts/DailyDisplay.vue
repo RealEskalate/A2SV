@@ -65,12 +65,25 @@
     </v-row>
     <v-row>
       <v-col cols="12" md="9" class="overflow-auto pl-md-10">
+        <!--suppress HtmlUnknownTag -->
+        <vue-loaders-ball-scale-multiple
+          v-if="graphLoaders.daily > 0"
+          style="position:absolute; left: 35%; top: 45%"
+          :color="$vuetify.theme.themes.light.primary"
+          scale="1"
+        />
         <bar-chart
+          :style="`opacity: ${graphLoaders.daily > 0 ? 0.5 : 1}`"
           class="v-card--shaped grey lighten-5 shadow-in pb-6 px-1"
           style="min-width: 400px"
           :height="480"
+          ref="graph"
           :chart-data="data"
           :options="chartOptions"
+        />
+        <small
+          class="d-block grey--text my-3 text--darken-2"
+          v-text="short_description"
         />
       </v-col>
       <v-col cols="12" md="3">
@@ -110,7 +123,8 @@
       date_range: [this.defaultDate(), this.defaultDate("end")],
       country: { name: "World", slug: "World" },
       age_range: "All",
-      social_distancing: 50
+      social_distancing: 50,
+      rendered: false
     };
   },
   methods: {
@@ -141,9 +155,6 @@
       handler() {
         this.fillGraph();
       }
-    },
-    tab_index() {
-      if (this.tab_index === 1) this.fillGraph();
     }
   },
   mounted() {
@@ -151,6 +162,7 @@
   },
   computed: {
     daily: () => store.getters.getDailyCounts,
+    graphLoaders: () => store.getters.getGraphLoaders,
     dateRangeText() {
       return this.rangeToText(this.date_range[0], this.date_range[1]);
     },

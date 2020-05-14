@@ -80,12 +80,12 @@
         </v-list>
       </v-navigation-drawer>
       <v-bottom-navigation
-              app
-              grow
-              color="primary"
-              class="px-3"
-              v-if=" curNavigation === '1'"
-              active-class="active-bottom v-card--raised"
+        app
+        grow
+        color="primary"
+        class="px-3"
+        v-if="curNavigation === '1'"
+        active-class="active-bottom v-card--raised"
       >
         <v-btn v-for="(item, i) in links" :to="item.to" :key="i">
           <span>{{ item.text }}</span>

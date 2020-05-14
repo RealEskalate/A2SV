@@ -290,8 +290,10 @@ export default {
       { commit },
       { criteria, country, start_date, end_date, mode }
     ) {
+      commit("resetGraphLoaders", mode);
       for (let i = 0; i < criteria.length; i++) {
         let cr = criteria[i];
+        commit("incrementGraphLoaders", mode);
         axios
           .get(`${process.env.VUE_APP_BASE_URL}/statistics`, {
             params: {
@@ -316,8 +318,102 @@ export default {
           })
           .catch(error => {
             console.log(error);
+          })
+          .finally(() => {
+            commit("decrementGraphLoaders", mode);
           });
       }
+    },
+    setDailyCounts({ commit }, { criteria, country, start_date, end_date }) {
+      commit("resetGraphLoaders", "daily");
+      commit("incrementGraphLoaders", "daily");
+      axios
+        .get(`${process.env.VUE_APP_BASE_URL}/statistics`, {
+          params: {
+            criteria: converter[criteria],
+            country: country,
+            start_date: start_date,
+            end_date: end_date,
+            daily: true
+          }
+        })
+        .then(response => {
+          commit("setDailyCounts", { key: criteria, payload: response.data });
+        })
+        .catch(error => {
+          console.log(error);
+        })
+        .finally(() => {
+          commit("decrementGraphLoaders", "daily");
+        });
+    },
+    setCountryCompare(
+      { commit },
+      { criteria, country, start_date, end_date, mode }
+    ) {
+      commit("incrementGraphLoaders", "countryCompare");
+      axios
+        .get(`${process.env.VUE_APP_BASE_URL}/statistics`, {
+          params: {
+            criteria: converter[criteria],
+            country: country,
+            start_date: start_date,
+            end_date: end_date
+          }
+        })
+        .then(response => {
+          let data = [];
+          for (let i in response.data) {
+            let val = response.data[i];
+            data.push({
+              x: `Day ${moment(val.t).diff(moment(start_date), "days")}`,
+              y: val.y
+            });
+          }
+          commit("setCountryCompare", { key: mode, payload: data });
+        })
+        .catch(error => {
+          console.log(error);
+        })
+        .finally(() => {
+          commit("decrementGraphLoaders", "countryCompare");
+        });
+    },
+    setDiseaseCompare({ commit }, { makeDataSet }) {
+      let diseaseColors = {
+        "COVID-19": [121, 134, 203],
+        EBOLA: [220, 231, 117],
+        SARS: [77, 208, 225],
+        MERS: [240, 98, 146],
+        "SEASONAL FLU": [176, 190, 197]
+      };
+      commit("resetGraphLoaders", "diseaseCompare");
+      commit("incrementGraphLoaders", "diseaseCompare");
+      axios
+        .get(`${process.env.VUE_APP_BASE_URL}/diseases`)
+        .then(response => {
+          let collection = [];
+          response.data.forEach(function(load) {
+            let input = {
+              label: load.title,
+              color: diseaseColors[load.title],
+              data: [
+                { x: "Confirmed Cases", y: load.confirmed },
+                { x: "Death Count", y: load.deaths },
+                { x: "Recovered Count", y: load.recovered },
+                { x: "Affected Countries", y: load.affected }
+              ]
+            };
+            collection.push(makeDataSet(input, "bar"));
+          });
+          commit("setDiseaseCompare", collection);
+        })
+        .catch(error => {
+          console.log(error);
+        })
+        .finally(() => {
+          commit("decrementGraphLoaders", "diseaseCompare");
+        });
     },
     setCountryResources({ commit }, { country }) {
       axios
@@ -342,85 +438,6 @@ export default {
         .catch(error => {
           console.log(error);
         });
-    },
-    setDailyCounts({ commit }, { criteria, country, start_date, end_date }) {
-      axios
-        .get(`${process.env.VUE_APP_BASE_URL}/statistics`, {
-          params: {
-            criteria: converter[criteria],
-            country: country,
-            start_date: start_date,
-            end_date: end_date,
-            daily: true
-          }
-        })
-        .then(response => {
-          commit("setDailyCounts", { key: criteria, payload: response.data });
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    },
-    setCountryCompare(
-      { commit },
-      { criteria, country, start_date, end_date, mode }
-    ) {
-      axios
-        .get(`${process.env.VUE_APP_BASE_URL}/statistics`, {
-          params: {
-            criteria: converter[criteria],
-            country: country,
-            start_date: start_date,
-            end_date: end_date
-          }
-        })
-        .then(response => {
-          let data = [];
-          for (let i in response.data) {
-            let val = response.data[i];
-            data.push({
-              x: `Day ${moment(val.t).diff(moment(start_date), "days")}`,
-              y: val.y
-            });
-          }
-          commit("setCountryCompare", { key: mode, payload: data });
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    },
-
-    setDiseaseCompare({ commit }, { makeDataSet }) {
-      let diseaseColors = {
-        "COVID-19": [121, 134, 203],
-        EBOLA: [220, 231, 117],
-        SARS: [77, 208, 225],
-        MERS: [240, 98, 146],
-        "SEASONAL FLU": [176, 190, 197]
-      };
-
-      axios.get(`${process.env.VUE_APP_BASE_URL}/diseases`).then(
-        response => {
-          let collection = [];
-          response.data.forEach(function(load) {
-            let input = {
-              label: load.title,
-              color: diseaseColors[load.title],
-              data: [
-                { x: "Confirmed Cases", y: load.confirmed },
-                { x: "Death Count", y: load.deaths },
-                { x: "Recovered Count", y: load.recovered },
-                { x: "Affected Countries", y: load.affected }
-              ]
-            };
-            collection.push(makeDataSet(input, "bar"));
-          });
-          commit("setDiseaseCompare", collection);
-        },
-        error => {
-          console.log(error);
-        }
-      );
     }
   }
 };

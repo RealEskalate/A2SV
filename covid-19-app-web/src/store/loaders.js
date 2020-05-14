@@ -7,6 +7,7 @@ export default {
     graphLoaders: {
       counts: 0,
       rates: 0,
+      daily: 0,
       countryCompare: 0,
       diseaseCompare: 0
     }
@@ -24,27 +25,13 @@ export default {
       state.newsLoaders[key] = value;
     },
     incrementGraphLoaders(state, key) {
-      state.newsLoaders[key]++;
+      state.graphLoaders[key]++;
     },
     decrementGraphLoaders(state, key) {
-      state.newsLoaders[key]--;
+      state.graphLoaders[key]--;
     },
     resetGraphLoaders(state, key) {
-      state.newsLoaders[key] = 0;
-    }
-  },
-  actions: {
-    setNewsLoaders({ commit }, { key, value }) {
-      commit("setNewsLoaders", { key: key, value: value });
-    },
-    incrementGraphLoaders({ commit }, key) {
-      commit("incrementGraphLoaders", key);
-    },
-    decrementGraphLoaders({ commit }, key) {
-      commit("decrementGraphLoaders", key);
-    },
-    resetGraphLoaders({ commit }, key) {
-      commit("resetGraphLoaders", key);
+      state.graphLoaders[key] = 0;
     }
   }
 };

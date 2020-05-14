@@ -1,6 +1,9 @@
-const LocationUser = require("../models/LocationUserModel");
-const Location = require("./../models/LocationModel");
-const { User } = require("./../models/UserModel");
+const LocationUserModels = require("./../models/LocationUserModel");
+const LocationUser = LocationUserModels.LocationUser;
+var LocationModels = require("../models/LocationModel.js");
+var Location = LocationModels.Location;
+const UserModels = require("./../models/UserModel");
+const User = UserModels.User;
 const axios = require("axios");
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
@@ -119,6 +122,11 @@ exports.post_location_user = async (req, res) => {
 
 //Get specific location_user by id
 exports.get_location_user_by_id = async (req, res) => {
+  if (req.query.demo && req.query.demo == "true"){
+    var LocationUser = LocationUserModels.DemoLocationUser;
+  }else{
+    var LocationUser = LocationUserModels.LocationUser;
+  }
 
   try {
     const locationUser = await LocationUser.findById(req.params.id);
@@ -133,6 +141,11 @@ exports.get_location_user_by_id = async (req, res) => {
 
 //Get location_user by location_id
 exports.get_by_location_id = async (req, res) => {
+  if (req.query.demo && req.query.demo == "true"){
+    var LocationUser = LocationUserModels.DemoLocationUser;
+  }else{
+    var LocationUser = LocationUserModels.LocationUser;
+  }
   try {
     const results = await LocationUser.find({
       location_id: { $eq: req.params.location_id },
@@ -148,6 +161,11 @@ exports.get_by_location_id = async (req, res) => {
 
 //Get all location_users
 exports.get_all_location_users = async (req, res) => {
+  if (req.query.demo && req.query.demo == "true"){
+    var LocationUser = LocationUserModels.DemoLocationUser;
+  }else{
+    var LocationUser = LocationUserModels.LocationUser;
+  }
 
   const results = await LocationUser.find({});
   try {
@@ -159,6 +177,11 @@ exports.get_all_location_users = async (req, res) => {
 
 //Get location_user by location_id
 exports.get_by_user_id = async (req, res) => {
+  if (req.query.demo && req.query.demo == "true"){
+    var LocationUser = LocationUserModels.DemoLocationUser;
+  }else{
+    var LocationUser = LocationUserModels.LocationUser;
+  }
 
   try {
     const results = await LocationUser.find({

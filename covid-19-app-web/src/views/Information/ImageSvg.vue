@@ -550,9 +550,10 @@
 </template>
 
 <script>
-  import store from "@/store/";
 
-  export default {
+import store from "@/store/";
+
+export default {
   name: "ImageSvg",
   data() {
     return {
@@ -561,8 +562,7 @@
       bad_color: "rgb(240, 98, 146)"
     };
   },
-  methods: {
-  },
+  methods: {},
   created() {
     store.dispatch("setStates");
   },
@@ -573,4 +573,3 @@
   }
 };
 </script>
-

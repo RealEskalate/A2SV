@@ -6,19 +6,13 @@ const { reactiveProp } = mixins;
 export const BarChart = {
   extends: Bar,
   mixins: [reactiveProp],
-  props: ["chartData", "options"],
-  mounted() {
-    this.renderChart(this.chartData, this.options);
-  }
+  props: ["chartData", "options"]
 };
 
 export const LineChart = {
   extends: Line,
   mixins: [reactiveProp],
-  props: ["chartData", "options"],
-  mounted() {
-    this.renderChart(this.chartData, this.options);
-  }
+  props: ["chartData", "options"]
 };
 
 export const ChartMixin = {
@@ -39,6 +33,12 @@ export const ChartMixin = {
       type: String,
       default() {
         return "linear";
+      }
+    },
+    short_description: {
+      type: String,
+      default() {
+        return "";
       }
     },
     tab_index: {
