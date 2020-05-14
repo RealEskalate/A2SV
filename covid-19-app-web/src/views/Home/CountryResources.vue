@@ -8,12 +8,12 @@
         </v-col>
         <v-col cols="1" class="my-0 py-0">
           <v-icon
-            class="justify-end"
-            small
-            color="primary darken-1"
-            @click="dialog = true"
-            v-text="'mdi-help-circle-outline'"
-          />
+                  class="justify-end"
+                  small
+                  color="primary darken-1"
+                  @click="dialog = true">
+            {{ mdiHelpCircleOutline }}
+          </v-icon>
         </v-col>
       </v-row>
     </v-card-subtitle>
@@ -43,8 +43,8 @@
           style="position: absolute; right: 0; top: 0"
           class="mt-3 mr-3"
           @click="dialog = false"
-          v-text="'mdi-close'"
-        />
+        > {{ mdiClose }}
+        </v-icon>
         <v-card-title class="headline mt-2" v-text="description.title" />
         <v-card-text v-text="description.content" />
         <v-card-text>
@@ -67,12 +67,14 @@
 </template>
 
 <script>
-import store from "@/store/index.js";
+  import store from "@/store/index.js";
+  import {mdiClose, mdiHelpCircleOutline} from "@mdi/js";
 
-export default {
+  export default {
   props: ["country"],
   data() {
     return {
+      mdiClose, mdiHelpCircleOutline,
       dialog: false,
       description: {
         title: "Available Resources - " + this.country.name,
