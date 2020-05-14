@@ -12,6 +12,8 @@
     "aos": "^2.3.4",
     "axios": "^0.19.2",
     "chart.js": "^2.9.3",
+    "compression": "^1.7.4",
+    "compression-webpack-plugin": "latest",
     "core-js": "^3.6.4",
     "express": "^4.17.1",
     "moment": "^2.24.0",
@@ -25,8 +27,7 @@
     "vue-social-sharing": "^2.4.7",
     "vuetify": "^2.2.23",
     "vuex": "^3.2.0",
-    "vuex-persistedstate": "^3.0.1",
-    "compression-webpack-plugin": "latest"
+    "vuex-persistedstate": "^3.0.1"
   },
   "devDependencies": {
     "@mdi/js": "^5.2.45",
