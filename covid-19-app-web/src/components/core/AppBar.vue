@@ -30,7 +30,7 @@
       <v-menu left bottom v-if="$vuetify.breakpoint.smAndDown">
         <template v-slot:activator="{ on }">
           <v-btn icon v-on="on">
-            <v-icon>mdi-dots-vertical</v-icon>
+            <v-icon>{{ mdiDotsVertical }}</v-icon>
           </v-btn>
         </template>
 
@@ -98,25 +98,27 @@
 
 <script>
   import store from "@/store/";
+  import {mdiBookOpenVariant, mdiDotsVertical, mdiHome, mdiInformation, mdiMap, mdiNewspaper} from "@mdi/js";
 
   export default {
   data: () => {
     return {
+      mdiDotsVertical,
       drawer: false,
       navType: store.getters.getNavigationType,
       locationY: 0,
       curRoute: 0,
       activeBtn: 0,
       links: [
-        { text: "Home", icon: "mdi-home", to: "/" },
+        {text: "Home", icon: mdiHome, to: "/"},
         {
           text: "Learn",
-          icon: "mdi-book-open-page-variant",
+          icon: mdiBookOpenVariant,
           to: "/information"
         },
-        { text: "About", icon: "mdi-information", to: "/about" },
-        { text: "News", icon: "mdi-newspaper", to: "/news" },
-        { text: "Map", icon: "mdi-map", to: "/map" }
+        {text: "About", icon: mdiInformation, to: "/about"},
+        {text: "News", icon: mdiNewspaper, to: "/news"},
+        {text: "Map", icon: mdiMap, to: "/map"}
       ]
     };
   },

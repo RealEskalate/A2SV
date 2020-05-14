@@ -70,12 +70,14 @@
 </template>
 
 <script>
-export default {
+  import {mdiTelegram, mdiWeb, mdiYoutube} from "@mdi/js";
+
+  export default {
   data: () => ({
     icons: [
-      ["mdi-youtube", "/youtube"],
-      ["mdi-telegram", "/telegram"],
-      ["mdi-web", "https://a2sv.org"]
+      [mdiYoutube, "/youtube"],
+      [mdiTelegram, "/telegram"],
+      [mdiWeb, "https://a2sv.org"]
     ]
     //https://www.ctech.co.ke/wp-content/uploads/2019/09/Home-Page_Layer-Slider-BG-1024x426.png
     //https://www.toptal.com/designers/subtlepatterns/patterns/memphis-mini.png

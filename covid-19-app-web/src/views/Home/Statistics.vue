@@ -14,59 +14,56 @@
           <v-card flat class="overflow-hidden">
             <v-tabs fixed-tabs v-model="selectedGraph">
               <v-tab>
-                <v-icon left>mdi-numeric</v-icon>
+                <v-icon left>{{mdiNumeric}}</v-icon>
                 Total Counts
                 <v-spacer />
                 <v-icon
-                  small
-                  color="primary darken-1"
-                  @click="dialog = true"
-                  v-text="'mdi-help-circle-outline'"
-                />
+                        small
+                        color="primary darken-1"
+                        @click="dialog = true">
+                  {{mdiHelpCircleOutline}}
+                </v-icon>
               </v-tab>
               <v-tab>
-                <v-icon left>mdi-weather-sunny</v-icon>
+                <v-icon left>{{mdiWeatherSunny}}</v-icon>
                 Daily Counts
                 <v-spacer />
                 <v-icon
-                  small
-                  color="primary darken-1"
-                  @click="dialog = true"
-                  v-text="'mdi-help-circle-outline'"
-                />
+                        small
+                        color="primary darken-1"
+                        @click="dialog = true">{{mdiHelpCircleOutline}}
+                </v-icon>
               </v-tab>
               <v-tab>
-                <v-icon left>mdi-percent-outline</v-icon>
+                <v-icon left>{{mdiPercentOutline}}</v-icon>
                 View Rates
                 <v-spacer />
                 <v-icon
-                  small
-                  color="primary darken-1"
-                  @click="dialog = true"
-                  v-text="'mdi-help-circle-outline'"
-                />
+                        small
+                        color="primary darken-1"
+                        @click="dialog = true"> {{mdiHelpCircleOutline}}
+                </v-icon>
               </v-tab>
               <v-tab>
-                <v-icon left>mdi-map-marker</v-icon>
+                <v-icon left>{{mdiMapMarker}}</v-icon>
                 Compare Countries
                 <v-spacer />
                 <v-icon
-                  small
-                  color="primary darken-1"
-                  @click="dialog = true"
-                  v-text="'mdi-help-circle-outline'"
-                />
+                        small
+                        color="primary darken-1"
+                        @click="dialog = true"> {{mdiHelpCircleOutline}}
+                </v-icon>
               </v-tab>
               <v-tab>
-                <v-icon left>mdi-virus-outline</v-icon>
+                <v-icon left>{{mdiVirusOutline}}</v-icon>
                 Compare Similar Diseases
                 <v-spacer />
                 <v-icon
-                  small
-                  color="primary"
-                  @click="dialog = true"
-                  v-text="'mdi-help-circle-outline'"
-                />
+                        small
+                        color="primary"
+                        @click="dialog = true">
+                  {{mdiHelpCircleOutline}}
+                </v-icon>
               </v-tab>
 
               <v-tab-item style="min-height: 700px">
@@ -107,11 +104,11 @@
       <v-dialog v-model="dialog" width="500">
         <v-card class="px-2" shaped style="overflow: hidden">
           <v-icon
-            style="position: absolute; right: 0; top: 0"
-            class="mt-3 mr-3"
-            @click="dialog = false"
-            v-text="'mdi-close'"
-          />
+                  style="position: absolute; right: 0; top: 0"
+                  class="mt-3 mr-3"
+                  @click="dialog = false">
+            {{mdiClose}}
+          </v-icon>
           <v-card-title
             class="headline mt-2"
             v-text="graphs[selectedGraph].title"
@@ -161,12 +158,13 @@
 </template>
 
 <script>
-import Display from "./Charts/Display.vue";
-import DailyDisplay from "./Charts/DailyDisplay.vue";
-import CountryCompare from "./Charts/CountryCompare.vue";
-import DiseaseCompare from "./Charts/DiseaseCompare.vue";
+  import Display from "./Charts/Display.vue";
+  import DailyDisplay from "./Charts/DailyDisplay.vue";
+  import CountryCompare from "./Charts/CountryCompare.vue";
+  import DiseaseCompare from "./Charts/DiseaseCompare.vue";
+  import {mdiClose, mdiHelpCircleOutline, mdiMapMarker, mdiNumeric, mdiVirusOutline, mdiWeatherSunny} from "@mdi/js";
 
-export default {
+  export default {
   components: {
     Display,
     DailyDisplay,
@@ -175,6 +173,7 @@ export default {
   },
   data: () => {
     return {
+      mdiHelpCircleOutline, mdiClose, mdiNumeric, mdiWeatherSunny, mdiVirusOutline, mdiMapMarker,
       dialog: false,
       selectedGraph: 0,
       graphs: [

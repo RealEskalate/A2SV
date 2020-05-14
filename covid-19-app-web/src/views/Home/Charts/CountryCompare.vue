@@ -27,17 +27,17 @@
             >
               <template v-slot:activator="{ on }">
                 <v-text-field
-                  :color="
+                        :color="
                     `rgb(${colors[0][0]}, ${colors[0][1]}, ${colors[0][2]})`
                   "
-                  outlined
-                  dense
-                  v-model="dateRangeText1"
-                  label="Date Range 1"
-                  hint="Country 1: From - To"
-                  prepend-inner-icon="mdi-calendar"
-                  readonly
-                  v-on="on"
+                        outlined
+                        dense
+                        v-model="dateRangeText1"
+                        label="Date Range 1"
+                        hint="Country 1: From - To"
+                        :prepend-inner-icon=" mdiCalendar"
+                        readonly
+                        v-on="on"
                 />
               </template>
               <v-date-picker
@@ -88,17 +88,17 @@
             >
               <template v-slot:activator="{ on }">
                 <v-text-field
-                  :color="
+                        :color="
                     `rgb(${colors[1][0]}, ${colors[1][1]}, ${colors[1][2]})`
                   "
-                  outlined
-                  dense
-                  v-model="dateRangeText2"
-                  label="Date Range 2"
-                  hint="Country 2: From - To"
-                  prepend-inner-icon="mdi-calendar"
-                  readonly
-                  v-on="on"
+                        outlined
+                        dense
+                        v-model="dateRangeText2"
+                        label="Date Range 2"
+                        hint="Country 2: From - To"
+                        :prepend-inner-icon="mdiCalendar"
+                        readonly
+                        v-on="on"
                 />
               </template>
               <v-date-picker
@@ -163,16 +163,19 @@
   </v-container>
 </template>
 <script>
-import { LineChart, ChartMixin } from "./charts.js";
-import CountryResources from "../CountryResources";
-import store from "@/store/index.js";
-import moment from "moment";
+  import {ChartMixin, LineChart} from "./charts.js";
+  import CountryResources from "../CountryResources";
+  import store from "@/store/index.js";
+  import moment from "moment";
+  import {mdiCalendar} from "@mdi/js"
 
-export default {
+
+  export default {
   components: { LineChart, CountryResources },
   mixins: [ChartMixin],
   data() {
     return {
+      mdiCalendar,
       data: null,
       criterion: "Confirmed Cases",
       colors: [
