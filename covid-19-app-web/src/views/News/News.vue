@@ -15,12 +15,7 @@
               item-value="name"
               outlined
               dense
-              @input="
-                () => {
-                  page = 1;
-                  fetchNews();
-                }
-              "
+              @input="resetPage"
             />
           </v-col>
         </v-row>
@@ -44,11 +39,7 @@
                     <v-list-item-avatar height="50" width="50">
                       <v-img
                         contain
-                        :src="
-                          `https://logo.clearbit.com/${getPageUrl(
-                            item.reference_link
-                          )}`
-                        "
+                        :src="clearBitLogo(item.reference_link)"
                         lazy-src="/img/news/avatar.png"
                       />
                     </v-list-item-avatar>
@@ -88,7 +79,7 @@
               label="Show"
               outlined
               dense
-              @input="fetchNews"
+              @input="resetPage"
             />
           </v-col>
           <v-col cols="12" md="10">
@@ -97,7 +88,7 @@
               v-model="page"
               total-visible="7"
               :length="Math.floor((totalCount || 0) / size)"
-              @input="fetchNews()"
+              @input="fetchNews"
             />
           </v-col>
         </v-row>
@@ -119,7 +110,7 @@
                 v-text="'Found Nothing'"
               />
               <v-list-item-group
-                @change="fetchNews"
+                @change="resetPage"
                 v-else
                 color="primary"
                 multiple
@@ -183,6 +174,10 @@ export default {
     };
   },
   methods: {
+    resetPage() {
+      this.page = 1;
+      this.fetchNews();
+    },
     fetchNews() {
       store.dispatch("setNews", {
         page: this.page,
@@ -191,14 +186,14 @@ export default {
         sources: this.sources
       });
     },
+    clearBitLogo(link) {
+      return `https://logo.clearbit.com/${this.getPageUrl(link)}`;
+    },
     getPageUrl(link) {
       let domain = link.split("/")[2] || "";
       domain = domain.split(".");
       if (domain.length >= 3) domain.shift();
       return domain.join(".");
-    },
-    logoNotFound(id) {
-      console.log(id);
     },
     getTime(postDate) {
       return moment(String(postDate || "")).format("hh:mm A - MMM DD, YYYY");
@@ -228,7 +223,7 @@ export default {
   watch: {
     localCountry(newValue) {
       this.country = newValue;
-      this.fetchNews();
+      this.resetPage();
     }
   },
   mounted() {
