@@ -22,7 +22,6 @@ exports.get_logs = async (req, res) => {
     let filter = {};
     if (req.query.statusCode) {
         filter['meta.res.statusCode'] = req.query.statusCode;
-
     }
 
     if (req.query.url) {
