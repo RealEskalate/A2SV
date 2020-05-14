@@ -6,7 +6,7 @@ exports.get_all_symptoms = async (req, res) => {
     const symptoms = await Symptom.find({});
 
     try {
-        res.status(201).send(symptoms);
+        res.status(200).send(symptoms);
     } catch (err) {
         res.status(500).send(err.toString());
     }
