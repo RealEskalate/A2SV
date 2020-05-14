@@ -57,7 +57,7 @@
                 <div class="text-center py-3">
                   <v-btn width="100" class="primary mx-auto" @click="sendForm">
                     Send
-                    <v-icon class="ml-2" small>mdi-send</v-icon>
+                    <v-icon class="ml-2" small> {{ mdiSend }}</v-icon>
                   </v-btn>
                 </div>
               </v-form>
@@ -83,10 +83,10 @@
               v-for="(action, action_i) in actions"
             >
               <v-icon
-                class="white--text mb-7"
-                style="font-size: 4em"
-                v-text="action.icon"
-              />
+                      class="white--text mb-7"
+                      style="font-size: 4em">
+                {{ action.icon }}
+              </v-icon>
               <h1>{{ action.title }}</h1>
               <p class="font-weight-thin my-2">{{ action.description }}</p>
               <a
@@ -135,11 +135,13 @@
 </template>
 
 <script>
-import axios from "axios";
+  import axios from "axios";
+  import {mdiCloudDownloadOutline, mdiSearchWeb, mdiSend, mdiYoutube} from "@mdi/js";
 
-export default {
+  export default {
   data: () => {
     return {
+      mdiSend,
       showAlert: false,
       message: "",
       type: "success",
@@ -181,14 +183,14 @@ export default {
       ],
       actions: [
         {
-          icon: "mdi-search-web",
+          icon: mdiSearchWeb,
           title: "A2SV Website",
           description:
             "Check out the team's website to learn more about our team, our program, our team members and how we started our journey.",
           links: [{ text: "Visit Website", href: "http://a2sv.org/" }]
         },
         {
-          icon: "mdi-cloud-download-outline",
+          icon: mdiCloudDownloadOutline,
           title: "Download The App",
           description:
             "Download our Symptom-tracking app, easily locate areas with a high density of symptoms using real-time data, and keep each other safe.",
@@ -198,7 +200,7 @@ export default {
           ]
         },
         {
-          icon: "mdi-youtube",
+          icon: mdiYoutube,
           title: "Watch the Video",
           description:
             "Learn how our app help mitigate the spread of COVID-19 and flatten the curve especially in countries with limited testing capacity.",

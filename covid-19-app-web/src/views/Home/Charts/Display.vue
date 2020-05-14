@@ -29,7 +29,8 @@
               v-model="dateRangeText"
               label="Date Range"
               hint="Date Range"
-              prepend-inner-icon="mdi-calendar"
+
+              :prepend-inner-icon="mdiCalendar"
               readonly
               v-on="on"
             />
@@ -80,11 +81,12 @@
   </v-container>
 </template>
 <script>
-import { LineChart, ChartMixin } from "./charts.js";
-import CountryResources from "../CountryResources";
-import store from "@/store/index.js";
+  import {ChartMixin, LineChart} from "./charts.js";
+  import CountryResources from "../CountryResources";
+  import store from "@/store/index.js";
+  import {mdiCalendar} from "@mdi/js";
 
-export default {
+  export default {
   components: { LineChart, CountryResources },
   mixins: [ChartMixin],
   props: {
@@ -97,6 +99,7 @@ export default {
   },
   data() {
     return {
+      mdiCalendar,
       data: null,
       date_range: [this.defaultDate(), this.defaultDate("end")],
       country: { name: "World", slug: "World" },
