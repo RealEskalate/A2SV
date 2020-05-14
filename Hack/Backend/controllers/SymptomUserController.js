@@ -1,11 +1,18 @@
-const { SymptomUser } = require("../models/SymptomUser");
-const { Symptom } = require("../models/Symptom");
-const UserSchema = require("./../models/UserModel");
-const User = UserSchema.User;
+const SymptomUserModel = require("./../models/SymptomUser");
+const SymptomUser = SymptomUserModel.SymptomUser;
+const { DemoSymptomUser } = require('./../models/DemoSymptomUserModel');
+const { Symptom, validateSymptom } = require("../models/Symptom");
+const UserModels = require("./../models/UserModel");
+const User = UserModels.User;
+const jwt = require("jsonwebtoken");
 
 // Display list of all symptoms.
 exports.get_all_symptomusers = async (req, res) => {
-
+  if (req.query.demo && req.query.demo == "true") {
+    var SymptomUser = DemoSymptomUser;
+  } else {
+    var SymptomUser = SymptomUserModel.SymptomUser;
+  }
   const symptomusers = await SymptomUser.find();
 
   try {
@@ -53,6 +60,11 @@ exports.post_symptomuser = async (req, res) => {
 
 //Get a symptomuser by symptom_id
 exports.get_symptomuser_by_symptom_id = async (req, res) => {
+  if (req.query.demo && req.query.demo == "true") {
+    var SymptomUser = DemoSymptomUser;
+  } else {
+    var SymptomUser = SymptomUserModel.SymptomUser;
+  }
   try {
     const symptomuser = await SymptomUser.find({
       symptom_id: req.params.symptom_id,
@@ -81,7 +93,11 @@ exports.get_symptomuser_by_symptom_id = async (req, res) => {
 
 //Get a symptomuser by user_id
 exports.get_symptomuser_by_user_id = async (req, res) => {
-
+  if (req.query.demo && req.query.demo == "true") {
+    var SymptomUser = DemoSymptomUser;
+  } else {
+    var SymptomUser = SymptomUserModel.SymptomUser;
+  }
   try {
     const symptomuser = await SymptomUser.find({ user_id: req.body.loggedInUser });
     if (!symptomuser) {

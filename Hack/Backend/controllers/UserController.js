@@ -1,13 +1,18 @@
-var UserSchema = require("../models/UserModel.js");
+var UserModels = require("../models/UserModel.js");
 var mongoose = require("mongoose");
 const Bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const axios = require('axios');
 const config = require('config');
-const User = UserSchema.User;
+const User = UserModels.User;
 
 // Get All Users.
 exports.get_all_users = async (req, res) => {
+  if (req.query.demo && req.query.demo == "true"){
+    var User = UserModels.DemoUser;
+  }else{
+    var User = UserModels.User;
+  }
   const users = await User.find();
   try {
     res.send(users);
@@ -18,7 +23,11 @@ exports.get_all_users = async (req, res) => {
 
 // Get User by ID.
 exports.get_user_by_id = async (req, res) => {
-
+  if (req.query.demo && req.query.demo == "true"){
+    var User = UserModels.DemoUser;
+  }else{
+    var User = UserModels.User;
+  }
   const user = await User.findById(req.params.id);
   try {
     res.send(user);
@@ -29,6 +38,11 @@ exports.get_user_by_id = async (req, res) => {
 
 // Get User by Username and Password.
 exports.get_user_by_credentials = async (req, res) => {
+  if (req.query.demo && req.query.demo == "true"){
+    var User = UserModels.DemoUser;
+  }else{
+    var User = UserModels.User;
+  }
   let user = await User.findOne({
     username: { $eq: req.body.username },
   });

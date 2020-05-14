@@ -32,5 +32,7 @@ location_user.pre('save', function () {
 //Make location user IDs unique
 location_user.index({ user_id: 1, location_id: 1 }, { unique: 1 });
 
-const LocationUserModel = mongoose.model("Demo LocationUser", location_user);
-module.exports = LocationUserModel;
+const LocationUserModel = mongoose.model("LocationUser", location_user);
+const DemoLocationUserModel = mongoose.model("Demo LocationUser", location_user);
+
+module.exports = { LocationUser: LocationUserModel, DemoLocationUser: DemoLocationUserModel };

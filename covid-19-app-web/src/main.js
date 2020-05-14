@@ -5,6 +5,7 @@ import store from "./store";
 import vuetify from "./plugins/vuetify";
 import VueProgressBar from "vue-progressbar";
 import VueLoaders from "vue-loaders";
+import "vue-loaders/dist/vue-loaders.css";
 
 Vue.use(VueLoaders);
 Vue.use(VueProgressBar, {
