@@ -18,8 +18,17 @@ exports.get_all_locations = async (req, res) => {
   }
 };
 
+
+
+
+
+
+
+
+
 exports.get_all_locations_with_symptoms = async (req, res) => {
-  if(!req.body.longitude || !req.body.latitude){
+
+  if (!req.body.longitude || !req.body.latitude) {
     return res.status(400).send("Coordinates are not given");
   }
   let lat = req.body.latitude;
@@ -29,45 +38,74 @@ exports.get_all_locations_with_symptoms = async (req, res) => {
   const locations = await Location.find(
     {
       longitude: {
-        $gte:new Number(long) - 0.3,
-        $lte:new Number(long) + 0.3
+        $gte: new Number(long) - 0.3,
+        $lte: new Number(long) + 0.3
       },
       latitude: {
-        $gte:new Number(lat) - 0.2,
-        $lte:new Number(lat) + 0.2
+        $gte: new Number(lat) - 0.2,
+        $lte: new Number(lat) + 0.2
       }
     }
-  );  
+  );
+  console.log("nearbys " + locations.length);
   let nearby_locations = []
+
   for (let i = 0; i < locations.length; i++) {
     let location = locations[i];
-    if(geolib.getDistance(
+    if (geolib.getDistance(
       { latitude: lat, longitude: long },
       { latitude: location.latitude, longitude: location.longitude }
-      )<6213.712){
-        nearby_locations.push(location._id)
-      }
-  }
-  console.log(nearby_locations.length)
-
-  let LocationUsers = await LocationUser.find({
-    location_id: {
-      $in: nearby_locations
+    ) < 6213.712) {
+      nearby_locations.push(location._id)
     }
-  }).populate('location_id').populate('user_id')
-  // Get Symptoms for each user and store in Symptoms
-  for (let i = 0; i < LocationUsers.length; i++) {
-    let userAtLocation = LocationUsers[i];
+  }
+  console.log("nearby locations " + nearby_locations.length)
+
+
+  let usersSet = new Set([]);
+  let locationsSet = new Set([]);
+
+  console.log("single elt " + nearby_locations[0]);
+  let Location_User = [];
+  for (let index = 0; index < nearby_locations.length; index++) {
+    let element = nearby_locations[index];
+    if (!locationsSet.has(element)) {
+      let location_user = await LocationUser.findOne({ location_id: element });
+      if (index % 100 == 0) {
+        console.log("loc user is " + location_user + " for " + index);
+      }
+      if (location_user && !usersSet.has(location_user.user_id)) {
+        usersSet.add(location_user.user_id);
+        Location_User.push({
+          location_id: element,
+          user_id: location_user.user_id
+        });
+      }
+    }
+    locationsSet.add(element);
+  }
+
+  console.log("filtered out " + Location_User.length);
+
+  // let LocationUsers = await LocationUser.find({
+  //   location_id: {
+  //     $in: nearby_locations
+  //   }
+  // }).populate('location_id').populate('user_id')
+
+  //Get Symptoms for each user and store in Symptoms
+  for (let i = 0; i < Location_User.length; i++) {
+    let userAtLocation = Location_User[i];
     let user = userAtLocation.user_id;
-    let location = userAtLocation.location_id;    
-    if(dict[`${user._id}`] && dict[`${user._id}`].TTL<userAtLocation.TTL){
+    let location = userAtLocation.location_id;
+    if (dict[`${user._id}`] && dict[`${user._id}`].TTL < userAtLocation.TTL) {
       continue
     }
     let symptoms = [];
     const symptomusers = await SymptomUser.find({
       user_id: user._id
     }).populate('symptom_id');
-    if(!symptomusers || symptomusers.length==0) continue;
+    if (!symptomusers || symptomusers.length == 0) continue;
     for (let j = 0; j < symptomusers.length; j++) {
       symptoms.push(symptomusers[j].symptom_id);
     }
@@ -85,7 +123,7 @@ exports.get_all_locations_with_symptoms = async (req, res) => {
     break;
   }
   let result = []
-  Object.keys(dict).forEach((item)=>{
+  Object.keys(dict).forEach((item) => {
     result.push({
       longitude: dict[`${item}`].Data.longitude,
       latitude: dict[`${item}`].Data.latitude,
@@ -94,6 +132,7 @@ exports.get_all_locations_with_symptoms = async (req, res) => {
       gender: dict[`${item}`].Data.gender
     })
   });
+  console.log("finally " + JSON.stringify(result));
   if (result.length > 0) {
     res.send(result);
   } else {
@@ -101,9 +140,21 @@ exports.get_all_locations_with_symptoms = async (req, res) => {
   }
 };
 
+
+
+
+
+
+
+
+
+
+
+
+
 // Post a location
 exports.post_location = async (req, res) => {
-  if(!req.body.longitude||!req.body.latitude){
+  if (!req.body.longitude || !req.body.latitude) {
     return res.status(500).send("Coordinates not given");
   }
   const check = await Location.findOne({
@@ -124,7 +175,7 @@ exports.post_location = async (req, res) => {
       const result = await axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${location.longitude},${location.latitude}.json?types=poi&access_token=pk.eyJ1IjoiZmVyb3g5OCIsImEiOiJjazg0czE2ZWIwNHhrM2VtY3Y0a2JkNjI3In0.zrm7UtCEPg2mX8JCiixE4g`)
         .then(response => {
           if (response.data) {
-            if (response.data.features && response.data.features.length>0) {
+            if (response.data.features && response.data.features.length > 0) {
               location.longitude = response.data.features[0].center[0];
               location.latitude = response.data.features[0].center[1];
               location.place_name = response.data.features[0].text;
@@ -146,7 +197,7 @@ exports.post_location = async (req, res) => {
 exports.get_location_by_id = async (req, res) => {
   try {
     const location = await Location.findById(req.params.id);
-    if(!location){
+    if (!location) {
       return res.status(500).send("Location not found");
     }
     res.send(location);
@@ -161,7 +212,7 @@ exports.get_location_by_coordinates = async (req, res) => {
       latitude: { $eq: req.params.latitude },
       longitude: { $eq: req.params.longitude },
     });
-    if(!locations || locations.length<1){
+    if (!locations || locations.length < 1) {
       return res.status(500).send("Location not found with the given coordinates");
     }
     res.send(locations);
@@ -173,12 +224,12 @@ exports.get_location_by_coordinates = async (req, res) => {
 exports.update_location = async (req, res) => {
   try {
     let location = await Location.findById(req.body._id);
-    if(!location){
-      return res.status(500).send("Location doesnot exist");      
+    if (!location) {
+      return res.status(500).send("Location doesnot exist");
     }
     location.set(req.body);
-    let check = await Location.findOne({latitude: location.latitude, longitude: location.longitude});
-    if(!check){
+    let check = await Location.findOne({ latitude: location.latitude, longitude: location.longitude });
+    if (!check) {
       await location.save();
       return res.send(location);
     }

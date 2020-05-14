@@ -10,6 +10,10 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true,
     index: true
+    // index: {
+    // unique: true,
+    // dropDups: true,
+    // },
   },
   password: {
     type: String,
@@ -44,7 +48,7 @@ function validateUser(user) {
   return Joi.validate(user._doc, schema);
 }
 
-const User = mongoose.model("User", userSchema);
+const User = mongoose.model("Demo User", userSchema);
 
 exports.User = User;
 exports.validateUser = validateUser;

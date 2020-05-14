@@ -10,7 +10,7 @@ const symptom_user_schema = new mongoose.Schema({
     user_id: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        ref: 'User'
+        ref: 'Demo User'
     },
     timestamp: {
         type: Date,
@@ -30,10 +30,10 @@ function validateSymptomUser(SymptomUser) {
             .min(10)
             .max(100)
     }
-    return Joi.validate(SymptomUser, schema);
+    return Joi.validate(symptom, schema);
 }
 
-const SymptomUser = mongoose.model("SymptomUser", symptom_user_schema);
+const SymptomUser = mongoose.model("Demo SymptomUser", symptom_user_schema);
 
 exports.SymptomUser = SymptomUser;
 exports.validateSymptomUser = validateSymptomUser;

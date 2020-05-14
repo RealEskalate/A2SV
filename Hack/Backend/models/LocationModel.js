@@ -1,3 +1,4 @@
+
 const mongoose = require("mongoose");
 
 const locationSchema = new mongoose.Schema({
@@ -18,5 +19,5 @@ const locationSchema = new mongoose.Schema({
 //Make latitude and longitude unique
 locationSchema.index({ longitude: 1, latitude: 1 }, { unique: true });
 
-var LocationModel = mongoose.model("Location", locationSchema);
+var LocationModel = mongoose.model("Demo Location", locationSchema);
 module.exports = LocationModel;
