@@ -2,11 +2,8 @@ var mongoose = require("mongoose");
 var LocationModels = require("../models/LocationModel.js");
 const LocationUserModels = require("./../models/LocationUserModel");
 const SymptomUserModel = require("./../models/SymptomUser");
-const { DemoSymptomUser } = require("./../models/DemoSymptomUserModel");
 const { Symptom } = require("./../models/Symptom");
 const UserModels = require("./../models/UserModel");
-const User = UserModels.User;
-const jwt = require("jsonwebtoken");
 const axios = require("axios");
 const geolib = require("geolib");
 
@@ -14,16 +11,9 @@ const geolib = require("geolib");
 exports.get_all_locations = async (req, res) => {
   if (req.query.demo && req.query.demo == "true"){
     var Location = LocationModels.DemoLocation;
-    var SymptomUser = DemoSymptomUser;
-    var LocationUser = LocationUserModels.DemoLocationUser;
-    var User = UserModels.DemoUser;
   }else{
     var Location = LocationModels.Location;
-    var SymptomUser = SymptomUserModel.SymptomUser;
-    var LocationUser = LocationUserModels.LocationUser;
-    var User = UserModels.User;
-  }
-  
+  }  
   const locations = await Location.find({});
   try {
     res.send(locations);
@@ -36,7 +26,6 @@ exports.get_all_locations_with_symptoms = async (req, res) => {
   if (req.body.demo && req.body.demo == "true"){
     var Location = LocationModels.DemoLocation;
     var LocationUser = LocationUserModels.DemoLocationUser;
-
   }else{
     var Location = LocationModels.Location;
     var LocationUser = LocationUserModels.LocationUser;
@@ -106,6 +95,12 @@ exports.get_all_locations_with_symptoms = async (req, res) => {
 
 // Post a location
 exports.post_location = async (req, res) => {
+  if (req.body.demo && req.body.demo == "true"){
+    var Location = LocationModels.DemoLocation;
+  }else{
+    var Location = LocationModels.Location;
+  }
+
   if(!req.body.longitude||!req.body.latitude){
     return res.status(500).send("Coordinates not given");
   }
@@ -184,6 +179,12 @@ exports.get_location_by_coordinates = async (req, res) => {
 };
 //Update a location by id
 exports.update_location = async (req, res) => {
+  if (req.body.demo && req.body.demo == "true"){
+    var Location = LocationModels.DemoLocation;
+  }else{
+    var Location = LocationModels.Location;
+  }
+
   try {
     let location = await Location.findById(req.body._id);
     if(!location){
@@ -203,6 +204,12 @@ exports.update_location = async (req, res) => {
 };
 //Delete a location
 exports.delete_location = async (req, res) => {
+  if (req.body.demo && req.body.demo == "true"){
+    var Location = LocationModels.DemoLocation;
+  }else{
+    var Location = LocationModels.Location;
+  }
+
   try {
     const location = await Location.findByIdAndDelete(req.body._id);
     if (!location) {
@@ -218,7 +225,7 @@ exports.delete_location = async (req, res) => {
 //Get risk factor of specific location by id
 const get_risk_by_location_id = async (id) => {
   if (req.query.demo && req.query.demo == "true"){
-    var SymptomUser = DemoSymptomUser;
+    var SymptomUser = SymptomUserModel.DemoSymptomUser;
     var LocationUser = LocationUserModels.DemoLocationUser;
   }else{
     var SymptomUser = SymptomUserModel.SymptomUser;
@@ -276,7 +283,6 @@ const get_risk_by_location_id = async (id) => {
 exports.get_location_risk_by_id = async (req, res) => {
   try {
     let riskFactor = await get_risk_by_location_id(req.params.id);
-
     res.json({ risk: riskFactor });
   } catch (err) {
     res.status(500).send(err.toString());

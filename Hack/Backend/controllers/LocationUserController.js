@@ -1,24 +1,24 @@
 const LocationUserModels = require("./../models/LocationUserModel");
-const LocationUser = LocationUserModels.LocationUser;
-var LocationModels = require("../models/LocationModel.js");
-const {DemoSymptomUser} = require('./../models/DemoSymptomUserModel');
-var Location = LocationModels.Location;
+const LocationModels = require("../models/LocationModel.js");
 const UserModels = require("./../models/UserModel");
-const User = UserModels.User;
+const SymptomUserModels = require("../models/SymptomUser");
 const {Tests} = require("../models/TestModel")
 const { MapData } = require("../models/MapDataModel");
 const axios = require("axios");
 const mongoose = require("mongoose");
-const jwt = require("jsonwebtoken");
 
 //Post a user location
 exports.post_location_user = async (req, res) => {
   if (req.query.demo && req.query.demo == "true"){
     var User = UserModels.DemoUser;
     var LocationUser = LocationUserModels.DemoLocationUser
+    var Location = LocationModels.DemoLocation
+    var SymptomUser = SymptomUserModels.DemoSymptomUser
   }else{
     var User = UserModels.User;
     var LocationUser = LocationUserModels.LocationUser
+    var Location = LocationModels.Location
+    var SymptomUser = SymptomUserModels.SymptomUser
   }
 
   if (!req.body.longitude || !req.body.latitude) {
@@ -114,7 +114,7 @@ exports.post_location_user = async (req, res) => {
     catch (err) {
       console.log(err);
     }
-    let symptomsList = await DemoSymptomUser.find({user_id: user_id}).populate('symptom_id')
+    let symptomsList = await SymptomUser.find({user_id: user_id}).populate('symptom_id')
     let symptoms = []
     symptomsList.forEach((item)=> symptoms.push(item.symptom_id.name))
     let probability = await calculateProbability(symptoms,iso)
@@ -215,6 +215,11 @@ exports.get_by_user_id = async (req, res) => {
 
 //Delete location_user with id
 exports.delete_location_user = async (req, res) => {
+  if (req.query.demo && req.query.demo == "true"){
+    var LocationUser = LocationUserModels.DemoLocationUser;
+  }else{
+    var LocationUser = LocationUserModels.LocationUser;
+  }
 
   try {
     const location_user = await LocationUser.findByIdAndDelete(req.body._id);
@@ -229,6 +234,11 @@ exports.delete_location_user = async (req, res) => {
 
 //Update location_user with id
 exports.update_location_user = async (req, res) => {
+  if (req.query.demo && req.query.demo == "true"){
+    var LocationUser = LocationUserModels.DemoLocationUser;
+  }else{
+    var LocationUser = LocationUserModels.LocationUser;
+  }
 
   try {
     let locationUser = await LocationUser.findById(req.body._id);
