@@ -1,5 +1,4 @@
 const SymptomUserModel = require("./../models/SymptomUser");
-const { Symptom} = require("../models/Symptom");
 const UserModels = require("./../models/UserModel");
 
 // Display list of all symptoms.

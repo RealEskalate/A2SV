@@ -123,7 +123,7 @@ exports.post_location_user = async (req, res) => {
       user_id: user_id
     })
     if (check) {
-      check.TTL = TTL
+      check.TTL = Number(TTL)
       check.probability = probability
       await check.save()
       return res.send(check);
