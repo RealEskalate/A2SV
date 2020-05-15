@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {
   View,
-  Text,
   Image,
   Dimensions,
   StyleSheet,
@@ -10,6 +9,7 @@ import {
 } from "react-native";
 import userIDStore from "../data-management/user-id-data/userIDStore";
 import * as actions from "../data-management/user-id-data/userIDActions";
+import Text from "./CustomText.js";
 
 const Profile = (props) => {
   const [userName, setUserName] = useState("");
@@ -83,8 +83,7 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 18,
     color: "#37474f",
-    fontFamily: "sans-serif-light",
-    fontWeight: "bold",
+    fontFamily: "Roboto-Black",
   },
   username: {
     color: "#455a64",

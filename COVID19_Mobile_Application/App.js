@@ -14,6 +14,8 @@ import WhatIsCovid19 from "./components/information-page/WhatIsCovid19.js";
 import Symptoms from "./components/information-page/Symptoms.js";
 import Preventions from "./components/information-page/Preventions.js";
 import Treatments from "./components/information-page/Treatments.js";
+import Message from "./components/information-page/Message.js";
+import Spreads from "./components/information-page/Spreads.js";
 import News from "./components/news-page/News.js";
 import NavigatorDrawer from "./components/navigation/NavigatorDrawer.js";
 import GetStartedStackNavigation from "./components/navigation/GetStartedStackNavigation.js";
@@ -45,9 +47,8 @@ export default function App() {
       userID = await AsyncStorage.getItem("userID");
       userName = await AsyncStorage.getItem("userName");
       userToken = await AsyncStorage.getItem("token");
-      userGender = await AsyncStorage.getItem("age_group");
-      userAgeGroup = await AsyncStorage.getItem("gender");
-
+      userGender = await AsyncStorage.getItem("gender");
+      userAgeGroup = await AsyncStorage.getItem("age_group");
       if (userID != null) {
         userIDStore.dispatch(
           actions.addUser(userID, userName, userToken, userAgeGroup, userGender)
@@ -126,6 +127,16 @@ export default function App() {
         <Stack.Screen
           name="Treatments"
           component={Treatments}
+          options={{ headerTransparent: true, headerTitle: "" }}
+        />
+        <Stack.Screen
+          name="Spreads"
+          component={Spreads}
+          options={{ headerTransparent: true, headerTitle: "" }}
+        />
+        <Stack.Screen
+          name="Message"
+          component={Message}
           options={{ headerTransparent: true, headerTitle: "" }}
         />
         <Stack.Screen name="Symptoms" component={SymptomPage} />

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import {
   StyleSheet,
-  Text,
   View,
   TextInput,
   TouchableOpacity,
@@ -9,12 +8,14 @@ import {
   Alert,
   ImageBackground,
   ActivityIndicator,
+  ScrollView,
 } from "react-native";
 import userIDStore from "../data-management/user-id-data/userIDStore";
 import * as actions from "../data-management/user-id-data/userIDActions";
 import * as Animatable from "react-native-animatable";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Feather from "react-native-vector-icons/Feather";
+import Text from "./CustomText.js";
 
 export default class SignIn extends Component {
   constructor(props) {
@@ -132,74 +133,84 @@ export default class SignIn extends Component {
         </ImageBackground>
 
         <Animatable.View animation="fadeInUpBig" style={styles.footer}>
-          <Text style={styles.text_footer}>Username</Text>
-          <View style={styles.action}>
-            <FontAwesome name="user-o" color="#05375a" size={20} />
-            <TextInput
-              placeholder="Your username"
-              onChangeText={(userName) =>
-                this.setState({ userName, check_textInputChange: true })
-              }
-              style={styles.textInput}
-              onSubmitEditing={() => this.password.focus()}
-            />
-            {this.state.check_textInputChange ? (
-              <Animatable.View animation="bounceIn">
-                <Feather name="check-circle" color="green" size={20} />
-              </Animatable.View>
+          <ScrollView>
+            <Text style={styles.text_footer}>Username</Text>
+            <View style={styles.action}>
+              <FontAwesome name="user-o" color="#05375a" size={20} />
+              <TextInput
+                placeholder="Your username"
+                onChangeText={(userName) =>
+                  this.setState({ userName, check_textInputChange: true })
+                }
+                style={styles.textInput}
+                onSubmitEditing={() => this.password.focus()}
+              />
+              {this.state.check_textInputChange ? (
+                <Animatable.View animation="bounceIn">
+                  <Feather name="check-circle" color="green" size={20} />
+                </Animatable.View>
+              ) : null}
+            </View>
+
+            <Text style={[styles.text_footer, { marginTop: 35 }]}>
+              Password
+            </Text>
+            <View style={styles.action}>
+              <FontAwesome name="lock" color="#05375a" size={20} />
+              <TextInput
+                placeholder="Your password"
+                onChangeText={(password) => this.setState({ password })}
+                secureTextEntry={!this.state.passwordVisibility}
+                style={styles.textInput}
+                ref={(input) => (this.password = input)}
+              />
+
+              <TouchableOpacity
+                style={{ width: 30, height: 30 }}
+                onPress={() => this.onTogglePasswordVisiblity()}
+              >
+                {this.state.passwordVisibility ? (
+                  <Feather name="eye-off" color="grey" size={20} />
+                ) : (
+                  <Feather name="eye" color="grey" size={20} />
+                )}
+              </TouchableOpacity>
+            </View>
+            {this.state.buttonPressed ? (
+              <ActivityIndicator
+                size="small"
+                color="#1565c0"
+                style={{ marginTop: 10 }}
+              />
             ) : null}
-          </View>
 
-          <Text style={[styles.text_footer, { marginTop: 35 }]}>Password</Text>
-          <View style={styles.action}>
-            <FontAwesome name="lock" color="#05375a" size={20} />
-            <TextInput
-              placeholder="Your password"
-              onChangeText={(password) => this.setState({ password })}
-              secureTextEntry={!this.state.passwordVisibility}
-              style={styles.textInput}
-              ref={(input) => (this.password = input)}
-            />
+            <View style={[styles.button]}>
+              <TouchableOpacity
+                style={styles.signIn}
+                onPress={this.login}
+                disabled={this.state.buttonPressed}
+              >
+                <Text style={styles.textSign}>LOGIN</Text>
+              </TouchableOpacity>
+            </View>
 
-            <TouchableOpacity
-              style={{ width: 30, height: 30 }}
-              onPress={() => this.onTogglePasswordVisiblity()}
-            >
-              {this.state.passwordVisibility ? (
-                <Feather name="eye-off" color="grey" size={20} />
-              ) : (
-                <Feather name="eye" color="grey" size={20} />
-              )}
-            </TouchableOpacity>
-          </View>
-          {this.state.buttonPressed ? (
-            <ActivityIndicator
-              size="small"
-              color="#1565c0"
-              style={{ marginTop: 10 }}
-            />
-          ) : null}
-
-          <View style={[styles.button]}>
-            <TouchableOpacity
-              style={styles.signIn}
-              onPress={this.login}
-              disabled={this.state.buttonPressed}
-            >
-              <Text style={([styles.textSign], { color: "white" })}>LOGIN</Text>
-            </TouchableOpacity>
-          </View>
-
-          <View style={[styles.sbutton]}>
-            <TouchableOpacity
-              style={styles.signIn}
-              onPress={() => this.props.navigation.navigate("SignUp")}
-            >
-              <Text style={([styles.textSign], { color: "#1565c0" })}>
-                SIGN UP
-              </Text>
-            </TouchableOpacity>
-          </View>
+            <View style={[styles.sbutton]}>
+              <TouchableOpacity
+                style={styles.signIn}
+                onPress={() => this.props.navigation.navigate("SignUp")}
+              >
+                <Text
+                  style={{
+                    color: "#1565c0",
+                    fontFamily: "PlayfairDisplay",
+                    fontSize: 18,
+                  }}
+                >
+                  SIGN UP
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </ScrollView>
         </Animatable.View>
       </View>
     );
@@ -221,16 +232,17 @@ const styles = StyleSheet.create({
     flex: 3,
     backgroundColor: "#fff",
     paddingHorizontal: 20,
-    paddingVertical: 30,
+    paddingTop: 10,
   },
   text_header: {
     color: "#fff",
-    fontWeight: "bold",
     fontSize: 30,
+    fontFamily: "Roboto-Black",
   },
   text_footer: {
     color: "#05375a",
     fontSize: 18,
+    fontFamily: "PlayfairDisplay",
   },
   action: {
     flexDirection: "row",
@@ -272,6 +284,7 @@ const styles = StyleSheet.create({
   },
   textSign: {
     fontSize: 18,
-    fontWeight: "bold",
+    color: "white",
+    fontFamily: "PlayfairDisplay",
   },
 });

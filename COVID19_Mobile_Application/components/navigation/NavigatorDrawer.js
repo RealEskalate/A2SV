@@ -39,6 +39,7 @@ const NavigatorDrawer = (props) => {
                 <Icon name="account-outline" color={color} size={size} />
               )}
               label="My Profile"
+              labelStyle={{ fontFamily: "PlayfairDisplay" }}
               onPress={() => {
                 props.navigation.closeDrawer();
                 props.navigation.navigate("Profile");
@@ -49,6 +50,7 @@ const NavigatorDrawer = (props) => {
                 <Icon name="information-outline" color={color} size={size} />
               )}
               label="About"
+              labelStyle={{ fontFamily: "PlayfairDisplay" }}
               onPress={() => {
                 props.navigation.closeDrawer();
                 props.navigation.navigate("About");
@@ -63,6 +65,7 @@ const NavigatorDrawer = (props) => {
             <Icon name="exit-to-app" color={color} size={size} />
           )}
           label="Sign Out"
+          labelStyle={{ fontFamily: "PlayfairDisplay" }}
           onPress={() => {
             removeUserData("userID", "userName"); //remove user id from async state
             props.navigation.closeDrawer();
@@ -96,7 +99,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 16,
     marginTop: 3,
-    fontWeight: "bold",
+    fontFamily: "Roboto-Black",
   },
   caption: {
     fontSize: 20,

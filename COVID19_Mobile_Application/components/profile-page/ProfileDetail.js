@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {
   View,
-  Text,
   TouchableOpacity,
   StyleSheet,
   Platform,
@@ -13,6 +12,7 @@ import {
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Feather from "react-native-vector-icons/Feather";
 import userIDStore from "../data-management/user-id-data/userIDStore";
+import Text from "./CustomText.js";
 
 const ProfileDetail = (props) => {
   const [data, setData] = React.useState({
@@ -183,8 +183,7 @@ const styles = StyleSheet.create({
   },
   text_header: {
     color: "#fff",
-    fontWeight: "bold",
-    fontSize: 30,
+    fontFamily: "Roboto-Black",
   },
   text_footer: {
     color: "#05375a",

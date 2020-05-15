@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import {
-  Text,
   View,
   FlatList,
   ActivityIndicator,
@@ -12,6 +11,7 @@ import {
 } from "react-native";
 import { SearchBar } from "react-native-elements";
 import userIDStore from "../data-management/user-id-data/userIDStore";
+import Text from "./CustomText.js";
 
 export default class News extends Component {
   state = {

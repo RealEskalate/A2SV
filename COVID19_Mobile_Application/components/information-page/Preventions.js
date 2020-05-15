@@ -1,15 +1,16 @@
 import React, { Component } from "react";
-import { View, Text, Image, Dimensions, StyleSheet } from "react-native";
+import { View, Image, Dimensions, StyleSheet } from "react-native";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import Text from "./CustomText.js";
 
-export default class Preventions extends Component {
+export default class Symptoms extends Component {
   render() {
     return (
       <View style={{ flex: 1 }}>
         <View style={{ height: 250 }}>
           <Image
-            source={require("../../assets/images/prevention_methods.jpg")}
+            source={require("../../assets/images/prevention.jpg")}
             style={{ height: 250, width: Dimensions.get("screen").width }}
             resizeMode="cover"
           />
@@ -23,110 +24,114 @@ export default class Preventions extends Component {
             style={{
               fontSize: 21,
               color: "#37474f",
-              fontFamily: "sans-serif-light",
-              fontWeight: "bold",
+              fontFamily: "Roboto-Black",
             }}
           >
-            WHAT IS COVID-19?
+            PREVENTION METHODS
           </Text>
           <Text style={{ fontSize: 12, fontWeight: "100", color: "#37474f" }}>
-            CORONAVIRUS DESEASE 2019
-          </Text>
-          <Text
-            style={{
-              color: "#455a64",
-              marginTop: 20,
-              fontSize: 13,
-              textAlign: "justify",
-            }}
-          >
-            Coronavirus disease 2019 (COVID-19) is an infectious disease caused
-            by severe acute respiratory syndrome coronavirus 2 (SARS-CoV-2). It
-            was first identified in December 2019 in Wuhan, China, and has since
-            spread globally, resulting in an ongoing pandemic. As of 9 May 2020,
-            more than 3.93 million cases have been reported across 187 countries
-            and territories, resulting in more than 274,000 deaths. More than
-            1.31 million people have recovered.
+            PREVENTION IS BETTER THAN CURE!
           </Text>
           <View style={{ flexDirection: "row", padding: 10 }}>
             <View>
-              <FontAwesome name="user" color="#388e3c" size={25} />
+              <FontAwesome name="hand-rock-o" color="#388e3c" size={25} />
             </View>
             <View style={{ marginLeft: 10 }}>
-              <Text style={{ fontSize: 12, fontWeight: "bold" }}>COUGH</Text>
+              <Text style={{ fontSize: 16, fontWeight: "bold" }}>
+                Wash your hands frequently
+              </Text>
               <Text style={{ fontSize: 12, color: "#607d8b" }}>
-                Coughing is one of thr major syptoms
+                Regularly and thoroughly clean your hands with an alcohol-based
+                hand{"\n"} rub or wash them with soap and water.
               </Text>
             </View>
           </View>
           <View style={{ flexDirection: "row", padding: 10 }}>
             <View>
-              <FontAwesome name="user" color="#ffb300" size={25} />
+              <Image
+                source={require("../../assets/keepdistance512.png")}
+                style={{ width: 20, height: 20 }}
+              />
             </View>
             <View style={{ marginLeft: 10 }}>
-              <Text style={{ fontSize: 12, fontWeight: "bold" }}>COUGH</Text>
+              <Text style={{ fontSize: 16, fontWeight: "bold" }}>
+                Maintain social distancing
+              </Text>
               <Text style={{ fontSize: 12, color: "#607d8b" }}>
-                Coughing is one of thr major syptoms
+                Maintain at least 2 meters (6 feet) distance between yourself
+                and{"\n"} anyone who is coughing or sneezing.
               </Text>
             </View>
           </View>
           <View style={{ flexDirection: "row", padding: 10 }}>
             <View>
-              <FontAwesome name="user" color="#388e3c" size={25} />
+              <Image
+                source={require("../../assets/notouch512.png")}
+                style={{ width: 20, height: 20 }}
+              />
             </View>
             <View style={{ marginLeft: 10 }}>
-              <Text style={{ fontSize: 12, fontWeight: "bold" }}>COUGH</Text>
+              <Text style={{ fontSize: 16, fontWeight: "bold" }}>
+                Avoid touching eyes, nose and mouth
+              </Text>
               <Text style={{ fontSize: 12, color: "#607d8b" }}>
-                Coughing is one of thr major syptoms
+                Why? Hands touch many surfaces and can pick up viruses. Once
+                contaminated, hands can transfer the virus to your eyes, nose,
+                or mouth. From there, the virus can enter your body and can make
+                you sick.
               </Text>
             </View>
           </View>
-          <Text
-            style={{
-              color: "#455a64",
-              marginTop: 20,
-              fontSize: 13,
-              textAlign: "justify",
-            }}
-          >
-            Coronavirus disease 2019 (COVID-19) is an infectious disease caused
-            by severe acute respiratory syndrome coronavirus 2 (SARS-CoV-2). It
-            was first identified in December 2019 in Wuhan, China, and has since
-            spread globally, resulting in an ongoing pandemic. As of 9 May 2020,
-            more than 3.93 million cases have been reported across 187 countries
-            and territories, resulting in more than 274,000 deaths. More than
-            1.31 million people have recovered.
-          </Text>
+
           <View style={{ flexDirection: "row", padding: 10 }}>
             <View>
-              <FontAwesome name="user" color="#388e3c" size={25} />
+              <Image
+                source={require("../../assets/respiratoryhygiene512.png")}
+                style={{ width: 20, height: 20 }}
+              />
             </View>
             <View style={{ marginLeft: 10 }}>
-              <Text style={{ fontSize: 12, fontWeight: "bold" }}>COUGH</Text>
+              <Text style={{ fontSize: 16, fontWeight: "bold" }}>
+                Practice respiratory hygiene
+              </Text>
               <Text style={{ fontSize: 12, color: "#607d8b" }}>
-                Coughing is one of thr major syptoms
+                Make sure you, and the people around you, follow good
+                respiratory hygiene. This means covering your mouth and nose
+                with your bent elbow or tissue when you cough or sneeze. Then
+                dispose of the used tissue immediately.
               </Text>
             </View>
           </View>
           <View style={{ flexDirection: "row", padding: 10 }}>
             <View>
-              <FontAwesome name="user" color="#ffb300" size={25} />
+              <FontAwesome name="info" color="#ffb300" size={25} />
             </View>
             <View style={{ marginLeft: 10 }}>
-              <Text style={{ fontSize: 12, fontWeight: "bold" }}>COUGH</Text>
+              <Text style={{ fontSize: 16, fontWeight: "bold" }}>
+                Stay informed and follow the advice given by your healthcare
+                provider
+              </Text>
               <Text style={{ fontSize: 12, color: "#607d8b" }}>
-                Coughing is one of thr major syptoms
+                Stay informed on the latest developments about COVID-19. Follow
+                the advice given by your healthcare provider, your national and
+                local public health authority, or your employer on how to
+                protect yourself and others from COVID-19.
               </Text>
             </View>
           </View>
           <View style={{ flexDirection: "row", padding: 10, marginBottom: 20 }}>
             <View>
-              <FontAwesome name="user" color="#388e3c" size={25} />
+              <FontAwesome name="hospital-o" color="#388e3c" size={25} />
             </View>
             <View style={{ marginLeft: 10 }}>
-              <Text style={{ fontSize: 12, fontWeight: "bold" }}>COUGH</Text>
+              <Text style={{ fontSize: 16, fontWeight: "bold" }}>
+                If you have fever, cough and difficulty breathing, seek medical
+                care early
+              </Text>
               <Text style={{ fontSize: 12, color: "#607d8b" }}>
-                Coughing is one of thr major syptoms
+                Stay home if you feel unwell. If you have a fever, cough and
+                difficulty breathing, seek medical attention, and call in
+                advance. Follow the directions of your local health authority.
               </Text>
             </View>
           </View>
