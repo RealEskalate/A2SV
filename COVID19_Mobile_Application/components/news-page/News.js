@@ -11,10 +11,8 @@ import {
 } from "react-native";
 import { SearchBar } from "react-native-elements";
 import userIDStore from "../data-management/user-id-data/userIDStore";
-<<<<<<< Updated upstream
-=======
+
 import Text from "./CustomText.js";
->>>>>>> Stashed changes
 
 export default class News extends Component {
   state = {

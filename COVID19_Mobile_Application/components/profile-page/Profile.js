@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {
   View,
-<<<<<<< Updated upstream
-  Text,
-=======
->>>>>>> Stashed changes
   Image,
   Dimensions,
   StyleSheet,
@@ -13,10 +9,7 @@ import {
 } from "react-native";
 import userIDStore from "../data-management/user-id-data/userIDStore";
 import * as actions from "../data-management/user-id-data/userIDActions";
-<<<<<<< Updated upstream
-=======
 import Text from "./CustomText.js";
->>>>>>> Stashed changes
 
 const Profile = (props) => {
   const [userName, setUserName] = useState("");
@@ -90,12 +83,8 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 18,
     color: "#37474f",
-<<<<<<< Updated upstream
-    fontFamily: "sans-serif-light",
-    fontWeight: "bold",
-=======
+
     fontFamily: "Roboto-Black",
->>>>>>> Stashed changes
   },
   username: {
     color: "#455a64",

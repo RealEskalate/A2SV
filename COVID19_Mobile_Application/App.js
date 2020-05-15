@@ -47,14 +47,8 @@ export default function App() {
       userID = await AsyncStorage.getItem("userID");
       userName = await AsyncStorage.getItem("userName");
       userToken = await AsyncStorage.getItem("token");
-<<<<<<< Updated upstream
-      userGender = await AsyncStorage.getItem("age_group");
-      userAgeGroup = await AsyncStorage.getItem("gender");
-=======
       userGender = await AsyncStorage.getItem("gender");
       userAgeGroup = await AsyncStorage.getItem("age_group");
->>>>>>> Stashed changes
-
       if (userID != null) {
         userIDStore.dispatch(
           actions.addUser(userID, userName, userToken, userAgeGroup, userGender)

@@ -45,14 +45,6 @@ export default class UserSymptomPage extends Component {
 
     this.timer = setInterval(() => {
       if (this.state.userSymptoms.length != 0) {
-        console.log(userIDStore.getState().userId);
-        console.log(this.state.user_longitude);
-        console.log(this.state.user_latitude);
-<<<<<<< Updated upstream
-
-=======
-        console.log("Token " + userIDStore.getState().userToken);
->>>>>>> Stashed changes
         fetch("https://sym-track.herokuapp.com/api/user_locations", {
           method: "POST",
           headers: {
