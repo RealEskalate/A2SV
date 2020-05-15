@@ -2,7 +2,6 @@ import React from "react";
 import { SearchBar } from "react-native-elements";
 import {
   StyleSheet,
-  Text,
   View,
   Dimensions,
   Alert,
@@ -19,6 +18,10 @@ import { ApplicationProvider, Datepicker, Layout } from "@ui-kitten/components";
 import * as eva from "@eva-design/eva";
 import SearchableDropdown from "react-native-searchable-dropdown";
 import userIDStore from "../data-management/user-id-data/userIDStore";
+<<<<<<< Updated upstream
+=======
+import Text from "./CustomText.js";
+>>>>>>> Stashed changes
 
 class DataAnalytics extends React.Component {
   state = {
@@ -475,7 +478,7 @@ class DataAnalytics extends React.Component {
             onPress={() => this.componentDidMount()}
           >
             <MaterialCommunityIcons name="reload" color="#0080ff" size={30} />
-            <Text>Refresh</Text>
+            <Text style={{ fontSize: 12 }}>Refresh</Text>
           </TouchableOpacity>
         </View>
 
@@ -489,7 +492,7 @@ class DataAnalytics extends React.Component {
                 width: Dimensions.get("window").width - 20,
               }}
             >
-              <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+              <Text style={{ fontSize: 20, fontFamily: "Roboto-Black" }}>
                 Case Update
               </Text>
             </View>
@@ -614,7 +617,7 @@ class DataAnalytics extends React.Component {
                 width: Dimensions.get("window").width - 20,
               }}
             >
-              <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+              <Text style={{ fontSize: 20, fontFamily: "Roboto-Black" }}>
                 Total Data
               </Text>
             </View>
@@ -725,7 +728,11 @@ class DataAnalytics extends React.Component {
 
             <View style={styles.container_graph}>
               <Text
-                style={{ fontSize: 20, fontWeight: "bold", marginLeft: 10 }}
+                style={{
+                  fontSize: 20,
+                  fontFamily: "Roboto-Black",
+                  marginLeft: 10,
+                }}
               >
                 Daily New Cases
               </Text>
@@ -938,7 +945,11 @@ class DataAnalytics extends React.Component {
 
             <View style={styles.container_graph}>
               <Text
-                style={{ fontSize: 20, fontWeight: "bold", marginLeft: 10 }}
+                style={{
+                  fontSize: 20,
+                  fontFamily: "Roboto-Black",
+                  marginLeft: 10,
+                }}
               >
                 Total Cases
               </Text>
@@ -1137,7 +1148,11 @@ class DataAnalytics extends React.Component {
 
             <View style={styles.container_graph}>
               <Text
-                style={{ fontSize: 20, fontWeight: "bold", marginLeft: 10 }}
+                style={{
+                  fontSize: 20,
+                  fontFamily: "Roboto-Black",
+                  marginLeft: 10,
+                }}
               >
                 Rate of Cases
               </Text>

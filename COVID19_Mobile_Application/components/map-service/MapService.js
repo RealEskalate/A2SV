@@ -218,8 +218,13 @@ export default class MapService extends React.Component {
       .then((res) => res.json())
       .then((data) => {
         const countries = data;
+<<<<<<< Updated upstream
         console.log("countries fetched with size = " + countries.length);
         console.log("Fetching test counts");
+=======
+        // console.log("countries fetched with size = " + countries.length);
+        // console.log("Fetching test counts");
+>>>>>>> Stashed changes
         const test_counts = {};
         for (let i = 0; i < countries.length; i++) {
           const slug = countries[i].slug;
@@ -247,6 +252,15 @@ export default class MapService extends React.Component {
       });
   }
   fetchSymptoms() {
+<<<<<<< Updated upstream
+=======
+    console.log(
+      "Fetching symptoms token : " +
+        this.state.user_longitude +
+        "," +
+        this.state.user_latitude
+    );
+>>>>>>> Stashed changes
     fetch("http://sym-track.herokuapp.com/api/locations_symptoms", {
       method: "POST",
       headers: {
@@ -260,8 +274,11 @@ export default class MapService extends React.Component {
       }),
     })
       .then((res) => {
+<<<<<<< Updated upstream
         console.log("res = ");
         console.log(res.status);
+=======
+>>>>>>> Stashed changes
         if (res.status === 500) {
           console.log("No locations with users and symptoms found.");
           return;
@@ -270,13 +287,21 @@ export default class MapService extends React.Component {
         }
       })
       .then((data) => {
+<<<<<<< Updated upstream
         console.log(data);
+=======
+        console.log("Data successfully" + data);
+>>>>>>> Stashed changes
         this.setState({ symptoms: data });
         const featureCollections = this.symptomsToGeoJson(this.state.symptoms);
         this.setState({ symptomCollections: featureCollections });
       })
       .catch((error) => {
+<<<<<<< Updated upstream
         console.log("error");
+=======
+        console.log("Error in symptom fetching");
+>>>>>>> Stashed changes
         console.log(error);
       });
   }

@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import {
   View,
+<<<<<<< Updated upstream
   Text,
+=======
+>>>>>>> Stashed changes
   TouchableOpacity,
   StyleSheet,
   Platform,
@@ -13,6 +16,10 @@ import {
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Feather from "react-native-vector-icons/Feather";
 import userIDStore from "../data-management/user-id-data/userIDStore";
+<<<<<<< Updated upstream
+=======
+import Text from "./CustomText.js";
+>>>>>>> Stashed changes
 
 const ProfileDetail = (props) => {
   const [data, setData] = React.useState({
@@ -183,8 +190,12 @@ const styles = StyleSheet.create({
   },
   text_header: {
     color: "#fff",
+<<<<<<< Updated upstream
     fontWeight: "bold",
     fontSize: 30,
+=======
+    fontFamily: "Roboto-Black",
+>>>>>>> Stashed changes
   },
   text_footer: {
     color: "#05375a",

@@ -174,6 +174,7 @@ export default class SymptomPage extends Component {
           <CheckBox
             key={item._id}
             title={item.name}
+            textStyle={{ fontFamily: "PlayfairDisplay" }}
             checked={this.doesSymptomAlreadyRegistered(item._id)}
             onPress={() =>
               this.handleSymptomAction(userIDStore.getState().userId, item._id)
