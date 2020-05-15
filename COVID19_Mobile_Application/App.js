@@ -14,6 +14,8 @@ import WhatIsCovid19 from "./components/information-page/WhatIsCovid19.js";
 import Symptoms from "./components/information-page/Symptoms.js";
 import Preventions from "./components/information-page/Preventions.js";
 import Treatments from "./components/information-page/Treatments.js";
+import Message from "./components/information-page/Message.js";
+import Spreads from "./components/information-page/Spreads.js";
 import News from "./components/news-page/News.js";
 import NavigatorDrawer from "./components/navigation/NavigatorDrawer.js";
 import GetStartedStackNavigation from "./components/navigation/GetStartedStackNavigation.js";
@@ -23,6 +25,8 @@ import { Header } from "react-native-elements";
 import NewsStack from "./components/news-page/NewsStack.js";
 import DataAnalyticsMap from "./components/public-data-page/DataAnalyticsMap.js";
 import About from "./components/about-page/About.js";
+import Profile from "./components/profile-page/Profile.js";
+import ProfileDetail from "./components/profile-page/ProfileDetail.js";
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -38,17 +42,23 @@ export default function App() {
   });
 
   const checkLoggedIn = async () => {
-    let userToken = null;
+    let userID = null;
     try {
-      userToken = await AsyncStorage.getItem("userID");
+      userID = await AsyncStorage.getItem("userID");
       userName = await AsyncStorage.getItem("userName");
-      if (userToken != null) {
-        userIDStore.dispatch(actions.addUser(userToken, userName)); //repopulate redux state
+      userToken = await AsyncStorage.getItem("token");
+      userGender = await AsyncStorage.getItem("gender");
+      userAgeGroup = await AsyncStorage.getItem("age_group");
+
+      if (userID != null) {
+        userIDStore.dispatch(
+          actions.addUser(userID, userName, userToken, userAgeGroup, userGender)
+        ); //repopulate redux state
       }
     } catch (e) {
       alert(e);
     }
-    setUserId(userToken);
+    setUserId(userID);
     setLoading(false);
   };
 
@@ -120,6 +130,16 @@ export default function App() {
           component={Treatments}
           options={{ headerTransparent: true, headerTitle: "" }}
         />
+        <Stack.Screen
+          name="Spreads"
+          component={Spreads}
+          options={{ headerTransparent: true, headerTitle: "" }}
+        />
+        <Stack.Screen
+          name="Message"
+          component={Message}
+          options={{ headerTransparent: true, headerTitle: "" }}
+        />
         <Stack.Screen name="Symptoms" component={SymptomPage} />
         <Stack.Screen name="Data Analytics Map" component={DataAnalyticsMap} />
 
@@ -136,6 +156,8 @@ export default function App() {
         >
           <Drawer.Screen name="Home" children={createSTNavigator} />
           <Drawer.Screen name="About" component={About} />
+          <Drawer.Screen name="Profile" component={Profile} />
+          <Drawer.Screen name="ProfileDetail" component={ProfileDetail} />
         </Drawer.Navigator>
       ) : (
         <GetStartedStackNavigation />

@@ -2,7 +2,6 @@ import React from "react";
 import { SearchBar } from "react-native-elements";
 import {
   StyleSheet,
-  Text,
   View,
   Dimensions,
   Alert,
@@ -18,12 +17,14 @@ import DatePicker from "react-native-datepicker";
 import { ApplicationProvider, Datepicker, Layout } from "@ui-kitten/components";
 import * as eva from "@eva-design/eva";
 import SearchableDropdown from "react-native-searchable-dropdown";
+import userIDStore from "../data-management/user-id-data/userIDStore";
+import Text from "./CustomText.js";
 
 class DataAnalytics extends React.Component {
   state = {
     selected_filter: criterias.confirmed, // sets the current filtering parameter on the graph
     selected_filter_daily_status: criterias.confirmed,
-    selected_filter_rate: criterias.confirmedRate,
+    selected_filter_rate: criterias.recoveryRate,
     selected_daily_start_date: "",
     selected_daily_end_date: "",
     selected_total_start_date: "",
@@ -92,6 +93,7 @@ class DataAnalytics extends React.Component {
     await fetch(query, {
       method: "GET",
       headers: {
+        Authorization: "Bearer " + userIDStore.getState().userToken,
         Accept: "application/json",
         "Content-Type": "application/json",
       },
@@ -130,6 +132,7 @@ class DataAnalytics extends React.Component {
     await fetch(query, {
       method: "GET",
       headers: {
+        Authorization: "Bearer " + userIDStore.getState().userToken,
         Accept: "application/json",
         "Content-Type": "application/json",
       },
@@ -166,6 +169,7 @@ class DataAnalytics extends React.Component {
       {
         method: "GET",
         headers: {
+          Authorization: "Bearer " + userIDStore.getState().userToken,
           Accept: "application/json",
           "Content-Type": "application/json",
         },
@@ -193,6 +197,7 @@ class DataAnalytics extends React.Component {
     await fetch("https://sym-track.herokuapp.com/api/statistics/countries", {
       method: "GET",
       headers: {
+        Authorization: "Bearer " + userIDStore.getState().userToken,
         Accept: "application/json",
         "Content-Type": "application/json",
       },
@@ -234,6 +239,7 @@ class DataAnalytics extends React.Component {
     await fetch(query, {
       method: "GET",
       headers: {
+        Authorization: "Bearer " + userIDStore.getState().userToken,
         Accept: "application/json",
         "Content-Type": "application/json",
       },
@@ -384,6 +390,9 @@ class DataAnalytics extends React.Component {
   //Check if test count data is available
   checkIfDataExist(filterCriteria) {
     let newThis = this;
+    newThis.setState({
+      testCountDataExist: false,
+    });
     var query =
       this.state.selected_daily_start_date.length > 1 &&
       this.state.selected_daily_end_date.length > 1
@@ -404,6 +413,7 @@ class DataAnalytics extends React.Component {
     fetch(query, {
       method: "GET",
       headers: {
+        Authorization: "Bearer " + userIDStore.getState().userToken,
         Accept: "application/json",
         "Content-Type": "application/json",
       },
@@ -465,7 +475,7 @@ class DataAnalytics extends React.Component {
             onPress={() => this.componentDidMount()}
           >
             <MaterialCommunityIcons name="reload" color="#0080ff" size={30} />
-            <Text>Refresh</Text>
+            <Text style={{ fontSize: 12 }}>Refresh</Text>
           </TouchableOpacity>
         </View>
 
@@ -479,7 +489,7 @@ class DataAnalytics extends React.Component {
                 width: Dimensions.get("window").width - 20,
               }}
             >
-              <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+              <Text style={{ fontSize: 20, fontFamily: "Roboto-Black" }}>
                 Case Update
               </Text>
             </View>
@@ -604,7 +614,7 @@ class DataAnalytics extends React.Component {
                 width: Dimensions.get("window").width - 20,
               }}
             >
-              <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+              <Text style={{ fontSize: 20, fontFamily: "Roboto-Black" }}>
                 Total Data
               </Text>
             </View>
@@ -715,12 +725,16 @@ class DataAnalytics extends React.Component {
 
             <View style={styles.container_graph}>
               <Text
-                style={{ fontSize: 20, fontWeight: "bold", marginLeft: 10 }}
+                style={{
+                  fontSize: 20,
+                  fontFamily: "Roboto-Black",
+                  marginLeft: 10,
+                }}
               >
                 Daily New Cases
               </Text>
               <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
-                Country : {this.state.searchedCountry}
+                Country : {this.state.search}
               </Text>
 
               <View
@@ -928,12 +942,16 @@ class DataAnalytics extends React.Component {
 
             <View style={styles.container_graph}>
               <Text
-                style={{ fontSize: 20, fontWeight: "bold", marginLeft: 10 }}
+                style={{
+                  fontSize: 20,
+                  fontFamily: "Roboto-Black",
+                  marginLeft: 10,
+                }}
               >
                 Total Cases
               </Text>
               <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
-                Country : {this.state.searchedCountry}
+                Country : {this.state.search}
               </Text>
 
               <View
@@ -1127,12 +1145,16 @@ class DataAnalytics extends React.Component {
 
             <View style={styles.container_graph}>
               <Text
-                style={{ fontSize: 20, fontWeight: "bold", marginLeft: 10 }}
+                style={{
+                  fontSize: 20,
+                  fontFamily: "Roboto-Black",
+                  marginLeft: 10,
+                }}
               >
                 Rate of Cases
               </Text>
               <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
-                Country : {this.state.searchedCountry}
+                Country : {this.state.search}
               </Text>
 
               <View
@@ -1226,29 +1248,32 @@ class DataAnalytics extends React.Component {
             </View>
 
             <View style={{ flexDirection: "row", marginBottom: 80 }}>
-              <TouchableOpacity
-                style={
-                  this.state.selected_filter_rate === criterias.confirmedRate
-                    ? styles.touchable_buttons
-                    : styles.touchable_buttons_pressed
-                }
-                onPress={async () => {
-                  await this.setState({
-                    selected_filter_rate: criterias.confirmedRate,
-                  });
-                  this.fetchRateStatistics();
-                }}
-              >
-                <Text
+              {this.state.testCountDataExist ? (
+                <TouchableOpacity
                   style={
                     this.state.selected_filter_rate === criterias.confirmedRate
-                      ? styles.text_style
-                      : styles.text_style_pressed
+                      ? styles.touchable_buttons
+                      : styles.touchable_buttons_pressed
                   }
+                  onPress={async () => {
+                    await this.setState({
+                      selected_filter_rate: criterias.confirmedRate,
+                    });
+                    this.fetchRateStatistics();
+                  }}
                 >
-                  Confirmed Rate
-                </Text>
-              </TouchableOpacity>
+                  <Text
+                    style={
+                      this.state.selected_filter_rate ===
+                      criterias.confirmedRate
+                        ? styles.text_style
+                        : styles.text_style_pressed
+                    }
+                  >
+                    Confirmed Rate
+                  </Text>
+                </TouchableOpacity>
+              ) : null}
               <TouchableOpacity
                 style={
                   this.state.selected_filter_rate === criterias.recoveryRate

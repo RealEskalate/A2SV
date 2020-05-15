@@ -24,7 +24,7 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import anosmia from "../../assets/images/anosmia.png";
 import cough from "../../assets/images/cough.png";
 import diarrhea from "../../assets/images/diarrhea.png";
-import fatigue from "../../assets/images/fever.png";
+import fatigue from "../../assets/images/fatigue.png";
 import fever from "../../assets/images/fever.png";
 import headache from "../../assets/images/headache.png";
 import muscle_pain from "../../assets/images/muscle-pain.png";
@@ -32,9 +32,13 @@ import runny_nose from "../../assets/images/runny-nose.png";
 import shortness from "../../assets/images/shortness-of-breath.png";
 import sneezing from "../../assets/images/sneezing.png";
 import sore from "../../assets/images/sore-throat.png";
+import chills from "../../assets/images/chills.jpg";
+import pneumonia from "../../assets/images/pneumonia.png";
 
 import manAvatar from "../../assets/images/avatar.png";
 import womanAvatar from "../../assets/images/person.png";
+import Geocoder from "react-native-geocoder";
+import userIDStore from "../data-management/user-id-data/userIDStore";
 
 MapboxGL.setAccessToken(
   "pk.eyJ1IjoiZmVyb3g5OCIsImEiOiJjazg0czE2ZWIwNHhrM2VtY3Y0a2JkNjI3In0.zrm7UtCEPg2mX8JCiixE4g"
@@ -42,13 +46,11 @@ MapboxGL.setAccessToken(
 console.disableYellowBox = true;
 
 const screenWidth = Dimensions.get("window").width;
-const colors = ["#c62828", "#ef6c00", "#ffb300"];
+const colors = ["#FFC107", "#EF6C00", "#B71C1C"];
 
-const small_flag_prob = 0.1667;
-const medium_flag_prob = 0.25;
-const big_flag_prob = 0.5;
+const covid = require("../public-data-page/data/covid.json");
 
-const small_flag_syms = new Set([
+const syms = new Set([
   "fatigue",
   "runny nose",
   "sneezing",
@@ -56,19 +58,58 @@ const small_flag_syms = new Set([
   "anosmia",
   "conjunctivitis",
   "diarrhoea",
-]);
-const medium_flag_syms = new Set([
   "myalgia",
   "sore throat",
   "medium-grade fever",
-]);
-const big_flag_syms = new Set(
   "high-grade fever",
   "persistent dry cough",
   "repeated shaking with chills",
   "difficulty breathing",
-  "pneumonia"
-);
+  "pneumonia",
+]);
+
+// prevalence of kth symptom in corona cases
+const Ak = {
+  cough: 0.861,
+  fever: 0.85,
+  "difficulty breathing": 0.8,
+  myalgia: 0.344,
+  diarrhoea: 0.267,
+  "sore throat": 0.178,
+  headaches: 0.161,
+  "runny nose": 0.161,
+  "chest pain": 0.15,
+  "abdominal pain": 0.083,
+  wheezing: 0.067,
+  nausea: 0.244, // everything below needs a proxy
+  fatigue: 0.65,
+  sneezing: 0.34,
+  conjunctivitis: 0.12,
+  chills: 0.44,
+  pneumonia: 0.53,
+  anosmia: 0.12,
+};
+
+const Sk = {
+  fatigue: 0.355,
+  headaches: 0.354,
+  "runny nose": 0.344,
+  cough: 0.283,
+  myalgia: 0.231,
+  "difficulty breathing": 0.132,
+  diarrhoea: 0.067,
+  fever: 0.07,
+  "abdominal pain": 0.117, // everything below needs a proxy
+  anosmia: 0.04,
+  "sore throat": 0.2,
+  "chest pain": 0.1,
+  wheezing: 0.04,
+  nausea: 0.34,
+  sneezing: 0.66,
+  conjunctivitis: 0.15,
+  chills: 0.52,
+  pneumonia: 0.12,
+};
 
 const pointInfos = {};
 let currentPointInfo = null;
@@ -79,13 +120,15 @@ export default class MapService extends React.Component {
     this.state = {
       isModalVisible: false,
       symptoms: [],
-      bounds: {
-        ne: [],
-        sw: [],
-      },
+
+      user_country: "",
       user_latitude: 0.0,
       user_longitude: 0.0,
       location: [0, 0],
+
+      countries: {},
+      test_counts: {},
+
       featureCollection: {
         type: "FeatureCollection",
         features: [],
@@ -108,7 +151,7 @@ export default class MapService extends React.Component {
     this.onTrackingChange = this.onTrackingChange.bind(this);
     this.onUserLocationUpdate = this.onUserLocationUpdate.bind(this);
     this.onSourceLayerPress = this.onSourceLayerPress.bind(this);
-    this.onFinishRenderingMap = this.onFinishRenderingMap.bind(this);
+    this.onFinishedLoadingMap = this.onFinishedLoadingMap.bind(this);
   }
 
   setModalVisible(visible) {
@@ -123,14 +166,32 @@ export default class MapService extends React.Component {
       currentPointInfo = pointInfo;
       this.setModalVisible(true);
     }
-    // console.log('You pressed a layer here is your feature', feature); // eslint-disable-line
+    // console.log('You pressed a layer here is your feature', feature); // eslint-disable-lin
   }
 
+  async onFinishedLoadingMap() {
+    console.log(
+      "LOCATION: " + this.state.user_longitude + " , " + this.state.user
+    );
+    this.setState({
+      location: [this.state.user_longitude + 0.02, this.state.user_latitude],
+    });
+
+    var loc = { lat: this.state.user_latitude, lng: this.state.user_longitude };
+    try {
+      const res = await Geocoder.geocodePosition(loc);
+      this.setState({ user_country: res[0].country });
+    } catch (err) {
+      console.log(err);
+    }
+    console.log(this.state.user_country);
+  }
   onTrackingChange() {
     console.log("tracking changed!");
     this.setState({
       location: [this.state.user_longitude + 0.02, this.state.user_latitude],
     });
+    console.log(this.state.user_longitude + " , " + this.state.user_latitude);
   }
   onUserLocationUpdate(location) {
     this.setState({
@@ -140,25 +201,89 @@ export default class MapService extends React.Component {
     console.log(this.state.user_latitude + " , " + this.state.user_longitude);
   }
 
-  onFinishRenderingMap() {
-    this.setState({
-      location: [this.state.user_longitude + 0.02, this.state.user_latitude],
-    });
-    this.state.bounds.ne = [
-      this.state.location[0] + 0.3,
-      this.state.location[1] - 0.3,
-    ];
-    this.state.bounds.sw = [
-      this.state.location[0] - 0.3,
-      this.state.location[1] + 0.3,
-    ];
-    console.log(this.state.bounds.ne + " ,, " + this.state.bounds.sw);
-  }
-
   FloatingButtonEvent = () => {
     this.onTrackingChange();
   };
 
+  fetchTestCounts() {
+    console.log("Fetching countries);");
+    fetch("https://sym-track.herokuapp.com/api/statistics/countries", {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + userIDStore.getState().userToken,
+        Accept: "application/json",
+        "Content-type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        const countries = data;
+        // console.log("countries fetched with size = " + countries.length);
+        // console.log("Fetching test counts");
+        const test_counts = {};
+        for (let i = 0; i < countries.length; i++) {
+          const slug = countries[i].slug;
+          console.log("slug = " + slug);
+          const country = countries[i].name;
+          fetch(
+            "https://sym-track.herokuapp.com/api/statistics?criteria=Tests&country=" +
+              slug,
+            {
+              method: "GET",
+              headers: {
+                Accept: "application/json",
+                "Content-type": "application/json",
+              },
+            }
+          )
+            .then((res) => res.json())
+            .then((data) => {
+              // store only the last value
+              const latest_tests = data[data.length - 1].y;
+              test_counts[country] = latest_tests;
+            });
+        }
+        this.setState({ test_counts: test_counts });
+      });
+  }
+  fetchSymptoms() {
+    console.log(
+      "Fetching symptoms token : " +
+        this.state.user_longitude +
+        "," +
+        this.state.user_latitude
+    );
+    fetch("http://sym-track.herokuapp.com/api/locations_symptoms", {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + userIDStore.getState().userToken,
+        Accept: "application/json",
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({
+        longitude: this.state.user_longitude,
+        latitude: this.state.user_latitude,
+      }),
+    })
+      .then((res) => {
+        if (res.status === 500) {
+          console.log("No locations with users and symptoms found.");
+          return;
+        } else {
+          return res.json();
+        }
+      })
+      .then((data) => {
+        console.log("Data successfully" + data);
+        this.setState({ symptoms: data });
+        const featureCollections = this.symptomsToGeoJson(this.state.symptoms);
+        this.setState({ symptomCollections: featureCollections });
+      })
+      .catch((error) => {
+        console.log("Error in symptom fetching");
+        console.log(error);
+      });
+  }
   componentDidMount() {
     PermissionsAndroid.requestMultiple(
       [
@@ -179,31 +304,11 @@ export default class MapService extends React.Component {
         reject(err);
       });
     MapboxGL.setTelemetryEnabled(false);
-    this.timer = setInterval(
-      () =>
-        fetch("http://sym-track.herokuapp.com/api/locations_symptoms", {
-          method: "GET",
-          headers: {
-            Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6IkZFTUFMRSIsImFnZV9ncm91cCI6IlVOREVSXzMwIiwiX2lkIjoiNWU5MDRjY2U3YTFjNmI2MjdhZTlmNWY3IiwidXNlcm5hbWUiOiJUZXN0aW5nIiwicGFzc3dvcmQiOiIkMmEkMTAkZWZteG01bzF2LmluSS5lU3RHR3hnTzF6SGsuTDZVb0E5TEV5WXJSUGhXa21UUVBYOC5OS08iLCJfX3YiOjB9LCJpYXQiOjE1ODY1Njk2OTF9.gIronZCVlONIQ2PmTQ6NhRJca9Rk-gv3clFyH6ViQxw",
-            Accept: "application/json",
-            "Content-type": "application/json",
-          },
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            console.log("Symptoms fetched");
-            this.setState({ symptoms: data });
-            const featureCollections = this.symptomsToGeoJson(
-              this.state.symptoms
-            );
-            this.setState({ symptomCollections: featureCollections });
-          })
-          .catch((error) => {
-            console.log(error);
-          }),
-      15000
-    );
+    console.log("-----------------------");
+    this.fetchTestCounts();
+    this.fetchSymptoms();
+
+    this.timer = setInterval(() => this.fetchSymptoms(), 15000);
   }
 
   getListOfSymptoms = (data, images) => {
@@ -242,6 +347,12 @@ export default class MapService extends React.Component {
     };
     for (let index = 0; index < symptoms.length; index++) {
       let element = symptoms[index];
+      if (
+        element.longitude == this.state.user_longitude &&
+        element.latitude == this.state.user_latitude
+      ) {
+        continue;
+      }
       var age_group = "";
       if (
         element.age_group.search("ABOVE") != -1 ||
@@ -269,11 +380,14 @@ export default class MapService extends React.Component {
         },
       };
       const prob = this.calculateProbability(element.symptoms);
-      if (prob < 0.4) {
+      if (prob < 0.2) {
+        console.log("Pushing to small");
         symptomCollections.smallSymptomCollection.features.push(feat);
-      } else if (prob < 0.6) {
+      } else if (prob < 0.4) {
+        console.log("pushing to medium");
         symptomCollections.mediumSymptomCollection.features.push(feat);
       } else {
+        console.log("pushing to large");
         symptomCollections.highSymptomCollection.features.push(feat);
       }
       pointInfos[`index-${index}`] = element;
@@ -282,16 +396,33 @@ export default class MapService extends React.Component {
   }
 
   calculateProbability(symptoms) {
-    let total_prob = 0.0;
+    let total_prob = 1.0;
+    let dates = Object.keys(covid[this.state.user_country]);
+    dates = dates.slice(4, dates.length);
+    const lastDate = dates[dates.length - 1];
+    const confirmed = parseFloat(covid[this.state.user_country][lastDate]); // confirmed cases for this country
+    const prevalence =
+      confirmed / this.state.test_counts[this.state.user_country];
+
+    console.log("prevalence = " + prevalence);
+
     for (let i = 0; i < symptoms.length; i++) {
-      if (big_flag_syms.has(symptoms[i].name.toLowerCase())) {
-        total_prob += big_flag_prob;
-      } else if (medium_flag_syms.has(symptoms[i].name.toLowerCase())) {
-        total_prob += medium_flag_prob;
-      } else {
-        total_prob += small_flag_prob;
+      var symptom = symptoms[i].name.toLowerCase();
+      if (symptom == "persistent dry cough") {
+        symptom = "cough";
+      } else if (
+        symptom == "high-grade fever" ||
+        symptom == "medium-grade fever"
+      ) {
+        symptom = "fever";
+      } else if (symptom == "repeated shaking with chills") {
+        symptom = "chills";
       }
+      const prob = 1 - (prevalence * Ak[symptom]) / Sk[symptom];
+      total_prob *= prob;
     }
+    total_prob = 1.0 - total_prob;
+    console.log("total probability = " + total_prob);
     return total_prob;
   }
 
@@ -330,13 +461,12 @@ export default class MapService extends React.Component {
         images.push(sneezing);
       } else if (name == "sore throat") {
         images.push(sore);
+      } else if (name == "repeated shaking with chills") {
+        images.push(chills);
+      } else if (name == "pneumonia") {
+        images.push(pneumonia);
       } else {
         images.push(cough);
-      }
-      console.log("logging symptom details");
-      console.log(data);
-      for (let j = 0; j < images.length; j++) {
-        console.log(images[j]);
       }
     }
     if (info == null) {
@@ -380,7 +510,9 @@ export default class MapService extends React.Component {
                     <View style={styles.tag}>
                       <Text style={styles.tagContent}>GEO</Text>
                     </View>
-                    <Text style={styles.tagData}>ETHIOPIA</Text>
+                    <Text style={styles.tagData}>
+                      {this.state.user_country}{" "}
+                    </Text>
                   </View>
                   <View style={styles.userDegree}>
                     <FontAwesome
@@ -462,8 +594,8 @@ export default class MapService extends React.Component {
             style={smallStyles.matchParent}
             styleURL={MapboxGL.StyleURL.Light}
             compassEnabled
-            onDidFinishLoadingMap={this.onFinishRenderingMap}
             compassViewPosition={1}
+            onDidFinishLoadingMap={this.onFinishedLoadingMap}
           >
             <MapboxGL.UserLocation
               visible={true}
@@ -605,8 +737,7 @@ const styles = StyleSheet.create({
 });
 const smallStyles = {
   singlePoint: {
-    circleColor: "yellow",
-    circleOpacity: 0.84,
+    circleColor: "#FFC107",
     circleStrokeWidth: 2,
     circleStrokeColor: "white",
     circleRadius: 5,
@@ -620,7 +751,7 @@ const smallStyles = {
     circleColor: [
       "step",
       ["get", "point_count"],
-      "yellow",
+      "#FFC107",
       100,
       "#f1f075",
       750,
@@ -643,11 +774,10 @@ const smallStyles = {
 
 const mediumStyles = {
   singlePoint: {
-    circleColor: "orange",
-    circleOpacity: 0.84,
+    circleColor: "#EF6C00",
     circleStrokeWidth: 2,
     circleStrokeColor: "white",
-    circleRadius: 5,
+    circleRadius: 6,
     circlePitchAlignment: "map",
   },
   matchParent: {
@@ -658,7 +788,7 @@ const mediumStyles = {
     circleColor: [
       "step",
       ["get", "point_count"],
-      "orange",
+      "#EF6C00",
       100,
       "#f1f075",
       750,
@@ -667,7 +797,6 @@ const mediumStyles = {
 
     circleRadius: ["step", ["get", "point_count"], 20, 100, 30, 750, 40],
 
-    circleOpacity: 0.84,
     circleStrokeWidth: 2,
     circleStrokeColor: "white",
   },
@@ -681,11 +810,10 @@ const mediumStyles = {
 
 const highStyles = {
   singlePoint: {
-    circleColor: "red",
-    circleOpacity: 0.84,
+    circleColor: "#B71C1C",
     circleStrokeWidth: 2,
     circleStrokeColor: "white",
-    circleRadius: 5,
+    circleRadius: 8,
     circlePitchAlignment: "map",
   },
   matchParent: {
@@ -696,7 +824,7 @@ const highStyles = {
     circleColor: [
       "step",
       ["get", "point_count"],
-      "red",
+      "#B71C1C",
       100,
       "#f1f075",
       750,
@@ -705,7 +833,6 @@ const highStyles = {
 
     circleRadius: ["step", ["get", "point_count"], 20, 100, 30, 750, 40],
 
-    circleOpacity: 0.84,
     circleStrokeWidth: 2,
     circleStrokeColor: "white",
   },

@@ -1,13 +1,13 @@
 import React from "react";
 import {
   View,
-  Text,
   TouchableOpacity,
   Image,
   Dimensions,
   Linking,
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import Text from "./CustomText.js";
 
 const About = (props) => {
   return (
@@ -24,8 +24,7 @@ const About = (props) => {
           style={{
             fontSize: 18,
             color: "#37474f",
-            fontFamily: "sans-serif-light",
-            fontWeight: "bold",
+            fontFamily: "Roboto-Black",
           }}
         >
           TRACK SYM
@@ -60,8 +59,7 @@ const About = (props) => {
           style={{
             fontSize: 18,
             color: "#37474f",
-            fontFamily: "sans-serif-light",
-            fontWeight: "bold",
+            fontFamily: "Roboto-Black",
           }}
         >
           WHO ARE WE?
@@ -92,8 +90,7 @@ const About = (props) => {
           style={{
             fontSize: 18,
             color: "#37474f",
-            fontFamily: "sans-serif-light",
-            fontWeight: "bold",
+            fontFamily: "Roboto-Black",
           }}
         >
           YOUR DATA

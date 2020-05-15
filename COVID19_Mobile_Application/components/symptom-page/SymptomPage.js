@@ -51,10 +51,12 @@ export default class SymptomPage extends Component {
   //gets the list of symptoms from database
   fetchSymptoms() {
     this.setState({ loading: true });
+
     let newThis = this; // create variable for referencing 'this'
     fetch("https://sym-track.herokuapp.com/api/symptoms", {
       method: "GET",
       headers: {
+        Authorization: "Bearer " + userIDStore.getState().userToken,
         Accept: "application/json",
         "Content-Type": "application/json",
       },
@@ -79,6 +81,7 @@ export default class SymptomPage extends Component {
     fetch("https://sym-track.herokuapp.com/api/symptomuser/user/" + userId, {
       method: "GET",
       headers: {
+        Authorization: "Bearer " + userIDStore.getState().userToken,
         Accept: "application/json",
         "Content-Type": "application/json",
       },
@@ -99,6 +102,7 @@ export default class SymptomPage extends Component {
     fetch("https://sym-track.herokuapp.com/api/symptomuser", {
       method: "POST",
       headers: {
+        Authorization: "Bearer " + userIDStore.getState().userToken,
         Accept: "application/json",
         "Content-Type": "application/json",
       },
@@ -126,6 +130,7 @@ export default class SymptomPage extends Component {
     fetch("https://sym-track.herokuapp.com/api/symptomuser", {
       method: "DELETE",
       headers: {
+        Authorization: "Bearer " + userIDStore.getState().userToken,
         Accept: "application/json",
         "Content-Type": "application/json",
       },
@@ -169,6 +174,7 @@ export default class SymptomPage extends Component {
           <CheckBox
             key={item._id}
             title={item.name}
+            textStyle={{ fontFamily: "PlayfairDisplay" }}
             checked={this.doesSymptomAlreadyRegistered(item._id)}
             onPress={() =>
               this.handleSymptomAction(userIDStore.getState().userId, item._id)

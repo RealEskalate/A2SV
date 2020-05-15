@@ -30,6 +30,7 @@
     "react-native-datepicker": "^1.7.2",
     "react-native-dropdown": "0.0.6",
     "react-native-elements": "^1.2.7",
+    "react-native-geocoder": "^0.5.0",
     "react-native-gesture-handler": "~1.6.0",
     "react-native-material-design": "^0.3.7",
     "react-native-material-dropdown": "^0.11.1",
