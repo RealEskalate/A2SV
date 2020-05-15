@@ -83,6 +83,11 @@ exports.get_user_by_credentials = async (req, res) => {
 };
 // Post a Use
 exports.post_user = async (req, res) => {
+  if (req.query.demo && req.query.demo == "true"){
+    var User = UserModels.DemoUser;
+  }else{
+    var User = UserModels.User;
+  }
   const user = new User({
     _id: mongoose.Types.ObjectId(),
     username: req.body.username,
@@ -108,7 +113,11 @@ exports.post_user = async (req, res) => {
 };
 // Update User by ID.
 exports.update_user = async (req, res) => {
-
+  if (req.query.demo && req.query.demo == "true"){
+    var User = UserModels.DemoUser;
+  }else{
+    var User = UserModels.User;
+  }
   try {
     let exists = await User.findOne({ username: req.body.username });
     // Change user info by _id
@@ -132,7 +141,11 @@ exports.update_user = async (req, res) => {
 };
 // Delete User by ID.
 exports.delete_user = async (req, res) => {
-
+  if (req.query.demo && req.query.demo == "true"){
+    var User = UserModels.DemoUser;
+  }else{
+    var User = UserModels.User;
+  }
   try {
     const user = await User.findByIdAndDelete(req.body._id);
     if (!user) {

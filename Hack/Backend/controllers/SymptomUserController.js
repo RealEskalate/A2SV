@@ -1,15 +1,11 @@
 const SymptomUserModel = require("./../models/SymptomUser");
-const SymptomUser = SymptomUserModel.SymptomUser;
-const {DemoSymptomUser} = require('./../models/DemoSymptomUserModel');
-const { Symptom, validateSymptom } = require("../models/Symptom");
+const { Symptom} = require("../models/Symptom");
 const UserModels = require("./../models/UserModel");
-const User = UserModels.User;
-const jwt = require("jsonwebtoken");
 
 // Display list of all symptoms.
 exports.get_all_symptomusers = async (req, res) => {
   if (req.query.demo && req.query.demo == "true"){
-    var SymptomUser = DemoSymptomUser;
+    var SymptomUser = SymptomUserModel.DemoSymptomUser;
   }else{
     var SymptomUser = SymptomUserModel.SymptomUser;
   }
@@ -24,7 +20,13 @@ exports.get_all_symptomusers = async (req, res) => {
 
 // Post a symptomuser
 exports.post_symptomuser = async (req, res) => {
-
+  if (req.query.demo && req.query.demo == "true"){
+    var SymptomUser = SymptomUserModel.DemoSymptomUser;
+    var User = UserModels.DemoUser
+  }else{
+    var User = UserModels.User
+    var SymptomUser = SymptomUserModel.SymptomUser;
+  }
   let symptomuser = new SymptomUser({
     symptom_id: req.body.symptom_id,
     user_id: req.body.user_id,
@@ -61,7 +63,7 @@ exports.post_symptomuser = async (req, res) => {
 //Get a symptomuser by symptom_id
 exports.get_symptomuser_by_symptom_id = async (req, res) => {
   if (req.query.demo && req.query.demo == "true"){
-    var SymptomUser = DemoSymptomUser;
+    var SymptomUser = SymptomUserModel.DemoSymptomUser;
   }else{
     var SymptomUser = SymptomUserModel.SymptomUser;
   }
@@ -94,7 +96,7 @@ exports.get_symptomuser_by_symptom_id = async (req, res) => {
 //Get a symptomuser by user_id
 exports.get_symptomuser_by_user_id = async (req, res) => {
   if (req.query.demo && req.query.demo == "true"){
-    var SymptomUser = DemoSymptomUser;
+    var SymptomUser = SymptomUserModel.DemoSymptomUser;
   }else{
     var SymptomUser = SymptomUserModel.SymptomUser;
   }
@@ -124,7 +126,11 @@ exports.get_symptomuser_by_user_id = async (req, res) => {
 
 //Update a symptomuser by id
 exports.update_symptomuser = async (req, res) => {
-
+  if (req.query.demo && req.query.demo == "true"){
+    var SymptomUser = SymptomUserModel.DemoSymptomUser;
+  }else{
+    var SymptomUser = SymptomUserModel.SymptomUser;
+  }
   try {
     const symptomuser = await SymptomUser.findByIdAndUpdate(
       req.body._id,
@@ -151,7 +157,11 @@ exports.update_symptomuser = async (req, res) => {
 
 // Deleting a symptomuser
 exports.delete_symptomuser = async (req, res) => {
-
+  if (req.query.demo && req.query.demo == "true"){
+    var SymptomUser = SymptomUserModel.DemoSymptomUser;
+  }else{
+    var SymptomUser = SymptomUserModel.SymptomUser;
+  }
   try {
     const symptomuser = await SymptomUser.findByIdAndDelete(req.body._id);
     if (!symptomuser) {
