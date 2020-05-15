@@ -18,7 +18,6 @@ import { ApplicationProvider, Datepicker, Layout } from "@ui-kitten/components";
 import * as eva from "@eva-design/eva";
 import SearchableDropdown from "react-native-searchable-dropdown";
 import userIDStore from "../data-management/user-id-data/userIDStore";
-
 import Text from "./CustomText.js";
 class DataAnalytics extends React.Component {
   state = {

@@ -83,7 +83,6 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 18,
     color: "#37474f",
-
     fontFamily: "Roboto-Black",
   },
   username: {

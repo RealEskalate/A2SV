@@ -222,7 +222,6 @@ export default class MapService extends React.Component {
         // console.log("Fetching test counts");
         // console.log("countries fetched with size = " + countries.length);
         // console.log("Fetching test counts");
-
         const test_counts = {};
         for (let i = 0; i < countries.length; i++) {
           const slug = countries[i].slug;
@@ -265,6 +264,7 @@ export default class MapService extends React.Component {
       .then((res) => {
         console.log("res = ");
         console.log(res.status);
+
         if (res.status === 500) {
           console.log("No locations with users and symptoms found.");
           return;
