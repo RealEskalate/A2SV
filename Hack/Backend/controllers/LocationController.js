@@ -1,10 +1,7 @@
-var LocationModels = require("../models/LocationModel.js");
-var Location = LocationModels.Location;
 var mongoose = require("mongoose");
+var LocationModels = require("../models/LocationModel.js");
 const LocationUserModels = require("./../models/LocationUserModel");
-const LocationUser = LocationUserModels.LocationUser;
 const SymptomUserModel = require("./../models/SymptomUser");
-const SymptomUser = SymptomUserModel.SymptomUser;
 const { DemoSymptomUser } = require("./../models/DemoSymptomUserModel");
 const { Symptom } = require("./../models/Symptom");
 const UserModels = require("./../models/UserModel");
@@ -36,13 +33,12 @@ exports.get_all_locations = async (req, res) => {
 };
 
 exports.get_all_locations_with_symptoms = async (req, res) => {
-  if (req.query.demo && req.query.demo == "true"){
+  if (req.body.demo && req.body.demo == "true"){
     var Location = LocationModels.DemoLocation;
-    var SymptomUser = DemoSymptomUser;
     var LocationUser = LocationUserModels.DemoLocationUser;
+
   }else{
     var Location = LocationModels.Location;
-    var SymptomUser = SymptomUserModel.SymptomUser;
     var LocationUser = LocationUserModels.LocationUser;
   }
 
@@ -51,76 +47,56 @@ exports.get_all_locations_with_symptoms = async (req, res) => {
   }
   let lat = req.body.latitude;
   let long = req.body.longitude;
-
-  let dict = {};
-  const locations = await Location.find(
-    {
-      longitude: {
-        $gte:new Number(long) - 0.3,
-        $lte:new Number(long) + 0.3
-      },
-      latitude: {
-        $gte:new Number(lat) - 0.2,
-        $lte:new Number(lat) + 0.2
-      }
+  const locations = await Location.find({
+    latitude: {
+      $gte: Number(lat) - 0.11,
+      $lte: Number(lat) + 0.11,      
+    },
+    longitude: {
+      $gte: Number(long) - 0.11,
+      $lte: Number(long) + 0.11,      
     }
-  );  
-  let nearby_locations = []
+  });  
+  console.log(`Fetched ${locations.length} Locations from MongoDB`)
+  let nearby_locations_dict = {}
   for (let i = 0; i < locations.length; i++) {
     let location = locations[i];
-    if(geolib.getDistance(
+    let distance = geolib.getDistance(
       { latitude: lat, longitude: long },
-      { latitude: location.latitude, longitude: location.longitude }
-      )<6213.712){
-        nearby_locations.push(location._id)
-      }
-  }
-  console.log(nearby_locations.length)
-
-  let LocationUsers = await LocationUser.find({
-    location_id: {
-      $in: nearby_locations
+      { latitude: location.latitude, longitude: location.longitude },5)
+    if(distance<1000){
+      nearby_locations_dict[distance] = location._id
     }
-  }).populate('location_id').populate('user_id')
-  // Get Symptoms for each user and store in Symptoms
-  for (let i = 0; i < LocationUsers.length; i++) {
-    let userAtLocation = LocationUsers[i];
-    let user = userAtLocation.user_id;
-    let location = userAtLocation.location_id;    
-    if(dict[`${user._id}`] && dict[`${user._id}`].TTL<userAtLocation.TTL){
+  }
+  let nearby_locations = []
+  Object.keys(nearby_locations_dict).forEach((item)=> nearby_locations.push(nearby_locations_dict[item]))
+  let result = []
+  let user_known = [];
+  console.log(`Filtered ${nearby_locations.length} Locations by Distance`)
+
+  for (let i = 0; i < nearby_locations.length; i++) {
+    let available_locations = await LocationUser.findOne({
+      location_id: nearby_locations[i],
+      user_id: {
+        $nin: user_known
+      }
+    }).populate("location_id").populate("user_id")
+    if(!available_locations){
       continue
     }
-    let symptoms = [];
-    const symptomusers = await SymptomUser.find({
-      user_id: user._id
-    }).populate('symptom_id');
-    if(!symptomusers || symptomusers.length==0) continue;
-    for (let j = 0; j < symptomusers.length; j++) {
-      symptoms.push(symptomusers[j].symptom_id);
-    }
-    dict[`${user._id}`] = {
-      Data: {
-        longitude: location.longitude,
-        latitude: location.latitude,
-        symptoms: symptoms,
-        age_group: user.age_group,
-        gender: user.gender
-      },
-      TTL: userAtLocation.TTL
-    };
-    //Since we only need one user at a point
-    break;
-  }
-  let result = []
-  Object.keys(dict).forEach((item)=>{
+    let user = available_locations.user_id
+    if(!user) continue
+    user_known.push(user._id)      
     result.push({
-      longitude: dict[`${item}`].Data.longitude,
-      latitude: dict[`${item}`].Data.latitude,
-      symptoms: dict[`${item}`].Data.symptoms,
-      age_group: dict[`${item}`].Data.age_group,
-      gender: dict[`${item}`].Data.gender
+      longitude: available_locations.location_id.longitude,
+      latitude: available_locations.location_id.latitude,
+      user_id: user._id,
+      prevalence: available_locations.prevalence,
+      age_group:  available_locations.user_id.age_group,
+      gender:  available_locations.user_id.gender
     })
-  });
+  }
+  console.log(`Fetched ${result.length} Locations and Users according to filter`)
   if (result.length > 0) {
     res.send(result);
   } else {
