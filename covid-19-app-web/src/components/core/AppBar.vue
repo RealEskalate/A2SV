@@ -97,10 +97,17 @@
 </template>
 
 <script>
-  import store from "@/store/";
-  import {mdiBookOpenVariant, mdiDotsVertical, mdiHome, mdiInformation, mdiMap, mdiNewspaper} from "@mdi/js";
+import store from "@/store/";
+import {
+  mdiBookOpenVariant,
+  mdiDotsVertical,
+  mdiHome,
+  mdiInformation,
+  mdiMap,
+  mdiNewspaper
+} from "@mdi/js";
 
-  export default {
+export default {
   data: () => {
     return {
       mdiDotsVertical,
@@ -110,15 +117,15 @@
       curRoute: 0,
       activeBtn: 0,
       links: [
-        {text: "Home", icon: mdiHome, to: "/"},
+        { text: "Home", icon: mdiHome, to: "/" },
         {
           text: "Learn",
           icon: mdiBookOpenVariant,
           to: "/information"
         },
-        {text: "About", icon: mdiInformation, to: "/about"},
-        {text: "News", icon: mdiNewspaper, to: "/news"},
-        {text: "Map", icon: mdiMap, to: "/map"}
+        { text: "About", icon: mdiInformation, to: "/about" },
+        { text: "News", icon: mdiNewspaper, to: "/news" },
+        { text: "Map", icon: mdiMap, to: "/map" }
       ]
     };
   },

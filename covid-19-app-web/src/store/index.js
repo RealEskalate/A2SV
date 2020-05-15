@@ -2,7 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import graphs from "./graphs";
 import heatmap from "./heatmap";
-import covidStates from "./covid-states";
+import learn from "./learn";
 import news from "./news";
 import loaders from "./loaders";
 import axios from "axios";
@@ -55,7 +55,7 @@ export default new Vuex.Store({
   modules: {
     graphs,
     heatmap,
-    covidStates,
+    learn,
     news,
     loaders
   }

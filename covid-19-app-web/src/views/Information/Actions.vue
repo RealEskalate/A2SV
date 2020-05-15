@@ -65,41 +65,15 @@
   </v-container>
 </template>
 <script>
+import store from "@/store";
+
 export default {
   data: () => {
     return {
       auto: true,
       interval: 0,
       value: 0,
-      selectedAction: 0,
-      actions: [
-        {
-          title: "Stay Calm",
-          description: `Pandemic does not refer to the lethality of a virus but to its transmission and geographical extension.
-          So Stay mindful and be the help instead of creating more problems in fear.`,
-          image: "/img/actions/mindfulness.svg"
-        },
-        {
-          title: "Wash your Hands",
-          description: `Respiratory viruses spread when mucus or droplets containing the virus
-          get into your body through your eyes, nose or throat. Most often, this
-          happens through your hands.`,
-          image: "/img/actions/wash_hands.svg"
-        },
-        {
-          title: "Keep Physical Distancing",
-          description: `Limiting face-to-face contact with others is the best way to reduce
-          the spread of the disease.`,
-          image: "/img/actions/social_distancing.svg"
-        }
-        // {
-        //   title: "Learn Even More",
-        //   description: `Go through our Learning paths to explore more about Covid 19.
-        //   Whatever age you are, we have something for you.`,
-        //   image: "/img/actions/book_reading.svg",
-        //   learning: true
-        // }
-      ]
+      selectedAction: 0
     };
   },
   beforeDestroy() {
@@ -115,6 +89,9 @@ export default {
         this.value += 15;
       }
     }, 1000);
+  },
+  computed: {
+    actions: () => store.getters.getActions
   }
 };
 </script>

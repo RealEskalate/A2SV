@@ -24,14 +24,14 @@
         >
           <template v-slot:activator="{ on }">
             <v-text-field
-                    outlined
-                    dense
-                    v-model="dateRangeText"
-                    label="Date Range"
-                    hint="Date Range"
-                    :prepend-inner-icon="mdiCalendar"
-                    readonly
-                    v-on="on"
+              outlined
+              dense
+              v-model="dateRangeText"
+              label="Date Range"
+              hint="Date Range"
+              :prepend-inner-icon="mdiCalendar"
+              readonly
+              v-on="on"
             />
           </template>
           <v-date-picker
@@ -93,12 +93,12 @@
   </v-container>
 </template>
 <script>
-  import {BarChart, ChartMixin} from "./charts.js";
-  import CountryResources from "../CountryResources";
-  import store from "@/store/index.js";
-  import {mdiCalendar} from "@mdi/js"
+import { BarChart, ChartMixin } from "./charts.js";
+import CountryResources from "../CountryResources";
+import store from "@/store/index.js";
+import { mdiCalendar } from "@mdi/js";
 
-  export default {
+export default {
   components: { BarChart, CountryResources },
   mixins: [ChartMixin],
   props: {

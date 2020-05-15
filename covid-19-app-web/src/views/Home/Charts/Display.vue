@@ -29,7 +29,6 @@
               v-model="dateRangeText"
               label="Date Range"
               hint="Date Range"
-
               :prepend-inner-icon="mdiCalendar"
               readonly
               v-on="on"
@@ -81,12 +80,12 @@
   </v-container>
 </template>
 <script>
-  import {ChartMixin, LineChart} from "./charts.js";
-  import CountryResources from "../CountryResources";
-  import store from "@/store/index.js";
-  import {mdiCalendar} from "@mdi/js";
+import { ChartMixin, LineChart } from "./charts.js";
+import CountryResources from "../CountryResources";
+import store from "@/store/index.js";
+import { mdiCalendar } from "@mdi/js";
 
-  export default {
+export default {
   components: { LineChart, CountryResources },
   mixins: [ChartMixin],
   props: {
