@@ -39,10 +39,7 @@ const NavigatorDrawer = (props) => {
                 <Icon name="account-outline" color={color} size={size} />
               )}
               label="My Profile"
-<<<<<<< Updated upstream
-=======
               labelStyle={{ fontFamily: "PlayfairDisplay" }}
->>>>>>> Stashed changes
               onPress={() => {
                 props.navigation.closeDrawer();
                 props.navigation.navigate("Profile");

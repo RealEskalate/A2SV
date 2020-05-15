@@ -18,11 +18,8 @@ import { ApplicationProvider, Datepicker, Layout } from "@ui-kitten/components";
 import * as eva from "@eva-design/eva";
 import SearchableDropdown from "react-native-searchable-dropdown";
 import userIDStore from "../data-management/user-id-data/userIDStore";
-<<<<<<< Updated upstream
-=======
-import Text from "./CustomText.js";
->>>>>>> Stashed changes
 
+import Text from "./CustomText.js";
 class DataAnalytics extends React.Component {
   state = {
     selected_filter: criterias.confirmed, // sets the current filtering parameter on the graph
