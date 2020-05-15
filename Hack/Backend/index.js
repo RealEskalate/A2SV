@@ -19,6 +19,9 @@ const userRouter = require("./routes/UserRoutes.js");
 const statisticsRouter = require("./routes/StatisticsRoutes");
 const diseasesRouter = require("./routes/DiseasesRoutes");
 const messageRouter = require("./routes/MessageRoutes.js");
+const statisticsResourceRouter = require("./routes/StatisticsResourcesRoute.js");
+const informationRouter = require("./routes/InformationRoute.js");
+const learningPathRouter = require("./routes/LearningPathRoute.js");
 
 const logger = require('./middlewares/logger');
 const bodyParser = require("body-parser");
@@ -48,6 +51,11 @@ app.use(symptomRouter);
 app.use(symptomuserRouter);
 app.use(userRouter);
 app.use(messageRouter);
+app.use(statisticsResourceRouter);
+app.use(informationRouter);
+app.use(learningPathRouter);
+app.use(express.static('public'));
+app.use('/img', express.static(__dirname + '/img'));
 
 app.listen(port, () => {
     console.log("Server is running... at port " + port);
