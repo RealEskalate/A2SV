@@ -28,7 +28,7 @@
                 <v-img
                   class="white--text align-end"
                   height="200px"
-                  :lazy-src="item.image"
+                  :lazy-src="server_url + item.image"
                 >
                   <v-card-title
                     class="text-truncate mr-3"
@@ -64,8 +64,8 @@
         <v-card outlined shaped>
           <v-img
             height="150px"
-            :lazy-src="selectedInfo.image"
-            :src="selectedInfo.image"
+            :lazy-src="server_url + selectedInfo.image"
+            :src="server_url + selectedInfo.image"
           />
           <v-card-title class="headline my-2" v-text="selectedInfo.title" />
           <v-card-text class="text-justify" v-html="selectedInfo.description" />

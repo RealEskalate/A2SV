@@ -524,7 +524,7 @@ export default {
         let cr = criteria[i];
         commit("incrementGraphLoaders", mode);
         axios
-          .get(`${process.env.VUE_APP_BASE_URL}/statistics`, {
+          .get(`${process.env.VUE_APP_BASE_URL}/api/statistics`, {
             params: {
               criteria: converter[cr.label],
               country: country,
@@ -557,7 +557,7 @@ export default {
       commit("resetGraphLoaders", "daily");
       commit("incrementGraphLoaders", "daily");
       axios
-        .get(`${process.env.VUE_APP_BASE_URL}/statistics`, {
+        .get(`${process.env.VUE_APP_BASE_URL}/api/statistics`, {
           params: {
             criteria: converter[criteria],
             country: country,
@@ -582,7 +582,7 @@ export default {
     ) {
       commit("incrementGraphLoaders", "countryCompare");
       axios
-        .get(`${process.env.VUE_APP_BASE_URL}/statistics`, {
+        .get(`${process.env.VUE_APP_BASE_URL}/api/statistics`, {
           params: {
             criteria: converter[criteria],
             country: country,
@@ -619,7 +619,7 @@ export default {
       commit("resetGraphLoaders", "diseaseCompare");
       commit("incrementGraphLoaders", "diseaseCompare");
       axios
-        .get(`${process.env.VUE_APP_BASE_URL}/diseases`)
+        .get(`${process.env.VUE_APP_BASE_URL}/api/diseases`)
         .then(response => {
           let collection = [];
           response.data.forEach(function(load) {
@@ -646,7 +646,7 @@ export default {
     },
     setCountryResources({ commit }, { country }) {
       axios
-        .get(`${process.env.VUE_APP_BASE_URL}/publicResources/${country}`)
+        .get(`${process.env.VUE_APP_BASE_URL}/api/publicResources/${country}`)
         .then(response => {
           let data = [];
           for (let i in response.data) {

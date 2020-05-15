@@ -128,13 +128,6 @@ export default {
           the spread of the disease.`,
         image: "/img/actions/social_distancing.svg"
       }
-      // {
-      //   title: "Learn Even More",
-      //   description: `Go through our Learning paths to explore more about Covid 19.
-      //   Whatever age you are, we have something for you.`,
-      //   image: "/img/actions/book_reading.svg",
-      //   learning: true
-      // }
     ],
     states: {
       incubation: {

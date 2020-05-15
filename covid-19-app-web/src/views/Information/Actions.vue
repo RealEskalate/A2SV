@@ -57,8 +57,8 @@
           transition="fade-transition"
           class="my-5 mx-auto"
           max-height="350px"
-          :lazy-src="actions[selectedAction].image"
-          :src="actions[selectedAction].image"
+          :lazy-src="server_url + actions[selectedAction].image"
+          :src="server_url + actions[selectedAction].image"
         />
       </v-col>
     </v-row>
