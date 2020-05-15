@@ -10,7 +10,7 @@ const fs = require("fs");
 let mongoose = require("mongoose");
 const XLSX = require("xlsx");
 var path = require("path");
-var root = path.dirname(require.main.filename);
+var root = __dirname;
 
 const schedule = require("node-schedule");
 
@@ -38,11 +38,16 @@ let default_sources = [
 exports.get_all_news = async (req, res) => {
   let news = [];
 
-  // query for news from other sources
   news = news.concat(await fetchGoogleNews(req));
-  news = news.concat(await fetchCDCNews());
 
-  const policies = await News.find();
+  let policies;  
+  if(req.query.country){
+    policies = await News.find({country: req.query.country}).select("-description");
+  }else{
+    news = news.concat(await fetchCDCNews());
+    policies = await News.find({}).select("-description");
+  }  
+  
   news = news.concat(policies);
 
   try {
@@ -144,6 +149,7 @@ async function fetchGovernmentMeasures() {
             location = response.headers.location;
 
             request = https.get(location, function (response) {
+              console.log("Started");
               response.pipe(file).on("finish", function () {
                 console.log("Finished");
                 populateDatabase();
@@ -157,7 +163,10 @@ async function fetchGovernmentMeasures() {
 }
 
 // populate database with data from excel sheet
-async function populateDatabase() {
+async function populateDatabase() {  
+  let week = new Date().setDate(new Date().getDate() - 7);
+  await News.deleteMany({date : { $lt : week}});
+
   var workbook = XLSX.readFile(
     path.join(root, "assets", "government_measures_data.xlsx"),
     { sheetStubs: true, cellDates: true }
@@ -185,7 +194,8 @@ async function populateDatabase() {
           country: currentPolicy.country,
           title: currentPolicy.title,
           description: currentPolicy.description,
-        }))
+        })) &&
+        currentPolicy.date > week
       ) {
         currentPolicy.save();
       }
@@ -266,10 +276,6 @@ function paginateAndFilter(data, req) {
   var page = parseInt(req.query.page) || 1;
   var size = parseInt(req.query.size) || 15;
 
-  if (req.query.country) {
-    data = data.filter((item) => item.country === req.query.country);
-  }
-
   if (req.query.source) {
     data = data.filter((item) =>
       req.query.source.split(",").includes(item.source)
@@ -307,7 +313,6 @@ async function fetchGoogleNews(req) {
       new News({
         title: element.title,
         source: element.source,
-        description: element.description,
         date: element.pubDate,
         country: req.query.country || "Global",
         reference_link: element.link,
@@ -333,7 +338,6 @@ async function fetchCDCNews() {
         new News({
           title: element.title,
           source: "CDC Newsroom",
-          description: element.description,
           date: element.pubDate,
           country: "Global",
           reference_link: element.link,
