@@ -48,7 +48,11 @@ export default class UserSymptomPage extends Component {
         console.log(userIDStore.getState().userId);
         console.log(this.state.user_longitude);
         console.log(this.state.user_latitude);
+<<<<<<< Updated upstream
 
+=======
+        console.log("Token " + userIDStore.getState().userToken);
+>>>>>>> Stashed changes
         fetch("https://sym-track.herokuapp.com/api/user_locations", {
           method: "POST",
           headers: {
@@ -80,7 +84,7 @@ export default class UserSymptomPage extends Component {
   }
 
   fetchData() {
-    this.setState({ userSymptoms: symptomStore.getState(), loading: false });
+    this.setState({ userSymptoms: symptomStore.getState() });
   }
 
   //gets the list of symptoms from database
@@ -98,6 +102,9 @@ export default class UserSymptomPage extends Component {
       .then((json) => {
         // fetching user symptoms from the database is successful and updating local state using redux
         symptomStore.dispatch(symptomActions.addSymptom(json));
+        newThis.setState({
+          loading: false,
+        });
       })
       .catch((error) => {
         console.log(error);
@@ -115,7 +122,7 @@ export default class UserSymptomPage extends Component {
           style={styles.symptoms}
           containerStyle={styles.symptoms}
           titleStyle={styles.symptoms}
-          subtitleStyle={styles.symptoms}
+          subtitleStyle={styles.subtitle}
         />
       );
     });
@@ -146,7 +153,12 @@ export default class UserSymptomPage extends Component {
         />
         {this.state.loading ? (
           <View
-            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+            style={{
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "center",
+              marginTop: 80,
+            }}
           >
             <ActivityIndicator size="large" color="#1976d2" />
           </View>
@@ -169,6 +181,18 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     backgroundColor: "#1976d2",
     color: "#ffffff",
+    flex: 1,
+    fontFamily: "PlayfairDisplay",
+  },
+  subtitle: {
+    borderColor: "#000000",
+    marginBottom: 5,
+    borderRadius: 30,
+    backgroundColor: "#1976d2",
+    color: "#ffffff",
+    flex: 1,
+    fontFamily: "PlayfairDisplay",
+    fontSize: 14,
   },
   emptyCard: {
     marginTop: 80,
