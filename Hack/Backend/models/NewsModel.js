@@ -14,6 +14,11 @@ const newsSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    type: {
+        type: String,
+        required: true,
+        enum: ['News', 'Government Measure'],
+    },
     date: {
         type: Date,
         required: true
@@ -24,6 +29,9 @@ const newsSchema = new mongoose.Schema({
     reference_link: {
         type: String,
     },
+    logo : {
+        type: String,
+    }
 });
 
   

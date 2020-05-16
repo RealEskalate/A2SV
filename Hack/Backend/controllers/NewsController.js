@@ -58,13 +58,28 @@ exports.get_all_news = async (req, res) => {
 };
 
 exports.get_sources = async (req, res) => {
-  let sources = await News.find().distinct("source");
+  let sources = await News.aggregate([
+    { $group: { _id: "$source", reference_link: { $first: "$reference_link" } } },
+  ]);
   let googleNews = await fetchGoogleNews(req);
-  let googleNewsSources = [...new Set(googleNews.map((item) => item.source))];
-  sources = sources.concat(googleNewsSources);
-  sources = default_sources.filter((x) => sources.includes(x));
+  let map = new Map();
+  for (let item of googleNews) {
+      if(!map.has(item.source)){
+          map.set(item.source, true);
+          sources.push({
+              source: item.source,
+              reference_link: item.reference_link,
+          });
+      }
+  }
+  sources = sources.filter((item) => default_sources.includes(item.source))
+                   .map((item) => { return {source: item.source, logo: clearBitLogo(item.reference_link)}});
+
   if(!req.query.country){
-    sources.unshift("CDC Newsroom");
+    sources.unshift({
+      source: "CDC Newsroom",
+      logo: "http://logo.clearbit.com/cdc.gov" 
+    });
   }  
 
   try {
@@ -79,6 +94,7 @@ exports.post_news = async (req, res) => {
   const news = new News({
     title: req.body.title,
     source: req.body.source,
+    type: req.body.type,
     description: req.body.description,
     date: req.body.date,
     country: req.body.country,
@@ -86,6 +102,15 @@ exports.post_news = async (req, res) => {
   });
   try {
     await news.save();
+    await saveAlert(news);
+    res.status(201).send(news);
+  } catch (err) {
+    res.status(500).send(err.toString());
+  }
+};
+
+async function saveAlert(news){
+  try {
     let alert = new Alert({
       _id: mongoose.Types.ObjectId(),
       title: news.title,
@@ -102,23 +127,18 @@ exports.post_news = async (req, res) => {
         user_id: users[i]._id,
         alert_id: alert._id,
       });
-      try {
-        const check = await AlertUser.findOne({
-          user_id: alert_user.user_id,
-          alert_id: alert_user.alert_id,
-        });
-        if (!check) {
-          await alert_user.save();
-        }
-      } catch (err) {
-        console.log(err);
+      const check = await AlertUser.findOne({
+        user_id: alert_user.user_id,
+        alert_id: alert_user.alert_id,
+      });
+      if (!check) {
+        await alert_user.save();
       }
     }
-    res.status(201).send(news);
   } catch (err) {
-    res.status(500).send(err.toString());
+    console.log(err);
   }
-};
+}
 
 // fetch government measures every day
 schedule.scheduleJob("0 0 * * *", function () {
@@ -198,11 +218,13 @@ async function populateDatabase() {
         currentPolicy.date > week
       ) {
         currentPolicy.save();
+        await saveAlert(currentPolicy);
       }
 
       currentPolicy = new News({
         title: " ",
         source: " ",
+        type: "Government Measure",
         description: " ",
         date: new Date(Date.now()),
         country: " ",
@@ -238,37 +260,11 @@ async function populateDatabase() {
       country: currentPolicy.country,
       title: currentPolicy.title,
       description: currentPolicy.description,
-    }))
+    })) &&
+    currentPolicy.date > week
   ) {
     currentPolicy.save();
-    try {
-      let alert = new Alert({
-        _id: mongoose.Types.ObjectId(),
-        title: currentPolicy.title,
-        type: "NEWS",
-        degree: "NORMAL",
-        content: currentPolicy.description,
-        timestamp: currentPolicy.date,
-      });
-      await alert.save();
-      let users = await User.find({ current_country: currentPolicy.country });
-      for (let i = 0; i < users.length; i++) {
-        const alert_user = new AlertUser({
-          _id: mongoose.Types.ObjectId(),
-          user_id: users[i]._id,
-          alert_id: alert._id,
-        });
-        const check = await AlertUser.findOne({
-          user_id: alert_user.user_id,
-          alert_id: alert_user.alert_id,
-        });
-        if (!check) {
-          await alert_user.save();
-        }
-      }
-    } catch (err) {
-      console.log(err);
-    }
+    await saveAlert(currentPolicy);
   }
 }
 
@@ -277,18 +273,24 @@ function paginateAndFilter(data, req) {
   var size = parseInt(req.query.size) || 15;
 
   if (req.query.source) {
-    data = data.filter((item) =>
-      req.query.source.split(",").includes(item.source)
+    data = data.filter((item) => req.query.source.split(",").includes(item.source)
     );
   }
 
   data.sort((a, b) => (a.date < b.date ? 1 : b.date < a.date ? -1 : 0));
 
+  let paginated = data.slice((page - 1) * size, page * size);
+
+  paginated.forEach((item) => {
+    let link = item.reference_link;
+    item.logo = clearBitLogo(link);
+  });
+
   let result = {
     data_count: data.length,
     page_size: size,
     current_page: page,
-    data: data.slice((page - 1) * size, page * size),
+    data: paginated,
   };
 
   return result;
@@ -313,6 +315,7 @@ async function fetchGoogleNews(req) {
       new News({
         title: element.title,
         source: element.source,
+        type: "News",
         date: element.pubDate,
         country: req.query.country || "Global",
         reference_link: element.link,
@@ -338,6 +341,7 @@ async function fetchCDCNews() {
         new News({
           title: element.title,
           source: "CDC Newsroom",
+          type: "News",
           date: element.pubDate,
           country: "Global",
           reference_link: element.link,
@@ -347,4 +351,11 @@ async function fetchCDCNews() {
   });
 
   return news;
+}
+
+function clearBitLogo(link) {
+  let domain = link.split("/")[2] || "";
+  domain = domain.split(".");
+  if (domain.length >= 3) domain.shift();
+  return `https://logo.clearbit.com/${domain.join(".")}`;
 }
