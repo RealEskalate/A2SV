@@ -100,7 +100,7 @@
             <v-fade-transition hide-on-leave>
               <v-skeleton-loader
                 ref="skeleton"
-                type="list-item-avatar,list-item-avatar,list-item-avatar,list-item-avatar,list-item-avatar,list-item-avatar,list-item-avatar"
+                type="list-item-avatar,list-item-avatar,list-item-avatar,list-item-avatar,list-item-avatar"
                 class="mx-auto"
                 v-if="loaders.sources"
               />
@@ -125,6 +125,7 @@
                   <template v-slot:default="{ active, toggle }">
                     <v-list-item-avatar>
                       <v-img
+                        contain
                         :src="source.logo"
                         lazy-src="/img/news/avatar.png"
                       />

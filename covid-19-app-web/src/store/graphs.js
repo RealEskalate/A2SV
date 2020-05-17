@@ -503,8 +503,8 @@ export default {
       state.diseaseCompare = {
         labels: [
           "Confirmed Cases",
-          "Recovered Count",
           "Death Count",
+          "Recovered Count",
           "Affected Countries"
         ],
         datasets: payload

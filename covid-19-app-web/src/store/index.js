@@ -38,14 +38,16 @@ export default new Vuex.Store({
   },
   actions: {
     fillCountriesList({ commit }) {
-      axios.get(`${process.env.VUE_APP_BASE_URL}/api/statistics/countries`).then(
-        response => {
-          commit("setCountriesList", response.data);
-        },
-        error => {
-          console.log(error);
-        }
-      );
+      axios
+        .get(`${process.env.VUE_APP_BASE_URL}/api/statistics/countries`)
+        .then(
+          response => {
+            commit("setCountriesList", response.data);
+          },
+          error => {
+            console.log(error);
+          }
+        );
     },
     setNavState({ commit }, { type }) {
       commit("setNavigationType", type);

@@ -15,7 +15,7 @@
               dense
               @input="fetchData1"
               :color="`rgb(${colors[0][0]}, ${colors[0][1]}, ${colors[0][2]})`"
-              item-color="indigo"
+              item-color="cyan"
             />
           </v-col>
           <v-col class="px-2" cols="12" md="6">
@@ -191,7 +191,7 @@ export default {
       data: null,
       criterion: "Confirmed Cases",
       colors: [
-        [121, 134, 203],
+        [77, 208, 225],
         [240, 98, 146]
       ],
       date_range_1: [this.defaultDate(), this.defaultDate("end")],

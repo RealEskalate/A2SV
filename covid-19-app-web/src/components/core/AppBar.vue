@@ -12,7 +12,7 @@
           contain
           src="/img/brand/blue.png"
           transition="scale-transition"
-          width="130"
+          width="140"
         />
       </router-link>
 
