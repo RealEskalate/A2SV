@@ -70,9 +70,9 @@
 </template>
 
 <script>
-  import {mdiTelegram, mdiWeb, mdiYoutube} from "@mdi/js";
+import { mdiTelegram, mdiWeb, mdiYoutube } from "@mdi/js";
 
-  export default {
+export default {
   data: () => ({
     icons: [
       [mdiYoutube, "/youtube"],
