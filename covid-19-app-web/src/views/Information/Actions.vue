@@ -69,7 +69,7 @@
         <v-fade-transition hide-on-leave>
           <v-skeleton-loader
             ref="skeleton"
-            type="image"
+            type="image,image"
             class="mx-mb-12"
             v-if="loaders.actions"
           />

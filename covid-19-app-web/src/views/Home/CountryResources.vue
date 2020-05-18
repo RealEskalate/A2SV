@@ -38,7 +38,7 @@
         </v-list-item>
       </v-list-item-group>
     </v-list>
-    <v-dialog v-model="dialog" width="400">
+    <v-dialog v-model="dialog" width="400" v-if="description">
       <v-card class="px-2" shaped style="overflow: hidden">
         <v-icon
           style="position: absolute; right: 0; top: 0"
@@ -47,12 +47,18 @@
         >
           {{ mdiClose }}
         </v-icon>
-        <v-card-title class="headline mt-2" v-text="description.title" />
+        <v-card-title
+          class="headline mt-2"
+          v-text="description.title"
+        />
         <v-card-text v-text="description.content" />
         <v-card-text>
           <v-list dense>
             <h4 v-text="'Metrics'" />
-            <v-list-item :key="i" v-for="(re, i) in description.resources">
+            <v-list-item
+              :key="i"
+              v-for="(re, i) in description.resources"
+            >
               <p>
                 <span v-text="re.name + ':  '" />
                 <span
@@ -78,15 +84,7 @@ export default {
     return {
       mdiClose,
       mdiHelpCircleOutline,
-      dialog: false,
-      description: {
-        title: "Available Resources - " + this.country.name,
-        content: "describing what they are doing",
-        resources: [
-          { name: "Hospital Beds", explanation: "this explanation" },
-          { name: "this other resource", explanation: "this other explanation" }
-        ]
-      }
+      dialog: false
     };
   },
   mounted() {
@@ -97,16 +95,23 @@ export default {
       handler() {
         this.fetchCountryResources();
       }
-    },
-    countryResources: {
-      deep: true,
-      handler() {
-        this.fetchCountryResources();
-      }
     }
   },
   computed: {
-    countryResources: () => store.getters.getCountryResources
+    countryResources: () => store.getters.getCountryResources,
+    descriptions: () => store.getters.getGraphDescriptions,
+    description() {
+      if (this.descriptions) {
+        return this.descriptions["Country Resources"];
+      } else {
+        return {
+          title: "",
+          description: "",
+          fields: [],
+          criteria: []
+        };
+      }
+    }
   },
   methods: {
     fetchCountryResources() {

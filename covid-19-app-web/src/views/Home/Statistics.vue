@@ -5,7 +5,7 @@
         <v-col>
           <h3
             class="display-1 font-weight-thin mb-5"
-            v-text="'Covid-19 Statistics'"
+            v-text="'Covid-19 Global Statistics'"
           />
         </v-col>
       </v-row>
@@ -59,18 +59,14 @@
                   mode="counts"
                   y_label="People"
                   :tab_index="selectedGraph"
-                  :short_description="
-                    graphDescriptions[graphNames[selectedGraph]].description
-                  "
+                  :short_description="selectedDescription.description"
                 />
               </v-tab-item>
               <v-tab-item style="min-height: 700px">
                 <daily-display
                   y_label="People"
                   :tab_index="selectedGraph"
-                  :short_description="
-                    graphDescriptions[graphNames[selectedGraph]].description
-                  "
+                  :short_description="selectedDescription.description"
                 />
               </v-tab-item>
               <v-tab-item style="min-height: 700px">
@@ -78,26 +74,20 @@
                   mode="rates"
                   y_label="Percent"
                   :tab_index="selectedGraph"
-                  :short_description="
-                    graphDescriptions[graphNames[selectedGraph]].description
-                  "
+                  :short_description="selectedDescription.description"
                 />
               </v-tab-item>
               <v-tab-item style="min-height: 700px">
                 <country-compare
                   x_axis_type="category"
                   :tab_index="selectedGraph"
-                  :short_description="
-                    graphDescriptions[graphNames[selectedGraph]].description
-                  "
+                  :short_description="selectedDescription.description"
                 />
               </v-tab-item>
               <v-tab-item style="min-height: 700px">
                 <disease-compare
                   :tab_index="selectedGraph"
-                  :short_description="
-                    graphDescriptions[graphNames[selectedGraph]].description
-                  "
+                  :short_description="selectedDescription.description"
                   y_label="Logarithmic Value"
                   y_axis_type="logarithmic"
                   x_axis_type="category"
@@ -118,24 +108,20 @@
           </v-icon>
           <v-card-title
             class="headline mt-2"
-            v-text="graphDescriptions[graphNames[selectedGraph]].title"
+            v-text="selectedDescription.title"
           />
-          <v-card-text
-            v-text="graphDescriptions[graphNames[selectedGraph]].description"
-          />
+          <v-card-text v-text="selectedDescription.description" />
           <v-card-text
             v-if="
-              graphDescriptions[graphNames[selectedGraph]].fields.length > 0 ||
-                graphDescriptions[graphNames[selectedGraph]].criteria.length > 0
+              selectedDescription.fields.length > 0 ||
+                selectedDescription.criteria.length > 0
             "
           >
             <v-list dense>
               <h4 v-text="'Fields'" />
               <v-list-item
                 :key="i"
-                v-for="(field, i) in graphDescriptions[
-                  graphNames[selectedGraph]
-                ].fields"
+                v-for="(field, i) in selectedDescription.fields"
               >
                 <p>
                   <span v-text="field.name + ':  '" />
@@ -150,8 +136,7 @@
               <h4 v-text="'Metrics'" />
               <v-list-item
                 :key="i"
-                v-for="(cr, i) in graphDescriptions[graphNames[selectedGraph]]
-                  .criteria"
+                v-for="(cr, i) in selectedDescription.criteria"
               >
                 <p>
                   <span v-text="cr.name + ':  '" />
@@ -213,7 +198,19 @@ export default {
     };
   },
   computed: {
-    graphDescriptions: () => store.getters.getGraphDescriptions
+    graphDescriptions: () => store.getters.getGraphDescriptions,
+    selectedDescription() {
+      if (this.graphDescriptions) {
+        return this.graphDescriptions[this.graphNames[this.selectedGraph]];
+      } else {
+        return {
+          title: "",
+          description: "",
+          fields: [],
+          criteria: []
+        };
+      }
+    }
   }
 };
 </script>

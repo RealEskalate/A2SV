@@ -10,6 +10,7 @@
       <v-row>
         <v-col cols="12" md="7" class="pl-md-12 py-md-9 px-8 py-5">
           <img-svg
+            style="max-height: 600px"
             class="col-12 py-md-12 px-md-12 px-5 py-3 grey lighten-4 v-card--shaped shadow-in"
           />
         </v-col>

@@ -1,6 +1,6 @@
 <!--suppress HtmlUnknownTarget -->
 <template>
-  <div class="information">
+  <v-container class="information">
     <section class="mb-12 text-justify">
       <v-container>
         <v-row>
@@ -121,7 +121,7 @@
     <section class="my-12 text-justify">
       <learning-paths class="my-12" />
     </section>
-  </div>
+  </v-container>
 </template>
 
 <script>
