@@ -2,7 +2,9 @@
   <v-app>
     <app-bar />
     <v-content class="px-md-0 px-3">
-      <router-view />
+      <v-fade-transition>
+        <router-view />
+      </v-fade-transition>
       <vue-progress-bar />
     </v-content>
     <app-footer />

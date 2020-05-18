@@ -11,8 +11,8 @@
           class="shrink ml-3"
           contain
           src="/img/brand/blue.png"
-          transition="scale-transition"
-          width="140"
+          style="transition: width 0.3s"
+          :width="brandWidth"
         />
       </router-link>
 
@@ -147,6 +147,9 @@ export default {
   computed: {
     raise() {
       return this.locationY > 50;
+    },
+    brandWidth() {
+      return this.locationY > 50 ? 130 : 140;
     },
     navOption() {
       return this.navType;

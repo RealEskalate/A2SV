@@ -235,230 +235,7 @@ export default {
       Zimbabwe: null
     },
     diseaseCompare: null,
-    graphDescriptions: {
-      "Total Counts": {
-        title: "Total Counts",
-        description:
-          "This graph represents the number of daily confirmed cases of the latest pandemic, COVID-19. The vertical line (y-axis) represents the daily confirmed cases and the horizontal line (x-axis) represents the date. The line represents the criteria selected.",
-        fields: [
-          {
-            name: "Country",
-            explanation: "Searchable list of countries"
-          },
-          {
-            name: "Date Range",
-            explanation:
-              "Specific start date and finish date for calculating the counts"
-          }
-        ],
-        criteria: [
-          {
-            name: "Test Count",
-            explanation:
-              "The total  number of tests conducted for each day in the selected range"
-          },
-          {
-            name: "Confirmed Cases",
-            explanation:
-              "The total number of confirmed cases  for each day in the selected range"
-          },
-          {
-            name: "Death Count ",
-            explanation:
-              "The total number of death cases  for each day in the selected range"
-          },
-          {
-            name: "Recovery Count",
-            explanation:
-              "The total number of reported recoveries  for each day in the selected range"
-          },
-          {
-            name: "Active Cases",
-            explanation:
-              "The number of cases still active on the day for each day in the selected range"
-          }
-        ]
-      },
-      "Daily Counts": {
-        title: "Daily Counts",
-        description:
-          "This graph represents the number of daily confirmed cases of the latest pandemic, COVID-19. The vertical line (y-axis) represents the daily confirmed cases and the horizontal line (x-axis) represents the date. The line represents the criteria selected.",
-        fields: [
-          {
-            name: "Country",
-            explanation: "Searchable list of countries"
-          },
-          {
-            name: "Date Range",
-            explanation:
-              "specific start to finish date for calculating the counts"
-          },
-          {
-            name: "Criteria",
-            explanation: " List of metrics to view "
-          }
-        ],
-        criteria: [
-          {
-            name: "Daily Test",
-            explanation:
-              "The number of tested people for each day in the selected rangey"
-          },
-          {
-            name: "Daily Confirmed Cases",
-            explanation:
-              "The number of confirmed cases for each day in the selected range"
-          },
-          {
-            name: "Daily Death ",
-            explanation:
-              "The number of death cases for each day in the selected range"
-          },
-          {
-            name: "Daily Recovery",
-            explanation:
-              "the number of recovered patients for each day in the selected range"
-          }
-        ]
-      },
-      "View Rates": {
-        title: "View Rates",
-        description:
-          "This graph represents the recovery rate, active rate, and death rate of the latest pandemic, COVID-19 of either any selected country or of the entire world. The vertical line (y-axis) represents the rate of increase and the horizontal line (x-axis) represents the date. The line represents the criteria selected.",
-        fields: [
-          {
-            name: "Country",
-            explanation: "Searchable list of countries"
-          },
-          {
-            name: "Date Range",
-            explanation:
-              "Specific start to finish date for calculating the counts"
-          }
-        ],
-        criteria: [
-          {
-            name: "Positive Rate ",
-            explanation:
-              "The percentage of positive counts from the test counts of all days in the selected range"
-          },
-          {
-            name: "Recovery Rate",
-            explanation:
-              "The percentage of recovered counts from the confirmed test counts of all days in the selected range"
-          },
-          {
-            name: "Active Rate",
-            explanation:
-              "The percentage of active patient counts from the confirmed test counts of all days in the selected range"
-          },
-          {
-            name: "Death Rate",
-            explanation:
-              "The percentage of  death counts from the test counts of all days in the selected range"
-          }
-        ]
-      },
-      "Compare Countries": {
-        title: "Compare Countries",
-        description:
-          "This graph represents the comparison of two selected countries regarding the latest pandemic, COVID-19 of either any selected country or of the entire world based on factors including test counts, confirmed cases, death counts, recovery counts, active cases, and others. The vertical line (y-axis) represents the rate of increase and the horizontal line (x-axis) represents the date. The two lines represent the criteria selected.",
-        fields: [
-          {
-            name: "Country 1 & 2",
-            explanation: " An option to select two countries to compare"
-          },
-          {
-            name: "Date Range 1 & 2",
-            explanation:
-              "Specific start to finish date in which we see the data for the respective country"
-          },
-          {
-            name: "Common Criteria",
-            explanation: "Mutual criteria to compare the chosen countries"
-          }
-        ],
-        criteria: [
-          {
-            name: "Test Count",
-            explanation:
-              "The total  number of tests conducted  for each day in the selected range"
-          },
-          {
-            name: "Recovery Count",
-            explanation:
-              "The total number of reported recoveries  for each day in the selected range"
-          },
-          {
-            name: "Confirmed Cases",
-            explanation:
-              "The total number of confirmed cases  for each day in the selected range"
-          },
-          {
-            name: "Death Count ",
-            explanation:
-              "The total number of death cases  for each day in the selected range"
-          },
-          {
-            name: "Active Cases",
-            explanation:
-              "The number of cases still active on the day for each day in the selected range"
-          },
-          {
-            name: "Positive Rate ",
-            explanation:
-              "The percentage of positive counts from the test counts of all days in the selected range"
-          },
-          {
-            name: "Recovery Rate",
-            explanation:
-              "The percentage of recovered counts from the confirmed test counts of all days in the selected range"
-          },
-          {
-            name: "Active Rate",
-            explanation:
-              "The percentage of active patient counts from the confirmed test counts of all days in the selected range"
-          },
-          {
-            name: "Death Rate",
-            explanation:
-              "The percentage of death counts from the test counts of all days in the selected range"
-          }
-        ]
-      },
-      "Compare Similar Diseases": {
-        title: "Compare Similar Diseases",
-        description:
-          "This graph represents the comparison of the latest pandemic, COVID-19 with other similar epidemics of the entire world based on factors including confirmed cases, death counts, recovery counts, active cases, and others. The vertical line (y-axis) represents the rate of increase and the horizontal line (x-axis) represents the date. The two lines represent the criteria selected.",
-        fields: [],
-        criteria: [
-          {
-            name: "Confirmed  Cases",
-            explanation: "The overall number of confirmed cases "
-          },
-          {
-            name: "Death Count",
-            explanation: "The overall number of death cases"
-          },
-          {
-            name: "Recovery Count",
-            explanation: "The overall number of recovery cases"
-          },
-          {
-            name: "Affected Countries",
-            explanation: "The overall number of countries affected"
-          }
-        ]
-      },
-      "Country Resources": {
-        title: "Available Resources",
-        content: "describing what they are doing",
-        resources: [
-          { name: "Hospital Beds", explanation: "this explanation" },
-          { name: "this other resource", explanation: "this other explanation" }
-        ]
-      }
-    }
+    graphDescriptions: null
   },
   getters: {
     getDisplayCounts(state) {
@@ -510,8 +287,8 @@ export default {
         datasets: payload
       };
     },
-    setGraphDescriptions(state, { key, payload }) {
-      state.graphDescriptions[key] = payload;
+    setGraphDescriptions(state, payload) {
+      state.graphDescriptions = payload;
     }
   },
   actions: {
@@ -663,6 +440,18 @@ export default {
             });
           }
           commit("setCountryResources", { key: country, payload: data });
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    setGraphDescriptions({ commit }) {
+      axios
+        .get(
+          `${process.env.VUE_APP_BASE_URL}/api/resources/statistics-description`
+        )
+        .then(response => {
+          commit("setGraphDescriptions", response.data);
         })
         .catch(error => {
           console.log(error);

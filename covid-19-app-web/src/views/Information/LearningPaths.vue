@@ -18,14 +18,22 @@
           :items="age_groups"
           label="Learning Path for"
           v-model="selected_age"
+          @input="fetchLearningPaths"
         />
       </v-col>
     </v-row>
     <v-row>
       <v-col cols="12" class="overflow-auto">
-        <v-simple-table fixed-header style="min-width: 800px">
-          <template v-slot:default>
-            <thead>
+        <v-fade-transition hide-on-leave>
+          <v-skeleton-loader
+            v-if="loaders.learningPaths"
+            ref="skeleton"
+            type="table"
+            class="mx-mb-12"
+          />
+          <v-simple-table v-else fixed-header style="min-width: 800px">
+            <template v-slot:default>
+              <thead>
               <tr>
                 <th
                   class="text-left primary--text text--darken-1"
@@ -39,8 +47,8 @@
                 <th class="text-left primary--text text--darken-1">Duration</th>
                 <th class="text-left primary--text text--darken-1">How?</th>
               </tr>
-            </thead>
-            <tbody>
+              </thead>
+              <tbody>
               <tr :key="i" v-for="(path, i) in learningPaths[selected_age]">
                 <td
                   class="text-left py-2 primary--text text--darken-1"
@@ -65,9 +73,10 @@
                   />
                 </td>
               </tr>
-            </tbody>
-          </template>
-        </v-simple-table>
+              </tbody>
+            </template>
+          </v-simple-table>
+        </v-fade-transition>
       </v-col>
     </v-row>
   </v-container>
@@ -83,8 +92,21 @@ export default {
       age_groups: ["Kids", "Teens", "Adults", "Seniors"]
     };
   },
+  methods: {
+    fetchLearningPaths() {
+      if (!this.learningPaths || !this.learningPaths[this.selected_age]) {
+        store.dispatch("setLearningPaths", {
+          age_group: this.selected_age
+        });
+      }
+    },
+  },
+  created() {
+    this.fetchLearningPaths()
+  },
   computed: {
-    learningPaths: () => store.getters.getLearningPaths
+    learningPaths: () => store.getters.getLearningPaths,
+    loaders: () => store.getters.getLearnLoaders
   }
 };
 </script>
