@@ -39,7 +39,7 @@
                     <v-list-item-avatar height="50" width="50">
                       <v-img
                         contain
-                        :src="clearBitLogo(item.reference_link)"
+                        :src="item.logo"
                         lazy-src="/img/news/avatar.png"
                       />
                     </v-list-item-avatar>
@@ -49,7 +49,7 @@
                       <h4 class="font-weight-medium" v-html="item.title" />
                       <div class="my-1">
                         <v-list-item-subtitle
-                          v-text="getTime(item.date)"
+                          v-text="formatTime(item.date)"
                           style="display:inline"
                         />
                         <v-btn
@@ -100,7 +100,7 @@
             <v-fade-transition hide-on-leave>
               <v-skeleton-loader
                 ref="skeleton"
-                type="list-item-avatar,list-item-avatar,list-item-avatar,list-item-avatar,list-item-avatar,list-item-avatar,list-item-avatar"
+                type="list-item-avatar,list-item-avatar,list-item-avatar,list-item-avatar,list-item-avatar"
                 class="mx-auto"
                 v-if="loaders.sources"
               />
@@ -120,18 +120,19 @@
                   :key="i"
                   class="px-5"
                   v-for="(source, i) in sourceList"
-                  :value="source"
+                  :value="source.source"
                 >
                   <template v-slot:default="{ active, toggle }">
                     <v-list-item-avatar>
                       <v-img
-                        :src="imageUrl(source)"
-                        :lazy-src="imageUrl(source)"
+                        contain
+                        :src="source.logo"
+                        lazy-src="/img/news/avatar.png"
                       />
                     </v-list-item-avatar>
 
                     <v-list-item-content>
-                      <v-list-item-title v-text="source" />
+                      <v-list-item-title v-text="source.source" />
                     </v-list-item-content>
 
                     <v-list-item-action>
@@ -186,38 +187,14 @@ export default {
         sources: this.sources
       });
     },
-    clearBitLogo(link) {
-      return `https://logo.clearbit.com/${this.getPageUrl(link)}`;
-    },
     getPageUrl(link) {
       let domain = link.split("/")[2] || "";
       domain = domain.split(".");
       if (domain.length >= 3) domain.shift();
       return domain.join(".");
     },
-    getTime(postDate) {
+    formatTime(postDate) {
       return moment(String(postDate || "")).format("hh:mm A - MMM DD, YYYY");
-    },
-    imageUrl(source) {
-      const newsImgPath = "/img/news";
-      switch (source) {
-        case "CDC Newsroom":
-          return `${newsImgPath}/cdc.png`;
-        case "CNN":
-          return `${newsImgPath}/cnn.png`;
-        case "BBC News":
-          return `${newsImgPath}/bbc.png`;
-        case "NPR":
-          return `${newsImgPath}/npr.png`;
-        case "World Health Organization":
-          return `${newsImgPath}/who.png`;
-        case "The Guardian":
-          return `${newsImgPath}/guardian.png`;
-        case "Global News":
-          return `${newsImgPath}/global-news.png`;
-        default:
-          return `${newsImgPath}/avatar.png`;
-      }
     }
   },
   watch: {

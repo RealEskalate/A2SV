@@ -16,6 +16,11 @@ Vue.use(VueProgressBar, {
 
 Vue.config.productionTip = false;
 Vue.mixin({
+  data: () => {
+    return {
+      server_url: process.env.VUE_APP_BASE_URL
+    };
+  },
   methods: {
     htmlToText(htmlString) {
       let p = document.createElement("div");

@@ -82,9 +82,7 @@
               :key="'actions_' + action_i"
               v-for="(action, action_i) in actions"
             >
-              <v-icon
-                      class="white--text mb-7"
-                      style="font-size: 4em">
+              <v-icon class="white--text mb-7" style="font-size: 4em">
                 {{ action.icon }}
               </v-icon>
               <h1>{{ action.title }}</h1>
@@ -135,10 +133,15 @@
 </template>
 
 <script>
-  import axios from "axios";
-  import {mdiCloudDownloadOutline, mdiSearchWeb, mdiSend, mdiYoutube} from "@mdi/js";
+import axios from "axios";
+import {
+  mdiCloudDownloadOutline,
+  mdiSearchWeb,
+  mdiSend,
+  mdiYoutube
+} from "@mdi/js";
 
-  export default {
+export default {
   data: () => {
     return {
       mdiSend,

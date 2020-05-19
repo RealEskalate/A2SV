@@ -56,12 +56,12 @@ exports.get_all_locations_with_symptoms = async (req, res) => {
   const locations = await Location.find(
     {
       longitude: {
-        $gte:new Number(long) - 0.3,
-        $lte:new Number(long) + 0.3
+        $gte:new Number(long) - 0.1,
+        $lte:new Number(long) + 0.1
       },
       latitude: {
-        $gte:new Number(lat) - 0.2,
-        $lte:new Number(lat) + 0.2
+        $gte:new Number(lat) - 0.1,
+        $lte:new Number(lat) + 0.1
       }
     }
   );  
@@ -71,7 +71,7 @@ exports.get_all_locations_with_symptoms = async (req, res) => {
     if(geolib.getDistance(
       { latitude: lat, longitude: long },
       { latitude: location.latitude, longitude: location.longitude }
-      )<6213.712){
+      )<150.712){
         nearby_locations.push(location._id)
       }
   }
@@ -86,8 +86,9 @@ exports.get_all_locations_with_symptoms = async (req, res) => {
   for (let i = 0; i < LocationUsers.length; i++) {
     let userAtLocation = LocationUsers[i];
     let user = userAtLocation.user_id;
-    let location = userAtLocation.location_id;    
-    if(dict[`${user._id}`] && dict[`${user._id}`].TTL<userAtLocation.TTL){
+    let location = userAtLocation.location_id;     
+       
+    if(!user || (dict[`${user._id}`] && dict[`${user._id}`].TTL<userAtLocation.TTL)){
       continue
     }
     let symptoms = [];
@@ -109,7 +110,7 @@ exports.get_all_locations_with_symptoms = async (req, res) => {
       TTL: userAtLocation.TTL
     };
     //Since we only need one user at a point
-    break;
+    // break;
   }
   let result = []
   Object.keys(dict).forEach((item)=>{

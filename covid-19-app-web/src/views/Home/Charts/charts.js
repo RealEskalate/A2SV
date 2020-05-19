@@ -234,7 +234,7 @@ export const ChartMixin = {
           { label: "Active Cases", color: [176, 190, 197] }
         ],
         daily: [
-          { label: "Daily Test", color: [121, 134, 203] },
+          // { label: "Daily Test", color: [121, 134, 203] },
           { label: "Daily Confirmed", color: [255, 213, 79] },
           { label: "Daily Deaths", color: [240, 98, 146] },
           { label: "Daily Recovery", color: [220, 231, 117] }

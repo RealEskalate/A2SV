@@ -8,7 +8,6 @@ const converter = {
   "Recovery Count": "Recovered",
   "Active Cases": "Active",
 
-  "Daily Test": "Test",
   "Daily Confirmed": "Confirmed",
   "Daily Deaths": "Deaths",
   "Daily Recovery": "Recovered",
@@ -235,7 +234,8 @@ export default {
       Zambia: null,
       Zimbabwe: null
     },
-    diseaseCompare: null
+    diseaseCompare: null,
+    graphDescriptions: null
   },
   getters: {
     getDisplayCounts(state) {
@@ -255,6 +255,9 @@ export default {
     },
     getDiseaseCompare(state) {
       return state.diseaseCompare;
+    },
+    getGraphDescriptions(state) {
+      return state.graphDescriptions;
     }
   },
   mutations: {
@@ -277,12 +280,15 @@ export default {
       state.diseaseCompare = {
         labels: [
           "Confirmed Cases",
-          "Recovered Count",
           "Death Count",
+          "Recovered Count",
           "Affected Countries"
         ],
         datasets: payload
       };
+    },
+    setGraphDescriptions(state, payload) {
+      state.graphDescriptions = payload;
     }
   },
   actions: {
@@ -295,7 +301,7 @@ export default {
         let cr = criteria[i];
         commit("incrementGraphLoaders", mode);
         axios
-          .get(`${process.env.VUE_APP_BASE_URL}/statistics`, {
+          .get(`${process.env.VUE_APP_BASE_URL}/api/statistics`, {
             params: {
               criteria: converter[cr.label],
               country: country,
@@ -328,7 +334,7 @@ export default {
       commit("resetGraphLoaders", "daily");
       commit("incrementGraphLoaders", "daily");
       axios
-        .get(`${process.env.VUE_APP_BASE_URL}/statistics`, {
+        .get(`${process.env.VUE_APP_BASE_URL}/api/statistics`, {
           params: {
             criteria: converter[criteria],
             country: country,
@@ -353,7 +359,7 @@ export default {
     ) {
       commit("incrementGraphLoaders", "countryCompare");
       axios
-        .get(`${process.env.VUE_APP_BASE_URL}/statistics`, {
+        .get(`${process.env.VUE_APP_BASE_URL}/api/statistics`, {
           params: {
             criteria: converter[criteria],
             country: country,
@@ -390,7 +396,7 @@ export default {
       commit("resetGraphLoaders", "diseaseCompare");
       commit("incrementGraphLoaders", "diseaseCompare");
       axios
-        .get(`${process.env.VUE_APP_BASE_URL}/diseases`)
+        .get(`${process.env.VUE_APP_BASE_URL}/api/diseases`)
         .then(response => {
           let collection = [];
           response.data.forEach(function(load) {
@@ -417,7 +423,7 @@ export default {
     },
     setCountryResources({ commit }, { country }) {
       axios
-        .get(`${process.env.VUE_APP_BASE_URL}/publicResources/${country}`)
+        .get(`${process.env.VUE_APP_BASE_URL}/api/publicResources/${country}`)
         .then(response => {
           let data = [];
           for (let i in response.data) {
@@ -434,6 +440,18 @@ export default {
             });
           }
           commit("setCountryResources", { key: country, payload: data });
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    setGraphDescriptions({ commit }) {
+      axios
+        .get(
+          `${process.env.VUE_APP_BASE_URL}/api/resources/statistics-description`
+        )
+        .then(response => {
+          commit("setGraphDescriptions", response.data);
         })
         .catch(error => {
           console.log(error);
