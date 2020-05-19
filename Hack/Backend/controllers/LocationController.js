@@ -5,7 +5,7 @@ const LocationUserModels = require("./../models/LocationUserModel");
 const LocationUser = LocationUserModels.LocationUser;
 const SymptomUserModel = require("./../models/SymptomUser");
 const SymptomUser = SymptomUserModel.SymptomUser;
-const { DemoSymptomUser } = require("./../models/DemoSymptomUserModel");
+const DemoSymptomUser = SymptomUserModel.DemoSymptomUser;
 const { Symptom } = require("./../models/Symptom");
 const UserModels = require("./../models/UserModel");
 const User = UserModels.User;
@@ -135,8 +135,7 @@ exports.post_location = async (req, res) => {
     return res.status(500).send("Coordinates not given");
   }
   const check = await Location.findOne({
-    longitude: { $eq: req.body.longitude },
-    latitude: { $eq: req.body.latitude },
+    "location.coordinates": [req.body.longitude, req.body.latitude],
   });
   if (check) {
     res.send(check);
@@ -144,8 +143,10 @@ exports.post_location = async (req, res) => {
   else {
     let location = new Location({
       _id: mongoose.Types.ObjectId(),
-      longitude: req.body.longitude,
-      latitude: req.body.latitude,
+      location: {
+        type: "Point",
+        coordinates: [req.body.longitude, req.body.latitude],
+      },
       place_name: req.body.place_name,
     });
     try {
@@ -153,9 +154,9 @@ exports.post_location = async (req, res) => {
         .then(response => {
           if (response.data) {
             if (response.data.features && response.data.features.length>0) {
-              location.longitude = response.data.features[0].center[0];
-              location.latitude = response.data.features[0].center[1];
-              location.place_name = response.data.features[0].text;
+              location.location.longitude = response.data.features[0].center[0];
+              location.location.latitude = response.data.features[0].center[1];
+              location.location.place_name = response.data.features[0].text;
             }
           }
           return location;
@@ -196,8 +197,7 @@ exports.get_location_by_coordinates = async (req, res) => {
   }
   try {
     const locations = await Location.find({
-      latitude: { $eq: req.params.latitude },
-      longitude: { $eq: req.params.longitude },
+      "location.coordinates": [req.body.longitude, req.body.latitude],
     });
     if(!locations || locations.length<1){
       return res.status(500).send("Location not found with the given coordinates");
@@ -215,7 +215,9 @@ exports.update_location = async (req, res) => {
       return res.status(500).send("Location doesnot exist");      
     }
     location.set(req.body);
-    let check = await Location.findOne({latitude: location.latitude, longitude: location.longitude});
+    let check = await Location.findOne({
+      "location.coordinates": [location.location.longitude, location.location.latitude],
+    });
     if(!check){
       await location.save();
       return res.send(location);
