@@ -68,6 +68,7 @@ exports.post_location_user = async (req, res) => {
   let TTL = req.body.TTL;
 
   const location_user = new LocationUser({
+    _id: mongoose.Types.ObjectId(),
     user_id,
     location_id,
     TTL,
@@ -95,7 +96,10 @@ exports.post_location_user = async (req, res) => {
           console.log(error);
         });
       user.set({
-        current_country: country
+        current_country: country,
+        latest_location: location_id,
+        latest_location_user: location_user._id,
+        expiresAt: new Date(Date.now() + Number(TTL))
       });
       await user.save();
     }
