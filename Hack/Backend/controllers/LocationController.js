@@ -154,8 +154,8 @@ exports.post_location = async (req, res) => {
         .then(response => {
           if (response.data) {
             if (response.data.features && response.data.features.length>0) {
-              location.location.longitude = response.data.features[0].center[0];
-              location.location.latitude = response.data.features[0].center[1];
+              location.location.coordinates[0] = response.data.features[0].center[0];
+              location.location.coordinates[1] = response.data.features[0].center[1];
               location.location.place_name = response.data.features[0].text;
             }
           }
@@ -197,7 +197,7 @@ exports.get_location_by_coordinates = async (req, res) => {
   }
   try {
     const locations = await Location.find({
-      "location.coordinates": [req.body.longitude, req.body.latitude],
+      "location.coordinates": [req.params.longitude, req.params.latitude],
     });
     if(!locations || locations.length<1){
       return res.status(500).send("Location not found with the given coordinates");

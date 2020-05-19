@@ -3,9 +3,9 @@ process.env.NODE_ENV = "test";
 let chai = require("chai");
 let chaiHttp = require("chai-http");
 let server = require("../index");
-let Location = require("../models/LocationModel");
+let {Location} = require("../models/LocationModel");
 let {User} = require("../models/UserModel");
-let LocationUser = require("../models/LocationUserModel");
+let {LocationUser} = require("../models/LocationUserModel");
 let mongoose = require("mongoose");
 const { expect } = chai;
 chai.use(chaiHttp);
@@ -239,8 +239,10 @@ describe("GET /api/user_locations/:id", () => {
       });
       location = new Location({
         _id: mongoose.Types.ObjectId(),
-        longitude: 10,
-        latitude: 10,
+        location: {
+          type: "Point",
+          coordinates: [10, 10],
+        },
         place_name: "Random Non Sequitor",
       });
       newUser = new User({
@@ -361,8 +363,10 @@ describe("GET /api/user_locations/:id", () => {
       });
       location = new Location({
         _id: mongoose.Types.ObjectId(),
-        longitude: 10,
-        latitude: 10,
+        location: {
+          type: "Point",
+          coordinates: [10, 10],
+        },
         place_name: "ABCD"
       });
       await location_user.save();
