@@ -18,8 +18,7 @@ exports.post_location_user = async (req, res) => {
   let longitude = req.body.longitude;
 
   const check = await Location.findOne({
-    longitude: longitude,
-    latitude: latitude
+    "location.coordinates": [longitude, latitude],
   });
   let location_id;
   if (check) {
@@ -50,7 +49,7 @@ exports.post_location_user = async (req, res) => {
           console.log(error);
         });
       const check_2 = await Location.findOne({
-        "location.coordinates": [location.location.longitude, location.location.latitude],
+        "location.coordinates": location.location.coordinates,
       });
       if (check_2) {
         location_id = check_2._id
