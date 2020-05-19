@@ -3,9 +3,9 @@ process.env.NODE_ENV = "test";
 let chai = require("chai");
 let chaiHttp = require("chai-http");
 let server = require("../index");
-let Location = require("../models/LocationModel");
+let {Location} = require("../models/LocationModel");
 let {User} = require("../models/UserModel");
-let LocationUser = require("../models/LocationUserModel");
+let {LocationUser} = require("../models/LocationUserModel");
 let mongoose = require("mongoose");
 const { expect } = chai;
 chai.use(chaiHttp);
@@ -33,8 +33,7 @@ describe("Location Users API", () => {
           "Authorization",
           "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6Ik1BTEUiLCJhZ2VfZ3JvdXAiOiI-OTAiLCJfaWQiOiI1ZWI3ZjMwYzNlMmE4ODRhYzgzYWE3NjAiLCJ1c2VybmFtZSI6ImF1dGh0ZXN0IiwicGFzc3dvcmQiOiIkMmEkMTAkYjJmYTZHTTJMTDlLVlJ4UzhVVEkzdS5SQ2JjUWw0WXc5OExaWVVHUHRnUVdBdVFGOERqNXUiLCJfX3YiOjAsImN1cnJlbnRfY291bnRyeSI6IiJ9LCJpYXQiOjE1ODkxODc5Mjd9.ZJQHbK7cVmDOf87uuhUttlnyAFYe5KA0Afnq0iBptF0"
         );
-      expect(response).to.have.status(200);
-      expect(response.body).to.be.a('array');
+      expect(response).to.have.status(404);
     });
   });
 
@@ -239,8 +238,10 @@ describe("GET /api/user_locations/:id", () => {
       });
       location = new Location({
         _id: mongoose.Types.ObjectId(),
-        longitude: 10,
-        latitude: 10,
+        location: {
+          type: "Point",
+          coordinates: [10, 10],
+        },
         place_name: "Random Non Sequitor",
       });
       newUser = new User({
@@ -310,6 +311,8 @@ describe("GET /api/user_locations/:id", () => {
           user_id: newUser._id,
           TTL:10000
         });
+      console.log(response.error);
+      
       expect(response).to.have.status(200);
       expect(response.body).to.be.a('object');
       expect(response.body).to.have.property('location_id');
@@ -361,8 +364,10 @@ describe("GET /api/user_locations/:id", () => {
       });
       location = new Location({
         _id: mongoose.Types.ObjectId(),
-        longitude: 10,
-        latitude: 10,
+        location: {
+          type: "Point",
+          coordinates: [10, 10],
+        },
         place_name: "ABCD"
       });
       await location_user.save();

@@ -1,6 +1,6 @@
 const SymptomUserModel = require("./../models/SymptomUser");
 const SymptomUser = SymptomUserModel.SymptomUser;
-const {DemoSymptomUser} = require('./../models/DemoSymptomUserModel');
+const DemoSymptomUser = SymptomUserModel.DemoSymptomUser;
 const { Symptom, validateSymptom } = require("../models/Symptom");
 const UserModels = require("./../models/UserModel");
 const User = UserModels.User;

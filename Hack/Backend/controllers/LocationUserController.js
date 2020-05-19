@@ -18,8 +18,7 @@ exports.post_location_user = async (req, res) => {
   let longitude = req.body.longitude;
 
   const check = await Location.findOne({
-    longitude: longitude,
-    latitude: latitude
+    "location.coordinates": [longitude, latitude],
   });
   let location_id;
   if (check) {
@@ -28,8 +27,10 @@ exports.post_location_user = async (req, res) => {
   else {
     let location = new Location({
       _id: mongoose.Types.ObjectId(),
-      longitude: req.body.longitude,
-      latitude: req.body.latitude,
+      location: {
+        type: "Point",
+        coordinates: [req.body.longitude, req.body.latitude],
+      },
       place_name: req.body.place_name,
     });
     try {
@@ -37,8 +38,8 @@ exports.post_location_user = async (req, res) => {
         .then(response => {
           if (response.data) {
             if (response.data.features && response.data.features.length > 0) {
-              location.longitude = response.data.features[0].center[0];
-              location.latitude = response.data.features[0].center[1];
+              location.location.coordinates[0] = response.data.features[0].center[0];
+              location.location.coordinates[1]  = response.data.features[0].center[1];
               location.place_name = response.data.features[0].text;
             }
           }
@@ -48,8 +49,7 @@ exports.post_location_user = async (req, res) => {
           console.log(error);
         });
       const check_2 = await Location.findOne({
-        longitude: location.longitude,
-        latitude: location.latitude
+        "location.coordinates": location.location.coordinates,
       });
       if (check_2) {
         location_id = check_2._id
@@ -68,6 +68,7 @@ exports.post_location_user = async (req, res) => {
   let TTL = req.body.TTL;
 
   const location_user = new LocationUser({
+    _id: mongoose.Types.ObjectId(),
     user_id,
     location_id,
     TTL,
@@ -95,7 +96,10 @@ exports.post_location_user = async (req, res) => {
           console.log(error);
         });
       user.set({
-        current_country: country
+        current_country: country,
+        latest_location: location_id,
+        latest_location_user: location_user._id,
+        expiresAt: new Date(Date.now() + Number(TTL))
       });
       await user.save();
     }
