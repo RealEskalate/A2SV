@@ -310,6 +310,9 @@ const findAllNearbySymptomaticUsers = async(long, lat, demo)=>{
     if(!user.latest_location_user || !user.latest_location) continue
     let latest_location_user = user.latest_location_user.user_id
     if(traversed_locations[user.latest_location._id] || !latest_location_user){
+      continue;    
+    }
+    if(latest_location_user.probability==0){
       continue;
     }
     traversed_locations[user.latest_location._id] = 1;
