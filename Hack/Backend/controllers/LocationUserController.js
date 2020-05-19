@@ -1,15 +1,24 @@
 const LocationUserModels = require("./../models/LocationUserModel");
-const LocationUser = LocationUserModels.LocationUser;
-var LocationModels = require("../models/LocationModel.js");
-var Location = LocationModels.Location;
+const LocationModels = require("../models/LocationModel.js");
 const UserModels = require("./../models/UserModel");
-const User = UserModels.User;
+const SymptomUserModels = require("../models/SymptomUser");
+const ProbabilityCalculator = require("../services/ProbabilityCalculator");
 const axios = require("axios");
 const mongoose = require("mongoose");
-const jwt = require("jsonwebtoken");
 
 //Post a user location
 exports.post_location_user = async (req, res) => {
+  if (req.query.demo && req.query.demo == "true"){
+    var User = UserModels.DemoUser;
+    var LocationUser = LocationUserModels.DemoLocationUser
+    var Location = LocationModels.DemoLocation
+    var SymptomUser = SymptomUserModels.DemoSymptomUser
+  }else{
+    var User = UserModels.User;
+    var LocationUser = LocationUserModels.LocationUser
+    var Location = LocationModels.Location
+    var SymptomUser = SymptomUserModels.SymptomUser
+  }
 
   if (!req.body.longitude || !req.body.latitude) {
     return res.status(400).send("Coordinates not given");
@@ -17,8 +26,15 @@ exports.post_location_user = async (req, res) => {
   let latitude = req.body.latitude;
   let longitude = req.body.longitude;
 
-  const check = await Location.findOne({
-    "location.coordinates": [longitude, latitude],
+  const check = await Location.findOne({ 
+    location: {
+      $near:
+      {
+        $geometry: { type: "Point",  coordinates: [ longitude , latitude ] },
+        $minDistance: 0,
+        $maxDistance: 1
+      }
+    }
   });
   let location_id;
   if (check) {
@@ -29,7 +45,7 @@ exports.post_location_user = async (req, res) => {
       _id: mongoose.Types.ObjectId(),
       location: {
         type: "Point",
-        coordinates: [req.body.longitude, req.body.latitude],
+        coordinates: [longitude , latitude]
       },
       place_name: req.body.place_name,
     });
@@ -39,7 +55,7 @@ exports.post_location_user = async (req, res) => {
           if (response.data) {
             if (response.data.features && response.data.features.length > 0) {
               location.location.coordinates[0] = response.data.features[0].center[0];
-              location.location.coordinates[1]  = response.data.features[0].center[1];
+              location.location.coordinates[1] = response.data.features[0].center[1];
               location.place_name = response.data.features[0].text;
             }
           }
@@ -48,10 +64,18 @@ exports.post_location_user = async (req, res) => {
         .catch(error => {
           console.log(error);
         });
-      const check_2 = await Location.findOne({
-        "location.coordinates": location.location.coordinates,
-      });
-      if (check_2) {
+
+        const check2 = await Location.findOne({ 
+          location: {
+            $near:
+            {
+              $geometry: { type: "Point",  coordinates: [ location.location.coordinates[0] , location.location.coordinates[1] ] },
+              $minDistance: 0,
+              $maxDistance: 1
+            }
+          }
+        });
+        if (check_2) {
         location_id = check_2._id
       }
       else {
@@ -68,7 +92,6 @@ exports.post_location_user = async (req, res) => {
   let TTL = req.body.TTL;
 
   const location_user = new LocationUser({
-    _id: mongoose.Types.ObjectId(),
     user_id,
     location_id,
     TTL,
@@ -85,44 +108,51 @@ exports.post_location_user = async (req, res) => {
     }
 
     let country = '';
+    let iso = ''
     try {
       const result = await axios.get('http://www.geoplugin.net/json.gp?ip=' + req.connection.remoteAddress.substring(2))
         .then(response => {
           if (response.data) {
             country = response.data.geoplugin_countryName
+            iso = response.data.geoplugin_countryCode
           }
         })
         .catch(error => {
           console.log(error);
         });
       user.set({
-        current_country: country,
-        latest_location: location_id,
-        latest_location_user: location_user._id,
-        expiresAt: new Date(Date.now() + Number(TTL))
+        current_country: country
       });
       await user.save();
     }
     catch (err) {
       console.log(err);
     }
-
+    let symptomsList = await SymptomUser.find({user_id: user_id}).populate('symptom_id')
+    let symptoms = []
+    symptomsList.forEach((item)=> symptoms.push(item.symptom_id.name))
+    let probability = await ProbabilityCalculator.calculateProbability(symptoms, iso)
     let check = await LocationUser.findOne({
       location_id: location_id,
       user_id: user_id
     })
     if (check) {
-      check.TTL = TTL
+      check.TTL = Number(TTL)
+      check.probability = probability
       await check.save()
       return res.send(check);
     }
+    location_user.probability = probability;
     await location_user.save();
+    user.latest_location = location_user.location_id
+    user.latest_location_user = location_user._id
+    await user.save();
     return res.send(location_user);
   } catch (err) {
     console.log(err);
     return res.status(500).send(err.toString());
   }
-};
+}
 
 //Get specific location_user by id
 exports.get_location_user_by_id = async (req, res) => {
@@ -179,7 +209,7 @@ exports.get_all_location_users = async (req, res) => {
   }
 };
 
-//Get location_user by location_id
+//Get location_user by user_id
 exports.get_by_user_id = async (req, res) => {
   if (req.query.demo && req.query.demo == "true"){
     var LocationUser = LocationUserModels.DemoLocationUser;
@@ -202,6 +232,11 @@ exports.get_by_user_id = async (req, res) => {
 
 //Delete location_user with id
 exports.delete_location_user = async (req, res) => {
+  if (req.query.demo && req.query.demo == "true"){
+    var LocationUser = LocationUserModels.DemoLocationUser;
+  }else{
+    var LocationUser = LocationUserModels.LocationUser;
+  }
 
   try {
     const location_user = await LocationUser.findByIdAndDelete(req.body._id);
@@ -216,6 +251,11 @@ exports.delete_location_user = async (req, res) => {
 
 //Update location_user with id
 exports.update_location_user = async (req, res) => {
+  if (req.query.demo && req.query.demo == "true"){
+    var LocationUser = LocationUserModels.DemoLocationUser;
+  }else{
+    var LocationUser = LocationUserModels.LocationUser;
+  }
 
   try {
     let locationUser = await LocationUser.findById(req.body._id);
@@ -229,3 +269,5 @@ exports.update_location_user = async (req, res) => {
     res.status(500).send(err.toString());
   }
 };
+
+

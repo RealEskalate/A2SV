@@ -22,7 +22,7 @@ exports.verifyToken = async (req, res, next) => {
         // console.log("going to check user");
         let user = await User.findById({ _id: id });
         if (!user) {
-            res.status(401).send("User does not exist!");
+            return res.status(401).send("User does not exist!");
         }
         req.body.loggedInUser = id;
         console.log("passing to next");
