@@ -40,7 +40,7 @@ exports.post_location_user = async (req, res) => {
             if (response.data.features && response.data.features.length > 0) {
               location.location.coordinates[0] = response.data.features[0].center[0];
               location.location.coordinates[1]  = response.data.features[0].center[1];
-              location.location.place_name = response.data.features[0].text;
+              location.place_name = response.data.features[0].text;
             }
           }
           return location;
