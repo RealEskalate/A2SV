@@ -43,7 +43,7 @@ exports.get_all_locations_with_symptoms = async (req, res) => {
     {latitude: top_right_end[1], longitude: top_right_end[0]},
   )
   let zoom = 0;
-  if(distance_check>5000){
+  if(distance_check>10000){
     zoom = 10;
   }
   let result = [] 
