@@ -39,10 +39,10 @@ exports.getStatisticsResourceByFields = async(req, res) => {
             let statisticsResource = await StatisticsResource.find({ language: req.query.language });
             res.status(200).send(statisticsResource);
         } else if (req.query.title != null) {
-            let statisticsResource = await StatisticsResource.find({ title: req.query.title });
+            let statisticsResource = await StatisticsResource.find({ title: req.query.title,language:"English" });
             res.status(200).send(statisticsResource);
         } else {
-            let statisticsResource = await StatisticsResource.find({});
+            let statisticsResource = await StatisticsResource.find({language:"English"});
             res.status(200).send(statisticsResource);
         }
 
