@@ -312,7 +312,7 @@ const findAllNearbySymptomaticUsers = async(long, lat, demo)=>{
     if(traversed_locations[user.latest_location._id] || !latest_location_user){
       continue;    
     }
-    if(latest_location_user.probability==0){
+    if(user.latest_location_user.probability==0){
       continue;
     }
     traversed_locations[user.latest_location._id] = 1;
@@ -320,7 +320,7 @@ const findAllNearbySymptomaticUsers = async(long, lat, demo)=>{
       longitude: user.latest_location.location.coordinates[0],
       latitude: user.latest_location.location.coordinates[1],
       user_id: user._id,
-      probability: latest_location_user.probability,
+      probability: user.latest_location_user.probability,
       age_group:  latest_location_user.age_group,
       gender:  latest_location_user.gender
     })
