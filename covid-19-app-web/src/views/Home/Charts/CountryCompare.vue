@@ -147,7 +147,7 @@
             <!--suppress HtmlUnknownTag -->
             <vue-loaders-ball-scale-multiple
               v-if="graphLoaders.countryCompare > 0"
-              style="position:absolute; left: 35%; top: 53%"
+              style="position:absolute; left: 35%; top: 60%"
               :color="$vuetify.theme.themes.light.primary"
               scale="1"
             />
