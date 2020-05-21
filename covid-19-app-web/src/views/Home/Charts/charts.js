@@ -229,9 +229,9 @@ export const ChartMixin = {
         counts: [
           { label: "Test Count", color: [121, 134, 203] },
           { label: "Confirmed Cases", color: [255, 213, 79] },
+          { label: "Active Cases", color: [176, 190, 197] },
           { label: "Death Count", color: [240, 98, 146] },
-          { label: "Recovery Count", color: [220, 231, 117] },
-          { label: "Active Cases", color: [176, 190, 197] }
+          { label: "Recovery Count", color: [220, 231, 117] }
         ],
         daily: [
           // { label: "Daily Test", color: [121, 134, 203] },
@@ -241,8 +241,8 @@ export const ChartMixin = {
         ],
         rates: [
           { label: "Positive Rate", color: [255, 213, 79] },
-          { label: "Recovery Rate", color: [220, 231, 117] },
           { label: "Active Rate", color: [176, 190, 197] },
+          { label: "Recovery Rate", color: [220, 231, 117] },
           // { label: "Hospitalization Rate", color: [77, 208, 225] },
           // { label: "ICU Rate", color: [121, 134, 203] },
           { label: "Death Rate", color: [240, 98, 146] }

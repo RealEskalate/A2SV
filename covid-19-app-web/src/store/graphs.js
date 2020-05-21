@@ -4,9 +4,9 @@ import moment from "moment";
 const converter = {
   "Test Count": "Tests",
   "Confirmed Cases": "Confirmed",
+  "Active Cases": "Active",
   "Death Count": "Deaths",
   "Recovery Count": "Recovered",
-  "Active Cases": "Active",
 
   "Daily Confirmed": "Confirmed",
   "Daily Deaths": "Deaths",
@@ -14,8 +14,8 @@ const converter = {
   "Daily Active": "Active",
 
   "Positive Rate": "Confirmed_Rate",
-  "Recovery Rate": "Recovered_Rate",
   "Active Rate": "Active_Rate",
+  "Recovery Rate": "Recovered_Rate",
   "Death Rate": "Deaths_Rate",
   "Hospitalization Rate": "Hospitalization",
   "ICU Rate": "ICU"
@@ -26,12 +26,11 @@ export default {
     displayCounts: {
       "Test Count": [],
       "Confirmed Cases": [],
+      "Active Cases": [],
       "Death Count": [],
-      "Recovery Count": [],
-      "Active Counts": []
+      "Recovery Count": []
     },
     dailyCounts: {
-      "Daily Test": [],
       "Daily Confirmed": [],
       "Daily Deaths": [],
       "Daily Recovery": []
@@ -39,6 +38,7 @@ export default {
     displayRates: {
       "Positive Rate": [],
       "Recovery Rate": [],
+      "Active Rate": [],
       "Death Rate": []
     },
     countryCompare: {
