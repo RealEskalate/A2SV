@@ -79,39 +79,23 @@ export default {
     },
     setStates: ({ commit }) => {
       commit("setLearnLoaders", { key: "states", value: true });
-      const payload = {
-        incubation: {
-          title: "Incubation",
-          description:
-            "The patient just got infected, the virus amount is not much so it goes unnoticed. "
-        },
-        mild: {
-          title: "Mild or no symptoms",
-          description:
-            " Now that the virus has reached the throat and/or the lungs, some patients start " +
-            "showing mild symptoms, some are asymptomatic."
-        },
-        heavy: {
-          title: "Heavy symptoms",
-          description:
-            "As the virus continues to replicate itself, some patients develop heavy symptoms and " +
-            "require hospitalization, some have strong enough immune systems that can beat the virus without hospitalization.\n"
-        },
-        hospitalization: {
-          title: "Hospitalization",
-          description:
-            "When the oxygen level in the blood goes below a certain threshold, COVID-19 patients " +
-            "require hospitalization. In case of not having a capacity in ICU, some patients may die due to a lack of materials."
-        },
-        icu: {
-          title: "ICU",
-          description:
-            "Unfortunately some patients’ immune systems can’t cope up with the virus well and the " +
-            "patients need to be taken to intensive care units."
-        }
-      };
-      commit("setStates", payload);
-      commit("setLearnLoaders", { key: "states", value: false });
+      axios
+        .get(`${process.env.VUE_APP_BASE_URL}/api/resources/information`, {
+          params: {
+            type: "state"
+          }
+        })
+        .then(
+          response => {
+            commit("setStates", response.data);
+          },
+          error => {
+            console.log(error);
+          }
+        )
+        .finally(function() {
+          commit("setLearnLoaders", { key: "states", value: false });
+        });
     },
     setLearningPaths: ({ commit }, { age_group }) => {
       commit("setLearnLoaders", { key: "learningPaths", value: true });
