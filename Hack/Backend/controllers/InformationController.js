@@ -3,10 +3,10 @@ var mongoose = require("mongoose");
 
 exports.getAllInformations = async(req, res) => {
     try {
-        if(req.query.type == "action" && req.query.language != null){
+        if(req.query.type!=null && req.query.language != null){
             let information = await Information.find({ type: req.query.type , language:req.query.language});
             res.status(200).send(information);
-        } else if (req.query.type == "action") {
+        } else if (req.query.type!=null ) {
             let information = await Information.find({ type: req.query.type , language:"English"});
             res.status(200).send(information);
         } else if (req.query.language != null && req.query.title != null) {
