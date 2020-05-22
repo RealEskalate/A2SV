@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {NavigationContainer} from '@react-navigation/native';
+import {DefaultTheme, NavigationContainer} from '@react-navigation/native';
 import {
   createStackNavigator,
   CardStyleInterpolators,
@@ -26,12 +26,34 @@ import About from './components/about-page/About.js';
 import Profile from './components/profile-page/Profile.js';
 import ProfileDetail from './components/profile-page/ProfileDetail.js';
 
+import * as eva from '@eva-design/eva';
+import {ApplicationProvider, IconRegistry} from '@ui-kitten/components';
+import {EvaIconsPack} from '@ui-kitten/eva-icons';
+import {default as customTheme} from './assets/themes/custom-theme.json'; // <-- Import app theme
+import {ThemeContext} from './assets/themes/theme-context';
+import {AuthNavigator} from './src/navigation/authNavigation';
+import {AppNavigator} from './src/navigation/appNavigation.js';
+
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 
 export default function App() {
   const [userId, setUserId] = useState('');
   const [isLoading, setLoading] = useState(true);
+  const [theme, setTheme] = React.useState('light');
+
+  const navigatorTheme = {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      // prevent layout blinking when performing navigation
+      background: 'transparent',
+    },
+  };
+
+  const toggleTheme = () => {
+    setTheme(theme === 'light' ? 'dark' : 'light');
+  };
 
   //signify whenever there is a state change in redux
   userIDStore.subscribe(async () => {
@@ -151,18 +173,27 @@ export default function App() {
   };
 
   return (
-    <NavigationContainer>
-      {userId !== '' && userId !== null ? (
-        <Drawer.Navigator
-          drawerContent={(props) => <NavigatorDrawer {...props} />}>
-          <Drawer.Screen name="Home" children={createSTNavigator} />
-          <Drawer.Screen name="About" component={About} />
-          <Drawer.Screen name="Profile" component={Profile} />
-          <Drawer.Screen name="ProfileDetail" component={ProfileDetail} />
-        </Drawer.Navigator>
-      ) : (
-        <GetStartedStackNavigation />
-      )}
-    </NavigationContainer>
+    <>
+      <IconRegistry icons={EvaIconsPack} />
+      <ThemeContext.Provider value={{theme, toggleTheme}}>
+        <ApplicationProvider {...eva} theme={{...eva[theme], ...customTheme}}>
+          <NavigationContainer theme={navigatorTheme}>
+            {userId !== '' && userId !== null ? (
+              // <Drawer.Navigator
+              //   drawerContent={(props) => <NavigatorDrawer {...props} />}>
+              //   <Drawer.Screen name="Home" children={createSTNavigator} />
+              //   <Drawer.Screen name="About" component={About} />
+              //   <Drawer.Screen name="Profile" component={Profile} />
+              //   <Drawer.Screen name="ProfileDetail" component={ProfileDetail} />
+              // </Drawer.Navigator>
+              <AppNavigator />
+            ) : (
+              // <GetStartedStackNavigation />
+              <AuthNavigator />
+            )}
+          </NavigationContainer>
+        </ApplicationProvider>
+      </ThemeContext.Provider>
+    </>
   );
 }
