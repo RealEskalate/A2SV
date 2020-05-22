@@ -3,8 +3,15 @@
     <v-card flat tile class="lighten-1 text-center">
       <v-divider />
       <v-card-text>
-        <v-btn v-for="icon in icons" :key="icon" class="mx-4" icon>
-          <v-icon size="24px">{{ icon }}</v-icon>
+        <v-btn
+          v-for="(icon, i) in icons"
+          class="mx-2 pa-3"
+          :href="icon.link"
+          target="_blank"
+          :key="i"
+          icon
+        >
+          <v-icon size="23px" v-text="icon.icon" />
         </v-btn>
       </v-card-text>
 
@@ -102,7 +109,11 @@ import { mdiTelegram, mdiWeb, mdiYoutube } from "@mdi/js";
 
 export default {
   data: () => ({
-    icons: [mdiYoutube, mdiTelegram, mdiWeb]
+    icons: [
+      { link: "http://a2sv.org/", icon: mdiWeb },
+      { link: "http://www.youtube.com/", icon: mdiYoutube },
+      { link: "http://www.youtube.com/", icon: mdiTelegram }
+    ]
     //https://www.ctech.co.ke/wp-content/uploads/2019/09/Home-Page_Layer-Slider-BG-1024x426.png
     //https://www.toptal.com/designers/subtlepatterns/patterns/memphis-mini.png
     //https://www.toptal.com/designers/subtlepatterns/patterns/memphis-mini.png
