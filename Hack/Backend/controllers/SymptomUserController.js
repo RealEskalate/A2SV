@@ -99,7 +99,7 @@ exports.get_symptomuser_by_user_id = async (req, res) => {
     var SymptomUser = SymptomUserModel.SymptomUser;
   }
   try {
-    const symptomuser = await SymptomUser.find({ user_id: req.params.user_id });
+    const symptomuser = await SymptomUser.find({ user_id: req.params.user_id }).populate('user_id');
     if (!symptomuser) {
       res.status(400).send("Symptom User Pair not found");
     }
@@ -109,7 +109,9 @@ exports.get_symptomuser_by_user_id = async (req, res) => {
       result.push({
         _id: symptomuser[i]._id,
         symptom_id: symptomuser[i].symptom_id,
-        user_id: symptomuser[i].user_id,
+        user_id: symptomuser[i].user_id._id,
+        gender: symptomuser[i].user_id.gender,
+        age_group: symptomuser[i].user_id.age_group,
         timestamp: symptomuser[i].timestamp,
         _v: symptomuser[i].__v,
         Symptom: symptom,
