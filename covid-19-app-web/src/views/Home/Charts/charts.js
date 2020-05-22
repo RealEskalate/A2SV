@@ -1,4 +1,4 @@
-import { Bar, Line, mixins } from "vue-chartjs";
+import { Bar, Doughnut, Line, mixins } from "vue-chartjs";
 import store from "@/store/index.js";
 import moment from "moment";
 const { reactiveProp } = mixins;
@@ -13,6 +13,15 @@ export const LineChart = {
   extends: Line,
   mixins: [reactiveProp],
   props: ["chartData", "options"]
+};
+
+export const DoughnutChart = {
+  extends: Doughnut,
+  mixins: [reactiveProp],
+  props: ["data", "options"],
+  mounted() {
+    this.renderChart(this.data, this.options);
+  }
 };
 
 export const ChartMixin = {
