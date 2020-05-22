@@ -99,7 +99,7 @@ exports.get_symptomuser_by_user_id = async (req, res) => {
     var SymptomUser = SymptomUserModel.SymptomUser;
   }
   try {
-    const symptomuser = await SymptomUser.find({ user_id: req.body.loggedInUser });
+    const symptomuser = await SymptomUser.find({ user_id: req.params.user_id });
     if (!symptomuser) {
       res.status(400).send("Symptom User Pair not found");
     }
