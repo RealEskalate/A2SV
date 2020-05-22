@@ -47,18 +47,12 @@
         >
           {{ mdiClose }}
         </v-icon>
-        <v-card-title
-          class="headline mt-2"
-          v-text="description.title"
-        />
-        <v-card-text v-text="description.content" />
+        <v-card-title class="headline mt-2" v-text="description.title" />
+        <v-card-text v-text="description.description" />
         <v-card-text>
           <v-list dense>
             <h4 v-text="'Metrics'" />
-            <v-list-item
-              :key="i"
-              v-for="(re, i) in description.resources"
-            >
+            <v-list-item :key="i" v-for="(re, i) in description.fields">
               <p>
                 <span v-text="re.name + ':  '" />
                 <span
@@ -97,12 +91,18 @@ export default {
       }
     }
   },
+  methods: {
+    fetchCountryResources() {
+      if (!this.countryResources[this.country.name])
+        store.dispatch("setCountryResources", { country: this.country.name });
+    }
+  },
   computed: {
     countryResources: () => store.getters.getCountryResources,
     descriptions: () => store.getters.getGraphDescriptions,
     description() {
       if (this.descriptions) {
-        return this.descriptions["Country Resources"];
+        return this.descriptions["Available Resources"];
       } else {
         return {
           title: "",
@@ -111,12 +111,6 @@ export default {
           criteria: []
         };
       }
-    }
-  },
-  methods: {
-    fetchCountryResources() {
-      if (!this.countryResources[this.country.name])
-        store.dispatch("setCountryResources", { country: this.country.name });
     }
   }
 };

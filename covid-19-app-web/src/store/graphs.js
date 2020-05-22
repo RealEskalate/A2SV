@@ -451,7 +451,11 @@ export default {
           `${process.env.VUE_APP_BASE_URL}/api/resources/statistics-description`
         )
         .then(response => {
-          commit("setGraphDescriptions", response.data);
+          let res = {};
+          response.data.forEach(function(desc) {
+            res[desc.title] = desc;
+          });
+          commit("setGraphDescriptions", res);
         })
         .catch(error => {
           console.log(error);
