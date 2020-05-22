@@ -65,7 +65,7 @@ exports.post_location_user = async (req, res) => {
           console.log(error);
         });
 
-        const check2 = await Location.findOne({ 
+        const check_2 = await Location.findOne({ 
           location: {
             $near:
             {
@@ -75,7 +75,7 @@ exports.post_location_user = async (req, res) => {
             }
           }
         });
-        if (check_2) {
+      if (check_2) {
         location_id = check_2._id
       }
       else {
