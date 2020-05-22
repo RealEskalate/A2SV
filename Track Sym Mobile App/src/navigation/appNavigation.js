@@ -13,7 +13,7 @@ import {
 import {StyleSheet} from 'react-native';
 import {HomeStackNavigator} from './homeNavigation';
 import {SettingNavigator} from '../pages/settings/settingStack';
-import News from '../pages/news/';
+import {NewsNavigator} from '../pages/news/newsStack';
 
 const {Navigator, Screen} = createDrawerNavigator();
 
@@ -75,7 +75,7 @@ const DrawerContent = ({navigation, state}) => (
 export const AppNavigator = () => (
   <Navigator drawerContent={(props) => <DrawerContent {...props} />}>
     <Screen name="HOME" component={HomeStackNavigator} />
-    <Screen name="NEWS" component={News} />
+    <Screen name="NEWS" component={NewsNavigator} />
     <Screen name="ETHIOPIA" component={OrdersScreen} />
     <Screen name="ABOUT" component={OrdersScreen} />
     <Screen name="SETTINGS" component={SettingNavigator} />
