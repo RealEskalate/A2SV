@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from 'react';
 import {
   View,
   TouchableOpacity,
@@ -8,11 +8,11 @@ import {
   ActivityIndicator,
   ScrollView,
   Alert,
-} from "react-native";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
-import Feather from "react-native-vector-icons/Feather";
-import userIDStore from "../data-management/user-id-data/userIDStore";
-import Text from "./CustomText.js";
+} from 'react-native';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Feather from 'react-native-vector-icons/Feather';
+import userIDStore from '../data-management/user-id-data/userIDStore';
+import Text from './CustomText.js';
 
 const ProfileDetail = (props) => {
   const [data, setData] = React.useState({
@@ -20,10 +20,10 @@ const ProfileDetail = (props) => {
     passVisibility: true,
     buttonPressed: false,
   });
-  const [userName, setUserName] = useState("");
-  const [ageGroup, setUserAgeGroup] = useState("");
-  const [gender, setUserGender] = useState("");
-  const [pass, setPass] = useState("");
+  const [userName, setUserName] = useState('');
+  const [ageGroup, setUserAgeGroup] = useState('');
+  const [gender, setUserGender] = useState('');
+  const [pass, setPass] = useState('');
 
   const setUserProfile = () => {
     setUserName(userIDStore.getState().userName);
@@ -36,12 +36,12 @@ const ProfileDetail = (props) => {
   }, []);
 
   const updateProfile = () => {
-    fetch("https://sym-track.herokuapp.com/api/users", {
-      method: "PATCH",
+    fetch('https://sym-track.herokuapp.com/api/users', {
+      method: 'PATCH',
       headers: {
-        Authorization: "Bearer " + userIDStore.getState().userToken,
-        Accept: "application/json",
-        "Content-Type": "application/json",
+        Authorization: 'Bearer ' + userIDStore.getState().userToken,
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         _id: userIDStore.getState().userId,
@@ -51,12 +51,12 @@ const ProfileDetail = (props) => {
     })
       .then((response) => response.json())
       .then((json) => {
-        console.log("success");
-        props.navigation.navigate("Profile");
+        console.log('success');
+        props.navigation.navigate('Profile');
       })
       .catch((error) => {
         console.log(error);
-        Alert.alert("Poor connection", "Couldn't resgister, please try again!");
+        Alert.alert('Poor connection', "Couldn't resgister, please try again!");
       });
   };
 
@@ -68,7 +68,7 @@ const ProfileDetail = (props) => {
   };
 
   return (
-    <ScrollView>
+    <ScrollView style={styles.container}>
       <View style={styles.container}>
         <View style={styles.footer}>
           <Text style={styles.text_footer}>Username</Text>
@@ -81,7 +81,7 @@ const ProfileDetail = (props) => {
               editable={false}
             />
           </View>
-          <Text style={[styles.text_footer, { marginTop: 30 }]}>GENDER</Text>
+          <Text style={[styles.text_footer, {marginTop: 30}]}>GENDER</Text>
           <View style={styles.action}>
             <FontAwesome name="users" color="#05375a" size={20} />
             <TextInput
@@ -91,7 +91,7 @@ const ProfileDetail = (props) => {
               editable={false}
             />
           </View>
-          <Text style={[styles.text_footer, { marginTop: 30 }]}>AGE GROUP</Text>
+          <Text style={[styles.text_footer, {marginTop: 30}]}>AGE GROUP</Text>
           <View style={styles.action}>
             <FontAwesome name="sort-numeric-desc" size={20} color="#05375a" />
             <TextInput
@@ -102,7 +102,7 @@ const ProfileDetail = (props) => {
             />
           </View>
 
-          <Text style={[styles.text_footer, { marginTop: 30 }]}>Password</Text>
+          <Text style={[styles.text_footer, {marginTop: 30}]}>Password</Text>
           <View style={styles.action}>
             <FontAwesome name="lock" color="#05375a" size={20} />
             <TextInput
@@ -112,9 +112,8 @@ const ProfileDetail = (props) => {
               style={styles.textInput}
             />
             <TouchableOpacity
-              style={{ width: 30, height: 30 }}
-              onPress={() => onTogglePasswordVisiblity()}
-            >
+              style={{width: 30, height: 30}}
+              onPress={() => onTogglePasswordVisiblity()}>
               {data.passVisibility ? (
                 <Feather name="eye-off" color="grey" size={20} />
               ) : (
@@ -149,11 +148,8 @@ const ProfileDetail = (props) => {
           <View style={[styles.sbutton]}>
             <TouchableOpacity
               style={styles.signIn}
-              onPress={() => updateProfile()}
-            >
-              <Text style={([styles.textSign], { color: "#1565c0" })}>
-                DONE
-              </Text>
+              onPress={() => updateProfile()}>
+              <Text style={([styles.textSign], {color: '#1565c0'})}>DONE</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -167,68 +163,68 @@ export default ProfileDetail;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#1565c0",
+    backgroundColor: '#fff',
   },
   header: {
     flex: 1,
-    justifyContent: "flex-end",
+    justifyContent: 'flex-end',
     paddingHorizontal: 20,
     paddingBottom: 50,
   },
   footer: {
     flex: 3,
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
     paddingHorizontal: 20,
     paddingVertical: 30,
   },
   text_header: {
-    color: "#fff",
-    fontFamily: "Roboto-Black",
+    color: '#fff',
+    fontFamily: 'Roboto-Black',
   },
   text_footer: {
-    color: "#05375a",
+    color: '#05375a',
     fontSize: 18,
   },
   action: {
-    flexDirection: "row",
+    flexDirection: 'row',
     marginTop: 10,
     borderBottomWidth: 1,
-    borderBottomColor: "#f2f2f2",
+    borderBottomColor: '#f2f2f2',
     paddingBottom: 5,
   },
   textInput: {
     flex: 1,
-    marginTop: Platform.OS === "ios" ? 0 : -12,
+    marginTop: Platform.OS === 'ios' ? 0 : -12,
     paddingLeft: 10,
-    color: "#05375a",
+    color: '#05375a',
   },
   button: {
-    alignItems: "center",
-    backgroundColor: "#1565c0",
+    alignItems: 'center',
+    backgroundColor: '#1565c0',
     borderRadius: 50,
     marginTop: 50,
   },
   sbutton: {
-    alignItems: "center",
-    borderColor: "#1565c0",
+    alignItems: 'center',
+    borderColor: '#1565c0',
     borderWidth: 1,
     borderRadius: 50,
     marginTop: 20,
   },
   signIn: {
-    width: "100%",
+    width: '100%',
     height: 50,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   signUp: {
-    width: "100%",
+    width: '100%',
     height: 50,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   textSign: {
     fontSize: 18,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
 });
