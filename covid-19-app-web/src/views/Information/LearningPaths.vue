@@ -34,45 +34,47 @@
           <v-simple-table v-else fixed-header style="min-width: 800px">
             <template v-slot:default>
               <thead>
-              <tr>
-                <th
-                  class="text-left primary--text text--darken-1"
-                  v-if="$vuetify.breakpoint.mdAndUp"
-                />
-                <th class="text-left primary--text text--darken-1">
-                  Task Name
-                </th>
-                <th class="text-left primary--text text--darken-1">What?</th>
-                <th class="text-left primary--text text--darken-1">Why?</th>
-                <th class="text-left primary--text text--darken-1">Duration</th>
-                <th class="text-left primary--text text--darken-1">How?</th>
-              </tr>
+                <tr>
+                  <th
+                    class="text-left primary--text text--darken-1"
+                    v-if="$vuetify.breakpoint.mdAndUp"
+                  />
+                  <th class="text-left primary--text text--darken-1">
+                    Task Name
+                  </th>
+                  <th class="text-left primary--text text--darken-1">What?</th>
+                  <th class="text-left primary--text text--darken-1">Why?</th>
+                  <th class="text-left primary--text text--darken-1">
+                    Duration
+                  </th>
+                  <th class="text-left primary--text text--darken-1">How?</th>
+                </tr>
               </thead>
               <tbody>
-              <tr :key="i" v-for="(path, i) in learningPaths[selected_age]">
-                <td
-                  class="text-left py-2 primary--text text--darken-1"
-                  v-if="$vuetify.breakpoint.mdAndUp"
-                  width="3%"
-                >
-                  {{ i + 1 }}
-                </td>
-                <td class="text-left py-2" width="14%">{{ path.name }}</td>
-                <td class="text-left py-2" width="31%">{{ path.what }}</td>
-                <td class="text-left py-2" width="31%">{{ path.why }}</td>
-                <td class="text-left py-2" width="9%">{{ path.time }}</td>
-                <td width="12%">
-                  <v-btn
-                    rounded
-                    style="width: 100%"
-                    small
-                    color="primary"
-                    v-text="path.action || 'View'"
-                    :href="path.how"
-                    target="_blank"
-                  />
-                </td>
-              </tr>
+                <tr :key="i" v-for="(path, i) in learningPaths[selected_age]">
+                  <td
+                    class="text-left py-2 primary--text text--darken-1"
+                    v-if="$vuetify.breakpoint.mdAndUp"
+                    width="3%"
+                  >
+                    {{ i + 1 }}
+                  </td>
+                  <td class="text-left py-2" width="14%">{{ path.name }}</td>
+                  <td class="text-left py-2" width="31%">{{ path.what }}</td>
+                  <td class="text-left py-2" width="31%">{{ path.why }}</td>
+                  <td class="text-left py-2" width="9%">{{ path.time }}</td>
+                  <td width="12%">
+                    <v-btn
+                      rounded
+                      style="width: 100%"
+                      small
+                      color="primary"
+                      v-text="path.action || 'View'"
+                      :href="path.how"
+                      target="_blank"
+                    />
+                  </td>
+                </tr>
               </tbody>
             </template>
           </v-simple-table>
@@ -99,10 +101,10 @@ export default {
           age_group: this.selected_age
         });
       }
-    },
+    }
   },
   created() {
-    this.fetchLearningPaths()
+    this.fetchLearningPaths();
   },
   computed: {
     learningPaths: () => store.getters.getLearningPaths,

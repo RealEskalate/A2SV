@@ -161,8 +161,8 @@
 </template>
 
 <script>
-import moment from "moment/src/moment";
-import store from "@/store/";
+import moment from "moment";
+import store from "@/store";
 
 export default {
   data() {
