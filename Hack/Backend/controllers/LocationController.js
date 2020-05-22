@@ -366,7 +366,6 @@ const updateDb = async (demo) => {
     var User = UserModel.User;
     var SymptomUser = SymptomUserModel.SymptomUser;
   }
-  await LocationGrid.collection.drop();
 
   zoom = 10;
   let zoomLevels= { 10: 0.09, 111:1 ,1000:9}
@@ -384,20 +383,24 @@ const updateDb = async (demo) => {
     let user = users[i];
     let loc = user.latest_location;
     let user_loc = user.latest_location_user;
-    //If the location expired, If the location doesn't exist or If the user has not sent their location data in a while, we will skip them
-    if(user_loc==null || loc==null || user.expiresAt < Date.now()){
+    //If the location expired, If the location doesn't exist
+    if(user_loc==null || loc==null){
       continue;
     }
+    // If the user has not sent their location data in a while, we will skip them
+    // if(user.expiresAt < Date.now()){
+    //   continue
+    // }
     //If the probability is also zero, then symptoms don't exist for that user, so we will skip
     if(user_loc.probability==0){
       continue;
     }
     //Calculate the center point of the grid after finding out the grid they place on
-    let lat_index = Math.ceil(loc.location.coordinates[1] + 90)/level;
-    let latDistance = Math.sin( (-90 + (lat_index*level)) * Math.PI / 180 )
+    let lat_index = Math.floor((loc.location.coordinates[1]+ 90)/level);
+    let latDistance = Math.sin((-90 + (lat_index*level)) * Math.PI / 180)
     let longKm = Math.cos(latDistance) * equatorDgree
     let inc = 10/longKm;
-    let lon_index = Math.ceil(loc.location.coordinates[0] + 180)/inc;
+    let lon_index = Math.floor((loc.location.coordinates[0] + 180)/inc);
     let start_point_lat = -90 + lat_index * (level)
     let start_point_lon = -180 + lon_index * (inc)
     let end_point_lat = start_point_lat + level
@@ -434,6 +437,7 @@ const updateDb = async (demo) => {
   var values = Object.keys(squareBoxes).map(function(key){
    return squareBoxes[key];
   });
+  await LocationGrid.collection.drop();
   await LocationGrid.insertMany(values);
   // return squareBoxes
 }
