@@ -1,11 +1,6 @@
 import * as actionTypes from "../actionTypes";
-//stores symptom in local data store
-export const addSymptom = (userSymptoms) => ({
-  type: actionTypes.symptomRegister,
-  symptoms: userSymptoms,
-});
-//removes symptom from local data store
-export const removeSymptom = (userSymptom) => ({
-  type: actionTypes.symptomRemove,
+//update whole symptom list
+export const updateSymptomList = (userSymptoms) => ({
+  type: actionTypes.updateSymptoms,
   symptoms: userSymptoms,
 });
