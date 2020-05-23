@@ -146,9 +146,7 @@ export default {
     };
   },
   created() {
-    console.log(this.$i18n.locale);
     window.addEventListener("scroll", this.handleScroll);
-    // alert(screen.height);
   },
   destroyed() {
     window.removeEventListener("scroll", this.handleScroll);
@@ -163,7 +161,7 @@ export default {
       return this.locationY > 50;
     },
     brandWidth() {
-      return this.locationY > 50 ? 125 : 140;
+      return this.locationY > 50 ? 125 : 135;
     },
     navOption() {
       return this.navType;

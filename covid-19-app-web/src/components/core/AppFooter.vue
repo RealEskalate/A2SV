@@ -58,7 +58,6 @@
 
 <script>
 import { mdiTelegram, mdiWeb, mdiYoutube } from "@mdi/js";
-import store from "@/store/";
 
 export default {
   data: () => ({
@@ -72,20 +71,7 @@ export default {
       { link: "http://www.youtube.com/", icon: mdiYoutube },
       { link: "http://www.youtube.com/", icon: mdiTelegram }
     ]
-  }),
-  mounted() {
-    console.log(store.getters.getLanguagePreference);
-    this.$i18n.locale =
-      store.getters.getLanguagePreference !== null
-        ? store.getters.getLanguagePreference
-        : "en";
-  },
-  methods: {
-    changeLang() {
-      console.log(this.$i18n.locale);
-      store.dispatch("setLanguagePreference", { lang: this.$i18n.locale });
-    }
-  }
+  })
 };
 </script>
 
