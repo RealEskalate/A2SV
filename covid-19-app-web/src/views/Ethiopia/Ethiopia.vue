@@ -74,8 +74,8 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="item in desserts" :key="item.name">
-                      <td>{{ item.name }}</td>
+                  <tr v-for="item in coronaCases" :key="item.name">
+                    <td>{{ $t(item.name) }}</td>
                       <td>{{ item.totalCases }}</td>
                       <td>{{ item.totalDeath }}</td>
                     </tr>
@@ -119,7 +119,7 @@
                   </v-btn>
                 </v-col>
                 <v-col class="py-0" cols="7" sm="6" md="7" xl="9">
-                  <small class="d-inline-block my-2" v-text="add.name" />
+                  <small class="d-inline-block my-2"> {{ $t(add.name) }} </small>
                 </v-col>
               </v-row>
             </v-col>
@@ -131,10 +131,10 @@
 </template>
 
 <script>
-import { DoughnutChart } from "../Home/Charts/charts.js";
-import { mdiPhone } from "@mdi/js";
+  import {DoughnutChart} from "../Home/Charts/charts.js";
+  import {mdiPhone} from "@mdi/js";
 
-export default {
+  export default {
   name: "Ethiopia",
   components: {
     DoughnutChart
@@ -144,93 +144,93 @@ export default {
       mdiPhone,
       addresses: [
         {
-          name: "Addis Ababa",
+          name: "addisAbaba",
           phone: 6406
         },
         {
-          name: "Oromia",
+          name: "oromia",
           phone: 6955
         },
         {
-          name: "Amhara",
+          name: "amhara",
           phone: 6981
         },
         {
-          name: "SNNPR",
+          name: "snnpr",
           phone: 6929
         },
         {
-          name: "Tigray",
+          name: "tigray",
           phone: 6244
         },
         {
-          name: "Somali",
+          name: "somali",
           phone: 6599
         },
         {
-          name: "Dire Dawa",
+          name: "direDawa",
           phone: 6407
         },
         {
-          name: "Afar",
+          name: "afar",
           phone: 6220
         },
         {
-          name: "Benishangul",
+          name: "benishangul",
           phone: 6016
         },
         {
-          name: "Harari",
+          name: "harari",
           phone: 6864
         },
         {
-          name: "Gambela",
+          name: "gambela",
           phone: 6184
         }
       ],
-      desserts: [
+      coronaCases: [
         {
-          name: "Addis Ababa",
+          name: "addisAbaba",
           totalCases: 159,
           totalDeath: 4
         },
         {
-          name: "Oromia",
+          name: "oromia",
           totalCases: 53,
           totalDeath: 1
         },
         {
-          name: "Tigrai",
+          name: "tigrai",
           totalCases: 262,
           totalDeath: 2
         },
         {
-          name: "Benishangul Gumuz",
+          name: "benishangulGumuz",
           totalCases: 22,
           totalDeath: 2
         },
         {
-          name: "Gambela",
+          name: "gambela",
           totalCases: 12,
           totalDeath: 0
         },
         {
-          name: "SNNPR",
+          name: "snnpr",
           totalCases: 22,
           totalDeath: 2
         },
         {
-          name: "Afar",
+          name: "afar",
           totalCases: 5,
           totalDeath: 2
         },
         {
-          name: "Somali",
+          name: "somali",
           totalCases: 5,
           totalDeath: 0
         },
         {
-          name: "Dire Dawa",
+          name: "direDawa",
           totalCases: 2,
           totalDeath: 2
         }
@@ -246,16 +246,16 @@ export default {
         hoverBackgroundColor: "red",
         hoverBorderWidth: 10,
         labels: [
-          "Addis Ababa",
-          "Oromia",
-          "Amhara",
-          "Tigrai",
-          "Benishangul Gumuz",
-          "Gambela",
-          "SNNPR",
-          "Afar",
-          "Somali",
-          "Dire Dawa"
+          "addisAbaba",
+          "oromia",
+          "amhara",
+          "tigrai",
+          "benishangulGumuz",
+          "gambela",
+          "snnpr",
+          "afar",
+          "somali",
+          "direDawa"
         ],
         datasets: [
           {
