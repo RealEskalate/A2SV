@@ -12,7 +12,6 @@ router.get(
   "/api/locations/:longitude/:latitude", verifyToken.verifyToken,
   location_controller.get_location_by_coordinates
 );
-router.get("/api/locations_risk/:id", verifyToken.verifyToken, location_controller.get_location_risk_by_id)
 router.post("/api/locations", verifyToken.verifyToken, location_controller.post_location);
 router.patch("/api/locations", verifyToken.verifyToken, location_controller.update_location);
 router.delete("/api/locations", verifyToken.verifyToken, location_controller.delete_location);
