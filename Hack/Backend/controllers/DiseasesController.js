@@ -10,36 +10,22 @@ exports.get_diseases = async(req, res) => {
     //         res.status(401).send("Incorrect authentication key");
     //     }
     // });
-    // https://api.covid19api.com/world/total
-    let request_url = "https://covid19api.io/api/v1/AllReports";
+    let request_url = "https://corona.lmao.ninja/v2/all?yesterday";
     let diseases = [];
     try{
-        let covid = await axios
-        .get(request_url)
-        .then((response) => {
-            let data = response.data.reports[0];
-            let affected_countries = data.table[0].length - 1;
-            let confirmed = data.cases;
-            let deaths = data.deaths;
-            let recovered = data.recovered;
-            let item = new Disease({
-                title: "COVID-19",
-                confirmed: confirmed,
-                deaths: deaths,
-                recovered: recovered,
-                affected: affected_countries,
-            });
-            return item
-        })
-        .catch((err) => {
-            console.log(err);
+        let response = await axios.get(request_url)
+        let covid = new Disease({
+            title: "COVID-19",
+            confirmed: response.data.cases,
+            deaths: response.data.deaths,
+            recovered: response.data.recovered,
+            affected: response.data.affectedCountries
         });
         diseases.push(covid);
     }
     catch(err){
         console.log(err);
     }
-
     diseases.push(
         new Disease({
             title: "SEASONAL FLU",
