@@ -245,8 +245,7 @@ describe("GET /api/user_locations/:id", () => {
         location: {
           type: "Point",
           coordinates: [10, 10],
-        },
-        place_name: "Random Non Sequitor",
+        }
       });
       newUser = new User({
         _id : mongoose.Types.ObjectId(),
@@ -371,8 +370,7 @@ describe("GET /api/user_locations/:id", () => {
         location: {
           type: "Point",
           coordinates: [10, 10],
-        },
-        place_name: "ABCD"
+        }
       });
       await location_user.save();
       await location.save();

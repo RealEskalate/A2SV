@@ -93,8 +93,7 @@ exports.post_location = async (req, res) => {
       location: {
         type: "Point",
         coordinates: [req.body.longitude , req.body.latitude]
-      },
-      place_name: req.body.place_name,
+      }
     });
     try {
       await location.save();
