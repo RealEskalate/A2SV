@@ -12,6 +12,8 @@ import {
   Icon,
   Divider,
 } from '@ui-kitten/components';
+import ChangePassScreen from './changePassword';
+import EditProfileScreen from './editProfile';
 
 const {Navigator, Screen} = createStackNavigator();
 const ArrowIosBackIcon = (style) => <Icon {...style} name="arrow-ios-back" />;
@@ -51,6 +53,8 @@ export const SettingNavigator = (props) => {
       }}>
       <Screen name="index" component={SettingScreen} />
       <Screen name="ProfileScreen" component={ProfileScreen} />
+      <Screen name="ChangePassScreen" component={ChangePassScreen} />
+      <Screen name="EditProfileScreen" component={EditProfileScreen} />
     </Navigator>
   );
 };
