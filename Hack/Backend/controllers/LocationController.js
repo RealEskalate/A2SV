@@ -133,7 +133,7 @@ exports.get_location_by_coordinates = async (req, res) => {
   }else{
     var Location = LocationModels.Location;
   }
-  if(!req.body.longitude || !req.body.latitude){
+  if(!req.params.longitude || !req.params.latitude){
     return res.status(400).send("Location Coordinates are not given");
   }
   try {
@@ -141,12 +141,12 @@ exports.get_location_by_coordinates = async (req, res) => {
       location: {
         $near:
         {
-          $geometry: { type: "Point",  coordinates: [ req.body.longitude , req.body.latitude ] },
+          $geometry: { type: "Point",  coordinates: [ req.params.longitude , req.params.latitude ] },
           $minDistance: 0,
           $maxDistance: 1
         }
       }
-  });
+    });
     if(!locations || locations.length<1){
       return res.status(204).send("Location not found with the given coordinates");
     }
@@ -172,9 +172,17 @@ exports.update_location = async (req, res) => {
       return res.status(204).send("Location doesnot exist");      
     }
     location.set(req.body);
-    let check = await Location.findOne({
-      "location.coordinates": [location.location.longitude, location.location.latitude],
+    const check = await Location.findOne({ 
+      location: {
+        $near:
+        {
+          $geometry: { type: "Point",  coordinates: location.location.coordinates },
+          $minDistance: 0,
+          $maxDistance: 1
+        }
+      }
     });
+    //If there is a location currently resembling the update, send that one instead
     if(!check){
       await location.save();
       return res.send(location);
