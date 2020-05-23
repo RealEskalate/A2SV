@@ -45,6 +45,7 @@ const Sk = {
 };
 
 exports.calculateProbability = async (symptoms, country) => {
+  if(symptoms.length==0) return 0;
   let total_prob = 1.0;
   const prevalence = await getCountryStat(country);
   for (let i = 0; i < symptoms.length; i++) {
