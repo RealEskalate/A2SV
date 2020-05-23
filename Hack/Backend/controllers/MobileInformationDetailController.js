@@ -50,7 +50,7 @@ exports.change_info = async (req, res) => {
     }
 }
 
-// adds fields or criterias into an information object
+// delete information object
 exports.delete_info = async (req, res) => {
     try{
         let parent = await MobileInformationDetail.findByIdAndDelete(req.query.id);
