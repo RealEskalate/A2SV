@@ -136,7 +136,7 @@
   }),
     mounted() {
       console.log(store.getters.getLanguagePreference);
-      this.$i18n.locale = store.getters.getLanguagePreference !== undefined ? store.getters.getLanguagePreference : "en";
+      this.$i18n.locale = store.getters.getLanguagePreference !== null ? store.getters.getLanguagePreference : "en";
     },
     methods: {
       changeLang() {
