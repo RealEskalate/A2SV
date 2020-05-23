@@ -12,6 +12,9 @@ exports.get_mobile_info = async (req, res) => {
     } else{
         filter.language = "English";
     }
+    if (req.query.title){
+        filter['descriptions.title']=req.query.title;
+    }
 
     try{
         let documents = await MobileStatistics.find(filter);
