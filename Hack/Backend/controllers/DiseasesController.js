@@ -13,7 +13,8 @@ exports.get_diseases = async(req, res) => {
     // https://api.covid19api.com/world/total
     let request_url = "https://covid19api.io/api/v1/AllReports";
     let diseases = [];
-    const result = await axios
+    try{
+        let covid = await axios
         .get(request_url)
         .then((response) => {
             let data = response.data.reports[0];
@@ -21,18 +22,24 @@ exports.get_diseases = async(req, res) => {
             let confirmed = data.cases;
             let deaths = data.deaths;
             let recovered = data.recovered;
-            let covid = new Disease({
+            let item = new Disease({
                 title: "COVID-19",
                 confirmed: confirmed,
                 deaths: deaths,
                 recovered: recovered,
                 affected: affected_countries,
             });
-            diseases.push(covid);
+            return item
         })
         .catch((err) => {
             console.log(err);
         });
+        diseases.push(covid);
+    }
+    catch(err){
+        console.log(err);
+    }
+
     diseases.push(
         new Disease({
             title: "SEASONAL FLU",
