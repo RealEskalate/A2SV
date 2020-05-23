@@ -197,6 +197,11 @@ export default {
       ]
     };
   },
+  created() {
+    if (!this.graphDescriptions) {
+      store.dispatch("setGraphDescriptions");
+    }
+  },
   computed: {
     graphDescriptions: () => store.getters.getGraphDescriptions,
     selectedDescription() {
