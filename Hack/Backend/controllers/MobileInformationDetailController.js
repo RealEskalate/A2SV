@@ -1,23 +1,21 @@
-const {MobileStatistics} = require("../models/MobileStatistics");
+const {MobileInformationDetail} = require("../models/MobileInformationDetail");
 const mongoose = require("mongoose");
 
 // return all info with optional query
 exports.get_mobile_info = async (req, res) => {
     let filter = {};
-    if (req.query.filter){
-        filter.filter = req.query.filter;
+    if (req.query.link){
+        filter.link = req.query.link;
     }
     if (req.query.language){
         filter.language = req.query.language;
     } else{
         filter.language = "English";
     }
-    if (req.query.title){
-        filter['descriptions.title']=req.query.title;
-    }
+
 
     try{
-        let documents = await MobileStatistics.find(filter);
+        let documents = await MobileInformationDetail.find(filter);
         res.send(documents);
     }catch (err){
         res.status(500).send(err.toString());
@@ -28,11 +26,11 @@ exports.get_mobile_info = async (req, res) => {
 // get info by info id
 exports.get_info_by_id = async (req, res) => {
     try {
-        const mobileStatistics = await MobileStatistics.findById(req.params.id);
-        if (!mobileStatistics){
+        const mobileInfo = await MobileInformationDetail.findById(req.params.id);
+        if (!mobileInfo){
             return res.status(400).send("Information not found")
         }
-        res.send(mobileStatistics);
+        res.send(mobileInfo);
     } catch (err) {
         res.status(500).send(err.toString());
     }
@@ -42,11 +40,11 @@ exports.get_info_by_id = async (req, res) => {
 exports.change_info = async (req, res) => {
 
     try{
-        let mobileStatistics = await MobileStatistics.findOneAndUpdate(req.query.id, req.body);
-        if (!mobileStatistics){
+        let mobileInfo = await MobileInformationDetail.findOneAndUpdate(req.query.id, req.body);
+        if (!mobileInfo){
             return res.status(400).send("Parent information not found");
         }
-        res.send(mobileStatistics);
+        res.send(mobileInfo);
     } catch (err) {
         res.status(500).send(err.toString());
     }
@@ -55,7 +53,7 @@ exports.change_info = async (req, res) => {
 // delete information object
 exports.delete_info = async (req, res) => {
     try{
-        let parent = await MobileStatistics.findByIdAndDelete(req.query.id);
+        let parent = await MobileInformationDetail.findByIdAndDelete(req.query.id);
         if (!parent){
             return res.status(400).send("Parent information not found")
         }
@@ -66,15 +64,15 @@ exports.delete_info = async (req, res) => {
 }
 
 exports.post_info = async (req, res) => {
-    let mobileStatistics = new MobileStatistics({
+    let mobileInfo = new MobileInformationDetail({
         _id: mongoose.Types.ObjectId(),
-        filter: req.body.filter,
-        descriptions: req.body.descriptions,
+        link: req.body.link,
+        resource: req.body.resource,
         language: req.body.language,
     })
     try{
-        await mobileStatistics.save();
-        res.send(mobileStatistics);
+        await mobileInfo.save();
+        res.send(mobileInfo);
     } catch(err){
         res.status(500).send(err.toString());
     }
