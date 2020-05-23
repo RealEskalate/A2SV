@@ -18,7 +18,7 @@
                 class="small-icon mx-auto my-3"
               />
               <h1 class="text-center">557</h1>
-              <p class="text-center">Total cases</p>
+              <p class="text-center">{{ $t("totalCases") }}</p>
             </v-col>
             <v-col sm="3" cols="6" class="border-right">
               <v-img
@@ -26,7 +26,7 @@
                 class="small-icon mx-auto my-3"
               />
               <h1 class="text-center">116</h1>
-              <p class="text-center">Recovered</p>
+              <p class="text-center">{{ $t("recovered") }}</p>
             </v-col>
             <v-col sm="3" cols="6" class="border-right">
               <v-img
@@ -34,7 +34,7 @@
                 class="small-icon mx-auto my-3"
               />
               <h1 class="text-center">5</h1>
-              <p class="text-center">Death</p>
+              <p class="text-center">{{ $t("death") }}</p>
             </v-col>
             <v-col sm="3" cols="6">
               <v-img
@@ -42,7 +42,7 @@
                 class="small-icon mx-auto my-3"
               />
               <h1 class="text-center">229</h1>
-              <p class="text-center">Active cases</p>
+              <p class="text-center"> {{ $t("activeCases") }} </p>
             </v-col>
           </v-row>
         </v-card>
@@ -160,7 +160,7 @@
           phone: 6929
         },
         {
-          name: "tigray",
+          name: "tigrai",
           phone: 6244
         },
         {
@@ -176,7 +176,7 @@
           phone: 6220
         },
         {
-          name: "benishangul",
+          name: "benishangulGumuz",
           phone: 6016
         },
         {
@@ -246,16 +246,16 @@
         hoverBackgroundColor: "red",
         hoverBorderWidth: 10,
         labels: [
-          "addisAbaba",
-          "oromia",
-          "amhara",
-          "tigrai",
-          "benishangulGumuz",
-          "gambela",
-          "snnpr",
-          "afar",
-          "somali",
-          "direDawa"
+          this.$t("addisAbaba"),
+          this.$t("oromia"),
+          this.$t("amhara"),
+          this.$t("tigrai"),
+          this.$t("benishangulGumuz"),
+          this.$t("gambela"),
+          this.$t("snnpr"),
+          this.$t("afar"),
+          this.$t("somali"),
+          this.$t("direDawa")
         ],
         datasets: [
           {

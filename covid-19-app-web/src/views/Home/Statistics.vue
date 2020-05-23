@@ -23,7 +23,7 @@
               </v-tab>
               <v-tab>
                 <v-icon left>{{ mdiWeatherSunny }}</v-icon>
-                Daily Counts
+                {{ $t("dailyCounts") }}
                 <v-spacer />
                 <v-icon small color="primary darken-1" @click="dialog = true"
                   >{{ mdiHelpCircleOutline }}
@@ -31,7 +31,7 @@
               </v-tab>
               <v-tab>
                 <v-icon left>{{ mdiPercentOutline }}</v-icon>
-                View Rates
+                {{ $t("viewRates") }}
                 <v-spacer />
                 <v-icon small color="primary darken-1" @click="dialog = true">
                   {{ mdiHelpCircleOutline }}
@@ -39,7 +39,7 @@
               </v-tab>
               <v-tab>
                 <v-icon left>{{ mdiMapMarker }}</v-icon>
-                Compare Countries
+                {{ $t("compareCountries") }}
                 <v-spacer />
                 <v-icon small color="primary darken-1" @click="dialog = true">
                   {{ mdiHelpCircleOutline }}
@@ -155,22 +155,22 @@
 </template>
 
 <script>
-import Display from "./Charts/Display.vue";
-import DailyDisplay from "./Charts/DailyDisplay.vue";
-import CountryCompare from "./Charts/CountryCompare.vue";
-import DiseaseCompare from "./Charts/DiseaseCompare.vue";
-import store from "@/store";
-import {
-  mdiClose,
-  mdiHelpCircleOutline,
-  mdiMapMarker,
-  mdiNumeric,
-  mdiVirusOutline,
-  mdiWeatherSunny,
-  mdiPercentOutline
-} from "@mdi/js";
+  import Display from "./Charts/Display.vue";
+  import DailyDisplay from "./Charts/DailyDisplay.vue";
+  import CountryCompare from "./Charts/CountryCompare.vue";
+  import DiseaseCompare from "./Charts/DiseaseCompare.vue";
+  import store from "@/store";
+  import {
+    mdiClose,
+    mdiHelpCircleOutline,
+    mdiMapMarker,
+    mdiNumeric,
+    mdiPercentOutline,
+    mdiVirusOutline,
+    mdiWeatherSunny
+  } from "@mdi/js";
 
-export default {
+  export default {
   components: {
     Display,
     DailyDisplay,
