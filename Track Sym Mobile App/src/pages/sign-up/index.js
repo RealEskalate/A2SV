@@ -1,5 +1,5 @@
-import React from 'react';
-import {View, TouchableWithoutFeedback} from 'react-native';
+import React from "react";
+import { View, TouchableWithoutFeedback } from "react-native";
 import {
   Button,
   CheckBox,
@@ -14,81 +14,81 @@ import {
   Modal,
   Card,
   Spinner,
-} from '@ui-kitten/components';
-import {ImageOverlay} from '../../components/ImageOverlay/image-overlay.component';
-import {BackIcon, GoogleIcon, FacebookIcon, TwitterIcon} from './extra/icons';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import themedStyles from './extra/themedStyles.js';
+} from "@ui-kitten/components";
+import { ImageOverlay } from "../../components/ImageOverlay/image-overlay.component";
+import { BackIcon, GoogleIcon, FacebookIcon, TwitterIcon } from "./extra/icons";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import themedStyles from "./extra/themedStyles.js";
 
 const data = [
-  '0-10',
-  '11-20',
-  '21-30',
-  '31-40',
-  '41-50',
-  '51-60',
-  '61-70',
-  '71-80',
-  '81-90',
-  '>90',
+  "0-10",
+  "11-20",
+  "21-30",
+  "31-40",
+  "41-50",
+  "51-60",
+  "61-70",
+  "71-80",
+  "81-90",
+  ">90",
 ];
 
-const genderData = ['MALE', 'FEMALE'];
+const genderData = ["MALE", "FEMALE"];
 
-export default ({navigation}) => {
-  const [username, setUsername] = React.useState('');
-  const [password, setPassword] = React.useState('');
-  const [confirmPassword, setConfirmPassword] = React.useState('');
-  const [usernameCap, setUsernameCap] = React.useState('');
-  const [passwordCap, setPasswordCap] = React.useState('');
-  const [confirmPasswordCap, setConfirmPasswordCap] = React.useState('');
+export default ({ navigation }) => {
+  const [username, setUsername] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [confirmPassword, setConfirmPassword] = React.useState("");
+  const [usernameCap, setUsernameCap] = React.useState("");
+  const [passwordCap, setPasswordCap] = React.useState("");
+  const [confirmPasswordCap, setConfirmPasswordCap] = React.useState("");
   const [termsAccepted, setTermsAccepted] = React.useState(false);
-  const [usernameStatus, setUsernameStatus] = React.useState('basic');
-  const [passwordStatus, setPasswordStatus] = React.useState('basic');
-  const [modalMessage, setModalMessage] = React.useState('');
+  const [usernameStatus, setUsernameStatus] = React.useState("basic");
+  const [passwordStatus, setPasswordStatus] = React.useState("basic");
+  const [modalMessage, setModalMessage] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(false);
   const [confirmPasswordStatus, setConfirmPasswordStatus] = React.useState(
-    'basic',
+    "basic"
   );
   const [modalState, setModalState] = React.useState(false);
   const [selectedAgeIndex, setSelectedAgeIndex] = React.useState(
-    new IndexPath(0),
+    new IndexPath(0)
   );
   const [selectedGenderIndex, setSelectedGenderIndex] = React.useState(
-    new IndexPath(0),
+    new IndexPath(0)
   );
   const [passwordVisible, setPasswordVisible] = React.useState(false);
 
   const styles = useStyleSheet(themedStyles);
 
   const onSignUpButtonPress = () => {
-    if (username === '') {
-      setModalMessage('Username can not be Empty!');
+    if (username === "") {
+      setModalMessage("Please enter your username!");
       setModalState(true);
-      setUsernameStatus('danger');
+      setUsernameStatus("danger");
       return;
     }
 
-    if (password === '') {
-      setModalMessage('Password can not be Empty!');
+    if (password === "") {
+      setModalMessage("Please enter your password!");
       setModalState(true);
-      setPasswordStatus('danger');
+      setPasswordStatus("danger");
       return;
     }
 
     if (confirmPassword !== password) {
       setModalMessage("Password Don't match !");
       setModalState(true);
-      setConfirmPasswordStatus('danger');
+      setConfirmPasswordStatus("danger");
       return;
     }
 
     setIsLoading(true);
-    fetch('https://sym-track.herokuapp.com/api/auth/register', {
-      method: 'POST',
+    fetch("https://sym-track.herokuapp.com/api/auth/register", {
+      method: "POST",
       headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         username: username,
@@ -109,8 +109,8 @@ export default ({navigation}) => {
         console.log(displayGenderValue);
         console.log(error);
         setModalMessage(
-          'Poor connection',
-          "Couldn't resgister, please try again!",
+          "Poor connection",
+          "Couldn't resgister, please try again!"
         );
         setModalState(true);
         setIsLoading(false);
@@ -118,7 +118,7 @@ export default ({navigation}) => {
   };
 
   const onSignInButtonPress = () => {
-    navigation && navigation.navigate('LoginScreen');
+    navigation && navigation.navigate("LoginScreen");
   };
 
   const displayAgeValue = data[selectedAgeIndex.row];
@@ -133,7 +133,7 @@ export default ({navigation}) => {
 
   const renderIcon = (props) => (
     <TouchableWithoutFeedback onPress={onPasswordIconPress}>
-      <Icon {...props} name={passwordVisible ? 'eye-off' : 'eye'} />
+      <Icon {...props} name={passwordVisible ? "eye-off" : "eye"} />
     </TouchableWithoutFeedback>
   );
 
@@ -142,34 +142,34 @@ export default ({navigation}) => {
   };
 
   const onUserNameChange = (name) => {
-    if (name !== '') {
-      setUsernameStatus('basic');
-      setUsernameCap('');
+    if (name !== "") {
+      setUsernameStatus("basic");
+      setUsernameCap("");
     } else {
-      setUsernameStatus('danger');
-      setUsernameCap('Username cannot be empty !');
+      setUsernameStatus("danger");
+      setUsernameCap("Username is required");
     }
     setUsername(name);
   };
 
   const onPasswordChange = (pass) => {
-    if (pass !== '') {
-      setPasswordStatus('basic');
-      setPasswordCap('');
+    if (pass !== "") {
+      setPasswordStatus("basic");
+      setPasswordCap("");
     } else {
-      setPasswordStatus('danger');
-      setPasswordCap('Password cannot be empty !');
+      setPasswordStatus("danger");
+      setPasswordCap("Password is required");
     }
     setPassword(pass);
   };
 
   const onConfirmPasswordChange = (pass) => {
     if (pass === password) {
-      setConfirmPasswordStatus('basic');
-      setConfirmPasswordCap('');
+      setConfirmPasswordStatus("basic");
+      setConfirmPasswordCap("");
     } else {
-      setConfirmPasswordStatus('danger');
-      setConfirmPasswordCap("Password dont't match !");
+      setConfirmPasswordStatus("danger");
+      setConfirmPasswordCap("Password doesn't match");
     }
     setConfirmPassword(pass);
   };
@@ -179,22 +179,30 @@ export default ({navigation}) => {
       <Modal
         visible={modalState}
         backdropStyle={styles.backdrop}
-        onBackdropPress={() => setModalState(false)}>
+        onBackdropPress={() => setModalState(false)}
+      >
         <Card disabled={true}>
-          <Text status="danger" category="h6" style={{marginBottom: 10}}>
+          <Text status="danger" category="h6" style={{ marginBottom: 10 }}>
             {modalMessage}
           </Text>
-          <Button onPress={() => setModalState(false)}>DISMISS</Button>
+          <Text
+            style={{ alignSelf: "flex-end", color: "#0080ff" }}
+            onPress={() => setModalState(false)}
+          >
+            Dismiss
+          </Text>
         </Card>
       </Modal>
       <ImageOverlay
         style={styles.headerContainer}
-        source={require('../../../assets/signupBackground.png')}>
+        source={require("../../../assets/signupBackground.png")}
+      >
         <Button
           style={styles.evaButton}
           appearance="ghost"
           status="control"
-          size="large">
+          size="large"
+        >
           TRACK SYM
         </Button>
         <View style={styles.signUpContainer}>
@@ -205,7 +213,8 @@ export default ({navigation}) => {
               status="control"
               size="giant"
               accessoryLeft={BackIcon}
-              onPress={onSignInButtonPress}></Button>
+              onPress={onSignInButtonPress}
+            ></Button>
           </View>
           <Text style={styles.signInLabel} category="h4" status="control">
             SIGN UP
@@ -214,7 +223,7 @@ export default ({navigation}) => {
       </ImageOverlay>
       <View style={[styles.container, styles.formContainer]}>
         <Input
-          placeholder="Ally"
+          placeholder="Username"
           label="Username"
           caption={usernameCap}
           status={usernameStatus}
@@ -224,27 +233,29 @@ export default ({navigation}) => {
         />
         <Select
           style={styles.select}
-          label="AGE GROUP"
+          label="Age Group"
           style={styles.formInput}
           placeholder="Default"
           value={displayAgeValue}
           selectedIndex={selectedAgeIndex}
-          onSelect={(index) => setSelectedAgeIndex(index)}>
+          onSelect={(index) => setSelectedAgeIndex(index)}
+        >
           {data.map((index, title) => renderOption(index, title))}
         </Select>
         <Select
           style={styles.select}
-          label="GENDER"
+          label="Gender"
           style={styles.formInput}
           placeholder="Default"
           value={displayGenderValue}
           selectedIndex={selectedGenderIndex}
-          onSelect={(index) => setSelectedGenderIndex(index)}>
+          onSelect={(index) => setSelectedGenderIndex(index)}
+        >
           {genderData.map((index, title) => renderGenderOption(index, title))}
         </Select>
         <Input
           style={styles.formInput}
-          label="PASSWORD"
+          label="Password"
           placeholder="Password"
           caption={passwordCap}
           status={passwordStatus}
@@ -257,30 +268,32 @@ export default ({navigation}) => {
           style={styles.formInput}
           caption={confirmPasswordCap}
           placeholder="Confirm Password"
-          label="CONFIRM PASSWORD"
+          label="Confirm Password"
           status={confirmPasswordStatus}
           value={confirmPassword}
           secureTextEntry={true}
           onChangeText={(pass) => onConfirmPasswordChange(pass)}
         />
-        <CheckBox
+        {/* <CheckBox
           style={styles.termsCheckBox}
           textStyle={styles.termsCheckBoxText}
           checked={termsAccepted}
-          onChange={(checked) => setTermsAccepted(checked)}>
+          onChange={(checked) => setTermsAccepted(checked)}
+        >
           <Text style={styles.termsCheckBoxText}>
             {
-              'By creating an account, I agree to the Track Sym Terms of\nUse and Privacy Policy'
+              "By creating an account, I agree to the Track Sym Terms of\nUse and Privacy Policy"
             }
           </Text>
-        </CheckBox>
+        </CheckBox> */}
       </View>
       <Button
         style={styles.signUpButton}
         size="large"
         disabled={isLoading}
         accessoryLeft={() => (isLoading ? <Spinner /> : <></>)}
-        onPress={onSignUpButtonPress}>
+        onPress={onSignUpButtonPress}
+      >
         SIGN UP
       </Button>
       <View style={styles.orContainer}>

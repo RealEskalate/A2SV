@@ -1,5 +1,5 @@
-import React from 'react';
-import {createDrawerNavigator} from '@react-navigation/drawer';
+import React from "react";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 import {
   Drawer,
   DrawerItem,
@@ -9,13 +9,14 @@ import {
   Avatar,
   Icon,
   Divider,
-} from '@ui-kitten/components';
-import {StyleSheet} from 'react-native';
-import {HomeStackNavigator} from './homeNavigation';
-import {SettingNavigator} from '../pages/settings/settingStack';
-import News from '../pages/news/';
+} from "@ui-kitten/components";
+import { StyleSheet } from "react-native";
+import { HomeStackNavigator } from "./homeNavigation";
+import { SettingNavigator } from "../pages/settings/settingStack";
+import userIDStore from "../../components/data-management/user-id-data/userIDStore";
+import News from "../pages/news/";
 
-const {Navigator, Screen} = createDrawerNavigator();
+const { Navigator, Screen } = createDrawerNavigator();
 
 const HomeIcon = (props) => <Icon {...props} name="home-outline" />;
 const NewsIcon = (props) => <Icon {...props} name="browser-outline" />;
@@ -28,7 +29,7 @@ export const AvatarSizeShowcase = () => (
     <Avatar
       style={styles.avatar}
       size="giant"
-      source={require('../../assets/icon.png')}
+      source={require("../../assets/man.png")}
     />
   </Layout>
 );
@@ -37,7 +38,7 @@ const Header = (props) => (
   <React.Fragment>
     <Layout style={[props.style, styles.header]}>
       <AvatarSizeShowcase />
-      <Text>Feysel Mubarek</Text>
+      <Text> {userIDStore.getState().userName}</Text>
     </Layout>
     <Divider />
   </React.Fragment>
@@ -46,24 +47,25 @@ const Header = (props) => (
 const Footer = (props) => (
   <React.Fragment>
     <Divider />
-    <Layout level="2" style={{padding: 10}}>
+    <Layout level="2" style={{ padding: 10 }}>
       <Text appearance="hint">©2020 Track Sym - V 0.1</Text>
     </Layout>
   </React.Fragment>
 );
 
 const OrdersScreen = () => (
-  <Layout style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+  <Layout style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
     <Text category="h1">Comming Soon!!</Text>
   </Layout>
 );
 
-const DrawerContent = ({navigation, state}) => (
+const DrawerContent = ({ navigation, state }) => (
   <Drawer
     header={Header}
     footer={Footer}
     selectedIndex={new IndexPath(state.index)}
-    onSelect={(index) => navigation.navigate(state.routeNames[index.row])}>
+    onSelect={(index) => navigation.navigate(state.routeNames[index.row])}
+  >
     <DrawerItem title="HOME" accessoryLeft={HomeIcon} />
     <DrawerItem title="NEWS" accessoryLeft={NewsIcon} />
     <DrawerItem title="ETHIOPIA" accessoryLeft={FlagIcon} />
@@ -84,9 +86,9 @@ export const AppNavigator = () => (
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    flexWrap: 'wrap',
+    flexDirection: "row",
+    alignItems: "center",
+    flexWrap: "wrap",
     marginRight: 8,
   },
   avatar: {
@@ -94,7 +96,7 @@ const styles = StyleSheet.create({
   },
   header: {
     height: 128,
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
 });
