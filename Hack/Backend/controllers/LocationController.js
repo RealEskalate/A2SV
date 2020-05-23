@@ -20,7 +20,7 @@ exports.get_all_locations = async (req, res) => {
   try {
     res.send(locations);
   } catch (err) {
-    res.status(204).send("No Locations Found.");
+    res.status(404).send("No Locations Found.");
   }
 };
 
@@ -60,7 +60,7 @@ exports.get_all_locations_with_symptoms = async (req, res) => {
   if (result.length > 0) {
     res.send(result);
   } else {
-    res.status(204).send("No locations with users and symptoms found.");
+    res.status(404).send("No locations with users and symptoms found.");
   }
 }
 
@@ -117,11 +117,11 @@ exports.get_location_by_id = async (req, res) => {
   try {
     const location = await Location.findById(req.params.id);
     if(!location){
-      return res.status(204).send("Location not found");
+      return res.status(404).send("Location not found");
     }
     res.send(location);
   } catch (err) {
-    res.status(204).send("Location not found.");
+    res.status(404).send("Location not found.");
   }
 };
 
@@ -147,11 +147,11 @@ exports.get_location_by_coordinates = async (req, res) => {
       }
     });
     if(!locations || locations.length<1){
-      return res.status(204).send("Location not found with the given coordinates");
+      return res.status(404).send("Location not found with the given coordinates");
     }
     res.send(locations);
   } catch (err) {
-    res.status(204).send("Location not found with the given coordinates");
+    res.status(404).send("Location not found with the given coordinates");
   }
 };
 
@@ -168,7 +168,7 @@ exports.update_location = async (req, res) => {
     }
     let location = await Location.findById(req.body._id);
     if(!location){
-      return res.status(204).send("Location doesnot exist");      
+      return res.status(404).send("Location doesnot exist");      
     }
     location.set(req.body);
     const check = await Location.findOne({ 
@@ -206,9 +206,9 @@ exports.delete_location = async (req, res) => {
   try {
     const location = await Location.findByIdAndDelete(req.body._id);
     if (!location) {
-      res.status(204).send("Location is not found");
+      res.status(404).send("Location is not found");
     } else {
-      res.status(204).send(location);
+      res.status(404).send(location);
     }
   } catch (err) {
     res.status(400).send("Location couldn't be deleted");

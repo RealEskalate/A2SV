@@ -122,7 +122,7 @@ exports.post_location_user = async (req, res) => {
     await user.save();
     return res.send(location_user);
   } catch (err) {
-    return res.status(204).send("Location User could not be posted");
+    return res.status(404).send("Location User could not be posted");
   }
 }
 
@@ -139,11 +139,11 @@ exports.get_location_user_by_id = async (req, res) => {
   try {
     const locationUser = await LocationUser.findById(req.params.id);
     if (!locationUser) {
-      return res.status(204).send("User Location not found");
+      return res.status(404).send("User Location not found");
     }
     res.send(locationUser);
   } catch (err) {
-    res.status(204).send("User Location not found");
+    res.status(404).send("User Location not found");
   }
 }
 
@@ -163,7 +163,7 @@ exports.get_by_location_id = async (req, res) => {
     });
     res.send(results);
   } catch (err) {
-    return res.status(204).send("User Locations filtered by Location not found");
+    return res.status(404).send("User Locations filtered by Location not found");
   }
 };
 
@@ -178,7 +178,7 @@ exports.get_all_location_users = async (req, res) => {
   try {
     res.send(results);
   } catch (err) {
-    res.status(204).send("No Location Users not found");
+    res.status(404).send("No Location Users not found");
   }
 };
 
@@ -198,7 +198,7 @@ exports.get_by_user_id = async (req, res) => {
     });
     res.send(results);
   } catch (err) {
-    return res.status(204).send("User Locations filtered by User not found");
+    return res.status(404).send("User Locations filtered by User not found");
   }
 };
 
@@ -215,11 +215,11 @@ exports.delete_location_user = async (req, res) => {
   try {
     const location_user = await LocationUser.findByIdAndDelete(req.body._id);
     if (!location_user) {
-      return res.status(204).send("User Location Not Found");
+      return res.status(404).send("User Location Not Found");
     }
     res.status(201).send(location_user);
   } catch (err) {
-    res.status(204).send("Location User could not be deleted");
+    res.status(404).send("Location User could not be deleted");
   }
 };
 
@@ -236,13 +236,13 @@ exports.update_location_user = async (req, res) => {
   try {
     let locationUser = await LocationUser.findById(req.body._id);
     if (!locationUser) {
-      return res.status(204).send("User Location Not Found");
+      return res.status(404).send("User Location Not Found");
     }
     locationUser.set(req.body);
     await locationUser.save();
     res.send(locationUser);
   } catch (err) {
-    res.status(204).send("Location User could not be updated");
+    res.status(404).send("Location User could not be updated");
   }
 };
 
