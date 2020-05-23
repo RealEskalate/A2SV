@@ -246,16 +246,16 @@
         hoverBackgroundColor: "red",
         hoverBorderWidth: 10,
         labels: [
-          "addisAbaba",
-          "oromia",
-          "amhara",
-          "tigrai",
-          "benishangulGumuz",
-          "gambela",
-          "snnpr",
-          "afar",
-          "somali",
-          "direDawa"
+          this.$t("addisAbaba"),
+          this.$t("oromia"),
+          this.$t("amhara"),
+          this.$t("tigrai"),
+          this.$t("benishangulGumuz"),
+          this.$t("gambela"),
+          this.$t("snnpr"),
+          this.$t("afar"),
+          this.$t("somali"),
+          this.$t("direDawa")
         ],
         datasets: [
           {
