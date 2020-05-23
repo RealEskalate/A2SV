@@ -13,12 +13,13 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   plugins: [
     createPersistedState({
-      paths: ["navigationType"]
+      paths: ["navigationType", "languagePreference"]
     })
   ],
   state: {
     allCountries: [],
-    navigationType: "1"
+    navigationType: "1",
+    languagePreference: null
   },
   getters: {
     getAllCountries(state) {
@@ -26,6 +27,9 @@ export default new Vuex.Store({
     },
     getNavigationType(state) {
       return state.navigationType;
+    },
+    getLanguagePreference(state) {
+      return state.languagePreference;
     }
   },
   mutations: {
@@ -34,6 +38,9 @@ export default new Vuex.Store({
     },
     setNavigationType(state, payload) {
       state.navigationType = payload;
+    },
+    setLanguagePreference(state, payload) {
+      state.languagePreference = payload;
     }
   },
   actions: {
@@ -52,6 +59,10 @@ export default new Vuex.Store({
     setNavState({ commit }, { type }) {
       commit("setNavigationType", type);
       console.log("type", type);
+    },
+    setLanguagePreference({commit}, {lang}) {
+      console.log(lang);
+      commit("setLanguagePreference", lang);
     }
   },
   modules: {

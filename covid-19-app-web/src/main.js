@@ -6,6 +6,7 @@ import vuetify from "./plugins/vuetify";
 import VueProgressBar from "vue-progressbar";
 import VueLoaders from "vue-loaders";
 import "vue-loaders/dist/vue-loaders.css";
+import i18n from "./i18n";
 
 Vue.use(VueLoaders);
 Vue.use(VueProgressBar, {
@@ -34,5 +35,6 @@ new Vue({
   router,
   store,
   vuetify,
+  i18n,
   render: h => h(App)
 }).$mount("#app");

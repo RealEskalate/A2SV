@@ -26,7 +26,7 @@
         active-class="border-bottom"
         class="hidden-sm-and-down v-card--shaped nav-btn"
       >
-        <span class="text-capitalize"> {{ link.text }}</span>
+        <span class="text-capitalize"> {{ $t(link.text.toLowerCase()) }}</span>
       </v-btn>
       <v-menu left bottom v-if="$vuetify.breakpoint.smAndDown">
         <template v-slot:activator="{ on }">
@@ -98,17 +98,10 @@
 </template>
 
 <script>
-import store from "@/store/";
-import {
-  mdiBookOpenVariant,
-  mdiDotsVertical,
-  mdiHome,
-  mdiInformation,
-  mdiMap,
-  mdiNewspaper
-} from "@mdi/js";
+  import store from "@/store/";
+  import {mdiBookOpenVariant, mdiDotsVertical, mdiHome, mdiInformation, mdiMap, mdiNewspaper} from "@mdi/js";
 
-export default {
+  export default {
   data: () => {
     return {
       mdiDotsVertical,
