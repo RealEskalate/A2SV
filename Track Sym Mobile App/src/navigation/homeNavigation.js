@@ -18,6 +18,9 @@ import {SafeAreaView} from 'react-native';
 import InformationScreen from '../pages/info/';
 import InfoDetailScreen from '../pages/info-detail/';
 import PrevDetailScreen from '../pages/info-detail/preventions';
+import SymDetailScreen from '../pages/info-detail/symptoms';
+import SpdDetailScreen from '../pages/info-detail/spread';
+import MsgDetailScreen from '../pages/info-detail/message';
 import SymptomPage from '../../components/symptom-page/SymptomPage';
 import {default as MapScreen} from '../../components/map-service/MapService';
 import UserSymptomPage from '../../components/symptom-page/UserSymptomPage.js';
@@ -128,6 +131,9 @@ export const HomeStackNavigator = (props) => (
     <Stack.Screen name="HomeBotttomNav" component={HomeTabsNavigator} />
     <Stack.Screen name="InfoDetailScreen" component={InfoDetailScreen} />
     <Stack.Screen name="PrevDetailScreen" component={PrevDetailScreen} />
+    <Stack.Screen name="SymDetailScreen" component={SymDetailScreen} />
+    <Stack.Screen name="SpdDetailScreen" component={SpdDetailScreen} />
+    <Stack.Screen name="MsgDetailScreen" component={MsgDetailScreen} />
     <Stack.Screen name="EditSymptomScreen" component={EditSymptomScreen} />
   </Stack.Navigator>
 );
