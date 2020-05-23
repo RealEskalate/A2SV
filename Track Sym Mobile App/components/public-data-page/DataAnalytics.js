@@ -14,7 +14,14 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import * as criterias from "./Criterias";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import DatePicker from "react-native-datepicker";
-import { ApplicationProvider, Datepicker, Layout } from "@ui-kitten/components";
+import {
+  ApplicationProvider,
+  Card,
+  Modal,
+  Button,
+  Datepicker,
+  Layout,
+} from "@ui-kitten/components";
 import * as eva from "@eva-design/eva";
 import SearchableDropdown from "react-native-searchable-dropdown";
 import userIDStore from "../data-management/user-id-data/userIDStore";
@@ -57,6 +64,14 @@ class DataAnalytics extends React.Component {
     countries: [],
     totalLoading: true,
     testCountDataExist: false,
+    new_case_description_visiblity: false,
+    total_case_description_visiblity: false,
+    rate_description_visibility: false,
+    new_case_description: [
+      `This graph represents the number of daily deaths, the number of currently active cases, the number of tests done, the number of daily deaths encountered, the number of recovered patients to the latest pandemic, COVID-19.`,
+    ],
+    total_case_description: `This graph represents the total number of positive cases, the total number of active cases, the total number of tests done, the number of total deaths encountered, the number of recovered patients to the latest pandemic, COVID-19.`,
+    rate_description: `This graph represents the rate of positive cases, rate of recovered patients, rate of active(currently infected) patients and rate of deaths encountered from the total conducted tests everyday to the latest pandemic, COVID-19.`,
   };
 
   componentDidMount = async () => {
@@ -67,7 +82,7 @@ class DataAnalytics extends React.Component {
       .then(this.getCountryList())
       .then(this.checkIfDataExist(criterias.numberOfTests)) //check if number of test case data exist
       .catch((error) => {
-        Alert.alert("Concurrency Issue");
+        console.log("Concurrency Issue");
       });
   };
 
@@ -431,12 +446,23 @@ class DataAnalytics extends React.Component {
         console.log(error);
       });
   }
+  //gets the current date and return in yyyy-mm-dd format
+  getCurrentDate() {
+    var day = new Date().getDate();
+    var month = new Date().getMonth() + 1;
+    var year = new Date().getFullYear();
+    return year + "-" + month + "-" + day;
+  }
+  //get minimum date for selection
+  getMinimumDate() {
+    return "2019-12-31";
+  }
 
   render() {
     const HIEGHT = Dimensions.get("window").height;
     return (
-      <View>
-        <View style={{ flexDirection: "row" }}>
+      <Layout>
+        <Layout style={{ flexDirection: "row" }}>
           <SearchableDropdown
             onTextChange={(text) => {
               this.setState({ search: text });
@@ -476,23 +502,24 @@ class DataAnalytics extends React.Component {
             <MaterialCommunityIcons name="reload" color="#0080ff" size={30} />
             <Text style={{ fontSize: 12 }}>Refresh</Text>
           </TouchableOpacity>
-        </View>
+        </Layout>
 
         <ScrollView>
-          <View style={styles.container}>
-            <View
+          <Layout style={styles.container}>
+            <Layout
               style={{
                 alignContent: "flex-start",
                 justifyContent: "flex-start",
                 margin: 10,
                 width: Dimensions.get("window").width - 20,
+                backgroundColor: "#ffffff00",
               }}
             >
               <Text style={{ fontSize: 20, fontFamily: "Roboto-Black" }}>
                 Case Update
               </Text>
-            </View>
-            <View
+            </Layout>
+            <Layout
               style={{
                 flexDirection: "row",
                 width: Dimensions.get("screen").width - 10,
@@ -509,21 +536,29 @@ class DataAnalytics extends React.Component {
                 disabled={true}
                 style={{ alignItems: "center" }}
               >
-                <View
-                  style={{
-                    width: 20,
-                    height: 20,
-                    borderRadius: 20 / 2,
-                    margin: 5,
-                    borderColor: "gray",
-                    borderWidth: 3,
-                  }}
-                ></View>
+                <Layout
+                  style={{ backgroundColor: "#F6CA81", borderRadius: 20 }}
+                >
+                  <Layout
+                    style={{
+                      width: 20,
+                      height: 20,
+                      borderRadius: 20 / 2,
+                      margin: 5,
+                      borderColor: "#F57B35",
+                      borderWidth: 3,
+                    }}
+                  ></Layout>
+                </Layout>
 
                 {this.state.totalLoading ? (
-                  <ActivityIndicator size="small" color="gray" />
+                  <ActivityIndicator
+                    size="small"
+                    color="#F57B35"
+                    style={{ margin: 5 }}
+                  />
                 ) : (
-                  <Text style={{ fontSize: 24, color: "gray" }}>
+                  <Text style={{ fontSize: 24, color: "#F57B35" }}>
                     {this.reformatNumber(
                       String(
                         this.state.TotalStatisticsData[
@@ -538,23 +573,32 @@ class DataAnalytics extends React.Component {
                 )}
                 <Text>New Cofirmed</Text>
               </TouchableOpacity>
+
               <TouchableOpacity
                 disabled={true}
                 style={{ alignItems: "center" }}
               >
-                <View
-                  style={{
-                    width: 20,
-                    height: 20,
-                    borderRadius: 20 / 2,
-                    margin: 5,
-                    borderColor: "green",
-                    borderWidth: 3,
-                  }}
-                ></View>
+                <Layout
+                  style={{ backgroundColor: "#ABF788", borderRadius: 20 }}
+                >
+                  <Layout
+                    style={{
+                      width: 20,
+                      height: 20,
+                      borderRadius: 20 / 2,
+                      margin: 5,
+                      borderColor: "green",
+                      borderWidth: 3,
+                    }}
+                  ></Layout>
+                </Layout>
 
                 {this.state.totalLoading ? (
-                  <ActivityIndicator size="small" color="green" />
+                  <ActivityIndicator
+                    size="small"
+                    color="green"
+                    style={{ margin: 5 }}
+                  />
                 ) : (
                   <Text style={{ fontSize: 24, color: "green" }}>
                     {this.reformatNumber(
@@ -571,23 +615,32 @@ class DataAnalytics extends React.Component {
                 )}
                 <Text>New Recovered</Text>
               </TouchableOpacity>
+
               <TouchableOpacity
                 disabled={true}
                 style={{ alignItems: "center" }}
               >
-                <View
-                  style={{
-                    width: 20,
-                    height: 20,
-                    borderRadius: 20 / 2,
-                    margin: 5,
-                    borderColor: "red",
-                    borderWidth: 3,
-                  }}
-                ></View>
+                <Layout
+                  style={{ backgroundColor: "#F9A993", borderRadius: 20 }}
+                >
+                  <Layout
+                    style={{
+                      width: 20,
+                      height: 20,
+                      borderRadius: 20 / 2,
+                      margin: 5,
+                      borderColor: "red",
+                      borderWidth: 3,
+                    }}
+                  ></Layout>
+                </Layout>
 
                 {this.state.totalLoading ? (
-                  <ActivityIndicator size="small" color="red" />
+                  <ActivityIndicator
+                    size="small"
+                    color="red"
+                    style={{ margin: 5 }}
+                  />
                 ) : (
                   <Text style={{ fontSize: 24, color: "red" }}>
                     {this.reformatNumber(
@@ -604,20 +657,23 @@ class DataAnalytics extends React.Component {
                 )}
                 <Text>New Death</Text>
               </TouchableOpacity>
-            </View>
-            <View
+            </Layout>
+
+            <Layout
               style={{
                 alignContent: "flex-start",
                 justifyContent: "flex-start",
                 margin: 10,
                 width: Dimensions.get("window").width - 20,
+                backgroundColor: "#ffffff00",
               }}
             >
               <Text style={{ fontSize: 20, fontFamily: "Roboto-Black" }}>
                 Total Data
               </Text>
-            </View>
-            <View
+            </Layout>
+
+            <Layout
               style={{
                 flexDirection: "row",
                 width: Dimensions.get("screen").width,
@@ -634,21 +690,29 @@ class DataAnalytics extends React.Component {
                 disabled={true}
                 style={{ alignItems: "center" }}
               >
-                <View
-                  style={{
-                    width: 20,
-                    height: 20,
-                    borderRadius: 20 / 2,
-                    margin: 5,
-                    borderColor: "gray",
-                    borderWidth: 3,
-                  }}
-                ></View>
+                <Layout
+                  style={{ backgroundColor: "#F6CA81", borderRadius: 20 }}
+                >
+                  <Layout
+                    style={{
+                      width: 20,
+                      height: 20,
+                      borderRadius: 20 / 2,
+                      margin: 5,
+                      borderColor: "#F57B35",
+                      borderWidth: 3,
+                    }}
+                  ></Layout>
+                </Layout>
 
                 {this.state.totalLoading ? (
-                  <ActivityIndicator size="small" color="gray" />
+                  <ActivityIndicator
+                    size="small"
+                    color="#F57B35"
+                    style={{ margin: 5 }}
+                  />
                 ) : (
-                  <Text style={{ fontSize: 24, color: "gray" }}>
+                  <Text style={{ fontSize: 24, color: "#F57B35" }}>
                     {this.reformatNumber(
                       String(
                         this.state.TotalStatisticsData[
@@ -664,19 +728,27 @@ class DataAnalytics extends React.Component {
                 disabled={true}
                 style={{ alignItems: "center" }}
               >
-                <View
-                  style={{
-                    width: 20,
-                    height: 20,
-                    borderRadius: 20 / 2,
-                    margin: 5,
-                    borderColor: "green",
-                    borderWidth: 3,
-                  }}
-                ></View>
+                <Layout
+                  style={{ backgroundColor: "#ABF788", borderRadius: 20 }}
+                >
+                  <Layout
+                    style={{
+                      width: 20,
+                      height: 20,
+                      borderRadius: 20 / 2,
+                      margin: 5,
+                      borderColor: "green",
+                      borderWidth: 3,
+                    }}
+                  ></Layout>
+                </Layout>
 
                 {this.state.totalLoading ? (
-                  <ActivityIndicator size="small" color="green" />
+                  <ActivityIndicator
+                    size="small"
+                    color="green"
+                    style={{ margin: 5 }}
+                  />
                 ) : (
                   <Text style={{ fontSize: 24, color: "green" }}>
                     {this.reformatNumber(
@@ -694,19 +766,27 @@ class DataAnalytics extends React.Component {
                 disabled={true}
                 style={{ alignItems: "center" }}
               >
-                <View
-                  style={{
-                    width: 20,
-                    height: 20,
-                    borderRadius: 20 / 2,
-                    margin: 5,
-                    borderColor: "red",
-                    borderWidth: 3,
-                  }}
-                ></View>
+                <Layout
+                  style={{ backgroundColor: "#F9A993", borderRadius: 20 }}
+                >
+                  <Layout
+                    style={{
+                      width: 20,
+                      height: 20,
+                      borderRadius: 20 / 2,
+                      margin: 5,
+                      borderColor: "red",
+                      borderWidth: 3,
+                    }}
+                  ></Layout>
+                </Layout>
 
                 {this.state.totalLoading ? (
-                  <ActivityIndicator size="small" color="red" />
+                  <ActivityIndicator
+                    size="small"
+                    color="red"
+                    style={{ margin: 5 }}
+                  />
                 ) : (
                   <Text style={{ fontSize: 24, color: "red" }}>
                     {this.reformatNumber(
@@ -720,9 +800,76 @@ class DataAnalytics extends React.Component {
                 )}
                 <Text>Total Death</Text>
               </TouchableOpacity>
-            </View>
+            </Layout>
+            <Layout style={styles.backdrop_container}>
+              <Modal
+                visible={this.state.new_case_description_visiblity}
+                backdropStyle={styles.backdrop}
+                onBackdropPress={() =>
+                  this.setState({ new_case_description_visiblity: false })
+                }
+              >
+                <Card disabled={true}>
+                  <Text>
+                    {this.state.selected_filter_daily_status ===
+                    criterias.confirmed
+                      ? this.state.new_case_description[0]
+                      : this.state.selected_filter_daily_status ===
+                        criterias.recoveries
+                      ? this.state.new_case_description[1]
+                      : this.state.new_case_description[2]}
+                  </Text>
+                  <Button
+                    appearance="ghost"
+                    onPress={() =>
+                      this.setState({ new_case_description_visiblity: false })
+                    }
+                  >
+                    Dismiss
+                  </Button>
+                </Card>
+              </Modal>
+              <Modal
+                visible={this.state.total_case_description_visiblity}
+                backdropStyle={styles.backdrop}
+                onBackdropPress={() =>
+                  this.setState({ total_case_description_visiblity: false })
+                }
+              >
+                <Card disabled={true}>
+                  <Text>{this.state.total_case_description}</Text>
+                  <Button
+                    appearance="ghost"
+                    onPress={() =>
+                      this.setState({ total_case_description_visiblity: false })
+                    }
+                  >
+                    Dismiss
+                  </Button>
+                </Card>
+              </Modal>
+              <Modal
+                visible={this.state.rate_description_visibility}
+                backdropStyle={styles.backdrop}
+                onBackdropPress={() =>
+                  this.setState({ rate_description_visibility: false })
+                }
+              >
+                <Card disabled={true}>
+                  <Text>{this.state.rate_description}</Text>
+                  <Button
+                    appearance="ghost"
+                    onPress={() =>
+                      this.setState({ rate_description_visibility: false })
+                    }
+                  >
+                    Dismiss
+                  </Button>
+                </Card>
+              </Modal>
+            </Layout>
 
-            <View style={styles.container_graph}>
+            <Layout style={styles.container_graph}>
               <Text
                 style={{
                   fontSize: 20,
@@ -736,7 +883,7 @@ class DataAnalytics extends React.Component {
                 Country : {this.state.search}
               </Text>
 
-              <View
+              <Layout
                 style={{
                   flexDirection: "row",
                   marginLeft: 10,
@@ -744,11 +891,16 @@ class DataAnalytics extends React.Component {
                   alignSelf: "center",
                 }}
               >
-                <View style={{ flexDirection: "row", marginRight: 20 }}>
+                <Layout style={{ flexDirection: "row", marginRight: 20 }}>
                   <DatePicker
                     date={this.state.selected_daily_start_date}
                     mode="date" //The enum of date, datetime and
                     placeholder="Select start date"
+                    maxDate={
+                      this.state.selected_daily_end_date === ""
+                        ? this.getCurrentDate()
+                        : this.state.selected_daily_end_date
+                    }
                     format="YYYY-MM-DD"
                     customStyles={{
                       dateIcon: {
@@ -767,14 +919,20 @@ class DataAnalytics extends React.Component {
                       this.setState({ selected_daily_start_date: date });
                     }}
                   />
-                </View>
-                <View style={{ flexDirection: "row" }}>
+                </Layout>
+                <Layout style={{ flexDirection: "row" }}>
                   <DatePicker
                     date={this.state.selected_daily_end_date}
                     mode="date" //The enum of date, datetime and time
                     placeholder="Select end date"
                     format="YYYY-MM-DD"
                     confirmBtnText="Confirm"
+                    minDate={
+                      this.state.selected_daily_start_date === ""
+                        ? this.getMinimumDate
+                        : this.state.selected_daily_start_date
+                    }
+                    maxDate={this.getCurrentDate()}
                     cancelBtnText="Cancel"
                     customStyles={{
                       dateIcon: {
@@ -794,8 +952,8 @@ class DataAnalytics extends React.Component {
                       this.fetchDailyNewsCases();
                     }}
                   />
-                </View>
-              </View>
+                </Layout>
+              </Layout>
 
               <BarChart
                 data={{
@@ -806,7 +964,7 @@ class DataAnalytics extends React.Component {
                     },
                   ],
                 }}
-                verticalLabelRotation={30}
+                verticalLabelRotation={60}
                 width={Dimensions.get("window").width} // from react-nativ
                 height={HIEGHT / 2}
                 formatYLabel={(Y) => this.intToString(Number(Y))}
@@ -831,9 +989,11 @@ class DataAnalytics extends React.Component {
                   borderRadius: 10,
                 }}
               />
-            </View>
+            </Layout>
 
-            <View style={{ flexDirection: "row" }}>
+            <Layout
+              style={{ flexDirection: "row", backgroundColor: "#ffffff00" }}
+            >
               <TouchableOpacity
                 style={
                   this.state.selected_filter_daily_status ===
@@ -937,9 +1097,17 @@ class DataAnalytics extends React.Component {
                   </Text>
                 </TouchableOpacity>
               ) : null}
-            </View>
+              <TouchableOpacity
+                style={styles.touchable_buttons_pressed}
+                onPress={() => {
+                  this.setState({ new_case_description_visiblity: true });
+                }}
+              >
+                <Text style={styles.text_style_pressed}>Description</Text>
+              </TouchableOpacity>
+            </Layout>
 
-            <View style={styles.container_graph}>
+            <Layout style={styles.container_graph}>
               <Text
                 style={{
                   fontSize: 20,
@@ -953,7 +1121,7 @@ class DataAnalytics extends React.Component {
                 Country : {this.state.search}
               </Text>
 
-              <View
+              <Layout
                 style={{
                   flexDirection: "row",
                   marginLeft: 10,
@@ -961,11 +1129,16 @@ class DataAnalytics extends React.Component {
                   alignSelf: "center",
                 }}
               >
-                <View style={{ flexDirection: "row", marginRight: 20 }}>
+                <Layout style={{ flexDirection: "row", marginRight: 20 }}>
                   <DatePicker
                     date={this.state.selected_total_start_date}
                     mode="date" //The enum of date, datetime and
                     placeholder="Select start date"
+                    maxDate={
+                      this.state.selected_total_end_date === ""
+                        ? this.getCurrentDate()
+                        : this.state.selected_total_end_date
+                    }
                     format="YYYY-MM-DD"
                     customStyles={{
                       dateIcon: {
@@ -984,13 +1157,19 @@ class DataAnalytics extends React.Component {
                       this.setState({ selected_total_start_date: date });
                     }}
                   />
-                </View>
-                <View style={{ flexDirection: "row" }}>
+                </Layout>
+                <Layout style={{ flexDirection: "row" }}>
                   <DatePicker
                     date={this.state.selected_total_end_date}
                     mode="date" //The enum of date, datetime and time
                     placeholder="Select end date"
                     format="YYYY-MM-DD"
+                    minDate={
+                      this.state.selected_total_start_date === ""
+                        ? this.getMinimumDate()
+                        : this.state.selected_total_start_date
+                    }
+                    maxDate={this.getCurrentDate()}
                     confirmBtnText="Confirm"
                     cancelBtnText="Cancel"
                     customStyles={{
@@ -1011,15 +1190,15 @@ class DataAnalytics extends React.Component {
                       this.fetchStatistics();
                     }}
                   />
-                </View>
-              </View>
+                </Layout>
+              </Layout>
 
               <LineChart
                 data={{
                   labels: this.state.graph_label,
                   datasets: [{ data: this.state.data_set }],
                 }}
-                verticalLabelRotation={30}
+                verticalLabelRotation={60}
                 width={Dimensions.get("window").width} // from react-native
                 height={HIEGHT / 2}
                 fromZero={true}
@@ -1042,9 +1221,11 @@ class DataAnalytics extends React.Component {
                   borderRadius: 10,
                 }}
               />
-            </View>
+            </Layout>
 
-            <View style={{ flexDirection: "row" }}>
+            <Layout
+              style={{ flexDirection: "row", backgroundColor: "#ffffff00" }}
+            >
               <TouchableOpacity
                 style={
                   this.state.selected_filter === criterias.confirmed
@@ -1140,9 +1321,17 @@ class DataAnalytics extends React.Component {
                   </Text>
                 </TouchableOpacity>
               ) : null}
-            </View>
+              <TouchableOpacity
+                style={styles.touchable_buttons_pressed}
+                onPress={() => {
+                  this.setState({ total_case_description_visiblity: true });
+                }}
+              >
+                <Text style={styles.text_style_pressed}>Description</Text>
+              </TouchableOpacity>
+            </Layout>
 
-            <View style={styles.container_graph}>
+            <Layout style={styles.container_graph}>
               <Text
                 style={{
                   fontSize: 20,
@@ -1156,7 +1345,7 @@ class DataAnalytics extends React.Component {
                 Country : {this.state.search}
               </Text>
 
-              <View
+              <Layout
                 style={{
                   flexDirection: "row",
                   marginLeft: 10,
@@ -1164,12 +1353,17 @@ class DataAnalytics extends React.Component {
                   alignSelf: "center",
                 }}
               >
-                <View style={{ flexDirection: "row", marginRight: 20 }}>
+                <Layout style={{ flexDirection: "row", marginRight: 20 }}>
                   <DatePicker
                     date={this.state.selected_rate_start_date}
                     mode="date" //The enum of date, datetime and
                     placeholder="Select start date"
                     format="YYYY-MM-DD"
+                    maxDate={
+                      this.state.selected_rate_end_date === ""
+                        ? this.getCurrentDate()
+                        : this.state.selected_rate_end_date
+                    }
                     customStyles={{
                       dateIcon: {
                         position: "absolute",
@@ -1187,12 +1381,18 @@ class DataAnalytics extends React.Component {
                       this.setState({ selected_rate_start_date: date });
                     }}
                   />
-                </View>
-                <View style={{ flexDirection: "row" }}>
+                </Layout>
+                <Layout style={{ flexDirection: "row" }}>
                   <DatePicker
                     date={this.state.selected_rate_end_date}
                     mode="date" //The enum of date, datetime and time
                     placeholder="Select end date"
+                    minDate={
+                      this.state.selected_rate_start_date === ""
+                        ? this.getMinimumDate()
+                        : this.state.selected_rate_start_date
+                    }
+                    maxDate={this.getCurrentDate()}
                     format="YYYY-MM-DD"
                     confirmBtnText="Confirm"
                     cancelBtnText="Cancel"
@@ -1214,15 +1414,15 @@ class DataAnalytics extends React.Component {
                       this.fetchRateStatistics();
                     }}
                   />
-                </View>
-              </View>
+                </Layout>
+              </Layout>
 
               <LineChart
                 data={{
                   labels: this.state.rate_label,
                   datasets: [{ data: this.state.rate_data_set }],
                 }}
-                verticalLabelRotation={30}
+                verticalLabelRotation={60}
                 width={Dimensions.get("window").width} // from react-native
                 height={HIEGHT / 2}
                 fromZero={true}
@@ -1244,9 +1444,15 @@ class DataAnalytics extends React.Component {
                   borderRadius: 10,
                 }}
               />
-            </View>
+            </Layout>
 
-            <View style={{ flexDirection: "row", marginBottom: 80 }}>
+            <Layout
+              style={{
+                flexDirection: "row",
+                marginBottom: 80,
+                backgroundColor: "#ffffff00",
+              }}
+            >
               {this.state.testCountDataExist ? (
                 <TouchableOpacity
                   style={
@@ -1320,10 +1526,18 @@ class DataAnalytics extends React.Component {
                   Death Rate
                 </Text>
               </TouchableOpacity>
-            </View>
-          </View>
+              <TouchableOpacity
+                style={styles.touchable_buttons_pressed}
+                onPress={() => {
+                  this.setState({ rate_description_visibility: true });
+                }}
+              >
+                <Text style={styles.text_style_pressed}>Description</Text>
+              </TouchableOpacity>
+            </Layout>
+          </Layout>
         </ScrollView>
-      </View>
+      </Layout>
     ); // end of return
   } // end of render function
 } // end of class StaticsPage
@@ -1333,6 +1547,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#eee",
+  },
+  backdrop_container: {
+    minHeight: 0,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  backdrop: {
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   cards_total: {
     backgroundColor: "#fc2314",

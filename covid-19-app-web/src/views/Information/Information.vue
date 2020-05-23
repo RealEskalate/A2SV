@@ -42,7 +42,7 @@
             />
             <carousel-3d
               v-else
-              style="min-height: 300px"
+              style="min-height: 350px"
               :border="0"
               :perspective="20"
               :inverse-scaling="50"
@@ -52,12 +52,13 @@
               width="400"
             >
               <slide
+                class="overflow-visible"
                 :key="i"
                 v-for="(item, i) in information"
                 :index="i"
                 style="height: auto; background-color: transparent"
               >
-                <v-card class="mx-auto" outlined shaped>
+                <v-card class="mx-auto shadow" outlined shaped>
                   <v-img
                     class="white--text align-end"
                     height="200px"

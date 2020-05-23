@@ -1,16 +1,11 @@
 import React, { Component } from "react";
-import {
-  ScrollView,
-  StyleSheet,
-  View,
-  ActivityIndicator,
-  Text,
-} from "react-native";
+import { ScrollView, StyleSheet, View, ActivityIndicator } from "react-native";
 import userIDStore from "../data-management/user-id-data/userIDStore";
 import symptomStore from "../data-management/user-symptom-data/symptomStore";
 import * as symptomActions from "../data-management/user-symptom-data/symptomActions";
 import { ListItem, Button, Card } from "react-native-elements";
 import MapboxGL from "@react-native-mapbox-gl/maps";
+import { Layout, Text } from "@ui-kitten/components";
 
 MapboxGL.setAccessToken(
   "pk.eyJ1IjoiZmVyb3g5OCIsImEiOiJjazg0czE2ZWIwNHhrM2VtY3Y0a2JkNjI3In0.zrm7UtCEPg2mX8JCiixE4g"
@@ -93,7 +88,7 @@ export default class UserSymptomPage extends Component {
       .then((response) => response.json())
       .then((json) => {
         // fetching user symptoms from the database is successful and updating local state using redux
-        symptomStore.dispatch(symptomActions.addSymptom(json));
+        symptomStore.dispatch(symptomActions.updateSymptomList(json));
         newThis.setState({
           loading: false,
         });
@@ -144,16 +139,17 @@ export default class UserSymptomPage extends Component {
           onUpdate={this.onUserLocationUpdate}
         />
         {this.state.loading ? (
-          <View
+          <Layout
             style={{
               flex: 1,
               justifyContent: "center",
               alignItems: "center",
               marginTop: 80,
+              backgroundColor: "#ffffff00",
             }}
           >
             <ActivityIndicator size="large" color="#1976d2" />
-          </View>
+          </Layout>
         ) : this.state.userSymptoms.length == 0 ? (
           this.emptySymptomList()
         ) : (

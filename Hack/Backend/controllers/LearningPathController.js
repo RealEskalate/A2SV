@@ -10,10 +10,10 @@ exports.getAllLearningPath = async(req, res) => {
             let learningPaths = await LearningPath.find({ language: req.query.language });
             res.status(200).send(learningPaths);
         } else if (req.query.age_group != null) {
-            let learningPaths = await LearningPath.find({ age_group: req.query.age_group });
+            let learningPaths = await LearningPath.find({ age_group: req.query.age_group, language:"English" });
             res.status(200).send(learningPaths);
         } else {
-            let learningPaths = await LearningPath.find({});
+            let learningPaths = await LearningPath.find({language:"English"});
             res.status(200).send(learningPaths);
         }
 

@@ -5,7 +5,7 @@
         v-if="$vuetify.breakpoint.smAndDown && navOption === '2'"
         @click.stop="drawer = !drawer"
       />
-      <router-link class="d-flex align-center no-decoration" to="/">
+      <router-link class="d-flex align-center" to="/">
         <v-img
           alt="Company Logo"
           class="shrink ml-3"
@@ -23,7 +23,8 @@
         :to="link.to"
         text
         v-for="link in links"
-        class="nav-item hidden-sm-and-down"
+        active-class="border-bottom"
+        class="hidden-sm-and-down v-card--shaped nav-btn"
       >
         <span class="text-capitalize"> {{ link.text }}</span>
       </v-btn>
@@ -162,6 +163,19 @@ export default {
 </script>
 
 <style scoped>
+.border-bottom {
+  border-bottom: #009ce5 solid 2px !important;
+}
+
+.v-btn--active.border-bottom::before {
+  opacity: 0 !important;
+}
+
+.nav-btn {
+  border-bottom: white solid 2px;
+  transition: border-bottom-color 0.8s;
+}
+
 .nav-item span {
   font-family: "Open Sans", sans-serif;
   font-weight: 700;

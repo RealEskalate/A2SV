@@ -3,11 +3,11 @@ process.env.NODE_ENV = "test";
 let chai = require("chai");
 let chaiHttp = require("chai-http");
 let server = require("../index");
-let Location = require("../models/LocationModel");
+let {Location} = require("../models/LocationModel");
 let {Symptom} = require("../models/Symptom");
 let {User} = require("../models/UserModel");
 let {SymptomUser} = require("../models/SymptomUser"); 
-let LocationUser = require("../models/LocationUserModel");
+let {LocationUser} = require("../models/LocationUserModel");
 let mongoose = require("mongoose");
 const { expect } = chai;
 chai.use(chaiHttp);
@@ -19,8 +19,10 @@ describe("Locations API", () => {
     beforeEach(async () => {
       location = new Location({
         _id: mongoose.Types.ObjectId(),
-        latitude: 10,
-        longitude: 10,
+        location: {
+          type: "Point",
+          coordinates: [10, 10],
+        },
         place_name: "Random Non Sequitor",
       });
       await location.save();
@@ -47,8 +49,10 @@ describe("Locations API", () => {
     beforeEach(async () => {
       location = new Location({
         _id: mongoose.Types.ObjectId(),
-        latitude: 10,
-        longitude: 10,
+        location: {
+          type: "Point",
+          coordinates: [10, 10],
+        },
         place_name: "Random Non Sequitor",
       });
       await location.save();
@@ -74,8 +78,10 @@ describe("Locations API", () => {
     beforeEach(async () => {
       location = new Location({
         _id: mongoose.Types.ObjectId(),
-        latitude: 10,
-        longitude: 10,
+        location: {
+          type: "Point",
+          coordinates: [10, 10],
+        },
         place_name: "Random Non Sequitor",
       });
       await location.save();
@@ -91,10 +97,12 @@ describe("Locations API", () => {
           "Authorization",
           "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6Ik1BTEUiLCJhZ2VfZ3JvdXAiOiI-OTAiLCJfaWQiOiI1ZWI3ZjMwYzNlMmE4ODRhYzgzYWE3NjAiLCJ1c2VybmFtZSI6ImF1dGh0ZXN0IiwicGFzc3dvcmQiOiIkMmEkMTAkYjJmYTZHTTJMTDlLVlJ4UzhVVEkzdS5SQ2JjUWw0WXc5OExaWVVHUHRnUVdBdVFGOERqNXUiLCJfX3YiOjAsImN1cnJlbnRfY291bnRyeSI6IiJ9LCJpYXQiOjE1ODkxODc5Mjd9.ZJQHbK7cVmDOf87uuhUttlnyAFYe5KA0Afnq0iBptF0"
         );
+      console.log(response.error);
+      
       expect(response).to.have.status(200);
       expect(response.body).to.be.a("object");
-      expect(response.body).to.have.property("latitude");
-      expect(response.body).to.have.property("longitude");
+      expect(response.body).to.have.property("place_name");
+      expect(response.body).to.have.property("location");
     });
   });
 
@@ -103,8 +111,10 @@ describe("Locations API", () => {
     beforeEach(async () => {
       location = new Location({
         _id: mongoose.Types.ObjectId(),
-        latitude: 10,
-        longitude: 10,
+        location: {
+          type: "Point",
+          coordinates: [10, 10],
+        },
         place_name: "Random Non Sequitor",
       });
       await location.save();
@@ -122,8 +132,10 @@ describe("Locations API", () => {
         );
       expect(response).to.have.status(200);
       expect(response.body).to.be.a("object");
-      expect(response.body).to.have.property("latitude");
-      expect(response.body).to.have.property("longitude");
+      expect(response.body).to.have.property("location");
+      console.log(response.body);
+      
+      expect(response.body.location.coordinates).to.be.an("array");
     });
   });
   //Get Locations By ID - InValid Location
@@ -132,8 +144,10 @@ describe("Locations API", () => {
     beforeEach(async () => {
       location = new Location({
         _id: mongoose.Types.ObjectId(),
-        latitude: 10,
-        longitude: 10,
+        location: {
+          type: "Point",
+          coordinates: [10, 10],
+        },
         place_name: "Random Non Sequitor",
       });
       await location.save();
@@ -159,8 +173,10 @@ describe("Locations API", () => {
     beforeEach(async () => {
       location = new Location({
         _id: mongoose.Types.ObjectId(),
-        latitude: 10,
-        longitude: 10,
+        location: {
+          type: "Point",
+          coordinates: [10, 10],
+        },
         place_name: "Random Non Sequitor",
       });
       await location.save();
@@ -187,8 +203,10 @@ describe("Locations API", () => {
     beforeEach(async () => {
       location = new Location({
         _id: mongoose.Types.ObjectId(),
-        latitude: 10,
-        longitude: 10,
+        location: {
+          type: "Point",
+          coordinates: [10, 10],
+        },
         place_name: "Random Non Sequitor",
       });
       await location.save();
@@ -214,8 +232,10 @@ describe("Locations API", () => {
     beforeEach(async () => {
       location = new Location({
         _id: mongoose.Types.ObjectId(),
-        latitude: 10,
-        longitude: 10,
+        location: {
+          type: "Point",
+          coordinates: [10, 10],
+        },
         place_name: "Random Non Sequitor",
       });
       await location.save();
@@ -226,11 +246,13 @@ describe("Locations API", () => {
     it("It should Get location by coordinates", async () => {
       let response = await chai
         .request(server)
-        .get("/api/locations/" + location.longitude + "/" + location.latitude)
+        .get("/api/locations/" + location.location.coordinates[0] + "/" + location.location.coordinates[1])
         .set(
           "Authorization",
           "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6Ik1BTEUiLCJhZ2VfZ3JvdXAiOiI-OTAiLCJfaWQiOiI1ZWI3ZjMwYzNlMmE4ODRhYzgzYWE3NjAiLCJ1c2VybmFtZSI6ImF1dGh0ZXN0IiwicGFzc3dvcmQiOiIkMmEkMTAkYjJmYTZHTTJMTDlLVlJ4UzhVVEkzdS5SQ2JjUWw0WXc5OExaWVVHUHRnUVdBdVFGOERqNXUiLCJfX3YiOjAsImN1cnJlbnRfY291bnRyeSI6IiJ9LCJpYXQiOjE1ODkxODc5Mjd9.ZJQHbK7cVmDOf87uuhUttlnyAFYe5KA0Afnq0iBptF0"
         );
+      console.log(response.error);
+      console.log(location.location.coordinates);
       expect(response).to.have.status(200);
       expect(response.body).to.be.a("array");
     });
@@ -242,8 +264,10 @@ describe("Locations API", () => {
     beforeEach(async () => {
       location = new Location({
         _id: mongoose.Types.ObjectId(),
-        latitude: 10,
-        longitude: 10,
+        location: {
+          type: "Point",
+          coordinates: [10, 10],
+        },
         place_name: "Random Non Sequitor",
       });
       await location.save();
@@ -270,8 +294,10 @@ describe("Locations API", () => {
     beforeEach(async () => {
       location = new Location({
         _id: mongoose.Types.ObjectId(),
-        latitude: 10,
-        longitude: 10,
+        location: {
+          type: "Point",
+          coordinates: [10, 10],
+        },
         place_name: "Random Non Sequitor",
       });
       await location.save();
@@ -294,6 +320,8 @@ describe("Locations API", () => {
           longitude: 10,
           place_name: "Random Non Sequitor",
         });
+      console.log(response.error);
+      
       expect(response).to.have.status(200);
       expect(response.body).to.be.a("object");
       new_location = response.body;
@@ -310,8 +338,10 @@ describe("Locations API", () => {
     beforeEach(async () => {
       location = new Location({
         _id: mongoose.Types.ObjectId(),
-        latitude: 10,
-        longitude: 10,
+        location: {
+          type: "Point",
+          coordinates: [10, 10],
+        },
         place_name: "Random Non Sequitor",
       });
       user = new User({
@@ -364,6 +394,8 @@ describe("Locations API", () => {
         latitude: 10,
         longitude: 10
       });
+      console.log(response.error);
+      
       expect(response).to.have.status(200);
       expect(response.body).to.be.a("array");
     });
@@ -380,8 +412,10 @@ describe("Locations API", () => {
       beforeEach(async () => {
         location = new Location({
           _id: mongoose.Types.ObjectId(),
-          latitude: 10,
-          longitude: 10,
+          location: {
+            type: "Point",
+            coordinates: [10, 10],
+          },
           place_name: "Random Non Sequitor",
         });
         user = new User({
@@ -444,8 +478,10 @@ describe("Locations API", () => {
     beforeEach(async () => {
       location = new Location({
         _id: mongoose.Types.ObjectId(),
-        latitude: 10,
-        longitude: 10,
+        location: {
+          type: "Point",
+          coordinates: [10, 10],
+        },
         place_name: "Random Non Sequitor",
       });
       await location.save();
@@ -479,8 +515,10 @@ describe("Locations API", () => {
     beforeEach(async () => {
       location = new Location({
         _id: mongoose.Types.ObjectId(),
-        latitude: 10,
-        longitude: 10,
+        location: {
+          type: "Point",
+          coordinates: [10, 10],
+        },
         place_name: "Random Non Sequitor",
       });
       await location.save();
@@ -511,8 +549,10 @@ describe("Locations API", () => {
     beforeEach(async () => {
       location = new Location({
         _id: mongoose.Types.ObjectId(),
-        latitude: 10,
-        longitude: 10,
+        location: {
+          type: "Point",
+          coordinates: [10, 10],
+        },
         place_name: "Random Non Sequitor",
       });
       await location.save();
@@ -530,8 +570,10 @@ describe("Locations API", () => {
         )
         .send({
           _id: location._id,
-          latitude: 12,
-          longitude: 10,
+          location: {
+            type: "Point",
+            coordinates: [12, 10],
+          },
           place_name: "Random Non Sequitor",
         });
       expect(response).to.have.status(200);
@@ -545,14 +587,18 @@ describe("Locations API", () => {
     beforeEach(async () => {
       location = new Location({
         _id: mongoose.Types.ObjectId(),
-        latitude: 10,
-        longitude: 10,
+        location: {
+          type: "Point",
+          coordinates: [10, 10],
+        },
         place_name: "Random Non Sequitor",
       });
       location_2 = new Location({
         _id: mongoose.Types.ObjectId(),
-        latitude: 12,
-        longitude: 10,
+        location: {
+          type: "Point",
+          coordinates: [12, 10],
+        },
         place_name: "Random Non Sequitor",
       });
       await location.save();
@@ -572,10 +618,14 @@ describe("Locations API", () => {
         )
         .send({
           _id: location._id,
-          latitude: 12,
-          longitude: 10,
+          location: {
+            type: "Point",
+            coordinates: [12, 10],
+          },
           place_name: "Random Non Sequitor",
         });
+      console.log(response.error);
+      
       expect(response).to.have.status(200);
       expect(response.body).to.be.a("object");
     });
@@ -586,8 +636,10 @@ describe("Locations API", () => {
     beforeEach(async () => {
       location = new Location({
         _id: mongoose.Types.ObjectId(),
-        latitude: 10,
-        longitude: 10,
+        location: {
+          type: "Point",
+          coordinates: [10, 10],
+        },
         place_name: "Random Non Sequitor",
       });
       await location.save();
@@ -605,7 +657,6 @@ describe("Locations API", () => {
         )
         .send({
           _id: "5e904cce7a1c6b627ae9f507",
-          latitude: 12,
           place_name: "Random Non Sequitor",
         });
       expect(response).to.have.status(500);
@@ -618,8 +669,10 @@ describe("Locations API", () => {
     beforeEach(async () => {
       location = new Location({
         _id: mongoose.Types.ObjectId(),
-        latitude: 10,
-        longitude: 10,
+        location: {
+          type: "Point",
+          coordinates: [10, 10],
+        },
         place_name: "Random Non Sequitor",
       });
       await location.save();
@@ -648,8 +701,10 @@ describe("Locations API", () => {
     beforeEach(async () => {
       location = new Location({
         _id: mongoose.Types.ObjectId(),
-        latitude: 10,
-        longitude: 10,
+        location: {
+          type: "Point",
+          coordinates: [10, 10],
+        },
         place_name: "Random Non Sequitor",
       });
       await location.save();
