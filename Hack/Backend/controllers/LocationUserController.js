@@ -41,50 +41,18 @@ exports.post_location_user = async (req, res) => {
     location_id = check._id
   }
   else {
-    let location = new Location({
-      _id: mongoose.Types.ObjectId(),
-      location: {
-        type: "Point",
-        coordinates: [longitude , latitude]
-      },
-      place_name: req.body.place_name,
-    });
-    try {
-      let result1 = await axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${location.longitude},${location.latitude}.json?types=poi&access_token=pk.eyJ1IjoiZmVyb3g5OCIsImEiOiJjazg0czE2ZWIwNHhrM2VtY3Y0a2JkNjI3In0.zrm7UtCEPg2mX8JCiixE4g`)
-        .then(response => {
-          if (response.data) {
-            if (response.data.features && response.data.features.length > 0) {
-              location.location.coordinates[0] = response.data.features[0].center[0];
-              location.location.coordinates[1] = response.data.features[0].center[1];
-              location.place_name = response.data.features[0].text;
-            }
-          }
-          return location;
-        })
-        .catch(error => {
-          console.log(error);
-        });
-
-        const check_2 = await Location.findOne({ 
-          location: {
-            $near:
-            {
-              $geometry: { type: "Point",  coordinates: [ location.location.coordinates[0] , location.location.coordinates[1] ] },
-              $minDistance: 0,
-              $maxDistance: 1
-            }
-          }
-        });
-      if (check_2) {
-        location_id = check_2._id
-      }
-      else {
-        await result1.save();
-        location_id = result1._id;
-      }
+    try{
+      let location = new Location({
+        _id: mongoose.Types.ObjectId(),
+        location: {
+          type: "Point",
+          coordinates: [longitude , latitude]
+        }
+      });
+      await location.save();
+      location_id = location._id;
     } catch (err) {
-      console.log(err);
-      return res.status(500).send(err.toString());
+      return res.status(400).send("Location could not be saved");
     }
   }
 
@@ -97,11 +65,7 @@ exports.post_location_user = async (req, res) => {
     TTL,
   });
   try {
-    // Check if user and location exists
-    let location = await Location.findById(location_id);
-    if (!location) {
-      return res.status(400).send("Location ID not found");
-    }
+    // Check if user exists
     let user = await User.findById(user_id);
     if (!user) {
       return res.status(400).send("User ID not found");
