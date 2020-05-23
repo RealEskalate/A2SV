@@ -10,37 +10,11 @@ import {
   List,
 } from '@ui-kitten/components';
 import {ImageOverlay} from './extra/image-overlay.component';
-import {preventionData as data} from './extra/data';
+import {messageData as data} from './extra/data';
 import styles from './extra/styles';
 import {InfoCard} from './extra/InfoCard';
 
 const BackIcon = (props) => <Icon name="arrow-ios-back-outline" {...props} />;
-const methods = [
-  {
-    title: 'Washing Hands',
-    label: 'Rub or wash your hand with soap and water.',
-    tag: 'Atleast 20 Sec',
-    image: require('../info-detail/assets/washing.jpg'),
-  },
-  {
-    title: 'Social Distancing',
-    label: 'Maintain at least 2m (6 ft) gap in groups.',
-    tag: '02 Meters Apart',
-    image: require('../info-detail/assets/social.jpg'),
-  },
-  {
-    title: 'Respiratory Hygiene',
-    label: 'Rub or wash your hand with soap and water.',
-    tag: 'Use Face covering',
-    image: require('../info-detail/assets/face.jpg'),
-  },
-  {
-    title: 'Stay Informed',
-    label: 'Follow the advice of healthcare provider.',
-    tag: 'Filter Fake & Real Data',
-    image: require('../info-detail/assets/info.jpg'),
-  },
-];
 
 export default PrevDetailScreen = (props) => {
   const navigateBack = () => {
@@ -51,15 +25,11 @@ export default PrevDetailScreen = (props) => {
     <TopNavigationAction icon={BackIcon} onPress={navigateBack} />
   );
 
-  const renderHorizontalTrainingItem = (info) => (
-    <InfoCard style={styles.horizontalItem} data={info.item} />
-  );
-
   return (
     <SafeAreaView style={styles.container}>
       <TopNavigation
         alignment="center"
-        title="PREVENTIONS"
+        title="MESSAGE"
         accessoryLeft={renderBackAction}
       />
       <Layout style={styles.container} level="2">
@@ -76,23 +46,22 @@ export default PrevDetailScreen = (props) => {
             </Text>
           </ImageOverlay>
           <Layout style={styles.contentContainer} level="1">
-            <Text>{data.content}</Text>
+            <Text>{data.content + '\n'}</Text>
+            <Text>{data.content_two}</Text>
           </Layout>
           <Divider />
-          <View style={{marginTop: 10}}>
-            <Text style={styles.headerTitle} appearance="hint">
-              RECOMMENDED METHODS
+          <View style={styles.authoringContainer}>
+            <Text style={styles.dateLabel} appearance="hint" category="p2">
+              MAJOR CONCERN
             </Text>
-            <List
-              contentContainerStyle={styles.horizontalList}
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}
-              data={methods}
-              renderItem={renderHorizontalTrainingItem}
-            />
           </View>
-          <Layout style={styles.contentContainer} level="1">
-            <Text>{data.content_two}</Text>
+          <Divider />
+          <Layout style={styles.contentContainer}>
+            <Text>
+              You should be careful not to get infected and stay safe. Even if
+              you are not heavily sick, there is a big risk that you might pass
+              it to your loved ones before the symptoms arise.
+            </Text>
           </Layout>
         </ScrollView>
       </Layout>
