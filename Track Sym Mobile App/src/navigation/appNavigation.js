@@ -9,6 +9,7 @@ import {
   Avatar,
   Icon,
   Divider,
+
 } from "@ui-kitten/components";
 import { StyleSheet } from "react-native";
 import { HomeStackNavigator } from "./homeNavigation";
@@ -77,7 +78,7 @@ const DrawerContent = ({ navigation, state }) => (
 export const AppNavigator = () => (
   <Navigator drawerContent={(props) => <DrawerContent {...props} />}>
     <Screen name="HOME" component={HomeStackNavigator} />
-    <Screen name="NEWS" component={News} />
+    <Screen name="NEWS" component={NewsNavigator} />
     <Screen name="ETHIOPIA" component={OrdersScreen} />
     <Screen name="ABOUT" component={OrdersScreen} />
     <Screen name="SETTINGS" component={SettingNavigator} />
