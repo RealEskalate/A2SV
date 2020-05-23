@@ -26,12 +26,14 @@ const MobileStatisticsRouter = require("./routes/MobileStatisticsRoutes");
 
 const logger = require('./middlewares/logger');
 const bodyParser = require("body-parser");
+const compression = require('compression');
 
 const app = express();
 const port = process.env.PORT || 3000;
 app.use(cors());
 
 app.use(logger.requestLog);
+app.use(compression({ filter: shouldCompress }))
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -62,5 +64,18 @@ app.use('/img', express.static(__dirname + '/img'));
 app.listen(port, () => {
     console.log("Server is running... at port " + port);
 });
+
+
+
+function shouldCompress (req, res) {
+    let routeToCompress=["/api/resources/information", "/api/resources/learning-path", "/api/resources/statistics-description" ];
+    if (!(routeToCompress.includes(req.route.path) )){
+       // " not compressed"
+       return false
+    }
+    
+    // "compressed"
+    return compression.filter(req, res)
+}
 
 module.exports = app;
