@@ -23,6 +23,8 @@ const statisticsResourceRouter = require("./routes/StatisticsResourcesRoute.js")
 const informationRouter = require("./routes/InformationRoute.js");
 const learningPathRouter = require("./routes/LearningPathRoute.js");
 const MobileStatisticsRouter = require("./routes/MobileStatisticsRoutes");
+const MobileInformationRouter = require("./routes/MobileInformationRoutes");
+const MobileInformationDetailRouter = require("./routes/MobileInformationDetailRoutes");
 
 const logger = require('./middlewares/logger');
 const bodyParser = require("body-parser");
@@ -58,6 +60,9 @@ app.use(statisticsResourceRouter);
 app.use(informationRouter);
 app.use(learningPathRouter);
 app.use(MobileStatisticsRouter);
+app.use(MobileInformationDetailRouter);
+app.use(MobileInformationRouter);
+
 app.use(express.static('public'));
 app.use('/img', express.static(__dirname + '/img'));
 
