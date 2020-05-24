@@ -36,8 +36,8 @@
   "about": "About",
   "news": "News",
   "map": "Map",
-  
-  "icuStageDescription": "Unfortunately, some patients’ immune systems can’t cope up with the virus well and the patients need to be taken to intensive care units.",
+  "statesTransitionTitle": "States of Transition",
+  "statesTransitionSubtitle": "What phases are there?",
   "learnEvenMore": "Learn Even More",
   "learnEvenMoreDescription": "Go through our Learning paths to explore more about Covid 19. Whatever age you are, we have something for you.",
   "taskName": "Task Name",

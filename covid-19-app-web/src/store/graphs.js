@@ -458,7 +458,7 @@ export default {
         .then(response => {
           let res = {};
           response.data.forEach(function(desc) {
-            console.log(desc)
+            console.log(desc);
             res[desc.title] = desc;
           });
           commit("setGraphDescriptions", res);

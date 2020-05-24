@@ -2,12 +2,15 @@
 <template>
   <v-container>
     <v-row>
-      <h3 class="display-1 font-weight-thin mb-10" v-text="$t('learnEvenMore')"/>
+      <h3
+              class="display-1 font-weight-thin mb-10"
+              v-text="$t('learnEvenMore')"
+      />
     </v-row>
     <v-row>
       <v-col cols="12" md="9" class="pr-md-12">
         <p>
-          {{ $t('learnEvenMoreDescription') }}
+          {{ $t("learnEvenMoreDescription") }}
         </p>
       </v-col>
       <v-col cols="12" md="3" class="pl-md-12">
@@ -40,12 +43,20 @@
                     v-if="$vuetify.breakpoint.mdAndUp"
                   />
                   <th class="text-left primary--text text--darken-1">
-                    {{ $t('taskName') }}
+                    {{ $t("taskName") }}
                   </th>
-                  <th class="text-left primary--text text--darken-1"> {{ $t('what') }}</th>
-                  <th class="text-left primary--text text--darken-1"> {{ $t('why') }}</th>
-                  <th class="text-left primary--text text--darken-1"> {{ $t('duration')}}</th>
-                  <th class="text-left primary--text text--darken-1"> {{ $t('how') }}</th>
+                  <th class="text-left primary--text text--darken-1">
+                    {{ $t("what") }}
+                  </th>
+                  <th class="text-left primary--text text--darken-1">
+                    {{ $t("why") }}
+                  </th>
+                  <th class="text-left primary--text text--darken-1">
+                    {{ $t("duration") }}
+                  </th>
+                  <th class="text-left primary--text text--darken-1">
+                    {{ $t("how") }}
+                  </th>
                 </tr>
               </thead>
               <tbody>

@@ -42,7 +42,7 @@
                 class="small-icon mx-auto my-3"
               />
               <h1 class="text-center">229</h1>
-              <p class="text-center"> {{ $t("activeCases") }} </p>
+              <p class="text-center">{{ $t("activeCases") }}</p>
             </v-col>
           </v-row>
         </v-card>
