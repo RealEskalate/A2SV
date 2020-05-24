@@ -4,11 +4,9 @@ import router from "./router";
 import store from "./store";
 import vuetify from "./plugins/vuetify";
 import VueProgressBar from "vue-progressbar";
-import VueLoaders from "vue-loaders";
 import "vue-loaders/dist/vue-loaders.css";
 import i18n from "./i18n";
 
-Vue.use(VueLoaders);
 Vue.use(VueProgressBar, {
   color: "#40AAFB",
   failedColor: "red",

@@ -149,17 +149,13 @@
         </v-row>
         <v-row>
           <v-col cols="12" md="12" class="overflow-auto px-md-10">
-            <!--suppress HtmlUnknownTag -->
-            <vue-loaders-ball-scale-multiple
+            <loader
               v-if="graphLoaders.countryCompare > 0"
               style="position:absolute; left: 35%; top: 53%"
-              :color="$vuetify.theme.themes.light.primary"
-              scale="1"
             />
             <line-chart
               :style="`opacity: ${graphLoaders.countryCompare > 0 ? 0.5 : 1}`"
               class="v-card--shaped grey lighten-5 shadow-in pb-6 px-1"
-              style="min-width: 400px"
               :height="350"
               ref="graph"
               :chart-data="data"
@@ -183,12 +179,13 @@
 <script>
 import { ChartMixin, LineChart } from "./charts.js";
 import CountryResources from "../CountryResources";
+import Loader from "@/components/core/Loader.vue";
 import store from "@/store/index.js";
 import moment from "moment";
 import { mdiCalendar } from "@mdi/js";
 
 export default {
-  components: { LineChart, CountryResources },
+  components: { LineChart, Loader, CountryResources },
   mixins: [ChartMixin],
   data() {
     return {
