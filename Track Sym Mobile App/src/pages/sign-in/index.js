@@ -1,5 +1,5 @@
 import React from "react";
-import { View, TouchableWithoutFeedback } from "react-native";
+import { View, TouchableWithoutFeedback, AsyncStorage } from "react-native";
 import {
   Button,
   Input,
@@ -13,8 +13,8 @@ import {
 } from "@ui-kitten/components";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { ImageOverlay } from "../../components/ImageOverlay/image-overlay.component";
-import userIDStore from "../../../components/data-management/user-id-data/userIDStore";
-import * as actions from "../../../components/data-management/user-id-data/userIDActions";
+import userIDStore from "../../data-management/user-id-data/userIDStore";
+import * as actions from "../../data-management/user-id-data/userIDActions";
 import themedStyles from "./extra/themedStyles";
 
 const PersonIcon = (style) => <Icon {...style} name="person" />;
@@ -100,6 +100,19 @@ export default ({ navigation }) => {
     login();
   };
 
+  const saveUser = async (userID, userName, token, age_group, gender) => {
+    try {
+      await AsyncStorage.setItem("userID", userID); //save user id on async storage
+      await AsyncStorage.setItem("userName", userName); //save user name on async storage
+      await AsyncStorage.setItem("token", token); //save token on async storage
+      await AsyncStorage.setItem("age_group", age_group); //save age group on async storage
+      await AsyncStorage.setItem("gender", gender); //save gender on async storage
+      await AsyncStorage.setItem("theme", "light");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   //Log in authentication
   const login = () => {
     fetch("https://sym-track.herokuapp.com/api/auth/login", {
@@ -124,7 +137,7 @@ export default ({ navigation }) => {
             json.user.gender
           )
         );
-        this.saveUser(
+        saveUser(
           json.user._id,
           json.user.username,
           json.token,
@@ -165,7 +178,7 @@ export default ({ navigation }) => {
 
       <ImageOverlay
         style={styles.headerContainer}
-        source={require("../../../assets/signinBackground.png")}
+        source={require("../../../assets/images/signinBackground.png")}
       >
         <Text
           style={{ alignSelf: "flex-start", marginLeft: 20 }}
@@ -203,7 +216,7 @@ export default ({ navigation }) => {
           onChangeText={onPasswordChange}
           onIconPress={onPasswordIconPress}
         />
-        <View style={styles.forgotPasswordContainer}>
+        {/* <View style={styles.forgotPasswordContainer}>
           <Button
             style={styles.forgotPasswordButton}
             appearance="ghost"
@@ -212,7 +225,7 @@ export default ({ navigation }) => {
           >
             Forgot your password?
           </Button>
-        </View>
+        </View> */}
       </Layout>
       <Button
         style={styles.signInButton}

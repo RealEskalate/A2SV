@@ -13,17 +13,19 @@ import {
   Icon,
   TopNavigation,
   TopNavigationAction,
-
 } from "@ui-kitten/components";
 import { SafeAreaView } from "react-native";
 import InformationScreen from "../pages/info/";
 import InfoDetailScreen from "../pages/info-detail/";
 import PrevDetailScreen from "../pages/info-detail/preventions";
-import SymptomPage from "../../components/symptom-page/SymptomPage";
-import { default as MapScreen } from "../../components/map-service/MapService";
-import UserSymptomPage from "../../components/symptom-page/UserSymptomPage.js";
-import DataAnalytics from "../../components/public-data-page/DataAnalytics.js";
-import DataAnalyticsMap from "../../components/public-data-page/DataAnalyticsMap.js";
+import SymptomPage from "../pages/symptom-page/SymptomPage";
+import { default as MapScreen } from "../pages/map-service/MapService";
+import UserSymptomPage from "../pages/symptom-page/UserSymptomPage.js";
+import DataAnalytics from "../pages/public-data-page/DataAnalytics.js";
+import DataAnalyticsMap from "../pages/public-data-page/DataAnalyticsMap.js";
+import SymDetailScreen from "../pages/info-detail/symptoms.js";
+import SpdDetailScreen from "../pages/info-detail/spread.js";
+import MsgDetailScreen from "../pages/info-detail/message.js";
 
 const BottomTab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -86,7 +88,12 @@ const HomeTabsNavigator = ({ navigation }) => {
     navigation.openDrawer();
   };
 
-  const names = ["INFO", "DATA ANALITICS", "MAP TRACKER", "SYMPTOMS"];
+  const names = [
+    "Information",
+    "Data Analytics",
+    "Symptom Tracker",
+    "My Symptoms",
+  ];
   const [i, setI] = React.useState(0);
 
   const OpenDrawerAction = () => (
@@ -118,10 +125,10 @@ const HomeTabsNavigator = ({ navigation }) => {
           navigation.navigate(state.routeNames[index]);
         }}
       >
-        <BottomNavigationTab title="INFO" icon={InfoIcon} />
-        <BottomNavigationTab title="DATA" icon={DataIcon} />
-        <BottomNavigationTab title="MAP" icon={MapIcon} />
-        <BottomNavigationTab title="SYMPTOMS" icon={PersonIcon} />
+        <BottomNavigationTab title="Information" icon={InfoIcon} />
+        <BottomNavigationTab title="Data Analytics" icon={DataIcon} />
+        <BottomNavigationTab title="Symptom Tracker" icon={MapIcon} />
+        <BottomNavigationTab title="Symptoms" icon={PersonIcon} />
       </BottomNavigation>
     </SafeAreaView>
   );
