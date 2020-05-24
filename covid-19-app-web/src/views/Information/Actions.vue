@@ -116,7 +116,9 @@
   },
   created() {
     if (!this.actions) {
-      store.dispatch("setActions", {lang: this.$i18n.locale === 'am' ? 'Amharic' : "English"});
+      store.dispatch("setActions", {
+        lang: this.$i18n.locale === "am" ? "Amharic" : "English"
+      });
     }
   },
   computed: {

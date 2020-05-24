@@ -15,7 +15,7 @@
       </v-card-text>
 
       <v-card-text class="pt-0 px-12 shrink">
-        {{ $t('aboutSectionDescription') }}
+        {{ $t("aboutSectionDescription") }}
       </v-card-text>
 
       <v-card-text>
@@ -53,7 +53,7 @@
 
 <script>
   import {mdiTelegram, mdiWeb, mdiYoutube} from "@mdi/js";
-  import store from "@/store/"
+  import store from "@/store/";
 
   export default {
   data: () => ({
@@ -69,7 +69,10 @@
     ]
   }),
     mounted() {
-      this.$i18n.locale = store.getters.getLanguagePreference === null ? 'en' : store.getters.getLanguagePreference;
+      this.$i18n.locale =
+          store.getters.getLanguagePreference === null
+              ? "en"
+              : store.getters.getLanguagePreference;
     },
     methods: {
       changeLang() {

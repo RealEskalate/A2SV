@@ -15,7 +15,10 @@
           />
         </v-col>
         <v-col cols="12" md="5" class="pr-md-12 py-md-8 px-8 py-5">
-          <h2 class="mb-5 primary--text" v-text="$t('statesTransitionSubtitle')"/>
+          <h2
+                  class="mb-5 primary--text"
+                  v-text="$t('statesTransitionSubtitle')"
+          />
           <v-list disabled>
             <v-skeleton-loader
               ref="skeleton"
@@ -58,7 +61,9 @@
   },
   created() {
     if (!this.states) {
-      store.dispatch("setStates", {lang: this.$i18n.locale === 'am' ? 'Amharic' : "English"});
+      store.dispatch("setStates", {
+        lang: this.$i18n.locale === "am" ? "Amharic" : "English"
+      });
     }
   },
   computed: {
