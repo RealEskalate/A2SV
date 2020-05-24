@@ -445,14 +445,20 @@ export default {
           console.log(error);
         });
     },
-    setGraphDescriptions({ commit }) {
+    setGraphDescriptions({commit}, {lang}) {
       axios
         .get(
-          `${process.env.VUE_APP_BASE_URL}/api/resources/statistics-description`
+            `${process.env.VUE_APP_BASE_URL}/api/resources/statistics-description`,
+            {
+              params: {
+                language: lang
+              }
+            }
         )
         .then(response => {
           let res = {};
           response.data.forEach(function(desc) {
+            console.log(desc)
             res[desc.title] = desc;
           });
           commit("setGraphDescriptions", res);

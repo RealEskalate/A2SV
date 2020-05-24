@@ -89,9 +89,9 @@
   </v-container>
 </template>
 <script>
-import store from "@/store";
+  import store from "@/store";
 
-export default {
+  export default {
   data: () => {
     return {
       auto: true,
@@ -116,7 +116,7 @@ export default {
   },
   created() {
     if (!this.actions) {
-      store.dispatch("setActions");
+      store.dispatch("setActions", {lang: this.$i18n.locale === 'am' ? 'Amharic' : "English"});
     }
   },
   computed: {
