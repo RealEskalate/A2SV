@@ -195,7 +195,7 @@ export default ({ navigation }) => {
       </Modal>
       <ImageOverlay
         style={styles.headerContainer}
-        source={require("../../../assets/signupBackground.png")}
+        source={require("../../../assets/images/signupBackground.png")}
       >
         <Button
           style={styles.evaButton}

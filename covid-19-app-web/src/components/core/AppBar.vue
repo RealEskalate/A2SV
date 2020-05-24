@@ -1,8 +1,9 @@
 <template>
-  <v-container>
+  <v-container class="white">
     <v-app-bar
       app
-      class="white v-card--shaped"
+      style="border-radius: 0 0 25px 0"
+      class="white"
       flat
       v-bind:class="{ shadow: raise }"
     >
@@ -95,9 +96,9 @@
         app
         grow
         color="primary"
-        class="px-3"
+        style="border-radius: 20px 20px 0 0"
+        class="px-3 overflow-hidden"
         v-if="curNavigation === '1'"
-        active-class="active-bottom v-card--raised"
       >
         <v-btn v-for="(item, i) in links" :to="item.to" :key="i">
           <span>{{ item.text }}</span>

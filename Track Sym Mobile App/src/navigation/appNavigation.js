@@ -9,13 +9,15 @@ import {
   Avatar,
   Icon,
   Divider,
-
+  TopNavigation,
+  TopNavigationAction,
 } from "@ui-kitten/components";
-import { StyleSheet } from "react-native";
+import { StyleSheet, SafeAreaView } from "react-native";
 import { HomeStackNavigator } from "./homeNavigation";
 import { SettingNavigator } from "../pages/settings/settingStack";
-import userIDStore from "../../components/data-management/user-id-data/userIDStore";
-import News from "../pages/news/";
+import userIDStore from "../data-management/user-id-data/userIDStore";
+import NewsNavigator from "../pages/news/news";
+import AboutPage from "../pages/about-page/About";
 
 const { Navigator, Screen } = createDrawerNavigator();
 
@@ -24,6 +26,7 @@ const NewsIcon = (props) => <Icon {...props} name="browser-outline" />;
 const InfoIcon = (props) => <Icon {...props} name="info-outline" />;
 const FlagIcon = (props) => <Icon {...props} name="flag-outline" />;
 const SettingIcon = (props) => <Icon {...props} name="settings-2-outline" />;
+const ArrowIosBackIcon = (style) => <Icon {...style} name="arrow-ios-back" />;
 
 export const AvatarSizeShowcase = () => (
   <Layout style={styles.container} level="1">
@@ -54,11 +57,51 @@ const Footer = (props) => (
   </React.Fragment>
 );
 
-const OrdersScreen = () => (
-  <Layout style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-    <Text category="h1">Comming Soon!!</Text>
-  </Layout>
-);
+const GoToEthiopia = (props) => {
+  const renderBackAction = () => (
+    <TopNavigationAction
+      icon={ArrowIosBackIcon}
+      onPress={props.navigation.goBack}
+    />
+  );
+
+  return (
+    <SafeAreaView style={{ flex: 1 }}>
+      <TopNavigation
+        title="Ethiopia"
+        alignment="center"
+        accessoryLeft={renderBackAction}
+      />
+      <Divider />
+      <Layout
+        style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+      >
+        <Text category="h1">Coming Soon!!</Text>
+      </Layout>
+    </SafeAreaView>
+  );
+};
+
+const GoToAboutPage = (props) => {
+  const renderBackAction = () => (
+    <TopNavigationAction
+      icon={ArrowIosBackIcon}
+      onPress={props.navigation.goBack}
+    />
+  );
+
+  return (
+    <SafeAreaView style={{ flex: 1 }}>
+      <TopNavigation
+        title="About us"
+        alignment="center"
+        accessoryLeft={renderBackAction}
+      />
+      <Divider />
+      <AboutPage />
+    </SafeAreaView>
+  );
+};
 
 const DrawerContent = ({ navigation, state }) => (
   <Drawer
@@ -79,8 +122,8 @@ export const AppNavigator = () => (
   <Navigator drawerContent={(props) => <DrawerContent {...props} />}>
     <Screen name="HOME" component={HomeStackNavigator} />
     <Screen name="NEWS" component={NewsNavigator} />
-    <Screen name="ETHIOPIA" component={OrdersScreen} />
-    <Screen name="ABOUT" component={OrdersScreen} />
+    <Screen name="ETHIOPIA" component={GoToEthiopia} />
+    <Screen name="ABOUT" component={GoToAboutPage} />
     <Screen name="SETTINGS" component={SettingNavigator} />
   </Navigator>
 );
