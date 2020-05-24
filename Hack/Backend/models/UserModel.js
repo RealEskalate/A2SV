@@ -38,7 +38,8 @@ const userSchema = new mongoose.Schema({
   },
   latest_location: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Location"
+    ref: "Location",
+    index:true
   },
   latest_location_user: {
     type: mongoose.Schema.Types.ObjectId,
@@ -86,7 +87,8 @@ const demoUserSchema = new mongoose.Schema({
   },
   latest_location: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Demo Location"
+    ref: "Demo Location",
+    index:true
   },
   latest_location_user: {
     type: mongoose.Schema.Types.ObjectId,
