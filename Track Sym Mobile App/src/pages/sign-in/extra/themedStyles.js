@@ -1,14 +1,14 @@
-import {StyleService} from '@ui-kitten/components';
+import { StyleService } from "@ui-kitten/components";
 
 const themedStyles = StyleService.create({
   container: {
-    backgroundColor: 'background-basic-color-1',
+    backgroundColor: "background-basic-color-1",
   },
   headerContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     minHeight: 216,
-    backgroundColor: 'color-primary-default',
+    backgroundColor: "color-primary-default",
   },
   formContainer: {
     flex: 1,
@@ -20,14 +20,15 @@ const themedStyles = StyleService.create({
   },
   signInButton: {
     marginHorizontal: 16,
+    marginTop: 16,
   },
   signUpButton: {
     marginVertical: 12,
     marginHorizontal: 16,
   },
   forgotPasswordContainer: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
+    flexDirection: "row",
+    justifyContent: "flex-end",
   },
   passwordInput: {
     marginTop: 16,
@@ -36,11 +37,11 @@ const themedStyles = StyleService.create({
     paddingHorizontal: 0,
   },
   backdrop: {
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   indicator: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 
