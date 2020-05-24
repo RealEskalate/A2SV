@@ -78,12 +78,13 @@ export default {
           commit("setLearnLoaders", { key: "actions", value: false });
         });
     },
-    setStates: ({ commit }) => {
+    setStates: ({commit}, {lang}) => {
       commit("setLearnLoaders", { key: "states", value: true });
       axios
         .get(`${process.env.VUE_APP_BASE_URL}/api/resources/information`, {
           params: {
-            type: "state"
+            type: "state",
+            language: lang
           }
         })
         .then(

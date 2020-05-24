@@ -2,13 +2,12 @@
 <template>
   <v-container>
     <v-row>
-      <h3 class="display-1 font-weight-thin mb-10" v-text="'Learn Even More'" />
+      <h3 class="display-1 font-weight-thin mb-10" v-text="$t('learnEvenMore')"/>
     </v-row>
     <v-row>
       <v-col cols="12" md="9" class="pr-md-12">
         <p>
-          Go through our Learning paths to explore more about Covid 19. Whatever
-          age you are, we have something for you.
+          {{ $t('learnEvenMoreDescription') }}
         </p>
       </v-col>
       <v-col cols="12" md="3" class="pl-md-12">
@@ -41,14 +40,12 @@
                     v-if="$vuetify.breakpoint.mdAndUp"
                   />
                   <th class="text-left primary--text text--darken-1">
-                    Task Name
+                    {{ $t('taskName') }}
                   </th>
-                  <th class="text-left primary--text text--darken-1">What?</th>
-                  <th class="text-left primary--text text--darken-1">Why?</th>
-                  <th class="text-left primary--text text--darken-1">
-                    Duration
-                  </th>
-                  <th class="text-left primary--text text--darken-1">How?</th>
+                  <th class="text-left primary--text text--darken-1"> {{ $t('what') }}</th>
+                  <th class="text-left primary--text text--darken-1"> {{ $t('why') }}</th>
+                  <th class="text-left primary--text text--darken-1"> {{ $t('duration')}}</th>
+                  <th class="text-left primary--text text--darken-1"> {{ $t('how') }}</th>
                 </tr>
               </thead>
               <tbody>
@@ -87,9 +84,9 @@
 </template>
 
 <script>
-import store from "@/store";
+  import store from "@/store";
 
-export default {
+  export default {
   data: () => {
     return {
       selected_age: "Adults",

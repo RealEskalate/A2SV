@@ -47,5 +47,14 @@
   "hospitalizationStageTitle": "Hospitalization",
   "hospitalizationStageDescription": "When the oxygen level in the blood goes below a certain threshold, COVID-19 patients require hospitalization. In case of not having a capacity in ICU, some patients may die due to a lack of materials.",
   "icuStageTitle": "ICU",
-  "icuStageDescription": "Unfortunately, some patients’ immune systems can’t cope up with the virus well and the patients need to be taken to intensive care units."
+  "icuStageDescription": "Unfortunately, some patients’ immune systems can’t cope up with the virus well and the patients need to be taken to intensive care units.",
+  "learnEvenMore": "Learn Even More",
+  "learnEvenMoreDescription": "Go through our Learning paths to explore more about Covid 19. Whatever age you are, we have something for you.",
+  "taskName": "Task Name",
+  "what": "What",
+  "why": "Why",
+  "duration": "Duration",
+  "how": "How",
+  "sources": "Sources",
+  "show": "Show"
 }

@@ -58,7 +58,7 @@
   },
   created() {
     if (!this.states) {
-      store.dispatch("setStates");
+      store.dispatch("setStates", {lang: this.$i18n.locale === 'am' ? 'Amharic' : "English"});
     }
   },
   computed: {
