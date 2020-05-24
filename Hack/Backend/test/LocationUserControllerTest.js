@@ -3,9 +3,9 @@ process.env.NODE_ENV = "test";
 let chai = require("chai");
 let chaiHttp = require("chai-http");
 let server = require("../index");
-let Location = require("../models/LocationModel");
+let {Location} = require("../models/LocationModel");
 let {User} = require("../models/UserModel");
-let LocationUser = require("../models/LocationUserModel");
+let {LocationUser} = require("../models/LocationUserModel");
 let mongoose = require("mongoose");
 const { expect } = chai;
 chai.use(chaiHttp);
@@ -33,8 +33,7 @@ describe("Location Users API", () => {
           "Authorization",
           "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6Ik1BTEUiLCJhZ2VfZ3JvdXAiOiI-OTAiLCJfaWQiOiI1ZWI3ZjMwYzNlMmE4ODRhYzgzYWE3NjAiLCJ1c2VybmFtZSI6ImF1dGh0ZXN0IiwicGFzc3dvcmQiOiIkMmEkMTAkYjJmYTZHTTJMTDlLVlJ4UzhVVEkzdS5SQ2JjUWw0WXc5OExaWVVHUHRnUVdBdVFGOERqNXUiLCJfX3YiOjAsImN1cnJlbnRfY291bnRyeSI6IiJ9LCJpYXQiOjE1ODkxODc5Mjd9.ZJQHbK7cVmDOf87uuhUttlnyAFYe5KA0Afnq0iBptF0"
         );
-      expect(response).to.have.status(200);
-      expect(response.body).to.be.a('array');
+      expect(response).to.have.status(404);
     });
   });
 
@@ -52,7 +51,7 @@ describe("Location Users API", () => {
     afterEach(async () => {
       await LocationUser.deleteOne({user_id: user_location.user_id, location_id: user_location.location_id});
     });
-    it("It should not Get alert users", async () => {
+    it("It should not Get location users", async () => {
       let response = await chai
         .request(server)
         .get("/api/user_locationsssss/")
@@ -114,7 +113,9 @@ describe("Location Users API", () => {
           "Authorization",
           "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6Ik1BTEUiLCJhZ2VfZ3JvdXAiOiI-OTAiLCJfaWQiOiI1ZWI3ZjMwYzNlMmE4ODRhYzgzYWE3NjAiLCJ1c2VybmFtZSI6ImF1dGh0ZXN0IiwicGFzc3dvcmQiOiIkMmEkMTAkYjJmYTZHTTJMTDlLVlJ4UzhVVEkzdS5SQ2JjUWw0WXc5OExaWVVHUHRnUVdBdVFGOERqNXUiLCJfX3YiOjAsImN1cnJlbnRfY291bnRyeSI6IiJ9LCJpYXQiOjE1ODkxODc5Mjd9.ZJQHbK7cVmDOf87uuhUttlnyAFYe5KA0Afnq0iBptF0"
         );
-      expect(response).to.have.status(500);
+      expect(response).to.have.status(200);
+      expect(response.body).to.be.a('array');
+      expect(response.body).to.have.lengthOf(0)
     });
   });
 //Get Location User By User ID - Valid Location User
@@ -166,8 +167,10 @@ describe("GET /api/user_locations/user/:user_id", () => {
         "Authorization",
         "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6Ik1BTEUiLCJhZ2VfZ3JvdXAiOiI-OTAiLCJfaWQiOiI1ZWI3ZjMwYzNlMmE4ODRhYzgzYWE3NjAiLCJ1c2VybmFtZSI6ImF1dGh0ZXN0IiwicGFzc3dvcmQiOiIkMmEkMTAkYjJmYTZHTTJMTDlLVlJ4UzhVVEkzdS5SQ2JjUWw0WXc5OExaWVVHUHRnUVdBdVFGOERqNXUiLCJfX3YiOjAsImN1cnJlbnRfY291bnRyeSI6IiJ9LCJpYXQiOjE1ODkxODc5Mjd9.ZJQHbK7cVmDOf87uuhUttlnyAFYe5KA0Afnq0iBptF0"
         );
-    expect(response).to.have.status(500);
-  });
+        expect(response).to.have.status(200);
+        expect(response.body).to.be.a('array');
+        expect(response.body).to.have.lengthOf(0)
+    });
 });  
 
 //Get Location User by ID - valid Location User
@@ -222,7 +225,7 @@ describe("GET /api/user_locations/:id", () => {
       "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6Ik1BTEUiLCJhZ2VfZ3JvdXAiOiI-OTAiLCJfaWQiOiI1ZWI3ZjMwYzNlMmE4ODRhYzgzYWE3NjAiLCJ1c2VybmFtZSI6ImF1dGh0ZXN0IiwicGFzc3dvcmQiOiIkMmEkMTAkYjJmYTZHTTJMTDlLVlJ4UzhVVEkzdS5SQ2JjUWw0WXc5OExaWVVHUHRnUVdBdVFGOERqNXUiLCJfX3YiOjAsImN1cnJlbnRfY291bnRyeSI6IiJ9LCJpYXQiOjE1ODkxODc5Mjd9.ZJQHbK7cVmDOf87uuhUttlnyAFYe5KA0Afnq0iBptF0"
       );
     
-    expect(response).to.have.status(500);
+    expect(response).to.have.status(404);
   });
 });
 
@@ -239,9 +242,10 @@ describe("GET /api/user_locations/:id", () => {
       });
       location = new Location({
         _id: mongoose.Types.ObjectId(),
-        longitude: 10,
-        latitude: 10,
-        place_name: "Random Non Sequitor",
+        location: {
+          type: "Point",
+          coordinates: [10, 10],
+        }
       });
       newUser = new User({
         _id : mongoose.Types.ObjectId(),
@@ -310,6 +314,8 @@ describe("GET /api/user_locations/:id", () => {
           user_id: newUser._id,
           TTL:10000
         });
+      console.log(response.error);
+      
       expect(response).to.have.status(200);
       expect(response.body).to.be.a('object');
       expect(response.body).to.have.property('location_id');
@@ -361,9 +367,10 @@ describe("GET /api/user_locations/:id", () => {
       });
       location = new Location({
         _id: mongoose.Types.ObjectId(),
-        longitude: 10,
-        latitude: 10,
-        place_name: "ABCD"
+        location: {
+          type: "Point",
+          coordinates: [10, 10],
+        }
       });
       await location_user.save();
       await location.save();
@@ -405,7 +412,7 @@ describe("GET /api/user_locations/:id", () => {
     afterEach(async () => {
       await LocationUser.deleteOne({user_id: location_user.user_id, location_id: location_user.location_id});
     });
-    it("It should not update alert user", async () => {
+    it("It should not update location user", async () => {
       let response = await chai
         .request(server)
         .patch("/api/user_locations/")
@@ -418,7 +425,7 @@ describe("GET /api/user_locations/:id", () => {
           user_id: mongoose.Types.ObjectId(),
           location_id: mongoose.Types.ObjectId(),
         });
-      expect(response).to.have.status(500);
+      expect(response).to.have.status(400);
     });
   });
 

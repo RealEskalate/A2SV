@@ -1,50 +1,61 @@
 <template>
   <v-container>
-    <v-app-bar app class="white" flat v-bind:class="{ raised: raise }">
+    <v-app-bar
+      app
+      class="white v-card--shaped"
+      flat
+      v-bind:class="{ shadow: raise }"
+    >
       <v-app-bar-nav-icon
         v-if="$vuetify.breakpoint.smAndDown && navOption === '2'"
         @click.stop="drawer = !drawer"
       />
-      <router-link class="d-flex align-center no-decoration" to="/">
+      <router-link class="d-flex align-center" to="/">
         <v-img
           alt="Company Logo"
           class="shrink ml-3"
           contain
           src="/img/brand/blue.png"
-          transition="scale-transition"
-          width="130"
+          style="transition: width 0.2s ease"
+          :width="brandWidth"
         />
       </router-link>
 
       <v-spacer />
-
       <v-btn
         :key="link.to"
         :to="link.to"
         text
         v-for="link in links"
-        class="nav-item hidden-sm-and-down"
+        active-class="border-bottom"
+        class="hidden-sm-and-down v-card--shaped nav-btn"
       >
-        <span class="text-capitalize"> {{ link.text }}</span>
+        <span class="text-capitalize"> {{ $t(link.text.toLowerCase()) }}</span>
       </v-btn>
-      <v-menu left bottom v-if="$vuetify.breakpoint.smAndDown">
-        <template v-slot:activator="{ on }">
-          <v-btn icon v-on="on">
-            <v-icon>{{ mdiDotsVertical }}</v-icon>
-          </v-btn>
-        </template>
-
-        <v-list>
-          <v-list-item-group v-model="navType" @change="onNavigationTypeChange">
-            <v-list-item value="1">
-              <v-list-item-title>Bottom Navigation</v-list-item-title>
-            </v-list-item>
-            <v-list-item value="2">
-              <v-list-item-title>Navigation Drawer</v-list-item-title>
-            </v-list-item>
-          </v-list-item-group>
-        </v-list>
-      </v-menu>
+      <v-divider class="mx-2" vertical light />
+      <div class="justify-end pt-7" style="width: 50px">
+        <v-select
+          solo
+          flat
+          dense
+          v-model="$i18n.locale"
+          :items="languages"
+          label="Lang"
+        >
+          <template v-slot:append>
+            <small />
+          </template>
+          <template v-slot:append>
+            <small />
+          </template>
+          <template v-slot:selection="{ item }">
+            <small class="primary--text" v-text="langText[item]" />
+          </template>
+          <template v-slot:item="{ item }">
+            <small v-text="langText[item]" />
+          </template>
+        </v-select>
+      </div>
     </v-app-bar>
     <v-container v-if="$vuetify.breakpoint.smAndDown">
       <v-navigation-drawer
@@ -97,10 +108,17 @@
 </template>
 
 <script>
-  import store from "@/store/";
-  import {mdiBookOpenVariant, mdiDotsVertical, mdiHome, mdiInformation, mdiMap, mdiNewspaper} from "@mdi/js";
+import store from "@/store/";
+import {
+  mdiBookOpenVariant,
+  mdiDotsVertical,
+  mdiHome,
+  mdiInformation,
+  mdiMap,
+  mdiNewspaper
+} from "@mdi/js";
 
-  export default {
+export default {
   data: () => {
     return {
       mdiDotsVertical,
@@ -109,22 +127,26 @@
       locationY: 0,
       curRoute: 0,
       activeBtn: 0,
+      languages: ["en", "am"],
+      langText: {
+        en: "EN",
+        am: "አማ"
+      },
       links: [
-        {text: "Home", icon: mdiHome, to: "/"},
+        { text: "Home", icon: mdiHome, to: "/" },
         {
           text: "Learn",
           icon: mdiBookOpenVariant,
           to: "/information"
         },
-        {text: "About", icon: mdiInformation, to: "/about"},
-        {text: "News", icon: mdiNewspaper, to: "/news"},
-        {text: "Map", icon: mdiMap, to: "/map"}
+        { text: "About", icon: mdiInformation, to: "/about" },
+        { text: "News", icon: mdiNewspaper, to: "/news" },
+        { text: "Map", icon: mdiMap, to: "/map" }
       ]
     };
   },
   created() {
     window.addEventListener("scroll", this.handleScroll);
-    // alert(screen.height);
   },
   destroyed() {
     window.removeEventListener("scroll", this.handleScroll);
@@ -132,14 +154,14 @@
   methods: {
     handleScroll() {
       this.locationY = window.scrollY;
-    },
-    onNavigationTypeChange() {
-      store.dispatch("setNavState", { type: this.navType });
     }
   },
   computed: {
     raise() {
       return this.locationY > 50;
+    },
+    brandWidth() {
+      return this.locationY > 50 ? 125 : 135;
     },
     navOption() {
       return this.navType;
@@ -152,23 +174,23 @@
 </script>
 
 <style scoped>
+.border-bottom {
+  border-bottom: #009ce5 solid 2px !important;
+}
+
+.v-btn--active.border-bottom::before {
+  opacity: 0 !important;
+}
+
+.nav-btn {
+  border-bottom: white solid 2px;
+  transition: border-bottom-color 0.8s;
+}
+
 .nav-item span {
   font-family: "Open Sans", sans-serif;
   font-weight: 700;
   color: #47536e !important;
-}
-
-.bg-transparent {
-  opacity: 0.95;
-}
-
-.no-decoration {
-  text-decoration: none !important;
-}
-
-.raised {
-  box-shadow: 5px 0 15px 5px #ddd;
-  z-index: 997;
 }
 
 .active-bottom .v-icon {

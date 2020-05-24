@@ -10,13 +10,25 @@
       <v-row>
         <v-col cols="12" md="7" class="pl-md-12 py-md-9 px-8 py-5">
           <img-svg
+            style="max-height: 600px"
             class="col-12 py-md-12 px-md-12 px-5 py-3 grey lighten-4 v-card--shaped shadow-in"
           />
         </v-col>
         <v-col cols="12" md="5" class="pr-md-12 py-md-8 px-8 py-5">
           <h2 class="mb-5 primary--text" v-text="'What phases are there?'" />
           <v-list disabled>
-            <v-list-item-group color="primary">
+            <v-skeleton-loader
+              ref="skeleton"
+              type="list-item-three-line,list-item-three-line,list-item-three-line,list-item-three-line,list-item-three-line,list-item-three-line"
+              class="mx-auto mb-2"
+              v-if="loaders.states"
+            />
+            <p
+              v-else-if="states && states.length === 0"
+              class="text-center grey--text text--darken-1"
+              v-text="'Found Nothing'"
+            />
+            <v-list-item-group v-else color="primary">
               <v-list-item
                 v-for="(state, i) in states"
                 :key="i"
@@ -44,10 +56,14 @@ export default {
   components: {
     "img-svg": ImageSvg
   },
-  computed: {
-    states() {
-      return store.getters.getStates;
+  created() {
+    if (!this.states) {
+      store.dispatch("setStates");
     }
+  },
+  computed: {
+    states: () => store.getters.getStates,
+    loaders: () => store.getters.getLearnLoaders
   }
 };
 </script>

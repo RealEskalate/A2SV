@@ -8,6 +8,7 @@
           </v-col>
           <v-col cols="12" md="4">
             <v-autocomplete
+              class="v-card--shaped"
               v-model="country"
               :items="countries"
               label="Country"
@@ -36,10 +37,14 @@
               <v-list v-else three-line>
                 <template v-for="item in news">
                   <v-list-item :key="item.title">
-                    <v-list-item-avatar height="50" width="50">
+                    <v-list-item-avatar
+                      class="v-card--shaped"
+                      height="50"
+                      width="50"
+                    >
                       <v-img
                         contain
-                        :src="clearBitLogo(item.reference_link)"
+                        :src="item.logo"
                         lazy-src="/img/news/avatar.png"
                       />
                     </v-list-item-avatar>
@@ -49,14 +54,13 @@
                       <h4 class="font-weight-medium" v-html="item.title" />
                       <div class="my-1">
                         <v-list-item-subtitle
-                          v-text="getTime(item.date)"
+                          v-text="formatTime(item.date)"
                           style="display:inline"
                         />
                         <v-btn
-                          tile
                           x-small
                           outlined
-                          class="float-right"
+                          class="float-right v-card--shaped"
                           :href="item.reference_link"
                           v-text="'Read More'"
                           target="blank"
@@ -74,6 +78,7 @@
         <v-row>
           <v-col cols="12" md="2">
             <v-select
+              class="v-card--shaped"
               v-model="size"
               :items="sizes"
               label="Show"
@@ -84,7 +89,7 @@
           </v-col>
           <v-col cols="12" md="10">
             <v-pagination
-              class="justify-end"
+              class="justify-md-end justify-center"
               v-model="page"
               total-visible="7"
               :length="Math.floor((totalCount || 0) / size)"
@@ -100,7 +105,7 @@
             <v-fade-transition hide-on-leave>
               <v-skeleton-loader
                 ref="skeleton"
-                type="list-item-avatar,list-item-avatar,list-item-avatar,list-item-avatar,list-item-avatar,list-item-avatar,list-item-avatar"
+                type="list-item-avatar,list-item-avatar,list-item-avatar,list-item-avatar,list-item-avatar"
                 class="mx-auto"
                 v-if="loaders.sources"
               />
@@ -120,18 +125,19 @@
                   :key="i"
                   class="px-5"
                   v-for="(source, i) in sourceList"
-                  :value="source"
+                  :value="source.source"
                 >
                   <template v-slot:default="{ active, toggle }">
                     <v-list-item-avatar>
                       <v-img
-                        :src="imageUrl(source)"
-                        :lazy-src="imageUrl(source)"
+                        contain
+                        :src="source.logo"
+                        lazy-src="/img/news/avatar.png"
                       />
                     </v-list-item-avatar>
 
                     <v-list-item-content>
-                      <v-list-item-title v-text="source" />
+                      <v-list-item-title v-text="source.source" />
                     </v-list-item-content>
 
                     <v-list-item-action>
@@ -160,8 +166,8 @@
 </template>
 
 <script>
-import moment from "moment/src/moment";
-import store from "@/store/";
+import moment from "moment";
+import store from "@/store";
 
 export default {
   data() {
@@ -186,38 +192,14 @@ export default {
         sources: this.sources
       });
     },
-    clearBitLogo(link) {
-      return `https://logo.clearbit.com/${this.getPageUrl(link)}`;
-    },
     getPageUrl(link) {
       let domain = link.split("/")[2] || "";
       domain = domain.split(".");
       if (domain.length >= 3) domain.shift();
       return domain.join(".");
     },
-    getTime(postDate) {
+    formatTime(postDate) {
       return moment(String(postDate || "")).format("hh:mm A - MMM DD, YYYY");
-    },
-    imageUrl(source) {
-      const newsImgPath = "/img/news";
-      switch (source) {
-        case "CDC Newsroom":
-          return `${newsImgPath}/cdc.png`;
-        case "CNN":
-          return `${newsImgPath}/cnn.png`;
-        case "BBC News":
-          return `${newsImgPath}/bbc.png`;
-        case "NPR":
-          return `${newsImgPath}/npr.png`;
-        case "World Health Organization":
-          return `${newsImgPath}/who.png`;
-        case "The Guardian":
-          return `${newsImgPath}/guardian.png`;
-        case "Global News":
-          return `${newsImgPath}/global-news.png`;
-        default:
-          return `${newsImgPath}/avatar.png`;
-      }
     }
   },
   watch: {

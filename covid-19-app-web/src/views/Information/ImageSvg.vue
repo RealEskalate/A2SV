@@ -550,7 +550,6 @@
 </template>
 
 <script>
-
 import store from "@/store/";
 
 export default {
@@ -563,9 +562,6 @@ export default {
     };
   },
   methods: {},
-  created() {
-    store.dispatch("setStates");
-  },
   computed: {
     states() {
       return store.getters.getStates;

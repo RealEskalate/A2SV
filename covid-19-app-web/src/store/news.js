@@ -42,7 +42,7 @@ const actions = {
   setSources: ({ commit }) => {
     commit("setNewsLoaders", { key: "sources", value: true });
     axios
-      .get(`${process.env.VUE_APP_BASE_URL}/news/sources`)
+      .get(`${process.env.VUE_APP_BASE_URL}/api/news/sources`)
       .then(
         response => {
           commit("setSources", response.data);
@@ -63,7 +63,7 @@ const actions = {
   setNews: ({ commit }, { page, size, country, sources }) => {
     commit("setNewsLoaders", { key: "list", value: true });
     axios
-      .get(`${process.env.VUE_APP_BASE_URL}/news`, {
+      .get(`${process.env.VUE_APP_BASE_URL}/api/news`, {
         params: {
           page: page,
           size: size,

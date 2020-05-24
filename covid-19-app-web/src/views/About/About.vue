@@ -29,33 +29,46 @@
               </div>
             </div>
             <div class="mx-auto mt-10 py-5">
+              <h3 class="display-1 font-weight-thin mb-5">Contact us</h3>
               <v-alert
                 v-if="showAlert"
                 :type="type"
                 v-text="message"
                 dismissible
               />
-              <h3 class="display-1 font-weight-thin">Contact us</h3>
-              <v-form class="py-5">
+              <v-form class="mt-7">
                 <v-text-field
+                  class="v-card--shaped"
+                  outlined
+                  dense
                   label="Name"
                   v-model="contact.name"
                   :rules="rules.nameRules"
-                  counter="10"
+                  counter="30"
                 />
                 <v-text-field
+                  class="v-card--shaped"
+                  outlined
+                  dense
                   label="Email"
                   v-model="contact.email"
                   :rules="rules.emailRules"
                 />
                 <v-textarea
+                  class="v-card--shaped"
+                  outlined
+                  dense
                   rows="5"
                   label="Message"
                   :rules="rules.messageRules"
                   v-model="contact.message"
                 />
                 <div class="text-center py-3">
-                  <v-btn width="100" class="primary mx-auto" @click="sendForm">
+                  <v-btn
+                    width="100"
+                    class="primary mx-auto v-card--shaped"
+                    @click="sendForm"
+                  >
                     Send
                     <v-icon class="ml-2" small> {{ mdiSend }}</v-icon>
                   </v-btn>
@@ -70,37 +83,31 @@
     <br />
     <section class="my-12">
       <v-parallax
-        style="min-height: 400px; height: auto"
+        :height="$vuetify.breakpoint.mdAndUp ? 350 : 900"
+        class="v-card--shaped shadow"
         src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg"
       >
-        <v-container>
-          <v-row class="py-5 text-center white--text">
-            <v-col
-              cols="12"
-              md="4"
-              class="px-12"
-              :key="'actions_' + action_i"
-              v-for="(action, action_i) in actions"
-            >
-              <v-icon
-                      class="white--text mb-7"
-                      style="font-size: 4em">
-                {{ action.icon }}
-              </v-icon>
-              <h1>{{ action.title }}</h1>
-              <p class="font-weight-thin my-2">{{ action.description }}</p>
-              <a
-                :key="'links_' + link_i"
-                v-for="(link, link_i) in action.links"
-                :href="link.href"
-                class="mx-2 grey--text text--lighten-5"
-                target="_blank"
-              >
-                {{ link.text }}
-              </a>
-            </v-col>
-          </v-row>
-        </v-container>
+        <v-row class="text-center white--text d-flex align-center">
+          <v-col
+            cols="12"
+            md="4"
+            class="px-12 my-3 my-md-0"
+            :key="'actions_' + action_i"
+            v-for="(action, action_i) in actions"
+          >
+            <v-icon class="white--text mb-7" x-large v-text="action.icon" />
+            <h1 v-text="action.title" />
+            <p class="font-weight-thin my-2" v-text="action.description" />
+            <a
+              :key="'links_' + link_i"
+              v-for="(link, link_i) in action.links"
+              :href="link.href"
+              class="mx-2 grey--text text--lighten-5"
+              target="_blank"
+              v-text="link.text"
+            />
+          </v-col>
+        </v-row>
       </v-parallax>
     </section>
     <br />
@@ -135,10 +142,15 @@
 </template>
 
 <script>
-  import axios from "axios";
-  import {mdiCloudDownloadOutline, mdiSearchWeb, mdiSend, mdiYoutube} from "@mdi/js";
+import axios from "axios";
+import {
+  mdiCloudDownloadOutline,
+  mdiSearchWeb,
+  mdiSend,
+  mdiYoutube
+} from "@mdi/js";
 
-  export default {
+export default {
   data: () => {
     return {
       mdiSend,
@@ -153,7 +165,7 @@
       rules: {
         nameRules: [
           v => !!v || "Name is required",
-          v => (v && v.length <= 10) || "Name must be less than 10 characters"
+          v => (v && v.length <= 30) || "Name must be less than 10 characters"
         ],
         emailRules: [
           v => !!v || "E-mail is required",
@@ -162,13 +174,13 @@
         messageRules: [
           v => !!v || "Message is required",
           v =>
-            (v && v.length <= 10) || "Message must be less than 150 characters"
+            (v && v.length <= 150) || "Message must be less than 150 characters"
         ]
       },
       descriptions: [
         {
-          title: "Corona App",
-          content: `<p> <strong> COVID-19 Symptom Tracker </strong> is a non-commercial app that uses crowd-sourcing to collect and visualize the density of the relevant symptoms. Registration only asks about age and gender to be used for data science purposes. Users can anonymously report symptoms and choose a location to see the density of symptoms in a map view. The data is aggregated by places, therefore, the app can help people avoid visiting a grocery store or a gas station that is heavily used by symptomatic people. </p>
+          title: "Track Sym",
+          content: `<p> <strong> Track Sym </strong> is a non-commercial app that uses crowd-sourcing to collect and visualize the density of the relevant symptoms. Registration only asks about age and gender to be used for data science purposes. Users can anonymously report symptoms and choose a location to see the density of symptoms in a map view. The data is aggregated by places, therefore, the app can help people avoid visiting a grocery store or a gas station that is heavily used by symptomatic people. </p>
                     <p> By filling out simple questionnaires about your health and symptoms every day you can help tackle the spread of the virus and ending the pandemic. Moreover, by looking or searching places you want to go, maybe to run errands or to grab groceries, you can find out how symptomatic the place is and what kinda measure you should take. </p>`
         },
         {

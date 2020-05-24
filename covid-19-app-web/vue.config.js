@@ -1,4 +1,4 @@
-const CompressionPlugin = require('compression-webpack-plugin');
+const CompressionPlugin = require("compression-webpack-plugin");
 
 module.exports = {
   configureWebpack: {
@@ -13,5 +13,11 @@ module.exports = {
     webpackBundleAnalyzer: {
       openAnalyzer: false
     },
+    i18n: {
+      locale: "en",
+      fallbackLocale: "en",
+      localeDir: "locales",
+      enableInSFC: true
+    }
   }
 };

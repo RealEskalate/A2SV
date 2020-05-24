@@ -5,101 +5,99 @@
     </v-row>
     <v-row>
       <v-col class="pr-12" md="5" cols="12">
-        <v-expansion-panels
-          accordion
-          flat
-          v-model="selectedAction"
-          style="min-height: 300px"
-        >
-          <v-expansion-panel
-            @change="value = 0"
-            v-for="(action, i) in actions"
-            :key="i"
+        <v-fade-transition hide-on-leave>
+          <v-skeleton-loader
+            ref="skeleton"
+            type="list-item-two-line,divider,list-item-two-line,divider,list-item-two-line,divider,list-item-two-line,divider"
+            class="mx-auto mb-2"
+            v-if="loaders.actions"
+          />
+          <p
+            v-else-if="actions && actions.length === 0"
+            class="text-center grey--text text--darken-1"
+            v-text="'Found Nothing'"
+          />
+          <v-expansion-panels
+            v-else
+            accordion
+            flat
+            v-model="selectedAction"
+            style="min-height: 300px"
           >
-            <v-expansion-panel-header
-              class="font-weight-bold"
-              hide-actions
-              @mouseenter="auto = false"
-              @mouseleave="auto = true"
+            <v-expansion-panel
+              @change="value = 0"
+              v-for="(action, i) in actions"
+              :key="i"
             >
-              <div class="text--primary">
-                <v-progress-circular
-                  :value="selectedAction === i ? value : 100"
-                  :width="7"
-                  :size="20"
-                  color="primary"
-                />
-                <h3
-                  class="text--primary d-inline-block mx-3"
-                  v-text="action.title"
-                />
-              </div>
-            </v-expansion-panel-header>
-            <v-expansion-panel-content>
-              <div
-                v-html="action.description"
+              <v-expansion-panel-header
+                class="font-weight-bold"
+                hide-actions
                 @mouseenter="auto = false"
                 @mouseleave="auto = true"
-              />
-              <v-img
-                class="my-5 mx-auto d-md-none"
-                :lazy-src="action.image"
-                :src="action.image"
-              />
-            </v-expansion-panel-content>
-            <v-divider />
-          </v-expansion-panel>
-        </v-expansion-panels>
+              >
+                <div class="text--primary">
+                  <v-progress-circular
+                    rotate="270"
+                    :value="selectedAction === i ? value : 100"
+                    :width="7"
+                    :size="20"
+                    color="primary"
+                  />
+                  <h3
+                    class="text--primary d-inline-block mx-3"
+                    v-text="action.title"
+                  />
+                </div>
+              </v-expansion-panel-header>
+              <v-expansion-panel-content>
+                <div
+                  v-html="action.description"
+                  @mouseenter="auto = false"
+                  @mouseleave="auto = true"
+                />
+                <v-img
+                  class="my-5 mx-auto d-md-none"
+                  :lazy-src="action.image"
+                  :src="action.image"
+                />
+              </v-expansion-panel-content>
+              <v-divider />
+            </v-expansion-panel>
+          </v-expansion-panels>
+        </v-fade-transition>
       </v-col>
       <v-col md="7" cols="12" class="px-10 my-auto d-md-block d-none">
-        <v-img
-          contain
-          transition="fade-transition"
-          class="my-5 mx-auto"
-          max-height="350px"
-          :lazy-src="actions[selectedAction].image"
-          :src="actions[selectedAction].image"
-        />
+        <v-fade-transition hide-on-leave>
+          <v-skeleton-loader
+            ref="skeleton"
+            type="image,image"
+            class="mx-mb-12"
+            v-if="loaders.actions"
+          />
+          <v-img
+            v-else-if="actions && actions.length > 0"
+            contain
+            transition="fade-transition"
+            class="my-5 mx-auto"
+            max-height="350px"
+            :lazy-src="server_url + actions[selectedAction].image"
+            :src="server_url + actions[selectedAction].image"
+          />
+        </v-fade-transition>
       </v-col>
     </v-row>
   </v-container>
 </template>
 <script>
+import store from "@/store";
+
 export default {
   data: () => {
     return {
       auto: true,
       interval: 0,
       value: 0,
-      selectedAction: 0,
-      actions: [
-        {
-          title: "Stay Calm",
-          description: `Pandemic does not refer to the lethality of a virus but to its transmission and geographical extension.
-          So Stay mindful and be the help instead of creating more problems in fear.`,
-          image: "/img/actions/mindfulness.svg"
-        },
-        {
-          title: "Wash your Hands",
-          description: `Respiratory viruses spread when mucus or droplets containing the virus
-          get into your body through your eyes, nose or throat. Most often, this
-          happens through your hands.`,
-          image: "/img/actions/wash_hands.svg"
-        },
-        {
-          title: "Keep Physical Distancing",
-          description: `Limiting face-to-face contact with others is the best way to reduce
-          the spread of the disease.`,
-          image: "/img/actions/social_distancing.svg"
-        }
-        // {
-        //   title: "Learn Even More",
-        //   description: `Go through our Learning paths to explore more about Covid 19.
-        //   Whatever age you are, we have something for you.`,
-        //   image: "/img/actions/book_reading.svg",
-        //   learning: true
-        // }
-      ]
+      selectedAction: 0
     };
   },
   beforeDestroy() {
@@ -115,6 +113,15 @@ export default {
         this.value += 15;
       }
     }, 1000);
+  },
+  created() {
+    if (!this.actions) {
+      store.dispatch("setActions");
+    }
+  },
+  computed: {
+    actions: () => store.getters.getActions,
+    loaders: () => store.getters.getLearnLoaders
   }
 };
 </script>

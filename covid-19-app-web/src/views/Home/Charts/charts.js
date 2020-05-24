@@ -1,4 +1,4 @@
-import { Bar, Line, mixins } from "vue-chartjs";
+import { Bar, Doughnut, Line, mixins } from "vue-chartjs";
 import store from "@/store/index.js";
 import moment from "moment";
 const { reactiveProp } = mixins;
@@ -13,6 +13,15 @@ export const LineChart = {
   extends: Line,
   mixins: [reactiveProp],
   props: ["chartData", "options"]
+};
+
+export const DoughnutChart = {
+  extends: Doughnut,
+  mixins: [reactiveProp],
+  props: ["data", "options"],
+  mounted() {
+    this.renderChart(this.data, this.options);
+  }
 };
 
 export const ChartMixin = {
@@ -229,20 +238,20 @@ export const ChartMixin = {
         counts: [
           { label: "Test Count", color: [121, 134, 203] },
           { label: "Confirmed Cases", color: [255, 213, 79] },
+          { label: "Active Cases", color: [176, 190, 197] },
           { label: "Death Count", color: [240, 98, 146] },
-          { label: "Recovery Count", color: [220, 231, 117] },
-          { label: "Active Cases", color: [176, 190, 197] }
+          { label: "Recovery Count", color: [220, 231, 117] }
         ],
         daily: [
-          { label: "Daily Test", color: [121, 134, 203] },
+          // { label: "Daily Test", color: [121, 134, 203] },
           { label: "Daily Confirmed", color: [255, 213, 79] },
           { label: "Daily Deaths", color: [240, 98, 146] },
           { label: "Daily Recovery", color: [220, 231, 117] }
         ],
         rates: [
           { label: "Positive Rate", color: [255, 213, 79] },
-          { label: "Recovery Rate", color: [220, 231, 117] },
           { label: "Active Rate", color: [176, 190, 197] },
+          { label: "Recovery Rate", color: [220, 231, 117] },
           // { label: "Hospitalization Rate", color: [77, 208, 225] },
           // { label: "ICU Rate", color: [121, 134, 203] },
           { label: "Death Rate", color: [240, 98, 146] }

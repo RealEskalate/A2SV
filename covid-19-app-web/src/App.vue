@@ -2,7 +2,9 @@
   <v-app>
     <app-bar />
     <v-content class="px-md-0 px-3">
-      <router-view />
+      <v-fade-transition>
+        <router-view />
+      </v-fade-transition>
       <vue-progress-bar />
     </v-content>
     <app-footer />
@@ -51,7 +53,35 @@ export default {
 </script>
 
 <style>
+.shadow-sm {
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1) !important;
+}
+
+.shadow {
+  box-shadow: 0 0.35rem 0.75rem rgba(0, 0, 0, 0.1) !important;
+}
+
+.shadow-lg {
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.15) !important;
+}
+
+.shadow-none {
+  box-shadow: none !important;
+}
+
 .shadow-in {
   box-shadow: 0 0 5px #dededede inset;
+}
+
+.v-alert,
+.v-dialog--active {
+  border-radius: 23px 5px 23px 5px !important;
+}
+
+.v-pagination__item,
+.v-pagination__navigation {
+  border-radius: 10px 3px 10px 3px !important;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 0.2rem 0.2rem rgba(0, 0, 0, 0.05) !important;
 }
 </style>

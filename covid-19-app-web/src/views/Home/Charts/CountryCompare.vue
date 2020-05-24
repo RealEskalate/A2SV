@@ -5,6 +5,7 @@
         <v-row class="mx-md-5" dense>
           <v-col class="px-2" cols="12" md="6">
             <v-autocomplete
+              class="v-card--shaped"
               v-model="country_1"
               :items="countries"
               label="Country 1"
@@ -15,7 +16,7 @@
               dense
               @input="fetchData1"
               :color="`rgb(${colors[0][0]}, ${colors[0][1]}, ${colors[0][2]})`"
-              item-color="indigo"
+              item-color="cyan"
             />
           </v-col>
           <v-col class="px-2" cols="12" md="6">
@@ -27,17 +28,18 @@
             >
               <template v-slot:activator="{ on }">
                 <v-text-field
-                        :color="
+                  class="v-card--shaped"
+                  :color="
                     `rgb(${colors[0][0]}, ${colors[0][1]}, ${colors[0][2]})`
                   "
-                        outlined
-                        dense
-                        v-model="dateRangeText1"
-                        label="Date Range 1"
-                        hint="Country 1: From - To"
-                        :prepend-inner-icon=" mdiCalendar"
-                        readonly
-                        v-on="on"
+                  outlined
+                  dense
+                  v-model="dateRangeText1"
+                  label="Date Range 1"
+                  hint="Country 1: From - To"
+                  :prepend-inner-icon="mdiCalendar"
+                  readonly
+                  v-on="on"
                 />
               </template>
               <v-date-picker
@@ -66,6 +68,7 @@
         <v-row class="mx-md-5" dense>
           <v-col class="px-2" cols="12" md="6">
             <v-autocomplete
+              class="v-card--shaped"
               v-model="country_2"
               :items="countries"
               label="Country 2"
@@ -88,17 +91,18 @@
             >
               <template v-slot:activator="{ on }">
                 <v-text-field
-                        :color="
+                  class="v-card--shaped"
+                  :color="
                     `rgb(${colors[1][0]}, ${colors[1][1]}, ${colors[1][2]})`
                   "
-                        outlined
-                        dense
-                        v-model="dateRangeText2"
-                        label="Date Range 2"
-                        hint="Country 2: From - To"
-                        :prepend-inner-icon="mdiCalendar"
-                        readonly
-                        v-on="on"
+                  outlined
+                  dense
+                  v-model="dateRangeText2"
+                  label="Date Range 2"
+                  hint="Country 2: From - To"
+                  :prepend-inner-icon="mdiCalendar"
+                  readonly
+                  v-on="on"
                 />
               </template>
               <v-date-picker
@@ -127,6 +131,7 @@
         <v-row class="mx-md-5" dense>
           <v-col class="px-2" cols="12">
             <v-select
+              class="v-card--shaped"
               v-model="criterion"
               :items="criteriaList"
               label="Common Criteria"
@@ -176,14 +181,13 @@
   </v-container>
 </template>
 <script>
-  import {ChartMixin, LineChart} from "./charts.js";
-  import CountryResources from "../CountryResources";
-  import store from "@/store/index.js";
-  import moment from "moment";
-  import {mdiCalendar} from "@mdi/js"
+import { ChartMixin, LineChart } from "./charts.js";
+import CountryResources from "../CountryResources";
+import store from "@/store/index.js";
+import moment from "moment";
+import { mdiCalendar } from "@mdi/js";
 
-
-  export default {
+export default {
   components: { LineChart, CountryResources },
   mixins: [ChartMixin],
   data() {
@@ -192,7 +196,7 @@
       data: null,
       criterion: "Confirmed Cases",
       colors: [
-        [121, 134, 203],
+        [77, 208, 225],
         [240, 98, 146]
       ],
       date_range_1: [this.defaultDate(), this.defaultDate("end")],

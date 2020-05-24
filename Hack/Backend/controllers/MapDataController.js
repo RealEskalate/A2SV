@@ -40,7 +40,11 @@ exports.getMapData = async (req, res) => {
 
 // Schedules fetching everyday
 const run_updates = () => {
-  schedule.scheduleJob({hour: 12, minute: 00}, async function () {
+  let rule = new schedule.RecurrenceRule()
+  rule.hour = 6;
+  rule.minute = 30;
+  rule.tz = 'Africa/Nairobi';
+  schedule.scheduleJob(rule, async function () {
     await updateDb();
   });
 };
