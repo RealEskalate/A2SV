@@ -32,6 +32,81 @@
 		5F3CCDAC595D425B8F12B456 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 962E7E0489944D71AAD804BC /* Octicons.ttf */; };
 		599AA00054314D3D8CE826D6 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3A7ABFFDDE6B4FF8ACE0A1C9 /* SimpleLineIcons.ttf */; };
 		7336A60834C2420CAB8DB26D /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6D04A18D787B4E6D9EC4A2F9 /* Zocial.ttf */; };
+		DDFA83CBCA0748FAB262FB0D /* android.png in Resources */ = {isa = PBXBuildFile; fileRef = EB1D562960414F55BDF6E742 /* android.png */; };
+		0AF9CE9ECFBE490FA18B39A2 /* caution512.png in Resources */ = {isa = PBXBuildFile; fileRef = 27E14DFAF1824664AEBA9EA6 /* caution512.png */; };
+		54710A48955C456A827EB83F /* corona.png in Resources */ = {isa = PBXBuildFile; fileRef = E4D4F3C463084905BD703C87 /* corona.png */; };
+		557861C27E9E4120BF9BE012 /* cough512.png in Resources */ = {isa = PBXBuildFile; fileRef = E97516974E4740BFAA30B6DE /* cough512.png */; };
+		EDB92B62A1C7428FB638F69C /* cough64.png in Resources */ = {isa = PBXBuildFile; fileRef = AF520860221D4107BA870CFF /* cough64.png */; };
+		C83D78FEE1B6485A988EA164 /* covid.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7E3E5F013ABE4FEE8E6BA99B /* covid.jpg */; };
+		ECB4081BCD0A47F9AB064168 /* fever512.png in Resources */ = {isa = PBXBuildFile; fileRef = 726DAF71AC2649819BB04004 /* fever512.png */; };
+		630AEF931A12484FB27701BF /* 17895-wear-mask-min.gif in Resources */ = {isa = PBXBuildFile; fileRef = 832130AE01A849D2BBBBC35F /* 17895-wear-mask-min.gif */; };
+		131781B76806499A85C5C662 /* corona-blue.gif in Resources */ = {isa = PBXBuildFile; fileRef = E46174C139F84F26B0DB3C3D /* corona-blue.gif */; };
+		619390E437014F9E8063C4BB /* corona-red.gif in Resources */ = {isa = PBXBuildFile; fileRef = 1124085D6A9E4B48B98A148E /* corona-red.gif */; };
+		3175A30870C6495E8261988F /* doctors.gif in Resources */ = {isa = PBXBuildFile; fileRef = 5C2F9D5837F84683ACC33D3D /* doctors.gif */; };
+		479129EA7D0C4152B39461B6 /* handWash.gif in Resources */ = {isa = PBXBuildFile; fileRef = 90760D9C34C040DEA49CACF4 /* handWash.gif */; };
+		F0742B87317244A2A79DF698 /* sneezing.gif in Resources */ = {isa = PBXBuildFile; fileRef = 5AB4F7D2F9A94E94BDBB90EF /* sneezing.gif */; };
+		66F3F326EDCB413FBD03076D /* t.gif in Resources */ = {isa = PBXBuildFile; fileRef = 4214C8C1581D4EC5B666F2C8 /* t.gif */; };
+		9BE25A0290914DCDB08104F7 /* v1.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E2169E9BAE14B1A98C7255F /* v1.png */; };
+		FD109298AE134CFCA434E779 /* headache512.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D91208E8C6749939AB60ADB /* headache512.png */; };
+		B6C0441697F44E14B900D456 /* heatMap.png in Resources */ = {isa = PBXBuildFile; fileRef = A8F6D03233514E87A1C8586D /* heatMap.png */; };
+		B7835CF888E44AB98A9C0313 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 499261677463402CBE3261F8 /* icon.png */; };
+		40110A433B45494096F9A07E /* anosmia.png in Resources */ = {isa = PBXBuildFile; fileRef = 56239571B3BF42EAAC3A663D /* anosmia.png */; };
+		CCECD75D52C246BA95CE63BF /* avatar.png in Resources */ = {isa = PBXBuildFile; fileRef = 615724642146413B9DB17B6E /* avatar.png */; };
+		4F209FFABD764DB1BC02269D /* chills.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B79168B721954C80A6F15CA9 /* chills.jpg */; };
+		2B423A218A0A409B8373676C /* cough.png in Resources */ = {isa = PBXBuildFile; fileRef = BAE7D71CA2B34A50BD4AFB24 /* cough.png */; };
+		CF809DCB59D848C99841B758 /* diarrhea.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C82AD2C185647A4BEE5C8C1 /* diarrhea.png */; };
+		0B26EFCC65B741C289BC9154 /* fatigue.png in Resources */ = {isa = PBXBuildFile; fileRef = F6C437896E474B56A0B79055 /* fatigue.png */; };
+		1E495539B1B6420B92C2019A /* fever.png in Resources */ = {isa = PBXBuildFile; fileRef = D01862EA8AB646F5BA65D71B /* fever.png */; };
+		B7F2198832BB44ECAF4DD0F4 /* file.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 461540ADFD854CEBBBD22AD3 /* file.jpg */; };
+		88B343E8554D4744BD0D68AC /* headache.png in Resources */ = {isa = PBXBuildFile; fileRef = 408AC24CF7584C279B793CED /* headache.png */; };
+		5FDD1A0CEAB14499850F1B95 /* Heat.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0981CD1EC28343698612E6B3 /* Heat.jpg */; };
+		AAFD15626373430EBA20D769 /* locate.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4C7A8E7C87A44453BAF1F7F0 /* locate.jpg */; };
+		95C727D5793B42A486AB4CE4 /* message.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DB3CDF20C0314F3598406F8D /* message.jpg */; };
+		F851370B7A7B4EFC9C83104C /* muscle-pain.png in Resources */ = {isa = PBXBuildFile; fileRef = CACA6A39F46D405D99439AE2 /* muscle-pain.png */; };
+		DC6399149BFB48B0A32A4B74 /* person.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FCDB9804F49442A901E99C0 /* person.png */; };
+		DDF16E68CE7541F0A523DACE /* pneumonia.png in Resources */ = {isa = PBXBuildFile; fileRef = BE8B410FE83240E293DB7B4B /* pneumonia.png */; };
+		6AAB82D457B544A8899F1B04 /* prevention_methods.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 30268DB323E24477BB619F7A /* prevention_methods.jpg */; };
+		E135320A6E234A81A2EF21EB /* Prevention.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E54754BF83614BD08943166A /* Prevention.jpg */; };
+		994D1E81A2A247919CA5BB46 /* Regional.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 884DCF02B902411DA8F6E3D4 /* Regional.jpg */; };
+		B6F9DA3A394547E88E939D00 /* robot-dev.png in Resources */ = {isa = PBXBuildFile; fileRef = 08A2658F64AA4CB893154CD3 /* robot-dev.png */; };
+		647240B33F1D47FA96130F14 /* robot-prod.png in Resources */ = {isa = PBXBuildFile; fileRef = F14B640BC407471E85B3C9F2 /* robot-prod.png */; };
+		DF7AAC15ED774BC3B92637CC /* runny-nose.png in Resources */ = {isa = PBXBuildFile; fileRef = F77BEEE4BA794120A3A1EB1D /* runny-nose.png */; };
+		0769688592BA46F09DFF42FF /* shortness-of-breath.png in Resources */ = {isa = PBXBuildFile; fileRef = DA2EAA883825463E8FDA450A /* shortness-of-breath.png */; };
+		A5A75D6C9708443C83F19FD9 /* signupBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = C7FDEADC1609473FA034D320 /* signupBackground.png */; };
+		A74335C9746D455189B2424B /* sneezing.png in Resources */ = {isa = PBXBuildFile; fileRef = 0333B60C9A874A5BA03F1A79 /* sneezing.png */; };
+		D3A66E365603457C8393C3A5 /* sore-throat.png in Resources */ = {isa = PBXBuildFile; fileRef = 15A386798AEC41008F705479 /* sore-throat.png */; };
+		61ACF6E362044BAA9BE16D7E /* splash.png in Resources */ = {isa = PBXBuildFile; fileRef = 5858216296D14B5F9572AD05 /* splash.png */; };
+		550E1C35EE0C491EBADEBE3C /* spreads.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 98F19A83C17B42C896C3C3AC /* spreads.jpg */; };
+		92897258D8C44829B518F3B0 /* symptoms.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B1022051162C4DCF8ED2EB32 /* symptoms.jpg */; };
+		19D36C4052F04098A9C7CD0A /* team.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DDD51D5D9E214B87BBCA9BAE /* team.jpg */; };
+		9C6DFF8AE3BE48E18ABEE5A7 /* tracker.png in Resources */ = {isa = PBXBuildFile; fileRef = 11E4AFFAA2084B1095FBF199 /* tracker.png */; };
+		873090607DDC4AD287D7615C /* user.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1FBDC5D1E0F540DBB70BEBD7 /* user.jpg */; };
+		CF696CB71F15477BB63E12CE /* whatIsCovid.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 846BADC2AA1F40029872C5EB /* whatIsCovid.jpg */; };
+		39149B8CFE8F4F25932A14A2 /* ios.png in Resources */ = {isa = PBXBuildFile; fileRef = CDF1B07BCD7C474895DDDE8E /* ios.png */; };
+		A6D6F9F08EA541C9A23A15A2 /* keepdistance512.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F8DD2FA7F2D4DF69EAE826C /* keepdistance512.png */; };
+		2F95CEDA28244EDD9CD850A8 /* man.png in Resources */ = {isa = PBXBuildFile; fileRef = 7A68AA57ECD946C0A627AE52 /* man.png */; };
+		6D31965EC5C24FCAB0B9BE5F /* news.png in Resources */ = {isa = PBXBuildFile; fileRef = 84707085BA964BEE805D4F35 /* news.png */; };
+		AFB4597C6C11473EA6618B42 /* people.png in Resources */ = {isa = PBXBuildFile; fileRef = B86BDCE94ADB407E9F3DF1EA /* people.png */; };
+		6601721981514766B80FA981 /* news2.png in Resources */ = {isa = PBXBuildFile; fileRef = D95DDF27E2A044CAACF4BA9D /* news2.png */; };
+		EE2AB89F769041E9813B3793 /* notouch512.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E7C90D03143496D8EC2FE25 /* notouch512.png */; };
+		E70393B95F6147548969D0B6 /* pain512.png in Resources */ = {isa = PBXBuildFile; fileRef = 748C7D6F2EBE4F5791A8F0B1 /* pain512.png */; };
+		C53DF45EF24B481E852DCD14 /* respiratoryhygiene512.png in Resources */ = {isa = PBXBuildFile; fileRef = 0CFE07FAF03A4C6D86493DC0 /* respiratoryhygiene512.png */; };
+		AAFD0765880D462AAABBD442 /* signinBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = DF98A166AC4047B1BDA482C8 /* signinBackground.png */; };
+		333C1FB4C28F469091E15A04 /* sorethroat512.png in Resources */ = {isa = PBXBuildFile; fileRef = C3EF060D4BDB458AA79383EE /* sorethroat512.png */; };
+		6A9F6511DA9E4B1DA3312050 /* tired512.png in Resources */ = {isa = PBXBuildFile; fileRef = 00B5D461D253486C8E354AF8 /* tired512.png */; };
+		1193AB8369F64D8982AFA8B4 /* treatment.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 145B14B0147F4FE197D5DA84 /* treatment.jpg */; };
+		11CCF9D0587745E1AC89E6A0 /* whoweare.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 056620FC1A5B40719908242E /* whoweare.jpg */; };
+		E6E851591B8E49E3B481BD7B /* PlayfairDisplay.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 03A0BB41058C4B2DA7C7D532 /* PlayfairDisplay.ttf */; };
+		E8A80D5CC1BF4E8C824872B5 /* Roboto-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 47A3A16EBBA64CCAB1729269 /* Roboto-Black.ttf */; };
+		39A13648C2F44B4994E6B552 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4E375A32718E46708CA0A0F8 /* Roboto-Bold.ttf */; };
+		950B3059928641E1AFCEF4C8 /* Roboto-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2DF34A6C0E9D427C993C0E98 /* Roboto-BoldItalic.ttf */; };
+		4878FD5373074DC4A1CB166A /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D5D87CF7FB58498CB4F4839B /* Roboto-Light.ttf */; };
+		4B77F1A3DBF0467AB8F9E5B5 /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 89A52BFF99FE4A93A11C454A /* Roboto-Medium.ttf */; };
+		8B0A9C09D61843318BDF168F /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7438A99721904E1D80DEA44A /* Roboto-Regular.ttf */; };
+		F9CFE9BC6A384279AA3EAFBD /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6774319E56C54D1995F82AE9 /* Roboto-Thin.ttf */; };
+		93385BFA22E741AA9E2C7683 /* SpaceMono-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 340F22EDB3E341819EA523D0 /* SpaceMono-Regular.ttf */; };
+		7DA87AB1069A446CBA61458C /* signinBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = D48EDF399F57452DA1DCBF7B /* signinBackground.png */; };
+		EADF9AE9493D494A91726E2D /* v1.png in Resources */ = {isa = PBXBuildFile; fileRef = 7DA239928D31471291EDF724 /* v1.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +158,81 @@
 		962E7E0489944D71AAD804BC /* Octicons.ttf */ = {isa = PBXFileReference; name = "Octicons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		3A7ABFFDDE6B4FF8ACE0A1C9 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; name = "SimpleLineIcons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		6D04A18D787B4E6D9EC4A2F9 /* Zocial.ttf */ = {isa = PBXFileReference; name = "Zocial.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		EB1D562960414F55BDF6E742 /* android.png */ = {isa = PBXFileReference; name = "android.png"; path = "../assets/android.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		27E14DFAF1824664AEBA9EA6 /* caution512.png */ = {isa = PBXFileReference; name = "caution512.png"; path = "../assets/caution512.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		E4D4F3C463084905BD703C87 /* corona.png */ = {isa = PBXFileReference; name = "corona.png"; path = "../assets/corona.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		E97516974E4740BFAA30B6DE /* cough512.png */ = {isa = PBXFileReference; name = "cough512.png"; path = "../assets/cough512.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		AF520860221D4107BA870CFF /* cough64.png */ = {isa = PBXFileReference; name = "cough64.png"; path = "../assets/cough64.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		7E3E5F013ABE4FEE8E6BA99B /* covid.jpg */ = {isa = PBXFileReference; name = "covid.jpg"; path = "../assets/covid.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		726DAF71AC2649819BB04004 /* fever512.png */ = {isa = PBXFileReference; name = "fever512.png"; path = "../assets/fever512.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		832130AE01A849D2BBBBC35F /* 17895-wear-mask-min.gif */ = {isa = PBXFileReference; name = "17895-wear-mask-min.gif"; path = "../assets/gifs/17895-wear-mask-min.gif"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		E46174C139F84F26B0DB3C3D /* corona-blue.gif */ = {isa = PBXFileReference; name = "corona-blue.gif"; path = "../assets/gifs/corona-blue.gif"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		1124085D6A9E4B48B98A148E /* corona-red.gif */ = {isa = PBXFileReference; name = "corona-red.gif"; path = "../assets/gifs/corona-red.gif"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		5C2F9D5837F84683ACC33D3D /* doctors.gif */ = {isa = PBXFileReference; name = "doctors.gif"; path = "../assets/gifs/doctors.gif"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		90760D9C34C040DEA49CACF4 /* handWash.gif */ = {isa = PBXFileReference; name = "handWash.gif"; path = "../assets/gifs/handWash.gif"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		5AB4F7D2F9A94E94BDBB90EF /* sneezing.gif */ = {isa = PBXFileReference; name = "sneezing.gif"; path = "../assets/gifs/sneezing.gif"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		4214C8C1581D4EC5B666F2C8 /* t.gif */ = {isa = PBXFileReference; name = "t.gif"; path = "../assets/gifs/t.gif"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		7E2169E9BAE14B1A98C7255F /* v1.png */ = {isa = PBXFileReference; name = "v1.png"; path = "../assets/gifs/v1.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		9D91208E8C6749939AB60ADB /* headache512.png */ = {isa = PBXFileReference; name = "headache512.png"; path = "../assets/headache512.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		A8F6D03233514E87A1C8586D /* heatMap.png */ = {isa = PBXFileReference; name = "heatMap.png"; path = "../assets/heatMap.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		499261677463402CBE3261F8 /* icon.png */ = {isa = PBXFileReference; name = "icon.png"; path = "../assets/icon.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		56239571B3BF42EAAC3A663D /* anosmia.png */ = {isa = PBXFileReference; name = "anosmia.png"; path = "../assets/images/anosmia.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		615724642146413B9DB17B6E /* avatar.png */ = {isa = PBXFileReference; name = "avatar.png"; path = "../assets/images/avatar.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		B79168B721954C80A6F15CA9 /* chills.jpg */ = {isa = PBXFileReference; name = "chills.jpg"; path = "../assets/images/chills.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		BAE7D71CA2B34A50BD4AFB24 /* cough.png */ = {isa = PBXFileReference; name = "cough.png"; path = "../assets/images/cough.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		1C82AD2C185647A4BEE5C8C1 /* diarrhea.png */ = {isa = PBXFileReference; name = "diarrhea.png"; path = "../assets/images/diarrhea.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		F6C437896E474B56A0B79055 /* fatigue.png */ = {isa = PBXFileReference; name = "fatigue.png"; path = "../assets/images/fatigue.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		D01862EA8AB646F5BA65D71B /* fever.png */ = {isa = PBXFileReference; name = "fever.png"; path = "../assets/images/fever.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		461540ADFD854CEBBBD22AD3 /* file.jpg */ = {isa = PBXFileReference; name = "file.jpg"; path = "../assets/images/file.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		408AC24CF7584C279B793CED /* headache.png */ = {isa = PBXFileReference; name = "headache.png"; path = "../assets/images/headache.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		0981CD1EC28343698612E6B3 /* Heat.jpg */ = {isa = PBXFileReference; name = "Heat.jpg"; path = "../assets/images/Heat.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		4C7A8E7C87A44453BAF1F7F0 /* locate.jpg */ = {isa = PBXFileReference; name = "locate.jpg"; path = "../assets/images/locate.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		DB3CDF20C0314F3598406F8D /* message.jpg */ = {isa = PBXFileReference; name = "message.jpg"; path = "../assets/images/message.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		CACA6A39F46D405D99439AE2 /* muscle-pain.png */ = {isa = PBXFileReference; name = "muscle-pain.png"; path = "../assets/images/muscle-pain.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		5FCDB9804F49442A901E99C0 /* person.png */ = {isa = PBXFileReference; name = "person.png"; path = "../assets/images/person.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		BE8B410FE83240E293DB7B4B /* pneumonia.png */ = {isa = PBXFileReference; name = "pneumonia.png"; path = "../assets/images/pneumonia.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		30268DB323E24477BB619F7A /* prevention_methods.jpg */ = {isa = PBXFileReference; name = "prevention_methods.jpg"; path = "../assets/images/prevention_methods.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		E54754BF83614BD08943166A /* Prevention.jpg */ = {isa = PBXFileReference; name = "Prevention.jpg"; path = "../assets/images/Prevention.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		884DCF02B902411DA8F6E3D4 /* Regional.jpg */ = {isa = PBXFileReference; name = "Regional.jpg"; path = "../assets/images/Regional.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		08A2658F64AA4CB893154CD3 /* robot-dev.png */ = {isa = PBXFileReference; name = "robot-dev.png"; path = "../assets/images/robot-dev.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		F14B640BC407471E85B3C9F2 /* robot-prod.png */ = {isa = PBXFileReference; name = "robot-prod.png"; path = "../assets/images/robot-prod.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		F77BEEE4BA794120A3A1EB1D /* runny-nose.png */ = {isa = PBXFileReference; name = "runny-nose.png"; path = "../assets/images/runny-nose.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		DA2EAA883825463E8FDA450A /* shortness-of-breath.png */ = {isa = PBXFileReference; name = "shortness-of-breath.png"; path = "../assets/images/shortness-of-breath.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		C7FDEADC1609473FA034D320 /* signupBackground.png */ = {isa = PBXFileReference; name = "signupBackground.png"; path = "../assets/images/signupBackground.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		0333B60C9A874A5BA03F1A79 /* sneezing.png */ = {isa = PBXFileReference; name = "sneezing.png"; path = "../assets/images/sneezing.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		15A386798AEC41008F705479 /* sore-throat.png */ = {isa = PBXFileReference; name = "sore-throat.png"; path = "../assets/images/sore-throat.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		5858216296D14B5F9572AD05 /* splash.png */ = {isa = PBXFileReference; name = "splash.png"; path = "../assets/images/splash.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		98F19A83C17B42C896C3C3AC /* spreads.jpg */ = {isa = PBXFileReference; name = "spreads.jpg"; path = "../assets/images/spreads.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		B1022051162C4DCF8ED2EB32 /* symptoms.jpg */ = {isa = PBXFileReference; name = "symptoms.jpg"; path = "../assets/images/symptoms.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		DDD51D5D9E214B87BBCA9BAE /* team.jpg */ = {isa = PBXFileReference; name = "team.jpg"; path = "../assets/images/team.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		11E4AFFAA2084B1095FBF199 /* tracker.png */ = {isa = PBXFileReference; name = "tracker.png"; path = "../assets/images/tracker.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		1FBDC5D1E0F540DBB70BEBD7 /* user.jpg */ = {isa = PBXFileReference; name = "user.jpg"; path = "../assets/images/user.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		846BADC2AA1F40029872C5EB /* whatIsCovid.jpg */ = {isa = PBXFileReference; name = "whatIsCovid.jpg"; path = "../assets/images/whatIsCovid.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		CDF1B07BCD7C474895DDDE8E /* ios.png */ = {isa = PBXFileReference; name = "ios.png"; path = "../assets/ios.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		4F8DD2FA7F2D4DF69EAE826C /* keepdistance512.png */ = {isa = PBXFileReference; name = "keepdistance512.png"; path = "../assets/keepdistance512.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		7A68AA57ECD946C0A627AE52 /* man.png */ = {isa = PBXFileReference; name = "man.png"; path = "../assets/man.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		84707085BA964BEE805D4F35 /* news.png */ = {isa = PBXFileReference; name = "news.png"; path = "../assets/news.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		B86BDCE94ADB407E9F3DF1EA /* people.png */ = {isa = PBXFileReference; name = "people.png"; path = "../assets/news/people.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		D95DDF27E2A044CAACF4BA9D /* news2.png */ = {isa = PBXFileReference; name = "news2.png"; path = "../assets/news2.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		5E7C90D03143496D8EC2FE25 /* notouch512.png */ = {isa = PBXFileReference; name = "notouch512.png"; path = "../assets/notouch512.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		748C7D6F2EBE4F5791A8F0B1 /* pain512.png */ = {isa = PBXFileReference; name = "pain512.png"; path = "../assets/pain512.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		0CFE07FAF03A4C6D86493DC0 /* respiratoryhygiene512.png */ = {isa = PBXFileReference; name = "respiratoryhygiene512.png"; path = "../assets/respiratoryhygiene512.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		DF98A166AC4047B1BDA482C8 /* signinBackground.png */ = {isa = PBXFileReference; name = "signinBackground.png"; path = "../assets/signinBackground.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		C3EF060D4BDB458AA79383EE /* sorethroat512.png */ = {isa = PBXFileReference; name = "sorethroat512.png"; path = "../assets/sorethroat512.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		00B5D461D253486C8E354AF8 /* tired512.png */ = {isa = PBXFileReference; name = "tired512.png"; path = "../assets/tired512.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		145B14B0147F4FE197D5DA84 /* treatment.jpg */ = {isa = PBXFileReference; name = "treatment.jpg"; path = "../assets/treatment.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		056620FC1A5B40719908242E /* whoweare.jpg */ = {isa = PBXFileReference; name = "whoweare.jpg"; path = "../assets/whoweare.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		03A0BB41058C4B2DA7C7D532 /* PlayfairDisplay.ttf */ = {isa = PBXFileReference; name = "PlayfairDisplay.ttf"; path = "../assets/fonts/PlayfairDisplay.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		47A3A16EBBA64CCAB1729269 /* Roboto-Black.ttf */ = {isa = PBXFileReference; name = "Roboto-Black.ttf"; path = "../assets/fonts/Roboto-Black.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		4E375A32718E46708CA0A0F8 /* Roboto-Bold.ttf */ = {isa = PBXFileReference; name = "Roboto-Bold.ttf"; path = "../assets/fonts/Roboto-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		2DF34A6C0E9D427C993C0E98 /* Roboto-BoldItalic.ttf */ = {isa = PBXFileReference; name = "Roboto-BoldItalic.ttf"; path = "../assets/fonts/Roboto-BoldItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		D5D87CF7FB58498CB4F4839B /* Roboto-Light.ttf */ = {isa = PBXFileReference; name = "Roboto-Light.ttf"; path = "../assets/fonts/Roboto-Light.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		89A52BFF99FE4A93A11C454A /* Roboto-Medium.ttf */ = {isa = PBXFileReference; name = "Roboto-Medium.ttf"; path = "../assets/fonts/Roboto-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		7438A99721904E1D80DEA44A /* Roboto-Regular.ttf */ = {isa = PBXFileReference; name = "Roboto-Regular.ttf"; path = "../assets/fonts/Roboto-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		6774319E56C54D1995F82AE9 /* Roboto-Thin.ttf */ = {isa = PBXFileReference; name = "Roboto-Thin.ttf"; path = "../assets/fonts/Roboto-Thin.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		340F22EDB3E341819EA523D0 /* SpaceMono-Regular.ttf */ = {isa = PBXFileReference; name = "SpaceMono-Regular.ttf"; path = "../assets/fonts/SpaceMono-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		D48EDF399F57452DA1DCBF7B /* signinBackground.png */ = {isa = PBXFileReference; name = "signinBackground.png"; path = "../assets/images/signinBackground.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		7DA239928D31471291EDF724 /* v1.png */ = {isa = PBXFileReference; name = "v1.png"; path = "../assets/images/v1.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -209,6 +359,81 @@
 				962E7E0489944D71AAD804BC /* Octicons.ttf */,
 				3A7ABFFDDE6B4FF8ACE0A1C9 /* SimpleLineIcons.ttf */,
 				6D04A18D787B4E6D9EC4A2F9 /* Zocial.ttf */,
+				EB1D562960414F55BDF6E742 /* android.png */,
+				27E14DFAF1824664AEBA9EA6 /* caution512.png */,
+				E4D4F3C463084905BD703C87 /* corona.png */,
+				E97516974E4740BFAA30B6DE /* cough512.png */,
+				AF520860221D4107BA870CFF /* cough64.png */,
+				7E3E5F013ABE4FEE8E6BA99B /* covid.jpg */,
+				726DAF71AC2649819BB04004 /* fever512.png */,
+				832130AE01A849D2BBBBC35F /* 17895-wear-mask-min.gif */,
+				E46174C139F84F26B0DB3C3D /* corona-blue.gif */,
+				1124085D6A9E4B48B98A148E /* corona-red.gif */,
+				5C2F9D5837F84683ACC33D3D /* doctors.gif */,
+				90760D9C34C040DEA49CACF4 /* handWash.gif */,
+				5AB4F7D2F9A94E94BDBB90EF /* sneezing.gif */,
+				4214C8C1581D4EC5B666F2C8 /* t.gif */,
+				7E2169E9BAE14B1A98C7255F /* v1.png */,
+				9D91208E8C6749939AB60ADB /* headache512.png */,
+				A8F6D03233514E87A1C8586D /* heatMap.png */,
+				499261677463402CBE3261F8 /* icon.png */,
+				56239571B3BF42EAAC3A663D /* anosmia.png */,
+				615724642146413B9DB17B6E /* avatar.png */,
+				B79168B721954C80A6F15CA9 /* chills.jpg */,
+				BAE7D71CA2B34A50BD4AFB24 /* cough.png */,
+				1C82AD2C185647A4BEE5C8C1 /* diarrhea.png */,
+				F6C437896E474B56A0B79055 /* fatigue.png */,
+				D01862EA8AB646F5BA65D71B /* fever.png */,
+				461540ADFD854CEBBBD22AD3 /* file.jpg */,
+				408AC24CF7584C279B793CED /* headache.png */,
+				0981CD1EC28343698612E6B3 /* Heat.jpg */,
+				4C7A8E7C87A44453BAF1F7F0 /* locate.jpg */,
+				DB3CDF20C0314F3598406F8D /* message.jpg */,
+				CACA6A39F46D405D99439AE2 /* muscle-pain.png */,
+				5FCDB9804F49442A901E99C0 /* person.png */,
+				BE8B410FE83240E293DB7B4B /* pneumonia.png */,
+				30268DB323E24477BB619F7A /* prevention_methods.jpg */,
+				E54754BF83614BD08943166A /* Prevention.jpg */,
+				884DCF02B902411DA8F6E3D4 /* Regional.jpg */,
+				08A2658F64AA4CB893154CD3 /* robot-dev.png */,
+				F14B640BC407471E85B3C9F2 /* robot-prod.png */,
+				F77BEEE4BA794120A3A1EB1D /* runny-nose.png */,
+				DA2EAA883825463E8FDA450A /* shortness-of-breath.png */,
+				C7FDEADC1609473FA034D320 /* signupBackground.png */,
+				0333B60C9A874A5BA03F1A79 /* sneezing.png */,
+				15A386798AEC41008F705479 /* sore-throat.png */,
+				5858216296D14B5F9572AD05 /* splash.png */,
+				98F19A83C17B42C896C3C3AC /* spreads.jpg */,
+				B1022051162C4DCF8ED2EB32 /* symptoms.jpg */,
+				DDD51D5D9E214B87BBCA9BAE /* team.jpg */,
+				11E4AFFAA2084B1095FBF199 /* tracker.png */,
+				1FBDC5D1E0F540DBB70BEBD7 /* user.jpg */,
+				846BADC2AA1F40029872C5EB /* whatIsCovid.jpg */,
+				CDF1B07BCD7C474895DDDE8E /* ios.png */,
+				4F8DD2FA7F2D4DF69EAE826C /* keepdistance512.png */,
+				7A68AA57ECD946C0A627AE52 /* man.png */,
+				84707085BA964BEE805D4F35 /* news.png */,
+				B86BDCE94ADB407E9F3DF1EA /* people.png */,
+				D95DDF27E2A044CAACF4BA9D /* news2.png */,
+				5E7C90D03143496D8EC2FE25 /* notouch512.png */,
+				748C7D6F2EBE4F5791A8F0B1 /* pain512.png */,
+				0CFE07FAF03A4C6D86493DC0 /* respiratoryhygiene512.png */,
+				DF98A166AC4047B1BDA482C8 /* signinBackground.png */,
+				C3EF060D4BDB458AA79383EE /* sorethroat512.png */,
+				00B5D461D253486C8E354AF8 /* tired512.png */,
+				145B14B0147F4FE197D5DA84 /* treatment.jpg */,
+				056620FC1A5B40719908242E /* whoweare.jpg */,
+				03A0BB41058C4B2DA7C7D532 /* PlayfairDisplay.ttf */,
+				47A3A16EBBA64CCAB1729269 /* Roboto-Black.ttf */,
+				4E375A32718E46708CA0A0F8 /* Roboto-Bold.ttf */,
+				2DF34A6C0E9D427C993C0E98 /* Roboto-BoldItalic.ttf */,
+				D5D87CF7FB58498CB4F4839B /* Roboto-Light.ttf */,
+				89A52BFF99FE4A93A11C454A /* Roboto-Medium.ttf */,
+				7438A99721904E1D80DEA44A /* Roboto-Regular.ttf */,
+				6774319E56C54D1995F82AE9 /* Roboto-Thin.ttf */,
+				340F22EDB3E341819EA523D0 /* SpaceMono-Regular.ttf */,
+				D48EDF399F57452DA1DCBF7B /* signinBackground.png */,
+				7DA239928D31471291EDF724 /* v1.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -368,6 +593,81 @@
 				5F3CCDAC595D425B8F12B456 /* Octicons.ttf in Resources */,
 				599AA00054314D3D8CE826D6 /* SimpleLineIcons.ttf in Resources */,
 				7336A60834C2420CAB8DB26D /* Zocial.ttf in Resources */,
+				DDFA83CBCA0748FAB262FB0D /* android.png in Resources */,
+				0AF9CE9ECFBE490FA18B39A2 /* caution512.png in Resources */,
+				54710A48955C456A827EB83F /* corona.png in Resources */,
+				557861C27E9E4120BF9BE012 /* cough512.png in Resources */,
+				EDB92B62A1C7428FB638F69C /* cough64.png in Resources */,
+				C83D78FEE1B6485A988EA164 /* covid.jpg in Resources */,
+				ECB4081BCD0A47F9AB064168 /* fever512.png in Resources */,
+				630AEF931A12484FB27701BF /* 17895-wear-mask-min.gif in Resources */,
+				131781B76806499A85C5C662 /* corona-blue.gif in Resources */,
+				619390E437014F9E8063C4BB /* corona-red.gif in Resources */,
+				3175A30870C6495E8261988F /* doctors.gif in Resources */,
+				479129EA7D0C4152B39461B6 /* handWash.gif in Resources */,
+				F0742B87317244A2A79DF698 /* sneezing.gif in Resources */,
+				66F3F326EDCB413FBD03076D /* t.gif in Resources */,
+				9BE25A0290914DCDB08104F7 /* v1.png in Resources */,
+				FD109298AE134CFCA434E779 /* headache512.png in Resources */,
+				B6C0441697F44E14B900D456 /* heatMap.png in Resources */,
+				B7835CF888E44AB98A9C0313 /* icon.png in Resources */,
+				40110A433B45494096F9A07E /* anosmia.png in Resources */,
+				CCECD75D52C246BA95CE63BF /* avatar.png in Resources */,
+				4F209FFABD764DB1BC02269D /* chills.jpg in Resources */,
+				2B423A218A0A409B8373676C /* cough.png in Resources */,
+				CF809DCB59D848C99841B758 /* diarrhea.png in Resources */,
+				0B26EFCC65B741C289BC9154 /* fatigue.png in Resources */,
+				1E495539B1B6420B92C2019A /* fever.png in Resources */,
+				B7F2198832BB44ECAF4DD0F4 /* file.jpg in Resources */,
+				88B343E8554D4744BD0D68AC /* headache.png in Resources */,
+				5FDD1A0CEAB14499850F1B95 /* Heat.jpg in Resources */,
+				AAFD15626373430EBA20D769 /* locate.jpg in Resources */,
+				95C727D5793B42A486AB4CE4 /* message.jpg in Resources */,
+				F851370B7A7B4EFC9C83104C /* muscle-pain.png in Resources */,
+				DC6399149BFB48B0A32A4B74 /* person.png in Resources */,
+				DDF16E68CE7541F0A523DACE /* pneumonia.png in Resources */,
+				6AAB82D457B544A8899F1B04 /* prevention_methods.jpg in Resources */,
+				E135320A6E234A81A2EF21EB /* Prevention.jpg in Resources */,
+				994D1E81A2A247919CA5BB46 /* Regional.jpg in Resources */,
+				B6F9DA3A394547E88E939D00 /* robot-dev.png in Resources */,
+				647240B33F1D47FA96130F14 /* robot-prod.png in Resources */,
+				DF7AAC15ED774BC3B92637CC /* runny-nose.png in Resources */,
+				0769688592BA46F09DFF42FF /* shortness-of-breath.png in Resources */,
+				A5A75D6C9708443C83F19FD9 /* signupBackground.png in Resources */,
+				A74335C9746D455189B2424B /* sneezing.png in Resources */,
+				D3A66E365603457C8393C3A5 /* sore-throat.png in Resources */,
+				61ACF6E362044BAA9BE16D7E /* splash.png in Resources */,
+				550E1C35EE0C491EBADEBE3C /* spreads.jpg in Resources */,
+				92897258D8C44829B518F3B0 /* symptoms.jpg in Resources */,
+				19D36C4052F04098A9C7CD0A /* team.jpg in Resources */,
+				9C6DFF8AE3BE48E18ABEE5A7 /* tracker.png in Resources */,
+				873090607DDC4AD287D7615C /* user.jpg in Resources */,
+				CF696CB71F15477BB63E12CE /* whatIsCovid.jpg in Resources */,
+				39149B8CFE8F4F25932A14A2 /* ios.png in Resources */,
+				A6D6F9F08EA541C9A23A15A2 /* keepdistance512.png in Resources */,
+				2F95CEDA28244EDD9CD850A8 /* man.png in Resources */,
+				6D31965EC5C24FCAB0B9BE5F /* news.png in Resources */,
+				AFB4597C6C11473EA6618B42 /* people.png in Resources */,
+				6601721981514766B80FA981 /* news2.png in Resources */,
+				EE2AB89F769041E9813B3793 /* notouch512.png in Resources */,
+				E70393B95F6147548969D0B6 /* pain512.png in Resources */,
+				C53DF45EF24B481E852DCD14 /* respiratoryhygiene512.png in Resources */,
+				AAFD0765880D462AAABBD442 /* signinBackground.png in Resources */,
+				333C1FB4C28F469091E15A04 /* sorethroat512.png in Resources */,
+				6A9F6511DA9E4B1DA3312050 /* tired512.png in Resources */,
+				1193AB8369F64D8982AFA8B4 /* treatment.jpg in Resources */,
+				11CCF9D0587745E1AC89E6A0 /* whoweare.jpg in Resources */,
+				E6E851591B8E49E3B481BD7B /* PlayfairDisplay.ttf in Resources */,
+				E8A80D5CC1BF4E8C824872B5 /* Roboto-Black.ttf in Resources */,
+				39A13648C2F44B4994E6B552 /* Roboto-Bold.ttf in Resources */,
+				950B3059928641E1AFCEF4C8 /* Roboto-BoldItalic.ttf in Resources */,
+				4878FD5373074DC4A1CB166A /* Roboto-Light.ttf in Resources */,
+				4B77F1A3DBF0467AB8F9E5B5 /* Roboto-Medium.ttf in Resources */,
+				8B0A9C09D61843318BDF168F /* Roboto-Regular.ttf in Resources */,
+				F9CFE9BC6A384279AA3EAFBD /* Roboto-Thin.ttf in Resources */,
+				93385BFA22E741AA9E2C7683 /* SpaceMono-Regular.ttf in Resources */,
+				7DA87AB1069A446CBA61458C /* signinBackground.png in Resources */,
+				EADF9AE9493D494A91726E2D /* v1.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

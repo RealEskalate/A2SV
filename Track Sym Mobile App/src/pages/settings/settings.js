@@ -1,5 +1,5 @@
-import React from 'react';
-import {StyleSheet, SafeAreaView} from 'react-native';
+import React from "react";
+import { StyleSheet, SafeAreaView } from "react-native";
 import {
   Layout,
   Toggle,
@@ -12,10 +12,10 @@ import {
   Modal,
   Spinner,
   Card,
-} from '@ui-kitten/components';
-import {ThemeContext} from '../../../assets/themes/theme-context';
-import * as actions from '../../../components/data-management/user-id-data/userIDActions';
-import userIDStore from '../../../components/data-management/user-id-data/userIDStore';
+} from "@ui-kitten/components";
+import { ThemeContext } from "../../../assets/themes/theme-context";
+import * as actions from "../../data-management/user-id-data/userIDActions";
+import userIDStore from "../../data-management/user-id-data/userIDStore";
 
 const ArrowIosBackIcon = (style) => <Icon {...style} name="arrow-ios-back" />;
 const EditProfile = (style) => <Icon {...style} name="edit-2-outline" />;
@@ -38,38 +38,39 @@ export const SettingScreen = (props) => {
   const stubAction = () => {};
 
   const profileAction = () => {
-    props.navigation.navigate('ProfileScreen');
+    props.navigation.navigate("ProfileScreen");
   };
 
   const changePassAction = () => {
-    props.navigation.navigate('ChangePassScreen');
+    props.navigation.navigate("ChangePassScreen");
   };
 
   const editProfAction = () => {
-    props.navigation.navigate('EditProfileScreen');
+    props.navigation.navigate("EditProfileScreen");
   };
-  const darkModeAction = () => {
+  const darkModeAction = async () => {
     themeContext.toggleTheme();
+    await AsyncStorage.setItem("theme", themeContext.theme);
   };
 
   const logOutAction = async () => {
     setVisible(true);
     try {
-      await AsyncStorage.removeItem('userID');
-      await AsyncStorage.removeItem('userName');
-      await AsyncStorage.removeItem('gender');
-      await AsyncStorage.removeItem('age_group');
+      await AsyncStorage.removeItem("userID");
+      await AsyncStorage.removeItem("userName");
+      await AsyncStorage.removeItem("gender");
+      await AsyncStorage.removeItem("age_group");
     } catch (error) {}
     userIDStore.dispatch(actions.removeUser()); //remove user id from redux state
-    props.navigation.navigate('HOME');
+    props.navigation.navigate("HOME");
   };
 
   const data = [
-    'Edit Profile',
-    'Change Password',
-    'Terms & Privacy',
-    'Dark Mode',
-    'Log Out',
+    "Edit Profile",
+    "Change Password",
+    "Terms & Privacy",
+    "Dark Mode",
+    "Log Out",
   ];
 
   const icons = [
@@ -93,7 +94,7 @@ export const SettingScreen = (props) => {
       <List
         style={styles.container}
         data={data}
-        renderItem={({item, index}) => (
+        renderItem={({ item, index }) => (
           <Layout>
             <ListItem
               style={styles.setting}
@@ -102,7 +103,7 @@ export const SettingScreen = (props) => {
               accessoryRight={() =>
                 index === 3 ? (
                   <Toggle
-                    checked={themeContext.theme == 'dark'}
+                    checked={themeContext.theme == "dark"}
                     onChange={darkModeAction}
                   />
                 ) : (
@@ -123,7 +124,8 @@ export const SettingScreen = (props) => {
       <Modal
         visible={visible}
         backdropStyle={styles.backdrop}
-        onBackdropPress={() => setVisible(false)}>
+        onBackdropPress={() => setVisible(false)}
+      >
         <Card disabled={true}>
           <Spinner {...props} size="large" />
         </Card>
@@ -152,6 +154,6 @@ const styles = StyleSheet.create({
     paddingTop: 32,
   },
   backdrop: {
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
 });

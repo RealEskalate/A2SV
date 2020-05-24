@@ -1,9 +1,9 @@
-import React from 'react';
-import {StyleSheet} from 'react-native';
-import Icon from 'react-native-vector-icons/Feather';
+import React from "./node_modules/react";
+import { StyleSheet } from "react-native";
+import Icon from "./node_modules/react-native-vector-icons/Feather";
 
 export const FeatherIconsPack = {
-  name: 'feather',
+  name: "feather",
   icons: createIconsMap(),
 };
 
@@ -14,15 +14,15 @@ function createIconsMap() {
       get(target, name) {
         return IconProvider(name);
       },
-    },
+    }
   );
 }
 
 const IconProvider = (name) => ({
-  toReactElement: (props) => FeatherIcon({name, ...props}),
+  toReactElement: (props) => FeatherIcon({ name, ...props }),
 });
 
-function FeatherIcon({name, style}) {
-  const {height, tintColor, ...iconStyle} = StyleSheet.flatten(style);
+function FeatherIcon({ name, style }) {
+  const { height, tintColor, ...iconStyle } = StyleSheet.flatten(style);
   return <Icon name={name} size={height} color={tintColor} style={iconStyle} />;
 }
