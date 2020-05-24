@@ -15,13 +15,7 @@
       </v-card-text>
 
       <v-card-text class="pt-0 px-12 shrink">
-        TrackSym is a non-commercial app that uses crowd-sourcing to collect and
-        visualize the density of the relevant symptoms. Registration only asks
-        about age and gender to be used for data science purposes. Users can
-        anonymously report symptoms and choose a location to see the density of
-        symptoms in a map view. The data is aggregated by places, therefore, the
-        app can help people avoid visiting a grocery store or a gas station that
-        is heavily used by symptomatic people.
+        {{ $t('aboutSectionDescription') }}
       </v-card-text>
 
       <v-card-text>
@@ -33,12 +27,13 @@
         |
         <div class="d-inline-block justify-end" style="width: 50px">
           <v-select
-            solo
-            flat
-            dense
-            v-model="$i18n.locale"
-            :items="languages"
-            label="Lang"
+                  solo
+                  flat
+                  dense
+                  v-model="$i18n.locale"
+                  :items="languages"
+                  label="Lang"
+                  @change="changeLang"
           >
             <template v-slot:append>
               <small />
@@ -57,9 +52,10 @@
 </template>
 
 <script>
-import { mdiTelegram, mdiWeb, mdiYoutube } from "@mdi/js";
+  import {mdiTelegram, mdiWeb, mdiYoutube} from "@mdi/js";
+  import store from "@/store/"
 
-export default {
+  export default {
   data: () => ({
     languages: ["en", "am"],
     langText: {
@@ -71,7 +67,15 @@ export default {
       { link: "http://www.youtube.com/", icon: mdiYoutube },
       { link: "http://www.youtube.com/", icon: mdiTelegram }
     ]
-  })
+  }),
+    mounted() {
+      this.$i18n.locale = store.getters.getLanguagePreference === null ? 'en' : store.getters.getLanguagePreference;
+    },
+    methods: {
+      changeLang() {
+        store.dispatch("setLanguagePreference", {lang: this.$i18n.locale});
+      }
+    }
 };
 </script>
 

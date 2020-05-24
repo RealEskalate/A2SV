@@ -206,7 +206,7 @@
   },
   created() {
     if (!this.graphDescriptions) {
-      store.dispatch("setGraphDescriptions");
+      store.dispatch("setGraphDescriptions", {lang: this.$i18n.locale === 'am' ? 'Amharic' : "English"});
     }
   },
   computed: {
