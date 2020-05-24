@@ -74,8 +74,8 @@
                     </tr>
                   </thead>
                   <tbody>
-                  <tr v-for="item in coronaCases" :key="item.name">
-                    <td>{{ $t(item.name) }}</td>
+                    <tr v-for="item in coronaCases" :key="item.name">
+                      <td>{{ $t(item.name) }}</td>
                       <td>{{ item.totalCases }}</td>
                       <td>{{ item.totalDeath }}</td>
                     </tr>
@@ -119,7 +119,9 @@
                   </v-btn>
                 </v-col>
                 <v-col class="py-0" cols="7" sm="6" md="7" xl="9">
-                  <small class="d-inline-block my-2"> {{ $t(add.name) }} </small>
+                  <small class="d-inline-block my-2">
+                    {{ $t(add.name) }}
+                  </small>
                 </v-col>
               </v-row>
             </v-col>
@@ -131,10 +133,10 @@
 </template>
 
 <script>
-  import {DoughnutChart} from "../Home/Charts/charts.js";
-  import {mdiPhone} from "@mdi/js";
+import { DoughnutChart } from "../Home/Charts/charts.js";
+import { mdiPhone } from "@mdi/js";
 
-  export default {
+export default {
   name: "Ethiopia",
   components: {
     DoughnutChart

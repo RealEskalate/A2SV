@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 
-const NotFound = () => import("@/views/errors/404.vue");
+const NotFound = () => import("@/views/Errors/404.vue");
 const Home = () => import("@/views/Home/Home.vue");
 const Information = () => import("@/views/Information/Information.vue");
 const About = () => import("@/views/About/About.vue");

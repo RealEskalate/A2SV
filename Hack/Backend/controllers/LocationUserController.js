@@ -23,6 +23,12 @@ exports.post_location_user = async (req, res) => {
   if (!req.body.longitude || !req.body.latitude) {
     return res.status(400).send("Coordinates not given");
   }
+  if (!req.body.user_id) {
+    return res.status(400).send("User ID not given");
+  }
+  if (!req.body.TTL) {
+    return res.status(400).send("TTL not given");
+  }
   let latitude = req.body.latitude;
   let longitude = req.body.longitude;
 
@@ -41,50 +47,18 @@ exports.post_location_user = async (req, res) => {
     location_id = check._id
   }
   else {
-    let location = new Location({
-      _id: mongoose.Types.ObjectId(),
-      location: {
-        type: "Point",
-        coordinates: [longitude , latitude]
-      },
-      place_name: req.body.place_name,
-    });
-    try {
-      let result1 = await axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${location.longitude},${location.latitude}.json?types=poi&access_token=pk.eyJ1IjoiZmVyb3g5OCIsImEiOiJjazg0czE2ZWIwNHhrM2VtY3Y0a2JkNjI3In0.zrm7UtCEPg2mX8JCiixE4g`)
-        .then(response => {
-          if (response.data) {
-            if (response.data.features && response.data.features.length > 0) {
-              location.location.coordinates[0] = response.data.features[0].center[0];
-              location.location.coordinates[1] = response.data.features[0].center[1];
-              location.place_name = response.data.features[0].text;
-            }
-          }
-          return location;
-        })
-        .catch(error => {
-          console.log(error);
-        });
-
-        const check_2 = await Location.findOne({ 
-          location: {
-            $near:
-            {
-              $geometry: { type: "Point",  coordinates: [ location.location.coordinates[0] , location.location.coordinates[1] ] },
-              $minDistance: 0,
-              $maxDistance: 1
-            }
-          }
-        });
-      if (check_2) {
-        location_id = check_2._id
-      }
-      else {
-        await result1.save();
-        location_id = result1._id;
-      }
+    try{
+      let location = new Location({
+        _id: mongoose.Types.ObjectId(),
+        location: {
+          type: "Point",
+          coordinates: [longitude , latitude]
+        }
+      });
+      await location.save();
+      location_id = location._id;
     } catch (err) {
-      console.log(err);
-      return res.status(500).send(err.toString());
+      return res.status(400).send("Location could not be saved");
     }
   }
 
@@ -97,11 +71,7 @@ exports.post_location_user = async (req, res) => {
     TTL,
   });
   try {
-    // Check if user and location exists
-    let location = await Location.findById(location_id);
-    if (!location) {
-      return res.status(400).send("Location ID not found");
-    }
+    // Check if user exists
     let user = await User.findById(user_id);
     if (!user) {
       return res.status(400).send("User ID not found");
@@ -140,6 +110,9 @@ exports.post_location_user = async (req, res) => {
       check.TTL = Number(TTL)
       check.probability = probability
       await check.save()
+      user.latest_location = check.location_id
+      user.latest_location_user = check._id
+      await user.save()
       return res.send(check);
     }
     location_user.probability = probability;
@@ -149,8 +122,7 @@ exports.post_location_user = async (req, res) => {
     await user.save();
     return res.send(location_user);
   } catch (err) {
-    console.log(err);
-    return res.status(500).send(err.toString());
+    return res.status(404).send("Location User could not be posted");
   }
 }
 
@@ -161,15 +133,17 @@ exports.get_location_user_by_id = async (req, res) => {
   }else{
     var LocationUser = LocationUserModels.LocationUser;
   }
-
+  if(!req.params.id){
+    return res.status(400).send("User Location ID not provided");
+  }
   try {
     const locationUser = await LocationUser.findById(req.params.id);
     if (!locationUser) {
-      return res.status(500).send("User Location not found");
+      return res.status(404).send("User Location not found");
     }
     res.send(locationUser);
   } catch (err) {
-    res.status(500).send(err.toString());
+    res.status(404).send("User Location not found");
   }
 }
 
@@ -180,16 +154,16 @@ exports.get_by_location_id = async (req, res) => {
   }else{
     var LocationUser = LocationUserModels.LocationUser;
   }
+  if(!req.params.location_id){
+    return res.status(400).send("Location ID not provided");
+  }
   try {
     const results = await LocationUser.find({
       location_id: { $eq: req.params.location_id },
     });
-    if (!results || results.length < 1) {
-      return res.status(500).send("No User Locations found.");
-    }
     res.send(results);
   } catch (err) {
-    res.status(500).send(err.toString());
+    return res.status(404).send("User Locations filtered by Location not found");
   }
 };
 
@@ -200,12 +174,11 @@ exports.get_all_location_users = async (req, res) => {
   }else{
     var LocationUser = LocationUserModels.LocationUser;
   }
-
   const results = await LocationUser.find({});
   try {
     res.send(results);
   } catch (err) {
-    res.status(500).send(err.toString());
+    res.status(404).send("No Location Users not found");
   }
 };
 
@@ -216,17 +189,16 @@ exports.get_by_user_id = async (req, res) => {
   }else{
     var LocationUser = LocationUserModels.LocationUser;
   }
-
+  if(!req.params.user_id){
+    return res.status(400).send("User ID not provided");
+  }
   try {
     const results = await LocationUser.find({
       user_id: { $eq: req.params.user_id },
     });
-    if (!results || results.length < 1) {
-      return res.status(500).send("No User Locations found.");
-    }
     res.send(results);
   } catch (err) {
-    res.status(500).send(err.toString());
+    return res.status(404).send("User Locations filtered by User not found");
   }
 };
 
@@ -237,15 +209,17 @@ exports.delete_location_user = async (req, res) => {
   }else{
     var LocationUser = LocationUserModels.LocationUser;
   }
-
+  if(!req.body._id){
+    return res.status(400).send("User Location ID not given");
+  }
   try {
     const location_user = await LocationUser.findByIdAndDelete(req.body._id);
     if (!location_user) {
-      return res.status(404).send("No item found");
+      return res.status(404).send("User Location Not Found");
     }
     res.status(201).send(location_user);
   } catch (err) {
-    res.status(500).send(err.toString());
+    res.status(404).send("Location User could not be deleted");
   }
 };
 
@@ -256,17 +230,19 @@ exports.update_location_user = async (req, res) => {
   }else{
     var LocationUser = LocationUserModels.LocationUser;
   }
-
+  if(!req.body._id){
+    return res.status(400).send("User Location ID not given");
+  }
   try {
     let locationUser = await LocationUser.findById(req.body._id);
     if (!locationUser) {
-      return res.status(500).send("User Location Not Found");
+      return res.status(404).send("User Location Not Found");
     }
     locationUser.set(req.body);
     await locationUser.save();
     res.send(locationUser);
   } catch (err) {
-    res.status(500).send(err.toString());
+    res.status(404).send("Location User could not be updated");
   }
 };
 

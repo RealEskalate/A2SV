@@ -14,12 +14,26 @@ const styles = StyleSheet.create({
     marginVertical: 24,
     zIndex: 1,
   },
+  headerTitle: {
+    marginHorizontal: 16,
+  },
+  horizontalItem: {
+    width: 256,
+    marginHorizontal: 8,
+  },
+  horizontalList: {
+    marginVertical: 16,
+    paddingHorizontal: 8,
+  },
   headerDescription: {
     zIndex: 1,
   },
   contentContainer: {
-    // flex: 1,
     padding: 24,
+  },
+  content_Container: {
+    paddingHorizontal: 20,
+    paddingVertical: 5,
   },
   activityContainer: {
     flexDirection: 'row',
@@ -34,12 +48,14 @@ const styles = StyleSheet.create({
     marginHorizontal: 8,
   },
   authoringContainer: {
-    flexDirection: 'row',
-    marginHorizontal: 24,
-    marginBottom: 20,
+    marginHorizontal: 10,
+    marginVertical: 10,
   },
   iconButton: {
     paddingHorizontal: 0,
+  },
+  radio: {
+    margin: 2,
   },
 });
 

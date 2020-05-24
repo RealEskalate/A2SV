@@ -12,10 +12,6 @@ const locationSchema = new mongoose.Schema({
       type: [Number],
       required: true,
      },
-  },
-  place_name: {
-    type: String,
-    minlength: 3,
   }
 });
 locationSchema.index({'location': '2dsphere'}, {unique:true})

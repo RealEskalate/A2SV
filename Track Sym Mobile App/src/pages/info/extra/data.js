@@ -15,14 +15,16 @@ export const symptoms = {
   photo: require("../assets/sym.jpg"),
   time: 2,
   sytx: 55,
-  link: "PrevDetailScreen",
+  link: 'SymDetailScreen',
+
 };
 
 export const preventions = {
   name: "PREVENTIONS",
   description:
-    "Follow the guidelines to help protect yourself from catching, carrying and passing on SARS-CoV-2.",
-  photo: require("../assets/lab.jpg"),
+    'Follow the guidelines to help protect yourself from catching, carrying and passing on SARS-CoV-2.',
+  photo: require('../assets/wash.jpg'),
+
   time: 16,
   sytx: 55,
   link: "PrevDetailScreen",
@@ -31,19 +33,21 @@ export const preventions = {
 export const spread = {
   name: "HOW COVID-19 SPREADS ?",
   description:
-    "COVID-19 is thought to spread mainly from person to person, mainly through respiratory droplets from an infected person.",
-  photo: require("../assets/lab.jpg"),
+    'COVID-19 is thought to spread mainly from person to person, mainly through respiratory droplets from an infected person.',
+  photo: require('../assets/cough.jpg'),
   time: 16,
   sytx: 55,
-  link: "PrevDetailScreen",
+  link: 'SpdDetailScreen',
+
 };
 
 export const message = {
   name: "MESSAGE FROM US",
   description:
     "There's a lot of information circulating about COVID-19, so it’simportant to know what’s true and what’s not.",
-  photo: require("../assets/lab.jpg"),
+  photo: require('../assets/home.jpg'),
   time: 16,
   sytx: 55,
-  link: "PrevDetailScreen",
+  link: 'MsgDetailScreen',
+
 };

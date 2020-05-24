@@ -1,6 +1,5 @@
 var mongoose = require("mongoose");
 const LocationModels = require("../models/LocationModel.js");
-const LocationUserModels = require("./../models/LocationUserModel");
 const LocationGridModels = require("./../models/LocationGridModel");
 const SymptomUserModel = require("./../models/SymptomUser");
 const UserModel = require("../models/UserModel");
@@ -9,7 +8,7 @@ const axios = require("axios");
 const geolib = require("geolib");
 const schedule = require("node-schedule");
 
-// Display list of all locations.
+// Fetch list of all locations.
 exports.get_all_locations = async (req, res) => {
   if (req.query.demo && req.query.demo == "true"){
     var Location = LocationModels.DemoLocation;
@@ -21,10 +20,11 @@ exports.get_all_locations = async (req, res) => {
   try {
     res.send(locations);
   } catch (err) {
-    res.status(500).send(err.toString());
+    res.status(404).send("No Locations Found.");
   }
 };
 
+// Fetch list of all locations alongside their symptoms
 exports.get_all_locations_with_symptoms = async (req, res) => {
   if(!req.body.longitude || !req.body.latitude){
     return res.status(400).send("Coordinates are not given");
@@ -36,8 +36,8 @@ exports.get_all_locations_with_symptoms = async (req, res) => {
   let long = req.body.longitude;
   let top_left_end = req.body.top_left_bound;
   let top_right_end = req.body.top_right_bound;
-  let bottom_right_end = req.body.bottom_right_bound;
   let bottom_left_end = req.body.bottom_left_bound;
+  let bottom_right_end = req.body.bottom_right_bound;
   let distance_check = geolib.getDistance(
     {latitude: top_left_end[1], longitude: top_left_end[0]},
     {latitude: top_right_end[1], longitude: top_right_end[0]},
@@ -60,7 +60,7 @@ exports.get_all_locations_with_symptoms = async (req, res) => {
   if (result.length > 0) {
     res.send(result);
   } else {
-    res.status(500).send("No locations with users and symptoms found.");
+    res.status(404).send("No locations with users and symptoms found.");
   }
 }
 
@@ -72,7 +72,7 @@ exports.post_location = async (req, res) => {
     var Location = LocationModels.Location;
   }
   if(!req.body.longitude||!req.body.latitude){
-    return res.status(500).send("Coordinates not given");
+    return res.status(400).send("Coordinates not given");
   }
   const check = await Location.findOne({ 
     location: {
@@ -84,7 +84,6 @@ exports.post_location = async (req, res) => {
       }
     }
   });
-  console.log(check)
   if (check) {
     return res.send(check);
   }
@@ -94,31 +93,17 @@ exports.post_location = async (req, res) => {
       location: {
         type: "Point",
         coordinates: [req.body.longitude , req.body.latitude]
-      },
-      place_name: req.body.place_name,
+      }
     });
     try {
-      const result = await axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${req.body.longitude},${req.body.latitude}.json?types=poi&access_token=pk.eyJ1IjoiZmVyb3g5OCIsImEiOiJjazg0czE2ZWIwNHhrM2VtY3Y0a2JkNjI3In0.zrm7UtCEPg2mX8JCiixE4g`)
-        .then(response => {
-          if (response.data) {
-            if (response.data.features && response.data.features.length>0) {
-              location.location.coordinates[0] = response.data.features[0].center[0];
-              location.location.coordinates[1] = response.data.features[0].center[1];
-              location.place_name = response.data.features[0].text;
-            }
-          }
-          return location;
-        })
-        .catch(error => {
-          console.log(error);
-        });
-      await result.save();
-      res.send(result);
+      await location.save();
+      res.send(location);
     } catch (err) {
-      res.status(500).send(err.toString());
+      res.status(400).send("Location could not be saved.");
     }
   }
 };
+
 //Get a specific Location by id
 exports.get_location_by_id = async (req, res) => {
   if (req.query.demo && req.query.demo == "true"){
@@ -126,16 +111,20 @@ exports.get_location_by_id = async (req, res) => {
   }else{
     var Location = LocationModels.Location;
   }
+  if(!req.params.id){
+    return res.status(400).send("Location ID not given");
+  }
   try {
     const location = await Location.findById(req.params.id);
     if(!location){
-      return res.status(500).send("Location not found");
+      return res.status(404).send("Location not found");
     }
     res.send(location);
   } catch (err) {
-    res.status(500).send(err.toString());
+    res.status(404).send("Location not found.");
   }
 };
+
 //Get a specific Location by latitude and longitude
 exports.get_location_by_coordinates = async (req, res) => {
   if (req.query.demo && req.query.demo == "true"){
@@ -143,38 +132,56 @@ exports.get_location_by_coordinates = async (req, res) => {
   }else{
     var Location = LocationModels.Location;
   }
+  if(!req.params.longitude || !req.params.latitude){
+    return res.status(400).send("Location Coordinates are not given");
+  }
   try {
     const locations = await Location.findOne({ 
       location: {
         $near:
         {
-          $geometry: { type: "Point",  coordinates: [ req.body.longitude , req.body.latitude ] },
+          $geometry: { type: "Point",  coordinates: [ req.params.longitude , req.params.latitude ] },
           $minDistance: 0,
           $maxDistance: 1
         }
       }
-  });
+    });
     if(!locations || locations.length<1){
-      return res.status(500).send("Location not found with the given coordinates");
+      return res.status(404).send("Location not found with the given coordinates");
     }
     res.send(locations);
   } catch (err) {
-    res.status(500).send(err.toString());
+    res.status(404).send("Location not found with the given coordinates");
   }
 };
 
-//[DEPRACATED AND UNNECESSARY]
 //Update a location by id
 exports.update_location = async (req, res) => {
+  if (req.query.demo && req.query.demo == "true"){
+    var Location = LocationModels.DemoLocation;
+  }else{
+    var Location = LocationModels.Location;
+  }
   try {
+    if(!req.body._id){
+      return res.status(400).send("Location ID isn't given.");      
+    }
     let location = await Location.findById(req.body._id);
     if(!location){
-      return res.status(500).send("Location doesnot exist");      
+      return res.status(404).send("Location doesnot exist");      
     }
     location.set(req.body);
-    let check = await Location.findOne({
-      "location.coordinates": [location.location.longitude, location.location.latitude],
+    const check = await Location.findOne({ 
+      location: {
+        $near:
+        {
+          $geometry: { type: "Point",  coordinates: location.location.coordinates },
+          $minDistance: 0,
+          $maxDistance: 1
+        }
+      }
     });
+    //If there is a location currently resembling the update, send that one instead
     if(!check){
       await location.save();
       return res.send(location);
@@ -182,9 +189,10 @@ exports.update_location = async (req, res) => {
     await Location.findByIdAndDelete(location._id);
     res.send(check);
   } catch (err) {
-    res.status(500).send(err.toString());
+    res.status(400).send("Location could not be updated.");
   }
 };  
+
 //Delete a location
 exports.delete_location = async (req, res) => {
   if (req.body.demo && req.body.demo == "true"){
@@ -192,88 +200,20 @@ exports.delete_location = async (req, res) => {
   }else{
     var Location = LocationModels.Location;
   }
+  if(!req.body._id){
+    return res.status(400).send("Location ID isn't given.");      
+  }
   try {
     const location = await Location.findByIdAndDelete(req.body._id);
     if (!location) {
-      res.status(404).send("No item found");
+      res.status(404).send("Location is not found");
     } else {
-      res.status(204).send(location);
+      res.status(404).send(location);
     }
   } catch (err) {
-    res.status(500).send(err.toString());
+    res.status(400).send("Location couldn't be deleted");
   }
 };
-
-//[DEPRACATED]
-//Get risk factor of specific location by id
-const get_risk_by_location_id = async (id) => {
-  if (req.query.demo && req.query.demo == "true"){
-    var SymptomUser = DemoSymptomUser;
-    var LocationUser = LocationUserModels.DemoLocationUser;
-  }else{
-    var SymptomUser = SymptomUserModel.SymptomUser;
-    var LocationUser = LocationUserModels.LocationUser;
-  }
-  //Get users at the location
-  const results = await LocationUser.find({
-    location_id: { $eq: id },
-  });
-
-  // Risk factor variables initiated
-  let riskFactor = 0;
-  const riskAssessmentModel = {
-    HIGH: 1 / 2,
-    MEDIUM: 1 / 4,
-    LOW: 1 / 6,
-  };
-  const Symptoms = {};
-
-  // Get Symptoms for each user and store in Symptoms
-  for (let i = 0; i < results.length; i++) {
-    try {
-      const symptomuser = await SymptomUser.find({
-        user_id: results[i].user_id,
-      });
-      if (!symptomuser) {
-        console.log("GOT HERE 2");
-        throw new Error("InternalError: Unknown UserID stored in locationUser");
-      }
-
-      // Stores as symptom_id: frequency
-      symptomuser.forEach((row) => {
-        if (!(row.symptom_id in Symptoms)) {
-          Symptoms[row.symptom_id] = 1;
-        } else {
-          Symptoms[row.symptom_id]++;
-        }
-      });
-    } catch (err) {
-      throw err;
-    }
-  }
-
-  // Calculate the risk factor for each of the symptoms
-  for (key in Symptoms) {
-    const symptom = await Symptom.findById(key);
-
-    riskFactor += riskAssessmentModel[symptom.relevance] * Symptoms[key];
-  }
-
-  return riskFactor;
-};
-
-//[DEPRACATED]
-//Get risk factor of specific location by id API
-exports.get_location_risk_by_id = async (req, res) => {
-  try {
-    let riskFactor = await get_risk_by_location_id(req.params.id);
-
-    res.json({ risk: riskFactor });
-  } catch (err) {
-    res.status(500).send(err.toString());
-  }
-};
-
 
 const findAllNearbySymptomaticUsers = async(long, lat, demo)=>{
   if (demo && demo == "true"){
@@ -388,9 +328,9 @@ const updateDb = async (demo) => {
       continue;
     }
     // If the user has not sent their location data in a while, we will skip them
-    // if(user.expiresAt < Date.now()){
-    //   continue
-    // }
+    if(user.expiresAt < Date.now()){
+      continue
+    }
     //If the probability is also zero, then symptoms don't exist for that user, so we will skip
     if(user_loc.probability==0){
       continue;
@@ -439,7 +379,6 @@ const updateDb = async (demo) => {
   });
   await LocationGrid.collection.drop();
   await LocationGrid.insertMany(values);
-  // return squareBoxes
 }
 
 exports.run_updates = run_updates;

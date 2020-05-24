@@ -41,10 +41,11 @@ exports.get_all_news = async (req, res) => {
   news = news.concat(await fetchGoogleNews(req));
 
   let policies;  
-  if(req.query.country){
+  if(req.query.country == "World"){
+    news = news.concat(await fetchCDCNews());
+  }else if(req.query.country){
     policies = await News.find({country: req.query.country}).select("-description");
   }else{
-    news = news.concat(await fetchCDCNews());
     policies = await News.find({}).select("-description");
   }  
   
@@ -343,7 +344,7 @@ async function fetchCDCNews() {
           source: "CDC Newsroom",
           type: "News",
           date: element.pubDate,
-          country: "Global",
+          country: "World",
           reference_link: element.link,
         })
       );

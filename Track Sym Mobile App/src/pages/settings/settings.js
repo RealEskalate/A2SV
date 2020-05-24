@@ -41,6 +41,13 @@ export const SettingScreen = (props) => {
     props.navigation.navigate('ProfileScreen');
   };
 
+  const changePassAction = () => {
+    props.navigation.navigate('ChangePassScreen');
+  };
+
+  const editProfAction = () => {
+    props.navigation.navigate('EditProfileScreen');
+  };
   const darkModeAction = () => {
     themeContext.toggleTheme();
   };
@@ -74,8 +81,8 @@ export const SettingScreen = (props) => {
   ];
 
   const settingActions = [
-    profileAction,
-    stubAction,
+    editProfAction,
+    changePassAction,
     stubAction,
     stubAction,
     logOutAction,

@@ -13,6 +13,7 @@ import {
   Icon,
   TopNavigation,
   TopNavigationAction,
+
 } from "@ui-kitten/components";
 import { SafeAreaView } from "react-native";
 import InformationScreen from "../pages/info/";
@@ -169,6 +170,9 @@ export const HomeStackNavigator = (props) => (
     <Stack.Screen name="HomeBotttomNav" component={HomeTabsNavigator} />
     <Stack.Screen name="InfoDetailScreen" component={InfoDetailScreen} />
     <Stack.Screen name="PrevDetailScreen" component={PrevDetailScreen} />
+    <Stack.Screen name="SymDetailScreen" component={SymDetailScreen} />
+    <Stack.Screen name="SpdDetailScreen" component={SpdDetailScreen} />
+    <Stack.Screen name="MsgDetailScreen" component={MsgDetailScreen} />
     <Stack.Screen name="EditSymptomScreen" component={EditSymptomScreen} />
     <Stack.Screen name="DataAnalyticsMap" component={DataMap} />
   </Stack.Navigator>

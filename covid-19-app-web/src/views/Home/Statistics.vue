@@ -111,13 +111,14 @@
             v-text="selectedDescription.title"
           />
           <v-card-text v-text="selectedDescription.description" />
-          <v-card-text
-            v-if="
-              selectedDescription.fields.length > 0 ||
-                selectedDescription.criteria.length > 0
-            "
-          >
-            <v-list dense>
+          <v-card-text>
+            <v-list
+              dense
+              v-if="
+                selectedDescription.fields &&
+                  selectedDescription.fields.length > 0
+              "
+            >
               <h4 v-text="'Fields'" />
               <v-list-item
                 :key="i"
@@ -132,7 +133,13 @@
                 </p>
               </v-list-item>
             </v-list>
-            <v-list dense>
+            <v-list
+              dense
+              v-if="
+                selectedDescription.criteria &&
+                  selectedDescription.criteria.length > 0
+              "
+            >
               <h4 v-text="'Metrics'" />
               <v-list-item
                 :key="i"

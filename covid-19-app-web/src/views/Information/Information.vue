@@ -6,7 +6,7 @@
         <v-row>
           <h3
             class="display-1 font-weight-thin mb-10"
-            v-text="'Learn About Covid-19'"
+            v-text="'About Covid-19'"
           />
           <v-fade-transition hide-on-leave>
             <carousel-3d

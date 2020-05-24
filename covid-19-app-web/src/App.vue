@@ -54,11 +54,11 @@ export default {
 
 <style>
 .shadow-sm {
-  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1) !important;
 }
 
 .shadow {
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 0.35rem 0.75rem rgba(0, 0, 0, 0.1) !important;
 }
 
 .shadow-lg {
@@ -68,10 +68,20 @@ export default {
 .shadow-none {
   box-shadow: none !important;
 }
+
 .shadow-in {
   box-shadow: 0 0 5px #dededede inset;
 }
+
+.v-alert,
 .v-dialog--active {
-  border-radius: 23px 0 23px 0 !important;
+  border-radius: 23px 5px 23px 5px !important;
+}
+
+.v-pagination__item,
+.v-pagination__navigation {
+  border-radius: 10px 3px 10px 3px !important;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 0.2rem 0.2rem rgba(0, 0, 0, 0.05) !important;
 }
 </style>

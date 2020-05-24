@@ -37,6 +37,7 @@
               >
                 <div class="text--primary">
                   <v-progress-circular
+                    rotate="270"
                     :value="selectedAction === i ? value : 100"
                     :width="7"
                     :size="20"

@@ -22,15 +22,20 @@ const messageRouter = require("./routes/MessageRoutes.js");
 const statisticsResourceRouter = require("./routes/StatisticsResourcesRoute.js");
 const informationRouter = require("./routes/InformationRoute.js");
 const learningPathRouter = require("./routes/LearningPathRoute.js");
+const MobileStatisticsRouter = require("./routes/MobileStatisticsRoutes");
+const MobileInformationRouter = require("./routes/MobileInformationRoutes");
+const MobileInformationDetailRouter = require("./routes/MobileInformationDetailRoutes");
 
 const logger = require('./middlewares/logger');
 const bodyParser = require("body-parser");
+const compression = require('compression');
 
 const app = express();
 const port = process.env.PORT || 3000;
 app.use(cors());
 
 app.use(logger.requestLog);
+app.use(compression({ filter: shouldCompress }))
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -54,11 +59,28 @@ app.use(messageRouter);
 app.use(statisticsResourceRouter);
 app.use(informationRouter);
 app.use(learningPathRouter);
+app.use(MobileStatisticsRouter);
+app.use(MobileInformationDetailRouter);
+app.use(MobileInformationRouter);
+
 app.use(express.static('public'));
 app.use('/img', express.static(__dirname + '/img'));
 
 app.listen(port, () => {
     console.log("Server is running... at port " + port);
 });
+
+
+
+function shouldCompress (req, res) {
+    let routeToCompress=["/api/resources/information", "/api/resources/learning-path", "/api/resources/statistics-description" ];
+    if (req.route==null ||  !(routeToCompress.includes(req.route.path) )){
+       // " not compressed"
+       return false
+    }
+    
+    // "compressed"
+    return compression.filter(req, res)
+}
 
 module.exports = app;

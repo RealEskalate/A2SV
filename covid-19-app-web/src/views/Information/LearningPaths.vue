@@ -5,17 +5,18 @@
       <h3 class="display-1 font-weight-thin mb-10" v-text="'Learn Even More'" />
     </v-row>
     <v-row>
-      <v-col cols="12" md="7" class="pr-md-12">
+      <v-col cols="12" md="9" class="pr-md-12">
         <p>
           Go through our Learning paths to explore more about Covid 19. Whatever
           age you are, we have something for you.
         </p>
       </v-col>
-      <v-col cols="12" md="5" class="pl-md-12">
+      <v-col cols="12" md="3" class="pl-md-12">
         <v-select
           outlined
           dense
           :items="age_groups"
+          class="v-card--shaped"
           label="Learning Path for"
           v-model="selected_age"
           @input="fetchLearningPaths"
@@ -66,6 +67,7 @@
                   <td width="12%">
                     <v-btn
                       rounded
+                      class="v-card--shaped"
                       style="width: 100%"
                       small
                       color="primary"

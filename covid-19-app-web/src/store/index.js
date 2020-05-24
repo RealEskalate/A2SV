@@ -60,7 +60,7 @@ export default new Vuex.Store({
       commit("setNavigationType", type);
       console.log("type", type);
     },
-    setLanguagePreference({commit}, {lang}) {
+    setLanguagePreference({ commit }, { lang }) {
       console.log(lang);
       commit("setLanguagePreference", lang);
     }

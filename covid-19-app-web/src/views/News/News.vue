@@ -8,6 +8,7 @@
           </v-col>
           <v-col cols="12" md="4">
             <v-autocomplete
+              class="v-card--shaped"
               v-model="country"
               :items="countries"
               label="Country"
@@ -36,7 +37,11 @@
               <v-list v-else three-line>
                 <template v-for="item in news">
                   <v-list-item :key="item.title">
-                    <v-list-item-avatar height="50" width="50">
+                    <v-list-item-avatar
+                      class="v-card--shaped"
+                      height="50"
+                      width="50"
+                    >
                       <v-img
                         contain
                         :src="item.logo"
@@ -53,10 +58,9 @@
                           style="display:inline"
                         />
                         <v-btn
-                          tile
                           x-small
                           outlined
-                          class="float-right"
+                          class="float-right v-card--shaped"
                           :href="item.reference_link"
                           v-text="'Read More'"
                           target="blank"
@@ -74,6 +78,7 @@
         <v-row>
           <v-col cols="12" md="2">
             <v-select
+              class="v-card--shaped"
               v-model="size"
               :items="sizes"
               label="Show"
@@ -84,7 +89,7 @@
           </v-col>
           <v-col cols="12" md="10">
             <v-pagination
-              class="justify-end"
+              class="justify-md-end justify-center"
               v-model="page"
               total-visible="7"
               :length="Math.floor((totalCount || 0) / size)"
