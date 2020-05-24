@@ -3,6 +3,7 @@
     <v-row class="mx-md-5" dense>
       <v-col class="px-2" cols="12" md="4">
         <v-autocomplete
+          class="v-card--shaped"
           v-model="country"
           :items="countries"
           label="Country"
@@ -24,6 +25,7 @@
         >
           <template v-slot:activator="{ on }">
             <v-text-field
+              class="v-card--shaped"
               outlined
               dense
               v-model="dateRangeText"
@@ -52,6 +54,7 @@
       </v-col>
       <v-col class="px-2" cols="12" md="4">
         <v-select
+          class="v-card--shaped"
           item-text="label"
           v-model="criterion"
           :items="criteria.daily"

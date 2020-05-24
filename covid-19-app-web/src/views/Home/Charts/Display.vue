@@ -3,6 +3,7 @@
     <v-row class="mx-md-5" dense>
       <v-col class="px-2" cols="12" md="6">
         <v-autocomplete
+          class="v-card--shaped"
           v-model="country"
           :items="countries"
           label="Country"
@@ -23,6 +24,7 @@
         >
           <template v-slot:activator="{ on }">
             <v-text-field
+              class="v-card--shaped"
               color="primary"
               outlined
               dense

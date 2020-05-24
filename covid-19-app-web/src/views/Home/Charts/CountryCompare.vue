@@ -5,6 +5,7 @@
         <v-row class="mx-md-5" dense>
           <v-col class="px-2" cols="12" md="6">
             <v-autocomplete
+              class="v-card--shaped"
               v-model="country_1"
               :items="countries"
               label="Country 1"
@@ -27,6 +28,7 @@
             >
               <template v-slot:activator="{ on }">
                 <v-text-field
+                  class="v-card--shaped"
                   :color="
                     `rgb(${colors[0][0]}, ${colors[0][1]}, ${colors[0][2]})`
                   "
@@ -66,6 +68,7 @@
         <v-row class="mx-md-5" dense>
           <v-col class="px-2" cols="12" md="6">
             <v-autocomplete
+              class="v-card--shaped"
               v-model="country_2"
               :items="countries"
               label="Country 2"
@@ -88,6 +91,7 @@
             >
               <template v-slot:activator="{ on }">
                 <v-text-field
+                  class="v-card--shaped"
                   :color="
                     `rgb(${colors[1][0]}, ${colors[1][1]}, ${colors[1][2]})`
                   "
@@ -127,6 +131,7 @@
         <v-row class="mx-md-5" dense>
           <v-col class="px-2" cols="12">
             <v-select
+              class="v-card--shaped"
               v-model="criterion"
               :items="criteriaList"
               label="Common Criteria"
