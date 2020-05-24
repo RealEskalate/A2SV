@@ -4,7 +4,7 @@
       <h3 class="display-1 font-weight-thin mb-10" v-text="'What Then?'" />
     </v-row>
     <v-row>
-      <v-col class="pr-12" md="5" cols="12">
+      <v-col class="pr-md-12" md="5" cols="12">
         <v-fade-transition hide-on-leave>
           <v-skeleton-loader
             ref="skeleton"
@@ -58,7 +58,7 @@
                 <v-img
                   class="my-5 mx-auto d-md-none"
                   :lazy-src="action.image"
-                  :src="action.image"
+                  :src="server_url + action.image"
                 />
               </v-expansion-panel-content>
               <v-divider />
