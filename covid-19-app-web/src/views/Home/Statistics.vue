@@ -4,8 +4,8 @@
       <v-row>
         <v-col>
           <h3
-            class="display-1 font-weight-thin mb-5"
-            v-text="'Covid-19 Global Statistics'"
+                  class="display-1 font-weight-thin mb-5"
+                  v-text="$t('globalStatisticsTitle')"
           />
         </v-col>
       </v-row>

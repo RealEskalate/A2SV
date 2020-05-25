@@ -1,5 +1,5 @@
 {
-  "globalStatisticsTitle": "Covid-19 Global Statistics",
+  "globalStatisticsTitle": "ኮ.ቪ.ድ. 19 ዓለም አቀፍ ስታቲስቲክስ",
   "totalCounts": "አጠቃላይ የተያዙ ብዛት",
   "dailyCounts": "ዛሬ የተያዙ ብዛት",
   "viewRates": "VIEW RATES",
@@ -37,6 +37,9 @@
   "about": "ስለኛ",
   "news": "ዜና",
   "map": "ካርታ",
+  "aboutCovid": "ስለ ኮ.ቪ.ድ. 19",
+  "whatThen": "መረጃዎች",
+
   "statesTransitionTitle": "የቫይረሱ የሽግግር ሂደት",
   "statesTransitionSubtitle": "ምን ምን ሂደቶች አሉት?",
   "learnEvenMore": "የበለጠ ለመረዳት",
