@@ -36,11 +36,11 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: false
   },
-  latest_location: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Location",
-    index:true
-  },
+  // latest_location: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: "Location",
+  //   index:true
+  // },
   latest_location_user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "LocationUser"
@@ -85,11 +85,11 @@ const demoUserSchema = new mongoose.Schema({
     type: String,
     required: false
   },
-  latest_location: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Demo Location",
-    index:true
-  },
+  // latest_location: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: "Demo Location",
+  //   index:true
+  // },
   latest_location_user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Demo LocationUser"
