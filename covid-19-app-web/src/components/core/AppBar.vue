@@ -143,7 +143,7 @@ export default {
 
 <style scoped>
 .border-bottom {
-  border-bottom: #009ce5 solid 2px !important;
+  border-bottom: #009ce5 solid 3px !important;
 }
 
 .v-btn--active.border-bottom::before {

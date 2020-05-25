@@ -42,8 +42,12 @@
                     class="text-left primary--text text--darken-1"
                     v-if="$vuetify.breakpoint.mdAndUp"
                   />
-                  <th class="text-left primary--text text--darken-1" :key="i" v-for="(header, i) in headers">
-                    {{ $t('learningPathHeaders.' + header) }}
+                  <th
+                    class="text-left primary--text text--darken-1"
+                    :key="i"
+                    v-for="(header, i) in headers"
+                  >
+                    {{ $t("learningPathHeaders." + header) }}
                   </th>
                 </tr>
               </thead>
@@ -90,13 +94,16 @@ export default {
     return {
       selected_age: "Adults",
       age_groups: ["Kids", "Teens", "Adults", "Seniors"],
-      headers: ['taskName', 'what', 'why', 'duration', 'how']
+      headers: ["taskName", "what", "why", "duration", "how"]
     };
   },
   methods: {
     fetchLearningPaths() {
       if (!this.learningPaths || !this.learningPaths[this.selected_age]) {
-        store.dispatch("setLearningPaths", { age_group: this.selected_age, lang: this.$i18n.locale });
+        store.dispatch("setLearningPaths", {
+          age_group: this.selected_age,
+          lang: this.$i18n.locale
+        });
       }
     }
   },
