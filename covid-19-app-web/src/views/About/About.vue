@@ -4,7 +4,12 @@
       <v-container>
         <v-row>
           <v-fade-transition hide-on-leave>
-            <v-col class="px-md-10" cols="12" md="7" v-if="loaders.descriptions">
+            <v-col
+              class="px-md-10"
+              cols="12"
+              md="7"
+              v-if="loaders.descriptions"
+            >
               <div :key="i" v-for="i in 4">
                 <v-skeleton-loader
                   ref="skeleton"
@@ -15,7 +20,10 @@
             </v-col>
             <v-col v-else class="px-md-10" cols="12" md="7">
               <div :key="i" v-for="(description, i) in descriptions">
-                <h3 class="display-1 font-weight-thin" v-text="description.title" />
+                <h3
+                  class="display-1 font-weight-thin"
+                  v-text="description.title"
+                />
                 <div
                   class="my-5 grey--text text--darken-2"
                   v-html="description.description"

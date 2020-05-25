@@ -33,7 +33,6 @@
             v-model="$i18n.locale"
             :items="languages"
             label="Lang"
-            @change="changeLang"
           >
             <template v-slot:append>
               <small />
@@ -53,7 +52,6 @@
 
 <script>
 import { mdiTelegram, mdiWeb, mdiYoutube } from "@mdi/js";
-import store from "@/store/";
 
 export default {
   data: () => ({
@@ -67,18 +65,7 @@ export default {
       { link: "http://www.youtube.com/", icon: mdiYoutube },
       { link: "http://www.youtube.com/", icon: mdiTelegram }
     ]
-  }),
-  mounted() {
-    this.$i18n.locale =
-      store.getters.getLanguagePreference === null
-        ? "en"
-        : store.getters.getLanguagePreference;
-  },
-  methods: {
-    changeLang() {
-      store.dispatch("setLanguagePreference", { lang: this.$i18n.locale });
-    }
-  }
+  })
 };
 </script>
 

@@ -2,10 +2,10 @@
   <v-container class="white">
     <v-app-bar
       app
-      style="border-radius: 0 0 25px 0"
-      class="white"
       flat
-      v-bind:class="{ shadow: raise }"
+      class="white"
+      style="border-radius: 0 0 25px 0"
+      :class="{ shadow: raise }"
     >
       <v-app-bar-nav-icon
         v-if="$vuetify.breakpoint.smAndDown && navOption === '2'"
