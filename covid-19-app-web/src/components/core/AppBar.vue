@@ -60,38 +60,6 @@
       </div>
     </v-app-bar>
     <v-container v-if="$vuetify.breakpoint.smAndDown">
-      <v-navigation-drawer
-        v-model="drawer"
-        temporary
-        app
-        overflow
-        v-if="curNavigation === '2'"
-      >
-        <v-img
-          alt="Company Logo"
-          class="shrink ml-2 d-block mt-4"
-          src="/img/brand/blue.png"
-          transition="scale-transition"
-          max-width="150"
-        />
-        <v-list dense nav shaped>
-          <v-list-item-group
-            v-model="curRoute"
-            justify="center"
-            active-class="white--text primary lighten-1"
-            class="mt-5"
-          >
-            <template v-for="(item, i) in links">
-              <v-list-item :key="i" :to="item.to" @click="drawer = false">
-                <v-list-item-action>
-                  <v-icon>{{ item.icon }}</v-icon>
-                </v-list-item-action>
-                <v-list-item-title>{{ item.text }}</v-list-item-title>
-              </v-list-item>
-            </template>
-          </v-list-item-group>
-        </v-list>
-      </v-navigation-drawer>
       <v-bottom-navigation
         app
         grow
@@ -101,7 +69,7 @@
         v-if="curNavigation === '1'"
       >
         <v-btn v-for="(item, i) in links" :to="item.to" :key="i">
-          <span>{{ item.text }}</span>
+          <span>{{ $t(item.text.toLowerCase()) }}</span>
           <v-icon> {{ item.icon }}</v-icon>
         </v-btn>
       </v-bottom-navigation>
