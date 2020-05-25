@@ -25,6 +25,7 @@ const learningPathRouter = require("./routes/LearningPathRoute.js");
 const MobileStatisticsRouter = require("./routes/MobileStatisticsRoutes");
 const MobileInformationRouter = require("./routes/MobileInformationRoutes");
 const MobileInformationDetailRouter = require("./routes/MobileInformationDetailRoutes");
+const citiesRouter = require("./routes/CitiesRoutes");
 
 const logger = require('./middlewares/logger');
 const bodyParser = require("body-parser");
@@ -62,6 +63,7 @@ app.use(learningPathRouter);
 app.use(MobileStatisticsRouter);
 app.use(MobileInformationDetailRouter);
 app.use(MobileInformationRouter);
+app.use(citiesRouter);
 
 app.use(express.static('public'));
 app.use('/img', express.static(__dirname + '/img'));
