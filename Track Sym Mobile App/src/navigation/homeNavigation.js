@@ -88,12 +88,7 @@ const HomeTabsNavigator = ({ navigation }) => {
     navigation.openDrawer();
   };
 
-  const names = [
-    "Information",
-    "Data Analytics",
-    "Symptom Tracker",
-    "My Symptoms",
-  ];
+  const names = ["Information", "Data", "Map", "My Symptoms"];
   const [i, setI] = React.useState(0);
 
   const OpenDrawerAction = () => (
@@ -126,8 +121,8 @@ const HomeTabsNavigator = ({ navigation }) => {
         }}
       >
         <BottomNavigationTab title="Information" icon={InfoIcon} />
-        <BottomNavigationTab title="Data Analytics" icon={DataIcon} />
-        <BottomNavigationTab title="Symptom Tracker" icon={MapIcon} />
+        <BottomNavigationTab title="Data" icon={DataIcon} />
+        <BottomNavigationTab title="Map" icon={MapIcon} />
         <BottomNavigationTab title="Symptoms" icon={PersonIcon} />
       </BottomNavigation>
     </SafeAreaView>
