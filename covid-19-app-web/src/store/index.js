@@ -3,12 +3,18 @@ import Vuex from "vuex";
 import graphs from "./graphs";
 import heatmap from "./heatmap";
 import learn from "./learn";
+import about from "./about";
 import news from "./news";
 import loaders from "./loaders";
 import axios from "axios";
 import createPersistedState from "vuex-persistedstate";
 
 Vue.use(Vuex);
+
+export const langConverter = {
+  en: "English",
+  am: "Amharic"
+};
 
 export default new Vuex.Store({
   plugins: [
@@ -58,10 +64,8 @@ export default new Vuex.Store({
     },
     setNavState({ commit }, { type }) {
       commit("setNavigationType", type);
-      console.log("type", type);
     },
     setLanguagePreference({ commit }, { lang }) {
-      console.log(lang);
       commit("setLanguagePreference", lang);
     }
   },
@@ -69,6 +73,7 @@ export default new Vuex.Store({
     graphs,
     heatmap,
     learn,
+    about,
     news,
     loaders
   }

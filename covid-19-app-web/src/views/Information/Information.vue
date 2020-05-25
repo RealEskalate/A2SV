@@ -5,8 +5,8 @@
       <v-container>
         <v-row>
           <h3
-                  class="display-1 font-weight-thin mb-10"
-                  v-text="$t('aboutCovid')"
+            class="display-1 font-weight-thin mb-10"
+            v-text="$t('titles.aboutCovid')"
           />
           <v-fade-transition hide-on-leave>
             <carousel-3d
@@ -126,13 +126,13 @@
 </template>
 
 <script>
-  import States from "./States.vue";
-  import Actions from "./Actions";
-  import LearningPaths from "./LearningPaths.vue";
-  import {Carousel3d, Slide} from "vue-carousel-3d";
-  import store from "@/store";
+import States from "./States.vue";
+import Actions from "./Actions";
+import LearningPaths from "./LearningPaths.vue";
+import { Carousel3d, Slide } from "vue-carousel-3d";
+import store from "@/store";
 
-  export default {
+export default {
   name: "Information",
   components: {
     Actions,
@@ -153,9 +153,7 @@
   },
   created() {
     if (!this.information) {
-      store.dispatch("setInformation", {
-        lang: this.$i18n.locale === "am" ? "Amharic" : "English"
-      });
+      store.dispatch("setInformation", { lang: this.$i18n.locale });
     }
   },
   computed: {

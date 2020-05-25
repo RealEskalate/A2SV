@@ -1,52 +1,80 @@
 {
-  "globalStatisticsTitle": "Covid-19 Global Statistics",
-  "totalCounts": "TOTAL COUNTS",
-  "dailyCounts": "DAILY COUNTS",
-  "viewRates": "VIEW RATES",
-  "compareCountries": "COMPARE COUNTRIES",
-  "compareSimilarDiseases": "COMPARE SIMILAR DISEASES",
+  "sources": "Sources",
   "country": "Country",
   "dateRange": "Date Range",
   "world": "World",
   "resourcesPer1K": "Resources per 1K people",
-  "ethiopiaStatisticsTitle": "Covid-19 Ethiopia Statistics",
   "totalCases": "Total cases",
   "recovered": "Recovered",
   "death": "Death",
   "activeCases": "Active Cases",
   "regions": "Regions",
   "totalDeath": "Total Death",
-  "addisAbaba": "Addis Ababa",
-  "oromia": "Oromia",
-  "tigrai": "Tigrai",
-  "benishangulGumuz": "Benishangul Gumuz",
-  "gambela": "Gambela",
-  "snnpr": "SNNPR",
-  "afar": "Afar",
-  "amhara": "Amhara",
-  "somali": "Somali",
-  "Dire Dawa": "Dire Dawa",
+
   "freeReportingPhoneNumbers": "Free COVID-19 Reporting Phone Numbers",
   "getOurApp": "Get our App",
   "aboutSectionDescription": "TrackSym is a non-commercial app that uses crowd-sourcing to collect and visualize the density of the relevant symptoms. Registration only asks about age and gender to be used for data science purposes. Users can anonymously report symptoms and choose a location to see the density of symptoms in a map view. The data is aggregated by places, therefore, the app can help people avoid visiting a grocery store or a gas station that is heavily used by symptomatic people. In addition it provide Play-ground for the Data and News related to Covid-19 by country.",
   "moreInfo": "More Info",
   "contactUs": "Contact us",
-  "home": "Home",
-  "learn": "Learn",
-  "about": "About",
-  "news": "News",
-  "map": "Map",
-  "aboutCovid": "About Covid-19",
-  "whatThen": "What Then?",
-  "statesTransitionTitle": "States of Transition",
+
   "statesTransitionSubtitle": "What phases are there?",
-  "learnEvenMore": "Learn Even More",
   "learnEvenMoreDescription": "Go through our Learning paths to explore more about Covid 19. Whatever age you are, we have something for you.",
-  "taskName": "Task Name",
-  "what": "What",
-  "why": "Why",
-  "duration": "Duration",
-  "how": "How",
-  "sources": "Sources",
-  "show": "Show"
+
+  "navbar": {
+    "home": "Home",
+    "learn": "Learn",
+    "about": "About",
+    "news": "News",
+    "map": "Map"
+  },
+
+  "titles": {
+    "globalStatisticsTitle": "Covid-19 Statistics",
+    "ethiopiaStatisticsTitle": "Covid-19 in Ethiopia",
+    "aboutCovid": "About Covid-19",
+    "actions": "What to do?",
+    "states": "Disease States",
+    "learningPath": "Learn even more",
+    "news": "News"
+  },
+
+  "graphNames": {
+    "totalCounts": "Total Counts",
+    "dailyCounts": "Daily Counts",
+    "viewRates": "View Rates",
+    "compareCountries": "Compare Countries",
+    "compareDiseases": "Compare Similar Diseases"
+  },
+
+  "learningPathHeaders": {
+    "taskName": "Task Name",
+    "what": "What",
+    "why": "Why",
+    "duration": "Duration",
+    "how": "How",
+    "sources": "Sources",
+    "show": "Show"
+  },
+
+  "ethiopiaRegions": {
+    "addisAbaba": "Addis Ababa",
+    "oromia": "Oromia",
+    "tigrai": "Tigrai",
+    "benishangulGumuz": "Benishangul Gumuz",
+    "gambela": "Gambela",
+    "snnpr": "SNNPR",
+    "afar": "Afar",
+    "harari": "Harari",
+    "amhara": "Amhara",
+    "somali": "Somali",
+    "direDawa": "Dire Dawa"
+  },
+
+  "aboutTitles": {
+    "aboutTrackSym": "Corona App",
+    "theMission": "The Mission",
+    "yourData": "Your Data",
+    "we": "Who we are",
+    "contact": "Contact us"
+  }
 }

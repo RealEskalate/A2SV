@@ -3,7 +3,7 @@
     <v-row>
       <h3
         class="display-1 font-weight-thin mb-10"
-        v-text="$t('statesTransitionTitle')"
+        v-text="$t('titles.states')"
       />
     </v-row>
     <v-card shaped style="overflow: hidden" outlined>
@@ -61,9 +61,7 @@ export default {
   },
   created() {
     if (!this.states) {
-      store.dispatch("setStates", {
-        lang: this.$i18n.locale === "am" ? "Amharic" : "English"
-      });
+      store.dispatch("setStates", { lang: this.$i18n.locale });
     }
   },
   computed: {

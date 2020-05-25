@@ -48,6 +48,19 @@ export default {
       //  finish the progress bar
       this.$Progress.finish();
     });
+  },
+  watch: {
+    "$i18n.locale": newValue => {
+      store.dispatch("setGraphDescriptions", { lang: newValue });
+      store.dispatch("setAboutDescriptions", { lang: newValue });
+      store.dispatch("setInformation", { lang: newValue });
+      store.dispatch("setActions", { lang: newValue });
+      store.dispatch("setStates", { lang: newValue });
+      store.dispatch("setLearningPaths", {
+        age_group: "Adults",
+        lang: newValue
+      });
+    }
   }
 };
 </script>

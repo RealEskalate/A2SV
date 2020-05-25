@@ -10,6 +10,10 @@ export default {
       states: false,
       learningPaths: false
     },
+    aboutLoaders: {
+      descriptions: false,
+      actions: false
+    },
     graphLoaders: {
       counts: 0,
       rates: 0,
@@ -26,6 +30,9 @@ export default {
     getLearnLoaders(state) {
       return state.learnLoaders;
     },
+    getAboutLoaders(state) {
+      return state.aboutLoaders;
+    },
     getGraphLoaders(state) {
       return state.graphLoaders;
     }
@@ -36,6 +43,9 @@ export default {
     },
     setLearnLoaders(state, { key, value }) {
       state.learnLoaders[key] = value;
+    },
+    setAboutLoaders(state, { key, value }) {
+      state.aboutLoaders[key] = value;
     },
     incrementGraphLoaders(state, key) {
       state.graphLoaders[key]++;

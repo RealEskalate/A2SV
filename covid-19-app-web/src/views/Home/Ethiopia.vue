@@ -4,7 +4,7 @@
       <v-col cols="12">
         <h3
           class="display-1 font-weight-thin mb-5"
-          v-text="$t('ethiopiaStatisticsTitle')"
+          v-text="$t('titles.ethiopiaStatisticsTitle')"
         />
       </v-col>
     </v-row>
@@ -55,7 +55,7 @@
             <v-col md="6" cols="12">
               <doughnut-chart
                 class="v-card--shaped grey lighten-5 shadow-in pb-6 px-3 px-xl-12"
-                :data="chartData"
+                :chartData="chartData"
                 :options="chartOptions"
               />
             </v-col>
@@ -133,7 +133,7 @@
 </template>
 
 <script>
-import { DoughnutChart } from "../Home/Charts/charts.js";
+import { DoughnutChart } from "./Charts/charts.js";
 import { mdiPhone } from "@mdi/js";
 
 export default {
@@ -141,123 +141,30 @@ export default {
   components: {
     DoughnutChart
   },
-  data() {
-    return {
-      mdiPhone,
-      addresses: [
-        {
-          name: "addisAbaba",
-          phone: 6406
-        },
-        {
-          name: "oromia",
-          phone: 6955
-        },
-        {
-          name: "amhara",
-          phone: 6981
-        },
-        {
-          name: "snnpr",
-          phone: 6929
-        },
-        {
-          name: "tigrai",
-          phone: 6244
-        },
-        {
-          name: "somali",
-          phone: 6599
-        },
-        {
-          name: "direDawa",
-          phone: 6407
-        },
-        {
-          name: "afar",
-          phone: 6220
-        },
-        {
-          name: "benishangulGumuz",
-          phone: 6016
-        },
-        {
-          name: "harari",
-          phone: 6864
-        },
-        {
-          name: "gambela",
-          phone: 6184
-        }
-      ],
-      coronaCases: [
-        {
-          name: "addisAbaba",
-          totalCases: 159,
-          totalDeath: 4
-        },
-        {
-          name: "oromia",
-          totalCases: 53,
-          totalDeath: 1
-        },
-        {
-          name: "tigrai",
-          totalCases: 262,
-          totalDeath: 2
-        },
-        {
-          name: "benishangulGumuz",
-          totalCases: 22,
-          totalDeath: 2
-        },
-        {
-          name: "gambela",
-          totalCases: 12,
-          totalDeath: 0
-        },
-        {
-          name: "snnpr",
-          totalCases: 22,
-          totalDeath: 2
-        },
-        {
-          name: "afar",
-          totalCases: 5,
-          totalDeath: 2
-        },
-        {
-          name: "somali",
-          totalCases: 5,
-          totalDeath: 0
-        },
-        {
-          name: "direDawa",
-          totalCases: 2,
-          totalDeath: 2
-        }
-      ],
-      chartOptions: {
-        hoverBorderWidth: 20,
-        legend: {
-          display: this.$vuetify.breakpoint.mdAndUp,
-          position: "right"
-        }
-      },
-      chartData: {
+  created() {
+    this.setChartData();
+  },
+  watch: {
+    "$i18n.locale"() {
+      this.setChartData();
+    }
+  },
+  methods: {
+    setChartData() {
+      this.chartData = {
         hoverBackgroundColor: "red",
         hoverBorderWidth: 10,
         labels: [
-          this.$t("addisAbaba"),
-          this.$t("oromia"),
-          this.$t("amhara"),
-          this.$t("tigrai"),
-          this.$t("benishangulGumuz"),
-          this.$t("gambela"),
-          this.$t("snnpr"),
-          this.$t("afar"),
-          this.$t("somali"),
-          this.$t("direDawa")
+          this.$t("ethiopiaRegions.addisAbaba"),
+          this.$t("ethiopiaRegions.oromia"),
+          this.$t("ethiopiaRegions.amhara"),
+          this.$t("ethiopiaRegions.tigrai"),
+          this.$t("ethiopiaRegions.benishangulGumuz"),
+          this.$t("ethiopiaRegions.gambela"),
+          this.$t("ethiopiaRegions.snnpr"),
+          this.$t("ethiopiaRegions.afar"),
+          this.$t("ethiopiaRegions.somali"),
+          this.$t("ethiopiaRegions.direDawa")
         ],
         datasets: [
           {
@@ -277,7 +184,113 @@ export default {
             data: [219, 20, 13, 11, 2, 0, 6, 22, 51, 8]
           }
         ]
-      }
+      };
+    }
+  },
+  data() {
+    return {
+      mdiPhone,
+      addresses: [
+        {
+          name: "ethiopiaRegions.addisAbaba",
+          phone: 6406
+        },
+        {
+          name: "ethiopiaRegions.oromia",
+          phone: 6955
+        },
+        {
+          name: "ethiopiaRegions.amhara",
+          phone: 6981
+        },
+        {
+          name: "ethiopiaRegions.snnpr",
+          phone: 6929
+        },
+        {
+          name: "ethiopiaRegions.tigrai",
+          phone: 6244
+        },
+        {
+          name: "ethiopiaRegions.somali",
+          phone: 6599
+        },
+        {
+          name: "ethiopiaRegions.direDawa",
+          phone: 6407
+        },
+        {
+          name: "ethiopiaRegions.afar",
+          phone: 6220
+        },
+        {
+          name: "ethiopiaRegions.benishangulGumuz",
+          phone: 6016
+        },
+        {
+          name: "ethiopiaRegions.harari",
+          phone: 6864
+        },
+        {
+          name: "ethiopiaRegions.gambela",
+          phone: 6184
+        }
+      ],
+      coronaCases: [
+        {
+          name: "ethiopiaRegions.addisAbaba",
+          totalCases: 159,
+          totalDeath: 4
+        },
+        {
+          name: "ethiopiaRegions.oromia",
+          totalCases: 53,
+          totalDeath: 1
+        },
+        {
+          name: "ethiopiaRegions.tigrai",
+          totalCases: 262,
+          totalDeath: 2
+        },
+        {
+          name: "ethiopiaRegions.benishangulGumuz",
+          totalCases: 22,
+          totalDeath: 2
+        },
+        {
+          name: "ethiopiaRegions.gambela",
+          totalCases: 12,
+          totalDeath: 0
+        },
+        {
+          name: "ethiopiaRegions.snnpr",
+          totalCases: 22,
+          totalDeath: 2
+        },
+        {
+          name: "ethiopiaRegions.afar",
+          totalCases: 5,
+          totalDeath: 2
+        },
+        {
+          name: "ethiopiaRegions.somali",
+          totalCases: 5,
+          totalDeath: 0
+        },
+        {
+          name: "ethiopiaRegions.direDawa",
+          totalCases: 2,
+          totalDeath: 2
+        }
+      ],
+      chartOptions: {
+        hoverBorderWidth: 20,
+        legend: {
+          display: this.$vuetify.breakpoint.mdAndUp,
+          position: "right"
+        }
+      },
+      chartData: null
     };
   }
 };

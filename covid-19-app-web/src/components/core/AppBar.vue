@@ -31,7 +31,7 @@
         active-class="border-bottom"
         class="hidden-sm-and-down v-card--shaped nav-btn"
       >
-        <span class="text-capitalize"> {{ $t(link.text.toLowerCase()) }}</span>
+        <span class="text-capitalize"> {{ $t(link.text) }}</span>
       </v-btn>
       <v-divider class="mx-2" vertical light />
       <div class="justify-end pt-7" style="width: 50px">
@@ -59,21 +59,19 @@
         </v-select>
       </div>
     </v-app-bar>
-    <v-container v-if="$vuetify.breakpoint.smAndDown">
-      <v-bottom-navigation
-        app
-        grow
-        color="primary"
-        style="border-radius: 20px 20px 0 0"
-        class="px-3 overflow-hidden"
-        v-if="curNavigation === '1'"
-      >
-        <v-btn v-for="(item, i) in links" :to="item.to" :key="i">
-          <span>{{ $t(item.text.toLowerCase()) }}</span>
-          <v-icon> {{ item.icon }}</v-icon>
-        </v-btn>
-      </v-bottom-navigation>
-    </v-container>
+    <v-bottom-navigation
+      v-if="$vuetify.breakpoint.smAndDown"
+      app
+      grow
+      color="primary"
+      style="border-radius: 20px 20px 0 0"
+      class="px-3 overflow-hidden"
+    >
+      <v-btn v-for="(item, i) in links" :to="item.to" :key="i">
+        <span>{{ $t(item.text) }}</span>
+        <v-icon> {{ item.icon }}</v-icon>
+      </v-btn>
+    </v-bottom-navigation>
   </v-container>
 </template>
 
@@ -103,15 +101,15 @@ export default {
         am: "አማ"
       },
       links: [
-        { text: "Home", icon: mdiHome, to: "/" },
+        { text: "navbar.home", icon: mdiHome, to: "/" },
         {
-          text: "Learn",
+          text: "navbar.learn",
           icon: mdiBookOpenVariant,
           to: "/information"
         },
-        { text: "About", icon: mdiInformation, to: "/about" },
-        { text: "News", icon: mdiNewspaper, to: "/news" },
-        { text: "Map", icon: mdiMap, to: "/map" }
+        { text: "navbar.about", icon: mdiInformation, to: "/about" },
+        { text: "navbar.news", icon: mdiNewspaper, to: "/news" },
+        { text: "navbar.map", icon: mdiMap, to: "/map" }
       ]
     };
   },
@@ -138,9 +136,6 @@ export default {
     },
     navOption() {
       return this.navType;
-    },
-    curNavigation() {
-      return store.getters.getNavigationType;
     }
   }
 };

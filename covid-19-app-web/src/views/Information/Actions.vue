@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row>
-      <h3 class="display-1 font-weight-thin mb-10" v-text="$t('whatThen')"/>
+      <h3 class="display-1 font-weight-thin mb-10" v-text="$t('titles.actions')" />
     </v-row>
     <v-row>
       <v-col class="pr-md-12" md="5" cols="12">
@@ -116,9 +116,7 @@ export default {
   },
   created() {
     if (!this.actions) {
-      store.dispatch("setActions", {
-        lang: this.$i18n.locale === "am" ? "Amharic" : "English"
-      });
+      store.dispatch("setActions", { lang: this.$i18n.locale });
     }
   },
   computed: {

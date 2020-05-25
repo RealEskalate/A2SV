@@ -4,8 +4,8 @@
       <v-row>
         <v-col>
           <h3
-                  class="display-1 font-weight-thin mb-5"
-                  v-text="$t('globalStatisticsTitle')"
+            class="display-1 font-weight-thin mb-5"
+            v-text="$t('titles.globalStatisticsTitle')"
           />
         </v-col>
       </v-row>
@@ -15,7 +15,7 @@
             <v-tabs fixed-tabs value="this" v-model="selectedGraph">
               <v-tab>
                 <v-icon left>{{ mdiNumeric }}</v-icon>
-                Total Counts
+                {{ $t(graphNames[0]) }}
                 <v-spacer />
                 <v-icon small color="primary darken-1" @click="dialog = true">
                   {{ mdiHelpCircleOutline }}
@@ -23,7 +23,7 @@
               </v-tab>
               <v-tab>
                 <v-icon left>{{ mdiWeatherSunny }}</v-icon>
-                {{ $t("dailyCounts") }}
+                {{ $t(graphNames[1]) }}
                 <v-spacer />
                 <v-icon small color="primary darken-1" @click="dialog = true"
                   >{{ mdiHelpCircleOutline }}
@@ -31,7 +31,7 @@
               </v-tab>
               <v-tab>
                 <v-icon left>{{ mdiPercentOutline }}</v-icon>
-                {{ $t("viewRates") }}
+                {{ $t(graphNames[2]) }}
                 <v-spacer />
                 <v-icon small color="primary darken-1" @click="dialog = true">
                   {{ mdiHelpCircleOutline }}
@@ -39,7 +39,7 @@
               </v-tab>
               <v-tab>
                 <v-icon left>{{ mdiMapMarker }}</v-icon>
-                {{ $t("compareCountries") }}
+                {{ $t(graphNames[3]) }}
                 <v-spacer />
                 <v-icon small color="primary darken-1" @click="dialog = true">
                   {{ mdiHelpCircleOutline }}
@@ -47,7 +47,7 @@
               </v-tab>
               <v-tab>
                 <v-icon left>{{ mdiVirusOutline }}</v-icon>
-                Compare Similar Diseases
+                {{ $t(graphNames[4]) }}
                 <v-spacer />
                 <v-icon small color="primary" @click="dialog = true">
                   {{ mdiHelpCircleOutline }}
@@ -196,34 +196,36 @@ export default {
       dialog: false,
       selectedGraph: 0,
       graphNames: [
-        "Total Counts",
-        "Daily Counts",
-        "View Rates",
-        "Compare Countries",
-        "Compare Similar Diseases"
+        "graphNames.totalCounts",
+        "graphNames.dailyCounts",
+        "graphNames.viewRates",
+        "graphNames.compareCountries",
+        "graphNames.compareDiseases"
       ]
     };
   },
   created() {
     if (!this.graphDescriptions) {
-      store.dispatch("setGraphDescriptions", {
-        lang: this.$i18n.locale === "am" ? "Amharic" : "English"
-      });
+      store.dispatch("setGraphDescriptions", { lang: this.$i18n.locale });
     }
   },
   computed: {
     graphDescriptions: () => store.getters.getGraphDescriptions,
     selectedDescription() {
       if (this.graphDescriptions) {
-        return this.graphDescriptions[this.graphNames[this.selectedGraph]];
-      } else {
-        return {
-          title: "",
-          description: "",
-          fields: [],
-          criteria: []
-        };
+        const res = this.graphDescriptions[
+          this.$t(this.graphNames[this.selectedGraph])
+        ];
+        if (res) {
+          return res;
+        }
       }
+      return {
+        title: "",
+        description: "",
+        fields: [],
+        criteria: []
+      };
     }
   }
 };

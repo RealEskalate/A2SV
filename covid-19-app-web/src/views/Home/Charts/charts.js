@@ -18,9 +18,9 @@ export const LineChart = {
 export const DoughnutChart = {
   extends: Doughnut,
   mixins: [reactiveProp],
-  props: ["data", "options"],
+  props: ["chartData", "options"],
   mounted() {
-    this.renderChart(this.data, this.options);
+    this.renderChart(this.chartData, this.options);
   }
 };
 
