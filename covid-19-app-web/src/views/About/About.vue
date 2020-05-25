@@ -15,9 +15,7 @@
             </v-col>
             <v-col v-else class="px-md-10" cols="12" md="7">
               <div :key="i" v-for="(description, i) in descriptions">
-                <h3 class="display-1 font-weight-thin">
-                  {{ description.title }}
-                </h3>
+                <h3 class="display-1 font-weight-thin" v-text="description.title" />
                 <div
                   class="my-5 grey--text text--darken-2"
                   v-html="description.description"
@@ -253,17 +251,18 @@ export default {
     }
   },
   created() {
-    store.dispatch("setGraphDescriptions", { lang: this.$i18n.locale });
+    store.dispatch("setAboutActions", { lang: this.$i18n.locale });
     store.dispatch("setAboutDescriptions", { lang: this.$i18n.locale });
   },
   computed: {
     loaders: () => store.getters.getAboutLoaders,
+    actions: () => store.getters.getAboutActions,
     allDescriptions: () => store.getters.getAboutDescriptions,
     descriptions() {
       let list = [];
+      const needed = ["aboutTrackSym", "theMission", "yourData"];
+      let self = this;
       try {
-        const needed = ["aboutTrackSym", "theMission", "yourData"];
-        let self = this;
         needed.forEach(function(key) {
           list.push(self.allDescriptions[self.$t("aboutTitles." + key)]);
         });
@@ -282,14 +281,6 @@ export default {
         title: "",
         description: ""
       };
-    },
-    actionData: () => store.getters.getGraphDescriptions,
-    actions() {
-      if (this.actionData && this.actionData["image-description"]) {
-        return this.actionData["image-description"].fields;
-      } else {
-        return [];
-      }
     }
   }
 };

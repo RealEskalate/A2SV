@@ -53,6 +53,7 @@ export default {
     "$i18n.locale": newValue => {
       store.dispatch("setGraphDescriptions", { lang: newValue });
       store.dispatch("setAboutDescriptions", { lang: newValue });
+      store.dispatch("setAboutActions", { lang: newValue });
       store.dispatch("setInformation", { lang: newValue });
       store.dispatch("setActions", { lang: newValue });
       store.dispatch("setStates", { lang: newValue });
