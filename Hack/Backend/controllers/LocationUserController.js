@@ -334,7 +334,7 @@ const updateDb = async (demo) => {
     probability:{
       $gt: 0
     }
-  }).populate('user_id');
+  });
   for(let i = 0; i<location_users.length; i++){
     console.log(i + " out of " + users.length + " and " + Object.keys(squareBoxes).length);
     let location_user = location_users[i];
@@ -342,12 +342,8 @@ const updateDb = async (demo) => {
       continue;
     }
     let loc = location_user.location;
-    let user = location_user.user_id;    
+    let user_id = location_user.user_id;    
     if(loc==null){
-      continue
-    }
-    // If the user has not sent their location data in a while, we will skip them
-    if(user.expiresAt < Date.now()){
       continue
     }
     //Calculate the center point of the grid after finding out the grid they place on
@@ -365,7 +361,7 @@ const updateDb = async (demo) => {
     let center = [center_point_lat, center_point_lon]
 
     //Fetch all the symptoms that user has
-    const symptomuser = await SymptomUser.find({ user_id: user._id }).populate('symptom_id');
+    const symptomuser = await SymptomUser.find({ user_id: user_id }).populate('symptom_id');
     if(squareBoxes[center]){
       symptomuser.forEach((item)=>{
         squareBoxes[center].value[`${item.symptom_id.name}`]++;
