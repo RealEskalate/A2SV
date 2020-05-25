@@ -1,4 +1,5 @@
 const LocationGridModels = require("./../models/LocationGridModel");
+const SymptomUserModel = require("./../models/SymptomUser");
 const UserModel = require("../models/UserModel");
 const { Symptom } = require("./../models/Symptom");
 const geolib = require("geolib");
@@ -336,7 +337,7 @@ const updateDb = async (demo) => {
     }
   });
   for(let i = 0; i<location_users.length; i++){
-    console.log(i + " out of " + users.length + " and " + Object.keys(squareBoxes).length);
+    console.log(i + " out of " + location_users.length + " and " + Object.keys(squareBoxes).length);
     let location_user = location_users[i];
     if(location_user==null){
       continue;
