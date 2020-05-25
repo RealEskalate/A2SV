@@ -11,7 +11,7 @@ export const whatsIsCovid = {
 export const symptoms = {
   name: "SYMPTOMS",
   description:
-    "Fever, Cough and Shortness of breath are the common symptoms reported by patients.",
+    "Fever, Cough, and Shortness of breath are common symptoms reported by patients",
   photo: require("../assets/sym.jpg"),
   time: 2,
   sytx: 55,
@@ -20,9 +20,9 @@ export const symptoms = {
 };
 
 export const preventions = {
-  name: "PREVENTIONS",
+  name: "PREVENTION",
   description:
-    'Follow the guidelines to help protect yourself from catching, carrying and passing on SARS-CoV-2.',
+    'Follow the guidelines to help protect yourself from catching, carrying, and passing on SARS-CoV-2',
   photo: require('../assets/wash.jpg'),
 
   time: 16,
@@ -31,9 +31,9 @@ export const preventions = {
 };
 
 export const spread = {
-  name: "HOW COVID-19 SPREADS ?",
+  name: "HOW DOES IT SPREAD ?",
   description:
-    'COVID-19 is thought to spread mainly from person to person, mainly through respiratory droplets from an infected person.',
+    'COVID-19 virus primarily transmitted between people through respiratory droplets and contact routes',
   photo: require('../assets/cough.jpg'),
   time: 16,
   sytx: 55,
@@ -44,7 +44,7 @@ export const spread = {
 export const message = {
   name: "MESSAGE FROM US",
   description:
-    "There's a lot of information circulating about COVID-19, so it’simportant to know what’s true and what’s not.",
+    "There is a lot of information circulating about COVID-19, so it is important to know what is right and what is not.",
   photo: require('../assets/home.jpg'),
   time: 16,
   sytx: 55,
