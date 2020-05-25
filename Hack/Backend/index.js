@@ -5,7 +5,6 @@ const mongoose = require("./db.js");
 //Routers
 const alertRouter = require("./routes/AlertRoutes");
 const alertUserRouter = require("./routes/AlertUserRoutes");
-const locationRouter = require("./routes/LocationRoutes.js");
 const locationUserRouter = require("./routes/LocationUserRoutes");
 const medicalhistoryRouter = require("./routes/MedicalHistoryRoutes.js");
 const medicalhistoryuserRouter = require("./routes/MedicalHistoryUserRoutes.js");
@@ -44,7 +43,6 @@ app.use(publicResourceRouter);
 
 app.use(alertRouter);
 app.use(alertUserRouter);
-app.use(locationRouter);
 app.use(locationUserRouter);
 app.use(logRouter);
 app.use(statisticsRouter);

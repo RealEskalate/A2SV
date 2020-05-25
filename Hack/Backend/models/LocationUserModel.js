@@ -7,10 +7,16 @@ const location_user = new schema({
         ref: 'User',
         required: true
     },
-    location_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Location',
-        required: true
+    location: {
+        type: {
+          type: String,
+          enum: ['Point'],
+          required: true,
+        },
+        coordinates: {
+          type: [Number],
+          required: true,
+        },
     },
     TTL: {
         type: Date,
@@ -29,10 +35,16 @@ const demo_location_user = new schema({
         ref: 'Demo User',
         required: true
     },
-    location_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Demo Location',
-        required: true
+    location: {
+        type: {
+          type: String,
+          enum: ['Point'],
+          required: true,
+        },
+        coordinates: {
+          type: [Number],
+          required: true,
+        },
     },
     TTL: {
         type: Date,
@@ -55,10 +67,6 @@ location_user.pre('save', function() {
 demo_location_user.pre('save', function() {
     this.TTL = new Date(Date.now() + Number(this.TTL));
 });
-
-//Make location user IDs unique
-location_user.index({ user_id : 1, location_id : 1 }, { unique : 1 });
-demo_location_user.index({ user_id : 1, location_id : 1 }, { unique : 1 });
 
 const LocationUserModel = mongoose.model("LocationUser", location_user);
 const DemoLocationUserModel = mongoose.model("Demo LocationUser", demo_location_user);
