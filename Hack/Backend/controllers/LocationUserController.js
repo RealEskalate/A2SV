@@ -330,7 +330,11 @@ const updateDb = async (demo) => {
   const symptoms = await Symptom.find({});
   //Find all users and retrieve their recent locations. Latest location will help us find the specific 
   //coordinates while Latest Location User will help us avoid db check if the user has any symptoms or not
-  let location_users = await LocationUser.find({}).populate('user_id');
+  let location_users = await LocationUser.find({
+    probability:{
+      $gt: 0
+    }
+  }).populate('user_id');
   for(let i = 0; i<location_users.length; i++){
     console.log(i + " out of " + users.length + " and " + Object.keys(squareBoxes).length);
     let location_user = location_users[i];
@@ -345,10 +349,6 @@ const updateDb = async (demo) => {
     // If the user has not sent their location data in a while, we will skip them
     if(user.expiresAt < Date.now()){
       continue
-    }
-    //If the probability is also zero, then symptoms don't exist for that user, so we will skip
-    if(location_user.probability==0){
-      continue;
     }
     //Calculate the center point of the grid after finding out the grid they place on
     let lat_index = Math.floor((loc.coordinates[1]+ 90)/level);
