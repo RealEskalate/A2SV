@@ -339,14 +339,8 @@ const updateDb = async (demo) => {
   for(let i = 0; i<location_users.length; i++){
     console.log(i + " out of " + location_users.length + " and " + Object.keys(squareBoxes).length);
     let location_user = location_users[i];
-    if(location_user==null){
-      continue;
-    }
     let loc = location_user.location;
     let user_id = location_user.user_id;    
-    if(loc==null){
-      continue
-    }
     //Calculate the center point of the grid after finding out the grid they place on
     let lat_index = Math.floor((loc.coordinates[1]+ 90)/level);
     let latDistance = Math.sin((-90 + (lat_index*level)) * Math.PI / 180)
