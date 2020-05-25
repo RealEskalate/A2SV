@@ -162,22 +162,22 @@
 </template>
 
 <script>
-  import Display from "./Charts/Display.vue";
-  import DailyDisplay from "./Charts/DailyDisplay.vue";
-  import CountryCompare from "./Charts/CountryCompare.vue";
-  import DiseaseCompare from "./Charts/DiseaseCompare.vue";
-  import store from "@/store";
-  import {
-    mdiClose,
-    mdiHelpCircleOutline,
-    mdiMapMarker,
-    mdiNumeric,
-    mdiPercentOutline,
-    mdiVirusOutline,
-    mdiWeatherSunny
-  } from "@mdi/js";
+import Display from "./Charts/Display.vue";
+import DailyDisplay from "./Charts/DailyDisplay.vue";
+import CountryCompare from "./Charts/CountryCompare.vue";
+import DiseaseCompare from "./Charts/DiseaseCompare.vue";
+import store from "@/store";
+import {
+  mdiClose,
+  mdiHelpCircleOutline,
+  mdiMapMarker,
+  mdiNumeric,
+  mdiPercentOutline,
+  mdiVirusOutline,
+  mdiWeatherSunny
+} from "@mdi/js";
 
-  export default {
+export default {
   components: {
     Display,
     DailyDisplay,

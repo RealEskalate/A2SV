@@ -89,9 +89,9 @@
   </v-container>
 </template>
 <script>
-  import store from "@/store";
+import store from "@/store";
 
-  export default {
+export default {
   data: () => {
     return {
       auto: true,

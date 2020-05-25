@@ -36,13 +36,13 @@
       <v-divider class="mx-2" vertical light />
       <div class="justify-end pt-7" style="width: 50px">
         <v-select
-                solo
-                flat
-                dense
-                v-model="$i18n.locale"
-                :items="languages"
-                label="Lang"
-                @change="changeLang"
+          solo
+          flat
+          dense
+          v-model="$i18n.locale"
+          :items="languages"
+          label="Lang"
+          @change="changeLang"
         >
           <template v-slot:append>
             <small />
@@ -78,10 +78,17 @@
 </template>
 
 <script>
-  import store from "@/store/";
-  import {mdiBookOpenVariant, mdiDotsVertical, mdiHome, mdiInformation, mdiMap, mdiNewspaper} from "@mdi/js";
+import store from "@/store/";
+import {
+  mdiBookOpenVariant,
+  mdiDotsVertical,
+  mdiHome,
+  mdiInformation,
+  mdiMap,
+  mdiNewspaper
+} from "@mdi/js";
 
-  export default {
+export default {
   data: () => {
     return {
       mdiDotsVertical,
@@ -119,7 +126,7 @@
       this.locationY = window.scrollY;
     },
     changeLang() {
-      store.dispatch("setLanguagePreference", {lang: this.$i18n.locale});
+      store.dispatch("setLanguagePreference", { lang: this.$i18n.locale });
     }
   },
   computed: {

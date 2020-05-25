@@ -3,8 +3,8 @@
     <v-row>
       <v-col cols="12">
         <h3
-                class="display-1 font-weight-thin mb-5"
-                v-text="$t('ethiopiaStatisticsTitle')"
+          class="display-1 font-weight-thin mb-5"
+          v-text="$t('ethiopiaStatisticsTitle')"
         />
       </v-col>
     </v-row>
@@ -133,10 +133,10 @@
 </template>
 
 <script>
-  import {DoughnutChart} from "../Home/Charts/charts.js";
-  import {mdiPhone} from "@mdi/js";
+import { DoughnutChart } from "../Home/Charts/charts.js";
+import { mdiPhone } from "@mdi/js";
 
-  export default {
+export default {
   name: "Ethiopia",
   components: {
     DoughnutChart

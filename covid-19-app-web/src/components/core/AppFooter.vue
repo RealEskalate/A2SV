@@ -27,13 +27,13 @@
         |
         <div class="d-inline-block justify-end" style="width: 50px">
           <v-select
-                  solo
-                  flat
-                  dense
-                  v-model="$i18n.locale"
-                  :items="languages"
-                  label="Lang"
-                  @change="changeLang"
+            solo
+            flat
+            dense
+            v-model="$i18n.locale"
+            :items="languages"
+            label="Lang"
+            @change="changeLang"
           >
             <template v-slot:append>
               <small />
@@ -52,10 +52,10 @@
 </template>
 
 <script>
-  import {mdiTelegram, mdiWeb, mdiYoutube} from "@mdi/js";
-  import store from "@/store/";
+import { mdiTelegram, mdiWeb, mdiYoutube } from "@mdi/js";
+import store from "@/store/";
 
-  export default {
+export default {
   data: () => ({
     languages: ["en", "am"],
     langText: {
@@ -68,17 +68,17 @@
       { link: "http://www.youtube.com/", icon: mdiTelegram }
     ]
   }),
-    mounted() {
-      this.$i18n.locale =
-          store.getters.getLanguagePreference === null
-              ? "en"
-              : store.getters.getLanguagePreference;
-    },
-    methods: {
-      changeLang() {
-        store.dispatch("setLanguagePreference", {lang: this.$i18n.locale});
-      }
+  mounted() {
+    this.$i18n.locale =
+      store.getters.getLanguagePreference === null
+        ? "en"
+        : store.getters.getLanguagePreference;
+  },
+  methods: {
+    changeLang() {
+      store.dispatch("setLanguagePreference", { lang: this.$i18n.locale });
     }
+  }
 };
 </script>
 

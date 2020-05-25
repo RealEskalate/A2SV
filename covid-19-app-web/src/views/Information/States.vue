@@ -2,8 +2,8 @@
   <v-container>
     <v-row>
       <h3
-              class="display-1 font-weight-thin mb-10"
-              v-text="$t('statesTransitionTitle')"
+        class="display-1 font-weight-thin mb-10"
+        v-text="$t('statesTransitionTitle')"
       />
     </v-row>
     <v-card shaped style="overflow: hidden" outlined>
@@ -16,8 +16,8 @@
         </v-col>
         <v-col cols="12" md="5" class="pr-md-12 py-md-8 px-8 py-5">
           <h2
-                  class="mb-5 primary--text"
-                  v-text="$t('statesTransitionSubtitle')"
+            class="mb-5 primary--text"
+            v-text="$t('statesTransitionSubtitle')"
           />
           <v-list disabled>
             <v-skeleton-loader
@@ -52,10 +52,10 @@
 </template>
 
 <script>
-  import ImageSvg from "./ImageSvg";
-  import store from "@/store";
+import ImageSvg from "./ImageSvg";
+import store from "@/store";
 
-  export default {
+export default {
   components: {
     "img-svg": ImageSvg
   },
