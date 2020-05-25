@@ -3,8 +3,8 @@
   <v-container>
     <v-row>
       <h3
-              class="display-1 font-weight-thin mb-10"
-              v-text="$t('learnEvenMore')"
+        class="display-1 font-weight-thin mb-10"
+        v-text="$t('learnEvenMore')"
       />
     </v-row>
     <v-row>
@@ -95,9 +95,9 @@
 </template>
 
 <script>
-  import store from "@/store";
+import store from "@/store";
 
-  export default {
+export default {
   data: () => {
     return {
       selected_age: "Adults",

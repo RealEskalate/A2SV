@@ -4,19 +4,19 @@
       <v-col class="pr-md-12" md="8" sm="12">
         <v-row>
           <v-col cols="12" md="8">
-            <h3 class="display-1 font-weight-thin mb-10" v-text="$t('news')"/>
+            <h3 class="display-1 font-weight-thin mb-10" v-text="$t('news')" />
           </v-col>
           <v-col cols="12" md="4">
             <v-autocomplete
-                    class="v-card--shaped"
-                    v-model="country"
-                    :items="countries"
-                    :label="$t('country')"
-                    item-text="name"
-                    item-value="name"
-                    outlined
-                    dense
-                    @input="resetPage"
+              class="v-card--shaped"
+              v-model="country"
+              :items="countries"
+              :label="$t('country')"
+              item-text="name"
+              item-value="name"
+              outlined
+              dense
+              @input="resetPage"
             />
           </v-col>
         </v-row>
@@ -101,7 +101,7 @@
       <v-col class="pl-md-10 mt-sm-4" md="4" sm="12">
         <v-card shaped outlined>
           <v-list>
-            <v-subheader v-text="$t('sources')"/>
+            <v-subheader v-text="$t('sources')" />
             <v-fade-transition hide-on-leave>
               <v-skeleton-loader
                 ref="skeleton"
@@ -166,10 +166,10 @@
 </template>
 
 <script>
-  import moment from "moment";
-  import store from "@/store";
+import moment from "moment";
+import store from "@/store";
 
-  export default {
+export default {
   data() {
     return {
       page: 1,

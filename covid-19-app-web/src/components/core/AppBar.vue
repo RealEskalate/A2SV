@@ -157,7 +157,7 @@ export default {
 
 .nav-btn {
   border-bottom: white solid 2px;
-  transition: border-bottom-color 0.8s;
+  transition: border-bottom-color 1s;
 }
 
 .nav-item span {
