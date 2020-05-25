@@ -24,35 +24,48 @@ const mostCommon = [
   },
   {
     title: 'Dry Cough',
-    label: 'The virus can be reason to trigger coughing',
+    label: 'The virus can be a reason to trigger coughing',
     tag: 'Use your Elbow',
     image: require('../info-detail/assets/cough.jpg'),
   },
   {
     title: 'Tiredness',
-    label: 'Fatigue can be one symtpom of virus',
+    label: 'Fatigue can be one symtpom of the virus',
     tag: '',
     image: require('../info-detail/assets/tired.jpg'),
   },
+  {
+    title: 'Shortness of Breath',
+    label: 'xxxxxxxxxxx',
+    tag: '',
+    image: require('../info-detail/assets/tired.jpg'),
+  },
+  
 ];
 
 const lessCommon = [
   {
     title: 'Aches and Pain',
-    label: 'loss of smell or a blocked nose, it is usually associated',
+    label: 'Loss of smell or a blocked nose, it is usually associated',
     tag: 'Check your Status',
     image: require('../info-detail/assets/ache.jpg'),
   },
   {
     title: 'Sore Throat',
-    label: 'Infections like the common cold and flu can casue it',
+    label: 'Infections like the common cold and flu can cause it',
     tag: 'Use medicne for throat',
     image: require('../info-detail/assets/cough.jpg'),
   },
   {
-    title: 'Head Ache',
+    title: 'Headache',
     label: 'Headache related to these viral fever',
     tag: 'Treat your self well',
+    image: require('../info-detail/assets/headache.jpg'),
+  },
+  {
+    title: 'Muscle Pain',
+    label: 'xxxxxxxxxxxx',
+    tag: 'xxxxxxxx',
     image: require('../info-detail/assets/headache.jpg'),
   },
 ];

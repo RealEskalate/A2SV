@@ -69,10 +69,9 @@ export default InfoDetailScreen = (props) => {
                   and cats.
                   {'\n'}
                   {'\n'}
-                  Occasionally, viruses that infect one species can mutate in
-                  such a way that allows them to start infecting another
-                  species. This is called “cross-species transmission” or
-                  “spillover”.
+                  Occasionally, viruses that infect one species can mutate in such
+                  a way that allows them to start infecting other species. This is
+                  called cross-species transmission or spillover.
                   {'\n'}
                   {'\n'}
                   The first coronavirus was discovered in chickens in the 1930s.
@@ -80,7 +79,7 @@ export default InfoDetailScreen = (props) => {
                   identified in the 1960s.
                   {'\n'}
                   {'\n'}
-                  To date, seven coronaviruses have the ability to cause disease
+                  To date, seven coronaviruses can cause disease
                   in humans. Four are endemic (regularly found among particular
                   people or in a certain area) and usually cause mild disease,
                   but three can cause much more serious and even fatal disease.
@@ -104,7 +103,7 @@ export default InfoDetailScreen = (props) => {
                   {'\n'} {'\n'}
                   Either by touching those animals or by eating them. And it can
                   also spread via the air. However, the actual source of this
-                  disease isn’t known yet.
+                  disease is not known yet.
                 </Text>
               </Layout>
             </Layout>
@@ -119,17 +118,17 @@ export default InfoDetailScreen = (props) => {
               <Divider />
               <Layout style={styles.contentContainer}>
                 <Text>
-                  Common misconception regarding COVID-19 is that coronaviruses
+                  A Common misconception regarding COVID-19 is that coronaviruses
                   affect only old people. This is far from true and is killing
                   many people from various age groups.
                   {'\n'}
                   {'\n'}
-                  It is true that the risk of dying due to COVID-19 is
-                  significantly higher for 80+ age groups(as high as 14.8%)
-                  while it’s below 1% for age groups below 40.
+                  The risk of dying due to COVID-19 is indeed significantly
+                  higher for 80+ age groups(as high as 14.8%) while it is below
+                  1% for age groups below 40.
                   {'\n'}
                   {'\n'}
-                  But this doesn’t mean that teenagers won’t be affected or die.
+                  But this does not mean that teenagers will not be affected or die.
                   So these and other false facts can lead to a dangerous road.
                   {'\n'}
                 </Text>
