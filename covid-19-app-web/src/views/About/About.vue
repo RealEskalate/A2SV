@@ -3,24 +3,48 @@
     <section class="mb-12 text-justify">
       <v-container>
         <v-row>
-          <v-col class="px-md-10" cols="12" md="7">
-            <div :key="i" v-for="(description, i) in descriptions">
-              <h3 class="display-1 font-weight-thin">
-                {{ description.title }}
-              </h3>
-              <div
-                class="my-5 grey--text text--darken-2"
-                v-html="description.description"
-              />
-            </div>
-          </v-col>
-          <v-col class="px-md-10" cols="12" md="5">
-            <div>
-              <h3 class="display-1 font-weight-thin" v-text="whoWeAre.title" />
-              <div class="my-5 grey--text text--darken-2">
-                <p v-html="whoWeAre.description" />
+          <v-fade-transition hide-on-leave>
+            <v-col class="px-md-10" cols="12" md="7" v-if="loaders.descriptions">
+              <div :key="i" v-for="i in 4">
+                <v-skeleton-loader
+                  ref="skeleton"
+                  type="article"
+                  class="mx-auto mb-2"
+                />
               </div>
-            </div>
+            </v-col>
+            <v-col v-else class="px-md-10" cols="12" md="7">
+              <div :key="i" v-for="(description, i) in descriptions">
+                <h3 class="display-1 font-weight-thin">
+                  {{ description.title }}
+                </h3>
+                <div
+                  class="my-5 grey--text text--darken-2"
+                  v-html="description.description"
+                />
+              </div>
+            </v-col>
+          </v-fade-transition>
+
+          <v-col class="px-md-10" cols="12" md="5">
+            <v-fade-transition hide-on-leave>
+              <div v-if="loaders.descriptions">
+                <v-skeleton-loader
+                  ref="skeleton"
+                  type="article"
+                  class="mx-auto mb-2"
+                />
+              </div>
+              <div v-else>
+                <h3
+                  class="display-1 font-weight-thin"
+                  v-text="whoWeAre.title"
+                />
+                <div class="my-5 grey--text text--darken-2">
+                  <p v-html="whoWeAre.description" />
+                </div>
+              </div>
+            </v-fade-transition>
             <div class="mx-auto mt-10 py-5">
               <h3
                 class="display-1 font-weight-thin mb-5"
@@ -62,11 +86,12 @@
                 <div class="text-center py-3">
                   <v-btn
                     width="100"
+                    :loading="submitting"
                     class="primary mx-auto v-card--shaped"
                     @click="sendForm"
                   >
                     Send
-                    <v-icon class="ml-2" small> {{ mdiSend }}</v-icon>
+                    <v-icon class="ml-2" small v-text="mdiSend" />
                   </v-btn>
                 </div>
               </v-form>
@@ -159,6 +184,7 @@ export default {
       mdiSend,
       mdiYoutube,
       showAlert: false,
+      submitting: false,
       message: "",
       type: "success",
       contact: {
@@ -205,18 +231,25 @@ export default {
   },
   methods: {
     sendForm() {
-      axios.post(`${process.env.VUE_APP_BASE_URL}/messages`, this.contact).then(
-        () => {
-          this.showAlert = true;
-          this.type = "success";
-          this.message = "Your feedback is successfully submitted!";
-        },
-        () => {
-          this.showAlert = true;
-          this.type = "error";
-          this.message = "Something went wrong!";
-        }
-      );
+      let self = this;
+      self.submitting = true;
+      axios
+        .post(`${process.env.VUE_APP_BASE_URL}/messages`, this.contact)
+        .then(
+          () => {
+            this.showAlert = true;
+            this.type = "success";
+            this.message = "Your feedback is successfully submitted!";
+          },
+          () => {
+            this.showAlert = true;
+            this.type = "error";
+            this.message = "Something went wrong!";
+          }
+        )
+        .finally(() => {
+          self.submitting = false;
+        });
     }
   },
   created() {
@@ -224,6 +257,7 @@ export default {
     store.dispatch("setAboutDescriptions", { lang: this.$i18n.locale });
   },
   computed: {
+    loaders: () => store.getters.getAboutLoaders,
     allDescriptions: () => store.getters.getAboutDescriptions,
     descriptions() {
       let list = [];
