@@ -5,5 +5,5 @@ WORKDIR /api
 
 ADD . /api
 
-CMD npm install
+RUN npm install
 CMD node index.js
