@@ -82,7 +82,11 @@
         />
         <v-fade-transition hide-on-leave>
           <div class="ma-2" v-if="graphLoaders.descriptions">
-            <v-skeleton-loader ref="skeleton" type="text,text" class="mx-auto my-3" />
+            <v-skeleton-loader
+              ref="skeleton"
+              type="text,text"
+              class="mx-auto my-3"
+            />
           </div>
           <small
             v-else-if="!short_description"
