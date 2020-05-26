@@ -4,8 +4,8 @@ var MobileInformationController = require("../controllers/MobileInformationContr
 
 router.get("/api/resources/mobile/information", MobileInformationController.get_mobile_info);
 router.get("/api/resources/mobile/information/:id", MobileInformationController.get_info_by_id)
-router.post("/api/resources/mobile/information", MobileInformationController.post_info);
-router.patch("/api/resources/mobile/information", MobileInformationController.change_info);
-router.delete("/api/resources/mobile/information", MobileInformationController.delete_info);
+// router.post("/api/resources/mobile/information", MobileInformationController.post_info);
+// router.patch("/api/resources/mobile/information", MobileInformationController.change_info);
+// router.delete("/api/resources/mobile/information", MobileInformationController.delete_info);
 
 module.exports = router;

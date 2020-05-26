@@ -36,7 +36,7 @@ exports.get_info_by_id = async (req, res) => {
     }
 }
 
-// update info
+// update info - [DEPRECATED: This endpoint is not in use (not necessary)]
 exports.change_info = async (req, res) => {
 
     try{
@@ -50,7 +50,7 @@ exports.change_info = async (req, res) => {
     }
 }
 
-// delete information object
+// delete information object - [DEPRECATED: This endpoint is not in use (not necessary)]
 exports.delete_info = async (req, res) => {
     try{
         let parent = await MobileInformationDetail.findByIdAndDelete(req.query.id);
@@ -62,7 +62,7 @@ exports.delete_info = async (req, res) => {
         res.status(500).send(err.toString());
     }
 }
-
+// creates an information object - [DEPRECATED: This endpoint is not in use (not necessary)]
 exports.post_info = async (req, res) => {
     let mobileInfo = new MobileInformationDetail({
         _id: mongoose.Types.ObjectId(),
