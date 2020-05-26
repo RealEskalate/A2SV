@@ -1,4 +1,11 @@
 steps:
+- name: node
+  entrypoint: npm
+  args: ['install']
+steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '-t', 'gcr.io/zeta-ascent-272907/a2sv:$SHORT_SHA', '.']
+  dir: 'Hack/Backend'
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/zeta-ascent-272907/a2sv/Hack/Backend:$SHORT_SHA']
   dir: 'Hack/Backend'
