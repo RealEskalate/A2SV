@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
   symptoms: {
     borderColor: "#000000",
     marginBottom: 5,
-    borderRadius: 30,
+    borderRadius: 10,
     backgroundColor: "#1976d2",
     color: "#ffffff",
     flex: 1,
