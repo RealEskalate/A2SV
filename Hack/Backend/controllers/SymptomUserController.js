@@ -6,7 +6,7 @@ const UserModels = require("./../models/UserModel");
 const User = UserModels.User;
 const jwt = require("jsonwebtoken");
 
-// Display list of all symptoms.
+// Display list of all symptoms. - [DEPRECATED: The information is too sensitive to share with API consumers]
 exports.get_all_symptomusers = async (req, res) => {
   if (req.query.demo && req.query.demo == "true"){
     var SymptomUser = DemoSymptomUser;
@@ -24,7 +24,9 @@ exports.get_all_symptomusers = async (req, res) => {
 
 // Post a symptomuser
 exports.post_symptomuser = async (req, res) => {
-
+  if(req.body.user_id !== req.body.loggedInUser){
+    return res.status(403).send("User not authorized to access this endpoint with id: " + req.body.loggedInUser);
+  }
   let symptomuser = new SymptomUser({
     symptom_id: req.body.symptom_id,
     user_id: req.body.user_id,
@@ -128,6 +130,10 @@ exports.get_symptomuser_by_user_id = async (req, res) => {
 exports.update_symptomuser = async (req, res) => {
 
   try {
+    const symptomuserCheck = await SymptomUser.findById(req.body._id);
+    if(symptomuserCheck._id !== req.body.loggedInUser){
+      return res.status(403).send("User not authorized to access this endpoint with id: " + req.body.loggedInUser);
+    }
     const symptomuser = await SymptomUser.findByIdAndUpdate(
       req.body._id,
       req.body
@@ -155,6 +161,10 @@ exports.update_symptomuser = async (req, res) => {
 exports.delete_symptomuser = async (req, res) => {
 
   try {
+    const symptomuserCheck = await SymptomUser.findById(req.body._id);
+    if(symptomuserCheck._id !== req.body.loggedInUser){
+      return res.status(403).send("User not authorized to access this endpoint with id: " + req.body.loggedInUser);
+    }
     const symptomuser = await SymptomUser.findByIdAndDelete(req.body._id);
     if (!symptomuser) {
       return res.status(404).send("Symptom User Pair not found");

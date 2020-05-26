@@ -13,7 +13,7 @@ exports.get_all_symptoms = async (req, res) => {
     }
 };
 
-// Post a symptom
+// Post a symptom - [DEPRECATED: This endpoint is not in use (not necessary)]
 exports.post_symptom = async (req, res) => {
     const symptom = new Symptom({
         name: req.body.name,
@@ -51,7 +51,7 @@ exports.get_symptom_by_id = async (req, res) => {
     }
 };
 
-//Update a symptom by id
+//Update a symptom by id - [DEPRECATED: This endpoint is not in use (not necessary)]
 exports.update_symptom = async (req, res) => {
 
     try {
@@ -67,7 +67,7 @@ exports.update_symptom = async (req, res) => {
     }
 };
 
-// Deleting a symptom
+// Deleting a symptom - [DEPRECATED: This endpoint is not in use (not necessary)]
 exports.delete_symptom = async (req, res) => {
 
     try {

@@ -5,7 +5,7 @@ const verifyToken = require("../middlewares/auth.js")
 // Require controller modules.
 var symptomuser_controller = require("../controllers/SymptomUserController");
 
-router.get("/api/symptomuser", verifyToken.verifyToken, symptomuser_controller.get_all_symptomusers);
+// router.get("/api/symptomuser", verifyToken.verifyToken, symptomuser_controller.get_all_symptomusers);
 router.get("/api/symptomuser/symptom/:symptom_id", verifyToken.verifyToken, symptomuser_controller.get_symptomuser_by_symptom_id);
 router.get("/api/symptomuser/user/:user_id", verifyToken.verifyToken, symptomuser_controller.get_symptomuser_by_user_id);
 

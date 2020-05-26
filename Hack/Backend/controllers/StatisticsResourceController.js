@@ -1,6 +1,7 @@
 const { StatisticsResource } = require("../models/StatisticsResourceModel.js");
 var mongoose = require("mongoose");
 
+// - [DEPRECATED: This endpoint is not in use (not necessary)]
 exports.postStatisticsResource = async(req, res) => {
     let statisticsResource = new StatisticsResource({
         _id: mongoose.Types.ObjectId(),
@@ -51,6 +52,7 @@ exports.getStatisticsResourceByFields = async(req, res) => {
     }
 };
 
+// - [DEPRECATED: This endpoint is not in use (not necessary)]
 exports.updateStatisticsResource = async(req, res) => {
     try {
         let statisticsResource = await StatisticsResource.findOneAndUpdate(req.params._id, req.body);
@@ -66,6 +68,7 @@ exports.updateStatisticsResource = async(req, res) => {
     }
 };
 
+// - [DEPRECATED: This endpoint is not in use (not necessary)]
 exports.deleteStatisticsResource = async(req, res) => {
     try {
         let statisticsResource = await StatisticsResource.findByIdAndRemove(req.body._id);
