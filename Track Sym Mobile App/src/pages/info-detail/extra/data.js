@@ -85,21 +85,34 @@ export const symptomsData = {
 export const preventionData = {
   title: 'Prevention',
   description: 'PREVENTION IS BETTER THAN CURE!',
-  content:
-    'Regularly and thoroughly clean your hands with an alcohol-based hand rub or wash them with soap and water at least for 20 seconds. ' +
-    '\n\nMaintain at least 2 meters (6 feet) distance between yourself and anyone who is coughing or sneezing. ' +
-    '\n\nHands touch many surfaces and can pick up viruses. Once contaminated, hands can transfer the virus to ' +
-    'your eyes, nose, or mouth. From there, the virus can enter your body and can make you sick. ',
-  content_two:
-    'Make sure you, and the people around you, follow good respiratory hygiene. This means covering your mouth ' +
-    'and nose with your bent elbow or tissue when you cough or sneeze. Then dispose of the used tissue immediately ' +
-    '\n\nStay informed on the latest developments about COVID-19. Follow the advice given by your healthcare provider, your national and ' +
-    'local public health authority, or your employer on how to protect yourself and others from COVID-19. ',
   image: require('../assets/wash.jpg'),
-  date: '19 Sep, 2018',
-  author: {
-    fullName: 'Weakpeadia',
-  },
+  methods1: [
+    {
+      name: 'Washing Hand',
+      inside:
+        'Make sure you, and the people around you, follow good respiratory hygiene. This means covering your mouth ' +
+        'and nose with your bent elbow or tissue when you cough or sneeze. Then dispose of the used tissue immediately.',
+    },
+    {
+      name: 'Social Distancing',
+      inside:
+        'Maintain at least 2 meters (6 feet) distance between yourself and anyone who is coughing or sneezing.',
+    },
+  ],
+  methods2: [
+    {
+      name: 'Respiratory hygiene',
+      inside:
+        'Make sure you, and the people around you, follow good respiratory hygiene. This means covering your mouth ' +
+        'and nose with your bent elbow or tissue when you cough or sneeze. Then dispose of the used tissue immediately.',
+    },
+    {
+      name: 'Stay Informed',
+      inside:
+        'Stay informed on the latest developments about COVID-19. Follow the advice given by your healthcare provider, your national and ' +
+        'local public health authority, or your employer on how to protect yourself and others from COVID-19.',
+    },
+  ],
 };
 
 export const spreadData = {
