@@ -8,9 +8,9 @@ const User = UserModels.User;
 
 // Get All Users.
 exports.get_all_users = async (req, res) => {
-  if (req.query.demo && req.query.demo == "true"){
+  if (req.query.demo && req.query.demo == "true") {
     var User = UserModels.DemoUser;
-  }else{
+  } else {
     var User = UserModels.User;
   }
   const users = await User.find();
@@ -22,9 +22,9 @@ exports.get_all_users = async (req, res) => {
 };
 // Get User by ID.
 exports.get_user_by_id = async (req, res) => {
-  if (req.query.demo && req.query.demo == "true"){
+  if (req.query.demo && req.query.demo == "true") {
     var User = UserModels.DemoUser;
-  }else{
+  } else {
     var User = UserModels.User;
   }
   const user = await User.findById(req.params.id);
@@ -36,9 +36,10 @@ exports.get_user_by_id = async (req, res) => {
 };
 // Get User by Username and Password.
 exports.get_user_by_credentials = async (req, res) => {
-  if (req.query.demo && req.query.demo == "true"){
+  console.log('ENCRYPT WITH ' + process.env.NODE_ENV + ' ' + process.env.APP_SECRET_KEY)
+  if (req.query.demo && req.query.demo == "true") {
     var User = UserModels.DemoUser;
-  }else{
+  } else {
     var User = UserModels.User;
   }
   let user = await User.findOne({
@@ -69,7 +70,7 @@ exports.get_user_by_credentials = async (req, res) => {
         console.log(err);
       }
       // jwt authentication(signing in) is  done here ...
-      jwt.sign({ user }, config.get('secretkey'), (err, token) => {
+      jwt.sign({ user }, process.env.APP_SECRET_KEY, (err, token) => {
         res.json({
           user: user,
           token: token

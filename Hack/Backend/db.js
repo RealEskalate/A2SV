@@ -1,8 +1,16 @@
 const mongoose = require("mongoose");
-const config = require("./config");
+// const config = require("./config");
+require('dotenv').config()
 const app = require('./index');
+var connectionString = ""
+console.log('env IS ' + (process.env.NODE_ENV))
+if (process.env.NODE_ENV === 'test') {
+  connectionString = process.env.APP_DB_CONNECTION_TEST
+} else {
+  connectionString = process.env.APP_DB_CONNECTION
+}
 mongoose.connect(
-  process.env.MONGODB_URI || config.mongoURI[process.env.NODE_ENV || 'development'],
+  connectionString,
   {
     useCreateIndex: true,
     useNewUrlParser: true,
@@ -14,7 +22,7 @@ mongoose.connect(
       console.log('Error connecting to database. ' + err);
     }
     else {
-      console.log('Connected to Database! ' + config.mongoURI[process.env.NODE_ENV || 'development']);
+      console.log('Connected to Database! ' + process.env.NODE_ENV + ' via ' + connectionString);
     }
   }
 );

@@ -1,6 +1,8 @@
 const express = require("express");
 const cors = require('cors');
 const mongoose = require("./db.js");
+require('dotenv').config()
+
 
 //Routers
 const alertRouter = require("./routes/AlertRoutes");
@@ -72,13 +74,13 @@ app.listen(port, () => {
 
 
 
-function shouldCompress (req, res) {
-    let routeToCompress=["/api/resources/information", "/api/resources/learning-path", "/api/resources/statistics-description" ];
-    if (req.route==null ||  !(routeToCompress.includes(req.route.path) )){
-       // " not compressed"
-       return false
+function shouldCompress(req, res) {
+    let routeToCompress = ["/api/resources/information", "/api/resources/learning-path", "/api/resources/statistics-description"];
+    if (req.route == null || !(routeToCompress.includes(req.route.path))) {
+        // " not compressed"
+        return false
     }
-    
+
     // "compressed"
     return compression.filter(req, res)
 }
