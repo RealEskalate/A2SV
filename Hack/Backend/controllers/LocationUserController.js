@@ -1,11 +1,9 @@
 const LocationGridModels = require("./../models/LocationGridModel");
 const SymptomUserModel = require("./../models/SymptomUser");
-const UserModel = require("../models/UserModel");
 const { Symptom } = require("./../models/Symptom");
 const geolib = require("geolib");
 const schedule = require("node-schedule");
 const LocationUserModels = require("./../models/LocationUserModel");
-const LocationModels = require("../models/LocationModel.js");
 const UserModels = require("./../models/UserModel");
 const SymptomUserModels = require("../models/SymptomUser");
 const ProbabilityCalculator = require("../services/ProbabilityCalculator");
