@@ -179,7 +179,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#1976d2',
     color: '#ffffff',
     flex: 1,
-    fontFamily: 'PlayfairDisplay',
   },
   subtitle: {
     borderColor: '#000000',
