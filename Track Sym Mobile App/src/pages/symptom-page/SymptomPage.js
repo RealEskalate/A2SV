@@ -1,6 +1,14 @@
 import React, { Component } from "react";
 import { ScrollView, StyleSheet, ActivityIndicator } from "react-native";
-import { ApplicationProvider, Layout, Text } from "@ui-kitten/components";
+import {
+  ApplicationProvider,
+  Layout,
+  Text,
+  ListItem,
+  Toggle,
+  Divider,
+  List,
+} from "@ui-kitten/components";
 import * as eva from "@eva-design/eva";
 import symptomStore from "../../data-management/user-symptom-data/symptomStore";
 import userIDStore from "../../data-management/user-id-data/userIDStore";
@@ -75,7 +83,7 @@ export default class SymptomPage extends Component {
     this.setState({
       loading: true,
     });
-
+    console.log("Bearer " + userIDStore.getState().userToken);
     let newThis = this; // create variable for referencing 'this'
     await fetch("https://sym-track.herokuapp.com/api/symptoms", {
       method: "GET",
@@ -213,6 +221,26 @@ export default class SymptomPage extends Component {
     return false;
   }
 
+  renderItem = ({ item, index }) => (
+    <ListItem
+      title={item.name}
+      description={item.description}
+      accessoryLeft={() => (
+        <Toggle
+          checked={this.state.localUserSymptoms.includes(item.name)}
+          onChange={() => {
+            if (!this.state.registerLoading) {
+              this.handleSymptomAction(
+                userIDStore.getState().userId,
+                item._id,
+                item.name
+              );
+            }
+          }}
+        />
+      )}
+    />
+  );
   contents = () =>
     this.state.symptoms.map((item) => {
       //return the corresponding mapping for each item in corresponding UI componenets
@@ -276,7 +304,13 @@ export default class SymptomPage extends Component {
                 <ActivityIndicator size="small" color="#1976d2" />
               </Layout>
             ) : null}
-            {this.contents()}
+            <Layout style={{ flex: 1 }}>
+              <List
+                data={this.state.symptoms}
+                ItemSeparatorComponent={Divider}
+                renderItem={this.renderItem}
+              />
+            </Layout>
           </Layout>
         )}
       </ScrollView>

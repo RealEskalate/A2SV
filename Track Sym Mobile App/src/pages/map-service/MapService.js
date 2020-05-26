@@ -668,21 +668,6 @@ export default class MapService extends React.Component {
     for (let index = 0; index < symptoms.length; index++) {
       let element = symptoms[index];
 
-      var age_group = "";
-      if (
-        element.age_group.search("ABOVE") != -1 ||
-        element.age_group.search("UNDER") != -1
-      ) {
-        var idx = element.age_group.search("_");
-        age_group =
-          element.age_group.substring(0, idx) +
-          " " +
-          element.age_group.substring(idx + 1);
-      } else {
-        var first_idx = element.age_group.search("_");
-        age_group = element.age_group.substring(0, first_idx);
-        age_group += " - " + element.age_group.substring(first_idx + 4);
-      }
       const feat = {
         type: "Feature",
         id: element.user_id,
@@ -691,7 +676,10 @@ export default class MapService extends React.Component {
         },
         geometry: {
           type: "Point",
-          coordinates: [element.longitude, element.latitude],
+          coordinates: [
+            parseFloat(element.location.coordinates[0]),
+            parseFloat(element.location.coordinates[1]),
+          ],
         },
       };
       const prob = element.probability;
