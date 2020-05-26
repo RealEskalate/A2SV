@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   ScrollView,
   ActivityIndicator,
+  Image,
 } from "react-native";
 import { LineChart, BarChart } from "react-native-chart-kit";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -19,13 +20,12 @@ import {
   Card,
   Modal,
   Button,
-  Datepicker,
+  Text,
   Layout,
 } from "@ui-kitten/components";
 import * as eva from "@eva-design/eva";
 import SearchableDropdown from "react-native-searchable-dropdown";
 import userIDStore from "../../data-management/user-id-data/userIDStore";
-import Text from "./CustomText.js";
 class DataAnalytics extends React.Component {
   state = {
     selected_filter: criterias.confirmed, // sets the current filtering parameter on the graph
@@ -515,7 +515,7 @@ class DataAnalytics extends React.Component {
                 backgroundColor: "#ffffff00",
               }}
             >
-              <Text style={{ fontSize: 20, fontFamily: "Roboto-Black" }}>
+              <Text style={{ fontSize: 20, fontWeight: "bold" }}>
                 Case Update
               </Text>
             </Layout>
@@ -536,29 +536,19 @@ class DataAnalytics extends React.Component {
                 disabled={true}
                 style={{ alignItems: "center" }}
               >
-                <Layout
-                  style={{ backgroundColor: "#F6CA81", borderRadius: 20 }}
-                >
-                  <Layout
-                    style={{
-                      width: 20,
-                      height: 20,
-                      borderRadius: 20 / 2,
-                      margin: 5,
-                      borderColor: "#F57B35",
-                      borderWidth: 3,
-                    }}
-                  ></Layout>
-                </Layout>
+                <Image
+                  source={require("../../../assets/images/sick.png")}
+                  style={{ height: 30, width: 30 }}
+                />
 
                 {this.state.totalLoading ? (
                   <ActivityIndicator
                     size="small"
-                    color="#F57B35"
+                    color="#ffa500"
                     style={{ margin: 5 }}
                   />
                 ) : (
-                  <Text style={{ fontSize: 24, color: "#F57B35" }}>
+                  <Text style={{ fontSize: 24, color: "#ffa500" }}>
                     {this.reformatNumber(
                       String(
                         this.state.TotalStatisticsData[
@@ -578,29 +568,19 @@ class DataAnalytics extends React.Component {
                 disabled={true}
                 style={{ alignItems: "center" }}
               >
-                <Layout
-                  style={{ backgroundColor: "#ABF788", borderRadius: 20 }}
-                >
-                  <Layout
-                    style={{
-                      width: 20,
-                      height: 20,
-                      borderRadius: 20 / 2,
-                      margin: 5,
-                      borderColor: "green",
-                      borderWidth: 3,
-                    }}
-                  ></Layout>
-                </Layout>
+                <Image
+                  source={require("../../../assets/images/recovered.png")}
+                  style={{ height: 30, width: 30 }}
+                />
 
                 {this.state.totalLoading ? (
                   <ActivityIndicator
                     size="small"
-                    color="green"
+                    color="#039be5"
                     style={{ margin: 5 }}
                   />
                 ) : (
-                  <Text style={{ fontSize: 24, color: "green" }}>
+                  <Text style={{ fontSize: 24, color: "#039be5" }}>
                     {this.reformatNumber(
                       String(
                         this.state.TotalStatisticsData[
@@ -620,20 +600,10 @@ class DataAnalytics extends React.Component {
                 disabled={true}
                 style={{ alignItems: "center" }}
               >
-                <Layout
-                  style={{ backgroundColor: "#F9A993", borderRadius: 20 }}
-                >
-                  <Layout
-                    style={{
-                      width: 20,
-                      height: 20,
-                      borderRadius: 20 / 2,
-                      margin: 5,
-                      borderColor: "red",
-                      borderWidth: 3,
-                    }}
-                  ></Layout>
-                </Layout>
+                <Image
+                  source={require("../../../assets/images/dead.png")}
+                  style={{ height: 30, width: 30 }}
+                />
 
                 {this.state.totalLoading ? (
                   <ActivityIndicator
@@ -668,7 +638,7 @@ class DataAnalytics extends React.Component {
                 backgroundColor: "#ffffff00",
               }}
             >
-              <Text style={{ fontSize: 20, fontFamily: "Roboto-Black" }}>
+              <Text style={{ fontSize: 20, fontWeight: "bold" }}>
                 Total Data
               </Text>
             </Layout>
@@ -690,29 +660,19 @@ class DataAnalytics extends React.Component {
                 disabled={true}
                 style={{ alignItems: "center" }}
               >
-                <Layout
-                  style={{ backgroundColor: "#F6CA81", borderRadius: 20 }}
-                >
-                  <Layout
-                    style={{
-                      width: 20,
-                      height: 20,
-                      borderRadius: 20 / 2,
-                      margin: 5,
-                      borderColor: "#F57B35",
-                      borderWidth: 3,
-                    }}
-                  ></Layout>
-                </Layout>
+                <Image
+                  source={require("../../../assets/images/sick.png")}
+                  style={{ height: 30, width: 30 }}
+                />
 
                 {this.state.totalLoading ? (
                   <ActivityIndicator
                     size="small"
-                    color="#F57B35"
+                    color="#ffa500"
                     style={{ margin: 5 }}
                   />
                 ) : (
-                  <Text style={{ fontSize: 24, color: "#F57B35" }}>
+                  <Text style={{ fontSize: 24, color: "#ffa500" }}>
                     {this.reformatNumber(
                       String(
                         this.state.TotalStatisticsData[
@@ -728,29 +688,19 @@ class DataAnalytics extends React.Component {
                 disabled={true}
                 style={{ alignItems: "center" }}
               >
-                <Layout
-                  style={{ backgroundColor: "#ABF788", borderRadius: 20 }}
-                >
-                  <Layout
-                    style={{
-                      width: 20,
-                      height: 20,
-                      borderRadius: 20 / 2,
-                      margin: 5,
-                      borderColor: "green",
-                      borderWidth: 3,
-                    }}
-                  ></Layout>
-                </Layout>
+                <Image
+                  source={require("../../../assets/images/recovered.png")}
+                  style={{ height: 30, width: 30 }}
+                />
 
                 {this.state.totalLoading ? (
                   <ActivityIndicator
                     size="small"
-                    color="green"
+                    color="#039be5"
                     style={{ margin: 5 }}
                   />
                 ) : (
-                  <Text style={{ fontSize: 24, color: "green" }}>
+                  <Text style={{ fontSize: 24, color: "#039be5" }}>
                     {this.reformatNumber(
                       String(
                         this.state.TotalStatisticsData[
@@ -766,20 +716,10 @@ class DataAnalytics extends React.Component {
                 disabled={true}
                 style={{ alignItems: "center" }}
               >
-                <Layout
-                  style={{ backgroundColor: "#F9A993", borderRadius: 20 }}
-                >
-                  <Layout
-                    style={{
-                      width: 20,
-                      height: 20,
-                      borderRadius: 20 / 2,
-                      margin: 5,
-                      borderColor: "red",
-                      borderWidth: 3,
-                    }}
-                  ></Layout>
-                </Layout>
+                <Image
+                  source={require("../../../assets/images/dead.png")}
+                  style={{ height: 30, width: 30 }}
+                />
 
                 {this.state.totalLoading ? (
                   <ActivityIndicator
@@ -801,6 +741,7 @@ class DataAnalytics extends React.Component {
                 <Text>Total Death</Text>
               </TouchableOpacity>
             </Layout>
+
             <Layout style={styles.backdrop_container}>
               <Modal
                 visible={this.state.new_case_description_visiblity}
@@ -873,7 +814,7 @@ class DataAnalytics extends React.Component {
               <Text
                 style={{
                   fontSize: 20,
-                  fontFamily: "Roboto-Black",
+                  fontWeight: "bold",
                   marginLeft: 10,
                 }}
               >
@@ -895,13 +836,14 @@ class DataAnalytics extends React.Component {
                   <DatePicker
                     date={this.state.selected_daily_start_date}
                     mode="date" //The enum of date, datetime and
-                    placeholder="Select start date"
+                    placeholder="Start date"
                     maxDate={
                       this.state.selected_daily_end_date === ""
                         ? this.getCurrentDate()
                         : this.state.selected_daily_end_date
                     }
                     format="YYYY-MM-DD"
+                    style={{ color: "#000000" }}
                     customStyles={{
                       dateIcon: {
                         position: "absolute",
@@ -913,6 +855,7 @@ class DataAnalytics extends React.Component {
                         marginLeft: 36,
                         borderRadius: 20,
                         height: 30,
+                        borderColor: "#000000",
                       },
                     }}
                     onDateChange={(date) => {
@@ -924,7 +867,7 @@ class DataAnalytics extends React.Component {
                   <DatePicker
                     date={this.state.selected_daily_end_date}
                     mode="date" //The enum of date, datetime and time
-                    placeholder="Select end date"
+                    placeholder="End date"
                     format="YYYY-MM-DD"
                     confirmBtnText="Confirm"
                     minDate={
@@ -945,6 +888,7 @@ class DataAnalytics extends React.Component {
                         marginLeft: 36,
                         borderRadius: 20,
                         height: 30,
+                        borderColor: "#000000",
                       },
                     }}
                     onDateChange={async (date) => {
@@ -1111,7 +1055,7 @@ class DataAnalytics extends React.Component {
               <Text
                 style={{
                   fontSize: 20,
-                  fontFamily: "Roboto-Black",
+                  fontWeight: "bold",
                   marginLeft: 10,
                 }}
               >
@@ -1133,7 +1077,7 @@ class DataAnalytics extends React.Component {
                   <DatePicker
                     date={this.state.selected_total_start_date}
                     mode="date" //The enum of date, datetime and
-                    placeholder="Select start date"
+                    placeholder="Start date"
                     maxDate={
                       this.state.selected_total_end_date === ""
                         ? this.getCurrentDate()
@@ -1151,6 +1095,7 @@ class DataAnalytics extends React.Component {
                         marginLeft: 36,
                         borderRadius: 20,
                         height: 30,
+                        borderColor: "#000000",
                       },
                     }}
                     onDateChange={(date) => {
@@ -1162,7 +1107,7 @@ class DataAnalytics extends React.Component {
                   <DatePicker
                     date={this.state.selected_total_end_date}
                     mode="date" //The enum of date, datetime and time
-                    placeholder="Select end date"
+                    placeholder="End date"
                     format="YYYY-MM-DD"
                     minDate={
                       this.state.selected_total_start_date === ""
@@ -1183,6 +1128,7 @@ class DataAnalytics extends React.Component {
                         marginLeft: 36,
                         borderRadius: 20,
                         height: 30,
+                        borderColor: "#000000",
                       },
                     }}
                     onDateChange={async (date) => {
@@ -1335,7 +1281,7 @@ class DataAnalytics extends React.Component {
               <Text
                 style={{
                   fontSize: 20,
-                  fontFamily: "Roboto-Black",
+                  fontWeight: "bold",
                   marginLeft: 10,
                 }}
               >
@@ -1357,7 +1303,7 @@ class DataAnalytics extends React.Component {
                   <DatePicker
                     date={this.state.selected_rate_start_date}
                     mode="date" //The enum of date, datetime and
-                    placeholder="Select start date"
+                    placeholder="Start date"
                     format="YYYY-MM-DD"
                     maxDate={
                       this.state.selected_rate_end_date === ""
@@ -1375,6 +1321,7 @@ class DataAnalytics extends React.Component {
                         marginLeft: 36,
                         borderRadius: 20,
                         height: 30,
+                        borderColor: "#000000",
                       },
                     }}
                     onDateChange={(date) => {
@@ -1386,7 +1333,7 @@ class DataAnalytics extends React.Component {
                   <DatePicker
                     date={this.state.selected_rate_end_date}
                     mode="date" //The enum of date, datetime and time
-                    placeholder="Select end date"
+                    placeholder="End date"
                     minDate={
                       this.state.selected_rate_start_date === ""
                         ? this.getMinimumDate()
@@ -1407,6 +1354,7 @@ class DataAnalytics extends React.Component {
                         marginLeft: 36,
                         borderRadius: 20,
                         height: 30,
+                        borderColor: "#000000",
                       },
                     }}
                     onDateChange={async (date) => {
@@ -1576,7 +1524,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   cards_recovered: {
-    backgroundColor: "#40cc2a",
+    backgroundColor: "#30cc2a",
     borderRadius: 20,
     marginTop: 15,
     height: Dimensions.get("window").height / 10,
