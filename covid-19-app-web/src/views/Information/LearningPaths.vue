@@ -3,8 +3,8 @@
   <v-container>
     <v-row>
       <h3
-              class="display-1 font-weight-thin mb-10"
-              v-text="$t('learnEvenMore')"
+        class="display-1 font-weight-thin mb-10"
+        v-text="$t('titles.learningPath')"
       />
     </v-row>
     <v-row>
@@ -42,20 +42,12 @@
                     class="text-left primary--text text--darken-1"
                     v-if="$vuetify.breakpoint.mdAndUp"
                   />
-                  <th class="text-left primary--text text--darken-1">
-                    {{ $t("taskName") }}
-                  </th>
-                  <th class="text-left primary--text text--darken-1">
-                    {{ $t("what") }}
-                  </th>
-                  <th class="text-left primary--text text--darken-1">
-                    {{ $t("why") }}
-                  </th>
-                  <th class="text-left primary--text text--darken-1">
-                    {{ $t("duration") }}
-                  </th>
-                  <th class="text-left primary--text text--darken-1">
-                    {{ $t("how") }}
+                  <th
+                    class="text-left primary--text text--darken-1"
+                    :key="i"
+                    v-for="(header, i) in headers"
+                  >
+                    {{ $t("learningPathHeaders." + header) }}
                   </th>
                 </tr>
               </thead>
@@ -95,20 +87,22 @@
 </template>
 
 <script>
-  import store from "@/store";
+import store from "@/store";
 
-  export default {
+export default {
   data: () => {
     return {
       selected_age: "Adults",
-      age_groups: ["Kids", "Teens", "Adults", "Seniors"]
+      age_groups: ["Kids", "Teens", "Adults", "Seniors"],
+      headers: ["taskName", "what", "why", "duration", "how"]
     };
   },
   methods: {
     fetchLearningPaths() {
       if (!this.learningPaths || !this.learningPaths[this.selected_age]) {
         store.dispatch("setLearningPaths", {
-          age_group: this.selected_age
+          age_group: this.selected_age,
+          lang: this.$i18n.locale
         });
       }
     }

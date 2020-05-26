@@ -5,13 +5,13 @@
       <v-container>
         <v-row>
           <h3
-                  class="display-1 font-weight-thin mb-10"
-                  v-text="$t('aboutCovid')"
+            class="display-1 font-weight-thin mb-10"
+            v-text="$t('titles.aboutCovid')"
           />
           <v-fade-transition hide-on-leave>
             <carousel-3d
               v-if="loaders.information"
-              style="min-height: 300px"
+              style="min-height: 350px"
               :border="0"
               :perspective="20"
               :inverse-scaling="50"
@@ -21,12 +21,13 @@
               width="400"
             >
               <slide
+                class="overflow-visible"
                 :key="i"
                 v-for="(item, i) in 5"
                 :index="i"
                 style="height: auto; background-color: transparent"
               >
-                <v-card shaped outlined>
+                <v-card class="shadow" shaped outlined>
                   <v-skeleton-loader
                     ref="skeleton"
                     type="card"
@@ -58,7 +59,7 @@
                 :index="i"
                 style="height: auto; background-color: transparent"
               >
-                <v-card class="mx-auto shadow" outlined shaped>
+                <v-card class="shadow" outlined shaped>
                   <v-img
                     class="white--text align-end"
                     height="200px"
@@ -126,13 +127,13 @@
 </template>
 
 <script>
-  import States from "./States.vue";
-  import Actions from "./Actions";
-  import LearningPaths from "./LearningPaths.vue";
-  import {Carousel3d, Slide} from "vue-carousel-3d";
-  import store from "@/store";
+import States from "./States.vue";
+import Actions from "./Actions";
+import LearningPaths from "./LearningPaths.vue";
+import { Carousel3d, Slide } from "vue-carousel-3d";
+import store from "@/store";
 
-  export default {
+export default {
   name: "Information",
   components: {
     Actions,
@@ -153,9 +154,7 @@
   },
   created() {
     if (!this.information) {
-      store.dispatch("setInformation", {
-        lang: this.$i18n.locale === "am" ? "Amharic" : "English"
-      });
+      store.dispatch("setInformation", { lang: this.$i18n.locale });
     }
   },
   computed: {

@@ -1,5 +1,6 @@
 import axios from "axios";
 import moment from "moment";
+import { langConverter } from "./index";
 
 const converter = {
   "Test Count": "Tests",
@@ -445,20 +446,19 @@ export default {
           console.log(error);
         });
     },
-    setGraphDescriptions({commit}, {lang}) {
+    setGraphDescriptions({ commit }, { lang }) {
       axios
         .get(
-            `${process.env.VUE_APP_BASE_URL}/api/resources/statistics-description`,
-            {
-              params: {
-                language: lang
-              }
+          `${process.env.VUE_APP_BASE_URL}/api/resources/statistics-description`,
+          {
+            params: {
+              language: langConverter[lang]
             }
+          }
         )
         .then(response => {
           let res = {};
           response.data.forEach(function(desc) {
-            console.log(desc);
             res[desc.title] = desc;
           });
           commit("setGraphDescriptions", res);

@@ -1,54 +1,80 @@
 {
-  "globalStatisticsTitle": "ኮ.ቪ.ድ. 19 ዓለም አቀፍ ስታቲስቲክስ",
-  "totalCounts": "አጠቃላይ የተያዙ ብዛት",
-  "dailyCounts": "ዛሬ የተያዙ ብዛት",
-  "viewRates": "VIEW RATES",
-  "compareCountries": "ሀገራት አነጻጽር",
-  "compareSimilarDiseases": "ተመሳሳይ በሽታዎችን አነጻጽር",
+  "sources": "ምንጮች",
   "country": "ሀገር",
-  "dateRange": "Date Range",
+  "dateRange": "መጀመሪያ - መጨረሻ",
   "world": "አለም",
-  "resourcesPer1K": "Resources per 1K people/ በአማካኝ ለየ1000 ሰዎች ያለው ቁሳቁሶች እና አገልግሎቶች",
-  "ethiopiaStatisticsTitle": "ኮቪድ 19 የኢትዮጵያ ስታቲስቲክስ",
+  "resourcesPer1K": "በአማካኝ ለየ1000 ሰዎች ያለው ቁሳቁሶች እና አገልግሎቶች",
   "totalCases": "አጠቃላይ ኬዞች",
   "recovered": "ያገገሙ",
   "death": "ሞት",
   "activeCases": "የተያዙ /ያልዳኑ",
   "regions": "ከልል",
   "totalDeath": "አጠቃላይ ሞት",
-  "addisAbaba": "አዲስ አበባ",
-  "oromia": "ኦሮምያ",
-  "tigrai": "ትግራይ",
-  "benishangulGumuz": "ቤንሻንጉል ጉሙዝ",
-  "gambela": "ጋምቤላ",
-  "snnpr": "ደቡብ ክልል",
-  "afar": "አፋር",
-  "harari": "ሃሪሪ",
-  "amhara": "አማራ",
-  "somali": "ሶማሊ",
-  "direDawa": "ድሬ ዳዋ",
-  "freeReportingPhoneNumbers": "ነፃ የCOVID-19 ሪፖርት ማድረጊያ ስልክ ቁጥሮች ",
+
+  "freeReportingPhoneNumbers": "ነፃ የኮቪድ-19 ሪፖርት ማድረጊያ ስልክ ቁጥሮች",
   "getOurApp": "የእኛን መተግበሪያ/አፕሊኬሽን/ ያግኙ",
   "aboutSectionDescription": "ይህ የእኛ መተግበሪያ/አፕሊኬሽን/ ተዛማጅ የሆነውን የኮ.ቪ.ድ. 19 ምልክቶችን ለመሰብሰብ እና የምልክቶቹ በተለያዪ ቦታዎች ያለውን መቀራራብ በካርታ ለሕዝብ ለማቅረብ የሚጠቅም የንግድ ያልሆነ መተግበሪያ ነው። ከዚህ በተጨማሪም ከ Covid-19 ጋር ለተዛመዱ መረጃዎች እና ዜናዎች በመረጡት ሀገር መሰረት ያቀርባል ፡፡",
   "moreInfo": "ለተጨማሪ መረጃ",
   "contactUs": "አግኙን",
-  "home": "Home",
-  "learn": "ይማሩ",
-  "about": "ስለኛ",
-  "news": "ዜና",
-  "map": "ካርታ",
-  "aboutCovid": "ስለ ኮ.ቪ.ድ. 19",
-  "whatThen": "መረጃዎች",
 
-  "statesTransitionTitle": "የቫይረሱ የሽግግር ሂደት",
   "statesTransitionSubtitle": "ምን ምን ሂደቶች አሉት?",
-  "learnEvenMore": "የበለጠ ለመረዳት",
   "learnEvenMoreDescription": "ስለ ኮ.ቪ.ድ. 19 የበለጠ ለመመርመር ባዘጋጀነው የመማር ጎዳናዎች ውስጥ ይሂዱ። እድሜዎ ምንም ይሁን ምን ፣ ለእርስዎ የሆነ አንድ ነገር አለን ፡፡",
-  "taskName": "የተግባር ስም",
-  "what": "ምንድን",
-  "why": "እንዴት",
-  "duration": "ቆይታ",
-  "how": "እንዴት",
-  "sources": "ምንጭ",
-  "show": "አሳይ"
+
+  "navbar": {
+    "home": "መግቢያ",
+    "learn": "ይማሩ",
+    "about": "ስለኛ",
+    "news": "ዜና",
+    "map": "ካርታ"
+  },
+
+  "titles": {
+    "globalStatisticsTitle": "ኮ.ቪ.ድ. 19 ዓለም አቀፍ ስታቲስቲክስ",
+    "ethiopiaStatisticsTitle": "ኮቪድ-19 በኢትዮጵያ",
+    "aboutCovid": "ስለ ኮቪድ-19",
+    "actions": "መደረግ ያለበት",
+    "states": "የበሽታው የሽግግር ሂደት",
+    "learningPath": "የበለጠ ለመረዳት",
+    "news": "ዜና"
+  },
+
+  "graphNames": {
+    "totalCounts": "አጠቃላይ ብዛት",
+    "dailyCounts": "እለታዊ ቁጥሮች",
+    "viewRates": "የለውጥ ደረጃ እይ",
+    "compareCountries": "ሐገራትን ያወዳድሩ",
+    "compareDiseases": "ከተመሳሳይ በሽታዎች ጋር ያወዳድሩ"
+  },
+
+  "learningPathHeaders": {
+    "taskName": "የተግባር ስም",
+    "what": "ምንድን",
+    "why": "እንዴት",
+    "duration": "ቆይታ",
+    "how": "እንዴት",
+    "sources": "ምንጭ",
+    "show": "አሳይ"
+  },
+
+  "ethiopiaRegions": {
+    "addisAbaba": "አዲስ አበባ",
+    "oromia": "ኦሮምያ",
+    "tigrai": "ትግራይ",
+    "benishangulGumuz": "ቤንሻንጉል ጉሙዝ",
+    "gambela": "ጋምቤላ",
+    "snnpr": "ደቡብ ክልል",
+    "afar": "አፋር",
+    "harari": "ሃሪሪ",
+    "amhara": "አማራ",
+    "somali": "ሶማሊ",
+    "direDawa": "ድሬ ዳዋ"
+  },
+
+  "aboutTitles": {
+    "aboutTrackSym": "TrackSym",
+    "theMission": "አላማችን",
+    "yourData": "ስለ እናንተ መረጃ",
+    "we": "ስለ እኛ ማንነት",
+    "contact": "መልእክቶን ይላኩ"
+  }
 }

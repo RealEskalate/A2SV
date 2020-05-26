@@ -3,9 +3,7 @@
     <v-card-title class="primary--text text--darken-2" v-text="country.name" />
     <v-card-subtitle>
       <v-row>
-        <v-col cols="10" class="my-0 py-0">
-          Resources per 1K people
-        </v-col>
+        <v-col cols="10" class="my-0 py-0" v-text="$t('resourcesPer1K')" />
         <v-col cols="1" class="my-0 py-0">
           <v-icon
             class="justify-end"
@@ -103,14 +101,13 @@ export default {
     description() {
       if (this.descriptions) {
         return this.descriptions["Available Resources"];
-      } else {
-        return {
-          title: "",
-          description: "",
-          fields: [],
-          criteria: []
-        };
       }
+      return {
+        title: "",
+        description: "",
+        fields: [],
+        criteria: []
+      };
     }
   }
 };

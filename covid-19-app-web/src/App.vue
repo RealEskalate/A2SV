@@ -25,6 +25,11 @@ export default {
   mounted() {
     //  [App.vue specific] When App.vue is finish loading finish the progress bar
     this.$Progress.finish();
+
+    this.$i18n.locale =
+      store.getters.getLanguagePreference === null
+        ? "en"
+        : store.getters.getLanguagePreference;
   },
   created() {
     store.dispatch("fillCountriesList");
@@ -48,6 +53,22 @@ export default {
       //  finish the progress bar
       this.$Progress.finish();
     });
+  },
+  watch: {
+    "$i18n.locale": newValue => {
+      store.dispatch("setLanguagePreference", { lang: newValue });
+
+      store.dispatch("setGraphDescriptions", { lang: newValue });
+      store.dispatch("setAboutDescriptions", { lang: newValue });
+      store.dispatch("setAboutActions", { lang: newValue });
+      store.dispatch("setInformation", { lang: newValue });
+      store.dispatch("setActions", { lang: newValue });
+      store.dispatch("setStates", { lang: newValue });
+      store.dispatch("setLearningPaths", {
+        age_group: "Adults",
+        lang: newValue
+      });
+    }
   }
 };
 </script>

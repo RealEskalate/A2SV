@@ -5,18 +5,18 @@
         <v-row class="mx-md-5" dense>
           <v-col class="px-2" cols="12" md="6">
             <v-autocomplete
-                    class="v-card--shaped"
-                    v-model="country_1"
-                    :items="countries"
-                    :label="$t('country') + ' 1'"
-                    hint="Search Country 1"
-                    item-text="name"
-                    return-object
-                    outlined
-                    dense
-                    @input="fetchData1"
-                    :color="`rgb(${colors[0][0]}, ${colors[0][1]}, ${colors[0][2]})`"
-                    item-color="cyan"
+              class="v-card--shaped"
+              v-model="country_1"
+              :items="countries"
+              :label="$t('country') + ' 1'"
+              hint="Search Country 1"
+              item-text="name"
+              return-object
+              outlined
+              dense
+              @input="fetchData1"
+              :color="`rgb(${colors[0][0]}, ${colors[0][1]}, ${colors[0][2]})`"
+              item-color="cyan"
             />
           </v-col>
           <v-col class="px-2" cols="12" md="6">
@@ -68,18 +68,18 @@
         <v-row class="mx-md-5" dense>
           <v-col class="px-2" cols="12" md="6">
             <v-autocomplete
-                    class="v-card--shaped"
-                    v-model="country_2"
-                    :items="countries"
-                    :label="$t('country') + ' 2'"
-                    hint="Search Country 2"
-                    item-text="name"
-                    return-object
-                    outlined
-                    dense
-                    @input="fetchData2"
-                    :color="`rgb(${colors[1][0]}, ${colors[1][1]}, ${colors[1][2]})`"
-                    item-color="red"
+              class="v-card--shaped"
+              v-model="country_2"
+              :items="countries"
+              :label="$t('country') + ' 2'"
+              hint="Search Country 2"
+              item-text="name"
+              return-object
+              outlined
+              dense
+              @input="fetchData2"
+              :color="`rgb(${colors[1][0]}, ${colors[1][1]}, ${colors[1][2]})`"
+              item-color="red"
             />
           </v-col>
           <v-col class="px-2" cols="12" md="6">
@@ -177,14 +177,14 @@
   </v-container>
 </template>
 <script>
-  import {ChartMixin, LineChart} from "./charts.js";
-  import CountryResources from "../CountryResources";
-  import Loader from "@/components/core/Loader.vue";
-  import store from "@/store/index.js";
-  import moment from "moment";
-  import {mdiCalendar} from "@mdi/js";
+import { ChartMixin, LineChart } from "./charts.js";
+import CountryResources from "../CountryResources";
+import Loader from "@/components/core/Loader.vue";
+import store from "@/store/index.js";
+import moment from "moment";
+import { mdiCalendar } from "@mdi/js";
 
-  export default {
+export default {
   components: { LineChart, Loader, CountryResources },
   mixins: [ChartMixin],
   data() {

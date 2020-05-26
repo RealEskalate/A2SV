@@ -1,14 +1,17 @@
 <template>
   <v-container>
     <v-row>
-      <h3 class="display-1 font-weight-thin mb-10" v-text="$t('whatThen')"/>
+      <h3
+        class="display-1 font-weight-thin mb-10"
+        v-text="$t('titles.actions')"
+      />
     </v-row>
     <v-row>
       <v-col class="pr-md-12" md="5" cols="12">
         <v-fade-transition hide-on-leave>
           <v-skeleton-loader
             ref="skeleton"
-            type="list-item-two-line,divider,list-item-two-line,divider,list-item-two-line,divider,list-item-two-line,divider"
+            type="list-item-two-line,divider,list-item-two-line,divider,list-item-two-line,divider,list-item-two-line,divider,list-item-two-line,divider"
             class="mx-auto mb-2"
             v-if="loaders.actions"
           />
@@ -89,9 +92,9 @@
   </v-container>
 </template>
 <script>
-  import store from "@/store";
+import store from "@/store";
 
-  export default {
+export default {
   data: () => {
     return {
       auto: true,
@@ -116,9 +119,7 @@
   },
   created() {
     if (!this.actions) {
-      store.dispatch("setActions", {
-        lang: this.$i18n.locale === "am" ? "Amharic" : "English"
-      });
+      store.dispatch("setActions", { lang: this.$i18n.locale });
     }
   },
   computed: {

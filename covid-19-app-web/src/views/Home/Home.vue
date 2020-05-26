@@ -8,13 +8,13 @@
 <script>
 // @ is an alias to /src
 import Statistics from "./Statistics.vue";
-import Ethiopia from "../Ethiopia/Ethiopia";
+import Ethiopia from "./Ethiopia";
 
 export default {
   name: "Home",
   components: {
     Statistics,
-    ethiopia: Ethiopia
+    Ethiopia
   }
 };
 </script>

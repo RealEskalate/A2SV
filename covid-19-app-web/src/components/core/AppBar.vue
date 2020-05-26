@@ -2,10 +2,10 @@
   <v-container class="white">
     <v-app-bar
       app
-      style="border-radius: 0 0 25px 0"
-      class="white"
       flat
-      v-bind:class="{ shadow: raise }"
+      class="white"
+      style="border-radius: 0 0 25px 0"
+      :class="{ shadow: raise }"
     >
       <v-app-bar-nav-icon
         v-if="$vuetify.breakpoint.smAndDown && navOption === '2'"
@@ -31,18 +31,18 @@
         active-class="border-bottom"
         class="hidden-sm-and-down v-card--shaped nav-btn"
       >
-        <span class="text-capitalize"> {{ $t(link.text.toLowerCase()) }}</span>
+        <span class="text-capitalize"> {{ $t(link.text) }}</span>
       </v-btn>
       <v-divider class="mx-2" vertical light />
       <div class="justify-end pt-7" style="width: 50px">
         <v-select
-                solo
-                flat
-                dense
-                v-model="$i18n.locale"
-                :items="languages"
-                label="Lang"
-                @change="changeLang"
+          solo
+          flat
+          dense
+          v-model="$i18n.locale"
+          :items="languages"
+          label="Lang"
+          @change="changeLang"
         >
           <template v-slot:append>
             <small />
@@ -59,29 +59,34 @@
         </v-select>
       </div>
     </v-app-bar>
-    <v-container v-if="$vuetify.breakpoint.smAndDown">
-      <v-bottom-navigation
-        app
-        grow
-        color="primary"
-        style="border-radius: 20px 20px 0 0"
-        class="px-3 overflow-hidden"
-        v-if="curNavigation === '1'"
-      >
-        <v-btn v-for="(item, i) in links" :to="item.to" :key="i">
-          <span>{{ $t(item.text.toLowerCase()) }}</span>
-          <v-icon> {{ item.icon }}</v-icon>
-        </v-btn>
-      </v-bottom-navigation>
-    </v-container>
+    <v-bottom-navigation
+      v-if="$vuetify.breakpoint.smAndDown"
+      app
+      grow
+      color="primary"
+      style="border-radius: 20px 20px 0 0"
+      class="px-3 overflow-hidden"
+    >
+      <v-btn v-for="(item, i) in links" :to="item.to" :key="i">
+        <span>{{ $t(item.text) }}</span>
+        <v-icon> {{ item.icon }}</v-icon>
+      </v-btn>
+    </v-bottom-navigation>
   </v-container>
 </template>
 
 <script>
-  import store from "@/store/";
-  import {mdiBookOpenVariant, mdiDotsVertical, mdiHome, mdiInformation, mdiMap, mdiNewspaper} from "@mdi/js";
+import store from "@/store/";
+import {
+  mdiBookOpenVariant,
+  mdiDotsVertical,
+  mdiHome,
+  mdiInformation,
+  mdiMap,
+  mdiNewspaper
+} from "@mdi/js";
 
-  export default {
+export default {
   data: () => {
     return {
       mdiDotsVertical,
@@ -96,15 +101,15 @@
         am: "አማ"
       },
       links: [
-        { text: "Home", icon: mdiHome, to: "/" },
+        { text: "navbar.home", icon: mdiHome, to: "/" },
         {
-          text: "Learn",
+          text: "navbar.learn",
           icon: mdiBookOpenVariant,
           to: "/information"
         },
-        { text: "About", icon: mdiInformation, to: "/about" },
-        { text: "News", icon: mdiNewspaper, to: "/news" },
-        { text: "Map", icon: mdiMap, to: "/map" }
+        { text: "navbar.about", icon: mdiInformation, to: "/about" },
+        { text: "navbar.news", icon: mdiNewspaper, to: "/news" },
+        { text: "navbar.map", icon: mdiMap, to: "/map" }
       ]
     };
   },
@@ -119,7 +124,7 @@
       this.locationY = window.scrollY;
     },
     changeLang() {
-      store.dispatch("setLanguagePreference", {lang: this.$i18n.locale});
+      store.dispatch("setLanguagePreference", { lang: this.$i18n.locale });
     }
   },
   computed: {
@@ -131,9 +136,6 @@
     },
     navOption() {
       return this.navType;
-    },
-    curNavigation() {
-      return store.getters.getNavigationType;
     }
   }
 };
@@ -141,7 +143,7 @@
 
 <style scoped>
 .border-bottom {
-  border-bottom: #009ce5 solid 2px !important;
+  border-bottom: #009ce5 solid 3px !important;
 }
 
 .v-btn--active.border-bottom::before {
@@ -150,7 +152,7 @@
 
 .nav-btn {
   border-bottom: white solid 2px;
-  transition: border-bottom-color 0.8s;
+  transition: border-bottom-color 1s;
 }
 
 .nav-item span {
