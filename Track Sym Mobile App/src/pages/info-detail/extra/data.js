@@ -27,10 +27,18 @@ export const symptomsData = {
     "\n\nSome people will get COVID-19 but don't show any symptoms. In fact, " +
     '80% of people infected with COVID-19 recover without any special ' +
     'treatment. As people move around the world, COVID-19 has spread in ' +
-    'all parts of the world and is continuing to do so. ',
+    'all parts of the world and is continuing to do so.',
   most_list: [
     {
       key: '1',
+      name: 'Fever',
+      inside:
+        'Also known as a high fever or a high temperature is not by ' +
+        'itself an illness. It is usually a symptom of an underlying ' +
+        'condition, most often an infection ',
+    },
+    {
+      key: '2',
       name: 'Dry Cough',
       inside:
         'A cough is supposed to protect you. It gets out stuff that ' +
@@ -39,56 +47,55 @@ export const symptomsData = {
         'trigger coughing',
     },
     {
-      key: '2',
-      name: 'Fever',
-      inside:
-        'Also known as a high fever or a high temperature is not by ' +
-        "itself an illness. It is usually a symptom of an underlying " +
-        'condition, most often an infection. ',
-    },
-    {
       key: '3',
-      name: 'Tiredness',
-      inside:
-        'Tiredness or feeling of fatigue can be one symtpom of coronavirus. ',
+      name: 'Fatigue',
+      inside: 'Lack of enengy and Motivation (physical and mental)',
     },
     {
       key: '4',
       name: 'Shortness of breath',
       inside:
-      'Shortness of breath (medically as dyspnea) is often described ' +
-      "as an intense tightening in the chest, air hunger, difficulty breathing, " +
-      'breathlessness, or a feeling of suffocation. ',
+        'Shortness of breath (medically as dyspnea) is often described ' +
+        'as an intense tightening in the chest, air hunger, difficulty breathing, ' +
+        'breathlessness, or a feeling of suffocation ',
+    },
+    {
+      key: '5',
+      name: 'Myalgia',
+      inside:
+        'Shortness of breath (medically as dyspnea) is often described ' +
+        'as an intense tightening in the chest, air hunger, difficulty breathing, ' +
+        'breathlessness, or a feeling of suffocation ',
     },
   ],
   less_list: [
-    {
-      name: 'Aches and Pain',
-      inside:
-        'While coronavirus can cause symptoms in your upper airways such ' +
-        'as loss of smell or a blocked nose, it is usually associated ' +
-        'with a high temperature, aches, pains, and a cough. ',
-    },
-    {
-      name: 'Sore Throat',
-      inside:
-        'Sore throat most often can be caused by viral and/or bacterial ' +
-        'infections like the common cold and flu or by infection with the ' +
-        'streptococcus bacterium. ',
-    },
     {
       name: 'Headache',
       inside:
         'Many viral infections can either directly or indirectly cause ' +
         'headaches. The headache related to these viral infections appears ' +
         'to be related to the fever, the body’s production of interferon, ' +
-        'and other elements of the immune system combating the viral infection. ',
+        'and other elements of the immune system combating the viral infection ',
     },
     {
-      name: 'Muscle Pain',
+      name: 'Ansomia',
+      inside:
+        'While coronavirus can cause symptoms in your upper airways such ' +
+        'as loss of smell or a blocked nose, it is usually associated ' +
+        'with a high temperature, aches, pains, and a cough ',
+    },
+    {
+      name: 'Sore Throat',
+      inside:
+        'Sore throat most often can be caused by viral and/or bacterial ' +
+        'infections like the common cold and flu or by infection with the ' +
+        'streptococcus bacterium ',
+    },
+    {
+      name: 'Chills',
       inside:
         'Muscle pain can involve a small area or your whole body, ' +
-        'ranging from mild to excruciating. ',
+        'ranging from mild to excruciating ',
     },
   ],
   image: require('../assets/sym.jpg'),
@@ -144,7 +151,6 @@ export const messageData = {
     'We are dealing with a pandemic and we need to be prepared and be ' +
     'willing to accept the advice, instructions, and mandate of authorities and ' +
     'health officials to have it under control soon. ' +
-    
     '\n\nParents should deal with the COVID-19 pandemic calmly and confidently ' +
     'so that their children will be able to follow in the same direction. Parents ' +
     'can be more reassuring to others around them. Since this is a new virus ' +

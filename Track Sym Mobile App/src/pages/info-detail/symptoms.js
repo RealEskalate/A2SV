@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, SafeAreaView, ScrollView} from 'react-native';
+import { View, SafeAreaView, ScrollView } from 'react-native';
 import {
   TopNavigation,
   TopNavigationAction,
@@ -9,64 +9,72 @@ import {
   Icon,
   List,
 } from '@ui-kitten/components';
-import {ImageOverlay} from './extra/image-overlay.component';
-import {symptomsData as data} from './extra/data';
+import { ImageOverlay } from './extra/image-overlay.component';
+import { symptomsData as data } from './extra/data';
 import styles from './extra/styles';
-import {InfoCard} from './extra/InfoCard';
+import { InfoCard } from './extra/InfoCard';
 
-const BackIcon = (props) => <Icon name="arrow-ios-back-outline" {...props} />;
+const BackIcon = (props) => <Icon name='arrow-ios-back-outline' {...props} />;
 const mostCommon = [
   {
-    title: 'High Fever',
-    label: 'Symptom of an underlying condition, most often an infection',
-    tag: 'More than 60 oC',
+    title: 'Fever',
+    label: 'Body temperature is 103°F (39.4°C) or above',
+    tag: '83% - 99%',
     image: require('../info-detail/assets/fever.jpg'),
   },
   {
     title: 'Dry Cough',
-    label: 'The virus can be a reason to trigger coughing',
-    tag: 'Use your Elbow',
-    image: require('../info-detail/assets/cough.jpg'),
+    label: 'Does not bring up mucus and stays for eight weeks or more',
+    tag: '59% - 82%',
+    image: require('../info-detail/assets/cough2.jpg'),
   },
   {
-    title: 'Tiredness',
-    label: 'Fatigue can be one symtpom of the virus',
-    tag: '',
+    title: 'Fatigue',
+    label: 'Lack of enengy and Motivation (physical and mental)',
+    tag: '40% - 70%',
     image: require('../info-detail/assets/tired.jpg'),
   },
   {
     title: 'Shortness of Breath',
-    label: 'xxxxxxxxxxx',
-    tag: '',
-    image: require('../info-detail/assets/tired.jpg'),
+    label:
+      'Trouble inhaling or exhaling or feels as though they cannot get enough oxygen',
+    tag: '31% - 40%',
+    image: require('../info-detail/assets/short.jpg'),
   },
-  
+  {
+    title: 'Myalgia',
+    label:
+      'Pain or ache in muscles characterized by chronic pain, stiffness and tenderness',
+    tag: '11% - 35%',
+    image: require('../info-detail/assets/ache.jpg'),
+  },
 ];
 
 const lessCommon = [
   {
-    title: 'Aches and Pain',
-    label: 'Loss of smell or a blocked nose, it is usually associated',
-    tag: 'Check your Status',
-    image: require('../info-detail/assets/ache.jpg'),
+    title: 'Headache',
+    label: 'Sharp, throbbing or dull feeling across the head',
+    tag: '',
+    image: require('../info-detail/assets/headache.jpg'),
+  },
+  {
+    title: 'Anosmia',
+    label: 'Usually associated with partial loss of smell or a blocked nose',
+    tag: '',
+    image: require('../info-detail/assets/smell.jpg'),
   },
   {
     title: 'Sore Throat',
-    label: 'Infections like the common cold and flu can cause it',
-    tag: 'Use medicne for throat',
+    label:
+      'Scratchiness or irritation of the throat that often worsens when you swallow',
+    tag: '',
     image: require('../info-detail/assets/cough.jpg'),
   },
   {
-    title: 'Headache',
-    label: 'Headache related to these viral fever',
-    tag: 'Treat your self well',
-    image: require('../info-detail/assets/headache.jpg'),
-  },
-  {
-    title: 'Muscle Pain',
-    label: 'xxxxxxxxxxxx',
-    tag: 'xxxxxxxx',
-    image: require('../info-detail/assets/headache.jpg'),
+    title: 'Chills',
+    label: 'Feeling of being cold without an apparent cause',
+    tag: '',
+    image: require('../info-detail/assets/cold2.jpg'),
   },
 ];
 
@@ -88,7 +96,7 @@ export default PrevDetailScreen = (props) => {
       <Layout key={item.key}>
         <Divider />
         <View style={styles.authoringContainer}>
-          <Text style={styles.dateLabel} appearance="hint" category="p2">
+          <Text style={styles.dateLabel} appearance='hint' category='p2'>
             {item.name}
           </Text>
         </View>
@@ -103,30 +111,30 @@ export default PrevDetailScreen = (props) => {
   return (
     <SafeAreaView style={styles.container}>
       <TopNavigation
-        alignment="center"
-        title="Symptoms"
+        alignment='center'
+        title='Symptoms'
         accessoryLeft={renderBackAction}
       />
-      <Layout style={styles.container} level="2">
+      <Layout style={styles.container} level='2'>
         <ScrollView>
           <ImageOverlay style={styles.headerContainer} source={data.image}>
-            <Text style={styles.headerTitle} category="h1" status="control">
+            <Text style={styles.headerTitle} category='h1' status='control'>
               {data.title}
             </Text>
             <Text
               style={styles.headerDescription}
-              category="s1"
-              status="control">
+              category='s1'
+              status='control'>
               {data.description}
             </Text>
           </ImageOverlay>
-          <Layout style={styles.contentContainer} level="1">
+          <Layout style={styles.contentContainer} level='1'>
             <Text>{data.content + '\n'}</Text>
             <Text>{data.content_two}</Text>
           </Layout>
           <Divider />
-          <View style={{marginTop: 10}}>
-            <Text style={styles.headerTitle} appearance="hint">
+          <View style={{ marginTop: 10 }}>
+            <Text style={styles.headerTitle} appearance='hint'>
               MOST COMMON
             </Text>
             <List
@@ -139,8 +147,8 @@ export default PrevDetailScreen = (props) => {
           </View>
           {renderDetail(data.most_list)}
           <Divider />
-          <View style={{marginTop: 10}}>
-            <Text style={styles.headerTitle} appearance="hint">
+          <View style={{ marginTop: 10 }}>
+            <Text style={styles.headerTitle} appearance='hint'>
               LESS COMMON
             </Text>
             <List
@@ -152,6 +160,7 @@ export default PrevDetailScreen = (props) => {
             />
           </View>
           {renderDetail(data.less_list)}
+          <Layout style={{ marginBottom: 10 }}></Layout>
         </ScrollView>
       </Layout>
     </SafeAreaView>
