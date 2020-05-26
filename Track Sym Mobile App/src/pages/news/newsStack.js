@@ -7,22 +7,22 @@ import {
 import NewsScreen from './news';
 import NewsView from './NewsView';
 
-const {Navigator, Screen} = createStackNavigator();
+const { Navigator, Screen } = createStackNavigator();
 
 export const NewsNavigator = () => {
   const [initRouteName, setInitRouteName] = React.useState('News');
 
   return (
     <Navigator
-      headerMode="none"
+      headerMode='none'
       initialRouteName={initRouteName}
       screenOptions={{
         gestureEnabled: true,
         gestureDirection: 'horizontal',
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
       }}>
-      <Screen name="News" component={NewsScreen} />
-      <Screen name="NewsView" component={NewsView} />
+      <Screen name='News' component={NewsScreen} />
+      <Screen name='NewsView' component={NewsView} />
     </Navigator>
   );
 };
