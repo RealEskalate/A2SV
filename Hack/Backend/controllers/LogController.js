@@ -1,6 +1,9 @@
 const Log = require("../models/LogModel");
 const jwt = require("jsonwebtoken");
 var mongoose = require("mongoose");
+const schedule = require('node-schedule');
+const fs = require('fs');
+const path = require('path');
 
 //Get a log by a specific id
 exports.get_log_by_id = async (req, res) => {
@@ -65,3 +68,32 @@ exports.get_logs = async (req, res) => {
 //         res.status(500).send(err);
 //     }
 // }
+const run_updates = () => {
+    var rule = new schedule.RecurrenceRule();
+    rule.minute = 15
+    schedule.scheduleJob(rule, async function () {
+      await saveLogs();
+    });
+};
+run_updates();
+const saveLogs = async ()=> {    
+    try {
+        console.log('Started fetching logs')
+        const Logs = await Log.find({});
+        await Log.collection.drop();
+        const save = JSON.stringify(Logs)
+        const date = new Date(Date.now()).toString();
+        const outputFilename = path.join(
+            __dirname,
+            "assets",
+            `${date}.txt`
+        );
+        fs.mkdirSync(path.join(__dirname, "assets"), { recursive: true });
+        fs.writeFileSync(outputFilename, Buffer.from(save));
+        console.log('Finished and Saved logs')
+    } catch (e) {
+        console.log("Cannot create folder ", e.toString());
+    }
+}
+
+  

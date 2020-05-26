@@ -299,11 +299,10 @@ const findGridNearbySymptomaticUsers = async(boundaries, demo)=>{
   });
   return result;
 }
-// Schedules grid calculation every hour
+// Schedules grid calculation every 3 hours
 const run_updates = () => {
   var rule = new schedule.RecurrenceRule();
   rule.hour = 3;
-  rule.minute = 0;
   schedule.scheduleJob(rule, async function () {
     await updateDb(false);
   });
