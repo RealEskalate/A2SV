@@ -86,8 +86,8 @@
                     id="docs-internal-guid-866c777f-7fff-93b4-6baa-9a2faff79d20"
                     ><span
                       style="font-size: 11pt ; font-weight: 700 ; vertical-align: baseline"
-                  >{{ $t('states.mildOrNoSymptom') }} </span
-                    ></span
+                  >{{ $t("states.mildOrNoSymptom") }}
+                    </span></span
                   >
                 </div>
               </div>
@@ -175,8 +175,8 @@
                     id="docs-internal-guid-8132d71f-7fff-2e0f-6b61-d2264aad7718"
                     ><span
                       style="font-size: 11pt ; font-weight: 700 ; vertical-align: baseline"
-                  >{{ $t('states.heavySymptoms') }} </span
-                    ></span
+                  >{{ $t("states.heavySymptoms") }}
+                    </span></span
                   >
                 </div>
               </div>
@@ -274,8 +274,8 @@
                     id="docs-internal-guid-252f80f8-7fff-d25d-9b1a-71f1ec292fb8"
                     ><span
                       style="font-size: 10pt ; font-weight: 700 ; vertical-align: baseline"
-                  >{{ $t('states.hospitalization') }} </span
-                    ></span
+                  >{{ $t("states.hospitalization") }}
+                    </span></span
                   >
                 </div>
               </div>
@@ -357,7 +357,9 @@
                     id="docs-internal-guid-0a722c08-7fff-1658-3a6b-8dd855d43165"
                     ><span
                       style="font-size: 12pt ; font-weight: 700 ; vertical-align: baseline"
-                  ><font color="#ffffff">{{ $t('states.icu') }} </font></span
+                  ><font color="#ffffff"
+                  >{{ $t("states.icu") }}
+                      </font></span
                     ></span
                   >
                 </div>
@@ -404,7 +406,9 @@
                 <div
                         style="display: inline-block; font-size: 12pt; font-family: Nunito, sans-serif; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; "
                 >
-                  <b><font color="#ffffff">{{ $t('death') }}</font></b>
+                  <b
+                  ><font color="#ffffff">{{ $t("death") }}</font></b
+                  >
                 </div>
               </div>
             </div>
@@ -449,7 +453,9 @@
                 <div
                         style="display: inline-block; font-size: 12pt; font-family: Nunito, sans-serif; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; "
                 >
-                  <b><font color="#ffffff">{{ $t('states.recovery') }}</font></b>
+                  <b
+                  ><font color="#ffffff">{{ $t("states.recovery") }}</font></b
+                  >
                 </div>
               </div>
             </div>
@@ -514,8 +520,8 @@
                     id="docs-internal-guid-bbfade3a-7fff-70cb-7443-5425a3b80c55"
                     ><span
                           style="font-size: 11pt ; font-weight: 700 ; vertical-align: baseline; font-family: Nunito, sans-serif"
-                  >{{ $t('states.incubation') }} </span
-                    ></span
+                  >{{ $t("states.incubation") }}
+                    </span></span
                   >
                 </div>
               </div>
