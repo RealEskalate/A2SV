@@ -31,20 +31,15 @@ export const symptomsData = {
   most_list: [
     {
       key: '1',
-      name: 'Fever',
+      name: 'High Fever',
       inside:
-        'Also known as a high fever or a high temperature is not by ' +
-        'itself an illness. It is usually a symptom of an underlying ' +
-        'condition, most often an infection ',
+        'It is a body temperature above 39 °C (103 °F). This is one of the most common symptoms of COVID-19 patients’ experience. The high fever is an indication of the Immune System fighting the viruses. ',
     },
     {
       key: '2',
       name: 'Dry Cough',
       inside:
-        'A cough is supposed to protect you. It gets out stuff that ' +
-        "doesn't belong in your lungs and windpipe, like inhaled dirt or " +
-        'food. Here are the common triggers. A virus can be one reason to ' +
-        'trigger coughing',
+        "It is a cough that doesn't bring up mucus. It may feel like you have a tickle in the back of your throat triggering your cough reflex, giving you hacking coughs. Dry coughs are often caused by upper respiratory infections, such as COVID-19. More than 60% of cases have dry cough as a symptom.",
     },
     {
       key: '3',
@@ -55,47 +50,33 @@ export const symptomsData = {
       key: '4',
       name: 'Shortness of breath',
       inside:
-        'Shortness of breath (medically as dyspnea) is often described ' +
-        'as an intense tightening in the chest, air hunger, difficulty breathing, ' +
-        'breathlessness, or a feeling of suffocation ',
+        'Also known medically as dyspnea — is often described as an intense tightening in the chest, air hunger, difficulty breathing, breathlessness, or a feeling of suffocation. Very strenuous exercise, extreme temperatures, obesity, and higher altitude all can cause shortness of breath in a healthy person. Outside of these examples, shortness of breath is likely a sign of a medical problem.',
     },
     {
       key: '5',
       name: 'Myalgia',
       inside:
-        'Shortness of breath (medically as dyspnea) is often described ' +
-        'as an intense tightening in the chest, air hunger, difficulty breathing, ' +
-        'breathlessness, or a feeling of suffocation ',
+        'It is pain or aches in muscles characterized by chronic pain, stiffness, and tenderness.  It describes muscle aches and pain, which can involve ligaments, tendons, and fascia, the soft tissues that connect muscles, bones, and organs.',
     },
   ],
   less_list: [
     {
       name: 'Headache',
-      inside:
-        'Many viral infections can either directly or indirectly cause ' +
-        'headaches. The headache related to these viral infections appears ' +
-        'to be related to the fever, the body’s production of interferon, ' +
-        'and other elements of the immune system combating the viral infection ',
+      inside: 'It can be a sharp, throbbing or dull feeling across the head.',
     },
     {
       name: 'Ansomia',
-      inside:
-        'While coronavirus can cause symptoms in your upper airways such ' +
-        'as loss of smell or a blocked nose, it is usually associated ' +
-        'with a high temperature, aches, pains, and a cough ',
+      inside: 'It is the partial or complete loss of the sense of smell.',
     },
     {
       name: 'Sore Throat',
       inside:
-        'Sore throat most often can be caused by viral and/or bacterial ' +
-        'infections like the common cold and flu or by infection with the ' +
-        'streptococcus bacterium ',
+        'It is a painful, dry, or scratchy feeling in the throat that often worsens when swallowing because of redness and swelling formed around the back of the mouth and larynx. This occurs in around 10% of coronavirus cases.',
     },
     {
       name: 'Chills',
       inside:
-        'Muscle pain can involve a small area or your whole body, ' +
-        'ranging from mild to excruciating ',
+        'It is the feeling of being cold without an apparent cause. You get this feeling when your muscles repeatedly expand and contract and the vessels in your skin constrict. Chills can occur with a fever and cause shivering or shaking.',
     },
   ],
   image: require('../assets/sym.jpg'),
@@ -104,21 +85,34 @@ export const symptomsData = {
 export const preventionData = {
   title: 'Prevention',
   description: 'PREVENTION IS BETTER THAN CURE!',
-  content:
-    'Regularly and thoroughly clean your hands with an alcohol-based hand rub or wash them with soap and water at least for 20 seconds. ' +
-    '\n\nMaintain at least 2 meters (6 feet) distance between yourself and anyone who is coughing or sneezing. ' +
-    '\n\nHands touch many surfaces and can pick up viruses. Once contaminated, hands can transfer the virus to ' +
-    'your eyes, nose, or mouth. From there, the virus can enter your body and can make you sick. ',
-  content_two:
-    'Make sure you, and the people around you, follow good respiratory hygiene. This means covering your mouth ' +
-    'and nose with your bent elbow or tissue when you cough or sneeze. Then dispose of the used tissue immediately ' +
-    '\n\nStay informed on the latest developments about COVID-19. Follow the advice given by your healthcare provider, your national and ' +
-    'local public health authority, or your employer on how to protect yourself and others from COVID-19. ',
   image: require('../assets/wash.jpg'),
-  date: '19 Sep, 2018',
-  author: {
-    fullName: 'Weakpeadia',
-  },
+  methods1: [
+    {
+      name: 'Washing Hand',
+      inside:
+        'Make sure you, and the people around you, follow good respiratory hygiene. This means covering your mouth ' +
+        'and nose with your bent elbow or tissue when you cough or sneeze. Then dispose of the used tissue immediately.',
+    },
+    {
+      name: 'Social Distancing',
+      inside:
+        'Maintain at least 2 meters (6 feet) distance between yourself and anyone who is coughing or sneezing.',
+    },
+  ],
+  methods2: [
+    {
+      name: 'Respiratory hygiene',
+      inside:
+        'Make sure you, and the people around you, follow good respiratory hygiene. This means covering your mouth ' +
+        'and nose with your bent elbow or tissue when you cough or sneeze. Then dispose of the used tissue immediately.',
+    },
+    {
+      name: 'Stay Informed',
+      inside:
+        'Stay informed on the latest developments about COVID-19. Follow the advice given by your healthcare provider, your national and ' +
+        'local public health authority, or your employer on how to protect yourself and others from COVID-19.',
+    },
+  ],
 };
 
 export const spreadData = {

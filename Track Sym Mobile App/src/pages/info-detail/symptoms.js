@@ -17,7 +17,7 @@ import { InfoCard } from './extra/InfoCard';
 const BackIcon = (props) => <Icon name='arrow-ios-back-outline' {...props} />;
 const mostCommon = [
   {
-    title: 'Fever',
+    title: 'High Fever',
     label: 'Body temperature is 103°F (39.4°C) or above',
     tag: '83% - 99%',
     image: require('../info-detail/assets/fever.jpg'),
@@ -31,7 +31,7 @@ const mostCommon = [
   {
     title: 'Fatigue',
     label: 'Lack of enengy and Motivation (physical and mental)',
-    tag: '40% - 70%',
+    tag: '44% - 70%',
     image: require('../info-detail/assets/tired.jpg'),
   },
   {
@@ -54,27 +54,27 @@ const lessCommon = [
   {
     title: 'Headache',
     label: 'Sharp, throbbing or dull feeling across the head',
-    tag: '',
+    tag: '< 14%',
     image: require('../info-detail/assets/headache.jpg'),
-  },
-  {
-    title: 'Anosmia',
-    label: 'Usually associated with partial loss of smell or a blocked nose',
-    tag: '',
-    image: require('../info-detail/assets/smell.jpg'),
   },
   {
     title: 'Sore Throat',
     label:
       'Scratchiness or irritation of the throat that often worsens when you swallow',
-    tag: '',
+    tag: '< 14%',
     image: require('../info-detail/assets/cough.jpg'),
   },
   {
     title: 'Chills',
     label: 'Feeling of being cold without an apparent cause',
-    tag: '',
+    tag: '< 11%',
     image: require('../info-detail/assets/cold2.jpg'),
+  },
+  {
+    title: 'Anosmia',
+    label: 'Usually associated with partial loss of smell or a blocked nose',
+    tag: '< 5%',
+    image: require('../info-detail/assets/smell.jpg'),
   },
 ];
 
@@ -92,20 +92,24 @@ export default PrevDetailScreen = (props) => {
   );
 
   const renderDetail = (list) => {
-    return list.map((item) => (
-      <Layout key={item.key}>
-        <Divider />
-        <View style={styles.authoringContainer}>
-          <Text style={styles.dateLabel} appearance='hint' category='p2'>
-            {item.name}
-          </Text>
-        </View>
-        <Divider />
-        <Layout style={styles.content_Container}>
-          <Text>{item.inside}</Text>
-        </Layout>
+    return (
+      <Layout style={{ paddingBottom: 10 }}>
+        {list.map((item) => (
+          <Layout key={item.key}>
+            <Divider />
+            <View style={styles.authoringContainer}>
+              <Text style={styles.dateLabel} appearance='hint' category='p2'>
+                {item.name}
+              </Text>
+            </View>
+            <Divider />
+            <Layout style={styles.content_Container}>
+              <Text>{item.inside}</Text>
+            </Layout>
+          </Layout>
+        ))}
       </Layout>
-    ));
+    );
   };
 
   return (
@@ -160,7 +164,6 @@ export default PrevDetailScreen = (props) => {
             />
           </View>
           {renderDetail(data.less_list)}
-          <Layout style={{ marginBottom: 10 }}></Layout>
         </ScrollView>
       </Layout>
     </SafeAreaView>
