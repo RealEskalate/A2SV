@@ -41,7 +41,6 @@ describe("User API", () => {
   });
 
   it("It should Get all users", async () => {
-    console.log('sending token ' + tokens)
     let response = await chai.request(server)
       .get("/api/users")
       .set(
