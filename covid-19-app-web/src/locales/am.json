@@ -3,7 +3,7 @@
   "country": "ሀገር",
   "dateRange": "መጀመሪያ - መጨረሻ",
   "world": "አለም",
-  "resourcesPer1K": "በአማካኝ ለየ1000 ሰዎች ያለው ቁሳቁሶች እና አገልግሎቶች",
+  "resourcesPer1K": "ለየ1ሺ ሰዎች ያለው አቅራቦት",
   "totalCases": "አጠቃላይ ኬዞች",
   "recovered": "ያገገሙ",
   "death": "ሞት",
@@ -16,9 +16,17 @@
   "aboutSectionDescription": "ይህ የእኛ መተግበሪያ/አፕሊኬሽን/ ተዛማጅ የሆነውን የኮ.ቪ.ድ. 19 ምልክቶችን ለመሰብሰብ እና የምልክቶቹ በተለያዪ ቦታዎች ያለውን መቀራራብ በካርታ ለሕዝብ ለማቅረብ የሚጠቅም የንግድ ያልሆነ መተግበሪያ ነው። ከዚህ በተጨማሪም ከ Covid-19 ጋር ለተዛመዱ መረጃዎች እና ዜናዎች በመረጡት ሀገር መሰረት ያቀርባል ፡፡",
   "moreInfo": "ለተጨማሪ መረጃ",
   "contactUs": "አግኙን",
-
-  "statesTransitionSubtitle": "ምን ምን ሂደቶች አሉት?",
   "learnEvenMoreDescription": "ስለ ኮ.ቪ.ድ. 19 የበለጠ ለመመርመር ባዘጋጀነው የመማር ጎዳናዎች ውስጥ ይሂዱ። እድሜዎ ምንም ይሁን ምን ፣ ለእርስዎ የሆነ አንድ ነገር አለን ፡፡",
+  "states": {
+    "statesTransitionTitle": "የቫይረሱ የሽግግር ሂደት",
+    "statesTransitionSubtitle": "ምን ምን ሂደቶች አሉት?",
+    "incubation": "ኢንኩቤሽን",
+    "mildOrNoSymptom": "መካከለኛ ወይም ምንም ምልክቶች የሉም",
+    "heavySymptoms": "ከባድ የህመም ምልክቶች",
+    "hospitalization": "ሆስፒታል መተኛት",
+    "icu": "አይ.ሲ.ዩ.",
+    "recovery": "ማገገም"
+  },
 
   "navbar": {
     "home": "መግቢያ",
@@ -53,7 +61,11 @@
     "duration": "ቆይታ",
     "how": "እንዴት",
     "sources": "ምንጭ",
-    "show": "አሳይ"
+    "show": "አሳይ",
+    "kids": "ህጻናት እና ልጆች",
+    "teens": "ታዳጊ",
+    "adults": "ወጣቶች",
+    "seniors": "አዛውንት"
   },
 
   "ethiopiaRegions": {

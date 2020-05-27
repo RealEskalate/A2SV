@@ -1,5 +1,5 @@
 const Alert = require("../models/AlertModel");
-const {User} = require("../models/UserModel");
+const { User } = require("../models/UserModel");
 const AlertUser = require("../models/AlertUserModel");
 const jwt = require("jsonwebtoken");
 var mongoose = require("mongoose");
@@ -110,7 +110,7 @@ exports.get_alert_user_by_id = async (req, res) => {
   // });
   try {
     const alert_user = await AlertUser.findById(req.params.id);
-    if(!alert_user){
+    if (!alert_user) {
       return res.status(400).send("Alert User Not Found");
     }
     res.send(alert_user);

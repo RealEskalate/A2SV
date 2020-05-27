@@ -80,14 +80,14 @@
                 style="box-sizing: border-box; font-size: 0; text-align: center; "
               >
                 <div
-                  style="display: inline-block; font-size: 12px; font-family: Roboto; color: #fff; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; "
+                  style="display: inline-block; font-size: 12px; font-family: Nunito; color: #fff; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; "
                 >
                   <span
                     id="docs-internal-guid-866c777f-7fff-93b4-6baa-9a2faff79d20"
                     ><span
                       style="font-size: 11pt ; font-weight: 700 ; vertical-align: baseline"
-                      >MILD OR NO SYMPTOMS</span
-                    ></span
+                      >{{ $t("states.mildOrNoSymptom") }}
+                    </span></span
                   >
                 </div>
               </div>
@@ -169,14 +169,14 @@
                 style="box-sizing: border-box; font-size: 0; text-align: center; "
               >
                 <div
-                  style="display: inline-block; font-size: 12px; font-family: Roboto; color: #fff; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; "
+                  style="display: inline-block; font-size: 12px; font-family: Nunito; color: #fff; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; "
                 >
                   <span
                     id="docs-internal-guid-8132d71f-7fff-2e0f-6b61-d2264aad7718"
                     ><span
                       style="font-size: 11pt ; font-weight: 700 ; vertical-align: baseline"
-                      >HEAVY SYMPTOMS</span
-                    ></span
+                      >{{ $t("states.heavySymptoms") }}
+                    </span></span
                   >
                 </div>
               </div>
@@ -186,7 +186,7 @@
             x="611"
             y="394"
             fill="#000000"
-            font-family="Roboto"
+            font-family="Nunito"
             font-size="12px"
             text-anchor="middle"
           >
@@ -268,14 +268,14 @@
                 style="box-sizing: border-box; font-size: 0; text-align: center; "
               >
                 <div
-                  style="display: inline-block; font-size: 12px; font-family: Roboto; color: #fff; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; "
+                  style="display: inline-block; font-size: 12px; font-family: Nunito; color: #fff; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; "
                 >
                   <span
                     id="docs-internal-guid-252f80f8-7fff-d25d-9b1a-71f1ec292fb8"
                     ><span
                       style="font-size: 10pt ; font-weight: 700 ; vertical-align: baseline"
-                      >HOSPITALIZATION</span
-                    ></span
+                      >{{ $t("states.hospitalization") }}
+                    </span></span
                   >
                 </div>
               </div>
@@ -285,7 +285,7 @@
             x="336"
             y="634"
             fill="#fff"
-            font-family="Roboto"
+            font-family="Nunito"
             font-size="12px"
             text-anchor="middle"
           >
@@ -351,13 +351,15 @@
                 style="box-sizing: border-box; font-size: 0; text-align: center; "
               >
                 <div
-                  style="display: inline-block; font-size: 12px; font-family: Comic Sans MS; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; "
+                  style="display: inline-block; font-size: 12px; font-family: Nunito; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; "
                 >
                   <span
                     id="docs-internal-guid-0a722c08-7fff-1658-3a6b-8dd855d43165"
                     ><span
                       style="font-size: 12pt ; font-weight: 700 ; vertical-align: baseline"
-                      ><font color="#ffffff">ICU</font></span
+                      ><font color="#ffffff"
+                        >{{ $t("states.icu") }}
+                      </font></span
                     ></span
                   >
                 </div>
@@ -368,7 +370,7 @@
             x="81"
             y="394"
             fill="#000000"
-            font-family="Roboto"
+            font-family="Nunito"
             font-size="12pt"
             text-anchor="middle"
           >
@@ -402,9 +404,11 @@
                 style="box-sizing: border-box; font-size: 0; text-align: center; "
               >
                 <div
-                  style="display: inline-block; font-size: 12pt; font-family: Roboto, sans-serif; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; "
+                  style="display: inline-block; font-size: 12pt; font-family: Nunito, sans-serif; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; "
                 >
-                  <b><font color="#ffffff">DEATH</font></b>
+                  <b
+                    ><font color="#ffffff">{{ $t("death") }}</font></b
+                  >
                 </div>
               </div>
             </div>
@@ -413,7 +417,7 @@
             x="336"
             y="394"
             fill="#000000"
-            font-family="Comic Sans MS"
+            font-family="Nunito"
             font-size="12px"
             text-anchor="middle"
           >
@@ -426,7 +430,7 @@
         cy="40"
         rx="60"
         ry="40"
-        :fill="good_color"
+        :fill="main_color"
         stroke="none"
         pointer-events="all"
       />
@@ -447,9 +451,11 @@
                 style="box-sizing: border-box; font-size: 0; text-align: center; "
               >
                 <div
-                  style="display: inline-block; font-size: 12pt; font-family: Roboto, sans-serif; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; "
+                  style="display: inline-block; font-size: 12pt; font-family: Nunito, sans-serif; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; "
                 >
-                  <b><font color="#ffffff">RECOVERY</font></b>
+                  <b
+                    ><font color="#ffffff">{{ $t("states.recovery") }}</font></b
+                  >
                 </div>
               </div>
             </div>
@@ -458,7 +464,7 @@
             x="441"
             y="44"
             fill="#000000"
-            font-family="Comic Sans MS"
+            font-family="Nunito"
             font-size="12px"
             text-anchor="middle"
           >
@@ -508,14 +514,14 @@
                 style="box-sizing: border-box; font-size: 0; text-align: center;"
               >
                 <div
-                  style="display: inline-block; font-size: 12px; font-family: Lucida Console; color: #fff; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; "
+                  style="display: inline-block; font-size: 12px; font-family: Nunito, sans-serif; color: #fff; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; "
                 >
                   <span
                     id="docs-internal-guid-bbfade3a-7fff-70cb-7443-5425a3b80c55"
                     ><span
-                      style="font-size: 11pt ; font-weight: 700 ; vertical-align: baseline; font-family: Roboto, sans-serif"
-                      >INCUBATION</span
-                    ></span
+                      style="font-size: 11pt ; font-weight: 700 ; vertical-align: baseline; font-family: Nunito, sans-serif"
+                      >{{ $t("states.incubation") }}
+                    </span></span
                   >
                 </div>
               </div>
@@ -525,7 +531,7 @@
             x="241"
             y="44"
             fill="#000000"
-            font-family="Roboto"
+            font-family="Nunito"
             font-size="12px"
             text-anchor="middle"
           >

@@ -16,9 +16,17 @@
   "aboutSectionDescription": "TrackSym is a non-commercial app that uses crowd-sourcing to collect and visualize the density of the relevant symptoms. Registration only asks about age and gender to be used for data science purposes. Users can anonymously report symptoms and choose a location to see the density of symptoms in a map view. The data is aggregated by places, therefore, the app can help people avoid visiting a grocery store or a gas station that is heavily used by symptomatic people. In addition it provide Play-ground for the Data and News related to Covid-19 by country.",
   "moreInfo": "More Info",
   "contactUs": "Contact us",
-
-  "statesTransitionSubtitle": "What phases are there?",
   "learnEvenMoreDescription": "Go through our Learning paths to explore more about Covid 19. Whatever age you are, we have something for you.",
+  "states": {
+    "statesTransitionTitle": "States of Transition",
+    "statesTransitionSubtitle": "What phases are there?",
+    "incubation": "Incubation",
+    "mildOrNoSymptom": "Mild or no symptoms",
+    "heavySymptoms": "Heavy symptoms",
+    "hospitalization": "Hospitalization",
+    "icu": "ICU",
+    "recovery": "Recovery"
+  },
 
   "navbar": {
     "home": "Home",
@@ -53,7 +61,11 @@
     "duration": "Duration",
     "how": "How",
     "sources": "Sources",
-    "show": "Show"
+    "show": "Show",
+    "kids": "Kids",
+    "teens": "Teens",
+    "adults": "adults",
+    "seniors": "Seniors"
   },
 
   "ethiopiaRegions": {

@@ -17,7 +17,7 @@
         <v-col cols="12" md="5" class="pr-md-12 py-md-8 px-8 py-5">
           <h2
             class="mb-5 primary--text"
-            v-text="$t('statesTransitionSubtitle')"
+            v-text="$t('states.statesTransitionSubtitle')"
           />
           <v-list disabled>
             <v-skeleton-loader
