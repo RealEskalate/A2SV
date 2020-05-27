@@ -62,7 +62,7 @@
                 v-text="message"
                 dismissible
               />
-              <v-form class="mt-7">
+              <v-form v-model="valid" class="mt-7">
                 <v-text-field
                   class="v-card--shaped"
                   outlined
@@ -92,6 +92,7 @@
                 <div class="text-center py-3">
                   <v-btn
                     width="100"
+                    :disabled="!valid"
                     :loading="submitting"
                     class="primary mx-auto v-card--shaped"
                     @click="sendForm"
@@ -189,6 +190,7 @@ export default {
       mdiSearchWeb,
       mdiSend,
       mdiYoutube,
+      valid: false,
       showAlert: false,
       submitting: false,
       message: "",

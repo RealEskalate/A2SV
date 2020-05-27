@@ -1,6 +1,13 @@
 <template>
   <v-footer padless class="white pb-md-0 pb-5">
-    <v-card flat tile class="lighten-1 text-center" shaped outlined>
+    <v-card
+      flat
+      tile
+      class="lighten-1 text-center"
+      style="width: 100%"
+      shaped
+      outlined
+    >
       <v-card-text>
         <v-btn
           v-for="(icon, i) in icons"

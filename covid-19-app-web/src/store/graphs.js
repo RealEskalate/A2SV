@@ -447,6 +447,7 @@ export default {
         });
     },
     setGraphDescriptions({ commit }, { lang }) {
+      commit("setGraphLoaders", { key: "descriptions", value: true });
       axios
         .get(
           `${process.env.VUE_APP_BASE_URL}/api/resources/statistics-description`,
@@ -465,6 +466,9 @@ export default {
         })
         .catch(error => {
           console.log(error);
+        })
+        .finally(function() {
+          commit("setGraphLoaders", { key: "descriptions", value: false });
         });
     }
   }

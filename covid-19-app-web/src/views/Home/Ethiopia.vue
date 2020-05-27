@@ -5,13 +5,13 @@
         <h3 class="display-1 font-weight-thin mb-5">
           {{ $t("titles.ethiopiaStatisticsTitle") }}
           <v-img
-                  src="/img/ethiopia/under-construction.svg"
-                  class="v-icon mx-auto"
-                  width="15rem"
+            src="/img/ethiopia/under-construction.svg"
+            class="v-icon mx-auto"
+            width="15rem"
           />
         </h3>
         <small class="red--text"
-        >*The following statistical data of Ethiopia is not accurate.</small
+          >*The following statistical data of Ethiopia is not accurate.</small
         >
       </v-col>
     </v-row>
@@ -140,10 +140,10 @@
 </template>
 
 <script>
-  import {DoughnutChart} from "./Charts/charts.js";
-  import {mdiPhone} from "@mdi/js";
+import { DoughnutChart } from "./Charts/charts.js";
+import { mdiPhone } from "@mdi/js";
 
-  export default {
+export default {
   name: "Ethiopia",
   components: {
     DoughnutChart
