@@ -56,9 +56,14 @@ const actions = {
       });
   },
   setCurrentCountry: ({ commit }) => {
-    axios.get("http://ip-api.com/json").then(response => {
-      commit("setCurrentCountry", response.data.country);
-    });
+    axios.get("http://ip-api.com/json").then(
+      response => {
+        commit("setCurrentCountry", response.data.country);
+      },
+      () => {
+        commit("setCurrentCountry", "World");
+      }
+    );
   },
   setNews: ({ commit }, { page, size, country, sources }) => {
     commit("setNewsLoaders", { key: "list", value: true });

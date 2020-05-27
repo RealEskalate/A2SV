@@ -1,5 +1,5 @@
 import { PermissionsAndroid } from "react-native";
-import React from "react";
+import React, { Fragment } from "react";
 import MapboxGL from "@react-native-mapbox-gl/maps";
 import Supercluster from "supercluster";
 
@@ -14,11 +14,13 @@ import {
   Text,
   Modal,
   TouchableHighlight,
+  Keyboard,
+  Platform,
+  KeyboardAvoidingView,
 } from "react-native";
 
 import { Avatar } from "react-native-paper";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-//import AppNavigator from "./TabViewCode";
 
 import anosmia from "../../../assets/images/anosmia.png";
 import cough from "../../../assets/images/cough.png";
@@ -41,6 +43,8 @@ import womanAvatar from "../../../assets/images/person.png";
 import Geocoder from "react-native-geocoder";
 import userIDStore from "../../data-management/user-id-data/userIDStore";
 
+import SearchableDropdown from "react-native-searchable-dropdown";
+
 MapboxGL.setAccessToken(
   "pk.eyJ1IjoiZmVyb3g5OCIsImEiOiJjazg0czE2ZWIwNHhrM2VtY3Y0a2JkNjI3In0.zrm7UtCEPg2mX8JCiixE4g"
 );
@@ -54,9 +58,11 @@ const colors = ["#FFC107", "#EF6C00", "#B71C1C"];
 const covid = require("../public-data-page/data/covid.json");
 
 const pointInfos = {};
-const gridInfos = {};
+const grid_infos = {};
 
 let currentPointInfo = null;
+
+const zoom_level = null;
 
 export default class MapService extends React.Component {
   constructor(props) {
@@ -77,7 +83,9 @@ export default class MapService extends React.Component {
       bottom_right_bound: 0.0,
 
       countries: {},
-      test_counts: {},
+      cities: {},
+      city_names: [],
+      selected_city: "",
 
       featureCollection: {
         type: "FeatureCollection",
@@ -113,6 +121,7 @@ export default class MapService extends React.Component {
         },
       },
       cluster_data: {},
+      grid_rendering: false,
     };
     this.onTrackingChange = this.onTrackingChange.bind(this);
     this.onUserLocationUpdate = this.onUserLocationUpdate.bind(this);
@@ -120,6 +129,7 @@ export default class MapService extends React.Component {
     this.onFinishedLoadingMap = this.onFinishedLoadingMap.bind(this);
     this.onRegionDidChange = this.onRegionDidChange.bind(this);
     this.renderClusterInfo = this.renderClusterInfo.bind(this);
+    this.metersToPixelsAtMaxZoom = this.metersToPixelsAtMaxZoom.bind(this);
   }
 
   setModalVisible(visible) {
@@ -372,6 +382,7 @@ export default class MapService extends React.Component {
     console.log("calling update clusters");
     // call updateClusters
     this.updateClusters();
+    zoom_level = this.map.getZoom();
   }
 
   async onFinishedLoadingMap() {
@@ -383,9 +394,10 @@ export default class MapService extends React.Component {
     );
 
     this.setState({
-      location: [this.state.user_longitude + 0.02, this.state.user_latitude],
+      location: [this.state.user_longitude, this.state.user_latitude],
     });
-
+    zoom_level = this.map.getZoom();
+    console.log("--------------------zoom level----------------" + zoom_level);
     var loc = { lat: this.state.user_latitude, lng: this.state.user_longitude };
     try {
       const res = await Geocoder.geocodePosition(loc);
@@ -400,13 +412,10 @@ export default class MapService extends React.Component {
   onTrackingChange() {
     console.log("tracking changed!");
     const location_prev = this.state.location;
-    const location_new = [
-      this.state.user_longitude + 0.02,
-      this.state.user_latitude,
-    ];
+    const location_new = [this.state.user_longitude, this.state.user_latitude];
 
     this.setState({
-      location: [this.state.user_longitude + 0.02, this.state.user_latitude],
+      location: [this.state.user_longitude, this.state.user_latitude],
     });
   }
 
@@ -420,6 +429,37 @@ export default class MapService extends React.Component {
   FloatingButtonEvent = () => {
     this.onTrackingChange();
   };
+
+  fetchCities() {
+    fetch("http://sym-track.herokuapp.com/api/cities", {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + userIDStore.getState().userToken,
+        Accept: "application/json",
+        "Content-type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        city_names = [];
+        console.log(data);
+        Object.keys(data).forEach((key, idx) => {
+          const city_name = key + ", " + data[key][0].country;
+          const id = idx;
+
+          const city = {
+            id: id,
+            name: city_name,
+          };
+          city_names.push(city);
+        });
+        console.log("----------- city data loaded --------------");
+        this.setState({
+          cities: data,
+          city_names: city_names,
+        });
+      });
+  }
 
   fetchSymptoms() {
     // Console.log(
@@ -471,6 +511,23 @@ export default class MapService extends React.Component {
           // just log them for now
           console.log("-----------if---------");
           console.log(data);
+          const gridCollections = this.gridsToGeoJson(data);
+          const small_cluster = new Supercluster({ radius: 40, maxZoom: 14 });
+          const medium_cluster = new Supercluster({ radius: 40, maxZoom: 14 });
+          const high_cluster = new Supercluster({ radius: 40, maxZoom: 14 });
+
+          small_cluster.load(gridCollections.smallGridCollection.features);
+          medium_cluster.load(gridCollections.mediumGridCollection.features);
+          high_cluster.load(gridCollections.heavyGridCollection.features);
+
+          this.setState({
+            gridCollections: gridCollections,
+            small_cluster: small_cluster,
+            medium_cluster: medium_cluster,
+            high_cluster: high_cluster,
+            grid_rendering: true,
+          });
+          this.updateClusters();
         } else {
           console.log("-----------else-------");
           this.setState({
@@ -497,6 +554,7 @@ export default class MapService extends React.Component {
             small_cluster: small_cluster,
             medium_cluster: medium_cluster,
             high_cluster: high_cluster,
+            grid_rendering: false,
           });
           this.updateClusters();
         }
@@ -505,7 +563,6 @@ export default class MapService extends React.Component {
         console.log(error);
       });
   }
-
   componentDidMount() {
     PermissionsAndroid.requestMultiple(
       [
@@ -527,6 +584,7 @@ export default class MapService extends React.Component {
       });
     MapboxGL.setTelemetryEnabled(false);
     console.log("-----------inside fetch symptoms--------");
+    this.fetchCities();
     this.timer = setInterval(() => this.fetchSymptoms(), 15000);
   }
 
@@ -641,12 +699,25 @@ export default class MapService extends React.Component {
     };
     for (let i = 0; i < grids.length; i++) {
       const element = grids[i];
-      const grid_lng = element.coordinates[0];
-      const grid_lat = element.coordinates[1];
-      let symptom_count = 0;
-      let grid_symptoms = {};
-      Object.keys(element.value).forEach((key) => {});
+      const feat = {
+        type: "Feature",
+        id: element._id,
+        properties: {
+          icon: "pin3",
+        },
+        geometry: {
+          type: "Point",
+          coordinates: [
+            parseFloat(element.location.coordinates[0]),
+            parseFloat(element.location.coordinates[1]),
+          ],
+        },
+      };
+      // subtitute with number of infections later
+      gridCollections.heavyGridCollection.features.push(feat);
+      grid_infos[element._id] = element;
     }
+    return gridCollections;
   }
 
   symptomsToGeoJson(symptoms) {
@@ -936,7 +1007,17 @@ export default class MapService extends React.Component {
     }
   }
 
-  renderSymptomLayer(id, featureCollection, style) {
+  renderSymptomLayer(id, featureCollection, style, grid_rendering) {
+    if (grid_rendering === true) {
+      return (
+        <MapboxGL.ShapeSource key={id} id={id} shape={featureCollection}>
+          <MapboxGL.CircleLayer
+            id={id + " singleCluster"}
+            style={singleCluster}
+          />
+        </MapboxGL.ShapeSource>
+      );
+    }
     return (
       <MapboxGL.ShapeSource
         key={id}
@@ -965,6 +1046,9 @@ export default class MapService extends React.Component {
     );
   }
 
+  metersToPixelsAtMaxZoom = (meters) =>
+    meters / 0.075 / Math.cos((this.state.location[1] * Math.PI) / 180);
+
   render() {
     const { isModalVisible } = this.state;
     return (
@@ -979,6 +1063,50 @@ export default class MapService extends React.Component {
         >
           {this.renderClusterInfo(this.state.cluster_data)}
         </Modal>
+        <View style={{ flex: 1 }}>
+          <SearchableDropdown
+            onItemSelect={(item) => {
+              const city_name = item.name.substring(0, item.name.search(","));
+
+              console.log("City name = " + city_name);
+
+              const latitude = this.state.cities[city_name][0].latitude;
+              const longitude = this.state.cities[city_name][0].longitude;
+              this.setState({
+                selected_city: item,
+                location: [longitude, latitude],
+              });
+            }}
+            containerStyle={{ padding: 5, backgroundColor: "#39363E" }}
+            itemStyle={{
+              padding: 10,
+              marginTop: 2,
+              backgroundColor: "#39363E",
+              borderColor: "#3E2723",
+              borderWidth: 1,
+              borderRadius: 5,
+            }}
+            itemTextStyle={{ color: "white" }}
+            itemsContainerStyle={{ maxHeight: 140 }}
+            items={this.state.city_names}
+            resetValue={false}
+            textInputProps={{
+              placeholder: "Search City",
+              placeholderTextColor: "white",
+              underlineColorAndroid: "transparent",
+              style: {
+                padding: 12,
+                borderWidth: 1,
+                borderColor: "#ccc",
+                borderRadius: 5,
+                color: "white",
+              },
+            }}
+            listProps={{
+              nestedScrollEnabled: true,
+            }}
+          />
+        </View>
         <View style={styles.container}>
           <MapboxGL.MapView
             ref={(ref) => (this.map = ref)}
@@ -999,21 +1127,23 @@ export default class MapService extends React.Component {
               pitch={45}
               centerCoordinate={this.state.location}
             />
-
             {this.renderSymptomLayer(
               "small",
               this.state.symptomCollections.smallSymptomCollection,
-              smallStyles
+              smallStyles,
+              this.state.grid_rendering
             )}
             {this.renderSymptomLayer(
               "medium",
               this.state.symptomCollections.mediumSymptomCollection,
-              mediumStyles
+              mediumStyles,
+              this.state.grid_rendering
             )}
             {this.renderSymptomLayer(
               "high",
               this.state.symptomCollections.highSymptomCollection,
-              highStyles
+              highStyles,
+              this.state.grid_rendering
             )}
           </MapboxGL.MapView>
         </View>
@@ -1031,6 +1161,21 @@ export default class MapService extends React.Component {
     );
   }
 }
+
+const singleCluster = {
+  circleColor: "#9C27B0",
+  circleStrokeWidth: 5,
+  circleStrokeColor: "#3E2723",
+  circleRadius: 50,
+  circleOpacity: 0.6,
+};
+
+const singleClusterCount = {
+  textField: "{120}",
+  textSize: 15,
+  textPitchAlignment: "map",
+  textColor: "white",
+};
 
 const styles = StyleSheet.create({
   centeredView: {
@@ -1129,14 +1274,15 @@ const styles = StyleSheet.create({
     backgroundColor: "#F5FCFF",
   },
   container: {
-    height: 900,
-    width: 900,
+    width: 500,
+    height: screenHeight - 200,
     backgroundColor: "white",
   },
   map: {
     flex: 1,
   },
 });
+
 const smallStyles = {
   singlePoint: {
     circleColor: "#FFC107",
@@ -1147,7 +1293,7 @@ const smallStyles = {
     circlePitchAlignment: "map",
   },
   matchParent: {
-    flex: 1,
+    flex: 3,
   },
   clusteredPoints: {
     circlePitchAlignment: "map",

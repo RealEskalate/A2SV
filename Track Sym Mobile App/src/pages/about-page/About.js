@@ -1,36 +1,36 @@
-import React from 'react';
+import React from "react";
 import {
   View,
   TouchableOpacity,
   Image,
   Dimensions,
   Linking,
-} from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+} from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import {
   Layout,
   Text,
   StyleService,
   useStyleSheet,
   Button,
-} from '@ui-kitten/components';
-import { Divider } from 'react-native-paper';
+} from "@ui-kitten/components";
+import { Divider } from "react-native-paper";
 
 const About = (props) => {
   const styles = useStyleSheet(themedStyle);
 
   return (
-    <ScrollView style={{ backgroundColor: '#fff' }}>
-      <Layout level='2' style={{ height: 220 }}>
+    <ScrollView style={{ backgroundColor: "#fff" }}>
+      <Layout level="2" style={{ height: 220 }}>
         <Image
-          source={require('../../../assets/images/track.png')}
-          style={{ height: 220, width: Dimensions.get('screen').width }}
-          resizeMode='cover'
+          source={require("../../../assets/images/track.png")}
+          style={{ height: 220, width: Dimensions.get("screen").width }}
+          resizeMode="cover"
         />
       </Layout>
       <Layout>
         <Layout style={styles.title_container}>
-          <Text category='h5'>TRACK SYM</Text>
+          <Text category="h5">TRACK SYM</Text>
         </Layout>
         <Divider />
         <Text style={styles.text}>
@@ -43,16 +43,16 @@ const About = (props) => {
           heavily used by symptomatic people
         </Text>
       </Layout>
-      <Layout level='2' style={{ height: 230 }}>
+      <Layout level="2" style={{ height: 230 }}>
         <Image
-          source={require('../../../assets/images/team.png')}
-          style={{ height: 230, width: Dimensions.get('screen').width }}
-          resizeMode='cover'
+          source={require("../../../assets/images/team.png")}
+          style={{ height: 230, width: Dimensions.get("screen").width }}
+          resizeMode="cover"
         />
       </Layout>
       <Layout>
         <Layout style={styles.title_container}>
-          <Text category='h5'>WHO ARE WE ?</Text>
+          <Text category="h5">WHO ARE WE ?</Text>
         </Layout>
         <Divider />
         <Text style={styles.text}>
@@ -61,16 +61,16 @@ const About = (props) => {
           Software/ML engineer.
         </Text>
       </Layout>
-      <Layout level='2' style={{ height: 220 }}>
+      <Layout level="2" style={{ height: 220 }}>
         <Image
-          source={require('../../../assets/images/file.png')}
-          style={{ height: 230, width: Dimensions.get('screen').width }}
-          resizeMode='cover'
+          source={require("../../../assets/images/file.png")}
+          style={{ height: 230, width: Dimensions.get("screen").width }}
+          resizeMode="cover"
         />
       </Layout>
       <Layout>
         <Layout style={styles.title_container}>
-          <Text category='h5'>YOUR DATA</Text>
+          <Text category="h5">YOUR DATA</Text>
         </Layout>
         <Divider />
         <Text style={styles.text}>
@@ -81,7 +81,7 @@ const About = (props) => {
       </Layout>
       <Layout style={{ flex: 1 }}>
         <Layout style={styles.bottom}>
-          <Button onPress={() => Linking.openURL('http://www.a2sv.org')}>
+          <Button onPress={() => Linking.openURL("http://www.a2sv.org")}>
             CHECK OUT OUR WEBSITE
           </Button>
         </Layout>
@@ -93,7 +93,7 @@ const About = (props) => {
 export default About;
 
 const themedStyle = StyleService.create({
-  title_container: { margin: 5, alignItems: 'center' },
+  title_container: { margin: 5, alignItems: "center" },
   text: {
     padding: 10,
   },
