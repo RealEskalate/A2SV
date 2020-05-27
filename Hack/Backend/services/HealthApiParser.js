@@ -45,6 +45,9 @@ exports.getCriticalStatistics = (req, res, respond) => {
 exports.getHealthStatistics = (req, res, respond, rates = false) => {
     let startDate = new Date(Date.parse(setStartDate(req)));
     let endDate = new Date(Date.parse(setEndDate(req)));
+    if (req.query.daily){
+        startDate.setDate(startDate.getDate()-1);
+    }
 
     if (req.query.country == "World") {
         let request_url = "https://datahub.io/core/covid-19/r/worldwide-aggregated.csv";
@@ -153,7 +156,7 @@ const getCountryStat = async(startDate, endDate, req, res, respond, rates) => {
                 }
 
             });
-
+            caseData.sort((a, b) => (a.t > b.t) ? 1 : -1)
             if (criteria !== "All") {
                 if (req.query.daily && req.query.daily === "true") {
                     caseData = calculateDaily(caseData)
@@ -216,7 +219,7 @@ const getWorldStat = (request_url, startDate, endDate, req, res, respond, rates)
                         }
                     }
                 });
-
+                results.sort((a, b) => (a.t > b.t) ? 1 : -1)
                 if (criteria !== "All") {
                     if (req.query.daily && req.query.daily === "true") {
                         results = calculateDaily(results)
