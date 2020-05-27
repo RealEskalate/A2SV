@@ -62,7 +62,7 @@ exports.post_symptomuser = async (req, res) => {
 exports.post_multiple_symptoms = async (req, res) => {
   const user = await User.findById(req.body.user_id)
   const symptoms = req.body.symptoms
-  if (!user) {
+  if (!user || !symptoms) {
     return res.status(400).send('Invalid request')
   }
   await SymptomUser.deleteMany({ user_id: user._id })
