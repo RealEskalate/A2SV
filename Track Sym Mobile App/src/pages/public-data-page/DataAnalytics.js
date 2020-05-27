@@ -26,6 +26,7 @@ import {
 import * as eva from "@eva-design/eva";
 import SearchableDropdown from "react-native-searchable-dropdown";
 import userIDStore from "../../data-management/user-id-data/userIDStore";
+import { DotsLoader } from "react-native-indicator";
 class DataAnalytics extends React.Component {
   state = {
     selected_filter: criterias.confirmed, // sets the current filtering parameter on the graph
@@ -62,14 +63,16 @@ class DataAnalytics extends React.Component {
       "Dec",
     ],
     countries: [],
+    totalGraphLoading: false,
+    dailyGraphLoading: false,
+    rateGraphLoading: false,
     totalLoading: true,
     testCountDataExist: false,
     new_case_description_visiblity: false,
     total_case_description_visiblity: false,
     rate_description_visibility: false,
-    new_case_description: [
-      `This graph represents the number of daily deaths, the number of currently active cases, the number of tests done, the number of daily deaths encountered, the number of recovered patients to the latest pandemic, COVID-19.`,
-    ],
+    new_case_description: `This graph represents the number of daily deaths, the number of currently active cases, the number of tests done, the number of daily deaths encountered, the number of recovered patients to the latest pandemic, COVID-19.`,
+
     total_case_description: `This graph represents the total number of positive cases, the total number of active cases, the total number of tests done, the number of total deaths encountered, the number of recovered patients to the latest pandemic, COVID-19.`,
     rate_description: `This graph represents the rate of positive cases, rate of recovered patients, rate of active(currently infected) patients and rate of deaths encountered from the total conducted tests everyday to the latest pandemic, COVID-19.`,
   };
@@ -89,6 +92,7 @@ class DataAnalytics extends React.Component {
   //gets statistics data based on selected criteria and populate UI
   fetchStatistics = async () => {
     let newThis = this;
+    this.setState({ totalGraphLoading: true });
     var query =
       this.state.selected_total_start_date.length > 1 &&
       this.state.selected_total_end_date.length > 1
@@ -117,6 +121,7 @@ class DataAnalytics extends React.Component {
         if (json !== undefined && json.length !== 0) {
           await newThis.populate(json);
           newThis.forceUpdate(); //refresh page
+          newThis.setState({ totalGraphLoading: false });
         } else {
           newThis.fetchStatistics();
         }
@@ -128,6 +133,7 @@ class DataAnalytics extends React.Component {
   //gets rate statistics data based on selected criteria and populate UI
   fetchRateStatistics = async () => {
     let newThis = this;
+    this.setState({ rateGraphLoading: true });
     var query =
       this.state.selected_rate_start_date.length > 1 &&
       this.state.selected_rate_end_date.length > 1
@@ -156,6 +162,7 @@ class DataAnalytics extends React.Component {
         if (json !== undefined && json.length !== 0) {
           await newThis.populateRateData(json);
           newThis.forceUpdate(); //refresh page
+          newThis.setState({ rateGraphLoading: false });
         } else {
           newThis.fetchRateStatistics();
         }
@@ -233,6 +240,7 @@ class DataAnalytics extends React.Component {
   //fetch daily new cases reported
   fetchDailyNewsCases = async () => {
     let newThis = this;
+    this.setState({ dailyGraphLoading: true });
     var query =
       this.state.selected_daily_start_date.length > 1 &&
       this.state.selected_daily_end_date.length > 1
@@ -263,6 +271,7 @@ class DataAnalytics extends React.Component {
         if (json !== undefined && json.length !== 0) {
           await newThis.populateDailyData(json);
           newThis.forceUpdate(); //refresh page
+          newThis.setState({ dailyGraphLoading: false });
         } else {
           newThis.fetchDailyNewsCases();
         }
@@ -276,24 +285,38 @@ class DataAnalytics extends React.Component {
     this.state.daily_newCases_label = [""]; //reseting all data point labels
     this.state.daily_newCases_data_set = [0]; //reseting all data point labels
 
-    let dataSet_counter = 0;
-
-    objList.map((data) => {
-      this.state.daily_newCases_data_set[dataSet_counter] = data.y;
-      dataSet_counter += 1;
-    });
     //generating interval
-    let graphLebel_counter = 0;
-    var interval = Math.floor(objList.length / 5);
-    var remainder = objList.length % 5;
+    var interval = Math.floor(objList.length / 6);
+    var setRemainder = objList.length % 6;
     if (interval === 0) {
       interval = 1;
       remainder = 0;
     }
+    let dataSet_counter = 0;
+    let indexCounterSet = 0;
+    while (dataSet_counter < objList.length) {
+      this.state.daily_newCases_data_set[indexCounterSet] =
+        objList[dataSet_counter].y;
+
+      indexCounterSet += 1;
+      if (
+        setRemainder > 0 &&
+        dataSet_counter + setRemainder - 1 === objList.length
+      ) {
+        dataSet_counter += setRemainder - 1;
+        continue;
+      }
+      dataSet_counter += interval;
+    }
+
+    var remainder = objList.length % 5;
+    let graphLebel_counter = 0;
+    let indexCounter = 0;
     while (graphLebel_counter < objList.length) {
-      this.state.daily_newCases_label[graphLebel_counter] = this.dateConverter(
+      this.state.daily_newCases_label[indexCounter] = this.dateConverter(
         objList[graphLebel_counter].t.split("T")[0]
       );
+      indexCounter += 1;
       if (
         remainder > 0 &&
         graphLebel_counter + remainder - 1 === objList.length
@@ -309,21 +332,32 @@ class DataAnalytics extends React.Component {
     this.state.graph_label = [""]; //reseting data label
     this.state.data_set = [0]; // reseting data set
 
-    let dataSet_counter = 0;
-    objList.map((data) => {
-      this.state.data_set[dataSet_counter] = data.y;
-      dataSet_counter += 1;
-    });
-
     //generating interval
-    let graphLebel_counter = 1;
-    let indexCounter = 0;
-    var interval = Math.floor(objList.length / 5);
-    var remainder = objList.length % 5;
+    var interval = Math.floor(objList.length / 6);
+    var setRemainder = objList.length % 6;
     if (interval === 0) {
       interval = 1;
       remainder = 0;
     }
+    let dataSet_counter = 0;
+    let indexCounterSet = 0;
+    while (dataSet_counter < objList.length) {
+      this.state.data_set[indexCounterSet] = objList[dataSet_counter].y;
+
+      indexCounterSet += 1;
+      if (
+        setRemainder > 0 &&
+        dataSet_counter + setRemainder - 1 === objList.length
+      ) {
+        dataSet_counter += setRemainder - 1;
+        continue;
+      }
+      dataSet_counter += interval;
+    }
+
+    var remainder = objList.length % 5;
+    let graphLebel_counter = 0;
+    let indexCounter = 0;
     while (graphLebel_counter < objList.length) {
       this.state.graph_label[indexCounter] = this.dateConverter(
         objList[graphLebel_counter].t.split("T")[0]
@@ -344,27 +378,37 @@ class DataAnalytics extends React.Component {
     this.state.rate_label = [""]; //reseting all data point labels
     this.state.rate_data_set = [0]; //reseting all data point labels
 
-    let dataSet_counter = 0;
-    let previousStat = 0;
-    let indexCounterDataSet = 0;
-    objList.map((data) => {
-      this.state.rate_data_set[dataSet_counter] = data.y;
-      dataSet_counter += 1;
-    });
-
-    let graphLebel_counter = 0;
-
     //generating interval
-    var interval = Math.floor(objList.length / 5);
-    var remainder = objList.length % 5;
+    var interval = Math.floor(objList.length / 6);
+    var setRemainder = objList.length % 6;
     if (interval === 0) {
       interval = 1;
       remainder = 0;
     }
+    let dataSet_counter = 0;
+    let indexCounterSet = 0;
+    while (dataSet_counter < objList.length) {
+      this.state.rate_data_set[indexCounterSet] = objList[dataSet_counter].y;
+
+      indexCounterSet += 1;
+      if (
+        setRemainder > 0 &&
+        dataSet_counter + setRemainder - 1 === objList.length
+      ) {
+        dataSet_counter += setRemainder - 1;
+        continue;
+      }
+      dataSet_counter += interval;
+    }
+
+    var remainder = objList.length % 5;
+    let graphLebel_counter = 0;
+    let indexCounter = 0;
     while (graphLebel_counter < objList.length) {
-      this.state.rate_label[graphLebel_counter] = this.dateConverter(
+      this.state.rate_label[indexCounter] = this.dateConverter(
         objList[graphLebel_counter].t.split("T")[0]
       );
+      indexCounter += 1;
       if (
         remainder > 0 &&
         graphLebel_counter + remainder - 1 === objList.length
@@ -751,15 +795,7 @@ class DataAnalytics extends React.Component {
                 }
               >
                 <Card disabled={true}>
-                  <Text>
-                    {this.state.selected_filter_daily_status ===
-                    criterias.confirmed
-                      ? this.state.new_case_description[0]
-                      : this.state.selected_filter_daily_status ===
-                        criterias.recoveries
-                      ? this.state.new_case_description[1]
-                      : this.state.new_case_description[2]}
-                  </Text>
+                  <Text>{this.state.new_case_description}</Text>
                   <Button
                     appearance="ghost"
                     onPress={() =>
@@ -899,7 +935,7 @@ class DataAnalytics extends React.Component {
                 </Layout>
               </Layout>
 
-              <BarChart
+              <LineChart
                 data={{
                   labels: this.state.daily_newCases_label,
                   datasets: [
@@ -918,10 +954,8 @@ class DataAnalytics extends React.Component {
                   backgroundGradientFrom: "#0080ff",
                   backgroundGradientTo: "#0080ff",
                   scrollableDotFill: "#ffffff",
-                  decimalPlaces: 0,
                   barPercentage: 0.1,
-                  fillShadowGradient: "#ffffff",
-                  fillShadowGradientOpacity: 0.4,
+                  decimalPlaces: 0, // optional, defaults to 2dp
                   color: (opacity = 0) => `rgba(255, 266, 255, ${opacity})`,
                   style: {
                     borderRadius: 10,
@@ -933,6 +967,17 @@ class DataAnalytics extends React.Component {
                   borderRadius: 10,
                 }}
               />
+              {this.state.dailyGraphLoading ? (
+                <Layout
+                  style={{
+                    width: Dimensions.get("window").width,
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
+                  <DotsLoader size={15} />
+                </Layout>
+              ) : null}
             </Layout>
 
             <Layout
@@ -1167,6 +1212,17 @@ class DataAnalytics extends React.Component {
                   borderRadius: 10,
                 }}
               />
+              {this.state.totalGraphLoading ? (
+                <Layout
+                  style={{
+                    width: Dimensions.get("window").width,
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
+                  <DotsLoader size={15} />
+                </Layout>
+              ) : null}
             </Layout>
 
             <Layout
@@ -1392,6 +1448,17 @@ class DataAnalytics extends React.Component {
                   borderRadius: 10,
                 }}
               />
+              {this.state.rateGraphLoading ? (
+                <Layout
+                  style={{
+                    width: Dimensions.get("window").width,
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
+                  <DotsLoader size={15} />
+                </Layout>
+              ) : null}
             </Layout>
 
             <Layout
