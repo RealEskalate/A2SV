@@ -3,11 +3,10 @@ const jwt = require("jsonwebtoken");
 
 // Display list of all locations.
 exports.get_all_symptoms = async (req, res) => {
-
     const symptoms = await Symptom.find({});
 
     try {
-        res.send(symptoms);
+        return res.status(200).send(symptoms);
     } catch (err) {
         res.status(500).send(err.toString());
     }
@@ -21,22 +20,27 @@ exports.post_symptom = async (req, res) => {
         description: req.body.description,
     });
 
-    var { error } = validateSymptom(req.body);
+    var { error } = validateSymptom({
+        name: req.body.name,
+        relevance: req.body.relevance,
+        description: req.body.description,
+    });
     if (error) {
-        res.status(400).send("Invalid request");
+        console.log('validation error ' + error)
+        return res.status(400).send("Invalid request");
     }
 
     try {
         const symptomExists = await Symptom.findOne({ name: symptom.name, relevance: symptom.relevance });
         if (symptomExists) {
-            res.send(symptomExists);
+            return res.send(symptomExists);
         }
         else {
             await symptom.save();
-            res.send(symptom);
+            return res.send(symptom);
         }
     } catch (err) {
-        res.status(500).send(err.toString());
+        return res.status(500).send(err.toString());
     }
 };
 

@@ -130,10 +130,12 @@ exports.get_symptomuser_by_user_id = async (req, res) => {
   }
   try {
     const symptomuser = await SymptomUser.find({ user_id: req.params.user_id }).populate('user_id');
+    console.log('found ' + symptomuser)
     if (!symptomuser) {
       res.status(400).send("Symptom User Pair not found");
     }
     let result = [];
+    console.log('len ' + symptomuser.length)
     for (let i = 0; i < symptomuser.length; i++) {
       let symptom = await Symptom.findById(symptomuser[i].symptom_id);
       result.push({
@@ -149,6 +151,7 @@ exports.get_symptomuser_by_user_id = async (req, res) => {
     }
     res.status(200).send(result);
   } catch (err) {
+    console.log(err.toString())
     res.status(500).send(err.toString());
   }
 
