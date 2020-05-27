@@ -19,13 +19,14 @@ export const langConverter = {
 export default new Vuex.Store({
   plugins: [
     createPersistedState({
-      paths: ["navigationType", "languagePreference"]
+      paths: ["navigationType", "languagePreference", "firstVisit"]
     })
   ],
   state: {
     allCountries: [],
     navigationType: "1",
-    languagePreference: null
+    languagePreference: null,
+    firstVisit: true
   },
   getters: {
     getAllCountries(state) {
@@ -36,6 +37,9 @@ export default new Vuex.Store({
     },
     getLanguagePreference(state) {
       return state.languagePreference;
+    },
+    getFirstVisit(state) {
+      return state.firstVisit;
     }
   },
   mutations: {
@@ -47,6 +51,9 @@ export default new Vuex.Store({
     },
     setLanguagePreference(state, payload) {
       state.languagePreference = payload;
+    },
+    setFirstVisit(state, payload) {
+      state.firstVisit = payload;
     }
   },
   actions: {
@@ -67,6 +74,9 @@ export default new Vuex.Store({
     },
     setLanguagePreference({ commit }, { lang }) {
       commit("setLanguagePreference", lang);
+    },
+    setFirstVisit({ commit }, { value }) {
+      commit("setFirstVisit", value);
     }
   },
   modules: {

@@ -8,20 +8,19 @@
       <vue-progress-bar />
     </v-content>
     <app-footer />
+    <tour />
   </v-app>
 </template>
 
 <script>
 import AppBar from "./components/core/AppBar.vue";
 import AppFooter from "./components/core/AppFooter.vue";
+import Tour from "./components/core/Tour.vue";
 import store from "@/store/";
 
 export default {
   name: "App",
-  components: { AppBar, AppFooter },
-  data: () => ({
-    //
-  }),
+  components: { AppBar, AppFooter, Tour },
   mounted() {
     //  [App.vue specific] When App.vue is finish loading finish the progress bar
     this.$Progress.finish();
@@ -30,6 +29,10 @@ export default {
       store.getters.getLanguagePreference === null
         ? "en"
         : store.getters.getLanguagePreference;
+    if (this.firstVisit) {
+      store.dispatch("setFirstVisit", { value: false });
+      this.$tours["appTour"].start();
+    }
   },
   created() {
     store.dispatch("fillCountriesList");
@@ -54,6 +57,9 @@ export default {
       this.$Progress.finish();
     });
   },
+  computed: {
+    firstVisit: () => store.getters.getFirstVisit
+  },
   watch: {
     "$i18n.locale": newValue => {
       store.dispatch("setLanguagePreference", { lang: newValue });
@@ -74,6 +80,14 @@ export default {
 </script>
 
 <style>
+html {
+  scroll-behavior: smooth;
+  scroll-margin-top: 50px;
+}
+.v-step__arrow {
+  color: white;
+}
+
 .shadow-sm {
   box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1) !important;
 }

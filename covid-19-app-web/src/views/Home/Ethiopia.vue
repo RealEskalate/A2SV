@@ -2,7 +2,7 @@
   <v-container>
     <v-row>
       <v-col cols="12">
-        <h3 class="display-1 font-weight-thin mb-5">
+        <h3 class="display-1 font-weight-thin mb-5" data-v-step="3">
           {{ $t("titles.ethiopiaStatisticsTitle") }}
           <v-img
             src="/img/ethiopia/under-construction.svg"

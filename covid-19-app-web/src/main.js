@@ -3,9 +3,12 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import vuetify from "./plugins/vuetify";
-import VueProgressBar from "vue-progressbar";
 import i18n from "./plugins/i18n";
+import VueTour from "vue-tour";
+import VueProgressBar from "vue-progressbar";
+require("vue-tour/dist/vue-tour.css");
 
+Vue.use(VueTour);
 Vue.use(VueProgressBar, {
   color: "#40AAFB",
   failedColor: "red",
