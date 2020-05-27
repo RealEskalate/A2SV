@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { ScrollView, SafeAreaView } from 'react-native';
+import React, { Component } from "react";
+import { ScrollView, SafeAreaView, ActivityIndicator } from "react-native";
 import {
   Layout,
   ListItem,
@@ -8,24 +8,26 @@ import {
   List,
   Text,
   Spinner,
-} from '@ui-kitten/components';
-import symptomStore from '../../data-management/user-symptom-data/symptomStore';
-import userIDStore from '../../data-management/user-id-data/userIDStore';
-import * as symptomActions from '../../data-management/user-symptom-data/symptomActions';
-import localSymptomStore from '../../data-management/local_symptom_data/localSymptomStore';
-import * as localSymptomActions from '../../data-management/local_symptom_data/localSymptomActions';
+} from "@ui-kitten/components";
+import symptomStore from "../../data-management/user-symptom-data/symptomStore";
+import userIDStore from "../../data-management/user-id-data/userIDStore";
+import * as symptomActions from "../../data-management/user-symptom-data/symptomActions";
+import localSymptomStore from "../../data-management/local_symptom_data/localSymptomStore";
+import * as localSymptomActions from "../../data-management/local_symptom_data/localSymptomActions";
+import { CheckBox, Icon } from "react-native-elements";
 
 export default class SymptomPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      symptomId: '',
+      symptomId: "",
       symptoms: [],
       userSymptoms: [],
       localUserSymptoms: [],
       loading: true,
       registerLoading: false,
-      registerStatusText: 'Loading',
+      registerStatusText: "Loading",
+      testCheck: false,
     };
     localSymptomStore.subscribe(() => {
       this.fetchData();
@@ -82,14 +84,14 @@ export default class SymptomPage extends Component {
     this.setState({
       loading: true,
     });
-    console.log('Bearer ' + userIDStore.getState().userToken);
+    console.log("Bearer " + userIDStore.getState().userToken);
     let newThis = this; // create variable for referencing 'this'
-    await fetch('https://sym-track.herokuapp.com/api/symptoms', {
-      method: 'GET',
+    await fetch("https://sym-track.herokuapp.com/api/symptoms", {
+      method: "GET",
       headers: {
-        Authorization: 'Bearer ' + userIDStore.getState().userToken,
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
+        Authorization: "Bearer " + userIDStore.getState().userToken,
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
     })
       .then((response) => response.json())
@@ -114,13 +116,13 @@ export default class SymptomPage extends Component {
     });
     let newThis = this; // create variable for referencing 'this'
     await fetch(
-      'https://sym-track.herokuapp.com/api/symptomuser/user/' + userId,
+      "https://sym-track.herokuapp.com/api/symptomuser/user/" + userId,
       {
-        method: 'GET',
+        method: "GET",
         headers: {
-          Authorization: 'Bearer ' + userIDStore.getState().userToken,
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
+          Authorization: "Bearer " + userIDStore.getState().userToken,
+          Accept: "application/json",
+          "Content-Type": "application/json",
         },
       }
     )
@@ -144,14 +146,14 @@ export default class SymptomPage extends Component {
   registerSymptom(userId, symptomId) {
     this.setState({
       registerLoading: true,
-      registerStatusText: 'Registering',
+      registerStatusText: "Registering",
     });
-    fetch('https://sym-track.herokuapp.com/api/symptomuser', {
-      method: 'POST',
+    fetch("https://sym-track.herokuapp.com/api/symptomuser", {
+      method: "POST",
       headers: {
-        Authorization: 'Bearer ' + userIDStore.getState().userToken,
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
+        Authorization: "Bearer " + userIDStore.getState().userToken,
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         symptom_id: symptomId,
@@ -177,14 +179,14 @@ export default class SymptomPage extends Component {
   removeSymptom(userId, randomId, symptomId) {
     this.setState({
       registerLoading: true,
-      registerStatusText: 'Unregistering',
+      registerStatusText: "Unregistering",
     });
-    fetch('https://sym-track.herokuapp.com/api/symptomuser', {
-      method: 'DELETE',
+    fetch("https://sym-track.herokuapp.com/api/symptomuser", {
+      method: "DELETE",
       headers: {
-        Authorization: 'Bearer ' + userIDStore.getState().userToken,
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
+        Authorization: "Bearer " + userIDStore.getState().userToken,
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         _id: randomId,
@@ -225,64 +227,85 @@ export default class SymptomPage extends Component {
       title={item.name}
       description={item.description}
       accessoryLeft={() => (
-        <Toggle
+        <CheckBox
+          key={item._id}
           checked={this.state.localUserSymptoms.includes(item.name)}
-          onChange={() => {
-            if (!this.state.registerLoading) {
-              this.handleSymptomAction(
-                userIDStore.getState().userId,
-                item._id,
-                item.name
-              );
-            }
-          }}
         />
       )}
+      onPress={() => {
+        if (!this.state.registerLoading) {
+          this.handleSymptomAction(
+            userIDStore.getState().userId,
+            item._id,
+            item.name
+          );
+        }
+      }}
     />
   );
 
+  contents = () =>
+    this.state.symptoms.map((item) => {
+      //return the corresponding mapping for each item in corresponding UI componenets.
+      return (
+        item &&
+        item._id &&
+        item.name && (
+          <ListItem
+            title={item.name}
+            description={item.description}
+            accessoryLeft={() => (
+              <CheckBox
+                key={item._id}
+                checked={this.state.localUserSymptoms.includes(item.name)}
+              />
+            )}
+            onPress={() => {
+              if (!this.state.registerLoading) {
+                this.handleSymptomAction(
+                  userIDStore.getState().userId,
+                  item._id,
+                  item.name
+                );
+              }
+            }}
+          />
+        )
+      );
+    });
+
+  onCheckedChange = (isChecked) => {
+    setChecked(isChecked);
+  };
+
   render() {
     return (
-      <SafeAreaView style={{ flex: 1 }}>
-        <Layout style={{ flex: 1 }}>
-          {this.state.loading ? (
+      <ScrollView style={{ backgroundColor: "#eee" }}>
+        <Layout>
+          {this.state.registerLoading ? (
             <Layout
               style={{
                 flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <Spinner size='large' />
+                margin: 5,
+                alignSelf: "center",
+                flexDirection: "row",
+              }}
+            >
+              <Text style={{ marginRight: 10 }}>
+                {this.state.registerStatusText} your symptom
+              </Text>
+              <Spinner size="small" />
             </Layout>
-          ) : (
-            <ScrollView>
-              <Layout>
-                {this.state.registerLoading ? (
-                  <Layout
-                    style={{
-                      flex: 1,
-                      margin: 5,
-                      alignSelf: 'center',
-                      flexDirection: 'row',
-                    }}>
-                    <Text style={{ marginRight: 10 }}>
-                      {this.state.registerStatusText} your symptom
-                    </Text>
-                    <Spinner size='small' />
-                  </Layout>
-                ) : null}
-                <Layout style={{ flex: 1 }}>
-                  <List
-                    data={this.state.symptoms}
-                    ItemSeparatorComponent={Divider}
-                    renderItem={this.renderItem}
-                  />
-                </Layout>
-              </Layout>
-            </ScrollView>
-          )}
+          ) : null}
+          <Layout style={{ flex: 1 }}>
+            <List
+              data={this.state.symptoms}
+              ItemSeparatorComponent={Divider}
+              renderItem={this.renderItem}
+            />
+          </Layout>
         </Layout>
-      </SafeAreaView>
+      </ScrollView>
     );
   }
 }
