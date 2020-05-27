@@ -854,7 +854,7 @@ class DataAnalytics extends React.Component {
                   marginLeft: 10,
                 }}
               >
-                Daily New Cases
+                Daily Stats Graph
               </Text>
               <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
                 Country : {this.state.search}
@@ -1104,7 +1104,7 @@ class DataAnalytics extends React.Component {
                   marginLeft: 10,
                 }}
               >
-                Total Cases
+                Total Stats Graph
               </Text>
               <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
                 Country : {this.state.search}
@@ -1341,7 +1341,7 @@ class DataAnalytics extends React.Component {
                   marginLeft: 10,
                 }}
               >
-                Rate of Cases
+                Daily Rates Graph
               </Text>
               <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
                 Country : {this.state.search}
