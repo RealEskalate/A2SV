@@ -37,11 +37,7 @@ describe("News API", () => {
       let response = await chai
         .request(server)
         .get("/api/news")
-        .query({page : 1, size : 10})
-        .set(
-          "Authorization",
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6Ik1BTEUiLCJhZ2VfZ3JvdXAiOiI-OTAiLCJfaWQiOiI1ZWI3ZjMwYzNlMmE4ODRhYzgzYWE3NjAiLCJ1c2VybmFtZSI6ImF1dGh0ZXN0IiwicGFzc3dvcmQiOiIkMmEkMTAkYjJmYTZHTTJMTDlLVlJ4UzhVVEkzdS5SQ2JjUWw0WXc5OExaWVVHUHRnUVdBdVFGOERqNXUiLCJfX3YiOjAsImN1cnJlbnRfY291bnRyeSI6IiJ9LCJpYXQiOjE1ODkxODc5Mjd9.ZJQHbK7cVmDOf87uuhUttlnyAFYe5KA0Afnq0iBptF0"
-        );
+        .query({ page: 1, size: 10 });
       expect(response).to.have.status(200);
       expect(response.body.data[0]).to.have.property("title", "Test Title");
       expect(response.body.data).to.have.lengthOf(10);
@@ -54,11 +50,7 @@ describe("News API", () => {
     it("It should not get news", async () => {
       let response = await chai
         .request(server)
-        .get("/api/newss")
-        .set(
-          "Authorization",
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6Ik1BTEUiLCJhZ2VfZ3JvdXAiOiI-OTAiLCJfaWQiOiI1ZWI3ZjMwYzNlMmE4ODRhYzgzYWE3NjAiLCJ1c2VybmFtZSI6ImF1dGh0ZXN0IiwicGFzc3dvcmQiOiIkMmEkMTAkYjJmYTZHTTJMTDlLVlJ4UzhVVEkzdS5SQ2JjUWw0WXc5OExaWVVHUHRnUVdBdVFGOERqNXUiLCJfX3YiOjAsImN1cnJlbnRfY291bnRyeSI6IiJ9LCJpYXQiOjE1ODkxODc5Mjd9.ZJQHbK7cVmDOf87uuhUttlnyAFYe5KA0Afnq0iBptF0"
-        );
+        .get("/api/newss");
       expect(response).to.have.status(404);
     });
   });
@@ -87,11 +79,7 @@ describe("News API", () => {
       let response = await chai
         .request(server)
         .get("/api/news")
-        .query({country : "Ethiopia"})
-        .set(
-          "Authorization",
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6Ik1BTEUiLCJhZ2VfZ3JvdXAiOiI-OTAiLCJfaWQiOiI1ZWI3ZjMwYzNlMmE4ODRhYzgzYWE3NjAiLCJ1c2VybmFtZSI6ImF1dGh0ZXN0IiwicGFzc3dvcmQiOiIkMmEkMTAkYjJmYTZHTTJMTDlLVlJ4UzhVVEkzdS5SQ2JjUWw0WXc5OExaWVVHUHRnUVdBdVFGOERqNXUiLCJfX3YiOjAsImN1cnJlbnRfY291bnRyeSI6IiJ9LCJpYXQiOjE1ODkxODc5Mjd9.ZJQHbK7cVmDOf87uuhUttlnyAFYe5KA0Afnq0iBptF0"
-        );
+        .query({ country: "Ethiopia" });
       expect(response).to.have.status(200);
       response.body.data.forEach(news => {
         expect(news).to.have.property("country", "Ethiopia");
@@ -102,11 +90,7 @@ describe("News API", () => {
       let response = await chai
         .request(server)
         .get("/api/news")
-        .query({source : "CNN,BBC News"})
-        .set(
-          "Authorization",
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6Ik1BTEUiLCJhZ2VfZ3JvdXAiOiI-OTAiLCJfaWQiOiI1ZWI3ZjMwYzNlMmE4ODRhYzgzYWE3NjAiLCJ1c2VybmFtZSI6ImF1dGh0ZXN0IiwicGFzc3dvcmQiOiIkMmEkMTAkYjJmYTZHTTJMTDlLVlJ4UzhVVEkzdS5SQ2JjUWw0WXc5OExaWVVHUHRnUVdBdVFGOERqNXUiLCJfX3YiOjAsImN1cnJlbnRfY291bnRyeSI6IiJ9LCJpYXQiOjE1ODkxODc5Mjd9.ZJQHbK7cVmDOf87uuhUttlnyAFYe5KA0Afnq0iBptF0"
-        );
+        .query({ source: "CNN,BBC News" });
       expect(response).to.have.status(200);
       response.body.data.forEach(news => {
         expect(news).to.have.deep.property('source').that.is.oneOf(["CNN", "BBC News"]);
@@ -138,13 +122,9 @@ describe("News API", () => {
       let response = await chai
         .request(server)
         .get("/api/news")
-        .query({source : "CN,BBC ews"})
-        .set(
-          "Authorization",
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6Ik1BTEUiLCJhZ2VfZ3JvdXAiOiI-OTAiLCJfaWQiOiI1ZWI3ZjMwYzNlMmE4ODRhYzgzYWE3NjAiLCJ1c2VybmFtZSI6ImF1dGh0ZXN0IiwicGFzc3dvcmQiOiIkMmEkMTAkYjJmYTZHTTJMTDlLVlJ4UzhVVEkzdS5SQ2JjUWw0WXc5OExaWVVHUHRnUVdBdVFGOERqNXUiLCJfX3YiOjAsImN1cnJlbnRfY291bnRyeSI6IiJ9LCJpYXQiOjE1ODkxODc5Mjd9.ZJQHbK7cVmDOf87uuhUttlnyAFYe5KA0Afnq0iBptF0"
-        );
+        .query({ source: "CN,BBC ews" })
       expect(response).to.have.status(200);
-      expect(response.body.data).to.have.lengthOf(0);      
+      expect(response.body.data).to.have.lengthOf(0);
     });
   });
 
@@ -184,10 +164,6 @@ describe("News API", () => {
       let response = await chai
         .request(server)
         .get("/api/news/sources")
-        .set(
-          "Authorization",
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6Ik1BTEUiLCJhZ2VfZ3JvdXAiOiI-OTAiLCJfaWQiOiI1ZWI3ZjMwYzNlMmE4ODRhYzgzYWE3NjAiLCJ1c2VybmFtZSI6ImF1dGh0ZXN0IiwicGFzc3dvcmQiOiIkMmEkMTAkYjJmYTZHTTJMTDlLVlJ4UzhVVEkzdS5SQ2JjUWw0WXc5OExaWVVHUHRnUVdBdVFGOERqNXUiLCJfX3YiOjAsImN1cnJlbnRfY291bnRyeSI6IiJ9LCJpYXQiOjE1ODkxODc5Mjd9.ZJQHbK7cVmDOf87uuhUttlnyAFYe5KA0Afnq0iBptF0"
-        );
       expect(response).to.have.status(200);
       response.body.forEach((item) => {
         expect(default_sources).to.include(item.source);
@@ -201,10 +177,6 @@ describe("News API", () => {
       let response = await chai
         .request(server)
         .get("/api/source")
-        .set(
-          "Authorization",
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6Ik1BTEUiLCJhZ2VfZ3JvdXAiOiI-OTAiLCJfaWQiOiI1ZWI3ZjMwYzNlMmE4ODRhYzgzYWE3NjAiLCJ1c2VybmFtZSI6ImF1dGh0ZXN0IiwicGFzc3dvcmQiOiIkMmEkMTAkYjJmYTZHTTJMTDlLVlJ4UzhVVEkzdS5SQ2JjUWw0WXc5OExaWVVHUHRnUVdBdVFGOERqNXUiLCJfX3YiOjAsImN1cnJlbnRfY291bnRyeSI6IiJ9LCJpYXQiOjE1ODkxODc5Mjd9.ZJQHbK7cVmDOf87uuhUttlnyAFYe5KA0Afnq0iBptF0"
-        );
       expect(response).to.have.status(404);
     });
   });
@@ -212,31 +184,32 @@ describe("News API", () => {
   //Post News - Valid News
   describe("POST /api/news", () => {
     let news;
-    let user;
     let alert;
     let alert_user;
     let new_news;
+    let user;
     beforeEach(async () => {
-        news = new News({
-          _id: mongoose.Types.ObjectId(),
-          title: "Test Title",
-          source: "Test Source",
-          type: "Government Measure",
-          description: "Test Description",
-          date: Date.now(),
-          country: "Test Country",
-          reference_link: "test.com",
-        });
-        user = new User({
-          _id: mongoose.Types.ObjectId(),
-          username: "Testing",
-          password: "$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
-          gender: "FEMALE",
-          age_group: "21-30",
-          current_country: "Test Country" 
-        });
-        await news.save();
-        await user.save();
+      user = new User({
+        _id: mongoose.Types.ObjectId(),
+        username: `${Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000}`,
+        password:
+          "$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
+        gender: "FEMALE",
+        age_group: "21-30",
+        country: 'Test Country'
+      });
+      await user.save();
+      news = new News({
+        _id: mongoose.Types.ObjectId(),
+        title: "Test Title",
+        source: "Test Source",
+        type: "Government Measure",
+        description: "Test Description",
+        date: Date.now(),
+        country: "Test Country",
+        reference_link: "test.com",
+      });
+      await news.save();
     });
     afterEach(async () => {
       await News.findByIdAndDelete(news._id);
@@ -249,10 +222,6 @@ describe("News API", () => {
       let response = await chai
         .request(server)
         .post("/api/news/")
-        .set(
-          "Authorization",
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6Ik1BTEUiLCJhZ2VfZ3JvdXAiOiI-OTAiLCJfaWQiOiI1ZWI3ZjMwYzNlMmE4ODRhYzgzYWE3NjAiLCJ1c2VybmFtZSI6ImF1dGh0ZXN0IiwicGFzc3dvcmQiOiIkMmEkMTAkYjJmYTZHTTJMTDlLVlJ4UzhVVEkzdS5SQ2JjUWw0WXc5OExaWVVHUHRnUVdBdVFGOERqNXUiLCJfX3YiOjAsImN1cnJlbnRfY291bnRyeSI6IiJ9LCJpYXQiOjE1ODkxODc5Mjd9.ZJQHbK7cVmDOf87uuhUttlnyAFYe5KA0Afnq0iBptF0"
-        )
         .send({
           title: "Test Title",
           source: "Test Source",
@@ -269,19 +238,19 @@ describe("News API", () => {
       expect(response.body).to.have.property("source", "Test Source");
       expect(response.body).to.have.property("description", "Test Description");
       expect(response.body).to.have.property("country", "Test Country");
-      expect(response.body).to.have.property("reference_link", "test.com"); 
+      expect(response.body).to.have.property("reference_link", "test.com");
 
       new_news = response.body;
 
       expect(await Alert.find()).to.have.length.greaterThan(0);
       expect(await AlertUser.find()).to.have.length.greaterThan(0);
 
-      alert = await Alert.find({"title" : news.title});
-      alert_user = await AlertUser.find({user_id : user._id, alert_id: alert._id});
+      alert = await Alert.find({ "title": news.title });
+      alert_user = await AlertUser.find({ user_id: user._id, alert_id: alert._id });
 
       expect(alert).to.be.not.a('null');
       expect(alert_user).to.be.not.a('null');
-        
+
     });
   });
 
@@ -308,10 +277,6 @@ describe("News API", () => {
       let response = await chai
         .request(server)
         .post("/api/news/")
-        .set(
-          "Authorization",
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6Ik1BTEUiLCJhZ2VfZ3JvdXAiOiI-OTAiLCJfaWQiOiI1ZWI3ZjMwYzNlMmE4ODRhYzgzYWE3NjAiLCJ1c2VybmFtZSI6ImF1dGh0ZXN0IiwicGFzc3dvcmQiOiIkMmEkMTAkYjJmYTZHTTJMTDlLVlJ4UzhVVEkzdS5SQ2JjUWw0WXc5OExaWVVHUHRnUVdBdVFGOERqNXUiLCJfX3YiOjAsImN1cnJlbnRfY291bnRyeSI6IiJ9LCJpYXQiOjE1ODkxODc5Mjd9.ZJQHbK7cVmDOf87uuhUttlnyAFYe5KA0Afnq0iBptF0"
-        )
         .send({});
       expect(response).to.have.status(500);
       expect(response.error.text).to.include("ValidationError: title: Path `title` is required., source: Path `source` is required., type: Path `type` is required., description: Path `description` is required., date: Path `date` is required.");
