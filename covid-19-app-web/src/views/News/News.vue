@@ -131,7 +131,9 @@
                   :value="source.source"
                 >
                   <template v-slot:default="{ active, toggle }">
-                    <v-list-item-avatar>
+                    <v-list-item-avatar
+                      style="border-radius: 15px 5px 15px 5px"
+                    >
                       <v-img
                         contain
                         :src="source.logo"

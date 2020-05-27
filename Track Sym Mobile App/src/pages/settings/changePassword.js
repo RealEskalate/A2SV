@@ -37,6 +37,7 @@ const ChangePassScreen = (props) => {
   const [isLoading, setIsLoading] = React.useState(false);
   const [modalState, setModalState] = React.useState(false);
   const [modalMessage, setModalMessage] = React.useState("");
+  const [modalStatus, setModalStatus] = React.useState("");
 
   const renderBackAction = () => (
     <TopNavigationAction
@@ -49,7 +50,6 @@ const ChangePassScreen = (props) => {
     if (pass === "") {
       setCurrPasswordStatus("danger");
       setCurrPasswordCap("required*");
-      return;
     } else {
       setCurrPasswordStatus("basic");
       setCurrPasswordCap();
@@ -61,7 +61,6 @@ const ChangePassScreen = (props) => {
     if (pass === "") {
       setNewPasswordStatus("danger");
       setNewPasswordCap("required*");
-      return;
     } else {
       setNewPasswordStatus("basic");
       setNewPasswordCap();
@@ -74,7 +73,6 @@ const ChangePassScreen = (props) => {
     if (pass !== newPassword) {
       setConNewPasswordStatus("danger");
       setConNewPasswordCap("Password donot match !");
-      return;
     } else {
       setConNewPasswordStatus("basic");
       setConNewPasswordCap();
@@ -127,6 +125,7 @@ const ChangePassScreen = (props) => {
         .catch((error) => {
           setModalMessage("Wrong current passowrd");
           setModalState(true);
+          setModalStatus("danger");
         });
     }
   };
@@ -150,10 +149,12 @@ const ChangePassScreen = (props) => {
         setModalMessage("You have successfully changed your password");
         setModalState(true);
         setIsLoading(false);
+        setModalStatus("success");
       })
       .catch((error) => {
         setModalMessage("Oops, couldn't update your password! Please retry!");
         setModalState(true);
+        setModalStatus("danger");
       });
   };
 
@@ -164,8 +165,8 @@ const ChangePassScreen = (props) => {
         backdropStyle={styles.backdrop}
         onBackdropPress={() => setModalState(false)}
       >
-        <Card disabled={true}>
-          <Text status="success" category="h6" style={{ marginBottom: 10 }}>
+        <Card disabled={true} style={{ marginLeft: 10, marginRight: 10 }}>
+          <Text status={modalStatus} category="h6" style={{ marginBottom: 10 }}>
             {modalMessage}
           </Text>
           <Text

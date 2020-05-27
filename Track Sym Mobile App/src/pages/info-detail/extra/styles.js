@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
@@ -13,11 +13,10 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginVertical: 24,
     zIndex: 1,
-    
   },
   headerTitle: {
     marginHorizontal: 16,
-    fontSize:18
+    // fontSize: 18,
   },
   horizontalItem: {
     width: 256,
@@ -48,7 +47,7 @@ const styles = StyleSheet.create({
   },
   dateLabel: {
     marginHorizontal: 8,
-    fontSize:18
+    fontSize: 18,
   },
   authoringContainer: {
     marginHorizontal: 10,
