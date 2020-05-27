@@ -8,9 +8,9 @@ const jwt = require("jsonwebtoken");
 
 // Display list of all symptoms.
 exports.get_all_symptomusers = async (req, res) => {
-  if (req.query.demo && req.query.demo == "true"){
+  if (req.query.demo && req.query.demo == "true") {
     var SymptomUser = DemoSymptomUser;
-  }else{
+  } else {
     var SymptomUser = SymptomUserModel.SymptomUser;
   }
   const symptomusers = await SymptomUser.find();
@@ -58,11 +58,41 @@ exports.post_symptomuser = async (req, res) => {
   }
 };
 
+// Post multiple symptoms given userId  and list of symptomsIds
+exports.post_multiple_symptoms = async (req, res) => {
+  const user = await User.findById(req.body.user_id)
+  const symptoms = req.body.symptoms
+  if (!user) {
+    return res.status(400).send('Invalid request')
+  }
+  await SymptomUser.deleteMany({ user_id: user._id })
+
+  for (let i = 0; i < symptoms.length; i++) {
+    let symptomuser = new SymptomUser({
+      symptom_id: symptoms[i],
+      user_id: user._id,
+    });
+
+    // Check if user and symptom exists
+    const symptomExists = await Symptom.findById(symptomuser.symptom_id)
+    if (!symptomExists) {
+      continue
+    }
+    try {
+      await symptomuser.save()
+    } catch (error) {
+      res.status(500).send(err.toString());
+    }
+
+  }
+  return res.status(201).send('Symptoms registered successfully')
+}
+
 //Get a symptomuser by symptom_id
 exports.get_symptomuser_by_symptom_id = async (req, res) => {
-  if (req.query.demo && req.query.demo == "true"){
+  if (req.query.demo && req.query.demo == "true") {
     var SymptomUser = DemoSymptomUser;
-  }else{
+  } else {
     var SymptomUser = SymptomUserModel.SymptomUser;
   }
   try {
@@ -93,9 +123,9 @@ exports.get_symptomuser_by_symptom_id = async (req, res) => {
 
 //Get a symptomuser by user_id
 exports.get_symptomuser_by_user_id = async (req, res) => {
-  if (req.query.demo && req.query.demo == "true"){
+  if (req.query.demo && req.query.demo == "true") {
     var SymptomUser = DemoSymptomUser;
-  }else{
+  } else {
     var SymptomUser = SymptomUserModel.SymptomUser;
   }
   try {
