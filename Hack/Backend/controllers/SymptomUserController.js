@@ -60,31 +60,33 @@ exports.post_symptomuser = async (req, res) => {
 
 // Post multiple symptoms given userId  and list of symptomsIds
 exports.post_multiple_symptoms = async (req, res) => {
-  const user = await User.findById(req.body.user_id)
-  const symptoms = req.body.symptoms
+  const user = await User.findById(req.body.loggedInUser)
+  const symptomMap = req.body.symptoms
   if (!user || !symptoms) {
     return res.status(400).send('Invalid request')
   }
-  await SymptomUser.deleteMany({ user_id: user._id })
+  await SymptomUser.deleteMany({ user_id: req.body.loggedInUser })
 
-  for (let i = 0; i < symptoms.length; i++) {
-    let symptomuser = new SymptomUser({
-      symptom_id: symptoms[i],
-      user_id: user._id,
-    });
+  for (let [id, isChecked] of symptomMap) {
+    if (isChecked) {
+      let symptomuser = new SymptomUser({
+        symptom_id: id,
+        user_id: req.body.loggedInUser,
+      });
 
-    // Check if user and symptom exists
-    const symptomExists = await Symptom.findById(symptomuser.symptom_id)
-    if (!symptomExists) {
-      continue
+      // Check if user and symptom exists
+      const symptomExists = await Symptom.findById(id)
+      if (!symptomExists) {
+        continue
+      }
+      try {
+        await symptomuser.save()
+      } catch (error) {
+        console.log(error.toString())
+      }
     }
-    try {
-      await symptomuser.save()
-    } catch (error) {
-      res.status(500).send(err.toString());
-    }
-
   }
+
   return res.status(201).send('Symptoms registered successfully')
 }
 
