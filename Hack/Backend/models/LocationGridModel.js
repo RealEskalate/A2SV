@@ -17,6 +17,14 @@ const locationGridSchema = new mongoose.Schema({
     type: Object,
     required: true
   },
+  ages: {
+    type: Object,
+    required: true
+  },
+  genders: {
+    type: Object,
+    required: true
+  },
   zoom_level: {
     type: Number,
     required: true
