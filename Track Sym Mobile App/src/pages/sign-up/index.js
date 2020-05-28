@@ -295,7 +295,13 @@ export default ({ navigation }) => {
         onPress={onSignUpButtonPress}>
         SIGN UP
       </Button>
-      <Button style={styles.termsButton} appearance='ghost' status='basic'>
+      <Button
+        style={styles.termsButton}
+        appearance='ghost'
+        status='basic'
+        onPress={() => {
+          navigation.navigate('TermsAndPrivacyScreen');
+        }}>
         Terms & Privacy
       </Button>
       {/* <View style={styles.orContainer}>
