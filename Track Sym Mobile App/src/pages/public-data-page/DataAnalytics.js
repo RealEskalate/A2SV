@@ -1047,7 +1047,7 @@ class DataAnalytics extends React.Component {
                   borderRadius: 10,
                 }}
               />
-              {/* {this.state.dailyGraphLoading ? (
+              {this.state.dailyGraphLoading ? (
                 <Layout
                   style={{
                     width: Dimensions.get("window").width,
@@ -1057,7 +1057,7 @@ class DataAnalytics extends React.Component {
                 >
                   <DotsLoader size={15} />
                 </Layout>
-              ) : null} */}
+              ) : null}
             </Layout>
 
             <Layout
@@ -1349,7 +1349,7 @@ class DataAnalytics extends React.Component {
                   borderRadius: 10,
                 }}
               />
-              {/* {this.state.totalGraphLoading ? (
+              {this.state.totalGraphLoading ? (
                 <Layout
                   style={{
                     width: Dimensions.get("window").width,
@@ -1359,7 +1359,7 @@ class DataAnalytics extends React.Component {
                 >
                   <DotsLoader size={15} />
                 </Layout>
-              ) : null} */}
+              ) : null}
             </Layout>
 
             <Layout
@@ -1639,7 +1639,7 @@ class DataAnalytics extends React.Component {
                   borderRadius: 10,
                 }}
               />
-              {/* {this.state.rateGraphLoading ? (
+              {this.state.rateGraphLoading ? (
                 <Layout
                   style={{
                     width: Dimensions.get("window").width,
@@ -1649,7 +1649,7 @@ class DataAnalytics extends React.Component {
                 >
                   <DotsLoader size={15} />
                 </Layout>
-              ) : null} */}
+              ) : null}
             </Layout>
 
             <Layout
@@ -1745,7 +1745,7 @@ class DataAnalytics extends React.Component {
                               .descriptions[0].criteria[1].explanation,
                             descriptionVisiblity: true,
                           })
-                        : this.getCriteriaDescriptions("Total Counts", 0)
+                        : this.getCriteriaDescriptions("View Rates", 0)
                       : this.state.selected_filter_rate ===
                         criterias.recoveryRate
                       ? this.state.staticsDescription.length > 1
@@ -1756,7 +1756,7 @@ class DataAnalytics extends React.Component {
                               .descriptions[0].criteria[3].explanation,
                             descriptionVisiblity: true,
                           })
-                        : this.getCriteriaDescriptions("Total Counts", 1)
+                        : this.getCriteriaDescriptions("View Rates", 1)
                       : this.state.selected_filter === criterias.deathRate
                       ? this.state.staticsDescription.length > 1
                         ? this.setState({
@@ -1766,7 +1766,7 @@ class DataAnalytics extends React.Component {
                               .descriptions[0].criteria[2].explanation,
                             descriptionVisiblity: true,
                           })
-                        : this.getCriteriaDescriptions("Total Counts", 3)
+                        : this.getCriteriaDescriptions("View Rates", 3)
                       : this.state.staticsDescription.length > 1
                       ? this.setState({
                           descriptionTitle: this.state.staticsDescription[1]
@@ -1775,7 +1775,7 @@ class DataAnalytics extends React.Component {
                             .descriptions[0].criteria[0].explanation,
                           descriptionVisiblity: true,
                         })
-                      : this.getCriteriaDescriptions("Total Counts", 2);
+                      : this.getCriteriaDescriptions("View Rates", 2);
                   }
                   this.setState({ descriptionVisiblity: true });
                 }}
