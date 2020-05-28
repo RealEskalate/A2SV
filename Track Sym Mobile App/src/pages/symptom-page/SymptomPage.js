@@ -1,5 +1,10 @@
 import React, { Component } from "react";
-import { ScrollView, SafeAreaView, ActivityIndicator } from "react-native";
+import {
+  ScrollView,
+  SafeAreaView,
+  ActivityIndicator,
+  View,
+} from "react-native";
 import {
   Layout,
   ListItem,
@@ -36,6 +41,7 @@ export default class SymptomPage extends Component {
       modalState: false,
       modalStatus: "",
       changesMade: false,
+      numberOfChanges: 0,
     };
     localSymptomStore.subscribe(() => {
       this.fetchData();
@@ -54,6 +60,31 @@ export default class SymptomPage extends Component {
     this.setState({
       localUserSymptoms: localSymptomStore.getState(),
     });
+    //Checking if there are any changes made
+    if (
+      symptomStore.getState().length !== localSymptomStore.getState().length
+    ) {
+      this.setState({ changesMade: true });
+    } else if (
+      symptomStore.getState().length === localSymptomStore.getState().length
+    ) {
+      if (localSymptomStore.getState().length === 0) {
+        this.setState({ changesMade: false }); //if they are equal but empty
+      }
+      for (var index = 0; index < symptomStore.getState().length; index++) {
+        if (
+          !localSymptomStore
+            .getState()
+            .includes(symptomStore.getState()[index].Symptom._id)
+        ) {
+          this.setState({ changesMade: true });
+          return;
+        }
+        this.setState({ changesMade: false });
+      }
+    } else {
+      this.setState({ changesMade: false });
+    }
   }
 
   //Sync with the remote
@@ -80,24 +111,12 @@ export default class SymptomPage extends Component {
     if (localSymptomStore.getState().includes(symptomId)) {
       localSymptomStore.dispatch(localSymptomActions.removeSymptom(symptomId));
       //check if new change has been made
-      let listSymptoms = symptomStore.getState();
-      let symptom = listSymptoms.find((obj) => obj.symptom_id == symptomId);
-      if (symptom === null) {
-        this.setState({ changesMade: true });
-      } else {
-        this.setState({ changesMade: false });
-      }
+
       //this.removeSymptom(userIdStore.getState().userId, symptom._id, symptomId);
     } else {
       localSymptomStore.dispatch(localSymptomActions.addSymptom(symptomId));
       //check if new change has been made
-      let listSymptoms = symptomStore.getState();
-      let symptom = listSymptoms.find((obj) => obj.symptom_id == symptomId);
-      if (symptom !== null) {
-        this.setState({ changesMade: true });
-      } else {
-        this.setState({ changesMade: false });
-      }
+
       //this.registerSymptom(userIdStore.getState().userId, symptomId);
     }
   };
@@ -301,7 +320,7 @@ export default class SymptomPage extends Component {
 
   render() {
     return (
-      <ScrollView style={{ backgroundColor: "#eee" }}>
+      <Layout style={{ flex: 1, flexDirection: "column" }}>
         <Modal
           visible={this.state.modalState}
           backdropStyle={styles.backdrop}
@@ -325,54 +344,49 @@ export default class SymptomPage extends Component {
             </Text>
           </Card>
         </Modal>
-        <Layout>
-          {this.state.loading ? (
-            <Layout
-              style={{
-                flex: 1,
-                margin: 5,
-                alignSelf: "center",
-                flexDirection: "row",
-              }}
-            >
-              <Text style={{ marginRight: 10 }}>
-                {this.state.loadingStatusText} your symptom
-              </Text>
-              <Spinner size="small" />
-            </Layout>
-          ) : null}
 
-          {this.state.changesMade ? (
-            <Layout
-              style={{
-                flex: 1,
-                margin: 5,
-                alignSelf: "center",
-                flexDirection: "row",
-              }}
-            >
-              <Button
-                style={styles.button}
-                appearance="outline"
-                disabled={this.state.registerLoading}
-                accessoryLeft={() =>
-                  this.state.registerLoading ? <Spinner /> : <></>
-                }
-                onPress={() => this.registerCollectionSymptom()}
-              >
-                Save Changes
-              </Button>
-            </Layout>
-          ) : null}
-          <Layout style={{ flex: 1 }}>
-            <List
-              data={this.state.symptoms}
-              ItemSeparatorComponent={Divider}
-              renderItem={this.renderItem}
-            />
+        {this.state.loading ? (
+          <Layout
+            style={{
+              margin: 5,
+              alignSelf: "center",
+              flexDirection: "row",
+            }}
+          >
+            <Text style={{ marginRight: 10 }}>
+              {this.state.loadingStatusText} your symptom
+            </Text>
+            <Spinner size="small" />
           </Layout>
-        </Layout>
-      </ScrollView>
+        ) : null}
+
+        {this.state.changesMade ? (
+          <Layout
+            style={{
+              margin: 5,
+              alignSelf: "center",
+              flexDirection: "row",
+            }}
+          >
+            <Button
+              style={styles.button}
+              appearance="outline"
+              disabled={this.state.registerLoading}
+              accessoryLeft={() =>
+                this.state.registerLoading ? <Spinner /> : <></>
+              }
+              onPress={() => this.registerCollectionSymptom()}
+            >
+              Save Changes
+            </Button>
+          </Layout>
+        ) : null}
+        <List
+          data={this.state.symptoms}
+          ItemSeparatorComponent={Divider}
+          renderItem={this.renderItem}
+        />
+      </Layout>
     );
   }
 }
