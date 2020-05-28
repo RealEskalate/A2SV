@@ -179,7 +179,7 @@ export default class MapService extends React.Component {
         for (let i = 0; i < leaves.length; i++) {
           let leaf = leaves[i];
           fetch(
-            "http://sym-track.herokuapp.com/api/symptomuser/user/" +
+            "https://sym-track.herokuapp.com/api/symptomuser/user/" +
               leaf.id +
               "?demo=true",
             {
@@ -221,7 +221,7 @@ export default class MapService extends React.Component {
         for (let i = 0; i < leaves.length; i++) {
           let leaf = leaves[i];
           fetch(
-            "http://sym-track.herokuapp.com/api/symptomuser/user/" +
+            "https://sym-track.herokuapp.com/api/symptomuser/user/" +
               leaf.id +
               "?demo=true",
             {
@@ -260,7 +260,7 @@ export default class MapService extends React.Component {
           .getLeaves(feature.properties.cluster_id, Infinity)
           .forEach((leaf) => {
             fetch(
-              "http://sym-track.herokuapp.com/api/symptomuser/user/" +
+              "https://sym-track.herokuapp.com/api/symptomuser/user/" +
                 leaf.id +
                 "?demo=true",
               {
@@ -337,7 +337,7 @@ export default class MapService extends React.Component {
       };
       const user_id = feature.id;
       const details = fetch(
-        "http://sym-track.herokuapp.com/api/symptomuser/user/" +
+        "https://sym-track.herokuapp.com/api/symptomuser/user/" +
           user_id +
           "?demo=true",
         {
@@ -431,7 +431,7 @@ export default class MapService extends React.Component {
   };
 
   fetchCities() {
-    fetch("http://sym-track.herokuapp.com/api/cities", {
+    fetch("https://sym-track.herokuapp.com/api/cities", {
       method: "GET",
       headers: {
         Authorization: "Bearer " + userIDStore.getState().userToken,
@@ -469,7 +469,7 @@ export default class MapService extends React.Component {
     //     ' lat ' +
     //     this.state.user_latitude,
     // );
-    fetch("http://sym-track.herokuapp.com/api/locations_symptoms?demo=true", {
+    fetch("https://sym-track.herokuapp.com/api/locations_symptoms?demo=true", {
       method: "POST",
       headers: {
         Authorization: "Bearer " + userIDStore.getState().userToken,

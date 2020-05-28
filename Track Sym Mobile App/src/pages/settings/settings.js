@@ -38,8 +38,8 @@ export const SettingScreen = (props) => {
 
   const stubAction = () => {};
 
-  const profileAction = () => {
-    props.navigation.navigate('ProfileScreen');
+  const termsAction = () => {
+    props.navigation.navigate('TermsAndPrivacyScreen');
   };
 
   const changePassAction = () => {
@@ -92,7 +92,7 @@ export const SettingScreen = (props) => {
   const settingActions = [
     editProfAction,
     changePassAction,
-    stubAction,
+    termsAction,
     stubAction,
     logOutAction,
   ];

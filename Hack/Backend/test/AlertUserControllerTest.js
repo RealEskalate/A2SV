@@ -4,8 +4,10 @@ let chai = require("chai");
 let chaiHttp = require("chai-http");
 let server = require("../index");
 let Alert = require("../models/AlertModel");
-let {User} = require("../models/UserModel");
+let { User } = require("../models/UserModel");
 let AlertUser = require("../models/AlertUserModel");
+const jwt = require("jsonwebtoken");
+const config = require("config");
 let mongoose = require("mongoose");
 const { expect } = chai;
 chai.use(chaiHttp);
@@ -14,16 +16,45 @@ describe("Alert Users API", () => {
   //Get Alert Users - Valid Route
   describe("GET /api/alerts_user", () => {
     let alert_user;
+    let user;
+    let alert;
+    let tokens;
     beforeEach(async () => {
+      user = new User({
+        _id: mongoose.Types.ObjectId(),
+        username: `${Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000}`,
+        password:
+          "$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
+        gender: "FEMALE",
+        age_group: "21-30",
+      });
+      await user.save();
+      try {
+        jwt.sign({ user }, config.get("secretkey"), (err, token) => {
+          tokens = token;
+        });
+      } catch (err) {
+        console.log(err.toString());
+      }
+      alert = new Alert({
+        _id: mongoose.Types.ObjectId(),
+        title: "Testing",
+        type: "UPDATES",
+        degree: "URGENT",
+        content: "Random Non Sequitor",
+      });
+      await alert.save();
       alert_user = new AlertUser({
         _id: mongoose.Types.ObjectId(),
-        user_id: mongoose.Types.ObjectId(),
-        alert_id: mongoose.Types.ObjectId(),
+        user_id: user._id,
+        alert_id: alert._id
       });
       await alert_user.save();
     });
     afterEach(async () => {
       await AlertUser.findByIdAndRemove(alert_user._id);
+      await Alert.findByIdAndRemove(alert._id);
+      await User.findByIdAndDelete(user._id);
     });
     it("It should Get alert users", async () => {
       let response = await chai
@@ -31,26 +62,55 @@ describe("Alert Users API", () => {
         .get("/api/alerts_user/")
         .set(
           "Authorization",
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6Ik1BTEUiLCJhZ2VfZ3JvdXAiOiI-OTAiLCJfaWQiOiI1ZWI3ZjMwYzNlMmE4ODRhYzgzYWE3NjAiLCJ1c2VybmFtZSI6ImF1dGh0ZXN0IiwicGFzc3dvcmQiOiIkMmEkMTAkYjJmYTZHTTJMTDlLVlJ4UzhVVEkzdS5SQ2JjUWw0WXc5OExaWVVHUHRnUVdBdVFGOERqNXUiLCJfX3YiOjAsImN1cnJlbnRfY291bnRyeSI6IiJ9LCJpYXQiOjE1ODkxODc5Mjd9.ZJQHbK7cVmDOf87uuhUttlnyAFYe5KA0Afnq0iBptF0"
+          "Bearer " + tokens
         );
-      expect(response).to.have.status(200);
-      expect(response.body).to.be.a('array');
+      //Since the route has been commented out, status is 404
+      expect(response).to.have.status(404);
     });
   });
 
   //Get Alert Users - InValid Route
   describe("GET /api/alerts_user", () => {
     let alert_user;
+    let user;
+    let alert;
+    let tokens;
     beforeEach(async () => {
+      user = new User({
+        _id: mongoose.Types.ObjectId(),
+        username: `${Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000}`,
+        password:
+          "$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
+        gender: "FEMALE",
+        age_group: "21-30",
+      });
+      await user.save();
+      try {
+        jwt.sign({ user }, config.get("secretkey"), (err, token) => {
+          tokens = token;
+        });
+      } catch (err) {
+        console.log(err.toString());
+      }
+      alert = new Alert({
+        _id: mongoose.Types.ObjectId(),
+        title: "Testing",
+        type: "UPDATES",
+        degree: "URGENT",
+        content: "Random Non Sequitor",
+      });
+      await alert.save();
       alert_user = new AlertUser({
         _id: mongoose.Types.ObjectId(),
-        user_id: mongoose.Types.ObjectId(),
-        alert_id: mongoose.Types.ObjectId(),
+        user_id: user._id,
+        alert_id: alert._id
       });
       await alert_user.save();
     });
     afterEach(async () => {
       await AlertUser.findByIdAndRemove(alert_user._id);
+      await Alert.findByIdAndRemove(alert._id);
+      await User.findByIdAndDelete(user._id);
     });
     it("It should not Get alert users", async () => {
       let response = await chai
@@ -58,7 +118,7 @@ describe("Alert Users API", () => {
         .get("/api/alerts_userssss/")
         .set(
           "Authorization",
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6Ik1BTEUiLCJhZ2VfZ3JvdXAiOiI-OTAiLCJfaWQiOiI1ZWI3ZjMwYzNlMmE4ODRhYzgzYWE3NjAiLCJ1c2VybmFtZSI6ImF1dGh0ZXN0IiwicGFzc3dvcmQiOiIkMmEkMTAkYjJmYTZHTTJMTDlLVlJ4UzhVVEkzdS5SQ2JjUWw0WXc5OExaWVVHUHRnUVdBdVFGOERqNXUiLCJfX3YiOjAsImN1cnJlbnRfY291bnRyeSI6IiJ9LCJpYXQiOjE1ODkxODc5Mjd9.ZJQHbK7cVmDOf87uuhUttlnyAFYe5KA0Afnq0iBptF0"
+          "Bearer " + tokens
         );
       expect(response).to.have.status(404);
     });
@@ -67,24 +127,53 @@ describe("Alert Users API", () => {
   //Get Alert User By ID - Valid Alert User
   describe("GET /api/alerts_user/:id", () => {
     let alert_user;
+    let user;
+    let alert;
+    let tokens;
     beforeEach(async () => {
+      user = new User({
+        _id: mongoose.Types.ObjectId(),
+        username: `${Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000}`,
+        password:
+          "$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
+        gender: "FEMALE",
+        age_group: "21-30",
+      });
+      await user.save();
+      try {
+        jwt.sign({ user }, config.get("secretkey"), (err, token) => {
+          tokens = token;
+        });
+      } catch (err) {
+        console.log(err.toString());
+      }
+      alert = new Alert({
+        _id: mongoose.Types.ObjectId(),
+        title: "Testing",
+        type: "UPDATES",
+        degree: "URGENT",
+        content: "Random Non Sequitor",
+      });
+      await alert.save();
       alert_user = new AlertUser({
         _id: mongoose.Types.ObjectId(),
-        user_id: mongoose.Types.ObjectId(),
-        alert_id: mongoose.Types.ObjectId(),
+        user_id: user._id,
+        alert_id: alert._id
       });
       await alert_user.save();
     });
     afterEach(async () => {
       await AlertUser.findByIdAndRemove(alert_user._id);
+      await Alert.findByIdAndRemove(alert._id);
+      await User.findByIdAndDelete(user._id);
     });
     it("It should Get alert user by id", async () => {
       let response = await chai
         .request(server)
-        .get("/api/alerts_user/"+alert_user._id)
+        .get("/api/alerts_user/" + alert_user._id)
         .set(
           "Authorization",
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6Ik1BTEUiLCJhZ2VfZ3JvdXAiOiI-OTAiLCJfaWQiOiI1ZWI3ZjMwYzNlMmE4ODRhYzgzYWE3NjAiLCJ1c2VybmFtZSI6ImF1dGh0ZXN0IiwicGFzc3dvcmQiOiIkMmEkMTAkYjJmYTZHTTJMTDlLVlJ4UzhVVEkzdS5SQ2JjUWw0WXc5OExaWVVHUHRnUVdBdVFGOERqNXUiLCJfX3YiOjAsImN1cnJlbnRfY291bnRyeSI6IiJ9LCJpYXQiOjE1ODkxODc5Mjd9.ZJQHbK7cVmDOf87uuhUttlnyAFYe5KA0Afnq0iBptF0"
+          "Bearer " + tokens
         );
       expect(response).to.have.status(200);
       expect(response.body).to.be.a('object');
@@ -96,16 +185,45 @@ describe("Alert Users API", () => {
   //Get Alert User By ID - Invalid Alert User
   describe("GET /api/alerts_user/:id", () => {
     let alert_user;
+    let user;
+    let alert;
+    let tokens;
     beforeEach(async () => {
+      user = new User({
+        _id: mongoose.Types.ObjectId(),
+        username: `${Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000}`,
+        password:
+          "$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
+        gender: "FEMALE",
+        age_group: "21-30",
+      });
+      await user.save();
+      try {
+        jwt.sign({ user }, config.get("secretkey"), (err, token) => {
+          tokens = token;
+        });
+      } catch (err) {
+        console.log(err.toString());
+      }
+      alert = new Alert({
+        _id: mongoose.Types.ObjectId(),
+        title: "Testing",
+        type: "UPDATES",
+        degree: "URGENT",
+        content: "Random Non Sequitor",
+      });
+      await alert.save();
       alert_user = new AlertUser({
         _id: mongoose.Types.ObjectId(),
-        user_id: mongoose.Types.ObjectId(),
-        alert_id: mongoose.Types.ObjectId(),
+        user_id: user._id,
+        alert_id: alert._id
       });
       await alert_user.save();
     });
     afterEach(async () => {
       await AlertUser.findByIdAndRemove(alert_user._id);
+      await Alert.findByIdAndRemove(alert._id);
+      await User.findByIdAndDelete(user._id);
     });
     it("It should not Get alert user by id", async () => {
       let response = await chai
@@ -113,7 +231,7 @@ describe("Alert Users API", () => {
         .get("/api/alerts_user/5e904cce7a1c6b627ae9f507")
         .set(
           "Authorization",
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6Ik1BTEUiLCJhZ2VfZ3JvdXAiOiI-OTAiLCJfaWQiOiI1ZWI3ZjMwYzNlMmE4ODRhYzgzYWE3NjAiLCJ1c2VybmFtZSI6ImF1dGh0ZXN0IiwicGFzc3dvcmQiOiIkMmEkMTAkYjJmYTZHTTJMTDlLVlJ4UzhVVEkzdS5SQ2JjUWw0WXc5OExaWVVHUHRnUVdBdVFGOERqNXUiLCJfX3YiOjAsImN1cnJlbnRfY291bnRyeSI6IiJ9LCJpYXQiOjE1ODkxODc5Mjd9.ZJQHbK7cVmDOf87uuhUttlnyAFYe5KA0Afnq0iBptF0"
+          "Bearer " + tokens
         );
       expect(response).to.have.status(400);
     });
@@ -122,15 +240,26 @@ describe("Alert Users API", () => {
   //Post Alert User - Valid Alert User
   describe("POST /api/alerts_user", () => {
     let alert_user;
+    let user;
     let alert;
-    let newUser;
-    let new_alert_user;
+    let tokens;
     beforeEach(async () => {
-      alert_user = new AlertUser({
+      user = new User({
         _id: mongoose.Types.ObjectId(),
-        user_id: mongoose.Types.ObjectId(),
-        alert_id: mongoose.Types.ObjectId(),
+        username: `${Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000}`,
+        password:
+          "$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
+        gender: "FEMALE",
+        age_group: "21-30",
       });
+      await user.save();
+      try {
+        jwt.sign({ user }, config.get("secretkey"), (err, token) => {
+          tokens = token;
+        });
+      } catch (err) {
+        console.log(err.toString());
+      }
       alert = new Alert({
         _id: mongoose.Types.ObjectId(),
         title: "Testing",
@@ -138,57 +267,77 @@ describe("Alert Users API", () => {
         degree: "URGENT",
         content: "Random Non Sequitor",
       });
-      newUser = new User({
-        _id : mongoose.Types.ObjectId(),
-        username:"Testing",
-        password:"$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
-        gender:"FEMALE",
-        age_group:"21-30",
-      });
-      await newUser.save();
-      await alert_user.save();
       await alert.save();
     });
     afterEach(async () => {
-      await AlertUser.findByIdAndRemove(alert_user._id);
-      await AlertUser.findByIdAndRemove(new_alert_user._id);
       await Alert.findByIdAndRemove(alert._id);
-      await User.findByIdAndRemove(newUser._id);
+      await User.findByIdAndDelete(user._id);
     });
     it("It should insert alert user", async () => {
+      let id = mongoose.Types.ObjectId()
       let response = await chai
         .request(server)
         .post("/api/alerts_user/")
         .set(
           "Authorization",
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6Ik1BTEUiLCJhZ2VfZ3JvdXAiOiI-OTAiLCJfaWQiOiI1ZWI3ZjMwYzNlMmE4ODRhYzgzYWE3NjAiLCJ1c2VybmFtZSI6ImF1dGh0ZXN0IiwicGFzc3dvcmQiOiIkMmEkMTAkYjJmYTZHTTJMTDlLVlJ4UzhVVEkzdS5SQ2JjUWw0WXc5OExaWVVHUHRnUVdBdVFGOERqNXUiLCJfX3YiOjAsImN1cnJlbnRfY291bnRyeSI6IiJ9LCJpYXQiOjE1ODkxODc5Mjd9.ZJQHbK7cVmDOf87uuhUttlnyAFYe5KA0Afnq0iBptF0"
+          "Bearer " + tokens
         )
         .send({
-          _id: mongoose.Types.ObjectId(),
+          _id: id,
           alert_id: alert._id,
-          user_id: newUser._id
+          user_id: user._id
         });
       expect(response).to.have.status(200);
       expect(response.body).to.be.a('object');
       expect(response.body).to.have.property('alert_id');
       expect(response.body).to.have.property('user_id');
       new_alert_user = response.body;
+      await AlertUser.findByIdAndRemove(id);
     });
   });
 
   //Post Alert User - Invalid Alert User
   describe("POST /api/alerts_user", () => {
     let alert_user;
+    let user;
+    let alert;
+    let tokens;
     beforeEach(async () => {
+      user = new User({
+        _id: mongoose.Types.ObjectId(),
+        username: `${Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000}`,
+        password:
+          "$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
+        gender: "FEMALE",
+        age_group: "21-30",
+      });
+      await user.save();
+      try {
+        jwt.sign({ user }, config.get("secretkey"), (err, token) => {
+          tokens = token;
+        });
+      } catch (err) {
+        console.log(err.toString());
+      }
+      alert = new Alert({
+        _id: mongoose.Types.ObjectId(),
+        title: "Testing",
+        type: "UPDATES",
+        degree: "URGENT",
+        content: "Random Non Sequitor",
+      });
+      await alert.save();
       alert_user = new AlertUser({
         _id: mongoose.Types.ObjectId(),
-        user_id: mongoose.Types.ObjectId(),
-        alert_id: mongoose.Types.ObjectId(),
+        user_id: user._id,
+        alert_id: alert._id
       });
       await alert_user.save();
     });
     afterEach(async () => {
       await AlertUser.findByIdAndRemove(alert_user._id);
+      await Alert.findByIdAndRemove(alert._id);
+      await User.findByIdAndDelete(user._id);
     });
     it("It should not insert alert user", async () => {
       let response = await chai
@@ -196,7 +345,7 @@ describe("Alert Users API", () => {
         .post("/api/alerts_user/")
         .set(
           "Authorization",
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6Ik1BTEUiLCJhZ2VfZ3JvdXAiOiI-OTAiLCJfaWQiOiI1ZWI3ZjMwYzNlMmE4ODRhYzgzYWE3NjAiLCJ1c2VybmFtZSI6ImF1dGh0ZXN0IiwicGFzc3dvcmQiOiIkMmEkMTAkYjJmYTZHTTJMTDlLVlJ4UzhVVEkzdS5SQ2JjUWw0WXc5OExaWVVHUHRnUVdBdVFGOERqNXUiLCJfX3YiOjAsImN1cnJlbnRfY291bnRyeSI6IiJ9LCJpYXQiOjE1ODkxODc5Mjd9.ZJQHbK7cVmDOf87uuhUttlnyAFYe5KA0Afnq0iBptF0"
+          "Bearer " + tokens
         )
         .send({
           _id: mongoose.Types.ObjectId(),
@@ -210,13 +359,26 @@ describe("Alert Users API", () => {
   //Patch Alert - Valid Alert
   describe("PATCH /api/alerts_user", () => {
     let alert_user;
+    let user;
     let alert;
+    let tokens;
     beforeEach(async () => {
-      alert_user = new AlertUser({
+      user = new User({
         _id: mongoose.Types.ObjectId(),
-        user_id: mongoose.Types.ObjectId(),
-        alert_id: mongoose.Types.ObjectId(),
+        username: `${Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000}`,
+        password:
+          "$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
+        gender: "FEMALE",
+        age_group: "21-30",
       });
+      await user.save();
+      try {
+        jwt.sign({ user }, config.get("secretkey"), (err, token) => {
+          tokens = token;
+        });
+      } catch (err) {
+        console.log(err.toString());
+      }
       alert = new Alert({
         _id: mongoose.Types.ObjectId(),
         title: "Testing",
@@ -224,12 +386,18 @@ describe("Alert Users API", () => {
         degree: "URGENT",
         content: "Random Non Sequitor",
       });
-      await alert_user.save();
       await alert.save();
+      alert_user = new AlertUser({
+        _id: mongoose.Types.ObjectId(),
+        user_id: user._id,
+        alert_id: alert._id
+      });
+      await alert_user.save();
     });
     afterEach(async () => {
       await AlertUser.findByIdAndRemove(alert_user._id);
       await Alert.findByIdAndRemove(alert._id);
+      await User.findByIdAndDelete(user._id);
     });
     it("It should update alert user", async () => {
       let response = await chai
@@ -237,7 +405,7 @@ describe("Alert Users API", () => {
         .patch("/api/alerts_user/")
         .set(
           "Authorization",
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6Ik1BTEUiLCJhZ2VfZ3JvdXAiOiI-OTAiLCJfaWQiOiI1ZWI3ZjMwYzNlMmE4ODRhYzgzYWE3NjAiLCJ1c2VybmFtZSI6ImF1dGh0ZXN0IiwicGFzc3dvcmQiOiIkMmEkMTAkYjJmYTZHTTJMTDlLVlJ4UzhVVEkzdS5SQ2JjUWw0WXc5OExaWVVHUHRnUVdBdVFGOERqNXUiLCJfX3YiOjAsImN1cnJlbnRfY291bnRyeSI6IiJ9LCJpYXQiOjE1ODkxODc5Mjd9.ZJQHbK7cVmDOf87uuhUttlnyAFYe5KA0Afnq0iBptF0"
+          "Bearer " + tokens
         )
         .send({
           _id: alert_user._id,
@@ -253,16 +421,45 @@ describe("Alert Users API", () => {
   //Patch Alert User - Invalid Entries
   describe("PATCH /api/alerts_user", () => {
     let alert_user;
+    let user;
+    let alert;
+    let tokens;
     beforeEach(async () => {
+      user = new User({
+        _id: mongoose.Types.ObjectId(),
+        username: `${Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000}`,
+        password:
+          "$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
+        gender: "FEMALE",
+        age_group: "21-30",
+      });
+      await user.save();
+      try {
+        jwt.sign({ user }, config.get("secretkey"), (err, token) => {
+          tokens = token;
+        });
+      } catch (err) {
+        console.log(err.toString());
+      }
+      alert = new Alert({
+        _id: mongoose.Types.ObjectId(),
+        title: "Testing",
+        type: "UPDATES",
+        degree: "URGENT",
+        content: "Random Non Sequitor",
+      });
+      await alert.save();
       alert_user = new AlertUser({
         _id: mongoose.Types.ObjectId(),
-        user_id: mongoose.Types.ObjectId(),
-        alert_id: mongoose.Types.ObjectId(),
+        user_id: user._id,
+        alert_id: alert._id
       });
       await alert_user.save();
     });
     afterEach(async () => {
       await AlertUser.findByIdAndRemove(alert_user._id);
+      await Alert.findByIdAndRemove(alert._id);
+      await User.findByIdAndDelete(user._id);
     });
     it("It should not update alert user", async () => {
       let response = await chai
@@ -270,7 +467,7 @@ describe("Alert Users API", () => {
         .patch("/api/alerts_user/")
         .set(
           "Authorization",
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6Ik1BTEUiLCJhZ2VfZ3JvdXAiOiI-OTAiLCJfaWQiOiI1ZWI3ZjMwYzNlMmE4ODRhYzgzYWE3NjAiLCJ1c2VybmFtZSI6ImF1dGh0ZXN0IiwicGFzc3dvcmQiOiIkMmEkMTAkYjJmYTZHTTJMTDlLVlJ4UzhVVEkzdS5SQ2JjUWw0WXc5OExaWVVHUHRnUVdBdVFGOERqNXUiLCJfX3YiOjAsImN1cnJlbnRfY291bnRyeSI6IiJ9LCJpYXQiOjE1ODkxODc5Mjd9.ZJQHbK7cVmDOf87uuhUttlnyAFYe5KA0Afnq0iBptF0"
+          "Bearer " + tokens
         )
         .send({
           _id: alert_user._id,
@@ -284,16 +481,45 @@ describe("Alert Users API", () => {
   //Delete Alert User - Valid Alert User
   describe("DELETE /api/alerts_user/", () => {
     let alert_user;
+    let user;
+    let alert;
+    let tokens;
     beforeEach(async () => {
+      user = new User({
+        _id: mongoose.Types.ObjectId(),
+        username: `${Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000}`,
+        password:
+          "$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
+        gender: "FEMALE",
+        age_group: "21-30",
+      });
+      await user.save();
+      try {
+        jwt.sign({ user }, config.get("secretkey"), (err, token) => {
+          tokens = token;
+        });
+      } catch (err) {
+        console.log(err.toString());
+      }
+      alert = new Alert({
+        _id: mongoose.Types.ObjectId(),
+        title: "Testing",
+        type: "UPDATES",
+        degree: "URGENT",
+        content: "Random Non Sequitor",
+      });
+      await alert.save();
       alert_user = new AlertUser({
         _id: mongoose.Types.ObjectId(),
-        user_id: mongoose.Types.ObjectId(),
-        alert_id: mongoose.Types.ObjectId(),
+        user_id: user._id,
+        alert_id: alert._id
       });
       await alert_user.save();
     });
     afterEach(async () => {
       await AlertUser.findByIdAndRemove(alert_user._id);
+      await Alert.findByIdAndRemove(alert._id);
+      await User.findByIdAndDelete(user._id);
     });
     it("It should delete alert user", async () => {
       let response = await chai
@@ -301,7 +527,7 @@ describe("Alert Users API", () => {
         .delete("/api/alerts_user/")
         .set(
           "Authorization",
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6Ik1BTEUiLCJhZ2VfZ3JvdXAiOiI-OTAiLCJfaWQiOiI1ZWI3ZjMwYzNlMmE4ODRhYzgzYWE3NjAiLCJ1c2VybmFtZSI6ImF1dGh0ZXN0IiwicGFzc3dvcmQiOiIkMmEkMTAkYjJmYTZHTTJMTDlLVlJ4UzhVVEkzdS5SQ2JjUWw0WXc5OExaWVVHUHRnUVdBdVFGOERqNXUiLCJfX3YiOjAsImN1cnJlbnRfY291bnRyeSI6IiJ9LCJpYXQiOjE1ODkxODc5Mjd9.ZJQHbK7cVmDOf87uuhUttlnyAFYe5KA0Afnq0iBptF0"
+          "Bearer " + tokens
         )
         .send({
           _id: alert_user._id,
@@ -312,16 +538,45 @@ describe("Alert Users API", () => {
   //Delete Alert User - Invalid Alert User
   describe("DELETE /api/alerts_user/", () => {
     let alert_user;
+    let user;
+    let alert;
+    let tokens;
     beforeEach(async () => {
-        alert_user = new AlertUser({
+      user = new User({
         _id: mongoose.Types.ObjectId(),
-        user_id: mongoose.Types.ObjectId(),
-        alert_id: mongoose.Types.ObjectId()
+        username: `${Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000}`,
+        password:
+          "$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
+        gender: "FEMALE",
+        age_group: "21-30",
+      });
+      await user.save();
+      try {
+        jwt.sign({ user }, config.get("secretkey"), (err, token) => {
+          tokens = token;
+        });
+      } catch (err) {
+        console.log(err.toString());
+      }
+      alert = new Alert({
+        _id: mongoose.Types.ObjectId(),
+        title: "Testing",
+        type: "UPDATES",
+        degree: "URGENT",
+        content: "Random Non Sequitor",
+      });
+      await alert.save();
+      alert_user = new AlertUser({
+        _id: mongoose.Types.ObjectId(),
+        user_id: user._id,
+        alert_id: alert._id
       });
       await alert_user.save();
     });
     afterEach(async () => {
       await AlertUser.findByIdAndRemove(alert_user._id);
+      await Alert.findByIdAndRemove(alert._id);
+      await User.findByIdAndDelete(user._id);
     });
     it("It should delete alert user", async () => {
       let response = await chai
@@ -329,7 +584,7 @@ describe("Alert Users API", () => {
         .delete("/api/alerts_user/")
         .set(
           "Authorization",
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6Ik1BTEUiLCJhZ2VfZ3JvdXAiOiI-OTAiLCJfaWQiOiI1ZWI3ZjMwYzNlMmE4ODRhYzgzYWE3NjAiLCJ1c2VybmFtZSI6ImF1dGh0ZXN0IiwicGFzc3dvcmQiOiIkMmEkMTAkYjJmYTZHTTJMTDlLVlJ4UzhVVEkzdS5SQ2JjUWw0WXc5OExaWVVHUHRnUVdBdVFGOERqNXUiLCJfX3YiOjAsImN1cnJlbnRfY291bnRyeSI6IiJ9LCJpYXQiOjE1ODkxODc5Mjd9.ZJQHbK7cVmDOf87uuhUttlnyAFYe5KA0Afnq0iBptF0"
+          "Bearer " + tokens
         )
         .send({
           _id: "5e904cce7a1c6b627ae9f507"
@@ -339,19 +594,29 @@ describe("Alert Users API", () => {
   });
   //Get alerts by user_id - Valid Entries
   describe("GET /api/alerts_user/user/", () => {
-    let user;
     let alert1;
     let alert2;
     let alertUser1;
     let alertUser2;
-    beforeEach(async ()=>{
+    let user;
+    let tokens;
+    beforeEach(async () => {
       user = new User({
-        _id : mongoose.Types.ObjectId(),
-        username:"Testing",
-        password:"$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
-        gender:"FEMALE",
-        age_group:"21-30",
+        _id: mongoose.Types.ObjectId(),
+        username: `${Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000}`,
+        password:
+          "$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
+        gender: "FEMALE",
+        age_group: "21-30",
       });
+      await user.save();
+      try {
+        jwt.sign({ user }, config.get("secretkey"), (err, token) => {
+          tokens = token;
+        });
+      } catch (err) {
+        console.log(err.toString());
+      }
       alert1 = new Alert({
         _id: mongoose.Types.ObjectId(),
         title: "Testing1",
@@ -387,17 +652,17 @@ describe("Alert Users API", () => {
       await AlertUser.findByIdAndRemove(alertUser2._id);
       await Alert.findByIdAndRemove(alert1._id);
       await Alert.findByIdAndRemove(alert2._id);
-      await User.findByIdAndRemove(user._id);
+      await User.findByIdAndDelete(user._id);
     });
-    it("It should send alerts", async () =>{
+    it("It should send alerts", async () => {
       let response = await chai
-      .request(server)
-      .get("/api/alerts_user/user/" + user._id)
-      .set(
-        "Authorization",
-        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6Ik1BTEUiLCJhZ2VfZ3JvdXAiOiI-OTAiLCJfaWQiOiI1ZWI3ZjMwYzNlMmE4ODRhYzgzYWE3NjAiLCJ1c2VybmFtZSI6ImF1dGh0ZXN0IiwicGFzc3dvcmQiOiIkMmEkMTAkYjJmYTZHTTJMTDlLVlJ4UzhVVEkzdS5SQ2JjUWw0WXc5OExaWVVHUHRnUVdBdVFGOERqNXUiLCJfX3YiOjAsImN1cnJlbnRfY291bnRyeSI6IiJ9LCJpYXQiOjE1ODkxODc5Mjd9.ZJQHbK7cVmDOf87uuhUttlnyAFYe5KA0Afnq0iBptF0"
+        .request(server)
+        .get("/api/alerts_user/user/" + user._id)
+        .set(
+          "Authorization",
+          "Bearer " + tokens
         );
-      
+
       expect(response).to.have.status(200);
       expect(response.body).to.have.property("alerts");
       expect(response.body).to.have.property("user_id");
@@ -407,17 +672,27 @@ describe("Alert Users API", () => {
   });
   //Get alerts by user_id - Inexistent user
   describe("GET /api/alerts_user/user/", () => {
-    let user1;
     let alert1;
     let alertUser1;
-    beforeEach(async ()=>{
+    let user;
+    let tokens;
+    beforeEach(async () => {
       user = new User({
-        _id : mongoose.Types.ObjectId(),
-        username:"Testing",
-        password:"$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
-        gender:"FEMALE",
-        age_group:"21-30",
+        _id: mongoose.Types.ObjectId(),
+        username: `${Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000}`,
+        password:
+          "$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
+        gender: "FEMALE",
+        age_group: "21-30",
       });
+      await user.save();
+      try {
+        jwt.sign({ user }, config.get("secretkey"), (err, token) => {
+          tokens = token;
+        });
+      } catch (err) {
+        console.log(err.toString());
+      }
       alert1 = new Alert({
         _id: mongoose.Types.ObjectId(),
         title: "Testing1",
@@ -437,20 +712,18 @@ describe("Alert Users API", () => {
     afterEach(async () => {
       await AlertUser.findByIdAndRemove(alertUser1._id);
       await Alert.findByIdAndRemove(alert1._id);
-      await User.findByIdAndRemove(user._id);
+      await User.findByIdAndDelete(user._id);
     });
-    it("It should send no alerts", async () =>{
+    it("It should send no alerts", async () => {
       let response = await chai
-      .request(server)
-      .get("/api/alerts_user/user/" + mongoose.Types.ObjectId())
-      .set(
-        "Authorization",
-        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6Ik1BTEUiLCJhZ2VfZ3JvdXAiOiI-OTAiLCJfaWQiOiI1ZWI3ZjMwYzNlMmE4ODRhYzgzYWE3NjAiLCJ1c2VybmFtZSI6ImF1dGh0ZXN0IiwicGFzc3dvcmQiOiIkMmEkMTAkYjJmYTZHTTJMTDlLVlJ4UzhVVEkzdS5SQ2JjUWw0WXc5OExaWVVHUHRnUVdBdVFGOERqNXUiLCJfX3YiOjAsImN1cnJlbnRfY291bnRyeSI6IiJ9LCJpYXQiOjE1ODkxODc5Mjd9.ZJQHbK7cVmDOf87uuhUttlnyAFYe5KA0Afnq0iBptF0"
+        .request(server)
+        .get("/api/alerts_user/user/" + mongoose.Types.ObjectId())
+        .set(
+          "Authorization",
+          "Bearer " + tokens
         );
-      
+
       expect(response).to.have.status(200);
-      expect(response.body).to.have.property("alerts");
-      expect(response.body).to.have.property("user_id");
       expect(response.body.alerts).to.have.length(0);
     });
   });
