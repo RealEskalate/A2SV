@@ -121,6 +121,8 @@ class DataAnalytics extends React.Component {
           await newThis.populate(json);
           newThis.forceUpdate(); //refresh page
           newThis.setState({ totalGraphLoading: false });
+        } else {
+          newThis.fetchStatistics();
         }
       })
       .catch((error) => {
@@ -160,6 +162,8 @@ class DataAnalytics extends React.Component {
           await newThis.populateRateData(json);
           newThis.forceUpdate(); //refresh page
           newThis.setState({ rateGraphLoading: false });
+        } else {
+          newThis.fetchRateStatistics();
         }
       })
       .catch((error) => {
@@ -199,6 +203,8 @@ class DataAnalytics extends React.Component {
             totalLoading: false,
           });
           newThis.forceUpdate(); //refresh page
+        } else {
+          newThis.getTotalData();
         }
       })
       .catch((error) => {
@@ -222,6 +228,8 @@ class DataAnalytics extends React.Component {
           await newThis.setState({
             countries: json,
           });
+        } else {
+          newThis.getCountryList();
         }
       })
       .catch((error) => {
@@ -263,6 +271,8 @@ class DataAnalytics extends React.Component {
           await newThis.populateDailyData(json);
           newThis.forceUpdate(); //refresh page
           newThis.setState({ dailyGraphLoading: false });
+        } else {
+          newThis.fetchDailyNewsCases();
         }
       })
       .catch((error) => {
@@ -512,13 +522,16 @@ class DataAnalytics extends React.Component {
             staticsDescriptionLoading: false,
           });
 
-          // console.log(this.state.staticsDescription)
+          console.log(this.state.staticsDescription);
         } else {
           newThis.getDescriptions();
         }
       })
       .catch((error) => {
         Alert.alert("Connection problem", "Couldn't connect to server");
+        // newThis.setState({
+        //   staticsDescriptionLoading: false,
+        // });
       });
   };
   //fetch description of graphs
@@ -700,7 +713,7 @@ class DataAnalytics extends React.Component {
                 style={{ alignItems: "center" }}
               >
                 <Image
-                  source={require("../../../assets/images/angel.jpg")}
+                  source={require("../../../assets/images/dead.png")}
                   style={{ height: 30, width: 30 }}
                 />
 
@@ -816,7 +829,7 @@ class DataAnalytics extends React.Component {
                 style={{ alignItems: "center" }}
               >
                 <Image
-                  source={require("../../../assets/images/angel.jpg")}
+                  source={require("../../../assets/images/dead.png")}
                   style={{ height: 30, width: 30 }}
                 />
 
@@ -1172,51 +1185,39 @@ class DataAnalytics extends React.Component {
                   </Layout>
                 ) : this.state.selected_filter_daily_status ===
                   criterias.confirmed ? (
-                  this.state.staticsDescription.length > 1 ? (
-                    this.setState({
-                      descriptionTitle: this.state.staticsDescription[1]
-                        .descriptions[0].criteria[1].name,
-                      description: this.state.staticsDescription[1]
-                        .descriptions[0].criteria[1].explanation,
-                    })
-                  ) : (
-                    this.getCriteriaDescriptions("Daily Counts", 0)
-                  )
+                  <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
+                    {this.state.staticsDescription[1].descriptions[0]
+                      .criteria[1].name +
+                      ": " +
+                      this.state.staticsDescription[1].descriptions[0]
+                        .criteria[1].explanation}
+                  </Text>
+                ) : this.state.selected_filter_daily_status ===
+                  criterias.recoveries ? (
+                  <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
+                    {this.state.staticsDescription[1].descriptions[0]
+                      .criteria[3].name +
+                      ": " +
+                      this.state.staticsDescription[1].descriptions[0]
+                        .criteria[3].explanation}
+                  </Text>
+                ) : this.state.selected_filter_daily_status ===
+                  criterias.deaths ? (
+                  <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
+                    {this.state.staticsDescription[1].descriptions[0]
+                      .criteria[2].name +
+                      ": " +
+                      this.state.staticsDescription[1].descriptions[0]
+                        .criteria[2].explanation}
+                  </Text>
                 ) : (
-                  (this.state.selected_filter_daily_status ===
-                    criterias.recoveries
-                    ? this.state.staticsDescription.length > 1
-                      ? this.setState({
-                          descriptionTitle: this.state.staticsDescription[1]
-                            .descriptions[0].criteria[3].name,
-                          description: this.state.staticsDescription[1]
-                            .descriptions[0].criteria[3].explanation,
-                        })
-                      : this.getCriteriaDescriptions("Daily Counts", 1)
-                    : this.state.selected_filter_daily_status ===
-                      criterias.deaths
-                    ? this.state.staticsDescription.length > 1
-                      ? this.setState({
-                          descriptionTitle: this.state.staticsDescription[1]
-                            .descriptions[0].criteria[2].name,
-                          description: this.state.staticsDescription[1]
-                            .descriptions[0].criteria[2].explanation,
-                        })
-                      : this.getCriteriaDescriptions("Daily Counts", 2)
-                    : this.state.staticsDescription.length > 1
-                    ? this.setState({
-                        descriptionTitle: this.state.staticsDescription[1]
-                          .descriptions[0].criteria[0].name,
-                        description: this.state.staticsDescription[1]
-                          .descriptions[0].criteria[0].explanation,
-                      })
-                    : this.getCriteriaDescriptions("Daily Counts", 3))(
-                    <Text
-                      style={{ fontSize: 16, color: "gray", marginLeft: 10 }}
-                    >
-                      {this.state.description}
-                    </Text>
-                  )
+                  <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
+                    {this.state.staticsDescription[1].descriptions[0]
+                      .criteria[0].name +
+                      ": " +
+                      this.state.staticsDescription[1].descriptions[0]
+                        .criteria[0].explanation}
+                  </Text>
                 )}
               </Layout>
             </Layout>
@@ -1474,45 +1475,37 @@ class DataAnalytics extends React.Component {
                     </Text>
                   </Layout>
                 ) : this.state.selected_filter === criterias.confirmed ? (
-                  this.state.staticsDescription.length > 1 ? (
-                    this.setState({
-                      descriptionTitle: this.state.staticsDescription[0]
-                        .descriptions[0].criteria[1].name,
-                      description: this.state.staticsDescription[0]
-                        .descriptions[0].criteria[1].explanation,
-                    })
-                  ) : (
-                    this.getCriteriaDescriptions("Total Counts", 0)
-                  )
+                  <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
+                    {this.state.staticsDescription[0].descriptions[0]
+                      .criteria[1].name +
+                      ": " +
+                      this.state.staticsDescription[0].descriptions[0]
+                        .criteria[1].explanation}
+                  </Text>
+                ) : this.state.selected_filter === criterias.recoveries ? (
+                  <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
+                    {this.state.staticsDescription[0].descriptions[0]
+                      .criteria[3].name +
+                      ": " +
+                      this.state.staticsDescription[0].descriptions[0]
+                        .criteria[3].explanation}
+                  </Text>
+                ) : this.state.selected_filter === criterias.deaths ? (
+                  <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
+                    {this.state.staticsDescription[0].descriptions[0]
+                      .criteria[2].name +
+                      ": " +
+                      this.state.staticsDescription[0].descriptions[0]
+                        .criteria[2].explanation}
+                  </Text>
                 ) : (
-                  (this.state.selected_filter === criterias.recoveries
-                    ? this.state.staticsDescription.length > 1
-                      ? this.setState({
-                          descriptionTitle: this.state.staticsDescription[0]
-                            .descriptions[0].criteria[3].name,
-                          description: this.state.staticsDescription[0]
-                            .descriptions[0].criteria[3].explanation,
-                        })
-                      : this.getCriteriaDescriptions("Total Counts", 1)
-                    : this.state.selected_filter === criterias.deaths
-                    ? this.state.staticsDescription.length > 1
-                      ? this.setState({
-                          descriptionTitle: this.state.staticsDescription[0]
-                            .descriptions[0].criteria[2].name,
-                          description: this.state.staticsDescription[0]
-                            .descriptions[0].criteria[2].explanation,
-                        })
-                      : this.getCriteriaDescriptions("Total Counts", 2)
-                    : this.state.staticsDescription.length > 1
-                    ? this.setState({
-                        descriptionTitle: this.state.staticsDescription[0]
-                          .descriptions[0].criteria[0].name,
-                        description: this.state.staticsDescription[0]
-                          .descriptions[0].criteria[0].explanation,
-                      })
-                    : this.getCriteriaDescriptions("Total Counts", 3))(
-                    <Text>{this.state.description}</Text>
-                  )
+                  <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
+                    {this.state.staticsDescription[0].descriptions[0]
+                      .criteria[0].name +
+                      ": " +
+                      this.state.staticsDescription[0].descriptions[0]
+                        .criteria[0].explanation}
+                  </Text>
                 )}
               </Layout>
             </Layout>
@@ -1753,50 +1746,38 @@ class DataAnalytics extends React.Component {
                   </Layout>
                 ) : this.state.selected_filter_rate ===
                   criterias.confirmedRate ? (
-                  this.state.staticsDescription.length > 1 ? (
-                    this.setState({
-                      descriptionTitle: this.state.staticsDescription[2]
-                        .descriptions[0].criteria[0].name,
-                      description: this.state.staticsDescription[2]
-                        .descriptions[0].criteria[0].explanation,
-                    })
-                  ) : (
-                    this.getCriteriaDescriptions("View Rates", 0)
-                  )
+                  <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
+                    {this.state.staticsDescription[2].descriptions[0]
+                      .criteria[0].name +
+                      ": " +
+                      this.state.staticsDescription[2].descriptions[0]
+                        .criteria[0].explanation}
+                  </Text>
                 ) : this.state.selected_filter_rate ===
                   criterias.recoveryRate ? (
-                  this.state.staticsDescription.length > 1 ? (
-                    this.setState({
-                      descriptionTitle: this.state.staticsDescription[2]
-                        .descriptions[0].criteria[1].name,
-                      description: this.state.staticsDescription[2]
-                        .descriptions[0].criteria[1].explanation,
-                    })
-                  ) : (
-                    this.getCriteriaDescriptions("View Rates", 1)
-                  )
+                  <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
+                    {this.state.staticsDescription[2].descriptions[0]
+                      .criteria[1].name +
+                      ": " +
+                      this.state.staticsDescription[2].descriptions[0]
+                        .criteria[1].explanation}
+                  </Text>
                 ) : this.state.selected_filter_rate === criterias.deathRate ? (
-                  this.state.staticsDescription.length > 1 ? (
-                    this.setState({
-                      descriptionTitle: this.state.staticsDescription[2]
-                        .descriptions[0].criteria[3].name,
-                      description: this.state.staticsDescription[2]
-                        .descriptions[0].criteria[3].explanation,
-                    })
-                  ) : (
-                    this.getCriteriaDescriptions("View Rates", 3)
-                  )
+                  <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
+                    {this.state.staticsDescription[2].descriptions[0]
+                      .criteria[3].name +
+                      ": " +
+                      this.state.staticsDescription[2].descriptions[0]
+                        .criteria[3].explanation}
+                  </Text>
                 ) : (
-                  (this.state.staticsDescription.length > 1
-                    ? this.setState({
-                        descriptionTitle: this.state.staticsDescription[2]
-                          .descriptions[0].criteria[0].name,
-                        description: this.state.staticsDescription[2]
-                          .descriptions[0].criteria[0].explanation,
-                      })
-                    : this.getCriteriaDescriptions("View Rates", 2))(
-                    <Text>{this.state.description}</Text>
-                  )
+                  <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
+                    {this.state.staticsDescription[2].descriptions[0]
+                      .criteria[0].name +
+                      ": " +
+                      this.state.staticsDescription[2].descriptions[0]
+                        .criteria[0].explanation}
+                  </Text>
                 )}
               </Layout>
             </Layout>
