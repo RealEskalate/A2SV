@@ -9,6 +9,7 @@ import {
   Avatar,
   Icon,
   Divider,
+  StyleService,
   TopNavigation,
   TopNavigationAction,
 } from '@ui-kitten/components';
@@ -40,7 +41,7 @@ export const AvatarSizeShowcase = () => (
 
 const Header = (props) => (
   <React.Fragment>
-    <Layout style={[props.style, styles.header]}>
+    <Layout level='2' style={[props.style, styles.header]}>
       <AvatarSizeShowcase />
       <Text> {userIDStore.getState().userName}</Text>
     </Layout>
@@ -117,7 +118,10 @@ const DrawerContent = ({ navigation, state }) => (
 );
 
 export const AppNavigator = () => (
-  <Navigator drawerContent={(props) => <DrawerContent {...props} />}>
+  <Navigator
+    initialRouteName='HOME'
+    backBehavior='initialRoute'
+    drawerContent={(props) => <DrawerContent {...props} />}>
     <Screen name='HOME' component={HomeStackNavigator} />
     <Screen name='NEWS' component={NewsNavigator} />
     <Screen name='ETHIOPIA' component={GoToEthiopia} />
@@ -126,12 +130,14 @@ export const AppNavigator = () => (
   </Navigator>
 );
 
-const styles = StyleSheet.create({
+const styles = StyleService.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
     flexWrap: 'wrap',
     marginRight: 8,
+    borderRadius: 30,
+    backgroundColor: '#5DC2FA',
   },
   avatar: {
     margin: 0,
