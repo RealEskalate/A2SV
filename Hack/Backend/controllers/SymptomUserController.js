@@ -61,14 +61,14 @@ exports.post_symptomuser = async (req, res) => {
 // Post multiple symptoms given userId  and list of symptomsIds
 exports.post_multiple_symptoms = async (req, res) => {
   const user = await User.findById(req.body.loggedInUser)
-  const symptomMap = req.body.symptoms
+  const symptoms = req.body.symptoms
   if (!user || !symptoms) {
     return res.status(400).send('Invalid request')
   }
   await SymptomUser.deleteMany({ user_id: req.body.loggedInUser })
 
-  for (let [id, isChecked] of symptomMap) {
-    if (isChecked) {
+  for (let index in symptoms) {
+      let id= symptoms[index];
       let symptomuser = new SymptomUser({
         symptom_id: id,
         user_id: req.body.loggedInUser,
@@ -84,7 +84,7 @@ exports.post_multiple_symptoms = async (req, res) => {
       } catch (error) {
         console.log(error.toString())
       }
-    }
+    
   }
 
   return res.status(201).send('Symptoms registered successfully')
@@ -132,12 +132,10 @@ exports.get_symptomuser_by_user_id = async (req, res) => {
   }
   try {
     const symptomuser = await SymptomUser.find({ user_id: req.params.user_id }).populate('user_id');
-    console.log('found ' + symptomuser)
     if (!symptomuser) {
       res.status(400).send("Symptom User Pair not found");
     }
     let result = [];
-    console.log('len ' + symptomuser.length)
     for (let i = 0; i < symptomuser.length; i++) {
       let symptom = await Symptom.findById(symptomuser[i].symptom_id);
       result.push({
