@@ -1,4 +1,4 @@
-import {StyleService} from '@ui-kitten/components';
+import { StyleService } from '@ui-kitten/components';
 
 const themedStyles = StyleService.create({
   container: {
@@ -44,7 +44,11 @@ const themedStyles = StyleService.create({
     paddingHorizontal: 0,
   },
   signUpButton: {
-    marginVertical: 24,
+    marginTop: 15,
+    marginHorizontal: 16,
+  },
+  termsButton: {
+    marginVertical: 12,
     marginHorizontal: 16,
   },
   socialAuthIcon: {

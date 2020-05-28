@@ -17,8 +17,8 @@ import { InfoCard } from './extra/InfoCard';
 const BackIcon = (props) => <Icon name='arrow-ios-back-outline' {...props} />;
 const methods = [
   {
-    title: 'Washing Hands',
-    label: 'Rub or wash your hand with soap and water for atleast 20 sec',
+    title: 'Hand Washing',
+    label: 'Rub or wash your hand with soap and water for at least 20 sec',
     tag: '> 20 Sec',
     image: require('../info-detail/assets/washing.jpg'),
   },

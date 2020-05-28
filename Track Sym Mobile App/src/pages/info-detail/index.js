@@ -96,7 +96,7 @@ export default InfoDetailScreen = (props) => {
               <Divider />
               <View style={styles.authoringContainer}>
                 <Text style={styles.dateLabel} appearance='hint' category='p2'>
-                  WHERE DID IT COME FROM
+                  WHERE DID IT COME FROM ?
                 </Text>
               </View>
               <Divider />

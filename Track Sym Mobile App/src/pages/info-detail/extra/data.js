@@ -10,7 +10,7 @@ export const covidData = {
     'circulate among animals with some of them also known to infect ' +
     'humans.',
   image: require('../assets/covid.jpg'),
-  title_2: 'WHAT DO WE KNOW SOFAR ?',
+  title_2: 'WHAT DO WE KNOW SO FAR ?',
 };
 
 export const symptomsData = {
@@ -21,9 +21,7 @@ export const symptomsData = {
     'suffer from dry cough, mild fever, tiredness, and breathing issues ' +
     'which may go unnoticed at first. ',
   content_two:
-    'What’s making the virus so difficult to contain is that Just like ' +
-    'the common cold or flu and spread from people to people rather ' +
-    'quickly.' +
+    'The virus is difficult to contain for the following reasons. The symptoms are similar to common cold or flue, and it spreads very rapidly. ' +
     "\n\nSome people will get COVID-19 but don't show any symptoms. In fact, " +
     '80% of people infected with COVID-19 recover without any special ' +
     'treatment. As people move around the world, COVID-19 has spread in ' +
@@ -71,7 +69,7 @@ export const symptomsData = {
     {
       name: 'Sore Throat',
       inside:
-        'It is a painful, dry, or scratchy feeling in the throat that often worsens when swallowing because of redness and swelling formed around the back of the mouth and larynx. This occurs in around 10% of coronavirus cases.',
+        'It is a painful, dry, or scratchy feeling in the throat that often worsens when swallowing because of redness and swelling formed around the back of the mouth and larynx. ',
     },
     {
       name: 'Chills',
@@ -88,10 +86,10 @@ export const preventionData = {
   image: require('../assets/wash.jpg'),
   methods1: [
     {
-      name: 'Washing Hand',
+      name: 'Hand Washing',
       inside:
-        'Make sure you, and the people around you, follow good respiratory hygiene. This means covering your mouth ' +
-        'and nose with your bent elbow or tissue when you cough or sneeze. Then dispose of the used tissue immediately.',
+        'Regularly and thoroughly clean your hands with an alcohol-based hand rub or wash them with soap and water for at least 20 seconds. ' +
+        'Hands touch many surfaces and can pick up viruses. Once contaminated, hands can transfer the virus to your eyes, nose, or mouth. From there, the virus can enter your body and can make you sick.',
     },
     {
       name: 'Social Distancing',
@@ -120,7 +118,7 @@ export const spreadData = {
   description: 'How does coronavirus become contagious ?',
   content:
     'Unlike most deadly viruses who quickly hospitalize their hosts ' +
-    'leading to their quarantine, can be highly contagious and ' +
+    'leading to their quarantine, it can be highly contagious and ' +
     'spread quickly because the patient may not even show any ' +
     'symptoms for days after infection.',
   content_two:
@@ -140,7 +138,7 @@ export const spreadData = {
 
 export const messageData = {
   title: 'Message From TrackSym',
-  description: 'Stay Home Stay Safe',
+  description: '',
   content:
     'We are dealing with a pandemic and we need to be prepared and be ' +
     'willing to accept the advice, instructions, and mandate of authorities and ' +
