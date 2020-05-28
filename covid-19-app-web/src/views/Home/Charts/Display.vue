@@ -1,7 +1,7 @@
 <template>
   <v-container class="py-8">
     <v-row class="mx-md-5" dense>
-      <v-col class="px-2" cols="12" md="6">
+      <v-col class="px-2" cols="12" md="6" data-v-step="2">
         <v-autocomplete
           class="v-card--shaped"
           v-model="country"
