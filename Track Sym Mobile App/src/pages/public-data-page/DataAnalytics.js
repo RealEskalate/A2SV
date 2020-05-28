@@ -68,13 +68,11 @@ class DataAnalytics extends React.Component {
     rateGraphLoading: false,
     totalLoading: true,
     testCountDataExist: false,
-    new_case_description_visiblity: false,
-    total_case_description_visiblity: false,
-    rate_description_visibility: false,
-    new_case_description: `This graph represents the number of daily deaths, the number of currently active cases, the number of tests done, the number of daily deaths encountered, the number of recovered patients to the latest pandemic, COVID-19.`,
-
-    total_case_description: `This graph represents the total number of positive cases, the total number of active cases, the total number of tests done, the number of total deaths encountered, the number of recovered patients to the latest pandemic, COVID-19.`,
-    rate_description: `This graph represents the rate of positive cases, rate of recovered patients, rate of active(currently infected) patients and rate of deaths encountered from the total conducted tests everyday to the latest pandemic, COVID-19.`,
+    discriptionVisiblity: false,
+    staticsDescription: [],
+    staticsDescriptionLoading: true,
+    discriptionTitle: "",
+    description: "",
   };
 
   componentDidMount = async () => {
@@ -84,6 +82,7 @@ class DataAnalytics extends React.Component {
       .then(this.fetchRateStatistics())
       .then(this.getCountryList())
       .then(this.checkIfDataExist(criterias.numberOfTests)) //check if number of test case data exist
+      .then(this.getDescriptions)
       .catch((error) => {
         console.log("Concurrency Issue");
       });
@@ -501,6 +500,72 @@ class DataAnalytics extends React.Component {
   getMinimumDate() {
     return "2019-12-31";
   }
+  //fetches description for different age group
+  getDescriptions = async () => {
+    let newThis = this;
+    await fetch(
+      "https://sym-track.herokuapp.com/api/resources/mobile/statistics?filter=adults",
+      {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + userIDStore.getState().userToken,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .then((response) => response.json())
+      .then(async (json) => {
+        if (json !== undefined && json.length !== 0) {
+          await newThis.setState({
+            staticsDescription: json,
+            staticsDescriptionLoading: false,
+          });
+
+          // console.log(this.state.staticsDescription)
+        } else {
+          newThis.getDescriptions();
+        }
+      })
+      .catch((error) => {
+        Alert.alert("Connection problem", "Couldn't connect to server");
+      });
+  };
+  //fetch description of graphs
+  getCriteriaDescriptions = async (title, position) => {
+    let newThis = this;
+    var query =
+      "http://sym-track.herokuapp.com/api/resources/mobile/statistics?filter=adults&title=" +
+      title;
+    await fetch(query, {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + userIDStore.getState().userToken,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then(async (json) => {
+        if (json !== undefined && json.length !== 0) {
+          await newThis.setState({
+            descriptionTitle: json[0].criteria[position].name,
+            description: json[0].criteria[position].explanation,
+            graphDescriptionLoading: false,
+          });
+          newThis.forceUpdate();
+        } else {
+          newThis.getCriteriaDescriptions();
+        }
+      })
+      .catch((error) => {
+        newThis.setState({
+          descriptionTitle: "Connection Problem",
+          description: "Unable to connect",
+        });
+        // Alert.alert("Connection problem", "Couldn't connect to server");
+      });
+  };
 
   render() {
     const HIEGHT = Dimensions.get("window").height;
@@ -788,60 +853,62 @@ class DataAnalytics extends React.Component {
 
             <Layout style={styles.backdrop_container}>
               <Modal
-                visible={this.state.new_case_description_visiblity}
+                visible={this.state.descriptionVisiblity}
                 backdropStyle={styles.backdrop}
-                onBackdropPress={() =>
-                  this.setState({ new_case_description_visiblity: false })
-                }
+                onBackdropPress={() => {
+                  this.setState({ descriptionVisiblity: false });
+                  this.setState({ descriptionTitle: "" });
+                  this.setState({ description: "" });
+                }}
               >
-                <Card disabled={true}>
-                  <Text>{this.state.new_case_description}</Text>
-                  <Button
-                    appearance="ghost"
-                    onPress={() =>
-                      this.setState({ new_case_description_visiblity: false })
-                    }
-                  >
-                    Dismiss
-                  </Button>
-                </Card>
-              </Modal>
-              <Modal
-                visible={this.state.total_case_description_visiblity}
-                backdropStyle={styles.backdrop}
-                onBackdropPress={() =>
-                  this.setState({ total_case_description_visiblity: false })
-                }
-              >
-                <Card disabled={true}>
-                  <Text>{this.state.total_case_description}</Text>
-                  <Button
-                    appearance="ghost"
-                    onPress={() =>
-                      this.setState({ total_case_description_visiblity: false })
-                    }
-                  >
-                    Dismiss
-                  </Button>
-                </Card>
-              </Modal>
-              <Modal
-                visible={this.state.rate_description_visibility}
-                backdropStyle={styles.backdrop}
-                onBackdropPress={() =>
-                  this.setState({ rate_description_visibility: false })
-                }
-              >
-                <Card disabled={true}>
-                  <Text>{this.state.rate_description}</Text>
-                  <Button
-                    appearance="ghost"
-                    onPress={() =>
-                      this.setState({ rate_description_visibility: false })
-                    }
-                  >
-                    Dismiss
-                  </Button>
+                <Card
+                  disabled={true}
+                  header={
+                    // style={{padding:10}}
+
+                    this.state.descriptionTitle != ""
+                      ? () => (
+                          <Text
+                            style={{
+                              minHeight: 0,
+                              fontSize: 20,
+                              fontFamily: "Roboto-Black",
+                              margin: 10,
+                            }}
+                          >
+                            {this.state.descriptionTitle}
+                          </Text>
+                        )
+                      : null
+                  }
+                  footer={
+                    this.state.description != ""
+                      ? () => (
+                          <Button
+                            style={styles.footerControl}
+                            appearance="ghost"
+                            onPress={() => {
+                              this.setState({ descriptionVisiblity: false });
+                              this.setState({ descriptionTitle: "" });
+                              this.setState({ description: "" });
+                              this.setState({ graphDescriptionLoading: true });
+                            }}
+                          >
+                            Dismiss
+                          </Button>
+                        )
+                      : null
+                  }
+                >
+                  {this.state.description == "" ? (
+                    <ActivityIndicator
+                      size="large"
+                      color="#F57B35"
+                      style={{ margin: 5 }}
+                    />
+                  ) : (
+                    <Text>{this.state.description}</Text>
+                  )}
                 </Card>
               </Modal>
             </Layout>
@@ -856,9 +923,22 @@ class DataAnalytics extends React.Component {
               >
                 Daily Stats Graph
               </Text>
-              <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
-                Country : {this.state.search}
-              </Text>
+              {this.state.staticsDescriptionLoading ? (
+                <Layout flexDirection="row">
+                  <ActivityIndicator
+                    size="small"
+                    color="gray"
+                    marginLeft={10}
+                  />
+                  <Text style={{ fontSize: 16, color: "gray" }}>
+                    Loading graph description
+                  </Text>
+                </Layout>
+              ) : (
+                <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
+                  {this.state.staticsDescription[1].descriptions[0].description}
+                </Text>
+              )}
 
               <Layout
                 style={{
@@ -1089,7 +1169,51 @@ class DataAnalytics extends React.Component {
               <TouchableOpacity
                 style={styles.touchable_buttons_pressed}
                 onPress={() => {
-                  this.setState({ new_case_description_visiblity: true });
+                  {
+                    this.state.selected_filter_daily_status ===
+                    criterias.confirmed
+                      ? this.state.staticsDescription.length > 1
+                        ? this.setState({
+                            descriptionTitle: this.state.staticsDescription[1]
+                              .descriptions[0].criteria[1].name,
+                            description: this.state.staticsDescription[1]
+                              .descriptions[0].criteria[1].explanation,
+                            descriptionVisiblity: true,
+                          })
+                        : this.getCriteriaDescriptions("Daily Counts", 0)
+                      : this.state.selected_filter_daily_status ===
+                        criterias.recoveries
+                      ? this.state.staticsDescription.length > 1
+                        ? this.setState({
+                            descriptionTitle: this.state.staticsDescription[1]
+                              .descriptions[0].criteria[3].name,
+                            description: this.state.staticsDescription[1]
+                              .descriptions[0].criteria[3].explanation,
+                            descriptionVisiblity: true,
+                          })
+                        : this.getCriteriaDescriptions("Daily Counts", 1)
+                      : this.state.selected_filter_daily_status ===
+                        criterias.deaths
+                      ? this.state.staticsDescription.length > 1
+                        ? this.setState({
+                            descriptionTitle: this.state.staticsDescription[1]
+                              .descriptions[0].criteria[2].name,
+                            description: this.state.staticsDescription[1]
+                              .descriptions[0].criteria[2].explanation,
+                            descriptionVisiblity: true,
+                          })
+                        : this.getCriteriaDescriptions("Daily Counts", 2)
+                      : this.state.staticsDescription.length > 1
+                      ? this.setState({
+                          descriptionTitle: this.state.staticsDescription[1]
+                            .descriptions[0].criteria[0].name,
+                          description: this.state.staticsDescription[1]
+                            .descriptions[0].criteria[0].explanation,
+                          descriptionVisiblity: true,
+                        })
+                      : this.getCriteriaDescriptions("Daily Counts", 3);
+                  }
+                  this.setState({ descriptionVisiblity: true });
                 }}
               >
                 <Text style={styles.text_style_pressed}>Description</Text>
@@ -1106,9 +1230,22 @@ class DataAnalytics extends React.Component {
               >
                 Total Stats Graph
               </Text>
-              <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
-                Country : {this.state.search}
-              </Text>
+              {this.state.staticsDescriptionLoading ? (
+                <Layout flexDirection="row">
+                  <ActivityIndicator
+                    size="small"
+                    color="gray"
+                    marginLeft={10}
+                  />
+                  <Text style={{ fontSize: 16, color: "gray" }}>
+                    Loading graph description
+                  </Text>
+                </Layout>
+              ) : (
+                <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
+                  {this.state.staticsDescription[0].descriptions[0].description}
+                </Text>
+              )}
 
               <Layout
                 style={{
@@ -1326,7 +1463,48 @@ class DataAnalytics extends React.Component {
               <TouchableOpacity
                 style={styles.touchable_buttons_pressed}
                 onPress={() => {
-                  this.setState({ total_case_description_visiblity: true });
+                  {
+                    this.state.selected_filter === criterias.confirmed
+                      ? this.state.staticsDescription.length > 1
+                        ? this.setState({
+                            descriptionTitle: this.state.staticsDescription[1]
+                              .descriptions[0].criteria[1].name,
+                            description: this.state.staticsDescription[1]
+                              .descriptions[0].criteria[1].explanation,
+                            descriptionVisiblity: true,
+                          })
+                        : this.getCriteriaDescriptions("Total Counts", 0)
+                      : this.state.selected_filter === criterias.recoveries
+                      ? this.state.staticsDescription.length > 1
+                        ? this.setState({
+                            descriptionTitle: this.state.staticsDescription[1]
+                              .descriptions[0].criteria[3].name,
+                            description: this.state.staticsDescription[1]
+                              .descriptions[0].criteria[3].explanation,
+                            descriptionVisiblity: true,
+                          })
+                        : this.getCriteriaDescriptions("Total Counts", 1)
+                      : this.state.selected_filter === criterias.deaths
+                      ? this.state.staticsDescription.length > 1
+                        ? this.setState({
+                            descriptionTitle: this.state.staticsDescription[1]
+                              .descriptions[0].criteria[2].name,
+                            description: this.state.staticsDescription[1]
+                              .descriptions[0].criteria[2].explanation,
+                            descriptionVisiblity: true,
+                          })
+                        : this.getCriteriaDescriptions("Total Counts", 2)
+                      : this.state.staticsDescription.length > 1
+                      ? this.setState({
+                          descriptionTitle: this.state.staticsDescription[1]
+                            .descriptions[0].criteria[0].name,
+                          description: this.state.staticsDescription[1]
+                            .descriptions[0].criteria[0].explanation,
+                          descriptionVisiblity: true,
+                        })
+                      : this.getCriteriaDescriptions("Total Counts", 3);
+                  }
+                  this.setState({ descriptionVisiblity: true });
                 }}
               >
                 <Text style={styles.text_style_pressed}>Description</Text>
@@ -1343,9 +1521,22 @@ class DataAnalytics extends React.Component {
               >
                 Daily Rates Graph
               </Text>
-              <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
-                Country : {this.state.search}
-              </Text>
+              {this.state.staticsDescriptionLoading ? (
+                <Layout flexDirection="row">
+                  <ActivityIndicator
+                    size="small"
+                    color="gray"
+                    marginLeft={10}
+                  />
+                  <Text style={{ fontSize: 16, color: "gray" }}>
+                    Loading graph description
+                  </Text>
+                </Layout>
+              ) : (
+                <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
+                  {this.state.staticsDescription[2].descriptions[0].description}
+                </Text>
+              )}
 
               <Layout
                 style={{
@@ -1544,7 +1735,49 @@ class DataAnalytics extends React.Component {
               <TouchableOpacity
                 style={styles.touchable_buttons_pressed}
                 onPress={() => {
-                  this.setState({ rate_description_visibility: true });
+                  {
+                    this.state.selected_filter_rate === criterias.confirmedRate
+                      ? this.state.staticsDescription.length > 1
+                        ? this.setState({
+                            descriptionTitle: this.state.staticsDescription[1]
+                              .descriptions[0].criteria[1].name,
+                            description: this.state.staticsDescription[1]
+                              .descriptions[0].criteria[1].explanation,
+                            descriptionVisiblity: true,
+                          })
+                        : this.getCriteriaDescriptions("View Rates", 0)
+                      : this.state.selected_filter_rate ===
+                        criterias.recoveryRate
+                      ? this.state.staticsDescription.length > 1
+                        ? this.setState({
+                            descriptionTitle: this.state.staticsDescription[1]
+                              .descriptions[0].criteria[3].name,
+                            description: this.state.staticsDescription[1]
+                              .descriptions[0].criteria[3].explanation,
+                            descriptionVisiblity: true,
+                          })
+                        : this.getCriteriaDescriptions("View Rates", 1)
+                      : this.state.selected_filter === criterias.deathRate
+                      ? this.state.staticsDescription.length > 1
+                        ? this.setState({
+                            descriptionTitle: this.state.staticsDescription[1]
+                              .descriptions[0].criteria[2].name,
+                            description: this.state.staticsDescription[1]
+                              .descriptions[0].criteria[2].explanation,
+                            descriptionVisiblity: true,
+                          })
+                        : this.getCriteriaDescriptions("View Rates", 3)
+                      : this.state.staticsDescription.length > 1
+                      ? this.setState({
+                          descriptionTitle: this.state.staticsDescription[1]
+                            .descriptions[0].criteria[0].name,
+                          description: this.state.staticsDescription[1]
+                            .descriptions[0].criteria[0].explanation,
+                          descriptionVisiblity: true,
+                        })
+                      : this.getCriteriaDescriptions("View Rates", 2);
+                  }
+                  this.setState({ descriptionVisiblity: true });
                 }}
               >
                 <Text style={styles.text_style_pressed}>Description</Text>
