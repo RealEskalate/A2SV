@@ -20,6 +20,9 @@ import { ImageOverlay } from '../../components/ImageOverlay/image-overlay.compon
 import { BackIcon, GoogleIcon, FacebookIcon, TwitterIcon } from './extra/icons';
 import themedStyles from './extra/themedStyles.js';
 import { KeyboardAvoidingView } from '../../components/3rd-party';
+import userIDStore from '../../data-management/user-id-data/userIDStore';
+import * as actions from '../../data-management/user-id-data/userIDActions';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const data = [
   '0-10',
@@ -59,6 +62,7 @@ export default ({ navigation }) => {
     new IndexPath(0)
   );
   const [passwordVisible, setPasswordVisible] = React.useState(false);
+  const [termStat, setTermStat] = React.useState('basic');
 
   const styles = useStyleSheet(themedStyles);
 
@@ -81,6 +85,11 @@ export default ({ navigation }) => {
       setModalMessage("Password Don't match !");
       setModalState(true);
       setConfirmPasswordStatus('danger');
+      return;
+    }
+
+    if (!termsAccepted) {
+      setTermStat('danger');
       return;
     }
 
@@ -121,8 +130,57 @@ export default ({ navigation }) => {
     }
 
     if (response.status === 200) {
-      navigation.goBack();
+      login();
     }
+  };
+
+  const saveUser = async (userID, userName, token, age_group, gender) => {
+    try {
+      await AsyncStorage.setItem('userID', userID); //save user id on async storage
+      await AsyncStorage.setItem('userName', userName); //save user name on async storage
+      await AsyncStorage.setItem('token', token); //save token on async storage
+      await AsyncStorage.setItem('age_group', age_group); //save age group on async storage
+      await AsyncStorage.setItem('gender', gender); //save gender on async storage
+      await AsyncStorage.setItem('theme', 'light');
+    } catch (error) {
+      // console.log(error);
+    }
+  };
+
+  const login = async () => {
+    const response = await fetch(
+      'https://sym-track.herokuapp.com/api/auth/login',
+      {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: username,
+          password: password,
+        }),
+      }
+    );
+
+    const json = await response.json();
+    userIDStore.dispatch(
+      actions.addUser(
+        json.user._id,
+        json.user.username,
+        json.token,
+        json.user.age_group,
+        json.user.gender
+      )
+    );
+    saveUser(
+      json.user._id,
+      json.user.username,
+      json.token,
+      json.user.age_group,
+      json.user.gender
+    ); //storing the user id in async storage
+    setIsLoading(false);
   };
 
   const onSignInButtonPress = () => {
@@ -192,8 +250,14 @@ export default ({ navigation }) => {
           <Text status='danger' category='h6' style={{ marginBottom: 10 }}>
             {modalMessage}
           </Text>
+          <Divider />
           <Text
-            style={{ alignSelf: 'flex-end', color: '#0080ff' }}
+            style={{
+              alignSelf: 'flex-end',
+              justifyContent: 'center',
+              marginTop: 5,
+            }}
+            status='primary'
             onPress={() => setModalState(false)}>
             Dismiss
           </Text>
@@ -279,8 +343,12 @@ export default ({ navigation }) => {
           style={styles.termsCheckBox}
           textStyle={styles.termsCheckBoxText}
           checked={termsAccepted}
-          onChange={(checked) => setTermsAccepted(checked)}>
-          <Text appearance='hint' category='c1'>
+          status={termStat}
+          onChange={(checked) => {
+            setTermsAccepted(checked);
+            setTermStat('basic');
+          }}>
+          <Text appearance='hint' category='c1' status={termStat}>
             {
               'By creating an account, I agree to the Track Sym Terms of\nUse and Privacy Policy'
             }
