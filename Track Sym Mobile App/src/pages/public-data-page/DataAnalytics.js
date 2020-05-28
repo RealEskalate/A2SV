@@ -625,7 +625,7 @@ class DataAnalytics extends React.Component {
               }}
             >
               <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-                Case Update
+                Daily Stats
               </Text>
             </Layout>
             <Layout
@@ -748,7 +748,7 @@ class DataAnalytics extends React.Component {
               }}
             >
               <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-                Total Data
+                Total Stats
               </Text>
             </Layout>
 
@@ -974,8 +974,9 @@ class DataAnalytics extends React.Component {
                         borderColor: "#000000",
                       },
                     }}
-                    onDateChange={(date) => {
-                      this.setState({ selected_daily_start_date: date });
+                    onDateChange={async (date) => {
+                      await this.setState({ selected_daily_start_date: date });
+                      this.fetchDailyNewsCases();
                     }}
                   />
                 </Layout>
@@ -1280,8 +1281,9 @@ class DataAnalytics extends React.Component {
                         borderColor: "#000000",
                       },
                     }}
-                    onDateChange={(date) => {
-                      this.setState({ selected_total_start_date: date });
+                    onDateChange={async (date) => {
+                      await this.setState({ selected_total_start_date: date });
+                      this.fetchStatistics();
                     }}
                   />
                 </Layout>
@@ -1467,9 +1469,9 @@ class DataAnalytics extends React.Component {
                     this.state.selected_filter === criterias.confirmed
                       ? this.state.staticsDescription.length > 1
                         ? this.setState({
-                            descriptionTitle: this.state.staticsDescription[1]
+                            descriptionTitle: this.state.staticsDescription[0]
                               .descriptions[0].criteria[1].name,
-                            description: this.state.staticsDescription[1]
+                            description: this.state.staticsDescription[0]
                               .descriptions[0].criteria[1].explanation,
                             descriptionVisiblity: true,
                           })
@@ -1477,9 +1479,9 @@ class DataAnalytics extends React.Component {
                       : this.state.selected_filter === criterias.recoveries
                       ? this.state.staticsDescription.length > 1
                         ? this.setState({
-                            descriptionTitle: this.state.staticsDescription[1]
+                            descriptionTitle: this.state.staticsDescription[0]
                               .descriptions[0].criteria[3].name,
-                            description: this.state.staticsDescription[1]
+                            description: this.state.staticsDescription[0]
                               .descriptions[0].criteria[3].explanation,
                             descriptionVisiblity: true,
                           })
@@ -1487,18 +1489,18 @@ class DataAnalytics extends React.Component {
                       : this.state.selected_filter === criterias.deaths
                       ? this.state.staticsDescription.length > 1
                         ? this.setState({
-                            descriptionTitle: this.state.staticsDescription[1]
+                            descriptionTitle: this.state.staticsDescription[0]
                               .descriptions[0].criteria[2].name,
-                            description: this.state.staticsDescription[1]
+                            description: this.state.staticsDescription[0]
                               .descriptions[0].criteria[2].explanation,
                             descriptionVisiblity: true,
                           })
                         : this.getCriteriaDescriptions("Total Counts", 2)
                       : this.state.staticsDescription.length > 1
                       ? this.setState({
-                          descriptionTitle: this.state.staticsDescription[1]
+                          descriptionTitle: this.state.staticsDescription[0]
                             .descriptions[0].criteria[0].name,
-                          description: this.state.staticsDescription[1]
+                          description: this.state.staticsDescription[0]
                             .descriptions[0].criteria[0].explanation,
                           descriptionVisiblity: true,
                         })
@@ -1571,8 +1573,9 @@ class DataAnalytics extends React.Component {
                         borderColor: "#000000",
                       },
                     }}
-                    onDateChange={(date) => {
-                      this.setState({ selected_rate_start_date: date });
+                    onDateChange={async (date) => {
+                      await this.setState({ selected_rate_start_date: date });
+                      this.fetchRateStatistics();
                     }}
                   />
                 </Layout>
@@ -1705,7 +1708,7 @@ class DataAnalytics extends React.Component {
                       : styles.text_style_pressed
                   }
                 >
-                  Recovered Rate
+                  Recovery Rate
                 </Text>
               </TouchableOpacity>
 
@@ -1739,10 +1742,10 @@ class DataAnalytics extends React.Component {
                     this.state.selected_filter_rate === criterias.confirmedRate
                       ? this.state.staticsDescription.length > 1
                         ? this.setState({
-                            descriptionTitle: this.state.staticsDescription[1]
-                              .descriptions[0].criteria[1].name,
-                            description: this.state.staticsDescription[1]
-                              .descriptions[0].criteria[1].explanation,
+                            descriptionTitle: this.state.staticsDescription[2]
+                              .descriptions[0].criteria[0].name,
+                            description: this.state.staticsDescription[2]
+                              .descriptions[0].criteria[0].explanation,
                             descriptionVisiblity: true,
                           })
                         : this.getCriteriaDescriptions("View Rates", 0)
@@ -1750,28 +1753,28 @@ class DataAnalytics extends React.Component {
                         criterias.recoveryRate
                       ? this.state.staticsDescription.length > 1
                         ? this.setState({
-                            descriptionTitle: this.state.staticsDescription[1]
-                              .descriptions[0].criteria[3].name,
-                            description: this.state.staticsDescription[1]
-                              .descriptions[0].criteria[3].explanation,
+                            descriptionTitle: this.state.staticsDescription[2]
+                              .descriptions[0].criteria[1].name,
+                            description: this.state.staticsDescription[2]
+                              .descriptions[0].criteria[1].explanation,
                             descriptionVisiblity: true,
                           })
                         : this.getCriteriaDescriptions("View Rates", 1)
-                      : this.state.selected_filter === criterias.deathRate
+                      : this.state.selected_filter_rate === criterias.deathRate
                       ? this.state.staticsDescription.length > 1
                         ? this.setState({
-                            descriptionTitle: this.state.staticsDescription[1]
-                              .descriptions[0].criteria[2].name,
-                            description: this.state.staticsDescription[1]
-                              .descriptions[0].criteria[2].explanation,
+                            descriptionTitle: this.state.staticsDescription[2]
+                              .descriptions[0].criteria[3].name,
+                            description: this.state.staticsDescription[2]
+                              .descriptions[0].criteria[3].explanation,
                             descriptionVisiblity: true,
                           })
                         : this.getCriteriaDescriptions("View Rates", 3)
                       : this.state.staticsDescription.length > 1
                       ? this.setState({
-                          descriptionTitle: this.state.staticsDescription[1]
+                          descriptionTitle: this.state.staticsDescription[2]
                             .descriptions[0].criteria[0].name,
-                          description: this.state.staticsDescription[1]
+                          description: this.state.staticsDescription[2]
                             .descriptions[0].criteria[0].explanation,
                           descriptionVisiblity: true,
                         })
