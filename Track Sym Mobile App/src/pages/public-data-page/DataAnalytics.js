@@ -121,8 +121,6 @@ class DataAnalytics extends React.Component {
           await newThis.populate(json);
           newThis.forceUpdate(); //refresh page
           newThis.setState({ totalGraphLoading: false });
-        } else {
-          newThis.fetchStatistics();
         }
       })
       .catch((error) => {
@@ -162,8 +160,6 @@ class DataAnalytics extends React.Component {
           await newThis.populateRateData(json);
           newThis.forceUpdate(); //refresh page
           newThis.setState({ rateGraphLoading: false });
-        } else {
-          newThis.fetchRateStatistics();
         }
       })
       .catch((error) => {
@@ -203,8 +199,6 @@ class DataAnalytics extends React.Component {
             totalLoading: false,
           });
           newThis.forceUpdate(); //refresh page
-        } else {
-          newThis.getTotalData();
         }
       })
       .catch((error) => {
@@ -228,8 +222,6 @@ class DataAnalytics extends React.Component {
           await newThis.setState({
             countries: json,
           });
-        } else {
-          newThis.getCountryList();
         }
       })
       .catch((error) => {
@@ -271,8 +263,6 @@ class DataAnalytics extends React.Component {
           await newThis.populateDailyData(json);
           newThis.forceUpdate(); //refresh page
           newThis.setState({ dailyGraphLoading: false });
-        } else {
-          newThis.fetchDailyNewsCases();
         }
       })
       .catch((error) => {
@@ -710,7 +700,7 @@ class DataAnalytics extends React.Component {
                 style={{ alignItems: "center" }}
               >
                 <Image
-                  source={require("../../../assets/images/dead.png")}
+                  source={require("../../../assets/images/angel.jpg")}
                   style={{ height: 30, width: 30 }}
                 />
 
@@ -826,7 +816,7 @@ class DataAnalytics extends React.Component {
                 style={{ alignItems: "center" }}
               >
                 <Image
-                  source={require("../../../assets/images/dead.png")}
+                  source={require("../../../assets/images/angel.jpg")}
                   style={{ height: 30, width: 30 }}
                 />
 
@@ -1059,98 +1049,24 @@ class DataAnalytics extends React.Component {
                   <DotsLoader size={15} />
                 </Layout>
               ) : null}
-            </Layout>
 
-            <Layout
-              style={{ flexDirection: "row", backgroundColor: "#ffffff00" }}
-            >
-              <TouchableOpacity
-                style={
-                  this.state.selected_filter_daily_status ===
-                  criterias.confirmed
-                    ? styles.touchable_buttons
-                    : styles.touchable_buttons_pressed
-                }
-                onPress={async () => {
-                  await this.setState({
-                    selected_filter_daily_status: criterias.confirmed,
-                  });
-                  this.fetchDailyNewsCases();
+              <Layout
+                style={{
+                  flexDirection: "row",
+                  backgroundColor: "#ffffff00",
+                  justifyContent: "space-evenly",
                 }}
               >
-                <Text
-                  style={
-                    this.state.selected_filter_daily_status ===
-                    criterias.confirmed
-                      ? styles.text_style
-                      : styles.text_style_pressed
-                  }
-                >
-                  Confirmed
-                </Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={
-                  this.state.selected_filter_daily_status ===
-                  criterias.recoveries
-                    ? styles.touchable_buttons
-                    : styles.touchable_buttons_pressed
-                }
-                onPress={async () => {
-                  await this.setState({
-                    selected_filter_daily_status: criterias.recoveries,
-                  });
-                  this.fetchDailyNewsCases();
-                }}
-              >
-                <Text
-                  style={
-                    this.state.selected_filter_daily_status ===
-                    criterias.recoveries
-                      ? styles.text_style
-                      : styles.text_style_pressed
-                  }
-                >
-                  Recovered
-                </Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={
-                  this.state.selected_filter_daily_status === criterias.deaths
-                    ? styles.touchable_buttons
-                    : styles.touchable_buttons_pressed
-                }
-                onPress={async () => {
-                  await this.setState({
-                    selected_filter_daily_status: criterias.deaths,
-                  });
-                  this.fetchDailyNewsCases();
-                }}
-              >
-                <Text
-                  style={
-                    this.state.selected_filter_daily_status === criterias.deaths
-                      ? styles.text_style
-                      : styles.text_style_pressed
-                  }
-                >
-                  Death
-                </Text>
-              </TouchableOpacity>
-
-              {this.state.testCountDataExist ? (
                 <TouchableOpacity
                   style={
                     this.state.selected_filter_daily_status ===
-                    criterias.numberOfTests
+                    criterias.confirmed
                       ? styles.touchable_buttons
                       : styles.touchable_buttons_pressed
                   }
                   onPress={async () => {
                     await this.setState({
-                      selected_filter_daily_status: criterias.numberOfTests,
+                      selected_filter_daily_status: criterias.confirmed,
                     });
                     this.fetchDailyNewsCases();
                   }}
@@ -1158,69 +1074,152 @@ class DataAnalytics extends React.Component {
                   <Text
                     style={
                       this.state.selected_filter_daily_status ===
-                      criterias.numberOfTests
+                      criterias.confirmed
                         ? styles.text_style
                         : styles.text_style_pressed
                     }
                   >
-                    Test Counts
+                    Confirmed
                   </Text>
                 </TouchableOpacity>
-              ) : null}
-              <TouchableOpacity
-                style={styles.touchable_buttons_pressed}
-                onPress={() => {
-                  {
+
+                <TouchableOpacity
+                  style={
                     this.state.selected_filter_daily_status ===
-                    criterias.confirmed
-                      ? this.state.staticsDescription.length > 1
-                        ? this.setState({
-                            descriptionTitle: this.state.staticsDescription[1]
-                              .descriptions[0].criteria[1].name,
-                            description: this.state.staticsDescription[1]
-                              .descriptions[0].criteria[1].explanation,
-                            descriptionVisiblity: true,
-                          })
-                        : this.getCriteriaDescriptions("Daily Counts", 0)
-                      : this.state.selected_filter_daily_status ===
-                        criterias.recoveries
-                      ? this.state.staticsDescription.length > 1
-                        ? this.setState({
-                            descriptionTitle: this.state.staticsDescription[1]
-                              .descriptions[0].criteria[3].name,
-                            description: this.state.staticsDescription[1]
-                              .descriptions[0].criteria[3].explanation,
-                            descriptionVisiblity: true,
-                          })
-                        : this.getCriteriaDescriptions("Daily Counts", 1)
-                      : this.state.selected_filter_daily_status ===
-                        criterias.deaths
-                      ? this.state.staticsDescription.length > 1
-                        ? this.setState({
-                            descriptionTitle: this.state.staticsDescription[1]
-                              .descriptions[0].criteria[2].name,
-                            description: this.state.staticsDescription[1]
-                              .descriptions[0].criteria[2].explanation,
-                            descriptionVisiblity: true,
-                          })
-                        : this.getCriteriaDescriptions("Daily Counts", 2)
-                      : this.state.staticsDescription.length > 1
+                    criterias.recoveries
+                      ? styles.touchable_buttons
+                      : styles.touchable_buttons_pressed
+                  }
+                  onPress={async () => {
+                    await this.setState({
+                      selected_filter_daily_status: criterias.recoveries,
+                    });
+                    this.fetchDailyNewsCases();
+                  }}
+                >
+                  <Text
+                    style={
+                      this.state.selected_filter_daily_status ===
+                      criterias.recoveries
+                        ? styles.text_style
+                        : styles.text_style_pressed
+                    }
+                  >
+                    Recovered
+                  </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={
+                    this.state.selected_filter_daily_status === criterias.deaths
+                      ? styles.touchable_buttons
+                      : styles.touchable_buttons_pressed
+                  }
+                  onPress={async () => {
+                    await this.setState({
+                      selected_filter_daily_status: criterias.deaths,
+                    });
+                    this.fetchDailyNewsCases();
+                  }}
+                >
+                  <Text
+                    style={
+                      this.state.selected_filter_daily_status ===
+                      criterias.deaths
+                        ? styles.text_style
+                        : styles.text_style_pressed
+                    }
+                  >
+                    Death
+                  </Text>
+                </TouchableOpacity>
+
+                {this.state.testCountDataExist ? (
+                  <TouchableOpacity
+                    style={
+                      this.state.selected_filter_daily_status ===
+                      criterias.numberOfTests
+                        ? styles.touchable_buttons
+                        : styles.touchable_buttons_pressed
+                    }
+                    onPress={async () => {
+                      await this.setState({
+                        selected_filter_daily_status: criterias.numberOfTests,
+                      });
+                      this.fetchDailyNewsCases();
+                    }}
+                  >
+                    <Text
+                      style={
+                        this.state.selected_filter_daily_status ===
+                        criterias.numberOfTests
+                          ? styles.text_style
+                          : styles.text_style_pressed
+                      }
+                    >
+                      Test Counts
+                    </Text>
+                  </TouchableOpacity>
+                ) : null}
+              </Layout>
+              <Layout padding={10}>
+                {this.state.staticsDescriptionLoading ? (
+                  <Layout flexDirection="row" alignSelf="center">
+                    <ActivityIndicator size="small" color="gray" />
+                    <Text style={{ fontSize: 16, color: "gray" }}>
+                      Loading criteria description
+                    </Text>
+                  </Layout>
+                ) : this.state.selected_filter_daily_status ===
+                  criterias.confirmed ? (
+                  this.state.staticsDescription.length > 1 ? (
+                    this.setState({
+                      descriptionTitle: this.state.staticsDescription[1]
+                        .descriptions[0].criteria[1].name,
+                      description: this.state.staticsDescription[1]
+                        .descriptions[0].criteria[1].explanation,
+                    })
+                  ) : (
+                    this.getCriteriaDescriptions("Daily Counts", 0)
+                  )
+                ) : (
+                  (this.state.selected_filter_daily_status ===
+                    criterias.recoveries
+                    ? this.state.staticsDescription.length > 1
                       ? this.setState({
                           descriptionTitle: this.state.staticsDescription[1]
-                            .descriptions[0].criteria[0].name,
+                            .descriptions[0].criteria[3].name,
                           description: this.state.staticsDescription[1]
-                            .descriptions[0].criteria[0].explanation,
-                          descriptionVisiblity: true,
+                            .descriptions[0].criteria[3].explanation,
                         })
-                      : this.getCriteriaDescriptions("Daily Counts", 3);
-                  }
-                  this.setState({ descriptionVisiblity: true });
-                }}
-              >
-                <Text style={styles.text_style_pressed}>Description</Text>
-              </TouchableOpacity>
+                      : this.getCriteriaDescriptions("Daily Counts", 1)
+                    : this.state.selected_filter_daily_status ===
+                      criterias.deaths
+                    ? this.state.staticsDescription.length > 1
+                      ? this.setState({
+                          descriptionTitle: this.state.staticsDescription[1]
+                            .descriptions[0].criteria[2].name,
+                          description: this.state.staticsDescription[1]
+                            .descriptions[0].criteria[2].explanation,
+                        })
+                      : this.getCriteriaDescriptions("Daily Counts", 2)
+                    : this.state.staticsDescription.length > 1
+                    ? this.setState({
+                        descriptionTitle: this.state.staticsDescription[1]
+                          .descriptions[0].criteria[0].name,
+                        description: this.state.staticsDescription[1]
+                          .descriptions[0].criteria[0].explanation,
+                      })
+                    : this.getCriteriaDescriptions("Daily Counts", 3))(
+                    <Text
+                      style={{ fontSize: 16, color: "gray", marginLeft: 10 }}
+                    >
+                      {this.state.description}
+                    </Text>
+                  )
+                )}
+              </Layout>
             </Layout>
-
             <Layout style={styles.container_graph}>
               <Text
                 style={{
@@ -1362,157 +1361,161 @@ class DataAnalytics extends React.Component {
                   <DotsLoader size={15} />
                 </Layout>
               ) : null}
-            </Layout>
 
-            <Layout
-              style={{ flexDirection: "row", backgroundColor: "#ffffff00" }}
-            >
-              <TouchableOpacity
-                style={
-                  this.state.selected_filter === criterias.confirmed
-                    ? styles.touchable_buttons
-                    : styles.touchable_buttons_pressed
-                }
-                onPress={async () => {
-                  await this.setState({
-                    selected_filter: criterias.confirmed,
-                  });
-                  this.fetchDailyNewsCases();
+              <Layout
+                style={{
+                  flexDirection: "row",
+                  backgroundColor: "#ffffff00",
+                  justifyContent: "space-evenly",
                 }}
               >
-                <Text
-                  style={
-                    this.state.selected_filter === criterias.confirmed
-                      ? styles.text_style
-                      : styles.text_style_pressed
-                  }
-                >
-                  Confirmed
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={
-                  this.state.selected_filter === criterias.recoveries
-                    ? styles.touchable_buttons
-                    : styles.touchable_buttons_pressed
-                }
-                onPress={async () => {
-                  await this.setState({
-                    selected_filter: criterias.recoveries,
-                  });
-                  this.fetchStatistics();
-                }}
-              >
-                <Text
-                  style={
-                    this.state.selected_filter === criterias.recoveries
-                      ? styles.text_style
-                      : styles.text_style_pressed
-                  }
-                >
-                  Recovered
-                </Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={
-                  this.state.selected_filter === criterias.deaths
-                    ? styles.touchable_buttons
-                    : styles.touchable_buttons_pressed
-                }
-                onPress={async () => {
-                  await this.setState({
-                    selected_filter: criterias.deaths,
-                  });
-                  this.fetchStatistics();
-                }}
-              >
-                <Text
-                  style={
-                    this.state.selected_filter === criterias.deaths
-                      ? styles.text_style
-                      : styles.text_style_pressed
-                  }
-                >
-                  Death
-                </Text>
-              </TouchableOpacity>
-              {this.state.testCountDataExist ? (
                 <TouchableOpacity
                   style={
-                    this.state.selected_filter === criterias.numberOfTests
+                    this.state.selected_filter === criterias.confirmed
                       ? styles.touchable_buttons
                       : styles.touchable_buttons_pressed
                   }
                   onPress={async () => {
                     await this.setState({
-                      selected_filter: criterias.numberOfTests,
+                      selected_filter: criterias.confirmed,
                     });
                     this.fetchDailyNewsCases();
                   }}
                 >
                   <Text
                     style={
-                      this.state.selected_filter === criterias.numberOfTests
+                      this.state.selected_filter === criterias.confirmed
                         ? styles.text_style
                         : styles.text_style_pressed
                     }
                   >
-                    Test Counts
+                    Confirmed
                   </Text>
                 </TouchableOpacity>
-              ) : null}
-              <TouchableOpacity
-                style={styles.touchable_buttons_pressed}
-                onPress={() => {
-                  {
-                    this.state.selected_filter === criterias.confirmed
-                      ? this.state.staticsDescription.length > 1
-                        ? this.setState({
-                            descriptionTitle: this.state.staticsDescription[0]
-                              .descriptions[0].criteria[1].name,
-                            description: this.state.staticsDescription[0]
-                              .descriptions[0].criteria[1].explanation,
-                            descriptionVisiblity: true,
-                          })
-                        : this.getCriteriaDescriptions("Total Counts", 0)
-                      : this.state.selected_filter === criterias.recoveries
-                      ? this.state.staticsDescription.length > 1
-                        ? this.setState({
-                            descriptionTitle: this.state.staticsDescription[0]
-                              .descriptions[0].criteria[3].name,
-                            description: this.state.staticsDescription[0]
-                              .descriptions[0].criteria[3].explanation,
-                            descriptionVisiblity: true,
-                          })
-                        : this.getCriteriaDescriptions("Total Counts", 1)
-                      : this.state.selected_filter === criterias.deaths
-                      ? this.state.staticsDescription.length > 1
-                        ? this.setState({
-                            descriptionTitle: this.state.staticsDescription[0]
-                              .descriptions[0].criteria[2].name,
-                            description: this.state.staticsDescription[0]
-                              .descriptions[0].criteria[2].explanation,
-                            descriptionVisiblity: true,
-                          })
-                        : this.getCriteriaDescriptions("Total Counts", 2)
-                      : this.state.staticsDescription.length > 1
+                <TouchableOpacity
+                  style={
+                    this.state.selected_filter === criterias.recoveries
+                      ? styles.touchable_buttons
+                      : styles.touchable_buttons_pressed
+                  }
+                  onPress={async () => {
+                    await this.setState({
+                      selected_filter: criterias.recoveries,
+                    });
+                    this.fetchStatistics();
+                  }}
+                >
+                  <Text
+                    style={
+                      this.state.selected_filter === criterias.recoveries
+                        ? styles.text_style
+                        : styles.text_style_pressed
+                    }
+                  >
+                    Recovered
+                  </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={
+                    this.state.selected_filter === criterias.deaths
+                      ? styles.touchable_buttons
+                      : styles.touchable_buttons_pressed
+                  }
+                  onPress={async () => {
+                    await this.setState({
+                      selected_filter: criterias.deaths,
+                    });
+                    this.fetchStatistics();
+                  }}
+                >
+                  <Text
+                    style={
+                      this.state.selected_filter === criterias.deaths
+                        ? styles.text_style
+                        : styles.text_style_pressed
+                    }
+                  >
+                    Death
+                  </Text>
+                </TouchableOpacity>
+                {this.state.testCountDataExist ? (
+                  <TouchableOpacity
+                    style={
+                      this.state.selected_filter === criterias.numberOfTests
+                        ? styles.touchable_buttons
+                        : styles.touchable_buttons_pressed
+                    }
+                    onPress={async () => {
+                      await this.setState({
+                        selected_filter: criterias.numberOfTests,
+                      });
+                      this.fetchDailyNewsCases();
+                    }}
+                  >
+                    <Text
+                      style={
+                        this.state.selected_filter === criterias.numberOfTests
+                          ? styles.text_style
+                          : styles.text_style_pressed
+                      }
+                    >
+                      Test Counts
+                    </Text>
+                  </TouchableOpacity>
+                ) : null}
+              </Layout>
+              <Layout padding={10}>
+                {this.state.staticsDescriptionLoading ? (
+                  <Layout flexDirection="row" alignSelf="center">
+                    <ActivityIndicator size="small" color="gray" />
+                    <Text style={{ fontSize: 16, color: "gray" }}>
+                      Loading criteria description
+                    </Text>
+                  </Layout>
+                ) : this.state.selected_filter === criterias.confirmed ? (
+                  this.state.staticsDescription.length > 1 ? (
+                    this.setState({
+                      descriptionTitle: this.state.staticsDescription[0]
+                        .descriptions[0].criteria[1].name,
+                      description: this.state.staticsDescription[0]
+                        .descriptions[0].criteria[1].explanation,
+                    })
+                  ) : (
+                    this.getCriteriaDescriptions("Total Counts", 0)
+                  )
+                ) : (
+                  (this.state.selected_filter === criterias.recoveries
+                    ? this.state.staticsDescription.length > 1
                       ? this.setState({
                           descriptionTitle: this.state.staticsDescription[0]
-                            .descriptions[0].criteria[0].name,
+                            .descriptions[0].criteria[3].name,
                           description: this.state.staticsDescription[0]
-                            .descriptions[0].criteria[0].explanation,
-                          descriptionVisiblity: true,
+                            .descriptions[0].criteria[3].explanation,
                         })
-                      : this.getCriteriaDescriptions("Total Counts", 3);
-                  }
-                  this.setState({ descriptionVisiblity: true });
-                }}
-              >
-                <Text style={styles.text_style_pressed}>Description</Text>
-              </TouchableOpacity>
+                      : this.getCriteriaDescriptions("Total Counts", 1)
+                    : this.state.selected_filter === criterias.deaths
+                    ? this.state.staticsDescription.length > 1
+                      ? this.setState({
+                          descriptionTitle: this.state.staticsDescription[0]
+                            .descriptions[0].criteria[2].name,
+                          description: this.state.staticsDescription[0]
+                            .descriptions[0].criteria[2].explanation,
+                        })
+                      : this.getCriteriaDescriptions("Total Counts", 2)
+                    : this.state.staticsDescription.length > 1
+                    ? this.setState({
+                        descriptionTitle: this.state.staticsDescription[0]
+                          .descriptions[0].criteria[0].name,
+                        description: this.state.staticsDescription[0]
+                          .descriptions[0].criteria[0].explanation,
+                      })
+                    : this.getCriteriaDescriptions("Total Counts", 3))(
+                    <Text>{this.state.description}</Text>
+                  )
+                )}
+              </Layout>
             </Layout>
-
             <Layout style={styles.container_graph}>
               <Text
                 style={{
@@ -1653,138 +1656,149 @@ class DataAnalytics extends React.Component {
                   <DotsLoader size={15} />
                 </Layout>
               ) : null}
-            </Layout>
 
-            <Layout
-              style={{
-                flexDirection: "row",
-                marginBottom: 80,
-                backgroundColor: "#ffffff00",
-              }}
-            >
-              {this.state.testCountDataExist ? (
+              <Layout
+                style={{
+                  flexDirection: "row",
+                  backgroundColor: "#ffffff00",
+                  justifyContent: "space-evenly",
+                }}
+              >
+                {this.state.testCountDataExist ? (
+                  <TouchableOpacity
+                    style={
+                      this.state.selected_filter_rate ===
+                      criterias.confirmedRate
+                        ? styles.touchable_buttons
+                        : styles.touchable_buttons_pressed
+                    }
+                    onPress={async () => {
+                      await this.setState({
+                        selected_filter_rate: criterias.confirmedRate,
+                      });
+                      this.fetchRateStatistics();
+                    }}
+                  >
+                    <Text
+                      style={
+                        this.state.selected_filter_rate ===
+                        criterias.confirmedRate
+                          ? styles.text_style
+                          : styles.text_style_pressed
+                      }
+                    >
+                      Confirmed Rate
+                    </Text>
+                  </TouchableOpacity>
+                ) : null}
                 <TouchableOpacity
                   style={
-                    this.state.selected_filter_rate === criterias.confirmedRate
+                    this.state.selected_filter_rate === criterias.recoveryRate
                       ? styles.touchable_buttons
                       : styles.touchable_buttons_pressed
                   }
                   onPress={async () => {
                     await this.setState({
-                      selected_filter_rate: criterias.confirmedRate,
+                      selected_filter_rate: criterias.recoveryRate,
                     });
                     this.fetchRateStatistics();
                   }}
                 >
                   <Text
                     style={
-                      this.state.selected_filter_rate ===
-                      criterias.confirmedRate
+                      this.state.selected_filter_rate === criterias.recoveryRate
                         ? styles.text_style
                         : styles.text_style_pressed
                     }
                   >
-                    Confirmed Rate
+                    Recovery Rate
                   </Text>
                 </TouchableOpacity>
-              ) : null}
-              <TouchableOpacity
-                style={
-                  this.state.selected_filter_rate === criterias.recoveryRate
-                    ? styles.touchable_buttons
-                    : styles.touchable_buttons_pressed
-                }
-                onPress={async () => {
-                  await this.setState({
-                    selected_filter_rate: criterias.recoveryRate,
-                  });
-                  this.fetchRateStatistics();
-                }}
-              >
-                <Text
-                  style={
-                    this.state.selected_filter_rate === criterias.recoveryRate
-                      ? styles.text_style
-                      : styles.text_style_pressed
-                  }
-                >
-                  Recovery Rate
-                </Text>
-              </TouchableOpacity>
 
-              <TouchableOpacity
-                style={
-                  this.state.selected_filter_rate === criterias.deathRate
-                    ? styles.touchable_buttons
-                    : styles.touchable_buttons_pressed
-                }
-                onPress={async () => {
-                  await this.setState({
-                    selected_filter_rate: criterias.deathRate,
-                  });
-                  this.fetchRateStatistics();
-                }}
-              >
-                <Text
+                <TouchableOpacity
                   style={
                     this.state.selected_filter_rate === criterias.deathRate
-                      ? styles.text_style
-                      : styles.text_style_pressed
+                      ? styles.touchable_buttons
+                      : styles.touchable_buttons_pressed
                   }
+                  onPress={async () => {
+                    await this.setState({
+                      selected_filter_rate: criterias.deathRate,
+                    });
+                    this.fetchRateStatistics();
+                  }}
                 >
-                  Death Rate
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.touchable_buttons_pressed}
-                onPress={() => {
-                  {
-                    this.state.selected_filter_rate === criterias.confirmedRate
-                      ? this.state.staticsDescription.length > 1
-                        ? this.setState({
-                            descriptionTitle: this.state.staticsDescription[2]
-                              .descriptions[0].criteria[0].name,
-                            description: this.state.staticsDescription[2]
-                              .descriptions[0].criteria[0].explanation,
-                            descriptionVisiblity: true,
-                          })
-                        : this.getCriteriaDescriptions("View Rates", 0)
-                      : this.state.selected_filter_rate ===
-                        criterias.recoveryRate
-                      ? this.state.staticsDescription.length > 1
-                        ? this.setState({
-                            descriptionTitle: this.state.staticsDescription[2]
-                              .descriptions[0].criteria[1].name,
-                            description: this.state.staticsDescription[2]
-                              .descriptions[0].criteria[1].explanation,
-                            descriptionVisiblity: true,
-                          })
-                        : this.getCriteriaDescriptions("View Rates", 1)
-                      : this.state.selected_filter_rate === criterias.deathRate
-                      ? this.state.staticsDescription.length > 1
-                        ? this.setState({
-                            descriptionTitle: this.state.staticsDescription[2]
-                              .descriptions[0].criteria[3].name,
-                            description: this.state.staticsDescription[2]
-                              .descriptions[0].criteria[3].explanation,
-                            descriptionVisiblity: true,
-                          })
-                        : this.getCriteriaDescriptions("View Rates", 3)
-                      : this.state.staticsDescription.length > 1
-                      ? this.setState({
-                          descriptionTitle: this.state.staticsDescription[2]
-                            .descriptions[0].criteria[0].name,
-                          description: this.state.staticsDescription[2]
-                            .descriptions[0].criteria[0].explanation,
-                          descriptionVisiblity: true,
-                        })
-                      : this.getCriteriaDescriptions("View Rates", 2);
-                  }
-                  this.setState({ descriptionVisiblity: true });
-                }}
-              >
-                <Text style={styles.text_style_pressed}>Description</Text>
-              </TouchableOpacity>
+                  <Text
+                    style={
+                      this.state.selected_filter_rate === criterias.deathRate
+                        ? styles.text_style
+                        : styles.text_style_pressed
+                    }
+                  >
+                    Death Rate
+                  </Text>
+                </TouchableOpacity>
+              </Layout>
+              <Layout style={{ padding: 10, marginBottom: 80 }}>
+                {this.state.staticsDescriptionLoading ? (
+                  <Layout flexDirection="row" alignSelf="center">
+                    <ActivityIndicator
+                      size="small"
+                      color="gray"
+                      marginLeft={10}
+                    />
+                    <Text style={{ fontSize: 16, color: "gray" }}>
+                      Loading criteria description
+                    </Text>
+                  </Layout>
+                ) : this.state.selected_filter_rate ===
+                  criterias.confirmedRate ? (
+                  this.state.staticsDescription.length > 1 ? (
+                    this.setState({
+                      descriptionTitle: this.state.staticsDescription[2]
+                        .descriptions[0].criteria[0].name,
+                      description: this.state.staticsDescription[2]
+                        .descriptions[0].criteria[0].explanation,
+                    })
+                  ) : (
+                    this.getCriteriaDescriptions("View Rates", 0)
+                  )
+                ) : this.state.selected_filter_rate ===
+                  criterias.recoveryRate ? (
+                  this.state.staticsDescription.length > 1 ? (
+                    this.setState({
+                      descriptionTitle: this.state.staticsDescription[2]
+                        .descriptions[0].criteria[1].name,
+                      description: this.state.staticsDescription[2]
+                        .descriptions[0].criteria[1].explanation,
+                    })
+                  ) : (
+                    this.getCriteriaDescriptions("View Rates", 1)
+                  )
+                ) : this.state.selected_filter_rate === criterias.deathRate ? (
+                  this.state.staticsDescription.length > 1 ? (
+                    this.setState({
+                      descriptionTitle: this.state.staticsDescription[2]
+                        .descriptions[0].criteria[3].name,
+                      description: this.state.staticsDescription[2]
+                        .descriptions[0].criteria[3].explanation,
+                    })
+                  ) : (
+                    this.getCriteriaDescriptions("View Rates", 3)
+                  )
+                ) : (
+                  (this.state.staticsDescription.length > 1
+                    ? this.setState({
+                        descriptionTitle: this.state.staticsDescription[2]
+                          .descriptions[0].criteria[0].name,
+                        description: this.state.staticsDescription[2]
+                          .descriptions[0].criteria[0].explanation,
+                      })
+                    : this.getCriteriaDescriptions("View Rates", 2))(
+                    <Text>{this.state.description}</Text>
+                  )
+                )}
+              </Layout>
             </Layout>
           </Layout>
         </ScrollView>
@@ -1852,14 +1866,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#1976d2",
     padding: 5,
     marginRight: 5,
-    marginBottom: 10,
     borderRadius: 10,
   },
   touchable_buttons_pressed: {
     backgroundColor: "#F5F6FA",
     padding: 5,
     marginRight: 5,
-    marginBottom: 10,
     borderRadius: 10,
   },
   text_style: {
