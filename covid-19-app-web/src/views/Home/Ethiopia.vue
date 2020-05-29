@@ -68,8 +68,8 @@
             </v-col>
             <v-col md="6" cols="12">
               <h3
-                      class="mb-3 px-3 primary--text"
-                      v-text="$t('regionalStatistics')"
+                class="mb-3 px-3 primary--text"
+                v-text="$t('regionalStatistics')"
               />
               <v-simple-table>
                 <template v-slot:default>
@@ -140,10 +140,10 @@
 </template>
 
 <script>
-  import {DoughnutChart} from "./Charts/charts.js";
-  import {mdiPhone} from "@mdi/js";
+import { DoughnutChart } from "./Charts/charts.js";
+import { mdiPhone } from "@mdi/js";
 
-  export default {
+export default {
   name: "Ethiopia",
   components: {
     DoughnutChart

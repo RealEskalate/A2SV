@@ -131,7 +131,7 @@ export default {
 </script>
 
 <style>
-  #action-img-loader .v-skeleton-loader__bone {
+#action-img-loader .v-skeleton-loader__bone {
   border-radius: 0 0 0 0 !important;
-  }
+}
 </style>

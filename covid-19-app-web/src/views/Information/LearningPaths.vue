@@ -29,7 +29,6 @@
           <template v-slot:item="{ item }">
             <span v-text="$t(`ageGroups.${item.toLowerCase()}`)" />
           </template>
-
         </v-select>
       </v-col>
     </v-row>
