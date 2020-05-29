@@ -243,7 +243,7 @@ exports.get_all_locations_with_symptoms = async (req, res) => {
       let boundaries = [
         top_left_end, top_right_end, bottom_right_end, bottom_left_end
       ]
-      result = await findGridNearbySymptomaticUsers(boundaries, req.query.demo);
+      result = await findGridNearbySymptomaticUsers(boundaries, req.query.demo, req.query.stress);
       console.log(`Fetched ${result.length} Grids according to filter`)
     }
     else{
@@ -305,11 +305,11 @@ const findAllNearbySymptomaticUsers = async(long, lat, demo, stress)=>{
   return location_users;
 }
 
-const findGridNearbySymptomaticUsers = async(boundaries, demo)=>{
+const findGridNearbySymptomaticUsers = async(boundaries, demo, stress)=>{
   // await updateDb(demo);
   if (demo && demo == "true"){
     var LocationGrid = LocationGridModels.DemoLocationGrid;
-  }else if (req.query.stress && req.query.stress == "true"){
+  }else if (stress && stress == "true"){
     var LocationUser = LocationUserModels.StressLocationUserModel 
   }else{
     var LocationGrid = LocationGridModels.LocationGrid;
