@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TouchableWithoutFeedback, AsyncStorage } from 'react-native';
+import { View, TouchableWithoutFeedback } from 'react-native';
 import {
   Button,
   Input,
@@ -10,10 +10,12 @@ import {
   Modal,
   Card,
   Spinner,
+  Divider,
 } from '@ui-kitten/components';
 import { ImageOverlay } from '../../components/ImageOverlay/image-overlay.component';
 import userIDStore from '../../data-management/user-id-data/userIDStore';
 import * as actions from '../../data-management/user-id-data/userIDActions';
+import AsyncStorage from '@react-native-community/async-storage';
 import themedStyles from './extra/themedStyles';
 import { KeyboardAvoidingView } from '../../components/3rd-party';
 
@@ -36,10 +38,6 @@ export default ({ navigation }) => {
   const onSignUpButtonPress = () => {
     navigation && navigation.navigate('SignUpScreen');
   };
-
-  // const onForgotPasswordButtonPress = () => {
-  //   // navigation && navigation.navigate('ForgotPassword');
-  // };
 
   const onPasswordIconPress = () => {
     setPasswordVisible(!passwordVisible);
@@ -115,46 +113,6 @@ export default ({ navigation }) => {
 
   //Log in authentication
   const login = async () => {
-    // fetch('https://sym-track.herokuapp.com/api/auth/login', {
-    //   method: 'POST',
-    //   headers: {
-    //     Accept: 'application/json',
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify({
-    //     username: username,
-    //     password: password,
-    //   }),
-    // })
-    //   .then((response) => response.json())
-    //   .then((json) => {
-    //     userIDStore.dispatch(
-    //       actions.addUser(
-    //         json.user._id,
-    //         json.user.username,
-    //         json.token,
-    //         json.user.age_group,
-    //         json.user.gender
-    //       )
-    //     );
-    //     saveUser(
-    //       json.user._id,
-    //       json.user.username,
-    //       json.token,
-    //       json.user.age_group,
-    //       json.user.gender
-    //     ); //storing the user id in async storage
-    //     setIsLoading(false);
-    //   })
-    //   .catch((error) => {
-    //     setModalMessage(
-    //       'Invalid Credentials',
-    //       'You have entered wrong user name or password, please try again!'
-    //     );
-    //     setModalState(true);
-    //     setIsLoading(false);
-    //   });
-
     const response = await fetch(
       'https://sym-track.herokuapp.com/api/auth/login',
       {
@@ -216,8 +174,14 @@ export default ({ navigation }) => {
           <Text status='danger' category='h6' style={{ marginBottom: 10 }}>
             {modalMessage}
           </Text>
+          <Divider />
           <Text
-            style={{ alignSelf: 'flex-end', color: '#0080ff' }}
+            style={{
+              alignSelf: 'flex-end',
+              justifyContent: 'center',
+              marginTop: 5,
+            }}
+            status='primary'
             onPress={() => setModalState(false)}>
             Dismiss
           </Text>

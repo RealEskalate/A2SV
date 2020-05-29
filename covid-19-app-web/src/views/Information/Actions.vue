@@ -72,6 +72,7 @@
       <v-col md="7" cols="12" class="px-10 my-auto d-md-block d-none">
         <v-fade-transition hide-on-leave>
           <v-skeleton-loader
+            id="action-img-loader"
             ref="skeleton"
             type="image,image"
             class="mx-mb-12"
@@ -128,3 +129,9 @@ export default {
   }
 };
 </script>
+
+<style>
+#action-img-loader .v-skeleton-loader__bone {
+  border-radius: 0 0 0 0 !important;
+}
+</style>

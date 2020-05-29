@@ -1,5 +1,10 @@
 import React, { Component } from "react";
-import { ScrollView, SafeAreaView, ActivityIndicator } from "react-native";
+import {
+  ScrollView,
+  SafeAreaView,
+  ActivityIndicator,
+  View,
+} from "react-native";
 import {
   Layout,
   ListItem,
@@ -8,6 +13,10 @@ import {
   List,
   Text,
   Spinner,
+  Modal,
+  StyleService,
+  Card,
+  Button,
 } from "@ui-kitten/components";
 import symptomStore from "../../data-management/user-symptom-data/symptomStore";
 import userIDStore from "../../data-management/user-id-data/userIDStore";
@@ -26,8 +35,13 @@ export default class SymptomPage extends Component {
       localUserSymptoms: [],
       loading: true,
       registerLoading: false,
-      registerStatusText: "Loading",
+      loadingStatusText: "Loading",
       testCheck: false,
+      modalMessage: "",
+      modalState: false,
+      modalStatus: "",
+      changesMade: false,
+      numberOfChanges: 0,
     };
     localSymptomStore.subscribe(() => {
       this.fetchData();
@@ -46,35 +60,64 @@ export default class SymptomPage extends Component {
     this.setState({
       localUserSymptoms: localSymptomStore.getState(),
     });
+    //Checking if there are any changes made
+    if (
+      symptomStore.getState().length !== localSymptomStore.getState().length
+    ) {
+      this.setState({ changesMade: true });
+    } else if (
+      symptomStore.getState().length === localSymptomStore.getState().length
+    ) {
+      if (localSymptomStore.getState().length === 0) {
+        this.setState({ changesMade: false }); //if they are equal but empty
+      }
+      for (var index = 0; index < symptomStore.getState().length; index++) {
+        if (
+          !localSymptomStore
+            .getState()
+            .includes(symptomStore.getState()[index].Symptom._id)
+        ) {
+          this.setState({ changesMade: true });
+          return;
+        }
+        this.setState({ changesMade: false });
+      }
+    } else {
+      this.setState({ changesMade: false });
+    }
   }
 
   //Sync with the remote
   sync() {
     // console.log(2);
     for (var index = 0; index < symptomStore.getState().length; index++) {
-      localSymptomStore.dispatch(
-        localSymptomActions.addSymptom(
-          symptomStore.getState()[index].Symptom.name
-        )
-      );
+      if (
+        !localSymptomStore
+          .getState()
+          .includes(symptomStore.getState()[index].Symptom._id)
+      ) {
+        localSymptomStore.dispatch(
+          localSymptomActions.addSymptom(
+            symptomStore.getState()[index].Symptom._id
+          )
+        );
+      }
     }
     // console.log(2);
   }
 
   //registers symptom on database and also stores in local data store
-  handleSymptomAction = (userId, symptomId, user_symptom) => {
-    let listSymptoms = symptomStore.getState();
-    let symptom = listSymptoms.find((obj) => obj.symptom_id == symptomId);
-    if (localSymptomStore.getState().includes(user_symptom)) {
-      localSymptomStore.dispatch(
-        localSymptomActions.removeSymptom(user_symptom)
-      );
+  handleSymptomAction = (symptomId) => {
+    if (localSymptomStore.getState().includes(symptomId)) {
+      localSymptomStore.dispatch(localSymptomActions.removeSymptom(symptomId));
+      //check if new change has been made
 
-      this.removeSymptom(userId, symptom._id, symptomId);
+      //this.removeSymptom(userIdStore.getState().userId, symptom._id, symptomId);
     } else {
-      localSymptomStore.dispatch(localSymptomActions.addSymptom(user_symptom));
+      localSymptomStore.dispatch(localSymptomActions.addSymptom(symptomId));
+      //check if new change has been made
 
-      this.registerSymptom(userId, symptomId);
+      //this.registerSymptom(userIdStore.getState().userId, symptomId);
     }
   };
 
@@ -111,9 +154,6 @@ export default class SymptomPage extends Component {
   //gets the list of symptoms from database
 
   fetchUserSymptoms = async (userId) => {
-    this.setState({
-      registerLoading: true,
-    });
     let newThis = this; // create variable for referencing 'this'
     await fetch(
       "https://sym-track.herokuapp.com/api/symptomuser/user/" + userId,
@@ -131,7 +171,7 @@ export default class SymptomPage extends Component {
         // fetching user symptoms from the database is successful and updating local state using redux
         symptomStore.dispatch(symptomActions.updateSymptomList(json));
         this.setState({
-          registerLoading: false,
+          loading: false,
         });
         //this.sync();
         this.forceUpdate();
@@ -146,7 +186,7 @@ export default class SymptomPage extends Component {
   registerSymptom(userId, symptomId) {
     this.setState({
       registerLoading: true,
-      registerStatusText: "Registering",
+      loadingStatusText: "Registering",
     });
     fetch("https://sym-track.herokuapp.com/api/symptomuser", {
       method: "POST",
@@ -174,12 +214,49 @@ export default class SymptomPage extends Component {
         this.registerSymptom(userId, symptomId);
       });
   }
+  //Registers collection of symptoms at once
+  registerCollectionSymptom = async () => {
+    console.log(this.state.localUserSymptoms);
+    this.setState({
+      registerLoading: true,
+    });
+    const response = await fetch(
+      "https://sym-track.herokuapp.com/api/symptomuser/multiple",
+      {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + userIDStore.getState().userToken,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          symptoms: this.state.localUserSymptoms,
+        }),
+      }
+    );
+    console.log("response " + response.status);
+    if (response.status === 404) {
+      this.registerCollectionSymptom(symptoms);
+    }
+    // symptom registeration is successful
+    if (response.status === 201) {
+      this.fetchUserSymptoms(userIDStore.getState().userId); // get the update from database and update local state
+      this.setState({
+        modalMessage: "Successfully Saved!",
+        modalState: true,
+        registerLoading: false,
+        modalStatus: "success",
+        changesMade: false,
+      });
+    }
+    //console.log(symptomStore.getState());
+  };
 
   //removes symptom with the user id
   removeSymptom(userId, randomId, symptomId) {
     this.setState({
       registerLoading: true,
-      registerStatusText: "Unregistering",
+      loadingStatusText: "Unregistering",
     });
     fetch("https://sym-track.herokuapp.com/api/symptomuser", {
       method: "DELETE",
@@ -229,83 +306,113 @@ export default class SymptomPage extends Component {
       accessoryLeft={() => (
         <CheckBox
           key={item._id}
-          checked={this.state.localUserSymptoms.includes(item.name)}
+          checked={this.state.localUserSymptoms.includes(item._id)}
+          onPress={() => {
+            this.handleSymptomAction(item._id);
+          }}
         />
       )}
       onPress={() => {
-        if (!this.state.registerLoading) {
-          this.handleSymptomAction(
-            userIDStore.getState().userId,
-            item._id,
-            item.name
-          );
-        }
+        this.handleSymptomAction(item._id);
       }}
     />
   );
 
-  contents = () =>
-    this.state.symptoms.map((item) => {
-      //return the corresponding mapping for each item in corresponding UI componenets.
-      return (
-        item &&
-        item._id &&
-        item.name && (
-          <ListItem
-            title={item.name}
-            description={item.description}
-            accessoryLeft={() => (
-              <CheckBox
-                key={item._id}
-                checked={this.state.localUserSymptoms.includes(item.name)}
-              />
-            )}
-            onPress={() => {
-              if (!this.state.registerLoading) {
-                this.handleSymptomAction(
-                  userIDStore.getState().userId,
-                  item._id,
-                  item.name
-                );
-              }
-            }}
-          />
-        )
-      );
-    });
-
-  onCheckedChange = (isChecked) => {
-    setChecked(isChecked);
-  };
-
   render() {
     return (
-      <ScrollView style={{ backgroundColor: "#eee" }}>
-        <Layout>
-          {this.state.registerLoading ? (
-            <Layout
-              style={{
-                flex: 1,
-                margin: 5,
-                alignSelf: "center",
-                flexDirection: "row",
+      <Layout style={{ flex: 1, flexDirection: "column" }}>
+        <Modal
+          visible={this.state.modalState}
+          backdropStyle={styles.backdrop}
+          onBackdropPress={() => this.setState({ modalState: false })}
+        >
+          <Card disabled={true} style={{ marginLeft: 10, marginRight: 10 }}>
+            <Text
+              status={this.state.modalStatus}
+              category="h6"
+              style={{ marginBottom: 10 }}
+            >
+              {this.state.modalMessage}
+            </Text>
+            <Text
+              style={{ alignSelf: "flex-end", color: "#0080ff" }}
+              onPress={() => {
+                this.setState({ modalState: false });
               }}
             >
-              <Text style={{ marginRight: 10 }}>
-                {this.state.registerStatusText} your symptom
-              </Text>
-              <Spinner size="small" />
-            </Layout>
-          ) : null}
-          <Layout style={{ flex: 1 }}>
-            <List
-              data={this.state.symptoms}
-              ItemSeparatorComponent={Divider}
-              renderItem={this.renderItem}
-            />
+              Dismiss
+            </Text>
+          </Card>
+        </Modal>
+
+        {this.state.loading ? (
+          <Layout
+            style={{
+              margin: 5,
+              alignSelf: "center",
+              flexDirection: "row",
+            }}
+          >
+            <Text style={{ marginRight: 10 }}>
+              {this.state.loadingStatusText} your symptom
+            </Text>
+            <Spinner size="small" />
           </Layout>
-        </Layout>
-      </ScrollView>
+        ) : null}
+
+        {this.state.changesMade ? (
+          <Layout
+            style={{
+              margin: 5,
+              alignSelf: "center",
+              flexDirection: "row",
+            }}
+          >
+            <Button
+              style={styles.button}
+              appearance="outline"
+              disabled={this.state.registerLoading}
+              accessoryLeft={() =>
+                this.state.registerLoading ? <Spinner /> : <></>
+              }
+              onPress={() => this.registerCollectionSymptom()}
+            >
+              Save Changes
+            </Button>
+          </Layout>
+        ) : null}
+        <List
+          data={this.state.symptoms}
+          ItemSeparatorComponent={Divider}
+          renderItem={this.renderItem}
+        />
+      </Layout>
     );
   }
 }
+const styles = StyleService.create({
+  formContainer: {
+    paddingTop: 32,
+    paddingHorizontal: 16,
+  },
+  doneButton: {
+    marginVertical: 24,
+    marginHorizontal: 16,
+  },
+  divider: {
+    flex: 1,
+  },
+  formInput: {
+    marginTop: 16,
+  },
+  backdrop: {
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  indicator: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  button: {
+    flex: 1,
+  },
+});

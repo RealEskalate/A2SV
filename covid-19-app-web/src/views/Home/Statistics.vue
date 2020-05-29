@@ -12,8 +12,8 @@
       <v-row>
         <v-col>
           <v-card flat class="overflow-hidden">
-            <v-tabs fixed-tabs value="this" v-model="selectedGraph">
-              <v-tab>
+            <v-tabs fixed-tabs v-model="selectedGraph">
+              <v-tab data-v-step="1">
                 <v-icon left>{{ mdiNumeric }}</v-icon>
                 {{ $t(graphNames[0]) }}
                 <v-spacer />

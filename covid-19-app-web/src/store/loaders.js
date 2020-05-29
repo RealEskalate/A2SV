@@ -20,7 +20,8 @@ export default {
       daily: 0,
       countryCompare: 0,
       diseaseCompare: 0,
-      descriptions: false
+      descriptions: false,
+      countryResources: false
     }
   },
   getters: {

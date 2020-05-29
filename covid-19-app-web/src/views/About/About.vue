@@ -62,7 +62,7 @@
                 v-text="message"
                 dismissible
               />
-              <v-form v-model="valid" class="mt-7">
+              <v-form ref="form" v-model="valid" class="mt-7">
                 <v-text-field
                   class="v-card--shaped"
                   outlined
@@ -92,8 +92,6 @@
                 <div class="text-center py-3">
                   <v-btn
                     width="100"
-                    :disabled="!valid"
-                    :loading="submitting"
                     class="primary mx-auto v-card--shaped"
                     @click="sendForm"
                   >
@@ -124,7 +122,7 @@
             v-for="(action, action_i) in actions"
           >
             <v-icon
-              class="white--text mb-7"
+              class="white--text mb-5"
               x-large
               v-text="$data[action.icon]"
             />
@@ -242,12 +240,13 @@ export default {
       let self = this;
       self.submitting = true;
       axios
-        .post(`${process.env.VUE_APP_BASE_URL}/messages`, this.contact)
+        .post(`${process.env.VUE_APP_BASE_URL}/api/messages`, this.contact)
         .then(
           () => {
             this.showAlert = true;
             this.type = "success";
             this.message = "Your feedback is successfully submitted!";
+            this.$refs.form.reset();
           },
           () => {
             this.showAlert = true;

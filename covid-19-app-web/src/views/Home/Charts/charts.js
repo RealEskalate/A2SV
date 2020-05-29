@@ -6,13 +6,19 @@ const { reactiveProp } = mixins;
 export const BarChart = {
   extends: Bar,
   mixins: [reactiveProp],
-  props: ["chartData", "options"]
+  props: ["chartData", "options"],
+  mounted() {
+    this.renderChart(this.chartData, this.options);
+  }
 };
 
 export const LineChart = {
   extends: Line,
   mixins: [reactiveProp],
-  props: ["chartData", "options"]
+  props: ["chartData", "options"],
+  mounted() {
+    this.renderChart(this.chartData, this.options);
+  }
 };
 
 export const DoughnutChart = {

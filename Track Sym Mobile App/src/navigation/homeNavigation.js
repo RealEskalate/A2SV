@@ -52,7 +52,7 @@ const EditSymptomScreen = (props) => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <TopNavigation
-        title="Edit Your Simptoms"
+        title="Edit Your Symptoms"
         alignment="center"
         accessoryLeft={renderBackAction}
       />

@@ -11,7 +11,7 @@
         v-if="$vuetify.breakpoint.smAndDown && navOption === '2'"
         @click.stop="drawer = !drawer"
       />
-      <router-link class="d-flex align-center" to="/">
+      <router-link data-v-step="0" class="d-flex align-center" to="/">
         <v-img
           alt="Company Logo"
           class="shrink ml-3"
@@ -34,7 +34,7 @@
         <span class="text-capitalize"> {{ $t(link.text) }}</span>
       </v-btn>
       <v-divider class="mx-2" vertical light />
-      <div class="justify-end pt-7" style="width: 50px">
+      <div class="justify-end pt-7" style="width: 50px" data-v-step="4">
         <v-select
           solo
           flat
@@ -64,7 +64,7 @@
       app
       grow
       color="primary"
-      style="border-radius: 20px 20px 0 0"
+      style="border-radius: 20px 0 0 0"
       class="px-3 overflow-hidden"
     >
       <v-btn v-for="(item, i) in links" :to="item.to" :key="i">

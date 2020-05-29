@@ -2,7 +2,7 @@
   <v-container>
     <v-row>
       <v-col cols="12">
-        <h3 class="display-1 font-weight-thin mb-5">
+        <h3 class="display-1 font-weight-thin mb-5" data-v-step="3">
           {{ $t("titles.ethiopiaStatisticsTitle") }}
           <v-img
             src="/img/ethiopia/under-construction.svg"
@@ -68,8 +68,8 @@
             </v-col>
             <v-col md="6" cols="12">
               <h3
-                      class="mb-3 px-3 primary--text"
-                      v-text="$t('regionalStatistics')"
+                class="mb-3 px-3 primary--text"
+                v-text="$t('regionalStatistics')"
               />
               <v-simple-table>
                 <template v-slot:default>
@@ -140,10 +140,10 @@
 </template>
 
 <script>
-  import {DoughnutChart} from "./Charts/charts.js";
-  import {mdiPhone} from "@mdi/js";
+import { DoughnutChart } from "./Charts/charts.js";
+import { mdiPhone } from "@mdi/js";
 
-  export default {
+export default {
   name: "Ethiopia",
   components: {
     DoughnutChart
