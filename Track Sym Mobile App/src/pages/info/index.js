@@ -65,6 +65,7 @@ export default InformationScreen = (props) => {
   const renderItem = (info) => (
     <Card
       style={styles.item}
+      onPress={() => props.navigation.navigate(info.item.link)}
       header={() => renderItemHeader(info)}
       footer={() => renderItemFooter(info.item.description, info.item.link)}>
       <Text style={styles.itemDescription} category='s1'>

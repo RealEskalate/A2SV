@@ -68,13 +68,11 @@ class DataAnalytics extends React.Component {
     rateGraphLoading: false,
     totalLoading: true,
     testCountDataExist: false,
-    new_case_description_visiblity: false,
-    total_case_description_visiblity: false,
-    rate_description_visibility: false,
-    new_case_description: `This graph represents the number of daily deaths, the number of currently active cases, the number of tests done, the number of daily deaths encountered, the number of recovered patients to the latest pandemic, COVID-19.`,
-
-    total_case_description: `This graph represents the total number of positive cases, the total number of active cases, the total number of tests done, the number of total deaths encountered, the number of recovered patients to the latest pandemic, COVID-19.`,
-    rate_description: `This graph represents the rate of positive cases, rate of recovered patients, rate of active(currently infected) patients and rate of deaths encountered from the total conducted tests everyday to the latest pandemic, COVID-19.`,
+    discriptionVisiblity: false,
+    staticsDescription: [],
+    staticsDescriptionLoading: true,
+    discriptionTitle: "",
+    description: "",
   };
 
   componentDidMount = async () => {
@@ -84,6 +82,7 @@ class DataAnalytics extends React.Component {
       .then(this.fetchRateStatistics())
       .then(this.getCountryList())
       .then(this.checkIfDataExist(criterias.numberOfTests)) //check if number of test case data exist
+      .then(this.getDescriptions)
       .catch((error) => {
         console.log("Concurrency Issue");
       });
@@ -501,6 +500,75 @@ class DataAnalytics extends React.Component {
   getMinimumDate() {
     return "2019-12-31";
   }
+  //fetches description for different age group
+  getDescriptions = async () => {
+    let newThis = this;
+    await fetch(
+      "https://sym-track.herokuapp.com/api/resources/mobile/statistics?filter=adults",
+      {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + userIDStore.getState().userToken,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .then((response) => response.json())
+      .then(async (json) => {
+        if (json !== undefined && json.length !== 0) {
+          await newThis.setState({
+            staticsDescription: json,
+            staticsDescriptionLoading: false,
+          });
+
+          console.log(this.state.staticsDescription);
+        } else {
+          newThis.getDescriptions();
+        }
+      })
+      .catch((error) => {
+        Alert.alert("Connection problem", "Couldn't connect to server");
+        // newThis.setState({
+        //   staticsDescriptionLoading: false,
+        // });
+      });
+  };
+  //fetch description of graphs
+  getCriteriaDescriptions = async (title, position) => {
+    let newThis = this;
+    var query =
+      "http://sym-track.herokuapp.com/api/resources/mobile/statistics?filter=adults&title=" +
+      title;
+    await fetch(query, {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + userIDStore.getState().userToken,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then(async (json) => {
+        if (json !== undefined && json.length !== 0) {
+          await newThis.setState({
+            descriptionTitle: json[0].criteria[position].name,
+            description: json[0].criteria[position].explanation,
+            graphDescriptionLoading: false,
+          });
+          newThis.forceUpdate();
+        } else {
+          newThis.getCriteriaDescriptions();
+        }
+      })
+      .catch((error) => {
+        newThis.setState({
+          descriptionTitle: "Connection Problem",
+          description: "Unable to connect",
+        });
+        // Alert.alert("Connection problem", "Couldn't connect to server");
+      });
+  };
 
   render() {
     const HIEGHT = Dimensions.get("window").height;
@@ -560,7 +628,7 @@ class DataAnalytics extends React.Component {
               }}
             >
               <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-                Case Update
+                Daily Stats
               </Text>
             </Layout>
             <Layout
@@ -683,7 +751,7 @@ class DataAnalytics extends React.Component {
               }}
             >
               <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-                Total Data
+                Total Stats
               </Text>
             </Layout>
 
@@ -788,60 +856,62 @@ class DataAnalytics extends React.Component {
 
             <Layout style={styles.backdrop_container}>
               <Modal
-                visible={this.state.new_case_description_visiblity}
+                visible={this.state.descriptionVisiblity}
                 backdropStyle={styles.backdrop}
-                onBackdropPress={() =>
-                  this.setState({ new_case_description_visiblity: false })
-                }
+                onBackdropPress={() => {
+                  this.setState({ descriptionVisiblity: false });
+                  this.setState({ descriptionTitle: "" });
+                  this.setState({ description: "" });
+                }}
               >
-                <Card disabled={true}>
-                  <Text>{this.state.new_case_description}</Text>
-                  <Button
-                    appearance="ghost"
-                    onPress={() =>
-                      this.setState({ new_case_description_visiblity: false })
-                    }
-                  >
-                    Dismiss
-                  </Button>
-                </Card>
-              </Modal>
-              <Modal
-                visible={this.state.total_case_description_visiblity}
-                backdropStyle={styles.backdrop}
-                onBackdropPress={() =>
-                  this.setState({ total_case_description_visiblity: false })
-                }
-              >
-                <Card disabled={true}>
-                  <Text>{this.state.total_case_description}</Text>
-                  <Button
-                    appearance="ghost"
-                    onPress={() =>
-                      this.setState({ total_case_description_visiblity: false })
-                    }
-                  >
-                    Dismiss
-                  </Button>
-                </Card>
-              </Modal>
-              <Modal
-                visible={this.state.rate_description_visibility}
-                backdropStyle={styles.backdrop}
-                onBackdropPress={() =>
-                  this.setState({ rate_description_visibility: false })
-                }
-              >
-                <Card disabled={true}>
-                  <Text>{this.state.rate_description}</Text>
-                  <Button
-                    appearance="ghost"
-                    onPress={() =>
-                      this.setState({ rate_description_visibility: false })
-                    }
-                  >
-                    Dismiss
-                  </Button>
+                <Card
+                  disabled={true}
+                  header={
+                    // style={{padding:10}}
+
+                    this.state.descriptionTitle != ""
+                      ? () => (
+                          <Text
+                            style={{
+                              minHeight: 0,
+                              fontSize: 20,
+                              fontFamily: "Roboto-Black",
+                              margin: 10,
+                            }}
+                          >
+                            {this.state.descriptionTitle}
+                          </Text>
+                        )
+                      : null
+                  }
+                  footer={
+                    this.state.description != ""
+                      ? () => (
+                          <Button
+                            style={styles.footerControl}
+                            appearance="ghost"
+                            onPress={() => {
+                              this.setState({ descriptionVisiblity: false });
+                              this.setState({ descriptionTitle: "" });
+                              this.setState({ description: "" });
+                              this.setState({ graphDescriptionLoading: true });
+                            }}
+                          >
+                            Dismiss
+                          </Button>
+                        )
+                      : null
+                  }
+                >
+                  {this.state.description == "" ? (
+                    <ActivityIndicator
+                      size="large"
+                      color="#F57B35"
+                      style={{ margin: 5 }}
+                    />
+                  ) : (
+                    <Text>{this.state.description}</Text>
+                  )}
                 </Card>
               </Modal>
             </Layout>
@@ -856,9 +926,22 @@ class DataAnalytics extends React.Component {
               >
                 Daily Stats Graph
               </Text>
-              <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
-                Country : {this.state.search}
-              </Text>
+              {this.state.staticsDescriptionLoading ? (
+                <Layout flexDirection="row">
+                  <ActivityIndicator
+                    size="small"
+                    color="gray"
+                    marginLeft={10}
+                  />
+                  <Text style={{ fontSize: 16, color: "gray" }}>
+                    Loading graph description
+                  </Text>
+                </Layout>
+              ) : (
+                <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
+                  {this.state.staticsDescription[1].descriptions[0].description}
+                </Text>
+              )}
 
               <Layout
                 style={{
@@ -894,8 +977,9 @@ class DataAnalytics extends React.Component {
                         borderColor: "#000000",
                       },
                     }}
-                    onDateChange={(date) => {
-                      this.setState({ selected_daily_start_date: date });
+                    onDateChange={async (date) => {
+                      await this.setState({ selected_daily_start_date: date });
+                      this.fetchDailyNewsCases();
                     }}
                   />
                 </Layout>
@@ -978,98 +1062,24 @@ class DataAnalytics extends React.Component {
                   <DotsLoader size={15} />
                 </Layout>
               ) : null}
-            </Layout>
 
-            <Layout
-              style={{ flexDirection: "row", backgroundColor: "#ffffff00" }}
-            >
-              <TouchableOpacity
-                style={
-                  this.state.selected_filter_daily_status ===
-                  criterias.confirmed
-                    ? styles.touchable_buttons
-                    : styles.touchable_buttons_pressed
-                }
-                onPress={async () => {
-                  await this.setState({
-                    selected_filter_daily_status: criterias.confirmed,
-                  });
-                  this.fetchDailyNewsCases();
+              <Layout
+                style={{
+                  flexDirection: "row",
+                  backgroundColor: "#ffffff00",
+                  justifyContent: "space-evenly",
                 }}
               >
-                <Text
-                  style={
-                    this.state.selected_filter_daily_status ===
-                    criterias.confirmed
-                      ? styles.text_style
-                      : styles.text_style_pressed
-                  }
-                >
-                  Confirmed
-                </Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={
-                  this.state.selected_filter_daily_status ===
-                  criterias.recoveries
-                    ? styles.touchable_buttons
-                    : styles.touchable_buttons_pressed
-                }
-                onPress={async () => {
-                  await this.setState({
-                    selected_filter_daily_status: criterias.recoveries,
-                  });
-                  this.fetchDailyNewsCases();
-                }}
-              >
-                <Text
-                  style={
-                    this.state.selected_filter_daily_status ===
-                    criterias.recoveries
-                      ? styles.text_style
-                      : styles.text_style_pressed
-                  }
-                >
-                  Recovered
-                </Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={
-                  this.state.selected_filter_daily_status === criterias.deaths
-                    ? styles.touchable_buttons
-                    : styles.touchable_buttons_pressed
-                }
-                onPress={async () => {
-                  await this.setState({
-                    selected_filter_daily_status: criterias.deaths,
-                  });
-                  this.fetchDailyNewsCases();
-                }}
-              >
-                <Text
-                  style={
-                    this.state.selected_filter_daily_status === criterias.deaths
-                      ? styles.text_style
-                      : styles.text_style_pressed
-                  }
-                >
-                  Death
-                </Text>
-              </TouchableOpacity>
-
-              {this.state.testCountDataExist ? (
                 <TouchableOpacity
                   style={
                     this.state.selected_filter_daily_status ===
-                    criterias.numberOfTests
+                    criterias.confirmed
                       ? styles.touchable_buttons
                       : styles.touchable_buttons_pressed
                   }
                   onPress={async () => {
                     await this.setState({
-                      selected_filter_daily_status: criterias.numberOfTests,
+                      selected_filter_daily_status: criterias.confirmed,
                     });
                     this.fetchDailyNewsCases();
                   }}
@@ -1077,25 +1087,140 @@ class DataAnalytics extends React.Component {
                   <Text
                     style={
                       this.state.selected_filter_daily_status ===
-                      criterias.numberOfTests
+                      criterias.confirmed
                         ? styles.text_style
                         : styles.text_style_pressed
                     }
                   >
-                    Test Counts
+                    Confirmed
                   </Text>
                 </TouchableOpacity>
-              ) : null}
-              <TouchableOpacity
-                style={styles.touchable_buttons_pressed}
-                onPress={() => {
-                  this.setState({ new_case_description_visiblity: true });
-                }}
-              >
-                <Text style={styles.text_style_pressed}>Description</Text>
-              </TouchableOpacity>
-            </Layout>
 
+                <TouchableOpacity
+                  style={
+                    this.state.selected_filter_daily_status ===
+                    criterias.recoveries
+                      ? styles.touchable_buttons
+                      : styles.touchable_buttons_pressed
+                  }
+                  onPress={async () => {
+                    await this.setState({
+                      selected_filter_daily_status: criterias.recoveries,
+                    });
+                    this.fetchDailyNewsCases();
+                  }}
+                >
+                  <Text
+                    style={
+                      this.state.selected_filter_daily_status ===
+                      criterias.recoveries
+                        ? styles.text_style
+                        : styles.text_style_pressed
+                    }
+                  >
+                    Recovered
+                  </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={
+                    this.state.selected_filter_daily_status === criterias.deaths
+                      ? styles.touchable_buttons
+                      : styles.touchable_buttons_pressed
+                  }
+                  onPress={async () => {
+                    await this.setState({
+                      selected_filter_daily_status: criterias.deaths,
+                    });
+                    this.fetchDailyNewsCases();
+                  }}
+                >
+                  <Text
+                    style={
+                      this.state.selected_filter_daily_status ===
+                      criterias.deaths
+                        ? styles.text_style
+                        : styles.text_style_pressed
+                    }
+                  >
+                    Death
+                  </Text>
+                </TouchableOpacity>
+
+                {this.state.testCountDataExist ? (
+                  <TouchableOpacity
+                    style={
+                      this.state.selected_filter_daily_status ===
+                      criterias.numberOfTests
+                        ? styles.touchable_buttons
+                        : styles.touchable_buttons_pressed
+                    }
+                    onPress={async () => {
+                      await this.setState({
+                        selected_filter_daily_status: criterias.numberOfTests,
+                      });
+                      this.fetchDailyNewsCases();
+                    }}
+                  >
+                    <Text
+                      style={
+                        this.state.selected_filter_daily_status ===
+                        criterias.numberOfTests
+                          ? styles.text_style
+                          : styles.text_style_pressed
+                      }
+                    >
+                      Test Counts
+                    </Text>
+                  </TouchableOpacity>
+                ) : null}
+              </Layout>
+              <Layout padding={10}>
+                {this.state.staticsDescriptionLoading ? (
+                  <Layout flexDirection="row" alignSelf="center">
+                    <ActivityIndicator size="small" color="gray" />
+                    <Text style={{ fontSize: 16, color: "gray" }}>
+                      Loading criteria description
+                    </Text>
+                  </Layout>
+                ) : this.state.selected_filter_daily_status ===
+                  criterias.confirmed ? (
+                  <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
+                    {this.state.staticsDescription[1].descriptions[0]
+                      .criteria[1].name +
+                      ": " +
+                      this.state.staticsDescription[1].descriptions[0]
+                        .criteria[1].explanation}
+                  </Text>
+                ) : this.state.selected_filter_daily_status ===
+                  criterias.recoveries ? (
+                  <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
+                    {this.state.staticsDescription[1].descriptions[0]
+                      .criteria[3].name +
+                      ": " +
+                      this.state.staticsDescription[1].descriptions[0]
+                        .criteria[3].explanation}
+                  </Text>
+                ) : this.state.selected_filter_daily_status ===
+                  criterias.deaths ? (
+                  <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
+                    {this.state.staticsDescription[1].descriptions[0]
+                      .criteria[2].name +
+                      ": " +
+                      this.state.staticsDescription[1].descriptions[0]
+                        .criteria[2].explanation}
+                  </Text>
+                ) : (
+                  <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
+                    {this.state.staticsDescription[1].descriptions[0]
+                      .criteria[0].name +
+                      ": " +
+                      this.state.staticsDescription[1].descriptions[0]
+                        .criteria[0].explanation}
+                  </Text>
+                )}
+              </Layout>
+            </Layout>
             <Layout style={styles.container_graph}>
               <Text
                 style={{
@@ -1106,9 +1231,22 @@ class DataAnalytics extends React.Component {
               >
                 Total Stats Graph
               </Text>
-              <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
-                Country : {this.state.search}
-              </Text>
+              {this.state.staticsDescriptionLoading ? (
+                <Layout flexDirection="row">
+                  <ActivityIndicator
+                    size="small"
+                    color="gray"
+                    marginLeft={10}
+                  />
+                  <Text style={{ fontSize: 16, color: "gray" }}>
+                    Loading graph description
+                  </Text>
+                </Layout>
+              ) : (
+                <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
+                  {this.state.staticsDescription[0].descriptions[0].description}
+                </Text>
+              )}
 
               <Layout
                 style={{
@@ -1143,8 +1281,9 @@ class DataAnalytics extends React.Component {
                         borderColor: "#000000",
                       },
                     }}
-                    onDateChange={(date) => {
-                      this.setState({ selected_total_start_date: date });
+                    onDateChange={async (date) => {
+                      await this.setState({ selected_total_start_date: date });
+                      this.fetchStatistics();
                     }}
                   />
                 </Layout>
@@ -1223,116 +1362,153 @@ class DataAnalytics extends React.Component {
                   <DotsLoader size={15} />
                 </Layout>
               ) : null}
-            </Layout>
 
-            <Layout
-              style={{ flexDirection: "row", backgroundColor: "#ffffff00" }}
-            >
-              <TouchableOpacity
-                style={
-                  this.state.selected_filter === criterias.confirmed
-                    ? styles.touchable_buttons
-                    : styles.touchable_buttons_pressed
-                }
-                onPress={async () => {
-                  await this.setState({
-                    selected_filter: criterias.confirmed,
-                  });
-                  this.fetchDailyNewsCases();
+              <Layout
+                style={{
+                  flexDirection: "row",
+                  backgroundColor: "#ffffff00",
+                  justifyContent: "space-evenly",
                 }}
               >
-                <Text
-                  style={
-                    this.state.selected_filter === criterias.confirmed
-                      ? styles.text_style
-                      : styles.text_style_pressed
-                  }
-                >
-                  Confirmed
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={
-                  this.state.selected_filter === criterias.recoveries
-                    ? styles.touchable_buttons
-                    : styles.touchable_buttons_pressed
-                }
-                onPress={async () => {
-                  await this.setState({
-                    selected_filter: criterias.recoveries,
-                  });
-                  this.fetchStatistics();
-                }}
-              >
-                <Text
-                  style={
-                    this.state.selected_filter === criterias.recoveries
-                      ? styles.text_style
-                      : styles.text_style_pressed
-                  }
-                >
-                  Recovered
-                </Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={
-                  this.state.selected_filter === criterias.deaths
-                    ? styles.touchable_buttons
-                    : styles.touchable_buttons_pressed
-                }
-                onPress={async () => {
-                  await this.setState({
-                    selected_filter: criterias.deaths,
-                  });
-                  this.fetchStatistics();
-                }}
-              >
-                <Text
-                  style={
-                    this.state.selected_filter === criterias.deaths
-                      ? styles.text_style
-                      : styles.text_style_pressed
-                  }
-                >
-                  Death
-                </Text>
-              </TouchableOpacity>
-              {this.state.testCountDataExist ? (
                 <TouchableOpacity
                   style={
-                    this.state.selected_filter === criterias.numberOfTests
+                    this.state.selected_filter === criterias.confirmed
                       ? styles.touchable_buttons
                       : styles.touchable_buttons_pressed
                   }
                   onPress={async () => {
                     await this.setState({
-                      selected_filter: criterias.numberOfTests,
+                      selected_filter: criterias.confirmed,
                     });
                     this.fetchDailyNewsCases();
                   }}
                 >
                   <Text
                     style={
-                      this.state.selected_filter === criterias.numberOfTests
+                      this.state.selected_filter === criterias.confirmed
                         ? styles.text_style
                         : styles.text_style_pressed
                     }
                   >
-                    Test Counts
+                    Confirmed
                   </Text>
                 </TouchableOpacity>
-              ) : null}
-              <TouchableOpacity
-                style={styles.touchable_buttons_pressed}
-                onPress={() => {
-                  this.setState({ total_case_description_visiblity: true });
-                }}
-              >
-                <Text style={styles.text_style_pressed}>Description</Text>
-              </TouchableOpacity>
-            </Layout>
+                <TouchableOpacity
+                  style={
+                    this.state.selected_filter === criterias.recoveries
+                      ? styles.touchable_buttons
+                      : styles.touchable_buttons_pressed
+                  }
+                  onPress={async () => {
+                    await this.setState({
+                      selected_filter: criterias.recoveries,
+                    });
+                    this.fetchStatistics();
+                  }}
+                >
+                  <Text
+                    style={
+                      this.state.selected_filter === criterias.recoveries
+                        ? styles.text_style
+                        : styles.text_style_pressed
+                    }
+                  >
+                    Recovered
+                  </Text>
+                </TouchableOpacity>
 
+                <TouchableOpacity
+                  style={
+                    this.state.selected_filter === criterias.deaths
+                      ? styles.touchable_buttons
+                      : styles.touchable_buttons_pressed
+                  }
+                  onPress={async () => {
+                    await this.setState({
+                      selected_filter: criterias.deaths,
+                    });
+                    this.fetchStatistics();
+                  }}
+                >
+                  <Text
+                    style={
+                      this.state.selected_filter === criterias.deaths
+                        ? styles.text_style
+                        : styles.text_style_pressed
+                    }
+                  >
+                    Death
+                  </Text>
+                </TouchableOpacity>
+                {this.state.testCountDataExist ? (
+                  <TouchableOpacity
+                    style={
+                      this.state.selected_filter === criterias.numberOfTests
+                        ? styles.touchable_buttons
+                        : styles.touchable_buttons_pressed
+                    }
+                    onPress={async () => {
+                      await this.setState({
+                        selected_filter: criterias.numberOfTests,
+                      });
+                      this.fetchDailyNewsCases();
+                    }}
+                  >
+                    <Text
+                      style={
+                        this.state.selected_filter === criterias.numberOfTests
+                          ? styles.text_style
+                          : styles.text_style_pressed
+                      }
+                    >
+                      Test Counts
+                    </Text>
+                  </TouchableOpacity>
+                ) : null}
+              </Layout>
+              <Layout padding={10}>
+                {this.state.staticsDescriptionLoading ? (
+                  <Layout flexDirection="row" alignSelf="center">
+                    <ActivityIndicator size="small" color="gray" />
+                    <Text style={{ fontSize: 16, color: "gray" }}>
+                      Loading criteria description
+                    </Text>
+                  </Layout>
+                ) : this.state.selected_filter === criterias.confirmed ? (
+                  <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
+                    {this.state.staticsDescription[0].descriptions[0]
+                      .criteria[1].name +
+                      ": " +
+                      this.state.staticsDescription[0].descriptions[0]
+                        .criteria[1].explanation}
+                  </Text>
+                ) : this.state.selected_filter === criterias.recoveries ? (
+                  <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
+                    {this.state.staticsDescription[0].descriptions[0]
+                      .criteria[3].name +
+                      ": " +
+                      this.state.staticsDescription[0].descriptions[0]
+                        .criteria[3].explanation}
+                  </Text>
+                ) : this.state.selected_filter === criterias.deaths ? (
+                  <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
+                    {this.state.staticsDescription[0].descriptions[0]
+                      .criteria[2].name +
+                      ": " +
+                      this.state.staticsDescription[0].descriptions[0]
+                        .criteria[2].explanation}
+                  </Text>
+                ) : (
+                  <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
+                    {this.state.staticsDescription[0].descriptions[0]
+                      .criteria[0].name +
+                      ": " +
+                      this.state.staticsDescription[0].descriptions[0]
+                        .criteria[0].explanation}
+                  </Text>
+                )}
+              </Layout>
+            </Layout>
             <Layout style={styles.container_graph}>
               <Text
                 style={{
@@ -1343,9 +1519,22 @@ class DataAnalytics extends React.Component {
               >
                 Daily Rates Graph
               </Text>
-              <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
-                Country : {this.state.search}
-              </Text>
+              {this.state.staticsDescriptionLoading ? (
+                <Layout flexDirection="row">
+                  <ActivityIndicator
+                    size="small"
+                    color="gray"
+                    marginLeft={10}
+                  />
+                  <Text style={{ fontSize: 16, color: "gray" }}>
+                    Loading graph description
+                  </Text>
+                </Layout>
+              ) : (
+                <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
+                  {this.state.staticsDescription[2].descriptions[0].description}
+                </Text>
+              )}
 
               <Layout
                 style={{
@@ -1380,8 +1569,9 @@ class DataAnalytics extends React.Component {
                         borderColor: "#000000",
                       },
                     }}
-                    onDateChange={(date) => {
-                      this.setState({ selected_rate_start_date: date });
+                    onDateChange={async (date) => {
+                      await this.setState({ selected_rate_start_date: date });
+                      this.fetchRateStatistics();
                     }}
                   />
                 </Layout>
@@ -1459,96 +1649,137 @@ class DataAnalytics extends React.Component {
                   <DotsLoader size={15} />
                 </Layout>
               ) : null}
-            </Layout>
 
-            <Layout
-              style={{
-                flexDirection: "row",
-                marginBottom: 80,
-                backgroundColor: "#ffffff00",
-              }}
-            >
-              {this.state.testCountDataExist ? (
+              <Layout
+                style={{
+                  flexDirection: "row",
+                  backgroundColor: "#ffffff00",
+                  justifyContent: "space-evenly",
+                }}
+              >
+                {this.state.testCountDataExist ? (
+                  <TouchableOpacity
+                    style={
+                      this.state.selected_filter_rate ===
+                      criterias.confirmedRate
+                        ? styles.touchable_buttons
+                        : styles.touchable_buttons_pressed
+                    }
+                    onPress={async () => {
+                      await this.setState({
+                        selected_filter_rate: criterias.confirmedRate,
+                      });
+                      this.fetchRateStatistics();
+                    }}
+                  >
+                    <Text
+                      style={
+                        this.state.selected_filter_rate ===
+                        criterias.confirmedRate
+                          ? styles.text_style
+                          : styles.text_style_pressed
+                      }
+                    >
+                      Confirmed Rate
+                    </Text>
+                  </TouchableOpacity>
+                ) : null}
                 <TouchableOpacity
                   style={
-                    this.state.selected_filter_rate === criterias.confirmedRate
+                    this.state.selected_filter_rate === criterias.recoveryRate
                       ? styles.touchable_buttons
                       : styles.touchable_buttons_pressed
                   }
                   onPress={async () => {
                     await this.setState({
-                      selected_filter_rate: criterias.confirmedRate,
+                      selected_filter_rate: criterias.recoveryRate,
                     });
                     this.fetchRateStatistics();
                   }}
                 >
                   <Text
                     style={
-                      this.state.selected_filter_rate ===
-                      criterias.confirmedRate
+                      this.state.selected_filter_rate === criterias.recoveryRate
                         ? styles.text_style
                         : styles.text_style_pressed
                     }
                   >
-                    Confirmed Rate
+                    Recovery Rate
                   </Text>
                 </TouchableOpacity>
-              ) : null}
-              <TouchableOpacity
-                style={
-                  this.state.selected_filter_rate === criterias.recoveryRate
-                    ? styles.touchable_buttons
-                    : styles.touchable_buttons_pressed
-                }
-                onPress={async () => {
-                  await this.setState({
-                    selected_filter_rate: criterias.recoveryRate,
-                  });
-                  this.fetchRateStatistics();
-                }}
-              >
-                <Text
-                  style={
-                    this.state.selected_filter_rate === criterias.recoveryRate
-                      ? styles.text_style
-                      : styles.text_style_pressed
-                  }
-                >
-                  Recovered Rate
-                </Text>
-              </TouchableOpacity>
 
-              <TouchableOpacity
-                style={
-                  this.state.selected_filter_rate === criterias.deathRate
-                    ? styles.touchable_buttons
-                    : styles.touchable_buttons_pressed
-                }
-                onPress={async () => {
-                  await this.setState({
-                    selected_filter_rate: criterias.deathRate,
-                  });
-                  this.fetchRateStatistics();
-                }}
-              >
-                <Text
+                <TouchableOpacity
                   style={
                     this.state.selected_filter_rate === criterias.deathRate
-                      ? styles.text_style
-                      : styles.text_style_pressed
+                      ? styles.touchable_buttons
+                      : styles.touchable_buttons_pressed
                   }
+                  onPress={async () => {
+                    await this.setState({
+                      selected_filter_rate: criterias.deathRate,
+                    });
+                    this.fetchRateStatistics();
+                  }}
                 >
-                  Death Rate
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.touchable_buttons_pressed}
-                onPress={() => {
-                  this.setState({ rate_description_visibility: true });
-                }}
-              >
-                <Text style={styles.text_style_pressed}>Description</Text>
-              </TouchableOpacity>
+                  <Text
+                    style={
+                      this.state.selected_filter_rate === criterias.deathRate
+                        ? styles.text_style
+                        : styles.text_style_pressed
+                    }
+                  >
+                    Death Rate
+                  </Text>
+                </TouchableOpacity>
+              </Layout>
+              <Layout style={{ padding: 10, marginBottom: 80 }}>
+                {this.state.staticsDescriptionLoading ? (
+                  <Layout flexDirection="row" alignSelf="center">
+                    <ActivityIndicator
+                      size="small"
+                      color="gray"
+                      marginLeft={10}
+                    />
+                    <Text style={{ fontSize: 16, color: "gray" }}>
+                      Loading criteria description
+                    </Text>
+                  </Layout>
+                ) : this.state.selected_filter_rate ===
+                  criterias.confirmedRate ? (
+                  <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
+                    {this.state.staticsDescription[2].descriptions[0]
+                      .criteria[0].name +
+                      ": " +
+                      this.state.staticsDescription[2].descriptions[0]
+                        .criteria[0].explanation}
+                  </Text>
+                ) : this.state.selected_filter_rate ===
+                  criterias.recoveryRate ? (
+                  <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
+                    {this.state.staticsDescription[2].descriptions[0]
+                      .criteria[1].name +
+                      ": " +
+                      this.state.staticsDescription[2].descriptions[0]
+                        .criteria[1].explanation}
+                  </Text>
+                ) : this.state.selected_filter_rate === criterias.deathRate ? (
+                  <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
+                    {this.state.staticsDescription[2].descriptions[0]
+                      .criteria[3].name +
+                      ": " +
+                      this.state.staticsDescription[2].descriptions[0]
+                        .criteria[3].explanation}
+                  </Text>
+                ) : (
+                  <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
+                    {this.state.staticsDescription[2].descriptions[0]
+                      .criteria[0].name +
+                      ": " +
+                      this.state.staticsDescription[2].descriptions[0]
+                        .criteria[0].explanation}
+                  </Text>
+                )}
+              </Layout>
             </Layout>
           </Layout>
         </ScrollView>
@@ -1616,14 +1847,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#1976d2",
     padding: 5,
     marginRight: 5,
-    marginBottom: 10,
     borderRadius: 10,
   },
   touchable_buttons_pressed: {
     backgroundColor: "#F5F6FA",
     padding: 5,
     marginRight: 5,
-    marginBottom: 10,
     borderRadius: 10,
   },
   text_style: {
