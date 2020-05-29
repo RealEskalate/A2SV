@@ -75,9 +75,9 @@
                 <template v-slot:default>
                   <thead>
                     <tr>
-                      <th class="text-left">Regions</th>
-                      <th class="text-left">Total cases</th>
-                      <th class="text-left">Total Death</th>
+                      <th class="text-left">{{ $t('regions') }}</th>
+                      <th class="text-left">{{ $t('totalCases') }}</th>
+                      <th class="text-left">{{ $t('totalDeath') }}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -140,10 +140,10 @@
 </template>
 
 <script>
-import { DoughnutChart } from "./Charts/charts.js";
-import { mdiPhone } from "@mdi/js";
+  import {DoughnutChart} from "./Charts/charts.js";
+  import {mdiPhone} from "@mdi/js";
 
-export default {
+  export default {
   name: "Ethiopia",
   components: {
     DoughnutChart
