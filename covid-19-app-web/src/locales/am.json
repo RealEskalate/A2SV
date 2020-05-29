@@ -12,6 +12,7 @@
   "regions": "ከልል",
   "totalDeath": "አጠቃላይ ሞት",
 
+  "clearbitMessage": "አርማዎች የቀረቡት ከClearBit ነው",
   "freeReportingPhoneNumbers": "ነፃ የኮቪድ-19 ሪፖርት ማድረጊያ ስልክ ቁጥሮች",
   "aboutSectionDescription": "ይህ የእኛ መተግበሪያ/አፕሊኬሽን/ ተዛማጅ የሆነውን የኮ.ቪ.ድ. 19 ምልክቶችን ለመሰብሰብ እና የምልክቶቹ በተለያዪ ቦታዎች ያለውን መቀራራብ በካርታ ለሕዝብ ለማቅረብ የሚጠቅም የንግድ ያልሆነ መተግበሪያ ነው። ከዚህ በተጨማሪም ከ Covid-19 ጋር ለተዛመዱ መረጃዎች እና ዜናዎች በመረጡት ሀገር መሰረት ያቀርባል ፡፡",
   "moreInfo": "ለተጨማሪ መረጃ",
@@ -20,9 +21,9 @@
   "privacy": "ግላዊነት",
   "references": "ዋቢዎች",
   "NA": "መ/የ",
-  "readMore": "ተጨማሪ ያንብቡ",
+  "readMore": "ተጨማሪ መረጃ",
   "close": "ዝጋ",
-  "dateRange": "የቀን ክልል",
+  "dateRange": "የቀን ገድብ",
   "metrics": "መለኪያዎች",
 
   "states": {
@@ -79,7 +80,7 @@
 
   "ethiopiaRegions": {
     "addisAbaba": "አዲስ አበባ",
-    "oromia": "ኦሮምያ",
+    "oromia": "ኦሮሚያ",
     "tigrai": "ትግራይ",
     "benishangulGumuz": "ቤንሻንጉል ጉሙዝ",
     "gambela": "ጋምቤላ",
@@ -104,5 +105,20 @@
     "teens": "ታዳጊዎች",
     "adults": "እዋቂዎች",
     "seniors": "አዛውንቶች"
+  },
+
+  "tourLabels": {
+    "start": "ጉብኝት ጀምር",
+    "skip": "ይቅር",
+    "previous": "ቀዳሚ",
+    "next": "ቀጣይ",
+    "finish": "ጨርስ"
+  },
+
+  "contactUs": {
+    "name": "ስም",
+    "email": "ኢ-ሜል",
+    "message": "መልዕክት",
+    "send": "ላክ"
   }
 }
