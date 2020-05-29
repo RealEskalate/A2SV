@@ -163,7 +163,7 @@
           small
           target="_blank"
           href="https://clearbit.com"
-          v-text="'Logos provided by Clearbit'"
+          v-text="$t('clearbitMessage')"
         />
       </v-col>
     </v-row>

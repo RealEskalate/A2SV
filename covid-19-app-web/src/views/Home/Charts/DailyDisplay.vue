@@ -29,7 +29,7 @@
                     outlined
                     dense
                     v-model="dateRangeText"
-                    :label="$('dateRange')"
+                    :label="$t('dateRange')"
                     hint="Date Range"
                     :prepend-inner-icon="mdiCalendar"
                     readonly

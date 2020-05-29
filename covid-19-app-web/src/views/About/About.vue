@@ -72,7 +72,7 @@
                   class="v-card--shaped"
                   outlined
                   dense
-                  label="Name"
+                  :label="$t('contactUs.name')"
                   v-model="contact.name"
                   :rules="rules.nameRules"
                   counter="30"
@@ -81,7 +81,7 @@
                   class="v-card--shaped"
                   outlined
                   dense
-                  label="Email"
+                  :label="$t('contactUs.email')"
                   v-model="contact.email"
                   :rules="rules.emailRules"
                 />
@@ -90,7 +90,7 @@
                   outlined
                   dense
                   rows="5"
-                  label="Message"
+                  :label="$t('contactUs.message')"
                   :rules="rules.messageRules"
                   v-model="contact.message"
                 />
@@ -100,7 +100,7 @@
                     class="primary mx-auto v-card--shaped"
                     @click="sendForm"
                   >
-                    Send
+                    {{ $t("contactUs.send") }}
                     <v-icon class="ml-2" small v-text="mdiSend" />
                   </v-btn>
                 </div>
