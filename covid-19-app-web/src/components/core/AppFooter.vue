@@ -26,8 +26,8 @@
       </v-card-text>
 
       <v-card-text>
-        <v-btn text small v-text="'Resources'" href="/" /> |
-        <v-btn text small v-text="'Terms of Privacy'" to="/privacy-policy"/>
+        <v-btn text small v-text="$t('references')" href="/" /> |
+        <v-btn text small v-text="$t('privacy')" to="/privacy-policy" />
         |
         <span class="pa-3">
           {{ new Date().getFullYear() }} — <strong>TrackSym</strong>
@@ -59,20 +59,16 @@
 </template>
 
 <script>
-  import {mdiTelegram, mdiWeb, mdiYoutube} from "@mdi/js";
+import { mdiWeb } from "@mdi/js";
 
-  export default {
+export default {
   data: () => ({
     languages: ["en", "am"],
     langText: {
       en: "EN",
       am: "አማ"
     },
-    icons: [
-      { link: "http://a2sv.org/", icon: mdiWeb },
-      { link: "http://www.youtube.com/", icon: mdiYoutube },
-      { link: "http://www.youtube.com/", icon: mdiTelegram }
-    ]
+    icons: [{ link: "http://a2sv.org/", icon: mdiWeb }]
   })
 };
 </script>

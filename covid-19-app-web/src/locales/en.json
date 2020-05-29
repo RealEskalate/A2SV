@@ -18,6 +18,10 @@
   "contactUs": "Contact us",
   "learnEvenMoreDescription": "Go through our Learning paths to explore more about Covid 19. Whatever age you are, we have something for you.",
   "regionalStatistics": "Regional Statistics",
+  "privacy": "Privacy",
+  "references": "References",
+  "NA": "N/A",
+
   "states": {
     "statesTransitionTitle": "States of Transition",
     "statesTransitionSubtitle": "What phases are there?",
@@ -84,10 +88,17 @@
   },
 
   "aboutTitles": {
-    "aboutTrackSym": "Corona App",
+    "aboutTrackSym": "TrackSym",
     "theMission": "The Mission",
     "yourData": "Your Data",
     "we": "Who we are",
     "contact": "Contact us"
+  },
+
+  "ageGroups": {
+    "kids": "Kids",
+    "teens": "Teens",
+    "adults": "Adults",
+    "seniors": "Seniors"
   }
 }

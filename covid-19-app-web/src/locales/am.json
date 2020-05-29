@@ -18,6 +18,9 @@
   "contactUs": "አግኙን",
   "learnEvenMoreDescription": "ስለ ኮ.ቪ.ድ. 19 የበለጠ ለመመርመር ባዘጋጀነው የመማር ጎዳናዎች ውስጥ ይሂዱ። እድሜዎ ምንም ይሁን ምን ፣ ለእርስዎ የሆነ አንድ ነገር አለን ፡፡",
   "regionalStatistics": "ክልላዊ ስታቲስቲክስ",
+  "privacy": "ግላዊነት",
+  "references": "ዋቢዎች",
+  "NA": "መ/የ",
 
   "states": {
     "statesTransitionTitle": "የቫይረሱ የሽግግር ሂደት",
@@ -90,5 +93,12 @@
     "yourData": "ስለ እናንተ መረጃ",
     "we": "ስለ እኛ ማንነት",
     "contact": "መልእክቶን ይላኩ"
+  },
+
+  "ageGroups": {
+    "kids": "ልጆች",
+    "teens": "ታዳጊዎች",
+    "adults": "እዋቂዎች",
+    "seniors": "አዛውንቶች"
   }
 }

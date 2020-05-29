@@ -22,7 +22,15 @@
           label="Learning Path for"
           v-model="selected_age"
           @input="fetchLearningPaths"
-        />
+        >
+          <template v-slot:selection="{ item }">
+            <span v-text="$t(`ageGroups.${item.toLowerCase()}`)" />
+          </template>
+          <template v-slot:item="{ item }">
+            <span v-text="$t(`ageGroups.${item.toLowerCase()}`)" />
+          </template>
+
+        </v-select>
       </v-col>
     </v-row>
     <v-row>

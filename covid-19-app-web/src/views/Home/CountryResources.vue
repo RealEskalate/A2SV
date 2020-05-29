@@ -10,33 +10,40 @@
             small
             color="primary darken-1"
             @click="dialog = true"
-          >
-            {{ mdiHelpCircleOutline }}
-          </v-icon>
+            v-text="mdiHelpCircleOutline"
+          />
         </v-col>
       </v-row>
     </v-card-subtitle>
     <v-divider class="mx-4" />
     <v-list disabled dense>
-      <v-card-subtitle
-        v-if="!countryResources[country.name]"
-        v-text="'Found Nothing'"
-      />
-      <v-list-item-group v-else color="primary">
-        <v-list-item
-          v-for="(resource, i) in countryResources[country.name]"
-          :key="i"
-        >
-          <v-list-item-content>
-            <span>
-              <span v-text="resource.key" /> :
-              <span class="grey--text" v-text="resource.value || 'N/A'" />
-            </span>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list-item-group>
+      <v-fade-transition hide-on-leave>
+        <v-skeleton-loader
+          v-if="graphLoaders.countryResources"
+          ref="skeleton"
+          type="list-item,list-item,list-item,list-item"
+          class="mx-auto"
+        />
+        <v-card-subtitle
+          v-else-if="!countryResources[country.name]"
+          v-text="'Found Nothing'"
+        />
+        <v-list-item-group v-else color="primary">
+          <v-list-item
+            v-for="(resource, i) in countryResources[country.name]"
+            :key="i"
+          >
+            <v-list-item-content>
+              <span>
+                <span v-text="resource.key" /> :
+                <span class="grey--text" v-text="resource.value || $t('NA')" />
+              </span>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list-item-group>
+      </v-fade-transition>
     </v-list>
-    <v-dialog v-model="dialog" width="400">
+    <v-dialog v-model="dialog" width="500">
       <v-card class="px-2" shaped style="overflow: hidden">
         <v-icon
           style="position: absolute; right: 0; top: 0; z-index: 100"
@@ -98,12 +105,21 @@ export default {
       handler() {
         this.fetchCountryResources();
       }
+    },
+    "$i18n.locale"(newValue) {
+      store.dispatch("setCountryResources", {
+        country: this.country.name,
+        lang: newValue
+      });
     }
   },
   methods: {
     fetchCountryResources() {
       if (!this.countryResources[this.country.name])
-        store.dispatch("setCountryResources", { country: this.country.name });
+        store.dispatch("setCountryResources", {
+          country: this.country.name,
+          lang: this.$i18n.locale
+        });
     }
   },
   computed: {

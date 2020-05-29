@@ -64,7 +64,7 @@
       app
       grow
       color="primary"
-      style="border-radius: 20px 20px 0 0"
+      style="border-radius: 20px 0 0 0"
       class="px-3 overflow-hidden"
     >
       <v-btn v-for="(item, i) in links" :to="item.to" :key="i">
