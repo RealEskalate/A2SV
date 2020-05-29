@@ -1,6 +1,9 @@
-
+const jwt = require("jsonwebtoken");
+const config = require("config");
+var { User } = require("../models/UserModel.js");
 // Bearer access_token key.
-const verifyToken = () => {
+exports.verifyToken = async (req, res, next) => {
+
     const authHeader = req.headers['authorization'];
 
     if (typeof authHeader !== 'undefined') {
@@ -28,5 +31,3 @@ const verifyToken = () => {
     }
 
 }
-
-exports.verifyToken=verifyToken;

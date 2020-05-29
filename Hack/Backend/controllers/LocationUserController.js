@@ -9,10 +9,6 @@ const SymptomUserModels = require("../models/SymptomUser");
 const ProbabilityCalculator = require("../services/ProbabilityCalculator");
 const axios = require("axios");
 const mongoose = require("mongoose");
-const jwt = require("jsonwebtoken");
-const SymptomUserModels = require("../models/SymptomUser");
-const {Tests} = require("../models/TestModel")
-const { MapData } = require("../models/MapDataModel");
 
 //Post a user location
 exports.post_location_user = async (req, res) => {
