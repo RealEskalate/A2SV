@@ -713,7 +713,7 @@ class DataAnalytics extends React.Component {
                 style={{ alignItems: "center" }}
               >
                 <Image
-                  source={require("../../../assets/images/dead.png")}
+                  source={require("../../../assets/images/angel.jpg")}
                   style={{ height: 30, width: 30 }}
                 />
 
@@ -829,7 +829,7 @@ class DataAnalytics extends React.Component {
                 style={{ alignItems: "center" }}
               >
                 <Image
-                  source={require("../../../assets/images/dead.png")}
+                  source={require("../../../assets/images/angel.jpg")}
                   style={{ height: 30, width: 30 }}
                 />
 
