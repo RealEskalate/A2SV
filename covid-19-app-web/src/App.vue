@@ -101,9 +101,10 @@ html {
 }
 
 .v-card--shaped,
+.v-snack__wrapper,
 .v-alert,
 .v-dialog--active {
-  border-radius: 21px 3px 21px 3px !important;
+  border-radius: 20px 3px 20px 3px !important;
 }
 
 .v-pagination__item,

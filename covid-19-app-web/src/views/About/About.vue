@@ -56,12 +56,17 @@
                 class="display-1 font-weight-thin mb-5"
                 v-text="$t('aboutTitles.contact')"
               />
-              <v-alert
-                v-if="showAlert"
-                :type="type"
-                v-text="message"
-                dismissible
-              />
+              <v-snackbar top :color="type" v-model="showAlert" :timeout="5000">
+                <h4 class="ma-2" v-text="message" />
+                <v-btn
+                  icon
+                  x-small
+                  color="white"
+                  @click="showAlert = false"
+                >
+                  <v-icon v-text="mdiCloseCircleOutline" />
+                </v-btn>
+              </v-snackbar>
               <v-form ref="form" v-model="valid" class="mt-7">
                 <v-text-field
                   class="v-card--shaped"
@@ -176,6 +181,7 @@ import axios from "axios";
 import store from "@/store";
 import {
   mdiCloudDownloadOutline,
+  mdiCloseCircleOutline,
   mdiSearchWeb,
   mdiSend,
   mdiYoutube
@@ -185,6 +191,7 @@ export default {
   data: () => {
     return {
       mdiCloudDownloadOutline,
+      mdiCloseCircleOutline,
       mdiSearchWeb,
       mdiSend,
       mdiYoutube,
@@ -250,7 +257,7 @@ export default {
           },
           () => {
             this.showAlert = true;
-            this.type = "error";
+            this.type = "danger";
             this.message = "Something went wrong!";
           }
         )
