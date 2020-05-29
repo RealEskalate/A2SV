@@ -65,7 +65,7 @@
                           outlined
                           class="float-right v-card--shaped"
                           :href="item.reference_link"
-                          v-text="'Read More'"
+                          v-text="$t('readMore')"
                           target="blank"
                         />
                       </div>
