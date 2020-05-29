@@ -331,16 +331,16 @@ const run_updates = () => {
   var rule = new schedule.RecurrenceRule();
   rule.hour = 3;
   schedule.scheduleJob(rule, async function () {
-    await updateDb(false);
+    await updateDb(false, false);
   });
 };
-const updateDb = async (demo) => {
+const updateDb = async (demo, stress) => {
   if (demo && demo == "true"){
     var LocationGrid = LocationGridModels.DemoLocationGrid;
     var LocationUser = LocationUserModels.DemoLocationUser;
     var SymptomUser = SymptomUserModel.DemoSymptomUser;
     var User = UserModels.DemoUser;
-  }else if (req.query.stress && req.query.stress == "true"){
+  }else if (stress && stress == "true"){
     var LocationGrid = LocationGridModels.StressLocationGrid;
     var LocationUser = LocationUserModels.StressLocationUser;
     var SymptomUser = SymptomUserModel.StressSymptomUser;
