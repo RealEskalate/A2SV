@@ -247,7 +247,7 @@ exports.get_all_locations_with_symptoms = async (req, res) => {
       console.log(`Fetched ${result.length} Grids according to filter`)
     }
     else{
-      result = await findAllNearbySymptomaticUsers(long, lat, req.query.demo);    
+      result = await findAllNearbySymptomaticUsers(long, lat, req.query.demo, req.query.stress);    
       console.log(`Fetched ${result.length} Locations and Users according to filter`)
     }
     if (result.length > 0) {
@@ -261,10 +261,10 @@ exports.get_all_locations_with_symptoms = async (req, res) => {
     res.status(500).send("No locations with users and symptoms found.");
   }
 }
-const findAllNearbySymptomaticUsers = async(long, lat, demo)=>{
+const findAllNearbySymptomaticUsers = async(long, lat, demo, stress)=>{
   if (demo && demo == "true"){
     var LocationUser = LocationUserModels.DemoLocationUser;
-  }else if (req.query.stress && req.query.stress == "true"){
+  }else if (stress && stress == "true"){
     var LocationUser = LocationUserModels.StressLocationUserModel 
   }else{
     var LocationUser = LocationUserModels.LocationUser;
