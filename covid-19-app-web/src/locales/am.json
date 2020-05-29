@@ -4,9 +4,10 @@
   "dateRange": "መጀመሪያ - መጨረሻ",
   "world": "አለም",
   "resourcesPer1K": "ለየ1ሺ ሰዎች ያለው አቅራቦት",
-  "totalCases": "አጠቃላይ ኬዞች",
+  "totalCases": "ጠቅላላ በበሽታው የተያዘ",
   "recovered": "ያገገሙ",
   "death": "ሞት",
+  "deathRate": "የሞት መጠን",
   "activeCases": "የተያዙ /ያልዳኑ",
   "regions": "ከልል",
   "totalDeath": "አጠቃላይ ሞት",
@@ -19,6 +20,10 @@
   "privacy": "ግላዊነት",
   "references": "ዋቢዎች",
   "NA": "መ/የ",
+  "readMore": "ተጨማሪ ያንብቡ",
+  "close": "ዝጋ",
+  "dateRange": "የቀን ክልል",
+  "metrics": "መለኪያዎች",
 
   "states": {
     "statesTransitionTitle": "የቫይረሱ የሽግግር ሂደት",
@@ -68,7 +73,8 @@
     "kids": "ህጻናት እና ልጆች",
     "teens": "ታዳጊ",
     "adults": "ወጣቶች",
-    "seniors": "አዛውንት"
+    "seniors": "አዛውንት",
+    "learningPathFor": "የመማር መንገድ ለ"
   },
 
   "ethiopiaRegions": {

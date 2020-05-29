@@ -7,6 +7,7 @@
   "totalCases": "Total cases",
   "recovered": "Recovered",
   "death": "Death",
+  "deathRate": "Death Rate",
   "activeCases": "Active Cases",
   "regions": "Regions",
   "totalDeath": "Total Death",
@@ -19,6 +20,10 @@
   "privacy": "Privacy",
   "references": "References",
   "NA": "N/A",
+  "readMore": "READ MORE",
+  "close": "Close",
+  "dateRange": "Date Range",
+  "metrics": "Metrics",
 
   "states": {
     "statesTransitionTitle": "States of Transition",
@@ -68,7 +73,8 @@
     "kids": "Kids",
     "teens": "Teens",
     "adults": "adults",
-    "seniors": "Seniors"
+    "seniors": "Seniors",
+    "learningPathFor": "Learning path for"
   },
 
   "ethiopiaRegions": {
