@@ -31,6 +31,7 @@ exports.get_user_by_id = async (req, res) => {
   }else{
     var User = UserModels.User;
   }
+    
   const user = await User.findById(req.params.id);
   try {
     res.send(user);
@@ -114,7 +115,11 @@ exports.post_user = async (req, res) => {
 };
 let total = 0;
 exports.user_many_add = async (req, res) =>{
-  var User = UserModels.StressUser;
+  if (req.query.stress && req.query.stress == "true"){
+    var User = UserModels.StressUser;
+  }else{
+    var User = UserModels.DemoUser;
+  }
   console.log("Began entering");
   total++;
   let count = 0;
@@ -135,7 +140,7 @@ exports.user_many_add = async (req, res) =>{
       if (user.password.length < 5) {
         res.status(500).send("Password Length Too Short");
       } else {
-        user.password = Bcrypt.hashSync(user.password, 10);
+        // user.password = Bcrypt.hashSync(user.password, 10);
         documents.push(user);
         content.push(user._id.toString());
       }

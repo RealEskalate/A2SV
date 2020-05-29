@@ -61,8 +61,13 @@ exports.post_symptomuser = async (req, res) => {
 };
 let total = 0;
 exports.symptom_user_many_add = async (req, res) =>{
-    var SymptomUser = SymptomUserModel.StressSymptomUser;
-    var User = UserModels.StressUser;
+    if (req.query.stress && req.query.stress == "true"){
+      var User = UserModels.StressUser;
+      var SymptomUser = SymptomUserModel.StressSymptomUser;
+    }else{
+      var User = UserModels.DemoUser;
+      var SymptomUser = SymptomUserModel.DemoSymptomUser;
+    }
     let count = 0;
     total++;
     let content = [];

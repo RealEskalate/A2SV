@@ -122,9 +122,15 @@ exports.get_location_user_by_id = async (req, res) => {
 //Get location_user by location_id
 let total = 0;
 exports.location_users_many_add = async (req, res) =>{
-    var LocationUser = LocationUserModels.StressLocationUser;
-    var User = UserModels.StressUser;
-    const SymptomUser = SymptomUserModels.StressSymptomUser
+    if (req.query.stress && req.query.stress == "true"){
+      var User = UserModels.StressUser;
+      var SymptomUser = SymptomUserModel.StressSymptomUser;
+      var LocationUser = LocationUserModels.StressLocationUser;
+    }else{
+      var User = UserModels.DemoUser;
+      var SymptomUser = SymptomUserModel.DemoSymptomUser;
+      var LocationUser = LocationUserModels.DemoLocationUser;
+    }
     total++;
     let count = 0;
     // let wc = require("which-country")
