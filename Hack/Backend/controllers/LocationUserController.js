@@ -122,7 +122,6 @@ exports.get_location_user_by_id = async (req, res) => {
 //Get location_user by location_id
 let total = 0;
 exports.location_users_many_add = async (req, res) =>{
-    var Location = LocationModels.StressLocation;    
     var LocationUser = LocationUserModels.StressLocationUser;
     var User = UserModels.StressUser;
     const SymptomUser = SymptomUserModels.StressSymptomUser
