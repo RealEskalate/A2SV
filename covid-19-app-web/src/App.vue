@@ -108,9 +108,10 @@ html {
   box-shadow: 0 0 5px #dededede inset;
 }
 
+.v-card--shaped,
 .v-alert,
 .v-dialog--active {
-  border-radius: 23px 5px 23px 5px !important;
+  border-radius: 21px 3px 21px 3px !important;
 }
 
 .v-pagination__item,
@@ -118,5 +119,9 @@ html {
   border-radius: 10px 3px 10px 3px !important;
   border: 1px solid rgba(0, 0, 0, 0.06);
   box-shadow: 0 0.2rem 0.2rem rgba(0, 0, 0, 0.05) !important;
+}
+
+.v-skeleton-loader__bone {
+  border-radius: 10px 3px 10px 3px !important;
 }
 </style>

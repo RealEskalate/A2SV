@@ -12,12 +12,14 @@
   "totalDeath": "Total Death",
 
   "freeReportingPhoneNumbers": "Free COVID-19 Reporting Phone Numbers",
-  "getOurApp": "Get our App",
   "aboutSectionDescription": "TrackSym is a non-commercial app that uses crowd-sourcing to collect and visualize the density of the relevant symptoms. Registration only asks about age and gender to be used for data science purposes. Users can anonymously report symptoms and choose a location to see the density of symptoms in a map view. The data is aggregated by places, therefore, the app can help people avoid visiting a grocery store or a gas station that is heavily used by symptomatic people. In addition it provide Play-ground for the Data and News related to Covid-19 by country.",
   "moreInfo": "More Info",
-  "contactUs": "Contact us",
   "learnEvenMoreDescription": "Go through our Learning paths to explore more about Covid 19. Whatever age you are, we have something for you.",
   "regionalStatistics": "Regional Statistics",
+  "privacy": "Privacy",
+  "references": "References",
+  "NA": "N/A",
+
   "states": {
     "statesTransitionTitle": "States of Transition",
     "statesTransitionSubtitle": "What phases are there?",
@@ -84,10 +86,17 @@
   },
 
   "aboutTitles": {
-    "aboutTrackSym": "Corona App",
+    "aboutTrackSym": "TrackSym",
     "theMission": "The Mission",
     "yourData": "Your Data",
     "we": "Who we are",
     "contact": "Contact us"
+  },
+
+  "ageGroups": {
+    "kids": "Kids",
+    "teens": "Teens",
+    "adults": "Adults",
+    "seniors": "Seniors"
   }
 }

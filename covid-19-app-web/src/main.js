@@ -10,9 +10,10 @@ require("vue-tour/dist/vue-tour.css");
 
 Vue.use(VueTour);
 Vue.use(VueProgressBar, {
-  color: "#40AAFB",
+  color: "#019DE5",
   failedColor: "red",
-  height: "2px"
+  thickness: "3px",
+  autoFinish: false
 });
 
 Vue.config.productionTip = false;

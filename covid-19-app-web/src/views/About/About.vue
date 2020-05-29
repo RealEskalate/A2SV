@@ -92,7 +92,6 @@
                 <div class="text-center py-3">
                   <v-btn
                     width="100"
-                    :disabled="!valid"
                     class="primary mx-auto v-card--shaped"
                     @click="sendForm"
                   >
@@ -123,7 +122,7 @@
             v-for="(action, action_i) in actions"
           >
             <v-icon
-              class="white--text mb-7"
+              class="white--text mb-5"
               x-large
               v-text="$data[action.icon]"
             />

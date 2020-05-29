@@ -97,7 +97,7 @@ export default {
   methods: {
     onNewSelect() {
       setTimeout(function() {
-        window.scrollBy(0, -200);
+        window.scrollBy(0, -100);
       }, 500);
     }
   },
