@@ -1,7 +1,7 @@
 <template>
   <v-tour
     name="appTour"
-    :steps="tour_steps"
+    :steps="tour_steps[$i18n.locale]"
     :options="tour_options"
     :callbacks="tour_callbacks"
   >
@@ -45,7 +45,7 @@
                   text
                   color="primary"
                   @click="tour.skip"
-                  v-text="tour.labels.buttonSkip"
+                  v-text="$t(`tourLabels.${tour.labels.buttonSkip}`)"
                 />
                 <v-btn
                   v-if="tour.isFirst"
@@ -54,7 +54,7 @@
                   depressed
                   color="primary"
                   @click="tour.nextStep"
-                  v-text="tour.labels.buttonStart"
+                  v-text="$t(`tourLabels.${tour.labels.buttonStart}`)"
                 />
                 <v-btn
                   v-if="!tour.isFirst"
@@ -63,7 +63,7 @@
                   text
                   color="primary"
                   @click="tour.previousStep"
-                  v-text="tour.labels.buttonPrevious"
+                  v-text="$t(`tourLabels.${tour.labels.buttonPrevious}`)"
                 />
                 <v-btn
                   v-if="!tour.isFirst && !tour.isLast"
@@ -72,7 +72,7 @@
                   depressed
                   color="primary"
                   @click="tour.nextStep"
-                  v-text="tour.labels.buttonNext"
+                  v-text="$t(`tourLabels.${tour.labels.buttonNext}`)"
                 />
                 <v-btn
                   v-if="tour.isLast"
@@ -81,7 +81,7 @@
                   depressed
                   color="primary"
                   @click="tour.stop"
-                  v-text="tour.labels.buttonStop"
+                  v-text="$t(`tourLabels.${tour.labels.buttonStop}`)"
                 />
               </div>
             </template>
@@ -93,70 +93,118 @@
 </template>
 
 <script>
+import store from "@/store";
+
 export default {
   methods: {
     onNewSelect() {
       setTimeout(function() {
         window.scrollBy(0, -100);
       }, 500);
+    },
+    onNewEnd() {
+      store.dispatch("setFirstVisit", { value: false });
     }
   },
   data() {
     return {
       tour_callbacks: {
         onPreviousStep: this.onNewSelect,
-        onNextStep: this.onNewSelect
+        onNextStep: this.onNewSelect,
+        onStop: this.onNewEnd,
+        onSkip: this.onNewEnd
       },
       tour_options: {
         useKeyboardNavigation: true,
         highlight: true,
         labels: {
-          buttonStart: "Start Tour",
-          buttonSkip: "Skip",
-          buttonPrevious: "Previous",
-          buttonNext: "Next",
-          buttonStop: "Finish"
+          buttonStart: "start",
+          buttonSkip: "skip",
+          buttonPrevious: "previous",
+          buttonNext: "next",
+          buttonStop: "finish"
         }
       },
-      tour_steps: [
-        {
-          target: '[data-v-step="0"]',
-          header: "TrackSym",
-          content: `Take a quick tour to understand how to use the website`,
-          params: {
-            placement: "bottom"
+      tour_steps: {
+        en: [
+          {
+            target: '[data-v-step="0"]',
+            header: "TrackSym",
+            content: `Take a quick tour to understand how to use the website`,
+            params: {
+              placement: "bottom"
+            }
+          },
+          {
+            target: '[data-v-step="1"]',
+            header: "Graphs",
+            content: `Go through the tabs to visit different graphs. Click on the question mark to learn more about the graph.`,
+            params: {
+              placement: "right"
+            }
+          },
+          {
+            target: '[data-v-step="2"]',
+            header: "Filters",
+            content: `Select the required parameters to filter data by and observe the the dynamic data`,
+            params: {
+              placement: "right"
+            }
+          },
+          {
+            target: '[data-v-step="3"]',
+            header: "Ethiopia",
+            content: `Visit the Ethiopia section for local statistics and more.`,
+            params: {
+              placement: "top"
+            }
+          },
+          {
+            target: '[data-v-step="4"]',
+            header: `Language`,
+            content: `Switch between different languages`
           }
-        },
-        {
-          target: '[data-v-step="1"]',
-          header: "Graphs",
-          content: `Go through the tabs to visit different graphs. Click on the question mark to learn more about the graph.`,
-          params: {
-            placement: "right"
+        ],
+        am: [
+          {
+            target: '[data-v-step="0"]',
+            header: "TrackSym",
+            content: `ድህረ ገጹን እንዴት እንደሚጠቀሙ ለመረዳት ፈጣን ጉብኝት ያድርጉ`,
+            params: {
+              placement: "bottom"
+            }
+          },
+          {
+            target: '[data-v-step="1"]',
+            header: "ግራፍ",
+            content: `የተለያዩ ግራፎችን ለመጎብኘት በትሮች ይሂዱ። ስለ ግራፉ የበለጠ ለመረዳት በጥያቄ ምልክት ላይ ጠቅ ያድርጉ።`,
+            params: {
+              placement: "right"
+            }
+          },
+          {
+            target: '[data-v-step="2"]',
+            header: "ማጣሪያ",
+            content: `ውሂብ ለማጣራት እና ተለዋዋጭ ውሂቡን ለመመልከት የሚያስፈልጉትን መለኪያዎች ይምረጡ`,
+            params: {
+              placement: "right"
+            }
+          },
+          {
+            target: '[data-v-step="3"]',
+            header: "ኢትዮጵያ",
+            content: `ለአካባቢያዊ ስታቲስቲክስ እና ሌሎችንም የኢትዮጵያን ክፍል ይጎብኙ ፡፡`,
+            params: {
+              placement: "top"
+            }
+          },
+          {
+            target: '[data-v-step="4"]',
+            header: `ቋንቋ`,
+            content: `በተለያዩ ቋንቋዎች መካከል ይቀያይሩ`
           }
-        },
-        {
-          target: '[data-v-step="2"]',
-          header: "Filters",
-          content: `Select the required parameters to filter data by and observe the the dynamic data`,
-          params: {
-            placement: "right"
-          }
-        },
-        {
-          target: '[data-v-step="3"]',
-          header: "Ethiopia",
-          content: `Visit the Ethiopia section for local statistics and more.`,
-          params: {
-            placement: "top"
-          }
-        },
-        {
-          target: '[data-v-step="4"]',
-          header: `Language`,
-          content: `Switch between different languages`
-        }
-      ]
+        ]
+      }
     };
   }
 };

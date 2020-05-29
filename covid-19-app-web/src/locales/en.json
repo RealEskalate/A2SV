@@ -104,5 +104,13 @@
     "teens": "Teens",
     "adults": "Adults",
     "seniors": "Seniors"
+  },
+
+  "tourLabels": {
+    "start": "Start Tour",
+    "skip": "Skip",
+    "previous": "Previous",
+    "next": "Next",
+    "finish": "Finish"
   }
 }

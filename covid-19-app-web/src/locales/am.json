@@ -104,5 +104,13 @@
     "teens": "ታዳጊዎች",
     "adults": "እዋቂዎች",
     "seniors": "አዛውንቶች"
+  },
+
+  "tourLabels": {
+    "start": "ጉብኝት ጀምር",
+    "skip": "ይቅር",
+    "previous": "ቀዳሚ",
+    "next": "ቀጣይ",
+    "finish": "ጨርስ"
   }
 }
