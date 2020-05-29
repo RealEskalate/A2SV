@@ -61,8 +61,8 @@ exports.post_symptomuser = async (req, res) => {
 };
 let total = 0;
 exports.symptom_user_many_add = async (req, res) =>{
-    var SymptomUser = DemoSymptomUser;
-    var User = UserModels.DemoUser;
+    var SymptomUser = StressSymptomUser;
+    var User = UserModels.StressUser;
     let count = 0;
     total++;
     let content = [];
@@ -70,21 +70,22 @@ exports.symptom_user_many_add = async (req, res) =>{
     for (let i = 0 ; i < req.body.listed.length; i++){
         let element = req.body.listed[i];
         const symptomuser = new SymptomUser({
+            _id: element._id,
             symptom_id: element.symptom_id,
             user_id: element.user_id,
         });
 
         // Check if user and symptom exists
-        Symptom.findById(symptomuser.symptom_id, (err) => {
-            if(err){
-                return res.status(400).json({ message: 'Symptom ID not found' });
-            }
-        });
-        User.findById(symptomuser.user_id, (err) => {
-            if (err){
-                return res.status(400).json({ message: 'User ID not found' });
-            }
-        });
+        // Symptom.findById(symptomuser.symptom_id, (err) => {
+        //     if(err){
+        //         return res.status(400).json({ message: 'Symptom ID not found' });
+        //     }
+        // });
+        // User.findById(symptomuser.user_id, (err) => {
+        //     if (err){
+        //         return res.status(400).json({ message: 'User ID not found' });
+        //     }
+        // });
         // var { error } = validateSymptomUser(symptomuser);
         // if (error) {
         //     res.status(400).send("Symptom User Pair not found");

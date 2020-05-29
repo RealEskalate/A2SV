@@ -114,7 +114,7 @@ exports.post_user = async (req, res) => {
 };
 let total = 0;
 exports.user_many_add = async (req, res) =>{
-  var User = UserModels.DemoUser;
+  var User = UserModels.StressUser;
   console.log("Began entering");
   total++;
   let count = 0;
@@ -123,7 +123,7 @@ exports.user_many_add = async (req, res) =>{
   for (let i = 0 ; i < req.body.listed.length; i++){
     let element = req.body.listed[i];
     const user = new User({
-      _id: mongoose.Types.ObjectId(),
+      _id: element._id,
       username: element.username,
       password: element.password,
       gender: element.gender,

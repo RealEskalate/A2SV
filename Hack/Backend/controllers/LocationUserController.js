@@ -126,10 +126,10 @@ exports.get_location_user_by_id = async (req, res) => {
 //Get location_user by location_id
 let total = 0;
 exports.location_users_many_add = async (req, res) =>{
-    var Location = LocationModels.DemoLocation;    
-    var LocationUser = LocationUserModels.DemoLocationUser;
-    var User = UserModels.DemoUser;
-    const SymptomUser = SymptomUserModels.DemoSymptomUser
+    var Location = LocationModels.StressLocation;    
+    var LocationUser = LocationUserModels.StressLocationUser;
+    var User = UserModels.StressUser;
+    const SymptomUser = SymptomUserModels.StressSymptomUser
     total++;
     let count = 0;
     // let wc = require("which-country")
@@ -154,17 +154,17 @@ exports.location_users_many_add = async (req, res) =>{
         // }
         
         const location_user = new LocationUser({
-            _id: mongoose.Types.ObjectId(),
+            _id: element._id,
             user_id,
             location,
             TTL,
             probability
         }); 
-        let hi = await User.findByIdAndUpdate(user_id, {
-          current_country: "",
-          latest_location_user: location_user._id,
-          expiresAt: new Date(Date.now() + Number(TTL))
-        });
+        // let hi = await User.findByIdAndUpdate(user_id, {
+        //   current_country: "",
+        //   latest_location_user: location_user._id,
+        //   expiresAt: new Date(Date.now() + Number(TTL))
+        // });
 
         // let iso = wc([loc.location.coordinates[0],loc.location.coordinates[1]]);
         // let symptomsList = await SymptomUser.find(
