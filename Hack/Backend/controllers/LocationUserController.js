@@ -16,6 +16,10 @@ exports.post_location_user = async (req, res) => {
     var User = UserModels.DemoUser;
     var LocationUser = LocationUserModels.DemoLocationUser
     var SymptomUser = SymptomUserModels.DemoSymptomUser
+  }else if (req.query.stress && req.query.stress == "true"){
+    var User = UserModels.StressUser;
+    var LocationUser = LocationUserModels.StressLocationUser
+    var SymptomUser = SymptomUserModels.StressSymptomUser 
   }else{
     var User = UserModels.User;
     var LocationUser = LocationUserModels.LocationUser
@@ -96,6 +100,8 @@ exports.post_location_user = async (req, res) => {
 exports.get_location_user_by_id = async (req, res) => {
   if (req.query.demo && req.query.demo == "true"){
     var LocationUser = LocationUserModels.DemoLocationUser;
+  }else if (req.query.stress && req.query.stress == "true"){
+    var LocationUser = LocationUserModels.StressLocationUserModel 
   }else{
     var LocationUser = LocationUserModels.LocationUser;
   }
@@ -117,6 +123,8 @@ exports.get_location_user_by_id = async (req, res) => {
 exports.get_all_location_users = async (req, res) => {
   if (req.query.demo && req.query.demo == "true"){
     var LocationUser = LocationUserModels.DemoLocationUser;
+  }else if (req.query.stress && req.query.stress == "true"){
+    var LocationUser = LocationUserModels.StressLocationUserModel 
   }else{
     var LocationUser = LocationUserModels.LocationUser;
   }
@@ -132,6 +140,8 @@ exports.get_all_location_users = async (req, res) => {
 exports.get_by_user_id = async (req, res) => {
   if (req.query.demo && req.query.demo == "true"){
     var LocationUser = LocationUserModels.DemoLocationUser;
+  }else if (req.query.stress && req.query.stress == "true"){
+    var LocationUser = LocationUserModels.StressLocationUserModel 
   }else{
     var LocationUser = LocationUserModels.LocationUser;
   }
@@ -152,6 +162,8 @@ exports.get_by_user_id = async (req, res) => {
 exports.delete_location_user = async (req, res) => {
   if (req.query.demo && req.query.demo == "true"){
     var LocationUser = LocationUserModels.DemoLocationUser;
+  }else if (req.query.stress && req.query.stress == "true"){
+    var LocationUser = LocationUserModels.StressLocationUserModel 
   }else{
     var LocationUser = LocationUserModels.LocationUser;
   }
@@ -173,6 +185,8 @@ exports.delete_location_user = async (req, res) => {
 exports.update_location_user = async (req, res) => {
   if (req.query.demo && req.query.demo == "true"){
     var LocationUser = LocationUserModels.DemoLocationUser;
+  }else if (req.query.stress && req.query.stress == "true"){
+    var LocationUser = LocationUserModels.StressLocationUserModel 
   }else{
     var LocationUser = LocationUserModels.LocationUser;
   }
@@ -250,6 +264,8 @@ exports.get_all_locations_with_symptoms = async (req, res) => {
 const findAllNearbySymptomaticUsers = async(long, lat, demo)=>{
   if (demo && demo == "true"){
     var LocationUser = LocationUserModels.DemoLocationUser;
+  }else if (req.query.stress && req.query.stress == "true"){
+    var LocationUser = LocationUserModels.StressLocationUserModel 
   }else{
     var LocationUser = LocationUserModels.LocationUser;
   }
@@ -293,6 +309,8 @@ const findGridNearbySymptomaticUsers = async(boundaries, demo)=>{
   // await updateDb(demo);
   if (demo && demo == "true"){
     var LocationGrid = LocationGridModels.DemoLocationGrid;
+  }else if (req.query.stress && req.query.stress == "true"){
+    var LocationUser = LocationUserModels.StressLocationUserModel 
   }else{
     var LocationGrid = LocationGridModels.LocationGrid;
   }
@@ -322,6 +340,11 @@ const updateDb = async (demo) => {
     var LocationUser = LocationUserModels.DemoLocationUser;
     var SymptomUser = SymptomUserModel.DemoSymptomUser;
     var User = UserModels.DemoUser;
+  }else if (req.query.stress && req.query.stress == "true"){
+    var LocationGrid = LocationGridModels.StressLocationGrid;
+    var LocationUser = LocationUserModels.StressLocationUser;
+    var SymptomUser = SymptomUserModel.StressSymptomUser;
+    var User = UserModels.StressUser;
   }else{
     var LocationGrid = LocationGridModels.LocationGrid;
     var LocationUser = LocationUserModels.LocationUser;
