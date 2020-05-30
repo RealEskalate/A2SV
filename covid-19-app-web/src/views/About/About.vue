@@ -58,12 +58,7 @@
               />
               <v-snackbar top :color="type" v-model="showAlert" :timeout="5000">
                 <h4 class="ma-2" v-text="message" />
-                <v-btn
-                  icon
-                  x-small
-                  color="white"
-                  @click="showAlert = false"
-                >
+                <v-btn icon x-small color="white" @click="showAlert = false">
                   <v-icon v-text="mdiCloseCircleOutline" />
                 </v-btn>
               </v-snackbar>
@@ -177,17 +172,11 @@
 </template>
 
 <script>
-import axios from "axios";
-import store from "@/store";
-import {
-  mdiCloudDownloadOutline,
-  mdiCloseCircleOutline,
-  mdiSearchWeb,
-  mdiSend,
-  mdiYoutube
-} from "@mdi/js";
+  import axios from "axios";
+  import store from "@/store";
+  import {mdiCloseCircleOutline, mdiCloudDownloadOutline, mdiSearchWeb, mdiSend, mdiYoutube} from "@mdi/js";
 
-export default {
+  export default {
   data: () => {
     return {
       mdiCloudDownloadOutline,
