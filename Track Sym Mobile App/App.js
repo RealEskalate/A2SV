@@ -10,7 +10,6 @@ import {
   IconRegistry,
   Spinner,
   Layout,
-  Avatar,
 } from '@ui-kitten/components';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import { default as customTheme } from './assets/themes/custom-theme.json'; // <-- Import app theme
@@ -18,6 +17,7 @@ import { ThemeContext } from './assets/themes/theme-context';
 import { AuthNavigator } from './src/navigation/authNavigation';
 import { AppNavigator } from './src/navigation/appNavigation.js';
 import { default as mapping } from './assets/fonts/mapping.json'; // <-- Import app mapping
+import { Image } from 'react-native';
 
 function App() {
   const [userId, setUserId] = useState('');
@@ -78,13 +78,35 @@ function App() {
   if (isLoading) {
     return (
       <Layout
+        level='2'
         style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Avatar
-          size='giant'
-          source={require('./assets/images/app_icon.png')}
-          style={{ marginBottom: 50 }}
-        />
-        <Spinner size='large' color='#1976d2' />
+        <Layout
+          level='3'
+          style={{
+            width: 100,
+            height: 100,
+            borderRadius: 50,
+            shadowColor: '#000',
+            shadowOffset: {
+              width: 0,
+              height: 1,
+            },
+            shadowOpacity: 0.2,
+            shadowRadius: 1.41,
+
+            elevation: 2,
+            marginBottom: 30,
+          }}>
+          <Image
+            source={require('./assets/images/app_icon.png')}
+            style={{
+              width: 100,
+              height: 100,
+              borderRadius: 50,
+            }}
+          />
+        </Layout>
+        <Spinner size='medium' status='info' />
       </Layout>
     );
   }

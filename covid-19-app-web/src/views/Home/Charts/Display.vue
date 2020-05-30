@@ -1,18 +1,18 @@
 <template>
   <v-container class="py-8">
     <v-row class="mx-md-5" dense>
-      <v-col class="px-2" cols="12" md="6">
+      <v-col class="px-2" cols="12" md="6" data-v-step="2">
         <v-autocomplete
-          class="v-card--shaped"
-          v-model="country"
-          :items="countries"
-          label="Country"
-          hint="Search Country"
-          item-text="name"
-          outlined
-          dense
-          return-object
-          @input="fetchData"
+                class="v-card--shaped"
+                v-model="country"
+                :items="countries"
+                :label="$t('country')"
+                hint="Search Country"
+                item-text="name"
+                outlined
+                dense
+                return-object
+                @input="fetchData"
         />
       </v-col>
       <v-col class="px-2" cols="12" md="6">
@@ -24,16 +24,16 @@
         >
           <template v-slot:activator="{ on }">
             <v-text-field
-              class="v-card--shaped"
-              color="primary"
-              outlined
-              dense
-              v-model="dateRangeText"
-              label="Date Range"
-              hint="Date Range"
-              :prepend-inner-icon="mdiCalendar"
-              readonly
-              v-on="on"
+                    class="v-card--shaped"
+                    color="primary"
+                    outlined
+                    dense
+                    v-model="dateRangeText"
+                    :label="$t('dateRange')"
+                    hint="Date Range"
+                    :prepend-inner-icon="mdiCalendar"
+                    readonly
+                    v-on="on"
             />
           </template>
           <v-date-picker
@@ -66,10 +66,25 @@
           :chart-data="data"
           :options="chartOptions"
         />
-        <small
-          class="d-block grey--text my-3 text--darken-2"
-          v-text="short_description"
-        />
+        <v-fade-transition hide-on-leave>
+          <div class="ma-2" v-if="graphLoaders.descriptions">
+            <v-skeleton-loader
+              ref="skeleton"
+              type="text,text"
+              class="mx-auto my-3"
+            />
+          </div>
+          <small
+            v-else-if="!short_description"
+            class="d-block grey--text my-3 text--darken-1"
+            v-text="'No Description'"
+          />
+          <small
+            v-else
+            class="d-block grey--text my-3 text--darken-2"
+            v-text="short_description"
+          />
+        </v-fade-transition>
       </v-col>
       <v-col cols="12" md="3">
         <country-resources :country="country" />
@@ -78,13 +93,13 @@
   </v-container>
 </template>
 <script>
-import { ChartMixin, LineChart } from "./charts.js";
-import CountryResources from "../CountryResources";
-import Loader from "@/components/core/Loader.vue";
-import store from "@/store";
-import { mdiCalendar } from "@mdi/js";
+  import {ChartMixin, LineChart} from "./charts.js";
+  import CountryResources from "../CountryResources";
+  import Loader from "@/components/core/Loader.vue";
+  import store from "@/store";
+  import {mdiCalendar} from "@mdi/js";
 
-export default {
+  export default {
   components: { LineChart, Loader, CountryResources },
   mixins: [ChartMixin],
   props: {

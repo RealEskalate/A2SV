@@ -65,7 +65,7 @@
                           outlined
                           class="float-right v-card--shaped"
                           :href="item.reference_link"
-                          v-text="'Read More'"
+                          v-text="$t('readMore')"
                           target="blank"
                         />
                       </div>
@@ -131,7 +131,9 @@
                   :value="source.source"
                 >
                   <template v-slot:default="{ active, toggle }">
-                    <v-list-item-avatar>
+                    <v-list-item-avatar
+                      style="border-radius: 15px 5px 15px 5px"
+                    >
                       <v-img
                         contain
                         :src="source.logo"
@@ -161,7 +163,7 @@
           small
           target="_blank"
           href="https://clearbit.com"
-          v-text="'Logos provided by Clearbit'"
+          v-text="$t('clearbitMessage')"
         />
       </v-col>
     </v-row>

@@ -3,17 +3,17 @@
     <v-row class="mx-md-5" dense>
       <v-col class="px-2" cols="12" md="4">
         <v-autocomplete
-          class="v-card--shaped"
-          v-model="country"
-          :items="countries"
-          label="Country"
-          hint="Search Country"
-          persistent-hint
-          item-text="name"
-          return-object
-          outlined
-          dense
-          @input="fetchData"
+                class="v-card--shaped"
+                v-model="country"
+                :items="countries"
+                :label="$t('country')"
+                hint="Search Country"
+                persistent-hint
+                item-text="name"
+                return-object
+                outlined
+                dense
+                @input="fetchData"
         />
       </v-col>
       <v-col class="px-2" cols="12" md="4">
@@ -25,15 +25,15 @@
         >
           <template v-slot:activator="{ on }">
             <v-text-field
-              class="v-card--shaped"
-              outlined
-              dense
-              v-model="dateRangeText"
-              label="Date Range"
-              hint="Date Range"
-              :prepend-inner-icon="mdiCalendar"
-              readonly
-              v-on="on"
+                    class="v-card--shaped"
+                    outlined
+                    dense
+                    v-model="dateRangeText"
+                    :label="$t('dateRange')"
+                    hint="Date Range"
+                    :prepend-inner-icon="mdiCalendar"
+                    readonly
+                    v-on="on"
             />
           </template>
           <v-date-picker
@@ -54,15 +54,15 @@
       </v-col>
       <v-col class="px-2" cols="12" md="4">
         <v-select
-          class="v-card--shaped"
-          item-text="label"
-          v-model="criterion"
-          :items="criteria.daily"
-          label="Criteria"
-          hint="Criteria"
-          outlined
-          dense
-          @input="fetchData"
+                class="v-card--shaped"
+                item-text="label"
+                v-model="criterion"
+                :items="criteria.daily"
+                :label="$t('metrics')"
+                hint="Criteria"
+                outlined
+                dense
+                @input="fetchData"
         />
       </v-col>
     </v-row>
@@ -80,10 +80,25 @@
           :chart-data="data"
           :options="chartOptions"
         />
-        <small
-          class="d-block grey--text my-3 text--darken-2"
-          v-text="short_description"
-        />
+        <v-fade-transition hide-on-leave>
+          <div class="ma-2" v-if="graphLoaders.descriptions">
+            <v-skeleton-loader
+              ref="skeleton"
+              type="text,text"
+              class="mx-auto my-3"
+            />
+          </div>
+          <small
+            v-else-if="!short_description"
+            class="d-block grey--text my-3 text--darken-1"
+            v-text="'No Description'"
+          />
+          <small
+            v-else
+            class="d-block grey--text my-3 text--darken-2"
+            v-text="short_description"
+          />
+        </v-fade-transition>
       </v-col>
       <v-col cols="12" md="3">
         <country-resources :country="country" />
@@ -92,13 +107,13 @@
   </v-container>
 </template>
 <script>
-import { BarChart, ChartMixin } from "./charts.js";
-import CountryResources from "../CountryResources";
-import Loader from "@/components/core/Loader.vue";
-import store from "@/store/index.js";
-import { mdiCalendar } from "@mdi/js";
+  import {BarChart, ChartMixin} from "./charts.js";
+  import CountryResources from "../CountryResources";
+  import Loader from "@/components/core/Loader.vue";
+  import store from "@/store/index.js";
+  import {mdiCalendar} from "@mdi/js";
 
-export default {
+  export default {
   components: { BarChart, Loader, CountryResources },
   mixins: [ChartMixin],
   props: {

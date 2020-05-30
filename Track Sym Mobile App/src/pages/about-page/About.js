@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  View,
-  TouchableOpacity,
-  Image,
-  Dimensions,
-  Linking,
-} from 'react-native';
+import { Image, Dimensions, Linking } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import {
   Layout,
@@ -13,11 +7,27 @@ import {
   StyleService,
   useStyleSheet,
   Button,
+  Icon,
 } from '@ui-kitten/components';
 import { Divider } from 'react-native-paper';
 
 const About = (props) => {
   const styles = useStyleSheet(themedStyle);
+  const infiniteAnimationIconRef = React.useRef();
+
+  React.useEffect(() => {
+    infiniteAnimationIconRef.current.startAnimation();
+  }, []);
+
+  const renderInfiniteAnimationIcon = (props) => (
+    <Icon
+      {...props}
+      ref={infiniteAnimationIconRef}
+      animationConfig={{ cycles: Infinity }}
+      animation='pulse'
+      name='globe-outline'
+    />
+  );
 
   return (
     <ScrollView style={{ backgroundColor: '#fff' }}>
@@ -37,10 +47,12 @@ const About = (props) => {
           It is a non-commercial COVID-19 symptom tracking app that uses
           crowd-sourcing to collect and visualize the density of the relevant
           symptoms. Users can anonymously report their symptoms and choose a
-          location to see the density of symptoms in a map view. The data is
-          aggregated by places, therefore, the app can help people avoid
-          visiting a grocery store, a gas station, or any other place that is
-          heavily used by symptomatic people
+          location to see the density of symptoms in a map view. {'\n\n'} It
+          represents publicly avaible data with a short description on how to
+          see the trend going on . The dat includes the number of confirmed
+          cases, deaths, recovered, and tests conducted of any selected country
+          or globally. It is also a great place to look for global and local
+          news about Covid-19.{'\n'}
         </Text>
       </Layout>
       <Layout level='2' style={{ height: 230 }}>
@@ -56,9 +68,21 @@ const About = (props) => {
         </Layout>
         <Divider />
         <Text style={styles.text}>
-          A2SV - Africa to Silicon Valley is a team of highly motivated and
-          talented students from Ethiopia, led by an ex-Google and Palantir
-          Software/ML engineer.
+          <Text style={{ fontWeight: 'bold' }}>A2SV </Text>- Africa to Silicon
+          Valley is a team of highly motivated and talented students from
+          Ethiopia, led by an ex-Google and Palantir Software/ML engineer.
+          {'\n\n'}
+          The team went through an intense 3-month preparation program in the
+          pursuit of summer internships at top Silicon Valley companies. Now
+          A2SV is dedicating all the time and energy to the fight against
+          COVID-19. COVID-19 is taking the world by storm. Even though some
+          countries are scaling up their testing capacities, it has been a
+          challenge for developed countries and is much harder for many
+          developing countries.{' '}
+          <Text style={{ fontWeight: 'bold' }}>
+            A2SV puts humanity first and is giving a non-commercial symptom
+            tracker app.{'\n'}
+          </Text>
         </Text>
       </Layout>
       <Layout level='2' style={{ height: 220 }}>
@@ -81,7 +105,9 @@ const About = (props) => {
       </Layout>
       <Layout style={{ flex: 1 }}>
         <Layout style={styles.bottom}>
-          <Button onPress={() => Linking.openURL('http://www.a2sv.org')}>
+          <Button
+            onPress={() => Linking.openURL('http://www.a2sv.org')}
+            accessoryLeft={renderInfiniteAnimationIcon}>
             CHECK OUT OUR WEBSITE
           </Button>
         </Layout>

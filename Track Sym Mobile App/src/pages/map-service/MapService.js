@@ -1,10 +1,9 @@
 import { PermissionsAndroid } from "react-native";
-import React from "react";
+import React, { Fragment } from "react";
 import MapboxGL from "@react-native-mapbox-gl/maps";
 import Supercluster from "supercluster";
-
+import { PieChart } from "react-native-chart-kit";
 import {
-  Button,
   View,
   StyleSheet,
   Image,
@@ -14,11 +13,22 @@ import {
   Text,
   Modal,
   TouchableHighlight,
+  ScrollView,
+  ActivityIndicator,
 } from "react-native";
 
+import {
+  Layout,
+  Button,
+  Tab,
+  TabView,
+  TabBar,
+  Card,
+} from "@ui-kitten/components";
+
+import cluster_icon from "../../../assets/images/chart.jpg";
 import { Avatar } from "react-native-paper";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-//import AppNavigator from "./TabViewCode";
 
 import anosmia from "../../../assets/images/anosmia.png";
 import cough from "../../../assets/images/cough.png";
@@ -35,12 +45,18 @@ import chills from "../../../assets/images/chills.jpg";
 import pneumonia from "../../../assets/images/pneumonia.png";
 import conjunctivitis from "../../../assets/images/conjunctivitis.jpg";
 import locationAvatar from "../../../assets/images/Heat.jpg";
+import infections from "../../../assets/images/infections.png";
+import male from "../../../assets/images/male.png";
+import female from "../../../assets/images/female.png";
+import undisclosed from "../../../assets/images/undisclosed.png";
 
 import manAvatar from "../../../assets/images/avatar.png";
 import womanAvatar from "../../../assets/images/person.png";
 import Geocoder from "react-native-geocoder";
 import userIDStore from "../../data-management/user-id-data/userIDStore";
 
+import SearchableDropdown from "react-native-searchable-dropdown";
+import Ionicons from "react-native-vector-icons/Ionicons";
 MapboxGL.setAccessToken(
   "pk.eyJ1IjoiZmVyb3g5OCIsImEiOiJjazg0czE2ZWIwNHhrM2VtY3Y0a2JkNjI3In0.zrm7UtCEPg2mX8JCiixE4g"
 );
@@ -54,16 +70,20 @@ const colors = ["#FFC107", "#EF6C00", "#B71C1C"];
 const covid = require("../public-data-page/data/covid.json");
 
 const pointInfos = {};
-const gridInfos = {};
+const grid_infos = {};
 
 let currentPointInfo = null;
+let current_grid_info = null;
 
+let zoom_level = null;
+let animating = true;
 export default class MapService extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       isModalVisible: false,
       isClusterModalVisible: false,
+
       symptoms: [],
 
       user_country: "",
@@ -77,7 +97,9 @@ export default class MapService extends React.Component {
       bottom_right_bound: 0.0,
 
       countries: {},
-      test_counts: {},
+      cities: {},
+      city_names: [],
+      selected_city: "",
 
       featureCollection: {
         type: "FeatureCollection",
@@ -113,26 +135,69 @@ export default class MapService extends React.Component {
         },
       },
       cluster_data: {},
+      grid_rendering: false,
     };
     this.onTrackingChange = this.onTrackingChange.bind(this);
     this.onUserLocationUpdate = this.onUserLocationUpdate.bind(this);
     this.onSourceLayerPress = this.onSourceLayerPress.bind(this);
+    this.onGridLayerPress = this.onGridLayerPress.bind(this);
     this.onFinishedLoadingMap = this.onFinishedLoadingMap.bind(this);
     this.onRegionDidChange = this.onRegionDidChange.bind(this);
     this.renderClusterInfo = this.renderClusterInfo.bind(this);
+
+    this.metersToPixelsAtMaxZoom = this.metersToPixelsAtMaxZoom.bind(this);
   }
 
   setModalVisible(visible) {
     this.setState({ isModalVisible: visible });
   }
 
+  onGridLayerPress(e) {
+    console.log("Inside grid layer press");
+    const feature = e.nativeEvent.payload;
+    animating = true;
+    const cluster_data = {
+      male: 0,
+      female: 0,
+      undisclosed: 0,
+      fatigue: 0,
+      "runny nose": 0,
+      sneezing: 0,
+      headaches: 0,
+      anosmia: 0,
+      conjunctivitis: 0,
+      diarrhoea: 0,
+      myalgia: 0,
+      fever: 0,
+      "sore throat": 0,
+      "difficulty breathing": 0,
+      pneumonia: 0,
+      chills: 0,
+      cough: 0,
+      "0-10": 0,
+      "11-20": 0,
+      "21-30": 0,
+      "31-40": 0,
+      "41-50": 0,
+      "51-60": 0,
+      "61-70": 0,
+      "71-80": 0,
+      "81-90": 0,
+      ">90": 0,
+    };
+    const user_id = feature.id;
+    current_grid_info = grid_infos[user_id];
+    this.setState({ isClusterModalVisible: true });
+  }
+
   onSourceLayerPress(e) {
     const feature = e.nativeEvent.payload;
+    animating = true;
     if (feature.properties.cluster) {
       const cluster_data = {
-        country: this.state.user_country,
         male: 0,
         female: 0,
+        undisclosed: 0,
         fatigue: 0,
         "runny nose": 0,
         sneezing: 0,
@@ -141,14 +206,12 @@ export default class MapService extends React.Component {
         conjunctivitis: 0,
         diarrhoea: 0,
         myalgia: 0,
+        fever: 0,
         "sore throat": 0,
-        "medium-grade fever": 0,
-        "high-grade fever": 0,
-        "persistent dry cough": 0,
         "difficulty breathing": 0,
         pneumonia: 0,
         chills: 0,
-        "repeated shaking with chills": 0,
+        cough: 0,
         "0-10": 0,
         "11-20": 0,
         "21-30": 0,
@@ -158,7 +221,7 @@ export default class MapService extends React.Component {
         "61-70": 0,
         "71-80": 0,
         "81-90": 0,
-        "> 90": 0,
+        ">90": 0,
       };
 
       try {
@@ -169,7 +232,7 @@ export default class MapService extends React.Component {
         for (let i = 0; i < leaves.length; i++) {
           let leaf = leaves[i];
           fetch(
-            "http://sym-track.herokuapp.com/api/symptomuser/user/" +
+            "https://sym-track.herokuapp.com/api/symptomuser/user/" +
               leaf.id +
               "?demo=true",
             {
@@ -188,10 +251,21 @@ export default class MapService extends React.Component {
                 const age_group = data[i].age_group;
                 const gender = data[i].gender;
 
-                cluster_data[symptom.toLowerCase()]++;
                 cluster_data[age_group]++;
                 cluster_data[gender.toLowerCase()]++;
+                if (symptom.search("fever") !== -1) {
+                  cluster_data.fever++;
+                } else if (symptom.search("chills") !== -1) {
+                  cluster_data.chills++;
+                } else if (symptom.search("cough") !== -1) {
+                  cluster_data.cough++;
+                } else {
+                  cluster_data[symptom.toLowerCase()]++;
+                }
               }
+            })
+            .catch((err) => {
+              console.log(err);
             });
         }
         this.setState({
@@ -211,7 +285,7 @@ export default class MapService extends React.Component {
         for (let i = 0; i < leaves.length; i++) {
           let leaf = leaves[i];
           fetch(
-            "http://sym-track.herokuapp.com/api/symptomuser/user/" +
+            "https://sym-track.herokuapp.com/api/symptomuser/user/" +
               leaf.id +
               "?demo=true",
             {
@@ -230,10 +304,21 @@ export default class MapService extends React.Component {
                 const age_group = data[i].age_group;
                 const gender = data[i].gender;
 
-                cluster_data[symptom.toLowerCase()]++;
+                if (symptom.search("fever") !== -1) {
+                  cluster_data.fever++;
+                } else if (symptom.search("chills") !== -1) {
+                  cluster_data.chills++;
+                } else if (symptom.search("cough") !== -1) {
+                  cluster_data.cough++;
+                } else {
+                  cluster_data[symptom.toLowerCase()]++;
+                }
                 cluster_data[age_group]++;
                 cluster_data[gender.toLowerCase()]++;
               }
+            })
+            .catch((err) => {
+              console.log(err);
             });
         }
         this.setState({
@@ -250,7 +335,7 @@ export default class MapService extends React.Component {
           .getLeaves(feature.properties.cluster_id, Infinity)
           .forEach((leaf) => {
             fetch(
-              "http://sym-track.herokuapp.com/api/symptomuser/user/" +
+              "https://sym-track.herokuapp.com/api/symptomuser/user/" +
                 leaf.id +
                 "?demo=true",
               {
@@ -269,10 +354,21 @@ export default class MapService extends React.Component {
                   const age_group = data[i].age_group;
                   const gender = data[i].gender;
 
-                  cluster_data[symptom.toLowerCase()]++;
+                  if (symptom.search("fever") !== -1) {
+                    cluster_data.fever++;
+                  } else if (symptom.search("chills") !== -1) {
+                    cluster_data.chills++;
+                  } else if (symptom.search("cough") !== -1) {
+                    cluster_data.cough++;
+                  } else {
+                    cluster_data[symptom.toLowerCase()]++;
+                  }
                   cluster_data[age_group]++;
                   cluster_data[gender.toLowerCase()]++;
                 }
+              })
+              .catch((err) => {
+                console.log(err);
               });
           });
         this.setState({
@@ -327,7 +423,7 @@ export default class MapService extends React.Component {
       };
       const user_id = feature.id;
       const details = fetch(
-        "http://sym-track.herokuapp.com/api/symptomuser/user/" +
+        "https://sym-track.herokuapp.com/api/symptomuser/user/" +
           user_id +
           "?demo=true",
         {
@@ -341,6 +437,7 @@ export default class MapService extends React.Component {
       )
         .then((res) => res.json())
         .then((data) => {
+          console.log(data);
           for (let i = 0; i < data.length; i++) {
             const symptom = data[i].Symptom.name;
             point_info.age_group = data[i].age_group;
@@ -372,6 +469,7 @@ export default class MapService extends React.Component {
     console.log("calling update clusters");
     // call updateClusters
     this.updateClusters();
+    zoom_level = this.map.getZoom();
   }
 
   async onFinishedLoadingMap() {
@@ -383,9 +481,8 @@ export default class MapService extends React.Component {
     );
 
     this.setState({
-      location: [this.state.user_longitude + 0.02, this.state.user_latitude],
+      location: [this.state.user_longitude, this.state.user_latitude],
     });
-
     var loc = { lat: this.state.user_latitude, lng: this.state.user_longitude };
     try {
       const res = await Geocoder.geocodePosition(loc);
@@ -393,20 +490,36 @@ export default class MapService extends React.Component {
     } catch (err) {
       console.log(err);
     }
-    console.log(this.state.user_country);
+    zoom_level = this.map.getZoom();
+
+    const top_left = await this.map.getCoordinateFromView([0, 0]);
+    const top_right = await this.map.getCoordinateFromView([screenWidth, 0]);
+    const bottom_left = await this.map.getCoordinateFromView([0, screenHeight]);
+    const bottom_right = await this.map.getCoordinateFromView([
+      screenWidth,
+      screenHeight,
+    ]);
+
+    this.setState({
+      top_left_bound: top_left,
+      top_right_bound: top_right,
+      bottom_left_bound: bottom_left,
+      bottom_right_bound: bottom_right,
+    });
+    animating = false;
+    console.log(
+      "-----------------SETTING COUNTRY ---------- " + this.state.user_country
+    );
     this.fetchSymptoms();
   }
 
   onTrackingChange() {
     console.log("tracking changed!");
     const location_prev = this.state.location;
-    const location_new = [
-      this.state.user_longitude + 0.02,
-      this.state.user_latitude,
-    ];
+    const location_new = [this.state.user_longitude, this.state.user_latitude];
 
     this.setState({
-      location: [this.state.user_longitude + 0.02, this.state.user_latitude],
+      location: [this.state.user_longitude, this.state.user_latitude],
     });
   }
 
@@ -421,15 +534,42 @@ export default class MapService extends React.Component {
     this.onTrackingChange();
   };
 
+  fetchCities() {
+    fetch("https://sym-track.herokuapp.com/api/cities", {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + userIDStore.getState().userToken,
+        Accept: "application/json",
+        "Content-type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        const city_names = [];
+        console.log(data);
+        Object.keys(data).forEach((key, idx) => {
+          const city_name = key + ", " + data[key][0].country;
+          const id = idx;
+
+          const city = {
+            id: id,
+            name: city_name,
+          };
+          city_names.push(city);
+        });
+        console.log("----------- city data loaded --------------");
+        this.setState({
+          cities: data,
+          city_names: city_names,
+        });
+      });
+  }
+
   fetchSymptoms() {
-    // Console.log(
-    //   userIDStore.getState().userToken +
-    //     ' long ' +
-    //     this.state.user_longitude +
-    //     ' lat ' +
-    //     this.state.user_latitude,
-    // );
-    fetch("http://sym-track.herokuapp.com/api/locations_symptoms?demo=true", {
+    if (!this.state.isClusterModalVisible) {
+      animating = true;
+    }
+    fetch("https://sym-track.herokuapp.com/api/locations_symptoms?demo=true", {
       method: "POST",
       headers: {
         Authorization: "Bearer " + userIDStore.getState().userToken,
@@ -471,6 +611,26 @@ export default class MapService extends React.Component {
           // just log them for now
           console.log("-----------if---------");
           console.log(data);
+          const gridCollections = this.gridsToGeoJson(data);
+          const small_cluster = new Supercluster({ radius: 40, maxZoom: 14 });
+          const medium_cluster = new Supercluster({ radius: 40, maxZoom: 14 });
+          const high_cluster = new Supercluster({ radius: 40, maxZoom: 14 });
+
+          small_cluster.load(gridCollections.smallGridCollection.features);
+          medium_cluster.load(gridCollections.mediumGridCollection.features);
+          high_cluster.load(gridCollections.heavyGridCollection.features);
+
+          this.setState({
+            gridCollections: gridCollections,
+            small_cluster: small_cluster,
+            medium_cluster: medium_cluster,
+            high_cluster: high_cluster,
+            grid_rendering: true,
+          });
+          if (animating === true) {
+            animating = false;
+          }
+          this.updateClusters();
         } else {
           console.log("-----------else-------");
           this.setState({
@@ -497,7 +657,11 @@ export default class MapService extends React.Component {
             small_cluster: small_cluster,
             medium_cluster: medium_cluster,
             high_cluster: high_cluster,
+            grid_rendering: false,
           });
+          if (animating === true) {
+            animating = false;
+          }
           this.updateClusters();
         }
       })
@@ -505,7 +669,6 @@ export default class MapService extends React.Component {
         console.log(error);
       });
   }
-
   componentDidMount() {
     PermissionsAndroid.requestMultiple(
       [
@@ -527,6 +690,7 @@ export default class MapService extends React.Component {
       });
     MapboxGL.setTelemetryEnabled(false);
     console.log("-----------inside fetch symptoms--------");
+    this.fetchCities();
     this.timer = setInterval(() => this.fetchSymptoms(), 15000);
   }
 
@@ -623,6 +787,33 @@ export default class MapService extends React.Component {
     );
   };
 
+  getClusterSymptoms = (data, images) => {
+    return (
+      <View style={{ marginTop: 10 }}>
+        <FlatList
+          data={data}
+          horizontal={false}
+          numColumns={1}
+          renderItem={({ item, index }) => (
+            <Card>
+              <View
+                style={{ marginLeft: 15, marginTop: 15, flexDirection: "row" }}
+              >
+                <Image
+                  style={{ marginLeft: 50, width: 60, height: 60 }}
+                  source={images[index]}
+                />
+                <Text style={{ marginTop: 30, fontSize: 16, marginLeft: 15 }}>
+                  {item.name}
+                </Text>
+              </View>
+            </Card>
+          )}
+        />
+      </View>
+    );
+  };
+
   gridsToGeoJson(grids) {
     console.log("Grids to GeoJson");
     const gridCollections = {
@@ -641,12 +832,25 @@ export default class MapService extends React.Component {
     };
     for (let i = 0; i < grids.length; i++) {
       const element = grids[i];
-      const grid_lng = element.coordinates[0];
-      const grid_lat = element.coordinates[1];
-      let symptom_count = 0;
-      let grid_symptoms = {};
-      Object.keys(element.value).forEach((key) => {});
+      const feat = {
+        type: "Feature",
+        id: element._id,
+        properties: {
+          icon: "pin3",
+        },
+        geometry: {
+          type: "Point",
+          coordinates: [
+            parseFloat(element.location.coordinates[0]),
+            parseFloat(element.location.coordinates[1]),
+          ],
+        },
+      };
+      // subtitute with number of infections later
+      gridCollections.heavyGridCollection.features.push(feat);
+      grid_infos[element._id] = element;
     }
+    return gridCollections;
   }
 
   symptomsToGeoJson(symptoms) {
@@ -694,124 +898,347 @@ export default class MapService extends React.Component {
     }
     return symptomCollections;
   }
-  /*
-  calculateProbability(symptoms) {
-    console.log("Symptoms are:");
-    console.log(symptoms);
-    let total_prob = 1.0;
-    let dates = Object.keys(covid[this.state.user_country]);
-    dates = dates.slice(4, dates.length);
-    const lastDate = dates[dates.length - 1];
-    const confirmed = parseFloat(covid[this.state.user_country][lastDate]); // confirmed cases for this country
-    const prevalence =
-      confirmed / this.state.test_counts[this.state.user_country];
 
-    console.log('prevalence = ' + prevalence);
+  renderClusterInfo(cluster_data, country) {
+    const chartConfig = {
+      backgroundGradientFrom: "#1E2923",
+      backgroundGradientFromOpacity: 0,
+      backgroundGradientTo: "#08130D",
+      backgroundGradientToOpacity: 0.5,
+      color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
+      strokeWidth: 2, // optional, default 3
+      barPercentage: 0.5,
+      useShadowColorFromDataset: false, // optional
+    };
 
-    for (let i = 0; i < symptoms.length; i++) {
-      var symptom = symptoms[i].name.toLowerCase();
-      if (symptom == 'persistent dry cough') {
-        symptom = 'cough';
-      } else if (
-        symptom == 'high-grade fever' ||
-        symptom == 'medium-grade fever'
-      ) {
-        symptom = 'fever';
-      } else if (symptom == 'repeated shaking with chills') {
-        symptom = 'chills';
-      }
-      const prob = 1 - (prevalence * Ak[symptom]) / Sk[symptom];
-      total_prob *= prob;
-    }
-    total_prob = 1.0 - total_prob;
-    console.log('total probability = ' + total_prob);
-    return total_prob;
-  }*/
-
-  renderClusterInfo(cluster_data) {
-    const data = [];
-    Object.keys(cluster_data).forEach((key, idx) => {
-      data.push({ id: idx, name: cluster_data[key] + " " + key });
-    });
+    const piechart_data = [];
+    const age_groups = [
+      "0-10",
+      "11-20",
+      "21-30",
+      "31-40",
+      "41-50",
+      "51-60",
+      "61-70",
+      "71-80",
+      "81-90",
+      ">90",
+    ];
+    const age_colors = [
+      "#6208F8",
+      "#F8BA08",
+      "#47F808",
+      "#F80F08",
+      "#0908F8",
+      "#08F8CB",
+      "#E608F8",
+      "#8CF808",
+      "#A508F8",
+      "#F85B08",
+    ];
     const images = [];
-    for (let i = 0; i < data.length; i++) {
-      if (data[i].name.search("country") !== -1) {
-        images.push(locationAvatar);
-      } else if (data[i].name.search("male") !== -1) {
-        images.push(manAvatar);
-      } else if (data[i].name.search("female") !== -1) {
-        images.push(womanAvatar);
-      } else if (data[i].name.search("fatigue") !== -1) {
-        images.push(fatigue);
-      } else if (data[i].name.search("runny nose") !== -1) {
-        images.push(runny_nose);
-      } else if (data[i].name.search("sneezing") !== -1) {
-        images.push(sneezing);
-      } else if (data[i].name.search("headaches") !== -1) {
-        images.push(headache);
-      } else if (data[i].name.search("anosmia") !== -1) {
-        images.push(anosmia);
-      } else if (data[i].name.search("conjunctivitis") !== -1) {
-        images.push(conjunctivitis);
-      } else if (data[i].name.search("diarrhoea") !== -1) {
-        images.push(diarrhea);
-      } else if (data[i].name.search("myalgia") !== -1) {
-        images.push(muscle_pain);
-      } else if (data[i].name.search("sore throat") !== -1) {
-        images.push(sore);
-      } else if (data[i].name.search("fever") !== -1) {
-        images.push(fever);
-      } else if (data[i].name.search("cough") !== -1) {
-        images.push(cough);
-      } else if (data[i].name.search("difficulty breathing") !== -1) {
-        images.push(shortness);
-      } else if (data[i].name.search("pneumonia") !== -1) {
-        images.push(pneumonia);
-      } else if (data[i].name.search("chills") !== -1) {
-        images.push(chills);
-      } else {
-        images.push(manAvatar);
+    const data = [];
+    let total_symptoms = 0,
+      male_symps = 0,
+      female_symps = 0,
+      undisclosed_symps = 0;
+    if (this.state.grid_rendering === true) {
+      female_symps = parseInt(current_grid_info.genders.FEMALE);
+      male_symps = parseInt(current_grid_info.genders.MALE);
+      undisclosed_symps = parseInt(current_grid_info.genders.UNDISCLOSED);
+
+      total_symptoms = male_symps + female_symps + undisclosed_symps;
+
+      Object.keys(current_grid_info.value).forEach((key, idx) => {
+        data.push({ id: idx, name: current_grid_info.value[key] + " " + key });
+      });
+
+      let i = 0;
+      for (i = 0; i < data.length; i++) {
+        if (data[i].name.search("fatigue") !== -1) {
+          images.push(fatigue);
+        } else if (data[i].name.search("runny nose") !== -1) {
+          images.push(runny_nose);
+        } else if (data[i].name.search("sneezing") !== -1) {
+          images.push(sneezing);
+        } else if (data[i].name.search("headaches") !== -1) {
+          images.push(headache);
+        } else if (data[i].name.search("anosmia") !== -1) {
+          images.push(anosmia);
+        } else if (data[i].name.search("conjunctivitis") !== -1) {
+          images.push(conjunctivitis);
+        } else if (
+          data[i].name.search("diarrhoea") !== -1 ||
+          data[i].name.search("diarrhea") !== -1
+        ) {
+          images.push(diarrhea);
+        } else if (data[i].name.search("myalgia") !== -1) {
+          images.push(muscle_pain);
+        } else if (data[i].name.search("sore throat") !== -1) {
+          images.push(sore);
+        } else if (data[i].name.search("fever") !== -1) {
+          images.push(fever);
+        } else if (data[i].name.search("cough") !== -1) {
+          images.push(cough);
+        } else if (data[i].name.search("difficulty breathing") !== -1) {
+          images.push(shortness);
+        } else if (data[i].name.search("pneumonia") !== -1) {
+          images.push(pneumonia);
+        } else if (data[i].name.search("chills") !== -1) {
+          images.push(chills);
+        } else {
+          images.push(manAvatar);
+        }
+      }
+      if (i === data.length - 1) {
+        animating = false;
+      }
+      for (i = 0; i < age_groups.length; i++) {
+        const age_group = age_groups[i];
+        if (
+          parseInt(current_grid_info.ages[age_group]) > 0 &&
+          age_group !== ">90"
+        ) {
+          const chart_element = {
+            name: " between " + age_group,
+            symptomatic: current_grid_info.ages[age_group],
+            color: age_colors[i],
+            legendFontColor: "#7F7F7F",
+            legendFontSize: 15,
+          };
+          piechart_data.push(chart_element);
+        } else if (age_group === ">90") {
+          const chart_element = {
+            name: " between " + age_group,
+            symptomatic: current_grid_info.ages[age_group],
+            color: age_colors[i],
+            legendFontColor: "#7F7F7F",
+            legendFontSize: 15,
+          };
+        }
+      }
+    } else {
+      male_symps = parseInt(cluster_data.male);
+      female_symps = parseInt(cluster_data.female);
+      undisclosed_symps = parseInt(cluster_data.undisclosed);
+      total_symptoms = male_symps + female_symps + undisclosed_symps;
+
+      Object.keys(cluster_data).forEach((key, idx) => {
+        if (
+          key !== "total" &&
+          key !== "male" &&
+          key !== "female" &&
+          key !== "undisclosed" &&
+          key.search("-") === -1 &&
+          key.search(">") === -1
+        ) {
+          if (parseInt(cluster_data[key]) > 0) {
+            data.push({
+              id: idx,
+              name: cluster_data[key] + " " + key,
+            });
+          }
+        }
+      });
+      let i = 0;
+      for (i = 0; i < data.length; i++) {
+        if (data[i].name.search("fatigue") !== -1) {
+          images.push(fatigue);
+        } else if (data[i].name.search("runny nose") !== -1) {
+          images.push(runny_nose);
+        } else if (data[i].name.search("sneezing") !== -1) {
+          images.push(sneezing);
+        } else if (data[i].name.search("headaches") !== -1) {
+          images.push(headache);
+        } else if (data[i].name.search("anosmia") !== -1) {
+          images.push(anosmia);
+        } else if (data[i].name.search("conjunctivitis") !== -1) {
+          images.push(conjunctivitis);
+        } else if (
+          data[i].name.search("diarrhoea") !== -1 ||
+          data[i].name.search("diarrhea") !== -1
+        ) {
+          images.push(diarrhea);
+        } else if (data[i].name.search("myalgia") !== -1) {
+          images.push(muscle_pain);
+        } else if (data[i].name.search("sore throat") !== -1) {
+          images.push(sore);
+        } else if (data[i].name.search("fever") !== -1) {
+          images.push(fever);
+        } else if (data[i].name.search("cough") !== -1) {
+          images.push(cough);
+        } else if (data[i].name.search("difficulty breathing") !== -1) {
+          images.push(shortness);
+        } else if (data[i].name.search("pneumonia") !== -1) {
+          images.push(pneumonia);
+        } else if (data[i].name.search("chills") !== -1) {
+          images.push(chills);
+        } else {
+          images.push(manAvatar);
+        }
+      }
+      if (i === cluster_data.length - 1) {
+        console.log("setting animating to false");
+        animating = false;
+      }
+
+      for (i = 0; i < age_groups.length; i++) {
+        const age_group = age_groups[i];
+        if (parseInt(cluster_data[age_group]) > 0 && age_group !== ">90") {
+          const chart_element = {
+            name: " between " + age_group,
+            symptomatic: cluster_data[age_group],
+            color: age_colors[i],
+            legendFontColor: "#7F7F7F",
+            legendFontSize: 15,
+          };
+          piechart_data.push(chart_element);
+        } else if (age_group === ">90") {
+          const chart_element = {
+            name: " between " + age_group,
+            symptomatic: cluster_data[age_group],
+            color: age_colors[i],
+            legendFontColor: "#7F7F7F",
+            legendFontSize: 15,
+          };
+        }
       }
     }
+
     return (
-      <View style={styles.modal}>
-        <View style={styles.clusterModalContent}>
-          <View style={styles.avatarContainer}>
-            <View style={styles.avatarRow}>
-              <Image
-                resizeMode="contain"
-                source={locationAvatar}
-                style={styles.cluster_avatar}
-              />
-            </View>
-            <View style={styles.cluster_userInfo}>
-              <View style={styles.useData}>
-                <View style={styles.tag}>
-                  <Text style={styles.tagContent}>GEO</Text>
+      <Layout style={styles.clusterModal}>
+        <Layout style={styles.clusterModalContent}>
+          <Layout style={{ flex: 1, borderRadius: 10 }}>
+            <View style={styles.clusterAvatarContainer}>
+              <View style={styles.clusterAvatarRow}>
+                <Image
+                  width="90"
+                  height="90"
+                  source={cluster_icon}
+                  style={styles.cluster_avatar}
+                />
+              </View>
+              <View style={styles.userInfo}>
+                <View style={styles.useData}>
+                  <View style={styles.tag}>
+                    <Text style={styles.tagContent}>GEO</Text>
+                  </View>
+                  <Text style={styles.tagData}>{country}</Text>
                 </View>
-                <Text style={styles.tagData}>{this.state.user_country}</Text>
               </View>
             </View>
-          </View>
-          <View style={styles.separator}></View>
-          <View style={styles.symptomContainer}>
-            <View>
-              <Text>CLUSTER DATA</Text>
-            </View>
-          </View>
-          <View style={styles.closeModalContainer}>
-            <TouchableOpacity
-              onPress={() => {
-                this.setState({ isClusterModalVisible: false });
-              }}
-              style={styles.closeModal}
-              activeOpacity={0.9}
+          </Layout>
+          <Layout
+            style={{
+              flex: 3,
+              borderRadius: 10,
+            }}
+          >
+            <TabView
+              style={{ flex: 1, borderRadius: 10 }}
+              selectedIndex={this.state.selected_index}
+              onSelect={(index) => this.setState({ selected_index: index })}
             >
-              <Text style={styles.closeModalText}>CANCEL</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </View>
+              <Tab title="GENERAL INFO">
+                <ScrollView>
+                  <Layout style={styles.tabContainer}>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        marginTop: 40,
+                        marginLeft: 50,
+                      }}
+                    >
+                      <Image
+                        resizeMode="contain"
+                        source={infections}
+                        style={styles.cluster_avatar}
+                      />
+                      <Text
+                        category="h5"
+                        style={{ marginLeft: 20, marginTop: 30 }}
+                      >
+                        {total_symptoms + " total symptomatic users"}
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        marginTop: 20,
+                        marginLeft: 20,
+                      }}
+                    >
+                      <View style={{ flexDirection: "column" }}>
+                        <Image
+                          resizeMode="contain"
+                          source={male}
+                          style={styles.cluster_avatar}
+                        />
+                        <Text
+                          category="h5"
+                          style={{ marginLeft: 20, marginTop: 30 }}
+                        >
+                          {male_symps + " male"}
+                        </Text>
+                      </View>
+                      <View style={{ flexDirection: "column", marginLeft: 15 }}>
+                        <Image
+                          resizeMode="contain"
+                          source={female}
+                          style={styles.cluster_avatar}
+                        />
+                        <Text
+                          category="h5"
+                          style={{ marginLeft: 20, marginTop: 30 }}
+                        >
+                          {female_symps + " female"}
+                        </Text>
+                      </View>
+                      <View style={{ flexDirection: "column", marginLeft: 15 }}>
+                        <Image
+                          resizeMode="contain"
+                          source={undisclosed}
+                          style={styles.cluster_avatar}
+                        />
+                        <Text
+                          category="h5"
+                          style={{ marginLeft: 5, marginTop: 30 }}
+                        >
+                          {undisclosed_symps + " undisclosed"}
+                        </Text>
+                      </View>
+                    </View>
+                  </Layout>
+                </ScrollView>
+              </Tab>
+              <Tab title="DEMOGRAPHICS">
+                <Layout style={styles.tabContainer}>
+                  <PieChart
+                    data={piechart_data}
+                    width={screenWidth - 40}
+                    height={200}
+                    chartConfig={chartConfig}
+                    accessor="symptomatic"
+                    backgroundColor="transparent"
+                    absolute
+                    style={{ marginTop: 30 }}
+                  />
+                </Layout>
+              </Tab>
+              <Tab title="SYMPTOMS">
+                <Layout style={styles.tabContainer}>
+                  <View>{this.getClusterSymptoms(data, images)}</View>
+                </Layout>
+              </Tab>
+            </TabView>
+            <Button
+              onPress={() => this.setState({ isClusterModalVisible: false })}
+            >
+              CLOSE
+            </Button>
+          </Layout>
+        </Layout>
+      </Layout>
     );
   }
 
@@ -821,41 +1248,50 @@ export default class MapService extends React.Component {
     if (info == null) return;
     const data = [];
     const images = [];
-    for (let i = 0; i < info.symptoms.length; i++) {
+    let i = 0;
+    for (i; i < info.symptoms.length; i++) {
       var name = info.symptoms[i];
       var sym = { id: (i + 1).toString(), name: name };
       data.push(sym);
       name = name.toLowerCase();
-      if (name == "anosmia") {
+      if (name === "anosmia") {
         images.push(anosmia);
-      } else if (name == "persistent dry cough") {
+      } else if (name.search(cough) !== -1) {
         images[i] = cough;
-      } else if (name == "diarrhoea") {
+      } else if (name === "diarrhoea" || name === "diarrhea") {
         images[i] = diarrhea;
-      } else if (name == "fatigue") {
+      } else if (name === "fatigue") {
         images[i] = fatigue;
-      } else if (name == "high-grade fever" || name == "medium-grade fever") {
+      } else if (name === "high-grade fever" || name === "medium-grade fever") {
         images.push(fever);
-      } else if (name == "headaches") {
+      } else if (name === "headaches") {
         images.push(headache);
-      } else if (name == "myalgia") {
+      } else if (name === "myalgia") {
         images.push(muscle_pain);
-      } else if (name == "runny nose") {
+      } else if (name === "runny nose") {
         images.push(runny_nose);
-      } else if (name == "difficulty breathing") {
+      } else if (name === "difficulty breathing") {
         images.push(shortness);
-      } else if (name == "sneezing") {
+      } else if (name === "sneezing") {
         images.push(sneezing);
-      } else if (name == "sore throat") {
+      } else if (name === "sore throat") {
         images.push(sore);
-      } else if (name == "repeated shaking with chills") {
+      } else if (name.search("chills") !== -1) {
         images.push(chills);
-      } else if (name == "pneumonia") {
+      } else if (name === "pneumonia") {
         images.push(pneumonia);
+      } else if (name === "conjunctivitis") {
+        images.push(conjunctivitis);
       } else {
         images.push(cough);
       }
     }
+
+    if (i === info.symptoms.length - 1) {
+      console.log("setting animating to false");
+      animating = false;
+    }
+
     if (info == null) {
       return (
         <View style={styles.modalView}>
@@ -936,7 +1372,22 @@ export default class MapService extends React.Component {
     }
   }
 
-  renderSymptomLayer(id, featureCollection, style) {
+  renderSymptomLayer(id, featureCollection, style, grid_rendering) {
+    if (grid_rendering === true) {
+      return (
+        <MapboxGL.ShapeSource
+          key={id}
+          id={id}
+          shape={featureCollection}
+          onPress={this.onGridLayerPress}
+        >
+          <MapboxGL.CircleLayer
+            id={id + " singleCluster"}
+            style={singleCluster}
+          />
+        </MapboxGL.ShapeSource>
+      );
+    }
     return (
       <MapboxGL.ShapeSource
         key={id}
@@ -965,20 +1416,100 @@ export default class MapService extends React.Component {
     );
   }
 
+  metersToPixelsAtMaxZoom = (meters) =>
+    meters / 0.075 / Math.cos((this.state.location[1] * Math.PI) / 180);
+
   render() {
     const { isModalVisible } = this.state;
     return (
       <View style={[styles.centeredView]}>
-        <Modal visible={isModalVisible} animationType="fade" transparent={true}>
-          {this.renderPointInfo(currentPointInfo)}
-        </Modal>
-        <Modal
-          visible={this.state.isClusterModalVisible}
-          animationType="fade"
-          transparent={true}
-        >
-          {this.renderClusterInfo(this.state.cluster_data)}
-        </Modal>
+        {animating && (
+          <View
+            style={{
+              backgroundColor: "#39363E",
+              zIndex: 9998,
+              width: 20,
+              height: 0,
+            }}
+          >
+            <ActivityIndicator
+              style={{
+                zIndex: 9999,
+                marginTop: parseInt(screenHeight / 2),
+                marginLeft: parseInt(screenWidth / 2),
+              }}
+              size="large"
+              color="#9B9696"
+            />
+          </View>
+        )}
+        {this.state.isModalVisible && (
+          <Modal
+            visible={animating === false}
+            animationType="fade"
+            transparent={true}
+          >
+            {this.renderPointInfo(currentPointInfo)}
+          </Modal>
+        )}
+
+        {this.state.isClusterModalVisible && (
+          <Modal
+            visible={animating === false}
+            animationType="fade"
+            transparent={true}
+          >
+            {this.renderClusterInfo(
+              this.state.cluster_data,
+              this.state.user_country
+            )}
+          </Modal>
+        )}
+
+        <View>
+          <SearchableDropdown
+            onItemSelect={(item) => {
+              const city_name = item.name.substring(0, item.name.search(","));
+
+              console.log("City name = " + city_name);
+
+              const latitude = this.state.cities[city_name][0].latitude;
+              const longitude = this.state.cities[city_name][0].longitude;
+              this.setState({
+                selected_city: item,
+                location: [longitude, latitude],
+              });
+            }}
+            containerStyle={{ padding: 5, backgroundColor: "#39363E" }}
+            itemStyle={{
+              padding: 10,
+              marginTop: 2,
+              backgroundColor: "#39363E",
+              borderColor: "#3E2723",
+              borderWidth: 1,
+              borderRadius: 5,
+            }}
+            itemTextStyle={{ color: "white" }}
+            itemsContainerStyle={{ maxHeight: 140 }}
+            items={this.state.city_names}
+            resetValue={false}
+            textInputProps={{
+              placeholder: "Search City",
+              placeholderTextColor: "white",
+              underlineColorAndroid: "transparent",
+              style: {
+                padding: 12,
+                borderWidth: 1,
+                borderColor: "#ccc",
+                borderRadius: 5,
+                color: "white",
+              },
+            }}
+            listProps={{
+              nestedScrollEnabled: true,
+            }}
+          />
+        </View>
         <View style={styles.container}>
           <MapboxGL.MapView
             ref={(ref) => (this.map = ref)}
@@ -999,38 +1530,56 @@ export default class MapService extends React.Component {
               pitch={45}
               centerCoordinate={this.state.location}
             />
-
             {this.renderSymptomLayer(
               "small",
               this.state.symptomCollections.smallSymptomCollection,
-              smallStyles
+              smallStyles,
+              this.state.grid_rendering
             )}
             {this.renderSymptomLayer(
               "medium",
               this.state.symptomCollections.mediumSymptomCollection,
-              mediumStyles
+              mediumStyles,
+              this.state.grid_rendering
             )}
             {this.renderSymptomLayer(
               "high",
               this.state.symptomCollections.highSymptomCollection,
-              highStyles
+              highStyles,
+              this.state.grid_rendering
             )}
           </MapboxGL.MapView>
         </View>
         <TouchableOpacity
-          activeOpacity={0.5}
+          // activeOpacity={0.5}
           onPress={this.FloatingButtonEvent}
           style={styles.TouchableOpacityStyle}
         >
-          <Image
-            source={require("../../../assets/images/location_dark.jpg")}
+          {/* <Image
+            source={require('../../../assets/images/location_dark.jpg')}
             style={styles.FloatingButtonStyle}
-          />
+          /> */}
+          <Ionicons name="md-locate" size={30} color="#9B9696" />
         </TouchableOpacity>
       </View>
     );
   }
 }
+
+const singleCluster = {
+  circleColor: "#9C27B0",
+  circleStrokeWidth: 5,
+  circleStrokeColor: "#3E2723",
+  circleRadius: 50,
+  circleOpacity: 0.6,
+};
+
+const singleClusterCount = {
+  textField: "{120}",
+  textSize: 15,
+  textPitchAlignment: "map",
+  textColor: "white",
+};
 
 const styles = StyleSheet.create({
   centeredView: {
@@ -1045,13 +1594,23 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  clusterModal: {
+    flex: 1,
+    backgroundColor: "rgba(52, 52, 52, 0.5)",
+    alignItems: "center",
+    justifyContent: "center",
+  },
   clusterModalContent: {
-    backgroundColor: "#fff",
-    width: screenWidth - 20,
-    height: screenHeight - 60,
-    marginBottom: 20,
+    width: screenWidth - 40,
+    height: screenHeight - 100,
     borderRadius: 10,
   },
+  clusterAvatarContainer: {
+    flex: 1,
+    padding: 20,
+    alignItems: "center",
+  },
+  clusterAvatarRow: { flexDirection: "row" },
   modalContent: {
     backgroundColor: "#fff",
     width: screenWidth - 40,
@@ -1114,8 +1673,9 @@ const styles = StyleSheet.create({
     height: 50,
     alignItems: "center",
     justifyContent: "center",
-    right: 30,
-    bottom: 30,
+    right: 20,
+    bottom: 20,
+    borderRadius: 5,
   },
   FloatingButtonStyle: {
     resizeMode: "contain",
@@ -1129,14 +1689,16 @@ const styles = StyleSheet.create({
     backgroundColor: "#F5FCFF",
   },
   container: {
-    height: 900,
-    width: 900,
+    //width: 500,
+    //height: screenHeight - 200,
     backgroundColor: "white",
+    flex: 1,
   },
   map: {
     flex: 1,
   },
 });
+
 const smallStyles = {
   singlePoint: {
     circleColor: "#FFC107",

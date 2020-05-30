@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Button,
   Divider,
@@ -12,13 +12,20 @@ import {
   TopNavigation,
   TopNavigationAction,
   Layout,
+  Modal,
+  Card,
+  Text,
 } from '@ui-kitten/components';
-import {SafeAreaView, View, TouchableWithoutFeedback} from 'react-native';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {ProfileAvatar} from './extra/profile-avatar.component';
+import { SafeAreaView, View, TouchableWithoutFeedback } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
+import { ProfileAvatar } from './extra/profile-avatar.component';
+import userIDStore from '../../data-management/user-id-data/userIDStore';
+import * as actions from '../../data-management/user-id-data/userIDActions';
+import { KeyboardAvoidingView } from '../../components/3rd-party';
 
-const ArrowIosBackIcon = (style) => <Icon {...style} name="arrow-ios-back" />;
+const ArrowIosBackIcon = (style) => <Icon {...style} name='arrow-ios-back' />;
 const data = [
+  'Update your age group',
   '0-10',
   '11-20',
   '21-30',
@@ -31,7 +38,7 @@ const data = [
   '>90',
 ];
 
-const genderData = ['MALE', 'FEMALE'];
+const genderData = ['Update your gender', 'MALE', 'FEMALE'];
 
 const EditProfileScreen = (props) => {
   const [username, setUsername] = React.useState('');
@@ -39,13 +46,28 @@ const EditProfileScreen = (props) => {
   const [usernameStatus, setUsernameStatus] = React.useState('basic');
   const [isLoading, setIsLoading] = React.useState(false);
   const [selectedAgeIndex, setSelectedAgeIndex] = React.useState(
-    new IndexPath(0),
+    new IndexPath(0)
   );
   const [selectedGenderIndex, setSelectedGenderIndex] = React.useState(
-    new IndexPath(0),
+    new IndexPath(0)
   );
 
+  const getMyUsername = async () => {
+    try {
+      let userName = await AsyncStorage.getItem('userName');
+      setUsername(userName);
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    getMyUsername();
+  }, []);
+
   const displayAgeValue = data[selectedAgeIndex.row];
+  const [modalState, setModalState] = React.useState(false);
+  const [modalMessage, setModalMessage] = React.useState('');
+  const [modalStatus, setModalStatus] = React.useState('');
+
   const renderOption = (title, index) => (
     <SelectItem title={title} key={index} />
   );
@@ -61,7 +83,7 @@ const EditProfileScreen = (props) => {
       setUsernameCap('');
     } else {
       setUsernameStatus('danger');
-      setUsernameCap('Username cannot be empty !');
+      setUsernameCap('required*');
     }
     setUsername(name);
   };
@@ -73,38 +95,25 @@ const EditProfileScreen = (props) => {
     />
   );
 
-  const onCurrPasswordChange = (pass) => {
-    if (pass === '') {
-      setCurrPasswordStatus('danger');
-      setCurrPasswordCap('Feild cannot be empty !');
-    } else {
-      setCurrPasswordStatus('basic');
-      setCurrPasswordCap();
+  const onGenderChange = (pass) => {
+    if (pass === 0) {
+      setModalMessage('Please select your gender');
+      setModalState(true);
+      setModalStatus('danger');
+      return;
     }
-    setCurrPassword(pass);
+    setSelectedGenderIndex(pass);
   };
 
-  const onNewPasswordChange = (pass) => {
-    if (pass === '') {
-      setNewPasswordStatus('danger');
-      setNewPasswordCap('Feild cannot be empty !');
-    } else {
-      setNewPasswordStatus('basic');
-      setNewPasswordCap();
+  const onAgeGroupChange = (pass) => {
+    if (pass === 0) {
+      setModalMessage('Please enter your age group');
+      setModalState(true);
+      setModalStatus('danger');
+      return;
     }
 
-    setNewPassword(pass);
-  };
-
-  const onConNewPasswordChange = (pass) => {
-    if (pass !== newPassword) {
-      setConNewPasswordStatus('danger');
-      setConNewPasswordCap('Password donot match !');
-    } else {
-      setConNewPasswordStatus('basic');
-      setConNewPasswordCap();
-    }
-    setConNewPassword(pass);
+    setSelectedAgeIndex(pass);
   };
 
   const renderPassIcon = (props) => (
@@ -121,48 +130,128 @@ const EditProfileScreen = (props) => {
     </TouchableWithoutFeedback>
   );
 
-  const CameraIcon = (style) => <Icon {...style} name="camera" />;
+  const CameraIcon = (style) => <Icon {...style} name='camera' />;
 
   const renderPhotoButton = () => (
     <Button
       style={styles.editAvatarButton}
-      status="basic"
+      status='basic'
       accessoryLeft={CameraIcon}
     />
   );
+  //change profile
+  const updateProfile = () => {
+    onUserNameChange(username);
+    onAgeGroupChange(selectedAgeIndex);
+    onGenderChange(selectedGenderIndex);
+    if (selectedAgeIndex > 0 && selectedGenderIndex > 0 && username !== '') {
+      setIsLoading(true);
+      fetch('https://sym-track.herokuapp.com/api/users', {
+        method: 'PATCH',
+        headers: {
+          Authorization: 'Bearer ' + userIDStore.getState().userToken,
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          _id: userIDStore.getState().userId,
+          username: username,
+          age_group: data[selectedAgeIndex],
+          gender: genderData[selectedGenderIndex],
+        }),
+      })
+        .then((response) => response.json())
+        .then((json) => {
+          setModalMessage('You have successfully changed your profile!');
+          setModalState(true);
+          setIsLoading(false);
+          setModalStatus('success');
+          saveUser(
+            username,
+            data[selectedAgeIndex],
+            genderData[selectedGenderIndex]
+          );
+          userIDStore.dispatch(
+            actions.addUser(
+              userIDStore.getState().userId,
+              username,
+              userIDStore.getState().userToken,
+              data[selectedAgeIndex],
+              genderData[selectedGenderIndex]
+            )
+          );
+        })
+        .catch((error) => {
+          console.log(error);
+          setModalMessage("Oops, couldn't update your profile! Please retry!");
+          setModalState(true);
+          setModalStatus('danger');
+        });
+    }
+  };
+  const saveUser = async (userName, age_group, gender) => {
+    try {
+      await AsyncStorage.setItem('userName', userName); //save user name on async storage
+      await AsyncStorage.setItem('age_group', age_group); //save age group on async storage
+      await AsyncStorage.setItem('gender', gender); //save gender on async storage
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{ flex: 1 }}>
+      <Modal
+        visible={modalState}
+        backdropStyle={styles.backdrop}
+        onBackdropPress={() => setModalState(false)}>
+        <Card disabled={true} style={{ marginLeft: 10, marginRight: 10 }}>
+          <Text status={modalStatus} category='h6' style={{ marginBottom: 10 }}>
+            {modalMessage}
+          </Text>
+          <Text
+            style={{ alignSelf: 'flex-end', color: '#0080ff' }}
+            onPress={() => {
+              setModalState(false);
+              setUsername('');
+              setSelectedAgeIndex('');
+              setSelectedGenderIndex('');
+              setIsLoading(false);
+            }}>
+            Dismiss
+          </Text>
+        </Card>
+      </Modal>
       <TopNavigation
-        alignment="center"
-        title="CHANGE PROFILE"
+        alignment='center'
+        title='CHANGE PROFILE'
         accessoryLeft={renderBackAction}
       />
       <Divider />
-      <Layout style={{flex: 1}}>
-        <KeyboardAwareScrollView>
-          <Layout level="2" style={{padding: 10}}>
+      <Layout style={{ flex: 1 }}>
+        <KeyboardAvoidingView>
+          <Layout level='2' style={{ padding: 10 }}>
             <ProfileAvatar
               style={styles.profileAvatar}
               source={require('../../../assets/man.png')}
-              editButton={renderPhotoButton}
             />
           </Layout>
           <View style={styles.formContainer}>
             <Input
-              placeholder="Ally"
-              label="Username"
+              placeholder={userIDStore.getState().userName}
+              label='Username'
+              disabled={true}
               caption={usernameCap}
               status={usernameStatus}
-              autoCapitalize="words"
+              autoCapitalize='words'
               value={username}
               onChangeText={(name) => onUserNameChange(name)}
             />
             <Select
               style={styles.select}
-              label="AGE GROUP"
+              label='AGE GROUP'
               style={styles.formInput}
-              placeholder="Default"
+              placeholder='Default'
               value={displayAgeValue}
               selectedIndex={selectedAgeIndex}
               onSelect={(index) => setSelectedAgeIndex(index)}>
@@ -170,26 +259,26 @@ const EditProfileScreen = (props) => {
             </Select>
             <Select
               style={styles.select}
-              label="GENDER"
+              label='GENDER'
               style={styles.formInput}
-              placeholder="Default"
+              placeholder='Default'
               value={displayGenderValue}
               selectedIndex={selectedGenderIndex}
               onSelect={(index) => setSelectedGenderIndex(index)}>
               {genderData.map((index, title) =>
-                renderGenderOption(index, title),
+                renderGenderOption(index, title)
               )}
             </Select>
           </View>
           <Button
             style={styles.doneButton}
-            size="large"
+            size='large'
             disabled={isLoading}
             accessoryLeft={() => (isLoading ? <Spinner /> : <></>)}
-            onPress={() => {}}>
+            onPress={() => updateProfile()}>
             DONE
           </Button>
-        </KeyboardAwareScrollView>
+        </KeyboardAvoidingView>
       </Layout>
     </SafeAreaView>
   );

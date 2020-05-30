@@ -76,7 +76,7 @@ exports.get_sources = async (req, res) => {
   sources = sources.filter((item) => default_sources.includes(item.source))
                    .map((item) => { return {source: item.source, logo: clearBitLogo(item.reference_link)}});
 
-  if(!req.query.country){
+  if(!req.query.country || req.query.country == "World"){
     sources.unshift({
       source: "CDC Newsroom",
       logo: "http://logo.clearbit.com/cdc.gov" 

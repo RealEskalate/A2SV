@@ -20,7 +20,8 @@ export default {
       daily: 0,
       countryCompare: 0,
       diseaseCompare: 0,
-      descriptions: false
+      descriptions: false,
+      countryResources: false
     }
   },
   getters: {
@@ -46,6 +47,9 @@ export default {
     },
     setAboutLoaders(state, { key, value }) {
       state.aboutLoaders[key] = value;
+    },
+    setGraphLoaders(state, { key, value }) {
+      state.graphLoaders[key] = value;
     },
     incrementGraphLoaders(state, key) {
       state.graphLoaders[key]++;

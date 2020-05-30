@@ -1,6 +1,13 @@
 <template>
   <v-footer padless class="white pb-md-0 pb-5">
-    <v-card flat tile class="lighten-1 text-center" shaped outlined>
+    <v-card
+      flat
+      tile
+      class="lighten-1 text-center"
+      style="width: 100%"
+      shaped
+      outlined
+    >
       <v-card-text>
         <v-btn
           v-for="(icon, i) in icons"
@@ -19,8 +26,9 @@
       </v-card-text>
 
       <v-card-text>
-        <v-btn text small v-text="'Resources'" href="/" /> |
-        <v-btn text small v-text="'Terms of Privacy'" href="/" /> |
+        <v-btn text small v-text="$t('references')" href="/" /> |
+        <v-btn text small v-text="$t('privacy')" to="/privacy-policy" />
+        |
         <span class="pa-3">
           {{ new Date().getFullYear() }} — <strong>TrackSym</strong>
         </span>
@@ -51,7 +59,7 @@
 </template>
 
 <script>
-import { mdiTelegram, mdiWeb, mdiYoutube } from "@mdi/js";
+import { mdiWeb } from "@mdi/js";
 
 export default {
   data: () => ({
@@ -60,11 +68,7 @@ export default {
       en: "EN",
       am: "አማ"
     },
-    icons: [
-      { link: "http://a2sv.org/", icon: mdiWeb },
-      { link: "http://www.youtube.com/", icon: mdiYoutube },
-      { link: "http://www.youtube.com/", icon: mdiTelegram }
-    ]
+    icons: [{ link: "http://a2sv.org/", icon: mdiWeb }]
   })
 };
 </script>

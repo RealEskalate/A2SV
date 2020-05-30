@@ -16,6 +16,10 @@ exports.post_location_user = async (req, res) => {
     var User = UserModels.DemoUser;
     var LocationUser = LocationUserModels.DemoLocationUser
     var SymptomUser = SymptomUserModels.DemoSymptomUser
+  }else if (req.query.stress && req.query.stress == "true"){
+    var User = UserModels.StressUser;
+    var LocationUser = LocationUserModels.StressLocationUser
+    var SymptomUser = SymptomUserModels.StressSymptomUser 
   }else{
     var User = UserModels.User;
     var LocationUser = LocationUserModels.LocationUser
@@ -96,6 +100,8 @@ exports.post_location_user = async (req, res) => {
 exports.get_location_user_by_id = async (req, res) => {
   if (req.query.demo && req.query.demo == "true"){
     var LocationUser = LocationUserModels.DemoLocationUser;
+  }else if (req.query.stress && req.query.stress == "true"){
+    var LocationUser = LocationUserModels.StressLocationUserModel 
   }else{
     var LocationUser = LocationUserModels.LocationUser;
   }
@@ -117,6 +123,8 @@ exports.get_location_user_by_id = async (req, res) => {
 exports.get_all_location_users = async (req, res) => {
   if (req.query.demo && req.query.demo == "true"){
     var LocationUser = LocationUserModels.DemoLocationUser;
+  }else if (req.query.stress && req.query.stress == "true"){
+    var LocationUser = LocationUserModels.StressLocationUserModel 
   }else{
     var LocationUser = LocationUserModels.LocationUser;
   }
@@ -132,6 +140,8 @@ exports.get_all_location_users = async (req, res) => {
 exports.get_by_user_id = async (req, res) => {
   if (req.query.demo && req.query.demo == "true"){
     var LocationUser = LocationUserModels.DemoLocationUser;
+  }else if (req.query.stress && req.query.stress == "true"){
+    var LocationUser = LocationUserModels.StressLocationUserModel 
   }else{
     var LocationUser = LocationUserModels.LocationUser;
   }
@@ -152,6 +162,8 @@ exports.get_by_user_id = async (req, res) => {
 exports.delete_location_user = async (req, res) => {
   if (req.query.demo && req.query.demo == "true"){
     var LocationUser = LocationUserModels.DemoLocationUser;
+  }else if (req.query.stress && req.query.stress == "true"){
+    var LocationUser = LocationUserModels.StressLocationUserModel 
   }else{
     var LocationUser = LocationUserModels.LocationUser;
   }
@@ -173,6 +185,8 @@ exports.delete_location_user = async (req, res) => {
 exports.update_location_user = async (req, res) => {
   if (req.query.demo && req.query.demo == "true"){
     var LocationUser = LocationUserModels.DemoLocationUser;
+  }else if (req.query.stress && req.query.stress == "true"){
+    var LocationUser = LocationUserModels.StressLocationUserModel 
   }else{
     var LocationUser = LocationUserModels.LocationUser;
   }
@@ -202,9 +216,11 @@ exports.update_location_user = async (req, res) => {
 // Fetch list of all locations alongside their symptoms
 exports.get_all_locations_with_symptoms = async (req, res) => {
   if(!req.body.longitude || !req.body.latitude){
+    console.log('User coordinates not supplied');
     return res.status(400).send("Coordinates are not given");
   }
   if(!req.body.top_left_bound || !req.body.top_right_bound || !req.body.bottom_left_bound || !req.body.bottom_right_bound){
+    console.log('Boundary coordinates not supplied');
     return res.status(400).send("Corner Coordinates are not given");
   }  
   let lat = req.body.latitude;
@@ -218,29 +234,38 @@ exports.get_all_locations_with_symptoms = async (req, res) => {
     {latitude: top_right_end[1], longitude: top_right_end[0]},
   )
   let zoom = 0;
-  if(distance_check>10000){
+  if(distance_check>=10000){
     zoom = 10;
   }
-  let result = [] 
-  if(zoom!=0){
-    let boundaries = [
-      top_left_end, top_right_end, bottom_right_end, bottom_left_end
-    ]
-    result = await findGridNearbySymptomaticUsers(boundaries, req.query.demo);
+  try{
+    let result = [] 
+    if(zoom!=0){
+      let boundaries = [
+        top_left_end, top_right_end, bottom_right_end, bottom_left_end
+      ]
+      result = await findGridNearbySymptomaticUsers(boundaries, req.query.demo, req.query.stress);
+      console.log(`Fetched ${result.length} Grids according to filter`)
+    }
+    else{
+      result = await findAllNearbySymptomaticUsers(long, lat, req.query.demo, req.query.stress);    
+      console.log(`Fetched ${result.length} Locations and Users according to filter`)
+    }
+    if (result.length > 0) {
+      res.send(result);
+    } else {
+      res.status(500).send("No locations with users and symptoms found.");
+    }
   }
-  else{
-    result = await findAllNearbySymptomaticUsers(long, lat, req.query.demo);    
-  }
-  console.log(`Fetched ${result.length} Locations and Users according to filter`)
-  if (result.length > 0) {
-    res.send(result);
-  } else {
-    res.status(404).send("No locations with users and symptoms found.");
+  catch(err){
+    console.log(err.toString());
+    res.status(500).send("No locations with users and symptoms found.");
   }
 }
-const findAllNearbySymptomaticUsers = async(long, lat, demo)=>{
+const findAllNearbySymptomaticUsers = async(long, lat, demo, stress)=>{
   if (demo && demo == "true"){
     var LocationUser = LocationUserModels.DemoLocationUser;
+  }else if (stress && stress == "true"){
+    var LocationUser = LocationUserModels.StressLocationUserModel 
   }else{
     var LocationUser = LocationUserModels.LocationUser;
   }
@@ -280,10 +305,12 @@ const findAllNearbySymptomaticUsers = async(long, lat, demo)=>{
   return location_users;
 }
 
-const findGridNearbySymptomaticUsers = async(boundaries, demo)=>{
+const findGridNearbySymptomaticUsers = async(boundaries, demo, stress)=>{
   // await updateDb(demo);
   if (demo && demo == "true"){
     var LocationGrid = LocationGridModels.DemoLocationGrid;
+  }else if (stress && stress == "true"){
+    var LocationUser = LocationUserModels.StressLocationUserModel 
   }else{
     var LocationGrid = LocationGridModels.LocationGrid;
   }
@@ -304,18 +331,25 @@ const run_updates = () => {
   var rule = new schedule.RecurrenceRule();
   rule.hour = 3;
   schedule.scheduleJob(rule, async function () {
-    await updateDb(false);
+    await updateDb(false, false);
   });
 };
-const updateDb = async (demo) => {
+const updateDb = async (demo, stress) => {
   if (demo && demo == "true"){
     var LocationGrid = LocationGridModels.DemoLocationGrid;
     var LocationUser = LocationUserModels.DemoLocationUser;
     var SymptomUser = SymptomUserModel.DemoSymptomUser;
+    var User = UserModels.DemoUser;
+  }else if (stress && stress == "true"){
+    var LocationGrid = LocationGridModels.StressLocationGrid;
+    var LocationUser = LocationUserModels.StressLocationUser;
+    var SymptomUser = SymptomUserModel.StressSymptomUser;
+    var User = UserModels.StressUser;
   }else{
     var LocationGrid = LocationGridModels.LocationGrid;
     var LocationUser = LocationUserModels.LocationUser;
     var SymptomUser = SymptomUserModel.SymptomUser;
+    var User = UserModels.User;
   }
 
   zoom = 10;
@@ -332,10 +366,11 @@ const updateDb = async (demo) => {
     probability:{
       $gt: 0
     }
-  });
+  }).populate('user_id');
   for(let i = 0; i<location_users.length; i++){
     console.log(i + " out of " + location_users.length + " and " + Object.keys(squareBoxes).length);
     let location_user = location_users[i];
+    if(!location_user || !location_user.location || !location_user.user_id) continue;
     let loc = location_user.location;
     let user_id = location_user.user_id;    
     //Calculate the center point of the grid after finding out the grid they place on
@@ -353,11 +388,15 @@ const updateDb = async (demo) => {
     let center = [center_point_lat, center_point_lon]
 
     //Fetch all the symptoms that user has
-    const symptomuser = await SymptomUser.find({ user_id: user_id }).populate('symptom_id');
+    const symptomuser = await SymptomUser.find({ user_id: user_id._id }).populate('symptom_id');
+    const ages = User.schema.path('age_group').enumValues;
+    const genders = User.schema.path('gender').enumValues;
     if(squareBoxes[center]){
       symptomuser.forEach((item)=>{
         squareBoxes[center].value[`${item.symptom_id.name}`]++;
       })
+      squareBoxes[center].ages[`${user_id.age_group}`]++;
+      squareBoxes[center].genders[`${user_id.gender}`]++;
     }
     else{
       squareBoxes[center] = new LocationGrid({
@@ -367,14 +406,24 @@ const updateDb = async (demo) => {
           coordinates: [center_point_lon , center_point_lat]
         },
         value: {},
+        ages: {},
+        genders: {},
         zoom_level: 10
       })
       symptoms.forEach((item)=>{
         squareBoxes[center].value[`${item.name}`] = 0;        
       })
+      ages.forEach((item)=>{
+        squareBoxes[center].ages[`${item}`] = 0
+      })
+      genders.forEach((item)=>{
+        squareBoxes[center].genders[`${item}`] = 0
+      })
       symptomuser.forEach((item)=>{
         squareBoxes[center].value[`${item.symptom_id.name}`]++;
-      })
+      })  
+      squareBoxes[center].ages[`${user_id.age_group}`]++;
+      squareBoxes[center].genders[`${user_id.gender}`]++;
     }
   }
   var values = Object.keys(squareBoxes).map(function(key){

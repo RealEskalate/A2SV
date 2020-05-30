@@ -2,16 +2,16 @@
   <v-container>
     <v-row>
       <v-col cols="12">
-        <h3 class="display-1 font-weight-thin mb-5">
+        <h3 class="display-1 font-weight-thin mb-5" data-v-step="3">
           {{ $t("titles.ethiopiaStatisticsTitle") }}
           <v-img
-                  src="/img/ethiopia/under-construction.svg"
-                  class="v-icon mx-auto"
-                  width="15rem"
+            src="/img/ethiopia/under-construction.svg"
+            class="v-icon mx-auto"
+            width="15rem"
           />
         </h3>
         <small class="red--text"
-        >*The following statistical data of Ethiopia is not accurate.</small
+          >*The following statistical data of Ethiopia is not accurate.</small
         >
       </v-col>
     </v-row>
@@ -69,15 +69,15 @@
             <v-col md="6" cols="12">
               <h3
                 class="mb-3 px-3 primary--text"
-                v-text="'Regional Statistics'"
+                v-text="$t('regionalStatistics')"
               />
               <v-simple-table>
                 <template v-slot:default>
                   <thead>
                     <tr>
-                      <th class="text-left">Regions</th>
-                      <th class="text-left">Total cases</th>
-                      <th class="text-left">Total Death</th>
+                      <th class="text-left">{{ $t('regions') }}</th>
+                      <th class="text-left">{{ $t('totalCases') }}</th>
+                      <th class="text-left">{{ $t('totalDeath') }}</th>
                     </tr>
                   </thead>
                   <tbody>

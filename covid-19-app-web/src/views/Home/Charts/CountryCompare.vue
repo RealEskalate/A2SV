@@ -28,18 +28,18 @@
             >
               <template v-slot:activator="{ on }">
                 <v-text-field
-                  class="v-card--shaped"
-                  :color="
+                        class="v-card--shaped"
+                        :color="
                     `rgb(${colors[0][0]}, ${colors[0][1]}, ${colors[0][2]})`
                   "
-                  outlined
-                  dense
-                  v-model="dateRangeText1"
-                  label="Date Range 1"
-                  hint="Country 1: From - To"
-                  :prepend-inner-icon="mdiCalendar"
-                  readonly
-                  v-on="on"
+                        outlined
+                        dense
+                        v-model="dateRangeText1"
+                        :label="$t('dateRange') + ' 1'"
+                        hint="Country 1: From - To"
+                        :prepend-inner-icon="mdiCalendar"
+                        readonly
+                        v-on="on"
                 />
               </template>
               <v-date-picker
@@ -91,18 +91,18 @@
             >
               <template v-slot:activator="{ on }">
                 <v-text-field
-                  class="v-card--shaped"
-                  :color="
+                        class="v-card--shaped"
+                        :color="
                     `rgb(${colors[1][0]}, ${colors[1][1]}, ${colors[1][2]})`
                   "
-                  outlined
-                  dense
-                  v-model="dateRangeText2"
-                  label="Date Range 2"
-                  hint="Country 2: From - To"
-                  :prepend-inner-icon="mdiCalendar"
-                  readonly
-                  v-on="on"
+                        outlined
+                        dense
+                        v-model="dateRangeText2"
+                        :label="$t('dateRange') + ' 2'"
+                        hint="Country 2: From - To"
+                        :prepend-inner-icon="mdiCalendar"
+                        readonly
+                        v-on="on"
                 />
               </template>
               <v-date-picker
@@ -131,14 +131,14 @@
         <v-row class="mx-md-5" dense>
           <v-col class="px-2" cols="12">
             <v-select
-              class="v-card--shaped"
-              v-model="criterion"
-              :items="criteriaList"
-              label="Common Criteria"
-              hint="Common Criteria"
-              outlined
-              dense
-              @input="
+                    class="v-card--shaped"
+                    v-model="criterion"
+                    :items="criteriaList"
+                    :label="$t('metrics')"
+                    hint="Common Criteria"
+                    outlined
+                    dense
+                    @input="
                 () => {
                   fetchData1();
                   fetchData2();
@@ -161,10 +161,25 @@
               :chart-data="data"
               :options="chartOptions"
             />
-            <small
-              class="d-block grey--text my-3 text--darken-2"
-              v-text="short_description"
-            />
+            <v-fade-transition hide-on-leave>
+              <div class="ma-2" v-if="graphLoaders.descriptions">
+                <v-skeleton-loader
+                  ref="skeleton"
+                  type="text,text"
+                  class="mx-auto my-3"
+                />
+              </div>
+              <small
+                v-else-if="!short_description"
+                class="d-block grey--text my-3 text--darken-1"
+                v-text="'No Description'"
+              />
+              <small
+                v-else
+                class="d-block grey--text my-3 text--darken-2"
+                v-text="short_description"
+              />
+            </v-fade-transition>
           </v-col>
         </v-row>
       </v-col>
@@ -177,14 +192,14 @@
   </v-container>
 </template>
 <script>
-import { ChartMixin, LineChart } from "./charts.js";
-import CountryResources from "../CountryResources";
-import Loader from "@/components/core/Loader.vue";
-import store from "@/store/index.js";
-import moment from "moment";
-import { mdiCalendar } from "@mdi/js";
+  import {ChartMixin, LineChart} from "./charts.js";
+  import CountryResources from "../CountryResources";
+  import Loader from "@/components/core/Loader.vue";
+  import store from "@/store/index.js";
+  import moment from "moment";
+  import {mdiCalendar} from "@mdi/js";
 
-export default {
+  export default {
   components: { LineChart, Loader, CountryResources },
   mixins: [ChartMixin],
   data() {
@@ -196,8 +211,8 @@ export default {
         [77, 208, 225],
         [240, 98, 146]
       ],
-      date_range_1: [this.defaultDate(), this.defaultDate("end")],
-      date_range_2: [this.defaultDate(), this.defaultDate("end")],
+      date_range_1: ["2019-10-01", this.defaultDate("end")],
+      date_range_2: ["2019-10-01", this.defaultDate("end")],
       country_1: { name: "World", slug: "World" },
       country_2: { name: "World", slug: "World" },
       age_range: "All",
@@ -242,7 +257,7 @@ export default {
         country: this.country_1.slug,
         criteria: this.criterion,
         mode: "one",
-        start_date: this.date_range_1[0] || this.defaultDate(),
+        start_date: this.date_range_1[0] || this.countriesData.start_one,
         end_date: this.date_range_1[1] || this.defaultDate("end")
       });
     },
@@ -251,7 +266,7 @@ export default {
         country: this.country_2.slug,
         criteria: this.criterion,
         mode: "two",
-        start_date: this.date_range_2[0] || this.defaultDate(),
+        start_date: this.date_range_2[0] || this.countriesData.start_two,
         end_date: this.date_range_2[1] || this.defaultDate()
       });
     }
@@ -263,17 +278,21 @@ export default {
   watch: {
     countriesData: {
       deep: true,
-      handler() {
+      handler(newValue) {
+        this.date_range_1[0] = newValue.start_one;
+        this.date_range_2[0] = newValue.start_two;
         this.fillGraph();
       }
     }
   },
   computed: {
     dateRangeText1() {
-      return this.rangeToText(this.date_range_1[0], this.date_range_1[1]);
+      let start = this.countriesData.start_one;
+      return this.rangeToText(start, this.date_range_1[1]);
     },
     dateRangeText2() {
-      return this.rangeToText(this.date_range_2[0], this.date_range_2[1]);
+      let start = this.countriesData.start_two;
+      return this.rangeToText(start, this.date_range_2[1]);
     },
     countriesData: () => store.getters.getCountryCompare,
     graphLoaders: () => store.getters.getGraphLoaders,
