@@ -528,7 +528,6 @@ const updateDb = async (demo, stress) => {
   await LocationGrid.insertMany(values);
 }
 
-updateDb(true, false);
 exports.run_updates = run_updates;
 run_updates();
 
