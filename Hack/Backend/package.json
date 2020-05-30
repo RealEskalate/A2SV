@@ -44,7 +44,7 @@
   },
   "type": "commonjs",
   "engines": {
-    "node": ">=0.12"
+    "node": ">=12.10.0"
   },
   "engineStrict": true
 }
