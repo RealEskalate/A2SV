@@ -423,12 +423,14 @@ const run_updates = () => {
   });
 };
 const updateDb = async (demo, stress) => {
-  if (demo && demo == "true"){
+  if (demo && demo == true){
     var LocationGrid = LocationGridModels.DemoLocationGrid;
     var LocationUser = LocationUserModels.DemoLocationUser;
     var SymptomUser = SymptomUserModel.DemoSymptomUser;
     var User = UserModels.DemoUser;
-  }else if (stress && stress == "true"){
+  }else if (stress && stress == true){
+    console.log("here");
+    
     var LocationGrid = LocationGridModels.StressLocationGrid;
     var LocationUser = LocationUserModels.StressLocationUser;
     var SymptomUser = SymptomUserModel.StressSymptomUser;
@@ -439,7 +441,8 @@ const updateDb = async (demo, stress) => {
     var SymptomUser = SymptomUserModel.SymptomUser;
     var User = UserModels.User;
   }
-
+  console.log("Started updating location grids...");
+  
   zoom = 10;
   let zoomLevels= { 10: 0.09, 111:1 ,1000:9}
   let equatorDgree=111
@@ -455,6 +458,8 @@ const updateDb = async (demo, stress) => {
       $gt: 0
     }
   }).populate('user_id');
+  console.log(location_users.length);
+  
   for(let i = 0; i<location_users.length; i++){
     console.log(i + " out of " + location_users.length + " and " + Object.keys(squareBoxes).length);
     let location_user = location_users[i];
@@ -517,10 +522,13 @@ const updateDb = async (demo, stress) => {
   var values = Object.keys(squareBoxes).map(function(key){
    return squareBoxes[key];
   });
+  console.log("DONE");
+  
   await LocationGrid.collection.drop();
   await LocationGrid.insertMany(values);
 }
 
+updateDb(true, false);
 exports.run_updates = run_updates;
 run_updates();
 
