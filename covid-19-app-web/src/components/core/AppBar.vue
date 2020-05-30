@@ -41,7 +41,6 @@
           dense
           v-model="$i18n.locale"
           :items="languages"
-          label="Lang"
           @change="changeLang"
         >
           <template v-slot:append>

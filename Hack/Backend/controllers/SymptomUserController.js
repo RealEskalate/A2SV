@@ -10,7 +10,9 @@ const jwt = require("jsonwebtoken");
 exports.get_all_symptomusers = async (req, res) => {
   if (req.query.demo && req.query.demo == "true") {
     var SymptomUser = DemoSymptomUser;
-  } else {
+  } else if (req.query.stress && req.query.stress == "true"){
+    var SymptomUser = SymptomUserModel.DemoSymptomUser
+  }else {
     var SymptomUser = SymptomUserModel.SymptomUser;
   }
   const symptomusers = await SymptomUser.find();
@@ -94,7 +96,9 @@ exports.post_multiple_symptoms = async (req, res) => {
 exports.get_symptomuser_by_symptom_id = async (req, res) => {
   if (req.query.demo && req.query.demo == "true") {
     var SymptomUser = DemoSymptomUser;
-  } else {
+  } else if (req.query.stress && req.query.stress == "true"){
+    var SymptomUser = SymptomUserModel.DemoSymptomUser
+  }else {
     var SymptomUser = SymptomUserModel.SymptomUser;
   }
   try {
@@ -127,7 +131,9 @@ exports.get_symptomuser_by_symptom_id = async (req, res) => {
 exports.get_symptomuser_by_user_id = async (req, res) => {
   if (req.query.demo && req.query.demo == "true") {
     var SymptomUser = DemoSymptomUser;
-  } else {
+  } else if (req.query.stress && req.query.stress == "true"){
+    var SymptomUser = SymptomUserModel.DemoSymptomUser
+  }else {
     var SymptomUser = SymptomUserModel.SymptomUser;
   }
   try {
