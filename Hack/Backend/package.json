@@ -43,6 +43,8 @@
     "mocha": "^7.1.1"
   },
   "type": "commonjs",
-  "engines": { "node" : ">=0.12" },
-  "engineStrict" : true
+  "engines": {
+    "node": ">=0.12"
+  },
+  "engineStrict": true
 }
