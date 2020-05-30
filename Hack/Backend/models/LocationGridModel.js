@@ -33,5 +33,10 @@ const locationGridSchema = new mongoose.Schema({
 locationGridSchema.index({'location': '2dsphere'}, {unique:true})
 var LocationGridModel = mongoose.model("LocationGrid", locationGridSchema);
 var DemoLocationGridModel = mongoose.model("Demo LocationGrid", locationGridSchema);
+var StressLocationGridModel = mongoose.model("Stress LocationGrid", locationGridSchema);
 
-module.exports = {LocationGrid: LocationGridModel, DemoLocationGrid: DemoLocationGridModel};
+module.exports = {
+  LocationGrid: LocationGridModel, 
+  DemoLocationGrid: DemoLocationGridModel,
+  StressLocationGrid: StressLocationGridModel
+};
