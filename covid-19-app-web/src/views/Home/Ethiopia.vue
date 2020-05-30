@@ -75,9 +75,9 @@
                 <template v-slot:default>
                   <thead>
                     <tr>
-                      <th class="text-left">{{ $t('regions') }}</th>
-                      <th class="text-left">{{ $t('totalCases') }}</th>
-                      <th class="text-left">{{ $t('totalDeath') }}</th>
+                      <th class="text-left">{{ $t("regions") }}</th>
+                      <th class="text-left">{{ $t("totalCases") }}</th>
+                      <th class="text-left">{{ $t("totalDeath") }}</th>
                     </tr>
                   </thead>
                   <tbody>
