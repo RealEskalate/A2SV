@@ -246,7 +246,7 @@ exports.get_all_locations_with_symptoms = async (req, res) => {
     { latitude: top_right_end[1], longitude: top_right_end[0] }
   );
   let zoom = 0;
-  if (distance_check >= 10000) {
+  if (distance_check >= 50000) {
     zoom = 10;
   }
   try {
@@ -265,9 +265,14 @@ exports.get_all_locations_with_symptoms = async (req, res) => {
       );
       console.log(`Fetched ${result.length} Grids according to filter`);
     } else {
+      let boundaries = [
+        top_left_end,
+        top_right_end,
+        bottom_right_end,
+        bottom_left_end,
+      ];
       result = await findAllNearbySymptomaticUsers(
-        long,
-        lat,
+        boundaries,
         req.query.demo,
         req.query.stress
       );
@@ -285,7 +290,7 @@ exports.get_all_locations_with_symptoms = async (req, res) => {
     res.status(500).send("No locations with users and symptoms found.");
   }
 };
-const findAllNearbySymptomaticUsers = async (long, lat, demo, stress) => {
+const findAllNearbySymptomaticUsers = async (boundaries, demo, stress) => {
   if (demo && demo == "true") {
     var LocationUser = LocationUserModels.DemoLocationUser;
   } else if (stress && stress == "true") {
@@ -295,11 +300,18 @@ const findAllNearbySymptomaticUsers = async (long, lat, demo, stress) => {
   }
   const location_users = await LocationUser.find({
     location: {
-      $near: {
-        $maxDistance: 10000,
+      $geoWithin: {
         $geometry: {
-          type: "Point",
-          coordinates: [long, lat],
+          type: "Polygon",
+          coordinates: [
+            [
+              boundaries[0],
+              boundaries[1],
+              boundaries[2],
+              boundaries[3],
+              boundaries[0],
+            ],
+          ],
         },
       },
     },
