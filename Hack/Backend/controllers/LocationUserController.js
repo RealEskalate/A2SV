@@ -222,6 +222,7 @@ exports.update_location_user = async (req, res) => {
 
 // Fetch list of all locations alongside their symptoms
 exports.get_all_locations_with_symptoms = async (req, res) => {
+  let limit = req.query.zoom_bound || 10000;
   if (!req.body.longitude || !req.body.latitude) {
     console.log("User coordinates not supplied");
     return res.status(400).send("Coordinates are not given");
@@ -244,9 +245,65 @@ exports.get_all_locations_with_symptoms = async (req, res) => {
   let distance_check = geolib.getDistance(
     { latitude: top_left_end[1], longitude: top_left_end[0] },
     { latitude: top_right_end[1], longitude: top_right_end[0] }
+    {
+      latitude: top_left_end[1],
+      longitude: top_left_end[0],
+    },
+    {
+      latitude: top_right_end[1],
+      longitude: top_right_end[0],
+    }
   );
+  //Check radius between the corner coords and main user location
+  let top_left_distance_check = geolib.getDistance(
+    {
+      latitude: lat,
+      longitude: long,
+    },
+    {
+      latitude: top_left_end[1],
+      longitude: top_left_end[0],
+    }
+  );
+  let top_right_distance_check = geolib.getDistance(
+    {
+      latitude: lat,
+      longitude: long,
+    },
+    {
+      latitude: top_right_end[1],
+      longitude: top_right_end[0],
+    }
+  );
+  let bottom_left_distance_check = geolib.getDistance(
+    {
+      latitude: lat,
+      longitude: long,
+    },
+    {
+      latitude: bottom_left_end[1],
+      longitude: bottom_left_end[0],
+    }
+  );
+  let bottom_right_distance_check = geolib.getDistance(
+    {
+      latitude: lat,
+      longitude: long,
+    },
+    {
+      latitude: bottom_right_end[1],
+      longitude: bottom_right_end[0],
+    }
+  );
+  let min_coord_distance = Math.min(
+    top_left_distance_check,
+    top_right_distance_check,
+    bottom_left_distance_check,
+    bottom_right_distance_check
+  );
+  let inPolygonCheck = min_coord_distance < 10000;
   let zoom = 0;
-  if (distance_check >= 50000) {
+  if (distance_check >= limit || !inPolygonCheck) {
     zoom = 10;
   }
   try {
