@@ -289,7 +289,7 @@ const findAllNearbySymptomaticUsers = async (long, lat, demo, stress) => {
   if (demo && demo == "true") {
     var LocationUser = LocationUserModels.DemoLocationUser;
   } else if (stress && stress == "true") {
-    var LocationUser = LocationUserModels.StressLocationUserModel;
+    var LocationUser = LocationUserModels.StressLocationUser;
   } else {
     var LocationUser = LocationUserModels.LocationUser;
   }
@@ -331,11 +331,11 @@ const findAllNearbySymptomaticUsers = async (long, lat, demo, stress) => {
 };
 
 const findGridNearbySymptomaticUsers = async (boundaries, demo, stress) => {
-  // await updateDb(demo);
+  // await updateDb(demo, stress);
   if (demo && demo == "true") {
     var LocationGrid = LocationGridModels.DemoLocationGrid;
   } else if (stress && stress == "true") {
-    var LocationGrid = LocationUserModels.StressLocationUserModel;
+    var LocationGrid = LocationGridModels.StressLocationGrid;
   } else {
     var LocationGrid = LocationGridModels.LocationGrid;
   }
