@@ -243,8 +243,6 @@ exports.get_all_locations_with_symptoms = async (req, res) => {
   let bottom_left_end = req.body.bottom_left_bound;
   let bottom_right_end = req.body.bottom_right_bound;
   let distance_check = geolib.getDistance(
-    { latitude: top_left_end[1], longitude: top_left_end[0] },
-    { latitude: top_right_end[1], longitude: top_right_end[0] }
     {
       latitude: top_left_end[1],
       longitude: top_left_end[0],
