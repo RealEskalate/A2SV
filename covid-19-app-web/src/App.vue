@@ -13,12 +13,13 @@
 </template>
 
 <script>
-import AppBar from "./components/core/AppBar.vue";
-import AppFooter from "./components/core/AppFooter.vue";
-import Tour from "./components/core/Tour.vue";
-import store from "@/store/";
+  import AppBar from "./components/core/AppBar.vue";
+  import AppFooter from "./components/core/AppFooter.vue";
+  import Tour from "./components/core/Tour.vue";
+  import router from "./router";
+  import store from "@/store/";
 
-export default {
+  export default {
   name: "App",
   components: { AppBar, AppFooter, Tour },
   mounted() {
@@ -54,6 +55,9 @@ export default {
   },
   watch: {
     "$i18n.locale": newValue => {
+      router.replace({params: {lang: newValue}}).catch(() => {
+      });
+
       store.dispatch("setLanguagePreference", { lang: newValue });
 
       store.dispatch("setGraphDescriptions", { lang: newValue });
