@@ -102,6 +102,7 @@ html {
 
 .v-card--shaped,
 .v-snack__wrapper,
+.v-menu__content,
 .v-alert,
 .v-dialog--active {
   border-radius: 20px 3px 20px 3px !important;

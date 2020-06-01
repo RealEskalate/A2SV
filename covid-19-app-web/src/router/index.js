@@ -9,6 +9,7 @@ const Information = () => import("@/views/Information/Information.vue");
 const About = () => import("@/views/About/About.vue");
 const News = () => import("@/views/News/News.vue");
 const HeatMap = () => import("@/views/HeatMap/HeatMap.vue");
+const Profile = () => import("@/views/Profile/Profile.vue");
 const References = () => import("@/views/References/References.vue");
 const PrivacyPolicy = () => import("@/views/PrivacyPolicy/PrivacyPolicy.vue");
 const Login = () => import("@/views/Auth/Login.vue");
@@ -53,6 +54,7 @@ const routes = [
         component: PrivacyPolicy
       },
       { path: "references", name: "References", component: References },
+      { path: "profile", name: "Profile", component: Profile },
       { path: "register", name: "Register", component: Register },
       { path: "login", name: "Login", component: Login },
       { path: "about", name: "About", component: About },

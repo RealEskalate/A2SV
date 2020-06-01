@@ -57,6 +57,25 @@
           </template>
         </v-select>
       </div>
+      <v-divider class="mr-2" vertical light />
+      <v-menu offset-y>
+        <template v-slot:activator="{ on }">
+          <v-btn fab text small color="primary" v-on="on">
+            <v-icon small v-text="mdiDotsVertical" />
+          </v-btn>
+        </template>
+        <v-list class="py-0">
+          <template v-for="(item, index) in more_links">
+            <v-divider v-if="index !== 0" :key="index" />
+            <v-list-item link :key="index" :to="item.to" active-class="white--text primary">
+              <v-icon small class="mr-2" v-text="item.icon" />
+              <v-list-item-content>
+                <small v-text="$t(item.text)" />
+              </v-list-item-content>
+            </v-list-item>
+          </template>
+        </v-list>
+      </v-menu>
     </v-app-bar>
     <v-bottom-navigation
       v-if="$vuetify.breakpoint.smAndDown"
@@ -83,7 +102,8 @@ import {
   mdiHome,
   mdiInformation,
   mdiMap,
-  mdiNewspaper
+  mdiNewspaper,
+  mdiAccountEdit
 } from "@mdi/js";
 
 export default {
@@ -101,11 +121,18 @@ export default {
         am: "አማ"
       },
       links: [
-        { text: "navbar.home", icon: mdiHome, to: "/" },
-        { text: "navbar.learn", icon: mdiBookOpenVariant, to: "information" },
+        { text: "navbar.home", icon: mdiHome, to: "" },
+        {
+          text: "navbar.learn",
+          icon: mdiBookOpenVariant,
+          to: "information"
+        },
         { text: "navbar.about", icon: mdiInformation, to: "about" },
         { text: "navbar.news", icon: mdiNewspaper, to: "news" },
         { text: "navbar.map", icon: mdiMap, to: "map" }
+      ],
+      more_links: [
+        { text: "navbar.profile", icon: mdiAccountEdit, to: "profile" }
       ]
     };
   },
@@ -164,5 +191,10 @@ export default {
   -webkit-transform: scale(1.3) !important;
   -moz-transform: scale(1.3) !important;
   -o-transform: scale(1.3) !important;
+}
+
+.v-select-list {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
 }
 </style>
