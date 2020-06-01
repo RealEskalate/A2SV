@@ -33,7 +33,7 @@ const routes = [
     },
     beforeEnter(to, from, next) {
       console.log(to);
-      console.log(to.params)
+      console.log(to.params);
       let lang = to.params.lang;
       if (languages.includes(lang)) {
         if (store.getters.getLanguagePreference !== lang) {
