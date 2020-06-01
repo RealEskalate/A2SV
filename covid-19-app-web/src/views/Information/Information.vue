@@ -127,13 +127,13 @@
 </template>
 
 <script>
-  import States from "./States.vue";
-  import Actions from "./Actions";
-  import LearningPaths from "./LearningPaths.vue";
-  import {Carousel3d, Slide} from "vue-carousel-3d";
-  import store from "@/store";
+import States from "./States.vue";
+import Actions from "./Actions";
+import LearningPaths from "./LearningPaths.vue";
+import { Carousel3d, Slide } from "vue-carousel-3d";
+import store from "@/store";
 
-  export default {
+export default {
   name: "Information",
   components: {
     Actions,
