@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, TouchableWithoutFeedback, ScrollView } from 'react-native';
+import React from "react";
+import { View, TouchableWithoutFeedback, ScrollView } from "react-native";
 import {
   Button,
   CheckBox,
@@ -15,44 +15,45 @@ import {
   Card,
   Spinner,
   Layout,
-} from '@ui-kitten/components';
-import { ImageOverlay } from '../../components/ImageOverlay/image-overlay.component';
-import { BackIcon, GoogleIcon, FacebookIcon, TwitterIcon } from './extra/icons';
-import themedStyles from './extra/themedStyles.js';
-import { KeyboardAvoidingView } from '../../components/3rd-party';
-import userIDStore from '../../data-management/user-id-data/userIDStore';
-import * as actions from '../../data-management/user-id-data/userIDActions';
-import AsyncStorage from '@react-native-community/async-storage';
+} from "@ui-kitten/components";
+import { ImageOverlay } from "../../components/ImageOverlay/image-overlay.component";
+import { BackIcon, GoogleIcon, FacebookIcon, TwitterIcon } from "./extra/icons";
+import themedStyles from "./extra/themedStyles.js";
+import { KeyboardAvoidingView } from "../../components/3rd-party";
+import userIDStore from "../../data-management/user-id-data/userIDStore";
+import * as actions from "../../data-management/user-id-data/userIDActions";
+import { strings } from "../../localization/localization";
+import AsyncStorage from "@react-native-community/async-storage";
 
 const data = [
-  '0-10',
-  '11-20',
-  '21-30',
-  '31-40',
-  '41-50',
-  '51-60',
-  '61-70',
-  '71-80',
-  '81-90',
-  '>90',
+  "0-10",
+  "11-20",
+  "21-30",
+  "31-40",
+  "41-50",
+  "51-60",
+  "61-70",
+  "71-80",
+  "81-90",
+  ">90",
 ];
 
-const genderData = ['MALE', 'FEMALE'];
+const genderData = [strings.Male, strings.Female];
 
 export default ({ navigation }) => {
-  const [username, setUsername] = React.useState('');
-  const [password, setPassword] = React.useState('');
-  const [confirmPassword, setConfirmPassword] = React.useState('');
-  const [usernameCap, setUsernameCap] = React.useState('');
-  const [passwordCap, setPasswordCap] = React.useState('');
-  const [confirmPasswordCap, setConfirmPasswordCap] = React.useState('');
+  const [username, setUsername] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [confirmPassword, setConfirmPassword] = React.useState("");
+  const [usernameCap, setUsernameCap] = React.useState("");
+  const [passwordCap, setPasswordCap] = React.useState("");
+  const [confirmPasswordCap, setConfirmPasswordCap] = React.useState("");
   const [termsAccepted, setTermsAccepted] = React.useState(false);
-  const [usernameStatus, setUsernameStatus] = React.useState('basic');
-  const [passwordStatus, setPasswordStatus] = React.useState('basic');
-  const [modalMessage, setModalMessage] = React.useState('');
+  const [usernameStatus, setUsernameStatus] = React.useState("basic");
+  const [passwordStatus, setPasswordStatus] = React.useState("basic");
+  const [modalMessage, setModalMessage] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(false);
   const [confirmPasswordStatus, setConfirmPasswordStatus] = React.useState(
-    'basic'
+    "basic"
   );
   const [modalState, setModalState] = React.useState(false);
   const [selectedAgeIndex, setSelectedAgeIndex] = React.useState(
@@ -62,34 +63,34 @@ export default ({ navigation }) => {
     new IndexPath(0)
   );
   const [passwordVisible, setPasswordVisible] = React.useState(false);
-  const [termStat, setTermStat] = React.useState('basic');
+  const [termStat, setTermStat] = React.useState("basic");
 
   const styles = useStyleSheet(themedStyles);
 
   const onSignUpButtonPress = () => {
-    if (username === '') {
-      setModalMessage('Please enter your username!');
+    if (username === "") {
+      setModalMessage("Please enter your username!");
       setModalState(true);
-      setUsernameStatus('danger');
+      setUsernameStatus("danger");
       return;
     }
 
-    if (password === '') {
-      setModalMessage('Please enter your password!');
+    if (password === "") {
+      setModalMessage("Please enter your password!");
       setModalState(true);
-      setPasswordStatus('danger');
+      setPasswordStatus("danger");
       return;
     }
 
     if (confirmPassword !== password) {
       setModalMessage("Password Don't match !");
       setModalState(true);
-      setConfirmPasswordStatus('danger');
+      setConfirmPasswordStatus("danger");
       return;
     }
 
     if (!termsAccepted) {
-      setTermStat('danger');
+      setTermStat("danger");
       return;
     }
 
@@ -99,12 +100,12 @@ export default ({ navigation }) => {
 
   const signUpRequest = async () => {
     const response = await fetch(
-      'https://sym-track.herokuapp.com/api/auth/register',
+      "https://sym-track.herokuapp.com/api/auth/register",
       {
-        method: 'POST',
+        method: "POST",
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
+          Accept: "application/json",
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           username: username,
@@ -116,14 +117,14 @@ export default ({ navigation }) => {
     );
 
     if (response.status === 404) {
-      setModalMessage('');
+      setModalMessage("");
       setModalState(true);
       setIsLoading(false);
       return;
     }
 
     if (response.status === 500) {
-      setModalMessage('Username already exists!');
+      setModalMessage("Username already exists!");
       setModalState(true);
       setIsLoading(false);
       return;
@@ -136,12 +137,12 @@ export default ({ navigation }) => {
 
   const saveUser = async (userID, userName, token, age_group, gender) => {
     try {
-      await AsyncStorage.setItem('userID', userID); //save user id on async storage
-      await AsyncStorage.setItem('userName', userName); //save user name on async storage
-      await AsyncStorage.setItem('token', token); //save token on async storage
-      await AsyncStorage.setItem('age_group', age_group); //save age group on async storage
-      await AsyncStorage.setItem('gender', gender); //save gender on async storage
-      await AsyncStorage.setItem('theme', 'light');
+      await AsyncStorage.setItem("userID", userID); //save user id on async storage
+      await AsyncStorage.setItem("userName", userName); //save user name on async storage
+      await AsyncStorage.setItem("token", token); //save token on async storage
+      await AsyncStorage.setItem("age_group", age_group); //save age group on async storage
+      await AsyncStorage.setItem("gender", gender); //save gender on async storage
+      await AsyncStorage.setItem("theme", "light");
     } catch (error) {
       // console.log(error);
     }
@@ -149,12 +150,12 @@ export default ({ navigation }) => {
 
   const login = async () => {
     const response = await fetch(
-      'https://sym-track.herokuapp.com/api/auth/login',
+      "https://sym-track.herokuapp.com/api/auth/login",
       {
-        method: 'POST',
+        method: "POST",
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
+          Accept: "application/json",
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           username: username,
@@ -184,7 +185,7 @@ export default ({ navigation }) => {
   };
 
   const onSignInButtonPress = () => {
-    navigation && navigation.navigate('LoginScreen');
+    navigation && navigation.navigate("LoginScreen");
   };
 
   const displayAgeValue = data[selectedAgeIndex.row];
@@ -199,7 +200,7 @@ export default ({ navigation }) => {
 
   const renderIcon = (props) => (
     <TouchableWithoutFeedback onPress={onPasswordIconPress}>
-      <Icon {...props} name={passwordVisible ? 'eye-off' : 'eye'} />
+      <Icon {...props} name={passwordVisible ? "eye-off" : "eye"} />
     </TouchableWithoutFeedback>
   );
 
@@ -208,33 +209,33 @@ export default ({ navigation }) => {
   };
 
   const onUserNameChange = (name) => {
-    if (name !== '') {
-      setUsernameStatus('basic');
-      setUsernameCap('');
+    if (name !== "") {
+      setUsernameStatus("basic");
+      setUsernameCap("");
     } else {
-      setUsernameStatus('danger');
-      setUsernameCap('Username is required');
+      setUsernameStatus("danger");
+      setUsernameCap("Username is required");
     }
     setUsername(name);
   };
 
   const onPasswordChange = (pass) => {
-    if (pass !== '') {
-      setPasswordStatus('basic');
-      setPasswordCap('');
+    if (pass !== "") {
+      setPasswordStatus("basic");
+      setPasswordCap("");
     } else {
-      setPasswordStatus('danger');
-      setPasswordCap('Password is required');
+      setPasswordStatus("danger");
+      setPasswordCap("Password is required");
     }
     setPassword(pass);
   };
 
   const onConfirmPasswordChange = (pass) => {
     if (pass === password) {
-      setConfirmPasswordStatus('basic');
-      setConfirmPasswordCap('');
+      setConfirmPasswordStatus("basic");
+      setConfirmPasswordCap("");
     } else {
-      setConfirmPasswordStatus('danger');
+      setConfirmPasswordStatus("danger");
       setConfirmPasswordCap("Password doesn't match");
     }
     setConfirmPassword(pass);
@@ -245,83 +246,90 @@ export default ({ navigation }) => {
       <Modal
         visible={modalState}
         backdropStyle={styles.backdrop}
-        onBackdropPress={() => setModalState(false)}>
+        onBackdropPress={() => setModalState(false)}
+      >
         <Card disabled={true}>
-          <Text status='danger' category='h6' style={{ marginBottom: 10 }}>
+          <Text status="danger" category="h6" style={{ marginBottom: 10 }}>
             {modalMessage}
           </Text>
           <Divider />
           <Text
             style={{
-              alignSelf: 'flex-end',
-              justifyContent: 'center',
+              alignSelf: "flex-end",
+              justifyContent: "center",
               marginTop: 5,
             }}
-            status='primary'
-            onPress={() => setModalState(false)}>
+            status="primary"
+            onPress={() => setModalState(false)}
+          >
             Dismiss
           </Text>
         </Card>
       </Modal>
       <ImageOverlay
         style={styles.headerContainer}
-        source={require('../../../assets/images/signupBackground.png')}>
+        source={require("../../../assets/images/signupBackground.png")}
+      >
         <Button
           style={styles.evaButton}
-          appearance='ghost'
-          status='control'
-          size='large'>
+          appearance="ghost"
+          status="control"
+          size="large"
+        >
           TRACK SYM
         </Button>
         <View style={styles.signUpContainer}>
           <View style={styles.backContainer}>
             <Button
               style={styles.signInButton}
-              appearance='ghost'
-              status='control'
-              size='giant'
+              appearance="ghost"
+              status="control"
+              size="giant"
               accessoryLeft={BackIcon}
-              onPress={onSignInButtonPress}></Button>
+              onPress={onSignInButtonPress}
+            ></Button>
           </View>
-          <Text style={styles.signInLabel} category='h4' status='control'>
-            SIGN UP
+          <Text style={styles.signInLabel} category="h4" status="control">
+            {strings.Password}
           </Text>
         </View>
       </ImageOverlay>
       <View style={[styles.container, styles.formContainer]}>
         <Input
-          placeholder='Username'
-          label='Username'
+          placeholder={strings.Username}
+          label={strings.Username}
           caption={usernameCap}
           status={usernameStatus}
-          autoCapitalize='words'
+          autoCapitalize="words"
           value={username}
           onChangeText={(name) => onUserNameChange(name)}
         />
         <Select
           style={styles.select}
-          label='Age Group'
+          label={strings.AgeGroup}
           style={styles.formInput}
-          placeholder='Default'
+          placeholder="Default"
           value={displayAgeValue}
           selectedIndex={selectedAgeIndex}
-          onSelect={(index) => setSelectedAgeIndex(index)}>
+          onSelect={(index) => setSelectedAgeIndex(index)}
+        >
           {data.map((index, title) => renderOption(index, title))}
         </Select>
         <Select
           style={styles.select}
-          label='Gender'
+          label={strings.Gender}
           style={styles.formInput}
-          placeholder='Default'
+          placeholder="Default"
           value={displayGenderValue}
           selectedIndex={selectedGenderIndex}
-          onSelect={(index) => setSelectedGenderIndex(index)}>
+          onSelect={(index) => setSelectedGenderIndex(index)}
+        >
           {genderData.map((index, title) => renderGenderOption(index, title))}
         </Select>
         <Input
           style={styles.formInput}
-          label='Password'
-          placeholder='Password'
+          label={strings.Password}
+          placeholder={strings.Password}
           caption={passwordCap}
           status={passwordStatus}
           secureTextEntry={!passwordVisible}
@@ -332,8 +340,8 @@ export default ({ navigation }) => {
         <Input
           style={styles.formInput}
           caption={confirmPasswordCap}
-          placeholder='Confirm Password'
-          label='Confirm Password'
+          placeholder={strings.ConfirmPassword}
+          label={strings.ConfirmPassword}
           status={confirmPasswordStatus}
           value={confirmPassword}
           secureTextEntry={true}
@@ -346,31 +354,34 @@ export default ({ navigation }) => {
           status={termStat}
           onChange={(checked) => {
             setTermsAccepted(checked);
-            setTermStat('basic');
-          }}>
-          <Text appearance='hint' category='c1' status={termStat}>
+            setTermStat("basic");
+          }}
+        >
+          <Text appearance="hint" category="c1" status={termStat}>
             {
-              'By creating an account, I agree to the Track Sym Terms of\nUse and Privacy Policy'
+              "By creating an account, I agree to the Track Sym Terms of\nUse and Privacy Policy"
             }
           </Text>
         </CheckBox>
       </View>
       <Button
         style={styles.signUpButton}
-        size='large'
+        size="large"
         disabled={isLoading}
         accessoryLeft={() => (isLoading ? <Spinner /> : <></>)}
-        onPress={onSignUpButtonPress}>
-        SIGN UP
+        onPress={onSignUpButtonPress}
+      >
+        {strings.SignUp}
       </Button>
       <Button
         style={styles.termsButton}
-        appearance='ghost'
-        status='basic'
+        appearance="ghost"
+        status="basic"
         onPress={() => {
-          navigation.navigate('TermsAndPrivacyScreen');
-        }}>
-        Terms & Privacy
+          navigation.navigate("TermsAndPrivacyScreen");
+        }}
+      >
+        {strings.TermsAndPrivacy}
       </Button>
       {/* <View style={styles.orContainer}>
         <Divider style={styles.divider} />

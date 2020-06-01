@@ -107,6 +107,21 @@
 		93385BFA22E741AA9E2C7683 /* SpaceMono-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 340F22EDB3E341819EA523D0 /* SpaceMono-Regular.ttf */; };
 		7DA87AB1069A446CBA61458C /* signinBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = D48EDF399F57452DA1DCBF7B /* signinBackground.png */; };
 		EADF9AE9493D494A91726E2D /* v1.png in Resources */ = {isa = PBXBuildFile; fileRef = 7DA239928D31471291EDF724 /* v1.png */; };
+		E1B8EC2A589E4EB3A1479D0E /* angel.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9C0CC66BEFEE4B0AB4C25172 /* angel.jpg */; };
+		DCDD604589BF4C60A011E0A1 /* app_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2750F44DA74F4546907DEAF2 /* app_icon.png */; };
+		D866E538D8DF4F8E92DEC417 /* chart.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 02CFB7835E9C4C3BBD5A15B1 /* chart.jpg */; };
+		17926107F3DA4E7091D7A0B9 /* conjunctivitis.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 167D1385614A4B5DB505A0BB /* conjunctivitis.jpg */; };
+		A3146E349F604FF78C130F29 /* dead.png in Resources */ = {isa = PBXBuildFile; fileRef = 18F62B4DF985465FA9A3D4E4 /* dead.png */; };
+		2759F53CB8D64F4DBAC2B8F7 /* female.png in Resources */ = {isa = PBXBuildFile; fileRef = 263961EE8BC24ED38EE55BA4 /* female.png */; };
+		16408F5F7B034636880D7924 /* file.png in Resources */ = {isa = PBXBuildFile; fileRef = 79358C2CAE934B16AD7065C9 /* file.png */; };
+		E4F961CADBE34390BFC93D84 /* infections.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF248984283439196CDFB9C /* infections.png */; };
+		267111E05B004639ACF329B7 /* location_dark.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5D938C2E2DBC485DADB8B6E1 /* location_dark.jpg */; };
+		85CDE094B9FA422BB0ED8AD5 /* male.png in Resources */ = {isa = PBXBuildFile; fileRef = 7A57A2CB2FC245BBB4734E3B /* male.png */; };
+		E90499D76F8D44F1BFB8692E /* recovered.png in Resources */ = {isa = PBXBuildFile; fileRef = 1504C2AF0B04417A886F3EFC /* recovered.png */; };
+		7A79B63510FB4D0B94EAEE9E /* sick.png in Resources */ = {isa = PBXBuildFile; fileRef = 8D9C958AECCB47548F942A19 /* sick.png */; };
+		477996BC87084082A201A773 /* team.png in Resources */ = {isa = PBXBuildFile; fileRef = 4112D6D7F5D4467C909EE88D /* team.png */; };
+		28BF110A2B9049DAB66EC2FA /* track.png in Resources */ = {isa = PBXBuildFile; fileRef = 7631FFDCA0B74831B33EEAC7 /* track.png */; };
+		8171B018AB524FCEBAF0BAE0 /* undisclosed.png in Resources */ = {isa = PBXBuildFile; fileRef = 833F358FF67D4053878AB722 /* undisclosed.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -233,6 +248,21 @@
 		340F22EDB3E341819EA523D0 /* SpaceMono-Regular.ttf */ = {isa = PBXFileReference; name = "SpaceMono-Regular.ttf"; path = "../assets/fonts/SpaceMono-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		D48EDF399F57452DA1DCBF7B /* signinBackground.png */ = {isa = PBXFileReference; name = "signinBackground.png"; path = "../assets/images/signinBackground.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		7DA239928D31471291EDF724 /* v1.png */ = {isa = PBXFileReference; name = "v1.png"; path = "../assets/images/v1.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		9C0CC66BEFEE4B0AB4C25172 /* angel.jpg */ = {isa = PBXFileReference; name = "angel.jpg"; path = "../assets/images/angel.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		2750F44DA74F4546907DEAF2 /* app_icon.png */ = {isa = PBXFileReference; name = "app_icon.png"; path = "../assets/images/app_icon.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		02CFB7835E9C4C3BBD5A15B1 /* chart.jpg */ = {isa = PBXFileReference; name = "chart.jpg"; path = "../assets/images/chart.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		167D1385614A4B5DB505A0BB /* conjunctivitis.jpg */ = {isa = PBXFileReference; name = "conjunctivitis.jpg"; path = "../assets/images/conjunctivitis.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		18F62B4DF985465FA9A3D4E4 /* dead.png */ = {isa = PBXFileReference; name = "dead.png"; path = "../assets/images/dead.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		263961EE8BC24ED38EE55BA4 /* female.png */ = {isa = PBXFileReference; name = "female.png"; path = "../assets/images/female.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		79358C2CAE934B16AD7065C9 /* file.png */ = {isa = PBXFileReference; name = "file.png"; path = "../assets/images/file.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		CAF248984283439196CDFB9C /* infections.png */ = {isa = PBXFileReference; name = "infections.png"; path = "../assets/images/infections.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		5D938C2E2DBC485DADB8B6E1 /* location_dark.jpg */ = {isa = PBXFileReference; name = "location_dark.jpg"; path = "../assets/images/location_dark.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		7A57A2CB2FC245BBB4734E3B /* male.png */ = {isa = PBXFileReference; name = "male.png"; path = "../assets/images/male.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		1504C2AF0B04417A886F3EFC /* recovered.png */ = {isa = PBXFileReference; name = "recovered.png"; path = "../assets/images/recovered.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		8D9C958AECCB47548F942A19 /* sick.png */ = {isa = PBXFileReference; name = "sick.png"; path = "../assets/images/sick.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		4112D6D7F5D4467C909EE88D /* team.png */ = {isa = PBXFileReference; name = "team.png"; path = "../assets/images/team.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		7631FFDCA0B74831B33EEAC7 /* track.png */ = {isa = PBXFileReference; name = "track.png"; path = "../assets/images/track.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		833F358FF67D4053878AB722 /* undisclosed.png */ = {isa = PBXFileReference; name = "undisclosed.png"; path = "../assets/images/undisclosed.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -434,6 +464,21 @@
 				340F22EDB3E341819EA523D0 /* SpaceMono-Regular.ttf */,
 				D48EDF399F57452DA1DCBF7B /* signinBackground.png */,
 				7DA239928D31471291EDF724 /* v1.png */,
+				9C0CC66BEFEE4B0AB4C25172 /* angel.jpg */,
+				2750F44DA74F4546907DEAF2 /* app_icon.png */,
+				02CFB7835E9C4C3BBD5A15B1 /* chart.jpg */,
+				167D1385614A4B5DB505A0BB /* conjunctivitis.jpg */,
+				18F62B4DF985465FA9A3D4E4 /* dead.png */,
+				263961EE8BC24ED38EE55BA4 /* female.png */,
+				79358C2CAE934B16AD7065C9 /* file.png */,
+				CAF248984283439196CDFB9C /* infections.png */,
+				5D938C2E2DBC485DADB8B6E1 /* location_dark.jpg */,
+				7A57A2CB2FC245BBB4734E3B /* male.png */,
+				1504C2AF0B04417A886F3EFC /* recovered.png */,
+				8D9C958AECCB47548F942A19 /* sick.png */,
+				4112D6D7F5D4467C909EE88D /* team.png */,
+				7631FFDCA0B74831B33EEAC7 /* track.png */,
+				833F358FF67D4053878AB722 /* undisclosed.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -668,6 +713,21 @@
 				93385BFA22E741AA9E2C7683 /* SpaceMono-Regular.ttf in Resources */,
 				7DA87AB1069A446CBA61458C /* signinBackground.png in Resources */,
 				EADF9AE9493D494A91726E2D /* v1.png in Resources */,
+				E1B8EC2A589E4EB3A1479D0E /* angel.jpg in Resources */,
+				DCDD604589BF4C60A011E0A1 /* app_icon.png in Resources */,
+				D866E538D8DF4F8E92DEC417 /* chart.jpg in Resources */,
+				17926107F3DA4E7091D7A0B9 /* conjunctivitis.jpg in Resources */,
+				A3146E349F604FF78C130F29 /* dead.png in Resources */,
+				2759F53CB8D64F4DBAC2B8F7 /* female.png in Resources */,
+				16408F5F7B034636880D7924 /* file.png in Resources */,
+				E4F961CADBE34390BFC93D84 /* infections.png in Resources */,
+				267111E05B004639ACF329B7 /* location_dark.jpg in Resources */,
+				85CDE094B9FA422BB0ED8AD5 /* male.png in Resources */,
+				E90499D76F8D44F1BFB8692E /* recovered.png in Resources */,
+				7A79B63510FB4D0B94EAEE9E /* sick.png in Resources */,
+				477996BC87084082A201A773 /* team.png in Resources */,
+				28BF110A2B9049DAB66EC2FA /* track.png in Resources */,
+				8171B018AB524FCEBAF0BAE0 /* undisclosed.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

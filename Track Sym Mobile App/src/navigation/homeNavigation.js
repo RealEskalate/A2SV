@@ -26,7 +26,7 @@ import DataAnalyticsMap from "../pages/public-data-page/DataAnalyticsMap.js";
 import SymDetailScreen from "../pages/info-detail/symptoms.js";
 import SpdDetailScreen from "../pages/info-detail/spread.js";
 import MsgDetailScreen from "../pages/info-detail/message.js";
-
+import { strings } from "../localization/localization.js";
 const BottomTab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
@@ -88,7 +88,12 @@ const HomeTabsNavigator = ({ navigation }) => {
     navigation.openDrawer();
   };
 
-  const names = ["Information", "Data", "Map", "My Symptoms"];
+  const names = [
+    strings.Information,
+    strings.Data,
+    strings.Map,
+    strings.Symptoms,
+  ];
   const [i, setI] = React.useState(0);
 
   const OpenDrawerAction = () => (
@@ -120,10 +125,10 @@ const HomeTabsNavigator = ({ navigation }) => {
           navigation.navigate(state.routeNames[index]);
         }}
       >
-        <BottomNavigationTab title="Information" icon={InfoIcon} />
-        <BottomNavigationTab title="Data" icon={DataIcon} />
-        <BottomNavigationTab title="Map" icon={MapIcon} />
-        <BottomNavigationTab title="Symptoms" icon={PersonIcon} />
+        <BottomNavigationTab title={strings.Information} icon={InfoIcon} />
+        <BottomNavigationTab title={strings.Data} icon={DataIcon} />
+        <BottomNavigationTab title={strings.Map} icon={MapIcon} />
+        <BottomNavigationTab title={strings.Symptoms} icon={PersonIcon} />
       </BottomNavigation>
     </SafeAreaView>
   );
@@ -150,10 +155,13 @@ const HomeTabsNavigator = ({ navigation }) => {
         backBehavior="initialRoute"
         tabBar={(props) => <HomeBottomNavigation {...props} />}
       >
-        <BottomTab.Screen name="Information" component={InformationScreen} />
-        <BottomTab.Screen name="Data" component={DataAnalytics} />
-        <BottomTab.Screen name="Map" component={MapScreen} />
-        <BottomTab.Screen name="Symptoms" component={UserSymptomPage} />
+        <BottomTab.Screen
+          name={strings.Information}
+          component={InformationScreen}
+        />
+        <BottomTab.Screen name={strings.Data} component={DataAnalytics} />
+        <BottomTab.Screen name={strings.Map} component={MapScreen} />
+        <BottomTab.Screen name={strings.Symptoms} component={UserSymptomPage} />
       </BottomTab.Navigator>
     </SafeAreaView>
   );

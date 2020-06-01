@@ -3,16 +3,16 @@
     <v-row class="mx-md-5" dense>
       <v-col class="px-2" cols="12" md="6" data-v-step="2">
         <v-autocomplete
-                class="v-card--shaped"
-                v-model="country"
-                :items="countries"
-                :label="$t('country')"
-                hint="Search Country"
-                item-text="name"
-                outlined
-                dense
-                return-object
-                @input="fetchData"
+          class="v-card--shaped"
+          v-model="country"
+          :items="countries"
+          :label="$t('country')"
+          hint="Search Country"
+          item-text="name"
+          outlined
+          dense
+          return-object
+          @input="fetchData"
         />
       </v-col>
       <v-col class="px-2" cols="12" md="6">
@@ -24,16 +24,16 @@
         >
           <template v-slot:activator="{ on }">
             <v-text-field
-                    class="v-card--shaped"
-                    color="primary"
-                    outlined
-                    dense
-                    v-model="dateRangeText"
-                    :label="$t('dateRange')"
-                    hint="Date Range"
-                    :prepend-inner-icon="mdiCalendar"
-                    readonly
-                    v-on="on"
+              class="v-card--shaped"
+              color="primary"
+              outlined
+              dense
+              v-model="dateRangeText"
+              :label="$t('dateRange')"
+              hint="Date Range"
+              :prepend-inner-icon="mdiCalendar"
+              readonly
+              v-on="on"
             />
           </template>
           <v-date-picker
@@ -93,13 +93,13 @@
   </v-container>
 </template>
 <script>
-  import {ChartMixin, LineChart} from "./charts.js";
-  import CountryResources from "../CountryResources";
-  import Loader from "@/components/core/Loader.vue";
-  import store from "@/store";
-  import {mdiCalendar} from "@mdi/js";
+import { ChartMixin, LineChart } from "./charts.js";
+import CountryResources from "../CountryResources";
+import Loader from "@/components/core/Loader.vue";
+import store from "@/store";
+import { mdiCalendar } from "@mdi/js";
 
-  export default {
+export default {
   components: { LineChart, Loader, CountryResources },
   mixins: [ChartMixin],
   props: {
