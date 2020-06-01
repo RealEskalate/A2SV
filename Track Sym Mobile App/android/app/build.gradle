@@ -206,6 +206,7 @@ dependencies {
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
 
     implementation project(':@react-native-mapbox-gl_maps')
+    implementation project(':react-native-localization')
 
     implementation 'com.android.support:multidex:1.0.3'
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Linking,
   Platform,
@@ -6,7 +6,7 @@ import {
   Image,
   TouchableOpacity,
   SafeAreaView,
-} from 'react-native';
+} from "react-native";
 import {
   Layout,
   Input,
@@ -18,16 +18,17 @@ import {
   TopNavigation,
   TopNavigationAction,
   Button,
-} from '@ui-kitten/components';
-import userIDStore from '../../data-management/user-id-data/userIDStore';
+} from "@ui-kitten/components";
+import userIDStore from "../../data-management/user-id-data/userIDStore";
+import { strings } from "../../localization/localization";
 
-const SearchIcon = (props) => <Icon {...props} name='search-outline' />;
+const SearchIcon = (props) => <Icon {...props} name="search-outline" />;
 
 const NewsScreen = (props) => {
   const [state, setState] = React.useState({
     data: [],
     isLoading: true,
-    searchTag: '',
+    searchTag: "",
     searching: false,
     refreshing: false,
   });
@@ -37,13 +38,13 @@ const NewsScreen = (props) => {
   }, []);
 
   const fetchNews = () => {
-    if (state.searchTag === '') {
-      fetch('https://sym-track.herokuapp.com/api/news/', {
-        method: 'GET',
+    if (state.searchTag === "") {
+      fetch("https://sym-track.herokuapp.com/api/news/", {
+        method: "GET",
         headers: {
-          Authorization: 'Bearer ' + userIDStore.getState().userToken,
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
+          Authorization: "Bearer " + userIDStore.getState().userToken,
+          Accept: "application/json",
+          "Content-Type": "application/json",
         },
       })
         .then((response) => response.json())
@@ -60,12 +61,12 @@ const NewsScreen = (props) => {
         });
     } else {
       fetch(
-        'https://sym-track.herokuapp.com/api/news?country=' + state.searchTag,
+        "https://sym-track.herokuapp.com/api/news?country=" + state.searchTag,
         {
-          method: 'GET',
+          method: "GET",
           headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
+            Accept: "application/json",
+            "Content-Type": "application/json",
           },
         }
       )
@@ -82,20 +83,20 @@ const NewsScreen = (props) => {
         .catch((error) => {
           alert(
             "Couldn't connect",
-            'Unable to connect to server, please try again!'
+            "Unable to connect to server, please try again!"
           );
         });
     }
   };
 
   const getMyTitle = (title) => {
-    var array = title.split('-');
-    var _title = '';
+    var array = title.split("-");
+    var _title = "";
 
     for (let index = 0; index < array.length - 1; index++) {
       _title += array[index];
       if (index != array.length - 2) {
-        _title += '-';
+        _title += "-";
       }
     }
 
@@ -111,13 +112,13 @@ const NewsScreen = (props) => {
     var mins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
 
     if (days > 0) {
-      return days + ' days ago';
+      return days + " days ago";
     }
     if (hrs == 0) {
-      return mins + ' min ago';
+      return mins + " min ago";
     }
 
-    return hrs + ' hr : ' + mins + ' min ago';
+    return hrs + " hr : " + mins + " min ago";
   };
 
   const onSearchChange = (searchTag) => {
@@ -130,7 +131,7 @@ const NewsScreen = (props) => {
   const searchNews = () => {
     setState({
       ...state,
-      searching: state.searchTag !== '',
+      searching: state.searchTag !== "",
     });
     fetchNews();
   };
@@ -142,13 +143,13 @@ const NewsScreen = (props) => {
 
   const goToNews = (reference_link) => {
     if (Platform.Version > 22) {
-      props.navigation.navigate('NewsView', { uri: reference_link });
+      props.navigation.navigate("NewsView", { uri: reference_link });
     } else {
       Linking.openURL(reference_link);
     }
   };
 
-  const ArrowIosBackIcon = (style) => <Icon {...style} name='arrow-ios-back' />;
+  const ArrowIosBackIcon = (style) => <Icon {...style} name="arrow-ios-back" />;
 
   const renderBackAction = () => (
     <TopNavigationAction
@@ -160,25 +161,26 @@ const NewsScreen = (props) => {
   return (
     <SafeAreaView style={styles.container}>
       <TopNavigation
-        alignment='center'
-        title='Top News'
+        alignment="center"
+        title={strings.News}
         accessoryLeft={renderBackAction}
       />
       <Divider />
       {state.isLoading ? (
         <Layout
-          style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <Spinner {...props} size='large' />
+          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+        >
+          <Spinner {...props} size="large" />
         </Layout>
       ) : (
-        <Layout style={{ flex: 1, flexDirection: 'column' }}>
+        <Layout style={{ flex: 1, flexDirection: "column" }}>
           <Input
-            placeholder='Search..'
+            placeholder={strings.Search}
             value={state.searchTag}
             accessoryLeft={SearchIcon}
-            size='large'
+            size="large"
             onSubmitEditing={() => searchNews()}
-            returnKeyType='done'
+            returnKeyType="done"
             accessoryRight={() =>
               state.searching ? <Spinner {...props} /> : <></>
             }
@@ -194,25 +196,26 @@ const NewsScreen = (props) => {
                 <Layout style={styles.newsRow}>
                   <Image
                     source={{ uri: item.logo }}
-                    resizeMethod='auto'
+                    resizeMethod="auto"
                     style={{
                       width: 50,
                       height: 50,
                       marginRight: 10,
                       borderRadius: 25,
-                      backgroundColor: '#eee',
+                      backgroundColor: "#eee",
                     }}
                   />
                   <Layout style={{ flex: 1 }}>
                     <Layout
                       style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                      }}>
-                      <Text appearance='hint' category='s2'>
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <Text appearance="hint" category="s2">
                         {item.source}
                       </Text>
-                      <Text appearance='hint' category='s2'>
+                      <Text appearance="hint" category="s2">
                         {getNewsDate(item.date)}
                       </Text>
                     </Layout>
@@ -221,13 +224,15 @@ const NewsScreen = (props) => {
                     </Layout>
                     <Layout
                       style={{
-                        flexDirection: 'row',
+                        flexDirection: "row",
                         flex: 1,
-                        justifyContent: 'flex-end',
-                      }}>
+                        justifyContent: "flex-end",
+                      }}
+                    >
                       <Button
-                        size='tiny'
-                        onPress={() => goToNews(item.reference_link)}>
+                        size="tiny"
+                        onPress={() => goToNews(item.reference_link)}
+                      >
                         GO TO NEWS
                       </Button>
                     </Layout>
@@ -248,14 +253,14 @@ export default NewsScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'space-between',
-    alignItems: 'stretch',
+    justifyContent: "space-between",
+    alignItems: "stretch",
     // marginBottom: 10,
   },
   newsRow: {
     flex: 1,
     padding: 5,
     marginHorizontal: 5,
-    flexDirection: 'row',
+    flexDirection: "row",
   },
 });
