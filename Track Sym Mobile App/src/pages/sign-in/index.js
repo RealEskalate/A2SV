@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, TouchableWithoutFeedback } from 'react-native';
+import React from "react";
+import { View, TouchableWithoutFeedback } from "react-native";
 import {
   Button,
   Input,
@@ -11,32 +11,33 @@ import {
   Card,
   Spinner,
   Divider,
-} from '@ui-kitten/components';
-import { ImageOverlay } from '../../components/ImageOverlay/image-overlay.component';
-import userIDStore from '../../data-management/user-id-data/userIDStore';
-import * as actions from '../../data-management/user-id-data/userIDActions';
-import AsyncStorage from '@react-native-community/async-storage';
-import themedStyles from './extra/themedStyles';
-import { KeyboardAvoidingView } from '../../components/3rd-party';
+} from "@ui-kitten/components";
+import { ImageOverlay } from "../../components/ImageOverlay/image-overlay.component";
+import userIDStore from "../../data-management/user-id-data/userIDStore";
+import * as actions from "../../data-management/user-id-data/userIDActions";
+import AsyncStorage from "@react-native-community/async-storage";
+import themedStyles from "./extra/themedStyles";
+import { KeyboardAvoidingView } from "../../components/3rd-party";
+import { strings } from "../../localization/localization";
 
-const PersonIcon = (style) => <Icon {...style} name='person' />;
+const PersonIcon = (style) => <Icon {...style} name="person" />;
 
 export default ({ navigation }) => {
-  const [username, setUsername] = React.useState('');
-  const [password, setPassword] = React.useState('');
-  const [usernameCap, setUsernameCap] = React.useState('');
-  const [passwordCap, setPasswordCap] = React.useState('');
+  const [username, setUsername] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [usernameCap, setUsernameCap] = React.useState("");
+  const [passwordCap, setPasswordCap] = React.useState("");
   const [passwordVisible, setPasswordVisible] = React.useState(false);
-  const [usernameStatus, setUsernameStatus] = React.useState('basic');
-  const [passwordStatus, setPasswordStatus] = React.useState('basic');
+  const [usernameStatus, setUsernameStatus] = React.useState("basic");
+  const [passwordStatus, setPasswordStatus] = React.useState("basic");
   const [modalState, setModalState] = React.useState(false);
-  const [modalMessage, setModalMessage] = React.useState('');
+  const [modalMessage, setModalMessage] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(false);
 
   const styles = useStyleSheet(themedStyles);
 
   const onSignUpButtonPress = () => {
-    navigation && navigation.navigate('SignUpScreen');
+    navigation && navigation.navigate("SignUpScreen");
   };
 
   const onPasswordIconPress = () => {
@@ -45,51 +46,51 @@ export default ({ navigation }) => {
 
   const renderIcon = (props) => (
     <TouchableWithoutFeedback onPress={onPasswordIconPress}>
-      <Icon {...props} name={passwordVisible ? 'eye-off' : 'eye'} />
+      <Icon {...props} name={passwordVisible ? "eye-off" : "eye"} />
     </TouchableWithoutFeedback>
   );
 
   const LoadingIndicator = (props) => {
     return (
       <View style={[props.style, styles.indicator]}>
-        <Spinner size='small' />
+        <Spinner size="small" />
       </View>
     );
   };
 
   const onUserNameChange = (name) => {
-    if (name !== '') {
-      setUsernameStatus('basic');
-      setUsernameCap('');
+    if (name !== "") {
+      setUsernameStatus("basic");
+      setUsernameCap("");
     } else {
-      setUsernameStatus('danger');
-      setUsernameCap('User name is required');
+      setUsernameStatus("danger");
+      setUsernameCap("User name is required");
     }
     setUsername(name);
   };
 
   const onPasswordChange = (pass) => {
-    if (pass !== '') {
-      setPasswordStatus('basic');
-      setPasswordCap('');
+    if (pass !== "") {
+      setPasswordStatus("basic");
+      setPasswordCap("");
     } else {
-      setPasswordStatus('danger');
-      setPasswordCap('Please enter your password!');
+      setPasswordStatus("danger");
+      setPasswordCap("Please enter your password!");
     }
     setPassword(pass);
   };
 
   const onSubmitForm = () => {
-    if (username === '') {
-      setUsernameStatus('danger');
-      setModalMessage('Please enter your user name!');
+    if (username === "") {
+      setUsernameStatus("danger");
+      setModalMessage("Please enter your user name!");
       setModalState(true);
       return;
     }
 
-    if (password === '') {
-      setPasswordStatus('danger');
-      setModalMessage('Password cannot be empty!');
+    if (password === "") {
+      setPasswordStatus("danger");
+      setModalMessage("Password cannot be empty!");
       setModalState(true);
       return;
     }
@@ -100,12 +101,12 @@ export default ({ navigation }) => {
 
   const saveUser = async (userID, userName, token, age_group, gender) => {
     try {
-      await AsyncStorage.setItem('userID', userID); //save user id on async storage
-      await AsyncStorage.setItem('userName', userName); //save user name on async storage
-      await AsyncStorage.setItem('token', token); //save token on async storage
-      await AsyncStorage.setItem('age_group', age_group); //save age group on async storage
-      await AsyncStorage.setItem('gender', gender); //save gender on async storage
-      await AsyncStorage.setItem('theme', 'light');
+      await AsyncStorage.setItem("userID", userID); //save user id on async storage
+      await AsyncStorage.setItem("userName", userName); //save user name on async storage
+      await AsyncStorage.setItem("token", token); //save token on async storage
+      await AsyncStorage.setItem("age_group", age_group); //save age group on async storage
+      await AsyncStorage.setItem("gender", gender); //save gender on async storage
+      await AsyncStorage.setItem("theme", "light");
     } catch (error) {
       // console.log(error);
     }
@@ -114,12 +115,12 @@ export default ({ navigation }) => {
   //Log in authentication
   const login = async () => {
     const response = await fetch(
-      'https://sym-track.herokuapp.com/api/auth/login',
+      "https://sym-track.herokuapp.com/api/auth/login",
       {
-        method: 'POST',
+        method: "POST",
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
+          Accept: "application/json",
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           username: username,
@@ -130,7 +131,7 @@ export default ({ navigation }) => {
 
     console.log(response);
     if (!response) {
-      setModalMessage('Check your internet connection and try again!');
+      setModalMessage("Check your internet connection and try again!");
       setModalState(true);
       setIsLoading(false);
       return;
@@ -138,7 +139,7 @@ export default ({ navigation }) => {
 
     if (response.status === 404) {
       setModalMessage(
-        'You have entered wrong username or password,\nPlease try again!'
+        "You have entered wrong username or password,\nPlease try again!"
       );
       setModalState(true);
       setIsLoading(false);
@@ -169,20 +170,22 @@ export default ({ navigation }) => {
       <Modal
         visible={modalState}
         backdropStyle={styles.backdrop}
-        onBackdropPress={() => setModalState(false)}>
+        onBackdropPress={() => setModalState(false)}
+      >
         <Card disabled={true}>
-          <Text status='danger' category='h6' style={{ marginBottom: 10 }}>
+          <Text status="danger" category="h6" style={{ marginBottom: 10 }}>
             {modalMessage}
           </Text>
           <Divider />
           <Text
             style={{
-              alignSelf: 'flex-end',
-              justifyContent: 'center',
+              alignSelf: "flex-end",
+              justifyContent: "center",
               marginTop: 5,
             }}
-            status='primary'
-            onPress={() => setModalState(false)}>
+            status="primary"
+            onPress={() => setModalState(false)}
+          >
             Dismiss
           </Text>
         </Card>
@@ -190,24 +193,27 @@ export default ({ navigation }) => {
 
       <ImageOverlay
         style={styles.headerContainer}
-        source={require('../../../assets/images/signinBackground.png')}>
+        source={require("../../../assets/images/signinBackground.png")}
+      >
         <Text
-          style={{ alignSelf: 'flex-start', marginLeft: 20 }}
-          category='h1'
-          status='control'>
-          WELCOME
+          style={{ alignSelf: "flex-start", marginLeft: 20 }}
+          category="h1"
+          status="control"
+        >
+          {strings.Welcome}
         </Text>
         <Text
-          style={{ alignSelf: 'flex-start', marginLeft: 20 }}
-          category='s1'
-          status='control'>
+          style={{ alignSelf: "flex-start", marginLeft: 20 }}
+          category="s1"
+          status="control"
+        >
           Sign in to your account
         </Text>
       </ImageOverlay>
 
-      <Layout style={styles.formContainer} level='1'>
+      <Layout style={styles.formContainer} level="1">
         <Input
-          placeholder='Username'
+          placeholder={strings.Username}
           status={usernameStatus}
           accessoryRight={PersonIcon}
           value={username}
@@ -217,7 +223,7 @@ export default ({ navigation }) => {
         <Input
           style={styles.passwordInput}
           status={passwordStatus}
-          placeholder='Password'
+          placeholder={strings.Password}
           caption={passwordCap}
           accessoryRight={renderIcon}
           value={password}
@@ -228,17 +234,19 @@ export default ({ navigation }) => {
       </Layout>
       <Button
         style={styles.signInButton}
-        size='large'
+        size="large"
         disabled={isLoading}
         accessoryLeft={() => (isLoading ? <LoadingIndicator /> : <></>)}
-        onPress={() => onSubmitForm()}>
-        SIGN IN
+        onPress={() => onSubmitForm()}
+      >
+        {strings.SignIn}
       </Button>
       <Button
         style={styles.signUpButton}
-        appearance='ghost'
-        status='basic'
-        onPress={onSignUpButtonPress}>
+        appearance="ghost"
+        status="basic"
+        onPress={onSignUpButtonPress}
+      >
         Don't have an account? Sign up
       </Button>
     </KeyboardAvoidingView>
