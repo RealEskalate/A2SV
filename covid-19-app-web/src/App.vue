@@ -13,10 +13,9 @@
 </template>
 
 <script>
-  import AppBar from "./components/core/AppBar.vue";
   import AppFooter from "./components/core/AppFooter.vue";
+  import AppBar from "./components/core/AppBar.vue";
   import Tour from "./components/core/Tour.vue";
-  import router from "./router";
   import store from "@/store/";
 
   export default {
@@ -55,9 +54,6 @@
   },
   watch: {
     "$i18n.locale": newValue => {
-      router.replace({params: {lang: newValue}}).catch(() => {
-      });
-
       store.dispatch("setLanguagePreference", { lang: newValue });
 
       store.dispatch("setGraphDescriptions", { lang: newValue });

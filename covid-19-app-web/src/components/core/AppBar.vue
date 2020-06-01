@@ -76,6 +76,7 @@
 
 <script>
   import store from "@/store/";
+  import router from "@/router/";
   import {mdiBookOpenVariant, mdiDotsVertical, mdiHome, mdiInformation, mdiMap, mdiNewspaper} from "@mdi/js";
 
   export default {
@@ -113,6 +114,9 @@
     },
     changeLang() {
       store.dispatch("setLanguagePreference", { lang: this.$i18n.locale });
+
+      router.replace({params: {lang: this.$i18n.locale}}).catch(() => {
+      });
     }
   },
   computed: {

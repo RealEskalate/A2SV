@@ -29,16 +29,14 @@ const routes = [
   {
     path: "/:lang",
     component: {
-      template: "<router-view></router-view>"
+      template: "<router-view />"
     },
     beforeEnter(to, from, next) {
-
-      console.log('matched')
       console.log(to);
       console.log(to.params)
       let lang = to.params.lang;
       if (languages.includes(lang)) {
-        if (store.state.getLanguagePreference !== lang) {
+        if (store.getters.getLanguagePreference !== lang) {
           store.dispatch("setLanguagePreference", {lang});
         }
         return next();
