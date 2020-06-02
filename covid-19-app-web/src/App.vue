@@ -13,12 +13,12 @@
 </template>
 
 <script>
-  import AppFooter from "./components/core/AppFooter.vue";
-  import AppBar from "./components/core/AppBar.vue";
-  import Tour from "./components/core/Tour.vue";
-  import store from "@/store/";
+import AppFooter from "./components/core/AppFooter.vue";
+import AppBar from "./components/core/AppBar.vue";
+import Tour from "./components/core/Tour.vue";
+import store from "@/store/";
 
-  export default {
+export default {
   name: "App",
   components: { AppBar, AppFooter, Tour },
   mounted() {
