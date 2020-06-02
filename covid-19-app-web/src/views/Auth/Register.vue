@@ -79,8 +79,7 @@
                 to="login"
                 class="mx-auto d-block text-center my-2 v-card--link"
         >Login
-        </router-link
-        >
+        </router-link>
       </div>
     </v-form>
   </v-card>
