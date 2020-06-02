@@ -11,6 +11,8 @@ const News = () => import("@/views/News/News.vue");
 const HeatMap = () => import("@/views/HeatMap/HeatMap.vue");
 const References = () => import("@/views/References/References.vue");
 const PrivacyPolicy = () => import("@/views/PrivacyPolicy/PrivacyPolicy.vue");
+const Login = () => import("@/views/Auth/Login.vue");
+const Register = () => import("@/views/Auth/Register.vue");
 
 Vue.use(VueRouter);
 
@@ -51,6 +53,8 @@ const routes = [
         component: PrivacyPolicy
       },
       {path: "references", name: "References", component: References},
+      {path: "register", name: "Register", component: Register},
+      {path: "login", name: "Login", component: Login},
       {path: "about", name: "About", component: About},
       {path: "news", name: "News", component: News},
       {path: "map", name: "Map", component: HeatMap},
