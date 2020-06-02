@@ -9,8 +9,8 @@ export const Rules = {
   name: [
     val => (val || "").length > 0 || "Name is required",
     val =>
-        (val.trim().split(" ").length >= 2 && val.length > 5) ||
-        "Please enter valid name"
+      (val.trim().split(" ").length >= 2 && val.length > 5) ||
+      "Please enter valid name"
   ],
   email: [
     v => !!v || "E-mail is required",

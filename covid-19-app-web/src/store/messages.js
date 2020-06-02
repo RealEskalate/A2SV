@@ -18,10 +18,10 @@ const mutations = {
 };
 
 const actions = {
-  setStateMessage: ({commit}, payload) => {
+  setStateMessage: ({ commit }, payload) => {
     commit("setStateMessage", payload);
   },
-  resetMessage: ({commit}) => {
+  resetMessage: ({ commit }) => {
     commit("resetMessage");
   }
 };
