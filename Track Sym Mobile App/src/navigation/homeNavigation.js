@@ -26,7 +26,8 @@ import DataAnalyticsMap from "../pages/public-data-page/DataAnalyticsMap.js";
 import SymDetailScreen from "../pages/info-detail/symptoms.js";
 import SpdDetailScreen from "../pages/info-detail/spread.js";
 import MsgDetailScreen from "../pages/info-detail/message.js";
-import { strings } from "../localization/localization.js";
+import { strings } from "../localization/localization";
+
 const BottomTab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
@@ -52,7 +53,7 @@ const EditSymptomScreen = (props) => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <TopNavigation
-        title="Edit Your Symptoms"
+        title={strings.EditYourSymptoms}
         alignment="center"
         accessoryLeft={renderBackAction}
       />
@@ -73,7 +74,7 @@ const DataMap = (props) => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <TopNavigation
-        title="Edit Your Simptoms"
+        title={strings.Data}
         alignment="center"
         accessoryLeft={renderBackAction}
       />
@@ -92,7 +93,7 @@ const HomeTabsNavigator = ({ navigation }) => {
     strings.Information,
     strings.Data,
     strings.Map,
-    strings.Symptoms,
+    strings.MySymptoms,
   ];
   const [i, setI] = React.useState(0);
 
@@ -155,13 +156,10 @@ const HomeTabsNavigator = ({ navigation }) => {
         backBehavior="initialRoute"
         tabBar={(props) => <HomeBottomNavigation {...props} />}
       >
-        <BottomTab.Screen
-          name={strings.Information}
-          component={InformationScreen}
-        />
-        <BottomTab.Screen name={strings.Data} component={DataAnalytics} />
-        <BottomTab.Screen name={strings.Map} component={MapScreen} />
-        <BottomTab.Screen name={strings.Symptoms} component={UserSymptomPage} />
+        <BottomTab.Screen name="Information" component={InformationScreen} />
+        <BottomTab.Screen name="Data" component={DataAnalytics} />
+        <BottomTab.Screen name="Map" component={MapScreen} />
+        <BottomTab.Screen name="Symptoms" component={UserSymptomPage} />
       </BottomTab.Navigator>
     </SafeAreaView>
   );

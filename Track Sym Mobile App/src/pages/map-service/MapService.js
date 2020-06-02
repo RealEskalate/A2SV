@@ -156,35 +156,6 @@ export default class MapService extends React.Component {
     console.log("Inside grid layer press");
     const feature = e.nativeEvent.payload;
     animating = true;
-    const cluster_data = {
-      male: 0,
-      female: 0,
-      undisclosed: 0,
-      fatigue: 0,
-      "runny nose": 0,
-      sneezing: 0,
-      headaches: 0,
-      anosmia: 0,
-      conjunctivitis: 0,
-      diarrhoea: 0,
-      myalgia: 0,
-      fever: 0,
-      "sore throat": 0,
-      "difficulty breathing": 0,
-      pneumonia: 0,
-      chills: 0,
-      cough: 0,
-      "0-10": 0,
-      "11-20": 0,
-      "21-30": 0,
-      "31-40": 0,
-      "41-50": 0,
-      "51-60": 0,
-      "61-70": 0,
-      "71-80": 0,
-      "81-90": 0,
-      ">90": 0,
-    };
     const user_id = feature.id;
     current_grid_info = grid_infos[user_id];
     this.setState({ isClusterModalVisible: true });
@@ -204,7 +175,7 @@ export default class MapService extends React.Component {
         headaches: 0,
         anosmia: 0,
         conjunctivitis: 0,
-        diarrhoea: 0,
+        diarrhea: 0,
         myalgia: 0,
         fever: 0,
         "sore throat": 0,
@@ -234,7 +205,7 @@ export default class MapService extends React.Component {
           fetch(
             "https://sym-track.herokuapp.com/api/symptomuser/user/" +
               leaf.id +
-              "?demo=true",
+              "?stress=true",
             {
               method: "GET",
               headers: {
@@ -247,12 +218,12 @@ export default class MapService extends React.Component {
             .then((res) => res.json())
             .then((data) => {
               for (let i = 0; i < data.length; i++) {
-                const symptom = data[i].Symptom.name;
+                const symptom = data[i].Symptom.name.toLowerCase();
                 const age_group = data[i].age_group;
-                const gender = data[i].gender;
+                const gender = data[i].gender.toLowerCase();
 
                 cluster_data[age_group]++;
-                cluster_data[gender.toLowerCase()]++;
+                cluster_data[gender]++;
                 if (symptom.search("fever") !== -1) {
                   cluster_data.fever++;
                 } else if (symptom.search("chills") !== -1) {
@@ -260,7 +231,7 @@ export default class MapService extends React.Component {
                 } else if (symptom.search("cough") !== -1) {
                   cluster_data.cough++;
                 } else {
-                  cluster_data[symptom.toLowerCase()]++;
+                  cluster_data[symptom]++;
                 }
               }
             })
@@ -287,7 +258,7 @@ export default class MapService extends React.Component {
           fetch(
             "https://sym-track.herokuapp.com/api/symptomuser/user/" +
               leaf.id +
-              "?demo=true",
+              "?stress=true",
             {
               method: "GET",
               headers: {
@@ -300,9 +271,9 @@ export default class MapService extends React.Component {
             .then((res) => res.json())
             .then((data) => {
               for (let i = 0; i < data.length; i++) {
-                const symptom = data[i].Symptom.name;
+                const symptom = data[i].Symptom.name.toLowerCase();
                 const age_group = data[i].age_group;
-                const gender = data[i].gender;
+                const gender = data[i].gender.toLowerCase();
 
                 if (symptom.search("fever") !== -1) {
                   cluster_data.fever++;
@@ -337,7 +308,7 @@ export default class MapService extends React.Component {
             fetch(
               "https://sym-track.herokuapp.com/api/symptomuser/user/" +
                 leaf.id +
-                "?demo=true",
+                "?stress=true",
               {
                 method: "GET",
                 headers: {
@@ -349,10 +320,11 @@ export default class MapService extends React.Component {
             )
               .then((res) => res.json())
               .then((data) => {
+                console.log(data);
                 for (let i = 0; i < data.length; i++) {
-                  const symptom = data[i].Symptom.name;
+                  const symptom = data[i].Symptom.name.toLowerCase();
                   const age_group = data[i].age_group;
-                  const gender = data[i].gender;
+                  const gender = data[i].gender.toLowerCase();
 
                   if (symptom.search("fever") !== -1) {
                     cluster_data.fever++;
@@ -366,6 +338,7 @@ export default class MapService extends React.Component {
                   cluster_data[age_group]++;
                   cluster_data[gender.toLowerCase()]++;
                 }
+                console.log(cluster_data);
               })
               .catch((err) => {
                 console.log(err);
@@ -425,7 +398,7 @@ export default class MapService extends React.Component {
       const details = fetch(
         "https://sym-track.herokuapp.com/api/symptomuser/user/" +
           user_id +
-          "?demo=true",
+          "?stress=true",
         {
           method: "GET",
           headers: {
@@ -439,7 +412,7 @@ export default class MapService extends React.Component {
         .then((data) => {
           console.log(data);
           for (let i = 0; i < data.length; i++) {
-            const symptom = data[i].Symptom.name;
+            const symptom = data[i].Symptom.name.toLowerCase();
             point_info.age_group = data[i].age_group;
             point_info.gender = data[i].gender;
 
@@ -497,6 +470,7 @@ export default class MapService extends React.Component {
     const bottom_left = await this.map.getCoordinateFromView([0, screenHeight]);
     const bottom_right = await this.map.getCoordinateFromView([
       screenWidth,
+
       screenHeight,
     ]);
 
@@ -569,23 +543,26 @@ export default class MapService extends React.Component {
     if (!this.state.isClusterModalVisible) {
       animating = true;
     }
-    fetch("https://sym-track.herokuapp.com/api/locations_symptoms?demo=true", {
-      method: "POST",
-      headers: {
-        Authorization: "Bearer " + userIDStore.getState().userToken,
-        Accept: "application/json",
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify({
-        longitude: this.state.user_longitude,
-        latitude: this.state.user_latitude,
+    fetch(
+      "https://sym-track.herokuapp.com/api/locations_symptoms?stress=true",
+      {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + userIDStore.getState().userToken,
+          Accept: "application/json",
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify({
+          longitude: this.state.user_longitude,
+          latitude: this.state.user_latitude,
 
-        top_left_bound: this.state.top_left_bound,
-        top_right_bound: this.state.top_right_bound,
-        bottom_left_bound: this.state.bottom_left_bound,
-        bottom_right_bound: this.state.bottom_right_bound,
-      }),
-    })
+          top_left_bound: this.state.top_left_bound,
+          top_right_bound: this.state.top_right_bound,
+          bottom_left_bound: this.state.bottom_left_bound,
+          bottom_right_bound: this.state.bottom_right_bound,
+        }),
+      }
+    )
       .then((res) => {
         console.log("res = ");
         console.log(res.status);
@@ -832,11 +809,17 @@ export default class MapService extends React.Component {
     };
     for (let i = 0; i < grids.length; i++) {
       const element = grids[i];
+      const total =
+        parseInt(grids[i].genders.MALE) +
+        parseInt(grids[i].genders.FEMALE) +
+        parseInt(grids[i].genders.UNDISCLOSED);
+
       const feat = {
         type: "Feature",
         id: element._id,
         properties: {
           icon: "pin3",
+          total: total,
         },
         geometry: {
           type: "Point",
@@ -948,9 +931,30 @@ export default class MapService extends React.Component {
       undisclosed_symps = parseInt(current_grid_info.genders.UNDISCLOSED);
 
       total_symptoms = male_symps + female_symps + undisclosed_symps;
+      if (
+        current_grid_info.value["Repeated Shaking with Chills"] !== undefined &&
+        current_grid_info.value["Repeated Shaking with Chills"] !== -1
+      ) {
+        const shaking_chills = parseInt(
+          current_grid_info.value["Repeated Shaking with Chills"]
+        );
+        const chills =
+          current_grid_info.value["Chills"] !== undefined
+            ? parseInt(current_grid_info.value["Chills"])
+            : 0;
+        const total_chills = shaking_chills + chills;
+        current_grid_info.value["Chills"] = total_chills;
+        console.log("-----------Total chills = " + total_chills);
+        current_grid_info.value["Repeated Shaking with Chills"] = -1;
+      }
 
       Object.keys(current_grid_info.value).forEach((key, idx) => {
-        data.push({ id: idx, name: current_grid_info.value[key] + " " + key });
+        if (key.toLowerCase() !== "repeated shaking with chills") {
+          data.push({
+            id: idx,
+            name: current_grid_info.value[key] + " " + key.toLowerCase(),
+          });
+        }
       });
 
       let i = 0;
@@ -1033,10 +1037,7 @@ export default class MapService extends React.Component {
           key.search(">") === -1
         ) {
           if (parseInt(cluster_data[key]) > 0) {
-            data.push({
-              id: idx,
-              name: cluster_data[key] + " " + key,
-            });
+            data.push({ id: idx, name: cluster_data[key] + " " + key });
           }
         }
       });
@@ -1381,6 +1382,20 @@ export default class MapService extends React.Component {
           shape={featureCollection}
           onPress={this.onGridLayerPress}
         >
+          <MapboxGL.SymbolLayer
+            id={id + " pointcount"}
+            style={{
+              textAllowOverlap: true,
+              iconAllowOverlap: true,
+              textIgnorePlacement: true,
+              textField: ["get", "total"],
+              textFont: ["Ubuntu Medium", "Arial Unicode MS Regular"],
+              textSize: 20,
+              textPitchAlignment: "map",
+              textColor: "white",
+            }}
+            aboveLayerID={id + " singleCluster"}
+          />
           <MapboxGL.CircleLayer
             id={id + " singleCluster"}
             style={singleCluster}
@@ -1530,24 +1545,27 @@ export default class MapService extends React.Component {
               pitch={45}
               centerCoordinate={this.state.location}
             />
-            {this.renderSymptomLayer(
-              "small",
-              this.state.symptomCollections.smallSymptomCollection,
-              smallStyles,
-              this.state.grid_rendering
-            )}
-            {this.renderSymptomLayer(
-              "medium",
-              this.state.symptomCollections.mediumSymptomCollection,
-              mediumStyles,
-              this.state.grid_rendering
-            )}
-            {this.renderSymptomLayer(
-              "high",
-              this.state.symptomCollections.highSymptomCollection,
-              highStyles,
-              this.state.grid_rendering
-            )}
+            {animating === false &&
+              this.renderSymptomLayer(
+                "small",
+                this.state.symptomCollections.smallSymptomCollection,
+                smallStyles,
+                this.state.grid_rendering
+              )}
+            {animating === false &&
+              this.renderSymptomLayer(
+                "medium",
+                this.state.symptomCollections.mediumSymptomCollection,
+                mediumStyles,
+                this.state.grid_rendering
+              )}
+            {animating === false &&
+              this.renderSymptomLayer(
+                "high",
+                this.state.symptomCollections.highSymptomCollection,
+                highStyles,
+                this.state.grid_rendering
+              )}
           </MapboxGL.MapView>
         </View>
         <TouchableOpacity
@@ -1567,18 +1585,21 @@ export default class MapService extends React.Component {
 }
 
 const singleCluster = {
-  circleColor: "#9C27B0",
+  circleColor: [
+    "step",
+    ["get", "total"],
+    "#FFC107",
+    300,
+    "#FF8F00",
+    900,
+    "#EF6C00",
+    1500,
+    "#9C27B0",
+  ],
   circleStrokeWidth: 5,
   circleStrokeColor: "#3E2723",
-  circleRadius: 50,
+  circleRadius: ["step", ["get", "total"], 30, 300, 40, 900, 50, 1500, 60],
   circleOpacity: 0.6,
-};
-
-const singleClusterCount = {
-  textField: "{120}",
-  textSize: 15,
-  textPitchAlignment: "map",
-  textColor: "white",
 };
 
 const styles = StyleSheet.create({

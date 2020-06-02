@@ -1,5 +1,5 @@
-import React from 'react';
-import {View, SafeAreaView, ScrollView} from 'react-native';
+import React from "react";
+import { View, SafeAreaView, ScrollView } from "react-native";
 import {
   TopNavigation,
   TopNavigationAction,
@@ -8,11 +8,12 @@ import {
   Text,
   Icon,
   List,
-} from '@ui-kitten/components';
-import {ImageOverlay} from './extra/image-overlay.component';
-import {messageData as data} from './extra/data';
-import styles from './extra/styles';
-import {InfoCard} from './extra/InfoCard';
+} from "@ui-kitten/components";
+import { ImageOverlay } from "./extra/image-overlay.component";
+import { messageData as data } from "./extra/data";
+import styles from "./extra/styles";
+import { InfoCard } from "./extra/InfoCard";
+import { strings } from "../../localization/localization";
 
 const BackIcon = (props) => <Icon name="arrow-ios-back-outline" {...props} />;
 
@@ -29,7 +30,7 @@ export default PrevDetailScreen = (props) => {
     <SafeAreaView style={styles.container}>
       <TopNavigation
         alignment="center"
-        title="MESSAGE"
+        title={strings.MessageFromUs}
         accessoryLeft={renderBackAction}
       />
       <Layout style={styles.container} level="2">
@@ -41,18 +42,19 @@ export default PrevDetailScreen = (props) => {
             <Text
               style={styles.headerDescription}
               category="s1"
-              status="control">
+              status="control"
+            >
               {data.description}
             </Text>
           </ImageOverlay>
           <Layout style={styles.contentContainer} level="1">
-            <Text>{data.content + '\n'}</Text>
+            <Text>{data.content + "\n"}</Text>
             <Text>{data.content_two}</Text>
           </Layout>
           <Divider />
           <View style={styles.authoringContainer}>
             <Text style={styles.dateLabel} appearance="hint" category="p2">
-              MAJOR CONCERN
+              {strings.MajorConcern}
             </Text>
           </View>
           <Divider />

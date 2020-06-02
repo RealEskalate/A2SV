@@ -19,6 +19,7 @@ import MapboxGL from "@react-native-mapbox-gl/maps";
 import Heat from "../../../assets/images/Heat.jpg";
 import Regional from "../../../assets/images/Regional.jpg";
 import userIDStore from "../../data-management/user-id-data/userIDStore";
+import { strings } from "../../localization/localization";
 
 MapboxGL.setAccessToken(
   "pk.eyJ1IjoiZmVyb3g5OCIsImEiOiJjazg0czE2ZWIwNHhrM2VtY3Y0a2JkNjI3In0.zrm7UtCEPg2mX8JCiixE4g"
@@ -541,9 +542,9 @@ export default class DataAnalyticsMap extends React.Component {
               }}
               itemStyle={{ color: "#1e88e5" }}
             >
-              <Picker.Item label="CONFIRMED" value="CONFIRMED" />
-              <Picker.Item label="RECOVERED" value="RECOVERED" />
-              <Picker.Item label="DEATHS" value="DEATH" />
+              <Picker.Item label={strings.Confirmed} value="CONFIRMED" />
+              <Picker.Item label={strings.Recovered} value="RECOVERED" />
+              <Picker.Item label={strings.Death} value="DEATH" />
             </Picker>
             <View
               style={{
@@ -634,9 +635,14 @@ export default class DataAnalyticsMap extends React.Component {
                   flex: 1,
                 }}
               >
-                {this.getCheckBox("HEAT", this.state.heatmap_checked, 0, Heat)}
                 {this.getCheckBox(
-                  "REGIONAL",
+                  strings.Heat,
+                  this.state.heatmap_checked,
+                  0,
+                  Heat
+                )}
+                {this.getCheckBox(
+                  strings.Regional,
                   this.state.regional_checked,
                   1,
                   Regional

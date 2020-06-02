@@ -142,7 +142,7 @@ export const SettingScreen = (props) => {
       <SafeAreaView style={styles.container}>
         <TopNavigation
           alignment="center"
-          title="Settings"
+          title={strings.Settings}
           accessoryLeft={renderBackAction}
         />
         <Divider />

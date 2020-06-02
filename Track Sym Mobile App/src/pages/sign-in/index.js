@@ -207,7 +207,7 @@ export default ({ navigation }) => {
           category="s1"
           status="control"
         >
-          Sign in to your account
+          {strings.SignInToYourAccount}
         </Text>
       </ImageOverlay>
 
@@ -247,7 +247,7 @@ export default ({ navigation }) => {
         status="basic"
         onPress={onSignUpButtonPress}
       >
-        Don't have an account? Sign up
+        {strings.DoNotHaveAccount}
       </Button>
     </KeyboardAvoidingView>
   );
