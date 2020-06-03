@@ -28,53 +28,62 @@ import SearchableDropdown from "react-native-searchable-dropdown";
 import userIDStore from "../../data-management/user-id-data/userIDStore";
 import { DotsLoader } from "react-native-indicator";
 import { strings } from "../../localization/localization";
+import languageStore from "../../data-management/language_data/languageStore";
+
 class DataAnalytics extends React.Component {
-  state = {
-    selected_filter: criterias.confirmed, // sets the current filtering parameter on the graph
-    selected_filter_daily_status: criterias.confirmed,
-    selected_filter_rate: criterias.recoveryRate,
-    selected_daily_start_date: "",
-    selected_daily_end_date: "",
-    selected_total_start_date: "",
-    selected_total_end_date: "",
-    selected_rate_start_date: "",
-    selected_rate_end_date: "",
-    graph_label: [""],
-    data_set: [0],
-    daily_newCases_label: [""],
-    daily_newCases_data_set: [0],
-    rate_label: [""],
-    rate_data_set: [0],
-    searchedCountry: "World",
-    TotalStatisticsData: [],
-    StatisticsData: {},
-    search: "World",
-    Months: [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ],
-    countries: [],
-    totalGraphLoading: false,
-    dailyGraphLoading: false,
-    rateGraphLoading: false,
-    totalLoading: true,
-    testCountDataExist: false,
-    discriptionVisiblity: false,
-    staticsDescription: [],
-    staticsDescriptionLoading: true,
-    discriptionTitle: "",
-    description: "",
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      selected_filter: criterias.confirmed, // sets the current filtering parameter on the graph
+      selected_filter_daily_status: criterias.confirmed,
+      selected_filter_rate: criterias.recoveryRate,
+      selected_daily_start_date: "",
+      selected_daily_end_date: "",
+      selected_total_start_date: "",
+      selected_total_end_date: "",
+      selected_rate_start_date: "",
+      selected_rate_end_date: "",
+      graph_label: [""],
+      data_set: [0],
+      daily_newCases_label: [""],
+      daily_newCases_data_set: [0],
+      rate_label: [""],
+      rate_data_set: [0],
+      searchedCountry: "World",
+      TotalStatisticsData: [],
+      StatisticsData: {},
+      search: "World",
+      Months: [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ],
+      countries: [],
+      totalGraphLoading: false,
+      dailyGraphLoading: false,
+      rateGraphLoading: false,
+      totalLoading: true,
+      testCountDataExist: false,
+      discriptionVisiblity: false,
+      staticsDescription: [],
+      staticsDescriptionLoading: true,
+      discriptionTitle: "",
+      description: "",
+    };
+    languageStore.subscribe(() => {
+      strings.setLanguage(languageStore.getState());
+      this.componentDidMount();
+    });
+  }
 
   componentDidMount = async () => {
     await this.getTotalData()
@@ -127,7 +136,7 @@ class DataAnalytics extends React.Component {
         }
       })
       .catch((error) => {
-        Alert.alert("Connection problem", "Couldn't connect to server");
+        Alert.alert(strings.ConnectionProblem, strings.CouldNotConnectToServer);
       });
   };
   //gets rate statistics data based on selected criteria and populate UI
@@ -168,7 +177,7 @@ class DataAnalytics extends React.Component {
         }
       })
       .catch((error) => {
-        Alert.alert("Connection problem", "Couldn't connect to server");
+        Alert.alert(strings.ConnectionProblem, strings.CouldNotConnectToServer);
       });
   };
   //Converts date in to appropriate format
@@ -209,7 +218,7 @@ class DataAnalytics extends React.Component {
         }
       })
       .catch((error) => {
-        Alert.alert("Connection Problem", "Couldn't connect to server");
+        Alert.alert(strings.ConnectionProblem, strings.CouldNotConnectToServer);
       });
   };
   //fetch list of countries available
@@ -234,7 +243,7 @@ class DataAnalytics extends React.Component {
         }
       })
       .catch((error) => {
-        Alert.alert("Connection problem", "Couldn't connect to server");
+        Alert.alert(strings.ConnectionProblem, strings.CouldNotConnectToServer);
       });
   };
   //fetch daily new cases reported
@@ -277,7 +286,7 @@ class DataAnalytics extends React.Component {
         }
       })
       .catch((error) => {
-        Alert.alert("Connection problem", "Couldn't connect to server");
+        Alert.alert(strings.ConnectionProblem, strings.CouldNotConnectToServer);
       });
   };
   //populate daily data
@@ -529,7 +538,7 @@ class DataAnalytics extends React.Component {
         }
       })
       .catch((error) => {
-        Alert.alert("Connection problem", "Couldn't connect to server");
+        Alert.alert(strings.ConnectionProblem, strings.CouldNotConnectToServer);
         // newThis.setState({
         //   staticsDescriptionLoading: false,
         // });
@@ -564,10 +573,10 @@ class DataAnalytics extends React.Component {
       })
       .catch((error) => {
         newThis.setState({
-          descriptionTitle: "Connection Problem",
+          descriptionTitle: strings.ConnectionProblem,
           description: "Unable to connect",
         });
-        // Alert.alert("Connection problem", "Couldn't connect to server");
+        // Alert.alert(strings.ConnectionProblem, strings.CouldNotConnectToServer);
       });
   };
 
@@ -898,7 +907,7 @@ class DataAnalytics extends React.Component {
                               this.setState({ graphDescriptionLoading: true });
                             }}
                           >
-                            Dismiss
+                            {strings.Dismiss}
                           </Button>
                         )
                       : null
@@ -935,7 +944,7 @@ class DataAnalytics extends React.Component {
                     marginLeft={10}
                   />
                   <Text style={{ fontSize: 16, color: "gray" }}>
-                    Loading graph description
+                    {strings.LoadingGraphDescription}
                   </Text>
                 </Layout>
               ) : (
@@ -1181,7 +1190,7 @@ class DataAnalytics extends React.Component {
                   <Layout flexDirection="row" alignSelf="center">
                     <ActivityIndicator size="small" color="gray" />
                     <Text style={{ fontSize: 16, color: "gray" }}>
-                      Loading criteria description
+                      {strings.LoadingCriteriaDescription}
                     </Text>
                   </Layout>
                 ) : this.state.selected_filter_daily_status ===
@@ -1240,7 +1249,7 @@ class DataAnalytics extends React.Component {
                     marginLeft={10}
                   />
                   <Text style={{ fontSize: 16, color: "gray" }}>
-                    Loading graph description
+                    {strings.LoadingGraphDescription}
                   </Text>
                 </Layout>
               ) : (
@@ -1467,12 +1476,12 @@ class DataAnalytics extends React.Component {
                   </TouchableOpacity>
                 ) : null}
               </Layout>
-              <Layout padding={10}>
+              <Layout padding={10} style={{ marginBottom: 80 }}>
                 {this.state.staticsDescriptionLoading ? (
                   <Layout flexDirection="row" alignSelf="center">
                     <ActivityIndicator size="small" color="gray" />
                     <Text style={{ fontSize: 16, color: "gray" }}>
-                      Loading criteria description
+                      {strings.LoadingCriteriaDescription}
                     </Text>
                   </Layout>
                 ) : this.state.selected_filter === criterias.confirmed ? (
@@ -1510,7 +1519,8 @@ class DataAnalytics extends React.Component {
                 )}
               </Layout>
             </Layout>
-            <Layout style={styles.container_graph}>
+
+            {/* <Layout style={styles.container_graph}>
               <Text
                 style={{
                   fontSize: 20,
@@ -1528,7 +1538,7 @@ class DataAnalytics extends React.Component {
                     marginLeft={10}
                   />
                   <Text style={{ fontSize: 16, color: "gray" }}>
-                    Loading graph description
+                    {strings.LoadingGraphDescription}
                   </Text>
                 </Layout>
               ) : (
@@ -1742,7 +1752,7 @@ class DataAnalytics extends React.Component {
                       marginLeft={10}
                     />
                     <Text style={{ fontSize: 16, color: "gray" }}>
-                      Loading criteria description
+                      {strings.LoadingCriteriaDescription}
                     </Text>
                   </Layout>
                 ) : this.state.selected_filter_rate ===
@@ -1781,7 +1791,7 @@ class DataAnalytics extends React.Component {
                   </Text>
                 )}
               </Layout>
-            </Layout>
+            </Layout> */}
           </Layout>
         </ScrollView>
       </Layout>

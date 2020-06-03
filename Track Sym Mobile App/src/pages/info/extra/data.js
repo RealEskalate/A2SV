@@ -1,4 +1,5 @@
 import { strings } from "../../../localization/localization";
+
 export const whatsIsCovid = {
   name: strings.WhatIsCOVID19,
   description:

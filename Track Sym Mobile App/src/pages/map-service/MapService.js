@@ -54,6 +54,8 @@ import manAvatar from "../../../assets/images/avatar.png";
 import womanAvatar from "../../../assets/images/person.png";
 import Geocoder from "react-native-geocoder";
 import userIDStore from "../../data-management/user-id-data/userIDStore";
+import languageStore from "../../data-management/language_data/languageStore";
+import { strings } from "../../localization/localization";
 
 import SearchableDropdown from "react-native-searchable-dropdown";
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -66,8 +68,6 @@ const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
 
 const colors = ["#FFC107", "#EF6C00", "#B71C1C"];
-
-const covid = require("../public-data-page/data/covid.json");
 
 const pointInfos = {};
 const grid_infos = {};
@@ -146,6 +146,10 @@ export default class MapService extends React.Component {
     this.renderClusterInfo = this.renderClusterInfo.bind(this);
 
     this.metersToPixelsAtMaxZoom = this.metersToPixelsAtMaxZoom.bind(this);
+    languageStore.subscribe(() => {
+      strings.setLanguage(languageStore.getState());
+      this.componentDidMount();
+    });
   }
 
   setModalVisible(visible) {
@@ -205,7 +209,7 @@ export default class MapService extends React.Component {
           fetch(
             "https://sym-track.herokuapp.com/api/symptomuser/user/" +
               leaf.id +
-              "?stress=true",
+              "?demo=true",
             {
               method: "GET",
               headers: {
@@ -258,7 +262,7 @@ export default class MapService extends React.Component {
           fetch(
             "https://sym-track.herokuapp.com/api/symptomuser/user/" +
               leaf.id +
-              "?stress=true",
+              "?demo=true",
             {
               method: "GET",
               headers: {
@@ -308,7 +312,7 @@ export default class MapService extends React.Component {
             fetch(
               "https://sym-track.herokuapp.com/api/symptomuser/user/" +
                 leaf.id +
-                "?stress=true",
+                "?demo=true",
               {
                 method: "GET",
                 headers: {
@@ -338,6 +342,7 @@ export default class MapService extends React.Component {
                   cluster_data[age_group]++;
                   cluster_data[gender.toLowerCase()]++;
                 }
+                console.log("Cluster data");
                 console.log(cluster_data);
               })
               .catch((err) => {
@@ -398,7 +403,7 @@ export default class MapService extends React.Component {
       const details = fetch(
         "https://sym-track.herokuapp.com/api/symptomuser/user/" +
           user_id +
-          "?stress=true",
+          "?demo=true",
         {
           method: "GET",
           headers: {
@@ -439,6 +444,9 @@ export default class MapService extends React.Component {
     this.setState({ bottom_left_bound: bottom_left });
     this.setState({ bottom_right_bound: bottom_right });
 
+    // call fetch symptoms
+    console.log("calling fetch symptoms");
+    this.fetchSymptoms();
     console.log("calling update clusters");
     // call updateClusters
     this.updateClusters();
@@ -543,31 +551,29 @@ export default class MapService extends React.Component {
     if (!this.state.isClusterModalVisible) {
       animating = true;
     }
-    fetch(
-      "https://sym-track.herokuapp.com/api/locations_symptoms?stress=true",
-      {
-        method: "POST",
-        headers: {
-          Authorization: "Bearer " + userIDStore.getState().userToken,
-          Accept: "application/json",
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify({
-          longitude: this.state.user_longitude,
-          latitude: this.state.user_latitude,
+    fetch("https://sym-track.herokuapp.com/api/locations_symptoms?demo=true", {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + userIDStore.getState().userToken,
+        Accept: "application/json",
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({
+        longitude: this.state.user_longitude,
+        latitude: this.state.user_latitude,
 
-          top_left_bound: this.state.top_left_bound,
-          top_right_bound: this.state.top_right_bound,
-          bottom_left_bound: this.state.bottom_left_bound,
-          bottom_right_bound: this.state.bottom_right_bound,
-        }),
-      }
-    )
+        top_left_bound: this.state.top_left_bound,
+        top_right_bound: this.state.top_right_bound,
+        bottom_left_bound: this.state.bottom_left_bound,
+        bottom_right_bound: this.state.bottom_right_bound,
+      }),
+    })
       .then((res) => {
         console.log("res = ");
         console.log(res.status);
 
         if (res.status === 500) {
+          animating = false;
           console.log("No locations with users and symptoms found.");
           console.log(
             this.state.user_longitude + " , " + this.state.user_latitude
@@ -999,20 +1005,17 @@ export default class MapService extends React.Component {
       }
       for (i = 0; i < age_groups.length; i++) {
         const age_group = age_groups[i];
-        if (
-          parseInt(current_grid_info.ages[age_group]) > 0 &&
-          age_group !== ">90"
-        ) {
-          const chart_element = {
-            name: " between " + age_group,
+        if (parseInt(current_grid_info.ages[age_group]) > 0) var chart_element;
+        if (age_group === ">90") {
+          chart_element = {
+            name: age_group,
             symptomatic: current_grid_info.ages[age_group],
             color: age_colors[i],
             legendFontColor: "#7F7F7F",
             legendFontSize: 15,
           };
-          piechart_data.push(chart_element);
-        } else if (age_group === ">90") {
-          const chart_element = {
+        } else {
+          chart_element = {
             name: " between " + age_group,
             symptomatic: current_grid_info.ages[age_group],
             color: age_colors[i],
@@ -1020,6 +1023,7 @@ export default class MapService extends React.Component {
             legendFontSize: 15,
           };
         }
+        piechart_data.push(chart_element);
       }
     } else {
       male_symps = parseInt(cluster_data.male);
@@ -1085,23 +1089,26 @@ export default class MapService extends React.Component {
 
       for (i = 0; i < age_groups.length; i++) {
         const age_group = age_groups[i];
-        if (parseInt(cluster_data[age_group]) > 0 && age_group !== ">90") {
-          const chart_element = {
-            name: " between " + age_group,
-            symptomatic: cluster_data[age_group],
-            color: age_colors[i],
-            legendFontColor: "#7F7F7F",
-            legendFontSize: 15,
-          };
+        var chart_element;
+        if (parseInt(cluster_data[age_group]) > 0) {
+          if (age_group === ">90") {
+            chart_element = {
+              name: age_group,
+              symptomatic: cluster_data[age_group],
+              color: age_colors[i],
+              legendFontColor: "#7F7F7F",
+              legendFontSize: 15,
+            };
+          } else {
+            chart_element = {
+              name: " between " + age_group,
+              symptomatic: cluster_data[age_group],
+              color: age_colors[i],
+              legendFontColor: "#7F7F7F",
+              legendFontSize: 15,
+            };
+          }
           piechart_data.push(chart_element);
-        } else if (age_group === ">90") {
-          const chart_element = {
-            name: " between " + age_group,
-            symptomatic: cluster_data[age_group],
-            color: age_colors[i],
-            legendFontColor: "#7F7F7F",
-            legendFontSize: 15,
-          };
         }
       }
     }

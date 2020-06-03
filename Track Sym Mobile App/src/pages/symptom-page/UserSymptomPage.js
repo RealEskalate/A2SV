@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { ScrollView, StyleSheet, View, SafeAreaView } from "react-native";
 import userIDStore from "../../data-management/user-id-data/userIDStore";
 import symptomStore from "../../data-management/user-symptom-data/symptomStore";
+import languageStore from "../../data-management/language_data/languageStore";
 import * as symptomActions from "../../data-management/user-symptom-data/symptomActions";
 import MapboxGL from "@react-native-mapbox-gl/maps";
 import {
@@ -32,6 +33,11 @@ export default class UserSymptomPage extends Component {
     symptomStore.subscribe(() => {
       this.fetchUserSymptoms(userIDStore.getState().userId);
     });
+    languageStore.subscribe(() => {
+      strings.setLanguage(languageStore.getState());
+      this.componentDidMount();
+    });
+
     this.onUserLocationUpdate = this.onUserLocationUpdate.bind(this);
   }
 

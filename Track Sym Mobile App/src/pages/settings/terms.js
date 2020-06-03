@@ -18,6 +18,7 @@ import {
 
 import Octicons from "react-native-vector-icons/Octicons";
 import { strings } from "../../localization/localization";
+import { LangContext } from "../../../assets/lang/language-context";
 
 const data = [
   {
@@ -94,6 +95,10 @@ const data = [
 const TermsAndPrivacyScreen = (props) => {
   const ArrowIosBackIcon = (style) => <Icon {...style} name="arrow-ios-back" />;
   const infiniteAnimationIconRef = React.useRef();
+  //setting up the language
+  const langContext = React.useContext(LangContext);
+  const lang = langContext.lang;
+  strings.setLanguage(lang);
 
   React.useEffect(() => {
     infiniteAnimationIconRef.current.startAnimation();

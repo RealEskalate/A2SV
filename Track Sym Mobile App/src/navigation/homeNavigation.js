@@ -27,6 +27,7 @@ import SymDetailScreen from "../pages/info-detail/symptoms.js";
 import SpdDetailScreen from "../pages/info-detail/spread.js";
 import MsgDetailScreen from "../pages/info-detail/message.js";
 import { strings } from "../localization/localization";
+import { LangContext } from "../../assets/lang/language-context";
 
 const BottomTab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -85,6 +86,10 @@ const DataMap = (props) => {
 };
 
 const HomeTabsNavigator = ({ navigation }) => {
+  //setting up the language
+  const langContext = React.useContext(LangContext);
+  const lang = langContext.lang;
+  strings.setLanguage(lang);
   const openDrawer = () => {
     navigation.openDrawer();
   };
