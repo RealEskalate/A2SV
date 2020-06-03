@@ -25,14 +25,14 @@ const mutations = {
 
 const actions = {
   setSymptomUser: ({ commit }, { userId }) => {
-    ajax.get(`api/symptomuser/user/${userId}/demo=true`).then(res => {
-      console.log(res);
+    ajax.get(`symptomuser/user/${userId}/`).then(res => {
+      console.log(res.data);
       commit("setSymptomUser", res.data);
     });
   },
   setCities: ({ commit }) => {
-    ajax.get("api/cities").then(res => {
-      console.log(res);
+    ajax.get("cities").then(res => {
+      console.log(res.data);
       commit("setCities", res.data);
     });
   }
