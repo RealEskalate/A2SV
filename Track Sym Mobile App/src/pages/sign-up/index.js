@@ -24,6 +24,7 @@ import userIDStore from "../../data-management/user-id-data/userIDStore";
 import * as actions from "../../data-management/user-id-data/userIDActions";
 import { strings } from "../../localization/localization";
 import AsyncStorage from "@react-native-community/async-storage";
+import { LangContext } from "../../../assets/lang/language-context";
 
 const data = [
   "0-10",
@@ -67,23 +68,28 @@ export default ({ navigation }) => {
 
   const styles = useStyleSheet(themedStyles);
 
+  //setting up the language
+  const langContext = React.useContext(LangContext);
+  const lang = langContext.lang;
+  strings.setLanguage(lang);
+
   const onSignUpButtonPress = () => {
     if (username === "") {
-      setModalMessage("Please enter your username!");
+      setModalMessage(strings.PleaseEnterYourUsername);
       setModalState(true);
       setUsernameStatus("danger");
       return;
     }
 
     if (password === "") {
-      setModalMessage("Please enter your password!");
+      setModalMessage(strings.PleaseEnterYourPassword);
       setModalState(true);
       setPasswordStatus("danger");
       return;
     }
 
     if (confirmPassword !== password) {
-      setModalMessage("Password Don't match !");
+      setModalMessage(strings.PasswordDoesNotMatch);
       setModalState(true);
       setConfirmPasswordStatus("danger");
       return;
@@ -124,7 +130,7 @@ export default ({ navigation }) => {
     }
 
     if (response.status === 500) {
-      setModalMessage("Username already exists!");
+      setModalMessage(strings.UsernameAlreadyExists);
       setModalState(true);
       setIsLoading(false);
       return;
@@ -214,7 +220,7 @@ export default ({ navigation }) => {
       setUsernameCap("");
     } else {
       setUsernameStatus("danger");
-      setUsernameCap("Username is required");
+      setUsernameCap(strings.Required);
     }
     setUsername(name);
   };
@@ -225,7 +231,7 @@ export default ({ navigation }) => {
       setPasswordCap("");
     } else {
       setPasswordStatus("danger");
-      setPasswordCap("Password is required");
+      setPasswordCap(strings.Required);
     }
     setPassword(pass);
   };
@@ -236,7 +242,7 @@ export default ({ navigation }) => {
       setConfirmPasswordCap("");
     } else {
       setConfirmPasswordStatus("danger");
-      setConfirmPasswordCap("Password doesn't match");
+      setConfirmPasswordCap(strings.PasswordDoNotMatch);
     }
     setConfirmPassword(pass);
   };
@@ -358,9 +364,7 @@ export default ({ navigation }) => {
           }}
         >
           <Text appearance="hint" category="c1" status={termStat}>
-            {
-              "By creating an account, I agree to the Track Sym Terms of\nUse and Privacy Policy"
-            }
+            {strings.AgreeingTermsAndServiceOnSignUp}
           </Text>
         </CheckBox>
       </View>

@@ -4,3 +4,4 @@ export const addUser = "userAdded";
 export const removeUser = "userRemoved";
 export const symptomRegister = "userSymptomRegistered";
 export const symptomRemove = "userSymptomRemoved";
+export const changeLanguage = "localLanguageChanged";
