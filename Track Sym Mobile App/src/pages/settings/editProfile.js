@@ -17,6 +17,7 @@ import {
   Text,
 } from "@ui-kitten/components";
 import { SafeAreaView, View, TouchableWithoutFeedback } from "react-native";
+import { LangContext } from "../../../assets/lang/language-context";
 import AsyncStorage from "@react-native-community/async-storage";
 import { ProfileAvatar } from "./extra/profile-avatar.component";
 import userIDStore from "../../data-management/user-id-data/userIDStore";
@@ -26,7 +27,7 @@ import { strings } from "../../localization/localization";
 
 const ArrowIosBackIcon = (style) => <Icon {...style} name="arrow-ios-back" />;
 const data = [
-  "Update your age group",
+  strings.UpdateYourAgeGroup,
   "0-10",
   "11-20",
   "21-30",
@@ -39,9 +40,10 @@ const data = [
   ">90",
 ];
 
-const genderData = ["Update your gender", "MALE", "FEMALE"];
+const genderData = [strings.UpdateYourGender, strings.Male, strings.Female];
 
 const EditProfileScreen = (props) => {
+  const langContext = React.useContext(LangContext);
   const [username, setUsername] = React.useState("");
   const [usernameCap, setUsernameCap] = React.useState("");
   const [usernameStatus, setUsernameStatus] = React.useState("basic");
@@ -68,6 +70,9 @@ const EditProfileScreen = (props) => {
   const [modalState, setModalState] = React.useState(false);
   const [modalMessage, setModalMessage] = React.useState("");
   const [modalStatus, setModalStatus] = React.useState("");
+  //setting up the languages
+  const lang = langContext.lang;
+  strings.setLanguage(lang);
 
   const renderOption = (title, index) => (
     <SelectItem title={title} key={index} />
@@ -84,7 +89,7 @@ const EditProfileScreen = (props) => {
       setUsernameCap("");
     } else {
       setUsernameStatus("danger");
-      setUsernameCap("required*");
+      setUsernameCap(strings.Required);
     }
     setUsername(name);
   };
@@ -98,7 +103,7 @@ const EditProfileScreen = (props) => {
 
   const onGenderChange = (pass) => {
     if (pass === 0) {
-      setModalMessage("Please select your gender");
+      setModalMessage(strings.PleaseSelectGender);
       setModalState(true);
       setModalStatus("danger");
       return;
@@ -108,7 +113,7 @@ const EditProfileScreen = (props) => {
 
   const onAgeGroupChange = (pass) => {
     if (pass === 0) {
-      setModalMessage("Please enter your age group");
+      setModalMessage(strings.PleaseSelectAgeGroup);
       setModalState(true);
       setModalStatus("danger");
       return;
@@ -165,7 +170,7 @@ const EditProfileScreen = (props) => {
       })
         .then((response) => response.json())
         .then((json) => {
-          setModalMessage("You have successfully changed your profile!");
+          setModalMessage(strings.YouHaveSuccessfullyChangedYourProfile);
           setModalState(true);
           setIsLoading(false);
           setModalStatus("success");
@@ -186,7 +191,7 @@ const EditProfileScreen = (props) => {
         })
         .catch((error) => {
           console.log(error);
-          setModalMessage("Oops, couldn't update your profile! Please retry!");
+          setModalMessage(strings.CantConnectDueToConnection);
           setModalState(true);
           setModalStatus("danger");
         });
@@ -223,7 +228,7 @@ const EditProfileScreen = (props) => {
               setIsLoading(false);
             }}
           >
-            Dismiss
+            {strings.Dismiss}
           </Text>
         </Card>
       </Modal>

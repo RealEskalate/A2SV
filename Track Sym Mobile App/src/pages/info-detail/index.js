@@ -15,11 +15,16 @@ import { ImageOverlay } from "./extra/image-overlay.component";
 import { covidData as data } from "./extra/data";
 import styles from "./extra/styles";
 import { strings } from "../../localization/localization";
+import { LangContext } from "../../../assets/lang/language-context";
 
 const BackIcon = (props) => <Icon name="arrow-ios-back-outline" {...props} />;
 
 export default InfoDetailScreen = (props) => {
   const [selectedIndex, setSelectedIndex] = React.useState(0);
+  //setting up the language
+  const langContext = React.useContext(LangContext);
+  const lang = langContext.lang;
+  strings.setLanguage(lang);
 
   const navigateBack = () => {
     props.navigation.goBack();

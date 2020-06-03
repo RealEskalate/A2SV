@@ -21,6 +21,7 @@ import {
 } from "@ui-kitten/components";
 import userIDStore from "../../data-management/user-id-data/userIDStore";
 import { strings } from "../../localization/localization";
+import { LangContext } from "../../../assets/lang/language-context";
 
 const SearchIcon = (props) => <Icon {...props} name="search-outline" />;
 
@@ -32,6 +33,10 @@ const NewsScreen = (props) => {
     searching: false,
     refreshing: false,
   });
+  //setting up the language
+  const langContext = React.useContext(LangContext);
+  const lang = langContext.lang;
+  strings.setLanguage(lang);
 
   React.useEffect(() => {
     fetchNews();
@@ -233,7 +238,7 @@ const NewsScreen = (props) => {
                         size="tiny"
                         onPress={() => goToNews(item.reference_link)}
                       >
-                        GO TO NEWS
+                        {strings.GoToNews}
                       </Button>
                     </Layout>
                   </Layout>

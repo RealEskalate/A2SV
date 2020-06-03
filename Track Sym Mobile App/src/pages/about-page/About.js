@@ -11,8 +11,14 @@ import {
 } from "@ui-kitten/components";
 import { Divider } from "react-native-paper";
 import { strings } from "../../localization/localization";
+import { LangContext } from "../../../assets/lang/language-context";
 
 const About = (props) => {
+  //setting up the language
+  const langContext = React.useContext(LangContext);
+  const lang = langContext.lang;
+  strings.setLanguage(lang);
+
   const styles = useStyleSheet(themedStyle);
   const infiniteAnimationIconRef = React.useRef();
 

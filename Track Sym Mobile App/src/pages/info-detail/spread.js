@@ -11,10 +11,16 @@ import { ImageOverlay } from "./extra/image-overlay.component";
 import { spreadData as data } from "./extra/data";
 import styles from "./extra/styles";
 import { strings } from "../../localization/localization";
+import { LangContext } from "../../../assets/lang/language-context";
 
 const BackIcon = (props) => <Icon name="arrow-ios-back-outline" {...props} />;
 
 export default PrevDetailScreen = (props) => {
+  //setting up the language
+  const langContext = React.useContext(LangContext);
+  const lang = langContext.lang;
+  strings.setLanguage(lang);
+
   const navigateBack = () => {
     props.navigation.goBack();
   };

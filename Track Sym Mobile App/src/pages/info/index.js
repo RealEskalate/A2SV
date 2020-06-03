@@ -11,6 +11,7 @@ import {
   whatsIsCovid,
 } from "./extra/data";
 import { strings } from "../../localization/localization";
+import { LangContext } from "../../../assets/lang/language-context";
 
 const data = [whatsIsCovid, symptoms, preventions, spread, message];
 
@@ -22,6 +23,10 @@ export default InformationScreen = (props) => {
       </Text>
     </ImageOverlay>
   );
+  //setting up the language
+  const langContext = React.useContext(LangContext);
+  const lang = langContext.lang;
+  strings.setLanguage(lang);
 
   const onShare = async (message) => {
     try {
