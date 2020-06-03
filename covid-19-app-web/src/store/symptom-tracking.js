@@ -1,12 +1,16 @@
 import ajax from "../auth/ajax";
 
 const state = {
+  allSymptoms: [],
   symptomUser: [],
   cities: [],
   locationsSymptoms: null
 };
 
 const getters = {
+  getAllSymptoms: state => {
+    return state.allSymptoms;
+  },
   getSymptomUser: state => {
     return state.symptomUser;
   },
@@ -19,6 +23,9 @@ const getters = {
 };
 
 const mutations = {
+  setAllSymptoms: (state, payload) => {
+    state.allSymptoms = payload;
+  },
   setSymptomUser: (state, payload) => {
     state.symptomUser = payload;
   },
@@ -31,6 +38,11 @@ const mutations = {
 };
 
 const actions = {
+  setAllSymptoms: ({ commit }) => {
+    ajax.get(`symptoms`).then(res => {
+      commit("setSymptomUser", res.data);
+    });
+  },
   setSymptomUser: ({ commit }, { userId }) => {
     ajax.get(`symptomuser/user/${userId}/demo=true`).then(res => {
       console.log(res);

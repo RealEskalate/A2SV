@@ -61,7 +61,7 @@
       <v-menu offset-y>
         <template v-slot:activator="{ on }">
           <v-btn fab text small color="primary" v-on="on">
-            <v-icon small v-text="mdiDotsVertical" />
+            <v-icon small v-text="mdiAccountCog" />
           </v-btn>
         </template>
         <v-list class="py-0">
@@ -103,7 +103,7 @@ import store from "@/store/";
 import router from "@/router/";
 import {
   mdiBookOpenVariant,
-  mdiDotsVertical,
+  mdiAccountCog,
   mdiHome,
   mdiInformation,
   mdiMap,
@@ -114,7 +114,7 @@ import {
 export default {
   data: () => {
     return {
-      mdiDotsVertical,
+      mdiAccountCog,
       drawer: false,
       navType: store.getters.getNavigationType,
       locationY: 0,
@@ -126,7 +126,7 @@ export default {
         am: "አማ"
       },
       links: [
-        { text: "navbar.home", icon: mdiHome, to: "" },
+        { text: "navbar.home", icon: mdiHome, to: "/" },
         {
           text: "navbar.learn",
           icon: mdiBookOpenVariant,

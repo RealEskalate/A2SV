@@ -100,6 +100,7 @@ html {
   box-shadow: 0 0 5px #dededede inset;
 }
 
+.v-image__image,
 .v-card--shaped,
 .v-snack__wrapper,
 .v-menu__content,
