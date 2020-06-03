@@ -76,6 +76,7 @@
 
 <script>
 import store from "@/store/";
+import router from "@/router/";
 import {
   mdiBookOpenVariant,
   mdiDotsVertical,
@@ -101,14 +102,10 @@ export default {
       },
       links: [
         { text: "navbar.home", icon: mdiHome, to: "/" },
-        {
-          text: "navbar.learn",
-          icon: mdiBookOpenVariant,
-          to: "/information"
-        },
-        { text: "navbar.about", icon: mdiInformation, to: "/about" },
-        { text: "navbar.news", icon: mdiNewspaper, to: "/news" },
-        { text: "navbar.map", icon: mdiMap, to: "/map" }
+        { text: "navbar.learn", icon: mdiBookOpenVariant, to: "information" },
+        { text: "navbar.about", icon: mdiInformation, to: "about" },
+        { text: "navbar.news", icon: mdiNewspaper, to: "news" },
+        { text: "navbar.map", icon: mdiMap, to: "map" }
       ]
     };
   },
@@ -124,6 +121,8 @@ export default {
     },
     changeLang() {
       store.dispatch("setLanguagePreference", { lang: this.$i18n.locale });
+
+      router.replace({ params: { lang: this.$i18n.locale } }).catch(() => {});
     }
   },
   computed: {

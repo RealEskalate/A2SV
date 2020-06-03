@@ -26,9 +26,9 @@
       </v-card-text>
 
       <v-card-text>
-        <v-btn text small v-text="$t('references')" to="/references"/>
+        <v-btn text small v-text="$t('references')" to="references" />
         |
-        <v-btn text small v-text="$t('privacy')" to="/privacy-policy" />
+        <v-btn text small v-text="$t('privacy')" to="privacy-policy" />
         |
         <span class="pa-3">
           {{ new Date().getFullYear() }} — <strong>TrackSym</strong>
@@ -60,9 +60,9 @@
 </template>
 
 <script>
-  import {mdiWeb} from "@mdi/js";
+import { mdiWeb } from "@mdi/js";
 
-  export default {
+export default {
   data: () => ({
     languages: ["en", "am"],
     langText: {

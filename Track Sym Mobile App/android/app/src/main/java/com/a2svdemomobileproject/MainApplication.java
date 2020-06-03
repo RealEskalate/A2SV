@@ -11,6 +11,7 @@ import com.facebook.soloader.SoLoader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import androidx.multidex.MultiDexApplication;
+import com.babisoft.ReactNativeLocalization.ReactNativeLocalizationPackage;
 
 public class MainApplication extends MultiDexApplication  implements ReactApplication {
 
@@ -25,6 +26,7 @@ public class MainApplication extends MultiDexApplication  implements ReactApplic
         protected List<ReactPackage> getPackages() {
           @SuppressWarnings("UnnecessaryLocalVariable")
           List<ReactPackage> packages = new PackageList(this).getPackages();
+          new ReactNativeLocalizationPackage();
           // Packages that cannot be autolinked yet can be added manually here, for example:
           // packages.add(new MyReactNativePackage());
           return packages;

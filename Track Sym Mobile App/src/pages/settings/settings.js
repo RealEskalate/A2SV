@@ -1,6 +1,6 @@
-import React from 'react';
-import { StyleSheet, SafeAreaView } from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
+import React, { useEffect } from "react";
+import { StyleSheet, SafeAreaView } from "react-native";
+import AsyncStorage from "@react-native-community/async-storage";
 import {
   Layout,
   Toggle,
@@ -13,21 +13,31 @@ import {
   Modal,
   Spinner,
   Card,
-} from '@ui-kitten/components';
-import { ThemeContext } from '../../../assets/themes/theme-context';
-import * as actions from '../../data-management/user-id-data/userIDActions';
-import userIDStore from '../../data-management/user-id-data/userIDStore';
+} from "@ui-kitten/components";
+import { ThemeContext } from "../../../assets/themes/theme-context";
+import { LangContext } from "../../../assets/lang/language-context";
+import * as actions from "../../data-management/user-id-data/userIDActions";
+import userIDStore from "../../data-management/user-id-data/userIDStore";
+import { strings } from "../../localization/localization";
+import languageStore from "../../data-management/language_data/languageStore";
+import * as languageActions from "../../data-management/language_data/languageActions";
 
-const ArrowIosBackIcon = (style) => <Icon {...style} name='arrow-ios-back' />;
-const EditProfile = (style) => <Icon {...style} name='edit-2-outline' />;
-const ChangePasswordIcon = (style) => <Icon {...style} name='unlock-outline' />;
-const TermsIcon = (style) => <Icon {...style} name='book-open-outline' />;
-const DarkModeIcon = (style) => <Icon {...style} name='moon-outline' />;
-const LogoutIcon = (style) => <Icon {...style} name='log-out-outline' />;
+const ArrowIosBackIcon = (style) => <Icon {...style} name="arrow-ios-back" />;
+const EditProfile = (style) => <Icon {...style} name="edit-2-outline" />;
+const ChangePasswordIcon = (style) => <Icon {...style} name="unlock-outline" />;
+const TermsIcon = (style) => <Icon {...style} name="book-open-outline" />;
+const DarkModeIcon = (style) => <Icon {...style} name="moon-outline" />;
+const LanguagesIcon = (style) => <Icon {...style} name="globe-outline" />;
+const LogoutIcon = (style) => <Icon {...style} name="log-out-outline" />;
 
 export const SettingScreen = (props) => {
   const themeContext = React.useContext(ThemeContext);
+  const langContext = React.useContext(LangContext);
   const [visible, setVisible] = React.useState(false);
+  const lang = langContext.lang;
+  strings.setLanguage(lang);
+
+  //set language for language
 
   const renderBackAction = () => (
     <TopNavigationAction
@@ -38,16 +48,20 @@ export const SettingScreen = (props) => {
 
   const stubAction = () => {};
 
+  const languagesAction = () => {
+    props.navigation.navigate("EditLanguageScreen");
+  };
+
   const termsAction = () => {
-    props.navigation.navigate('TermsAndPrivacyScreen');
+    props.navigation.navigate("TermsAndPrivacyScreen");
   };
 
   const changePassAction = () => {
-    props.navigation.navigate('ChangePassScreen');
+    props.navigation.navigate("ChangePassScreen");
   };
 
   const editProfAction = () => {
-    props.navigation.navigate('EditProfileScreen');
+    props.navigation.navigate("EditProfileScreen");
   };
   const darkModeAction = () => {
     saveTheme();
@@ -56,34 +70,36 @@ export const SettingScreen = (props) => {
 
   const saveTheme = async () => {
     await AsyncStorage.setItem(
-      'theme',
-      themeContext.theme === 'light' ? 'dark' : 'light'
+      "theme",
+      themeContext.theme === "light" ? "dark" : "light"
     );
   };
 
   const logOutAction = async () => {
     setVisible(true);
     try {
-      await AsyncStorage.removeItem('userID');
-      await AsyncStorage.removeItem('userName');
-      await AsyncStorage.removeItem('gender');
-      await AsyncStorage.removeItem('age_group');
+      await AsyncStorage.removeItem("userID");
+      await AsyncStorage.removeItem("userName");
+      await AsyncStorage.removeItem("gender");
+      await AsyncStorage.removeItem("age_group");
     } catch (error) {}
     userIDStore.dispatch(actions.removeUser()); //remove user id from redux state
-    props.navigation.navigate('HOME');
+    props.navigation.navigate("HOME");
   };
 
   const data = [
-    'Edit Profile',
-    'Change Password',
-    'Terms & Privacy',
-    'Dark Mode',
-    'Log Out',
+    strings.EditProfile,
+    strings.ChangePassword,
+    strings.Languages,
+    strings.TermsAndPrivacy,
+    strings.DarkMode,
+    strings.LogOut,
   ];
 
   const icons = [
     EditProfile,
     ChangePasswordIcon,
+    LanguagesIcon,
     TermsIcon,
     DarkModeIcon,
     LogoutIcon,
@@ -92,6 +108,7 @@ export const SettingScreen = (props) => {
   const settingActions = [
     editProfAction,
     changePassAction,
+    languagesAction,
     termsAction,
     stubAction,
     logOutAction,
@@ -109,9 +126,9 @@ export const SettingScreen = (props) => {
               onPress={settingActions[index]}
               accessoryLeft={icons[index]}
               accessoryRight={() =>
-                index === 3 ? (
+                index === 4 ? (
                   <Toggle
-                    checked={themeContext.theme == 'dark'}
+                    checked={themeContext.theme == "dark"}
                     onChange={darkModeAction}
                   />
                 ) : (
@@ -132,15 +149,16 @@ export const SettingScreen = (props) => {
       <Modal
         visible={visible}
         backdropStyle={styles.backdrop}
-        onBackdropPress={() => setVisible(false)}>
+        onBackdropPress={() => setVisible(false)}
+      >
         <Card disabled={true}>
-          <Spinner {...props} size='large' />
+          <Spinner {...props} size="large" />
         </Card>
       </Modal>
       <SafeAreaView style={styles.container}>
         <TopNavigation
-          alignment='center'
-          title='Settings'
+          alignment="center"
+          title={strings.Settings}
           accessoryLeft={renderBackAction}
         />
         <Divider />
@@ -161,6 +179,6 @@ const styles = StyleSheet.create({
     paddingTop: 32,
   },
   backdrop: {
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
 });

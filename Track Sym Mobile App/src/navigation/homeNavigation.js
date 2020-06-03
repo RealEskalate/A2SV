@@ -26,6 +26,8 @@ import DataAnalyticsMap from "../pages/public-data-page/DataAnalyticsMap.js";
 import SymDetailScreen from "../pages/info-detail/symptoms.js";
 import SpdDetailScreen from "../pages/info-detail/spread.js";
 import MsgDetailScreen from "../pages/info-detail/message.js";
+import { strings } from "../localization/localization";
+import { LangContext } from "../../assets/lang/language-context";
 
 const BottomTab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -52,7 +54,7 @@ const EditSymptomScreen = (props) => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <TopNavigation
-        title="Edit Your Symptoms"
+        title={strings.EditYourSymptoms}
         alignment="center"
         accessoryLeft={renderBackAction}
       />
@@ -73,7 +75,7 @@ const DataMap = (props) => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <TopNavigation
-        title="Edit Your Simptoms"
+        title={strings.Data}
         alignment="center"
         accessoryLeft={renderBackAction}
       />
@@ -84,11 +86,20 @@ const DataMap = (props) => {
 };
 
 const HomeTabsNavigator = ({ navigation }) => {
+  //setting up the language
+  const langContext = React.useContext(LangContext);
+  const lang = langContext.lang;
+  strings.setLanguage(lang);
   const openDrawer = () => {
     navigation.openDrawer();
   };
 
-  const names = ["Information", "Data", "Map", "My Symptoms"];
+  const names = [
+    strings.Information,
+    strings.Data,
+    strings.Map,
+    strings.MySymptoms,
+  ];
   const [i, setI] = React.useState(0);
 
   const OpenDrawerAction = () => (
@@ -120,10 +131,10 @@ const HomeTabsNavigator = ({ navigation }) => {
           navigation.navigate(state.routeNames[index]);
         }}
       >
-        <BottomNavigationTab title="Information" icon={InfoIcon} />
-        <BottomNavigationTab title="Data" icon={DataIcon} />
-        <BottomNavigationTab title="Map" icon={MapIcon} />
-        <BottomNavigationTab title="Symptoms" icon={PersonIcon} />
+        <BottomNavigationTab title={strings.Information} icon={InfoIcon} />
+        <BottomNavigationTab title={strings.Data} icon={DataIcon} />
+        <BottomNavigationTab title={strings.Map} icon={MapIcon} />
+        <BottomNavigationTab title={strings.Symptoms} icon={PersonIcon} />
       </BottomNavigation>
     </SafeAreaView>
   );

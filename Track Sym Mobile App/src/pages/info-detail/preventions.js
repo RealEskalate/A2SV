@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, SafeAreaView, ScrollView } from 'react-native';
+import React from "react";
+import { View, SafeAreaView, ScrollView } from "react-native";
 import {
   TopNavigation,
   TopNavigationAction,
@@ -8,41 +8,47 @@ import {
   Text,
   Icon,
   List,
-} from '@ui-kitten/components';
-import { ImageOverlay } from './extra/image-overlay.component';
-import { preventionData as data } from './extra/data';
-import styles from './extra/styles';
-import { InfoCard } from './extra/InfoCard';
+} from "@ui-kitten/components";
+import { ImageOverlay } from "./extra/image-overlay.component";
+import { preventionData as data } from "./extra/data";
+import styles from "./extra/styles";
+import { InfoCard } from "./extra/InfoCard";
+import { strings } from "../../localization/localization";
+import { LangContext } from "../../../assets/lang/language-context";
 
-const BackIcon = (props) => <Icon name='arrow-ios-back-outline' {...props} />;
+const BackIcon = (props) => <Icon name="arrow-ios-back-outline" {...props} />;
 const methods = [
   {
-    title: 'Hand Washing',
-    label: 'Rub or wash your hand with soap and water for at least 20 sec',
-    tag: '> 20 Sec',
-    image: require('../info-detail/assets/washing.jpg'),
+    title: strings.HandWashing,
+    label: "Rub or wash your hand with soap and water for at least 20 sec",
+    tag: "> 20 Sec",
+    image: require("../info-detail/assets/washing.jpg"),
   },
   {
-    title: 'Social Distancing',
-    label: 'Maintain at least 2m (6 ft) gap in groups.',
-    tag: '2 Meters',
-    image: require('../info-detail/assets/social.jpg'),
+    title: strings.SocialDistancing,
+    label: "Maintain at least 2m (6 ft) gap in groups.",
+    tag: "2 Meters",
+    image: require("../info-detail/assets/social.jpg"),
   },
   {
-    title: 'Respiratory Hygiene',
-    label: 'Use mouse and nose covering masks when going outside',
-    tag: 'Face covering',
-    image: require('../info-detail/assets/face.jpg'),
+    title: strings.RespiratoryHygiene,
+    label: "Use mouse and nose covering masks when going outside",
+    tag: "Face covering",
+    image: require("../info-detail/assets/face.jpg"),
   },
   {
-    title: 'Stay Informed',
-    label: 'Follow the advice of healthcare provider and your government',
-    tag: 'Truth vs Fake',
-    image: require('../info-detail/assets/info.jpg'),
+    title: strings.StayInformed,
+    label: "Follow the advice of healthcare provider and your government",
+    tag: "Truth vs Fake",
+    image: require("../info-detail/assets/info.jpg"),
   },
 ];
 
 export default PrevDetailScreen = (props) => {
+  //setting up the language
+  const langContext = React.useContext(LangContext);
+  const lang = langContext.lang;
+  strings.setLanguage(lang);
   const navigateBack = () => {
     props.navigation.goBack();
   };
@@ -62,7 +68,7 @@ export default PrevDetailScreen = (props) => {
           <Layout key={item.key}>
             <Divider />
             <View style={styles.authoringContainer}>
-              <Text style={styles.dateLabel} appearance='hint' category='p2'>
+              <Text style={styles.dateLabel} appearance="hint" category="p2">
                 {item.name}
               </Text>
             </View>
@@ -79,27 +85,28 @@ export default PrevDetailScreen = (props) => {
   return (
     <SafeAreaView style={styles.container}>
       <TopNavigation
-        alignment='center'
-        title='PREVENTION'
+        alignment="center"
+        title={strings.Prevention}
         accessoryLeft={renderBackAction}
       />
-      <Layout style={styles.container} level='2'>
+      <Layout style={styles.container} level="2">
         <ScrollView>
           <ImageOverlay style={styles.headerContainer} source={data.image}>
-            <Text style={styles.headerTitle} category='h1' status='control'>
+            <Text style={styles.headerTitle} category="h1" status="control">
               {data.title}
             </Text>
             <Text
               style={styles.headerDescription}
-              category='s1'
-              status='control'>
+              category="s1"
+              status="control"
+            >
               {data.description}
             </Text>
           </ImageOverlay>
           {renderDetail(data.methods1)}
           <View style={{ marginTop: 10 }}>
-            <Text style={styles.headerTitle} appearance='hint'>
-              RECOMMENDED METHODS
+            <Text style={styles.headerTitle} appearance="hint">
+              {strings.RecommendedMethods}
             </Text>
             <List
               contentContainerStyle={styles.horizontalList}

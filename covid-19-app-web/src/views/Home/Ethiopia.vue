@@ -100,7 +100,7 @@
           <v-card-title>
             <h4
               class="mb-2 primary--text"
-              v-text="'Free COVID-19 Reporting Phone Numbers'"
+              v-text="$t('freeReportingPhoneNumbers')"
             />
           </v-card-title>
           <v-row align="center" align-content="center" class="mx-auto">
@@ -140,10 +140,10 @@
 </template>
 
 <script>
-  import {DoughnutChart} from "./Charts/charts.js";
-  import {mdiPhone} from "@mdi/js";
+import { DoughnutChart } from "./Charts/charts.js";
+import { mdiPhone } from "@mdi/js";
 
-  export default {
+export default {
   name: "Ethiopia",
   components: {
     DoughnutChart

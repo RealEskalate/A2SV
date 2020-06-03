@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
-import { ScrollView, StyleSheet, View, SafeAreaView } from 'react-native';
-import userIDStore from '../../data-management/user-id-data/userIDStore';
-import symptomStore from '../../data-management/user-symptom-data/symptomStore';
-import * as symptomActions from '../../data-management/user-symptom-data/symptomActions';
-import MapboxGL from '@react-native-mapbox-gl/maps';
+import React, { Component } from "react";
+import { ScrollView, StyleSheet, View, SafeAreaView } from "react-native";
+import userIDStore from "../../data-management/user-id-data/userIDStore";
+import symptomStore from "../../data-management/user-symptom-data/symptomStore";
+import languageStore from "../../data-management/language_data/languageStore";
+import * as symptomActions from "../../data-management/user-symptom-data/symptomActions";
+import MapboxGL from "@react-native-mapbox-gl/maps";
 import {
   Layout,
   Text,
@@ -11,12 +12,13 @@ import {
   List,
   ListItem,
   Divider,
-} from '@ui-kitten/components';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { ThemeContext } from '../../../assets/themes/theme-context';
+} from "@ui-kitten/components";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { ThemeContext } from "../../../assets/themes/theme-context";
+import { strings } from "../../localization/localization";
 
 MapboxGL.setAccessToken(
-  'pk.eyJ1IjoiZmVyb3g5OCIsImEiOiJjazg0czE2ZWIwNHhrM2VtY3Y0a2JkNjI3In0.zrm7UtCEPg2mX8JCiixE4g'
+  "pk.eyJ1IjoiZmVyb3g5OCIsImEiOiJjazg0czE2ZWIwNHhrM2VtY3Y0a2JkNjI3In0.zrm7UtCEPg2mX8JCiixE4g"
 );
 
 export default class UserSymptomPage extends Component {
@@ -31,6 +33,11 @@ export default class UserSymptomPage extends Component {
     symptomStore.subscribe(() => {
       this.fetchUserSymptoms(userIDStore.getState().userId);
     });
+    languageStore.subscribe(() => {
+      strings.setLanguage(languageStore.getState());
+      this.componentDidMount();
+    });
+
     this.onUserLocationUpdate = this.onUserLocationUpdate.bind(this);
   }
 
@@ -50,12 +57,12 @@ export default class UserSymptomPage extends Component {
 
     this.timer = setInterval(() => {
       if (this.state.userSymptoms.length != 0) {
-        fetch('https://sym-track.herokuapp.com/api/user_locations', {
-          method: 'POST',
+        fetch("https://sym-track.herokuapp.com/api/user_locations", {
+          method: "POST",
           headers: {
-            Authorization: 'Bearer ' + userIDStore.getState().userToken,
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
+            Authorization: "Bearer " + userIDStore.getState().userToken,
+            Accept: "application/json",
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({
             longitude: this.state.user_longitude,
@@ -72,9 +79,9 @@ export default class UserSymptomPage extends Component {
             console.log(err);
           });
       } else {
-        console.log('No symptoms to report');
+        console.log("No symptoms to report");
         console.log(
-          this.state.user_latitude + ' , ' + this.state.user_longitude
+          this.state.user_latitude + " , " + this.state.user_longitude
         );
       }
     }, 10000);
@@ -87,12 +94,12 @@ export default class UserSymptomPage extends Component {
   //gets the list of symptoms from database
   fetchUserSymptoms(userId) {
     let newThis = this; // create variable for referencing 'this'
-    fetch('https://sym-track.herokuapp.com/api/symptomuser/user/' + userId, {
-      method: 'GET',
+    fetch("https://sym-track.herokuapp.com/api/symptomuser/user/" + userId, {
+      method: "GET",
       headers: {
-        Authorization: 'Bearer ' + userIDStore.getState().userToken,
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
+        Authorization: "Bearer " + userIDStore.getState().userToken,
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
     })
       .then((response) => response.json())
@@ -130,13 +137,14 @@ export default class UserSymptomPage extends Component {
     const customTheme = this.context;
     return (
       <Layout
-        style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+      >
         <MaterialCommunityIcons
-          name='grease-pencil'
+          name="grease-pencil"
           size={60}
-          color={customTheme.theme === 'light' ? 'black' : 'white'}
+          color={customTheme.theme === "light" ? "black" : "white"}
         />
-        <Text>You have not registered any symptom.</Text>
+        <Text>{strings.YouHaveNotRegisteredAnySymptom}</Text>
       </Layout>
     );
   };
@@ -147,12 +155,13 @@ export default class UserSymptomPage extends Component {
         <Layout style={{ flex: 1 }}>
           {this.state.loading ? (
             <Layout
-              level='2'
+              level="2"
               style={{
                 flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
               <Spinner />
             </Layout>
           ) : (
@@ -178,19 +187,19 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   symptoms: {
-    borderColor: '#000000',
+    borderColor: "#000000",
     marginBottom: 5,
     borderRadius: 10,
-    backgroundColor: '#1976d2',
-    color: '#ffffff',
+    backgroundColor: "#1976d2",
+    color: "#ffffff",
     flex: 1,
   },
   subtitle: {
-    borderColor: '#000000',
+    borderColor: "#000000",
     marginBottom: 5,
     borderRadius: 30,
-    backgroundColor: '#1976d2',
-    color: '#ffffff',
+    backgroundColor: "#1976d2",
+    color: "#ffffff",
     flex: 1,
     fontSize: 14,
   },

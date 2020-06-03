@@ -19,6 +19,8 @@ import MapboxGL from "@react-native-mapbox-gl/maps";
 import Heat from "../../../assets/images/Heat.jpg";
 import Regional from "../../../assets/images/Regional.jpg";
 import userIDStore from "../../data-management/user-id-data/userIDStore";
+import { strings } from "../../localization/localization";
+import languageStore from "../../data-management/language_data/languageStore";
 
 MapboxGL.setAccessToken(
   "pk.eyJ1IjoiZmVyb3g5OCIsImEiOiJjazg0czE2ZWIwNHhrM2VtY3Y0a2JkNjI3In0.zrm7UtCEPg2mX8JCiixE4g"
@@ -26,8 +28,6 @@ MapboxGL.setAccessToken(
 
 console.disableYellowBox = true;
 
-const nycJSON = require("./data/countries.json");
-//const covid = require("./data/covid.json");
 const { height } = Dimensions.get("window");
 const screenWidth = Dimensions.get("window").width;
 export default class DataAnalyticsMap extends React.Component {
@@ -39,11 +39,8 @@ export default class DataAnalyticsMap extends React.Component {
 
       covid: {},
 
-      renderFunction: 0, // heatmaps rendered by default
       groupCollections: {},
       screenCoords: [],
-      selectedGeoJSON: null,
-      country2boundary: {},
       featureCollection: {
         type: "FeatureCollection",
         features: [],
@@ -52,9 +49,6 @@ export default class DataAnalyticsMap extends React.Component {
       maxDateLength: 0,
       max: 0.0,
       slider_date: 0,
-      dataToView: "confirmed",
-      regional_checked: false,
-      heatmap_checked: true,
       visible: false,
 
       map_type: "confirmed",
@@ -67,6 +61,10 @@ export default class DataAnalyticsMap extends React.Component {
 
     this.featureToGroupCollection = this.featureToGroupCollection.bind(this);
     this.loadDataByDate = this.loadDataByDate.bind(this);
+    languageStore.subscribe(() => {
+      strings.setLanguage(languageStore.getState());
+      this.componentDidMount();
+    });
   }
 
   _toggleBottomNavigationView = () => {
@@ -99,8 +97,6 @@ export default class DataAnalyticsMap extends React.Component {
   }
 
   async componentDidMount() {
-    const country2boundary = this.prepareBoundaries(nycJSON);
-    this.setState({ country2boundary: country2boundary });
     const covid = await this.getCovid();
     console.log("------ Logging covid--------");
     console.log(covid);
@@ -235,10 +231,6 @@ export default class DataAnalyticsMap extends React.Component {
         element.properties.confirmed =
           element.properties.confirmed / this.state.max;
         let groupKey = Math.round(element.properties.confirmed * 10);
-        const geoJsonElement = this.state.country2boundary[element.id];
-        if (geoJsonElement) {
-          groupCollections[groupKey].features.push(geoJsonElement);
-        }
       } else if (this.state.map_type === "death") {
         // deaths
         if (element.properties.death != 0) {
@@ -249,10 +241,6 @@ export default class DataAnalyticsMap extends React.Component {
         element.properties.death = element.properties.death / this.state.max;
         let groupKey = Math.round(element.properties.death * 10);
         console.log("group key = " + groupKey);
-        const geoJsonElement = this.state.country2boundary[element.id];
-        if (geoJsonElement) {
-          groupCollections[groupKey].features.push(geoJsonElement);
-        }
       } else {
         if (element.properties.recovered != 0) {
           element.properties.recovered = parseFloat(
@@ -263,36 +251,31 @@ export default class DataAnalyticsMap extends React.Component {
           element.properties.recovered / this.state.max;
         console.log(element.properties.recovered);
         let groupKey = Math.round(element.properties.recovered * 10);
-        const geoJsonElement = this.state.country2boundary[element.id];
-        if (geoJsonElement) {
-          groupCollections[groupKey].features.push(geoJsonElement);
-        }
       }
     }
 
     this.setState({ groupCollections: groupCollections });
   }
 
-  prepareBoundaries(geoJson) {
-    const collections = {};
-    for (let index = 0; index < geoJson.features.length; index++) {
-      const element = geoJson.features[index];
-      const country = element.properties.ADMIN;
-      collections[country] = element;
-    }
-    return collections;
-  }
+  // prepareBoundaries(geoJson) {
+  //   const collections = {};
+  //   for (let index = 0; index < geoJson.features.length; index++) {
+  //     const element = geoJson.features[index];
+  //     const country = element.properties.ADMIN;
+  //     collections[country] = element;
+  //   }
+  //   return collections;
+  // }
 
-  getBoundingBox(screenCoords) {
-    const maxX = Math.max(screenCoords[0][0], screenCoords[1][0]);
-    const minX = Math.min(screenCoords[0][0], screenCoords[1][0]);
-    const maxY = Math.max(screenCoords[0][1], screenCoords[1][1]);
-    const minY = Math.min(screenCoords[0][1], screenCoords[1][1]);
-    return [maxY, maxX, minY, minX];
-  }
+  // getBoundingBox(screenCoords) {
+  //   const maxX = Math.max(screenCoords[0][0], screenCoords[1][0]);
+  //   const minX = Math.min(screenCoords[0][0], screenCoords[1][0]);
+  //   const maxY = Math.max(screenCoords[0][1], screenCoords[1][1]);
+  //   const minY = Math.min(screenCoords[0][1], screenCoords[1][1]);
+  //   return [maxY, maxX, minY, minX];
+  // }
 
   loadDataByDate(date) {
-    console.log("maptype = " + this.state.map_type);
     const featureCollection = this.state.featureCollection;
     this.state.max = 0.0;
     for (let index = 0; index < featureCollection.features.length; index++) {
@@ -323,59 +306,50 @@ export default class DataAnalyticsMap extends React.Component {
     this.setState({ featureCollection: featureCollection });
   }
 
-  renderGroup(key, featureCollection, color) {
-    return (
-      <MapboxGL.ShapeSource key={key} id={`${key}`} shape={featureCollection}>
-        <MapboxGL.FillLayer
-          id={`${key}-fill`}
-          style={{
-            fillAntialias: true,
-            fillColor: color,
-            fillOutlineColor: "black",
-            fillOpacity: 0.84,
-          }}
-        />
-      </MapboxGL.ShapeSource>
-    );
-  }
+  // renderGroup(key, featureCollection, color) {
+  //   return (
+  //     <MapboxGL.ShapeSource key={key} id={`${key}`} shape={featureCollection}>
+  //       <MapboxGL.FillLayer
+  //         id={`${key}-fill`}
+  //         style={{
+  //           fillAntialias: true,
+  //           fillColor: color,
+  //           fillOutlineColor: "black",
+  //           fillOpacity: 0.84,
+  //         }}
+  //       />
+  //     </MapboxGL.ShapeSource>
+  //   );
+  // }
 
-  renderGroups(map_type) {
-    console.log("Rendering regional map");
-    const shapes = [];
-    let k = 0;
-    var gradientColors = [];
-    for (var n = 0; n <= 11; n++) {
-      if (map_type === "confirmed" || map_type === "death") {
-        gradientColors.push(`rgba(${255}, ${0}, ${0}, ${n / 11.0})`);
-      } else {
-        gradientColors.push(`rgba(${0}, ${255}, ${0}, ${n / 11.0})`);
-      }
-    }
-    for (let key in this.state.groupCollections) {
-      const featureCollection = this.state.groupCollections[key];
-      if (featureCollection !== undefined) {
-        const view = this.renderGroup(
-          key,
-          featureCollection,
-          gradientColors[k]
-        );
-        shapes.push(view);
-        k += 1;
-      }
-    }
-    return shapes;
-  }
-
-  renderMap(map_type) {
-    if (this.state.renderFunction == 0) {
-      return this.renderHeatmap();
-    } else {
-      return this.renderGroups(map_type);
-    }
-  }
+  // renderGroups(map_type) {
+  //   console.log("Rendering regional map");
+  //   const shapes = [];
+  //   let k = 0;
+  //   var gradientColors = [];
+  //   for (var n = 0; n <= 11; n++) {
+  //     if (map_type === "confirmed" || map_type === "death") {
+  //       gradientColors.push(`rgba(${255}, ${0}, ${0}, ${n / 11.0})`);
+  //     } else {
+  //       gradientColors.push(`rgba(${0}, ${255}, ${0}, ${n / 11.0})`);
+  //     }
+  //   }
+  //   for (let key in this.state.groupCollections) {
+  //     const featureCollection = this.state.groupCollections[key];
+  //     if (featureCollection !== undefined) {
+  //       const view = this.renderGroup(
+  //         key,
+  //         featureCollection,
+  //         gradientColors[k]
+  //       );
+  //       shapes.push(view);
+  //       k += 1;
+  //     }
+  //   }
+  //   return shapes;
+  // }
 
   renderHeatmap() {
-    console.log("Rendering heatmap");
     return (
       <MapboxGL.ShapeSource
         id="earthquakes"
@@ -463,28 +437,19 @@ export default class DataAnalyticsMap extends React.Component {
   }
   playMapEvent() {
     this.setState({ play: true });
-    var refresh_rate = 1200;
+    var refresh_rate = 400;
     var slider_rate = 1;
-    if (this.state.renderFunction == 1) {
-      slider_rate = 5;
-    }
-    console.log("refresh rate = " + refresh_rate);
-    console.log("render function = " + this.state.renderFunction);
-    console.log("slider rate = " + slider_rate);
+
     this.timer = setInterval(() => {
       if (
-        this.state.play == true &&
-        this.state.slider_date + slider_rate < this.state.maxDateLength
+        this.state.play === true &&
+        this.state.slider_date + 1 < this.state.maxDateLength
       ) {
-        console.log(this.state.slider_date + " , " + this.state.maxDateLength);
-        this.setState({ slider_date: this.state.slider_date + slider_rate });
+        this.setState({ slider_date: this.state.slider_date + 1 });
         this.loadDataByDate(this.state.index2date[this.state.slider_date]);
-        if (this.state.renderFunction == 1) {
-          console.log("calling feature to group");
-          this.featureToGroupCollection();
-        }
       } else {
         //console.log("breaking");
+        this.setState({ play: false });
         return;
       }
     }, refresh_rate);
@@ -502,10 +467,10 @@ export default class DataAnalyticsMap extends React.Component {
         >
           <MapboxGL.Camera zoomLevel={1} centerCoordinate={[60, 40.723279]} />
 
-          {this.renderMap(this.state.map_type)}
+          {this.renderHeatmap()}
         </MapboxGL.MapView>
         <SlidingUpPanel
-          draggableRange={{ top: 240, bottom: 20 }}
+          draggableRange={{ top: 155, bottom: 20 }}
           showBackdrop={false}
           ref={(c) => (this._panel = c)}
         >
@@ -541,9 +506,9 @@ export default class DataAnalyticsMap extends React.Component {
               }}
               itemStyle={{ color: "#1e88e5" }}
             >
-              <Picker.Item label="CONFIRMED" value="CONFIRMED" />
-              <Picker.Item label="RECOVERED" value="RECOVERED" />
-              <Picker.Item label="DEATHS" value="DEATH" />
+              <Picker.Item label={strings.Confirmed} value="CONFIRMED" />
+              <Picker.Item label={strings.Recovered} value="RECOVERED" />
+              <Picker.Item label={strings.Death} value="DEATH" />
             </Picker>
             <View
               style={{
@@ -615,40 +580,10 @@ export default class DataAnalyticsMap extends React.Component {
                 <FontAwesome name="pause" color="#fff" size={15} />
               </TouchableOpacity>
             </View>
-            <Text style={{ color: "#1e88e5" }}>
+            <Text style={{ marginTop: 20, color: "#1e88e5" }}>
               <FontAwesome name="calendar" size={15} />
               {this.state.index2date[this.state.slider_date]}
             </Text>
-            <View
-              style={{
-                flexDirection: "row",
-                marginLeft: 30,
-                marginRight: 30,
-                marginTop: 10,
-                alignItems: "center",
-              }}
-            >
-              <View
-                style={{
-                  flexDirection: "row",
-                  flex: 1,
-                }}
-              >
-                {this.getCheckBox("HEAT", this.state.heatmap_checked, 0, Heat)}
-                {this.getCheckBox(
-                  "REGIONAL",
-                  this.state.regional_checked,
-                  1,
-                  Regional
-                )}
-              </View>
-            </View>
-            <View
-              style={{
-                alignItems: "flex-end",
-                width: 300,
-              }}
-            ></View>
           </View>
         </SlidingUpPanel>
       </View>

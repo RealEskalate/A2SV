@@ -13,8 +13,8 @@
 </template>
 
 <script>
-import AppBar from "./components/core/AppBar.vue";
 import AppFooter from "./components/core/AppFooter.vue";
+import AppBar from "./components/core/AppBar.vue";
 import Tour from "./components/core/Tour.vue";
 import store from "@/store/";
 
