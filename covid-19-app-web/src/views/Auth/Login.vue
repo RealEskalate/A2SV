@@ -62,12 +62,12 @@
   </v-row>
 </template>
 <script>
-  import ajax from "../../auth/ajax";
-  import store from "@/store/";
-  import {Rules, User} from "./user.js";
-  import {mdiEye, mdiEyeOff} from "@mdi/js";
+import ajax from "../../auth/ajax";
+import store from "@/store/";
+import { Rules, User } from "./user.js";
+import { mdiEye, mdiEyeOff } from "@mdi/js";
 
-  export default {
+export default {
   name: "Login",
   data() {
     return {
@@ -85,11 +85,11 @@
     submit() {
       this.loadAnim = true;
       ajax.post("auth/login", this.user).then(
-          res => {
-            store.dispatch("setUser", {user: res.data.user});
-            store.dispatch("setToken", {token: res.data.token});
+        res => {
+          store.dispatch("setUser", { user: res.data.user });
+          store.dispatch("setToken", { token: res.data.token });
           alert("Login successful");
-            console.log(res);
+          console.log(res);
           this.loadAnim = false;
         },
         error => {
@@ -111,9 +111,9 @@
       return store.getters.getMessage;
     }
   },
-    mounted() {
-      console.log(store.getters.getUser);
-      console.log(store.getters.getToken);
-    }
+  mounted() {
+    console.log(store.getters.getUser);
+    console.log(store.getters.getToken);
+  }
 };
 </script>

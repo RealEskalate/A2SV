@@ -22,10 +22,10 @@ const mutations = {
 };
 
 const actions = {
-  setUser: ({commit}, {user}) => {
+  setUser: ({ commit }, { user }) => {
     commit("setUser", user);
   },
-  setToken: ({commit}, {token}) => {
+  setToken: ({ commit }, { token }) => {
     commit("setToken", token);
   }
 };
