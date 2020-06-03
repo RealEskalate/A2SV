@@ -14,6 +14,7 @@ import { symptomsData as data } from "./extra/data";
 import styles from "./extra/styles";
 import { InfoCard } from "./extra/InfoCard";
 import { strings } from "../../localization/localization";
+import { LangContext } from "../../../assets/lang/language-context";
 
 const BackIcon = (props) => <Icon name="arrow-ios-back-outline" {...props} />;
 const mostCommon = [
@@ -80,6 +81,11 @@ const lessCommon = [
 ];
 
 export default PrevDetailScreen = (props) => {
+  //setting up the language
+  const langContext = React.useContext(LangContext);
+  const lang = langContext.lang;
+  strings.setLanguage(lang);
+
   const navigateBack = () => {
     props.navigation.goBack();
   };

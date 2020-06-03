@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, SafeAreaView } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
 import {
@@ -15,20 +15,29 @@ import {
   Card,
 } from "@ui-kitten/components";
 import { ThemeContext } from "../../../assets/themes/theme-context";
+import { LangContext } from "../../../assets/lang/language-context";
 import * as actions from "../../data-management/user-id-data/userIDActions";
 import userIDStore from "../../data-management/user-id-data/userIDStore";
 import { strings } from "../../localization/localization";
+import languageStore from "../../data-management/language_data/languageStore";
+import * as languageActions from "../../data-management/language_data/languageActions";
 
 const ArrowIosBackIcon = (style) => <Icon {...style} name="arrow-ios-back" />;
 const EditProfile = (style) => <Icon {...style} name="edit-2-outline" />;
 const ChangePasswordIcon = (style) => <Icon {...style} name="unlock-outline" />;
 const TermsIcon = (style) => <Icon {...style} name="book-open-outline" />;
 const DarkModeIcon = (style) => <Icon {...style} name="moon-outline" />;
+const LanguagesIcon = (style) => <Icon {...style} name="globe-outline" />;
 const LogoutIcon = (style) => <Icon {...style} name="log-out-outline" />;
 
 export const SettingScreen = (props) => {
   const themeContext = React.useContext(ThemeContext);
+  const langContext = React.useContext(LangContext);
   const [visible, setVisible] = React.useState(false);
+  const lang = langContext.lang;
+  strings.setLanguage(lang);
+
+  //set language for language
 
   const renderBackAction = () => (
     <TopNavigationAction
@@ -38,6 +47,10 @@ export const SettingScreen = (props) => {
   );
 
   const stubAction = () => {};
+
+  const languagesAction = () => {
+    props.navigation.navigate("EditLanguageScreen");
+  };
 
   const termsAction = () => {
     props.navigation.navigate("TermsAndPrivacyScreen");
@@ -77,6 +90,7 @@ export const SettingScreen = (props) => {
   const data = [
     strings.EditProfile,
     strings.ChangePassword,
+    strings.Languages,
     strings.TermsAndPrivacy,
     strings.DarkMode,
     strings.LogOut,
@@ -85,6 +99,7 @@ export const SettingScreen = (props) => {
   const icons = [
     EditProfile,
     ChangePasswordIcon,
+    LanguagesIcon,
     TermsIcon,
     DarkModeIcon,
     LogoutIcon,
@@ -93,6 +108,7 @@ export const SettingScreen = (props) => {
   const settingActions = [
     editProfAction,
     changePassAction,
+    languagesAction,
     termsAction,
     stubAction,
     logOutAction,
@@ -110,7 +126,7 @@ export const SettingScreen = (props) => {
               onPress={settingActions[index]}
               accessoryLeft={icons[index]}
               accessoryRight={() =>
-                index === 3 ? (
+                index === 4 ? (
                   <Toggle
                     checked={themeContext.theme == "dark"}
                     onChange={darkModeAction}

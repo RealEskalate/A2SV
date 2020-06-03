@@ -14,6 +14,7 @@ import { messageData as data } from "./extra/data";
 import styles from "./extra/styles";
 import { InfoCard } from "./extra/InfoCard";
 import { strings } from "../../localization/localization";
+import { LangContext } from "../../../assets/lang/language-context";
 
 const BackIcon = (props) => <Icon name="arrow-ios-back-outline" {...props} />;
 
@@ -21,6 +22,10 @@ export default PrevDetailScreen = (props) => {
   const navigateBack = () => {
     props.navigation.goBack();
   };
+  //setting up the language
+  const langContext = React.useContext(LangContext);
+  const lang = langContext.lang;
+  strings.setLanguage(lang);
 
   const renderBackAction = () => (
     <TopNavigationAction icon={BackIcon} onPress={navigateBack} />

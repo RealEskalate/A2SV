@@ -20,6 +20,7 @@ import userIDStore from "../data-management/user-id-data/userIDStore";
 import { NewsNavigator } from "../pages/news/newsStack";
 import AboutPage from "../pages/about-page/About";
 import { strings } from "../localization/localization";
+import { LangContext } from "../../assets/lang/language-context";
 
 const { Navigator, Screen } = createDrawerNavigator();
 
@@ -29,6 +30,11 @@ const InfoIcon = (props) => <Icon {...props} name="info-outline" />;
 const FlagIcon = (props) => <Icon {...props} name="flag-outline" />;
 const SettingIcon = (props) => <Icon {...props} name="settings-2-outline" />;
 const ArrowIosBackIcon = (style) => <Icon {...style} name="arrow-ios-back" />;
+
+//setting up the language
+const langContext = React.useContext(LangContext);
+const lang = langContext.lang;
+strings.setLanguage(lang);
 
 export const AvatarSizeShowcase = () => (
   <Layout style={styles.container} level="1">

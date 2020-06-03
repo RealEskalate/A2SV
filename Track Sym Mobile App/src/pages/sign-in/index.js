@@ -19,6 +19,7 @@ import AsyncStorage from "@react-native-community/async-storage";
 import themedStyles from "./extra/themedStyles";
 import { KeyboardAvoidingView } from "../../components/3rd-party";
 import { strings } from "../../localization/localization";
+import { LangContext } from "../../../assets/lang/language-context";
 
 const PersonIcon = (style) => <Icon {...style} name="person" />;
 
@@ -33,6 +34,10 @@ export default ({ navigation }) => {
   const [modalState, setModalState] = React.useState(false);
   const [modalMessage, setModalMessage] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(false);
+  //setting up the language
+  const langContext = React.useContext(LangContext);
+  const lang = langContext.lang;
+  strings.setLanguage(lang);
 
   const styles = useStyleSheet(themedStyles);
 
@@ -64,7 +69,7 @@ export default ({ navigation }) => {
       setUsernameCap("");
     } else {
       setUsernameStatus("danger");
-      setUsernameCap("User name is required");
+      setUsernameCap(strings.Required);
     }
     setUsername(name);
   };
@@ -75,7 +80,7 @@ export default ({ navigation }) => {
       setPasswordCap("");
     } else {
       setPasswordStatus("danger");
-      setPasswordCap("Please enter your password!");
+      setPasswordCap(strings.Required);
     }
     setPassword(pass);
   };
@@ -83,14 +88,14 @@ export default ({ navigation }) => {
   const onSubmitForm = () => {
     if (username === "") {
       setUsernameStatus("danger");
-      setModalMessage("Please enter your user name!");
+      setModalMessage(strings.PleaseEnterYourUsername);
       setModalState(true);
       return;
     }
 
     if (password === "") {
       setPasswordStatus("danger");
-      setModalMessage("Password cannot be empty!");
+      setModalMessage(strings.PleaseEnterYourPassword);
       setModalState(true);
       return;
     }
@@ -131,7 +136,7 @@ export default ({ navigation }) => {
 
     console.log(response);
     if (!response) {
-      setModalMessage("Check your internet connection and try again!");
+      setModalMessage(strings.PleaseCheckYourConnection);
       setModalState(true);
       setIsLoading(false);
       return;
@@ -139,7 +144,7 @@ export default ({ navigation }) => {
 
     if (response.status === 404) {
       setModalMessage(
-        "You have entered wrong username or password,\nPlease try again!"
+        strings.YouHaveEnteredWrongUsernameOrPasswordPleaseTryAgain
       );
       setModalState(true);
       setIsLoading(false);
@@ -186,7 +191,7 @@ export default ({ navigation }) => {
             status="primary"
             onPress={() => setModalState(false)}
           >
-            Dismiss
+            {strings.Dismiss}
           </Text>
         </Card>
       </Modal>
