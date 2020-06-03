@@ -9,6 +9,7 @@ import loaders from "./loaders";
 import axios from "axios";
 import messages from "./messages";
 import symptomTracking from "./symptom-tracking";
+import user from "./user";
 import createPersistedState from "vuex-persistedstate";
 
 Vue.use(Vuex);
@@ -21,7 +22,13 @@ export const langConverter = {
 export default new Vuex.Store({
   plugins: [
     createPersistedState({
-      paths: ["navigationType", "languagePreference", "firstVisit"]
+      paths: [
+        "navigationType",
+        "languagePreference",
+        "firstVisit",
+        "user.user",
+        "user.token"
+      ]
     })
   ],
   state: {
@@ -87,6 +94,7 @@ export default new Vuex.Store({
     learn,
     about,
     news,
+    user,
     loaders,
     messages,
     symptomTracking

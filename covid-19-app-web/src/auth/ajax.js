@@ -15,7 +15,7 @@ ajax.isCancel = axios.isCancel;
  */
 ajax.interceptors.request.use(
   config => {
-    let token = store.getters.getApiToken;
+    let token = store.getters.getToken;
 
     if (token) {
       config.headers["Authorization"] = `Bearer ${token}`;
