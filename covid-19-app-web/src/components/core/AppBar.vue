@@ -67,7 +67,12 @@
         <v-list class="py-0">
           <template v-for="(item, index) in more_links">
             <v-divider v-if="index !== 0" :key="index" />
-            <v-list-item link :key="index" :to="item.to" active-class="white--text primary">
+            <v-list-item
+              link
+              :key="index"
+              :to="item.to"
+              active-class="white--text primary"
+            >
               <v-icon small class="mr-2" v-text="item.icon" />
               <v-list-item-content>
                 <small v-text="$t(item.text)" />
