@@ -16,6 +16,8 @@
     "compression": "^1.7.4",
     "compression-webpack-plugin": "latest",
     "express": "^4.17.1",
+    "mapbox-gl": "^1.10.1",
+    "mapbox-gl-vue": "^2.0.4",
     "moment": "^2.26.0",
     "vue": "^2.6.11",
     "vue-carousel-3d": "^0.2.0",
