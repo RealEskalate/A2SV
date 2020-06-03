@@ -11,21 +11,21 @@
               Global map(Legacy)
             </v-tab>
             <v-tab-item>
-              <sym-track/>
+              <sym-track />
             </v-tab-item>
             <v-tab-item>
               <v-responsive
-                      :aspect-ratio="
+                :aspect-ratio="
                   $vuetify.breakpoint.smAndDown ? 12 / 16 : 16 / 12
                 "
               >
                 <iframe
-                        src="https://public.domo.com/cards/dG1jy"
-                        width="100%"
-                        height="100%"
-                        marginheight="0"
-                        marginwidth="0"
-                        frameborder="0"
+                  src="https://public.domo.com/cards/dG1jy"
+                  width="100%"
+                  height="100%"
+                  marginheight="0"
+                  marginwidth="0"
+                  frameborder="0"
                 ></iframe>
                 <!--            <iframe-->
                 <!--              src="https://public.domo.com/cards/bWxVg"-->
@@ -44,11 +44,11 @@
   </section>
 </template>
 <script>
-  import SymTrack from "./Maps/SymTrack";
+import SymTrack from "./Maps/SymTrack";
 
-  export default {
-    components: {
-      SymTrack
-    }
-  };
+export default {
+  components: {
+    SymTrack
+  }
+};
 </script>

@@ -8,6 +8,7 @@ import news from "./news";
 import loaders from "./loaders";
 import axios from "axios";
 import messages from "./messages";
+import symptomTracking from "./symptom-tracking";
 import createPersistedState from "vuex-persistedstate";
 
 Vue.use(Vuex);
@@ -87,6 +88,7 @@ export default new Vuex.Store({
     about,
     news,
     loaders,
-    messages
+    messages,
+    symptomTracking
   }
 });
