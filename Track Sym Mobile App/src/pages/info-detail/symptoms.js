@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, SafeAreaView, ScrollView } from 'react-native';
+import React from "react";
+import { View, SafeAreaView, ScrollView } from "react-native";
 import {
   TopNavigation,
   TopNavigationAction,
@@ -8,73 +8,74 @@ import {
   Text,
   Icon,
   List,
-} from '@ui-kitten/components';
-import { ImageOverlay } from './extra/image-overlay.component';
-import { symptomsData as data } from './extra/data';
-import styles from './extra/styles';
-import { InfoCard } from './extra/InfoCard';
+} from "@ui-kitten/components";
+import { ImageOverlay } from "./extra/image-overlay.component";
+import { symptomsData as data } from "./extra/data";
+import styles from "./extra/styles";
+import { InfoCard } from "./extra/InfoCard";
+import { strings } from "../../localization/localization";
 
-const BackIcon = (props) => <Icon name='arrow-ios-back-outline' {...props} />;
+const BackIcon = (props) => <Icon name="arrow-ios-back-outline" {...props} />;
 const mostCommon = [
   {
-    title: 'High Fever',
-    label: 'Body temperature is 103°F (39.4°C) or above',
-    tag: '83% - 99%',
-    image: require('../info-detail/assets/fever.jpg'),
+    title: strings.HighFever,
+    label: "Body temperature is 103°F (39.4°C) or above",
+    tag: "83% - 99%",
+    image: require("../info-detail/assets/fever.jpg"),
   },
   {
-    title: 'Dry Cough',
-    label: 'Does not bring up mucus and stays for eight weeks or more',
-    tag: '59% - 82%',
-    image: require('../info-detail/assets/cough2.jpg'),
+    title: strings.DryCough,
+    label: "Does not bring up mucus and stays for eight weeks or more",
+    tag: "59% - 82%",
+    image: require("../info-detail/assets/cough2.jpg"),
   },
   {
-    title: 'Fatigue',
-    label: 'Lack of enengy and Motivation (physical and mental)',
-    tag: '44% - 70%',
-    image: require('../info-detail/assets/tired.jpg'),
+    title: strings.Fatigue,
+    label: "Lack of enengy and Motivation (physical and mental)",
+    tag: "44% - 70%",
+    image: require("../info-detail/assets/tired.jpg"),
   },
   {
-    title: 'Shortness of Breath',
+    title: strings.ShortnessOfBreath,
     label:
-      'Trouble inhaling or exhaling or feels as though they cannot get enough oxygen',
-    tag: '31% - 40%',
-    image: require('../info-detail/assets/short.jpg'),
+      "Trouble inhaling or exhaling or feels as though they cannot get enough oxygen",
+    tag: "31% - 40%",
+    image: require("../info-detail/assets/short.jpg"),
   },
   {
-    title: 'Myalgia',
+    title: strings.Myalgia,
     label:
-      'Pain or ache in muscles characterized by chronic pain, stiffness and tenderness',
-    tag: '11% - 35%',
-    image: require('../info-detail/assets/ache.jpg'),
+      "Pain or ache in muscles characterized by chronic pain, stiffness and tenderness",
+    tag: "11% - 35%",
+    image: require("../info-detail/assets/ache.jpg"),
   },
 ];
 
 const lessCommon = [
   {
-    title: 'Headache',
-    label: 'Sharp, throbbing or dull feeling across the head',
-    tag: '< 14%',
-    image: require('../info-detail/assets/headache.jpg'),
+    title: strings.Headache,
+    label: "Sharp, throbbing or dull feeling across the head",
+    tag: "< 14%",
+    image: require("../info-detail/assets/headache.jpg"),
   },
   {
-    title: 'Sore Throat',
+    title: strings.SoreThroat,
     label:
-      'Scratchiness or irritation of the throat that often worsens when you swallow',
-    tag: '< 14%',
-    image: require('../info-detail/assets/cough.jpg'),
+      "Scratchiness or irritation of the throat that often worsens when you swallow",
+    tag: "< 14%",
+    image: require("../info-detail/assets/cough.jpg"),
   },
   {
-    title: 'Chills',
-    label: 'Feeling of being cold without an apparent cause',
-    tag: '< 11%',
-    image: require('../info-detail/assets/cold2.jpg'),
+    title: strings.Chills,
+    label: "Feeling of being cold without an apparent cause",
+    tag: "< 11%",
+    image: require("../info-detail/assets/cold2.jpg"),
   },
   {
-    title: 'Anosmia',
-    label: 'Usually associated with partial loss of smell or a blocked nose',
-    tag: '< 5%',
-    image: require('../info-detail/assets/smell.jpg'),
+    title: strings.Anosmia,
+    label: "Usually associated with partial loss of smell or a blocked nose",
+    tag: "< 5%",
+    image: require("../info-detail/assets/smell.jpg"),
   },
 ];
 
@@ -98,7 +99,7 @@ export default PrevDetailScreen = (props) => {
           <Layout key={item.key}>
             <Divider />
             <View style={styles.authoringContainer}>
-              <Text style={styles.dateLabel} appearance='hint' category='p2'>
+              <Text style={styles.dateLabel} appearance="hint" category="p2">
                 {item.name}
               </Text>
             </View>
@@ -115,31 +116,32 @@ export default PrevDetailScreen = (props) => {
   return (
     <SafeAreaView style={styles.container}>
       <TopNavigation
-        alignment='center'
-        title='Symptoms'
+        alignment="center"
+        title={strings.Symptoms}
         accessoryLeft={renderBackAction}
       />
-      <Layout style={styles.container} level='2'>
+      <Layout style={styles.container} level="2">
         <ScrollView>
           <ImageOverlay style={styles.headerContainer} source={data.image}>
-            <Text style={styles.headerTitle} category='h1' status='control'>
+            <Text style={styles.headerTitle} category="h1" status="control">
               {data.title}
             </Text>
             <Text
               style={styles.headerDescription}
-              category='s1'
-              status='control'>
+              category="s1"
+              status="control"
+            >
               {data.description}
             </Text>
           </ImageOverlay>
-          <Layout style={styles.contentContainer} level='1'>
-            <Text>{data.content + '\n'}</Text>
+          <Layout style={styles.contentContainer} level="1">
+            <Text>{data.content + "\n"}</Text>
             <Text>{data.content_two}</Text>
           </Layout>
           <Divider />
           <View style={{ marginTop: 10 }}>
-            <Text style={styles.headerTitle} appearance='hint'>
-              MOST COMMON
+            <Text style={styles.headerTitle} appearance="hint">
+              {strings.MostCommon}
             </Text>
             <List
               contentContainerStyle={styles.horizontalList}
@@ -152,8 +154,8 @@ export default PrevDetailScreen = (props) => {
           {renderDetail(data.most_list)}
           <Divider />
           <View style={{ marginTop: 10 }}>
-            <Text style={styles.headerTitle} appearance='hint'>
-              LESS COMMON
+            <Text style={styles.headerTitle} appearance="hint">
+              {strings.LessCommon}
             </Text>
             <List
               contentContainerStyle={styles.horizontalList}

@@ -19,7 +19,7 @@ import { SettingNavigator } from "../pages/settings/settingStack";
 import userIDStore from "../data-management/user-id-data/userIDStore";
 import { NewsNavigator } from "../pages/news/newsStack";
 import AboutPage from "../pages/about-page/About";
-import { strings } from "../localization/localization.js";
+import { strings } from "../localization/localization";
 
 const { Navigator, Screen } = createDrawerNavigator();
 
@@ -95,7 +95,7 @@ const GoToAboutPage = (props) => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <TopNavigation
-        title={strings.About}
+        title={strings.AboutUs}
         alignment="center"
         accessoryLeft={renderBackAction}
       />
@@ -122,15 +122,15 @@ const DrawerContent = ({ navigation, state }) => (
 
 export const AppNavigator = () => (
   <Navigator
-    initialRouteName={strings.Settings}
+    initialRouteName="HOME"
     backBehavior="initialRoute"
     drawerContent={(props) => <DrawerContent {...props} />}
   >
-    <Screen name={strings.Home} component={HomeStackNavigator} />
-    <Screen name={strings.News} component={NewsNavigator} />
-    <Screen name={strings.Ethiopia} component={GoToEthiopia} />
-    <Screen name={strings.About} component={GoToAboutPage} />
-    <Screen name={strings.Settings} component={SettingNavigator} />
+    <Screen name="HOME" component={HomeStackNavigator} />
+    <Screen name="NEWS" component={NewsNavigator} />
+    <Screen name="ETHIOPIA" component={GoToEthiopia} />
+    <Screen name="ABOUT" component={GoToAboutPage} />
+    <Screen name="SETTINGS" component={SettingNavigator} />
   </Navigator>
 );
 

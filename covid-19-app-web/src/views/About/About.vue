@@ -172,11 +172,17 @@
 </template>
 
 <script>
-  import axios from "axios";
-  import store from "@/store";
-  import {mdiCloseCircleOutline, mdiCloudDownloadOutline, mdiSearchWeb, mdiSend, mdiYoutube} from "@mdi/js";
+import axios from "axios";
+import store from "@/store";
+import {
+  mdiCloseCircleOutline,
+  mdiCloudDownloadOutline,
+  mdiSearchWeb,
+  mdiSend,
+  mdiYoutube
+} from "@mdi/js";
 
-  export default {
+export default {
   data: () => {
     return {
       mdiCloudDownloadOutline,

@@ -23,6 +23,7 @@ import userIDStore from "../../data-management/user-id-data/userIDStore";
 import * as symptomActions from "../../data-management/user-symptom-data/symptomActions";
 import localSymptomStore from "../../data-management/local_symptom_data/localSymptomStore";
 import * as localSymptomActions from "../../data-management/local_symptom_data/localSymptomActions";
+import { strings } from "../../localization/localization";
 import { CheckBox, Icon } from "react-native-elements";
 
 export default class SymptomPage extends Component {
@@ -377,7 +378,7 @@ export default class SymptomPage extends Component {
               }
               onPress={() => this.registerCollectionSymptom()}
             >
-              Save Changes
+              {strings.SaveChanges}
             </Button>
           </Layout>
         ) : null}

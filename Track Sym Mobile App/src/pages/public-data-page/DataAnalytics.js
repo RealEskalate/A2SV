@@ -27,6 +27,7 @@ import * as eva from "@eva-design/eva";
 import SearchableDropdown from "react-native-searchable-dropdown";
 import userIDStore from "../../data-management/user-id-data/userIDStore";
 import { DotsLoader } from "react-native-indicator";
+import { strings } from "../../localization/localization";
 class DataAnalytics extends React.Component {
   state = {
     selected_filter: criterias.confirmed, // sets the current filtering parameter on the graph
@@ -612,7 +613,7 @@ class DataAnalytics extends React.Component {
             onPress={() => this.componentDidMount()}
           >
             <MaterialCommunityIcons name="reload" color="#0080ff" size={30} />
-            <Text style={{ fontSize: 12 }}>Refresh</Text>
+            <Text style={{ fontSize: 12 }}>{strings.Refresh}</Text>
           </TouchableOpacity>
         </Layout>
 
@@ -628,7 +629,7 @@ class DataAnalytics extends React.Component {
               }}
             >
               <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-                Daily Stats
+                {strings.DailyStats}
               </Text>
             </Layout>
             <Layout
@@ -673,7 +674,7 @@ class DataAnalytics extends React.Component {
                     )}
                   </Text>
                 )}
-                <Text>New Cofirmed</Text>
+                <Text>{strings.NewConfirmed}</Text>
               </TouchableOpacity>
 
               <TouchableOpacity
@@ -705,7 +706,7 @@ class DataAnalytics extends React.Component {
                     )}
                   </Text>
                 )}
-                <Text>New Recovered</Text>
+                <Text>{strings.NewRecovered}</Text>
               </TouchableOpacity>
 
               <TouchableOpacity
@@ -737,7 +738,7 @@ class DataAnalytics extends React.Component {
                     )}
                   </Text>
                 )}
-                <Text>New Death</Text>
+                <Text>{strings.NewDeath}</Text>
               </TouchableOpacity>
             </Layout>
 
@@ -751,7 +752,7 @@ class DataAnalytics extends React.Component {
               }}
             >
               <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-                Total Stats
+                {strings.TotalStats}
               </Text>
             </Layout>
 
@@ -794,7 +795,7 @@ class DataAnalytics extends React.Component {
                     )}
                   </Text>
                 )}
-                <Text>Total Cofirmed</Text>
+                <Text>{strings.TotalConfirmed}</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 disabled={true}
@@ -822,7 +823,7 @@ class DataAnalytics extends React.Component {
                     )}
                   </Text>
                 )}
-                <Text>Total Recovered</Text>
+                <Text>{strings.TotalRecovered}</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 disabled={true}
@@ -850,7 +851,7 @@ class DataAnalytics extends React.Component {
                     )}
                   </Text>
                 )}
-                <Text>Total Death</Text>
+                <Text>{strings.TotalDeath}</Text>
               </TouchableOpacity>
             </Layout>
 
@@ -924,7 +925,7 @@ class DataAnalytics extends React.Component {
                   marginLeft: 10,
                 }}
               >
-                Daily Stats Graph
+                {strings.DailyStatsGraph}
               </Text>
               {this.state.staticsDescriptionLoading ? (
                 <Layout flexDirection="row">
@@ -955,7 +956,7 @@ class DataAnalytics extends React.Component {
                   <DatePicker
                     date={this.state.selected_daily_start_date}
                     mode="date" //The enum of date, datetime and
-                    placeholder="Start date"
+                    placeholder={strings.StartDate}
                     maxDate={
                       this.state.selected_daily_end_date === ""
                         ? this.getCurrentDate()
@@ -987,7 +988,7 @@ class DataAnalytics extends React.Component {
                   <DatePicker
                     date={this.state.selected_daily_end_date}
                     mode="date" //The enum of date, datetime and time
-                    placeholder="End date"
+                    placeholder={strings.EndDate}
                     format="YYYY-MM-DD"
                     confirmBtnText="Confirm"
                     minDate={
@@ -1092,7 +1093,7 @@ class DataAnalytics extends React.Component {
                         : styles.text_style_pressed
                     }
                   >
-                    Confirmed
+                    {strings.Confirmed}
                   </Text>
                 </TouchableOpacity>
 
@@ -1118,7 +1119,7 @@ class DataAnalytics extends React.Component {
                         : styles.text_style_pressed
                     }
                   >
-                    Recovered
+                    {strings.Recovered}
                   </Text>
                 </TouchableOpacity>
 
@@ -1143,7 +1144,7 @@ class DataAnalytics extends React.Component {
                         : styles.text_style_pressed
                     }
                   >
-                    Death
+                    {strings.Death}
                   </Text>
                 </TouchableOpacity>
 
@@ -1170,7 +1171,7 @@ class DataAnalytics extends React.Component {
                           : styles.text_style_pressed
                       }
                     >
-                      Test Counts
+                      {strings.TestCounts}
                     </Text>
                   </TouchableOpacity>
                 ) : null}
@@ -1229,7 +1230,7 @@ class DataAnalytics extends React.Component {
                   marginLeft: 10,
                 }}
               >
-                Total Stats Graph
+                {strings.TotalStatsGraph}
               </Text>
               {this.state.staticsDescriptionLoading ? (
                 <Layout flexDirection="row">
@@ -1260,7 +1261,7 @@ class DataAnalytics extends React.Component {
                   <DatePicker
                     date={this.state.selected_total_start_date}
                     mode="date" //The enum of date, datetime and
-                    placeholder="Start date"
+                    placeholder={strings.StartDate}
                     maxDate={
                       this.state.selected_total_end_date === ""
                         ? this.getCurrentDate()
@@ -1291,7 +1292,7 @@ class DataAnalytics extends React.Component {
                   <DatePicker
                     date={this.state.selected_total_end_date}
                     mode="date" //The enum of date, datetime and time
-                    placeholder="End date"
+                    placeholder={strings.EndDate}
                     format="YYYY-MM-DD"
                     minDate={
                       this.state.selected_total_start_date === ""
@@ -1390,7 +1391,7 @@ class DataAnalytics extends React.Component {
                         : styles.text_style_pressed
                     }
                   >
-                    Confirmed
+                    {strings.Confirmed}
                   </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -1413,7 +1414,7 @@ class DataAnalytics extends React.Component {
                         : styles.text_style_pressed
                     }
                   >
-                    Recovered
+                    {strings.Recovered}
                   </Text>
                 </TouchableOpacity>
 
@@ -1437,7 +1438,7 @@ class DataAnalytics extends React.Component {
                         : styles.text_style_pressed
                     }
                   >
-                    Death
+                    {strings.Death}
                   </Text>
                 </TouchableOpacity>
                 {this.state.testCountDataExist ? (
@@ -1461,7 +1462,7 @@ class DataAnalytics extends React.Component {
                           : styles.text_style_pressed
                       }
                     >
-                      Test Counts
+                      {strings.TestCounts}
                     </Text>
                   </TouchableOpacity>
                 ) : null}
@@ -1517,7 +1518,7 @@ class DataAnalytics extends React.Component {
                   marginLeft: 10,
                 }}
               >
-                Daily Rates Graph
+                {strings.DailyRatesGraph}
               </Text>
               {this.state.staticsDescriptionLoading ? (
                 <Layout flexDirection="row">
@@ -1548,7 +1549,7 @@ class DataAnalytics extends React.Component {
                   <DatePicker
                     date={this.state.selected_rate_start_date}
                     mode="date" //The enum of date, datetime and
-                    placeholder="Start date"
+                    placeholder={strings.StartDate}
                     format="YYYY-MM-DD"
                     maxDate={
                       this.state.selected_rate_end_date === ""
@@ -1579,7 +1580,7 @@ class DataAnalytics extends React.Component {
                   <DatePicker
                     date={this.state.selected_rate_end_date}
                     mode="date" //The enum of date, datetime and time
-                    placeholder="End date"
+                    placeholder={strings.EndDate}
                     minDate={
                       this.state.selected_rate_start_date === ""
                         ? this.getMinimumDate()
@@ -1680,7 +1681,7 @@ class DataAnalytics extends React.Component {
                           : styles.text_style_pressed
                       }
                     >
-                      Confirmed Rate
+                      {strings.ConfirmedRate}
                     </Text>
                   </TouchableOpacity>
                 ) : null}
@@ -1704,7 +1705,7 @@ class DataAnalytics extends React.Component {
                         : styles.text_style_pressed
                     }
                   >
-                    Recovery Rate
+                    {strings.RecoveryRate}
                   </Text>
                 </TouchableOpacity>
 
@@ -1728,7 +1729,7 @@ class DataAnalytics extends React.Component {
                         : styles.text_style_pressed
                     }
                   >
-                    Death Rate
+                    {strings.DeathRate}
                   </Text>
                 </TouchableOpacity>
               </Layout>

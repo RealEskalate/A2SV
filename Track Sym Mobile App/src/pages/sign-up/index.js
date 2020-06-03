@@ -276,7 +276,7 @@ export default ({ navigation }) => {
           status="control"
           size="large"
         >
-          TRACK SYM
+          {strings.TrackSYM}
         </Button>
         <View style={styles.signUpContainer}>
           <View style={styles.backContainer}>
