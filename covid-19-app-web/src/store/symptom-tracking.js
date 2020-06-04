@@ -13,7 +13,7 @@ const getters = {
   getCities: state => {
     return state.cities;
   },
-  getLocationSymptoms: state => {
+  getLocationsSymptoms: state => {
     return state.locationsSymptoms;
   }
 };
@@ -25,28 +25,28 @@ const mutations = {
   setCities: (state, payload) => {
     state.cities = payload;
   },
-  setLocationSymptoms: (state, payload) => {
+  setLocationsSymptoms: (state, payload) => {
     state.locationsSymptoms = payload;
   }
 };
 
 const actions = {
   setSymptomUser: ({ commit }, { userId }) => {
-    ajax.get(`symptomuser/user/${userId}/`).then(res => {
-      console.log(res.data);
+    ajax.get(`symptomuser/user/${userId}/demo=true`).then(res => {
+      console.log(res);
       commit("setSymptomUser", res.data);
     });
   },
   setCities: ({ commit }) => {
     ajax.get("cities").then(res => {
-      console.log(res.data);
+      console.log(res);
       commit("setCities", res.data);
     });
   },
-  setLocationSymptoms: ({ commit }, { location }) => {
+  setLocationsSymptoms: ({ commit }, location) => {
     ajax.post("locations_symptoms", location).then(res => {
       console.log(res.data);
-      commit("setLocationSymptoms", res.data);
+      commit("setLocationsSymptoms", res);
     });
   }
 };

@@ -1,5 +1,5 @@
 const CompressionPlugin = require("compression-webpack-plugin");
-
+const webpack = require("webpack");
 module.exports = {
   runtimeCompiler: true,
 
@@ -8,7 +8,12 @@ module.exports = {
     config.plugin("CompressionPlugin").use(CompressionPlugin);
   },
   configureWebpack: {
-    plugins: [new CompressionPlugin()],
+    plugins: [
+      new CompressionPlugin(),
+      new webpack.ProvidePlugin({
+        mapboxgl: "mapbox-gl"
+      })
+    ],
     resolve: {
       alias: {
         moment: "moment/src/moment"
