@@ -1,4 +1,5 @@
 const { PublicResourcesData } = require("../models/PublicResourcesModel");
+const { StatisticsResource } = require("../models/StatisticsResourceModel.js");
 const fs = require("fs");
 const axios = require("axios");
 const XLSX = require("xlsx");
@@ -10,11 +11,14 @@ var root = __dirname;
 const schedule = require("node-schedule");
 
 exports.getPublicResources = async (req, res) => {
-  let titles= {"English":{"Physicians (per 1,000 people)":"Physicians","Nurses and midwives (per 1,000 people)":"Health Workers","Hospital beds (per 1,000 people)":"Hospital Beds", "UHC service coverage index":"UHC service coverage index"}, "Amharic" :{"Physicians (per 1,000 people)":"ሐኪሞች","Nurses and midwives (per 1,000 people)":"የጤና ሰራተኞች","Hospital beds (per 1,000 people)":"የሆስፒታል አልጋዎች", "UHC service coverage index":"የዩኒቨርሳል የጤና ሽፋን የአገልግሎት ሽፋን ማውጫ"} }
-  let language= "English";
+  let titles=null;
   if (req.query.language){
-      language=req.query.language;
+    titles= await StatisticsResource.findOne({ language: req.query.language, title: 'public-resource' });
   }
+  if(!titles){
+    titles= await StatisticsResource.findOne({ language: 'English', title: 'public-resource'});
+  }
+  titles=titles.fields[0];
 
   let result;
   try{
@@ -23,19 +27,19 @@ exports.getPublicResources = async (req, res) => {
     result.forEach((item) => {
       switch (item.Indicator){
         case 'Physicians (per 1,000 people)':
-          item.Indicator=titles[language][item.Indicator]
+          item.Indicator=titles[item.Indicator]
           reorderedResult[0] = item;
           break;
         case 'Nurses and midwives (per 1,000 people)':
-          item.Indicator=titles[language][item.Indicator]
+          item.Indicator=titles[item.Indicator]
           reorderedResult[1] = item;
           break;
         case 'Hospital beds (per 1,000 people)':
-          item.Indicator=titles[language][item.Indicator]
+          item.Indicator=titles[item.Indicator]
           reorderedResult[2] = item;
           break;
         case 'UHC service coverage index':
-          item.Indicator=titles[language][item.Indicator]
+          item.Indicator=titles[item.Indicator]
           reorderedResult[3] = item;
       }
     });
