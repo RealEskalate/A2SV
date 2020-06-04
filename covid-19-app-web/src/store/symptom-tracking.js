@@ -40,7 +40,7 @@ const mutations = {
 const actions = {
   setAllSymptoms: ({ commit }) => {
     ajax.get(`symptoms`).then(res => {
-      commit("setSymptomUser", res.data);
+      commit("setAllSymptoms", res.data);
     });
   },
   setSymptomUser: ({ commit }, { userId }) => {
