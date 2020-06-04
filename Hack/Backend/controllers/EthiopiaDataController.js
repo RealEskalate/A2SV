@@ -31,7 +31,7 @@ exports.get_ethiopia_data = async (req, res) => {
         filter.date={ $gte: today};
         var ethiopiaData = await EthiopiaData.find(filter);
         if (!ethiopiaData.length){
-            filter.date=={ $gte: yesterday};
+            filter.date={ $gte: yesterday};
             ethiopiaData = await EthiopiaData.find(filter);
         }
 
