@@ -277,7 +277,7 @@ export default {
         profile: false
       },
       editing: {
-        profile: true,
+        profile: false,
         password: false,
         symptoms: false
       },
@@ -311,12 +311,25 @@ export default {
       }
     },
     updateProfile() {
-      console.log(this.user);
       this.editing.profile = false;
+    },
+    userSymptomIndexes() {
+      let res = [];
+      for (let i = 0; i < this.allSymptoms.length; i++) {
+        if (this.userSymptoms().includes(this.allSymptoms[i])) {
+          res.push(i);
+        }
+      }
+      return res;
     }
   },
   created() {
     store.dispatch("setAllSymptoms");
+  },
+  watch: {
+    userSymptoms() {
+      this.selectedSymptoms = this.userSymptomIndexes();
+    }
   },
   computed: {
     userSymptoms: () => store.getters.getSymptomUser,
