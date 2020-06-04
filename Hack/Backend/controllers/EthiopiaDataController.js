@@ -1,81 +1,108 @@
 const EthiopiaData = require("../models/EthiopiaDataModel");
-const jwt = require("jsonwebtoken");
-var mongoose = require("mongoose");
+const axios = require("axios");
+const schedule = require('node-schedule');
+const { StatisticsResource } = require("../models/StatisticsResourceModel.js");
+const mongoose = require("mongoose");
 
-exports.post_ethiopia_data = async (req, res) => {
-    const ethiopiaData = new EthiopiaData({
-        _id: mongoose.Types.ObjectId(),
-        region: req.body.region,
-        amharic_region: req.body.amharic_region,
-        phone_number: req.body.phone_number,
-        total: req.body.total,
-        recovered: req.body.recovered,
-        death: req.body.death,
-        active: req.body.active
-    });
-    try{
-        await ethiopiaData.save();
-        res.send(ethiopiaData);    
-    } catch (err) {
-        res.status(500).send(err.toString());
-    }
-};
-
-exports.patch_ethiopia_data = async (req, res) => {
-    try{
-        let ethiopiaData = await EthiopiaData.findOne({region : req.body.region}) || await EthiopiaData.findById(req.body._id);
-        if (!ethiopiaData){
-            return res.status(400).send("Data not found")
-        }
-        ethiopiaData.set(req.body);
-        await ethiopiaData.save();
-        res.send(ethiopiaData);    
-    } catch (err) {
-        res.status(500).send(err.toString());
-    }
-};
-
-exports.delete_ethiopia_data = async (req, res) => {
-    try {
-        const ethiopiaData = await EthiopiaData.findByIdAndDelete(req.body._id);
-        if (!ethiopiaData) {
-          return res.status(404).send("No item found");
-        }
-        res.status(201).send(ethiopiaData);
-      } catch (err) {
-        res.status(500).send(err.toString());
-      }
-    };
 
 exports.get_ethiopia_data = async (req, res) => {
-    const ethiopiaData = await EthiopiaData.find({});
-    try {
-        res.send(ethiopiaData);
-    } catch (err) {
-        res.status(500).send(err.toString());
-    }
-};
+    let filter = {};
+    let regions=null;
 
-exports.get_ethiopia_data_by_id = async (req, res) => {
+    if (req.query.language){
+        regions= await StatisticsResource.findOne({ language:req.query.language , title: 'ethiopia-regions'});
+        if (regions){regions=regions.fields[0];}
+    } 
+
+    if(req.query.test){
+        filter.test={ $ne: null };
+    }else{
+        filter.test=null;
+    }
+    if(req.query.region){
+        filter.region=req.query.region;
+    }
+
+    let today=new Date();
+    today.setHours(0,0,0,0);
+    let yesterday= new Date( today.getFullYear(),today.getMonth(),today.getDate()-1)
+
     try {
-        const ethiopiaData = await EthiopiaData.findById(req.params.id);
-        if(!ethiopiaData){
-            return res.status(500).send("Data Not Found");
+        filter.date={ $gte: today};
+        var ethiopiaData = await EthiopiaData.find(filter);
+        if (!ethiopiaData.length){
+            filter.date=={ $gte: yesterday};
+            ethiopiaData = await EthiopiaData.find(filter);
+        }
+
+        for (var index=0; index<ethiopiaData.length;index++){
+            let data= ethiopiaData[index];
+            if (regions){
+                data.region=regions[data.region];
+            }
         }
         res.send(ethiopiaData);
-    } catch (err) {
+    }catch(err){
         res.status(500).send(err.toString());
-    }
+    } 
 };
 
-exports.get_ethiopia_data_by_region = async (req, res) => {
-    try {
-        const ethiopiaData = await EthiopiaData.findOne({region : req.params.region});
-        if(!ethiopiaData){
-            return res.status(500).send("Data Not Found");
+
+
+let update_db = async function() {
+    let phone_no= await StatisticsResource.findOne({ language: 'English', title: 'ethiopia-phone-call'});
+    phone_no=phone_no.fields[0];
+
+    let request_url = "https://covid19-ethiopia.qulph.com/api/data.json";
+    let ethData = await axios.get(request_url);
+
+    let data = ethData.data;
+    if (data) {
+        let date_str= data.tested[0].updatetimestamp.slice(0,10).split('/')
+        let date= new Date(date_str[2],date_str[1]-1,date_str[0]);
+
+        let exists= await EthiopiaData.findOne({ date: date})
+        if (exists){
+            await EthiopiaData.deleteMany({ date: { $gte:date} });
         }
-        res.send(ethiopiaData);
-    } catch (err) {
-        res.status(500).send(err.toString());
+
+        let test= new EthiopiaData({
+            _id: mongoose.Types.ObjectId(),
+            region:"Ethiopia",
+            phone_number:phone_no["Ethiopia"],
+            test: data.tested[0].totalindividualstested,
+            date: date
+        })
+        await test.save();
+
+
+        for (var index = 0; index < data.statewise.length; index++) {
+            let case_data = data.statewise[index];
+            let state=(case_data.state=="Total")? "Ethiopia": case_data.state;
+
+            var ethiopia= new EthiopiaData({
+                _id: mongoose.Types.ObjectId(),
+                region: state,
+                phone_number: phone_no[state],
+                total:{
+                    'confirmed': case_data.confirmed,
+                    'recovered': case_data.recovered,
+                    'deaths': case_data.deaths,
+                    'active': case_data.active
+                },
+                daily:{
+                    'confirmed': case_data.deltaconfirmed,
+                    'recovered': case_data.deltarecovered,
+                    'deaths': case_data.deltadeaths,
+                },
+                date: date
+            })
+            await ethiopia.save();
+        }
     }
-}
+    console.log("update-completed")
+};
+// Schedules fetching every 4 hours
+schedule.scheduleJob('0 */4 * * *', async function() {
+    await update_db();
+});
