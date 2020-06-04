@@ -3,20 +3,27 @@
     <v-container>
       <v-row>
         <v-col>
-          <v-tabs fixed-tabs>
+          <h3 class="display-1 font-weight-thin mb-5" v-text="'Heat Map'" />
+          <v-tabs fixed-tabs centered>
             <v-tab>
-              Symtrack tab
+              Symptom Tracker
             </v-tab>
             <v-tab>
-              Global map(Legacy)
+              Global Statistics
             </v-tab>
             <v-tab-item>
-              <sym-track />
+              <v-responsive
+                :aspect-ratio="
+                  $vuetify.breakpoint.smAndDown ? 12 / 13 : 16 / 10
+                "
+              >
+                <sym-track class="mx-md-5 my-5" style="height: 100%" />
+              </v-responsive>
             </v-tab-item>
             <v-tab-item>
               <v-responsive
                 :aspect-ratio="
-                  $vuetify.breakpoint.smAndDown ? 12 / 16 : 16 / 12
+                  $vuetify.breakpoint.smAndDown ? 12 / 16 : 16 / 13
                 "
               >
                 <iframe

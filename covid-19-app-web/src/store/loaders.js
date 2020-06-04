@@ -14,6 +14,9 @@ export default {
       descriptions: false,
       actions: false
     },
+    mapLoaders: {
+      locationsSymptoms: false
+    },
     graphLoaders: {
       counts: 0,
       rates: 0,
@@ -34,6 +37,9 @@ export default {
     getAboutLoaders(state) {
       return state.aboutLoaders;
     },
+    getMapLoaders(state) {
+      return state.mapLoaders;
+    },
     getGraphLoaders(state) {
       return state.graphLoaders;
     }
@@ -47,6 +53,9 @@ export default {
     },
     setAboutLoaders(state, { key, value }) {
       state.aboutLoaders[key] = value;
+    },
+    setMapLoaders(state, { key, value }) {
+      state.mapLoaders[key] = value;
     },
     setGraphLoaders(state, { key, value }) {
       state.graphLoaders[key] = value;

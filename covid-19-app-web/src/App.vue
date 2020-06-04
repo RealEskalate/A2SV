@@ -97,11 +97,18 @@ html {
 }
 
 .shadow-in {
-  box-shadow: 0 0 5px #dededede inset;
+  box-shadow: 0 0 5px #dededede inset !important;
 }
 
+canvas.mapboxgl-canvas{
+  border: 2px solid rgba(0, 0, 0, 0.06);
+}
+
+canvas.mapboxgl-canvas,
+.v-image__image,
 .v-card--shaped,
 .v-snack__wrapper,
+.v-menu__content,
 .v-alert,
 .v-dialog--active {
   border-radius: 20px 3px 20px 3px !important;

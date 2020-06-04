@@ -1,11 +1,19 @@
 <template>
-  <div id="app">
+  <v-card flat shaped class="overflow-hidden">
+    <v-progress-linear
+      style="position: absolute"
+      v-if="mapLoaders.locationsSymptoms"
+      height="3"
+      striped
+      indeterminate
+      color="primary"
+    />
     <mapbox
-      access-token="pk.eyJ1IjoiZmVyb3g5OCIsImEiOiJjazg0czE2ZWIwNHhrM2VtY3Y0a2JkNjI3In0.zrm7UtCEPg2mX8JCiixE4g"
+      :access-token="api_token"
       :map-options="{
-        style: 'mapbox://styles/mapbox/dark-v10',
+        style: 'mapbox://styles/mapbox/light-v10',
         center: [38.811684, 9.015326],
-        zoom: 12
+        zoom: 15
       }"
       :geolocate-control="{
         show: true,
@@ -13,10 +21,11 @@
       }"
       @map-load="loaded"
     />
-  </div>
+  </v-card>
 </template>
 
 <script>
+import store from "@/store";
 import Mapbox from "mapbox-gl-vue";
 import Supercluster from "supercluster";
 
@@ -31,6 +40,16 @@ export default {
   components: { Mapbox },
   data: function() {
     return {
+      api_token: process.env.VUE_APP_MAPBOX_API,
+
+      small_cluster: null,
+      medium_cluster: null,
+      high_cluster: null,
+
+      small_superclusters: null,
+      medium_superclusters: null,
+      high_superclusters: null,
+
       symptomCollections: {
         smallSymptomCollection: {
           type: "FeatureCollection",
@@ -62,9 +81,62 @@ export default {
       // bottom_right_bound: [38.82312696429011, 8.976957049826808],
     };
   },
+  watch: {
+    loadedData(newValue) {
+      if (newValue.length > 0 && newValue[0].probability === undefined) {
+        // we're getting grid results
+        // just log them for now
+        const gridCollections = this.gridsToGeoJson(newValue);
+        const small_cluster = new Supercluster({ radius: 40, maxZoom: 14 });
+        const medium_cluster = new Supercluster({ radius: 40, maxZoom: 14 });
+        const high_cluster = new Supercluster({ radius: 40, maxZoom: 14 });
+
+        small_cluster.load(gridCollections.smallGridCollection.features);
+        medium_cluster.load(gridCollections.mediumGridCollection.features);
+        high_cluster.load(gridCollections.heavyGridCollection.features);
+
+        this.gridCollections = gridCollections;
+        this.small_cluster = small_cluster;
+        this.medium_cluster = medium_cluster;
+        this.high_cluster = high_cluster;
+        // this.grid_rendering = true;
+        // if (animating === true) {
+        //   animating = false;
+        // }
+        this.symptomCollections = this.updateClusters();
+      } else {
+        const featureCollections = this.symptomsToGeoJson(newValue);
+
+        const small_cluster = new Supercluster({ radius: 40, maxZoom: 14 });
+        const medium_cluster = new Supercluster({ radius: 40, maxZoom: 14 });
+        const high_cluster = new Supercluster({ radius: 40, maxZoom: 14 });
+
+        small_cluster.load(featureCollections.smallSymptomCollection.features);
+        medium_cluster.load(
+          featureCollections.mediumSymptomCollection.features
+        );
+        high_cluster.load(featureCollections.highSymptomCollection.features);
+
+        this.symptomCollections = featureCollections;
+        this.small_cluster = small_cluster;
+        this.medium_cluster = medium_cluster;
+        this.high_cluster = high_cluster;
+        this.grid_rendering = false;
+        // if (animating === true) {
+        //   animating = false;
+        // }
+        this.symptomCollections = this.updateClusters();
+      }
+
+      this.fillMapData();
+    }
+  },
+  computed: {
+    loadedData: () => store.getters.getLocationsSymptoms,
+    mapLoaders: () => store.getters.getMapLoaders
+  },
   methods: {
     symptomsToGeoJson(symptoms) {
-      console.log("symptoms to GeoJson " + symptoms.length);
       const symptomCollections = {
         smallSymptomCollection: {
           type: "FeatureCollection",
@@ -110,7 +182,6 @@ export default {
     },
 
     gridsToGeoJson(grids) {
-      console.log("Grids to GeoJson");
       const gridCollections = {
         smallGridCollection: {
           type: "FeatureCollection",
@@ -154,9 +225,20 @@ export default {
       return gridCollections;
     },
 
-    async updateClusters() {
-      console.log("inside update--", this);
+    fetchLocationsSymptoms() {
+      const input = {
+        longitude: this.user_longitude,
+        latitude: this.user_latitude,
 
+        top_left_bound: this.top_left_bound,
+        top_right_bound: this.top_right_bound,
+        bottom_left_bound: this.bottom_left_bound,
+        bottom_right_bound: this.bottom_right_bound
+      };
+      store.dispatch("setLocationsSymptoms", input);
+    },
+
+    updateClusters() {
       const small_cluster = this.small_cluster;
       const medium_cluster = this.medium_cluster;
       const high_cluster = this.high_cluster;
@@ -177,13 +259,13 @@ export default {
       };
 
       if (small_cluster || medium_cluster || high_cluster) {
-        const bounds = await this.map.getBounds();
+        const bounds = this.map.getBounds();
         const west_lng = bounds._sw.lng,
           south_lat = bounds._sw.lat;
         const east_lng = bounds._ne.lng,
           north_lat = bounds._ne.lat;
 
-        const zoom = Math.round(await this.map.getZoom());
+        const zoom = Math.round(this.map.getZoom());
 
         if (small_cluster) {
           small_cluster
@@ -209,7 +291,6 @@ export default {
           );
         }
         if (high_cluster) {
-          console.log("High cluster");
           high_cluster
             .getClusters([west_lng, south_lat, east_lng, north_lat], zoom)
             .forEach(feature => {
@@ -221,109 +302,14 @@ export default {
           );
         }
       }
-      console.log("returning from update clusters: ");
-      console.log(SymptomCollection.highSymptomCollection.features);
       return SymptomCollection;
     },
-    async fetchSymptoms() {
-      const res = await fetch(
-        "https://sym-track.herokuapp.com/api/locations_symptoms?demo=true",
-        {
-          method: "POST",
-          headers: {
-            Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6Ik1BTEUiLCJhZ2VfZ3JvdXAiOiI0MS01MCIsIl9pZCI6IjVlYmFkZTdlZGRhMzk3MDAxNzcwNDI0ZCIsInVzZXJuYW1lIjoid2VybyIsInBhc3N3b3JkIjoiJDJhJDEwJERhbHVPZjNNaHhOVE1ZaTZrci9WdmVyR0xJR0pFM3l3N2ZOc3RGN3F1RjY4UDU5UnBtWVJPIiwiX192IjowLCJjdXJyZW50X2NvdW50cnkiOiJVbml0ZWQgU3RhdGVzIn0sImlhdCI6MTU4OTMwNDk3M30.oYX_IVUUu5yMObci5W5P6iFlqah-M4LMd30niQ31kM4",
-            Accept: "application/json",
-            "Content-type": "application/json"
-          },
-          body: JSON.stringify({
-            longitude: this.user_longitude,
-            latitude: this.user_latitude,
 
-            top_left_bound: this.top_left_bound,
-            top_right_bound: this.top_right_bound,
-            bottom_left_bound: this.bottom_left_bound,
-            bottom_right_bound: this.bottom_right_bound
-          })
-        }
-      );
-
-      if ((await res.status) === 500) {
-        // animating = false;
-        console.log("No locations with users and symptoms found.");
-        console.log(this.user_longitude + " , " + this.user_latitude);
-        console.log(this.top_left_bound);
-        console.log(this.top_right_bound);
-        console.log(this.bottom_left_bound);
-        console.log(this.bottom_right_bound);
-        return;
-      } else {
-        const data = await res.json();
-        console.log("Data loaded!!!!!!!!");
-        if (data.length > 0 && data[0].probability === undefined) {
-          // we're getting grid results
-          // just log them for now
-          console.log("-----------if---------");
-          console.log(data);
-          const gridCollections = this.gridsToGeoJson(data);
-          const small_cluster = new Supercluster({ radius: 40, maxZoom: 14 });
-          const medium_cluster = new Supercluster({ radius: 40, maxZoom: 14 });
-          const high_cluster = new Supercluster({ radius: 40, maxZoom: 14 });
-
-          small_cluster.load(gridCollections.smallGridCollection.features);
-          medium_cluster.load(gridCollections.mediumGridCollection.features);
-          high_cluster.load(gridCollections.heavyGridCollection.features);
-
-          this.gridCollections = gridCollections;
-
-          this.small_cluster = small_cluster;
-          this.medium_cluster = medium_cluster;
-          this.high_cluster = high_cluster;
-          console.log("small cluster = " + this.small_cluster);
-          // this.grid_rendering = true;
-          // if (animating === true) {
-          //   animating = false;
-          // }
-          this.symptomCollections = await this.updateClusters();
-          console.log("got result from update clusters");
-          return this.symptomCollections;
-        } else {
-          console.log("-----------else-------");
-
-          const featureCollections = this.symptomsToGeoJson(data);
-
-          const small_cluster = new Supercluster({ radius: 40, maxZoom: 14 });
-          const medium_cluster = new Supercluster({ radius: 40, maxZoom: 14 });
-          const high_cluster = new Supercluster({ radius: 40, maxZoom: 14 });
-
-          small_cluster.load(
-            featureCollections.smallSymptomCollection.features
-          );
-          medium_cluster.load(
-            featureCollections.mediumSymptomCollection.features
-          );
-          high_cluster.load(featureCollections.highSymptomCollection.features);
-          this.symptomCollections = featureCollections;
-          this.small_cluster = small_cluster;
-          this.medium_cluster = medium_cluster;
-          this.high_cluster = high_cluster;
-          this.grid_rendering = false;
-          // if (animating === true) {
-          //   animating = false;
-          // }
-          this.symptomCollections = await this.updateClusters();
-          return this.symptomCollections;
-        }
-      }
-    },
-    async loaded(map) {
-      console.log("LOADED!");
-      if (this.map === undefined) {
-        console.log("saving map");
+    loaded(map) {
+      if (!this.map) {
         this.map = map; // save the map for use by other components
       }
-      const bounds = await this.map.getBounds();
-      console.log(bounds);
+      const bounds = this.map.getBounds();
       const west_lng = bounds._sw.lng,
         south_lat = bounds._sw.lat;
       const east_lng = bounds._ne.lng,
@@ -334,13 +320,13 @@ export default {
       this.bottom_left_bound = [west_lng, south_lat];
       this.bottom_right_bound = [east_lng, south_lat];
 
-      var res = await this.fetchSymptoms();
+      this.fetchLocationsSymptoms();
+    },
 
-      console.log(await res);
-      console.log("Logging symptomCollections");
-      console.log(await res.highSymptomCollection.features);
-      if ((await res.smallSymptomCollection.features.length) !== 0) {
-        map.addLayer({
+    fillMapData() {
+      let res = this.symptomCollections;
+      if (res.smallSymptomCollection.features.length !== 0) {
+        this.map.addLayer({
           id: "points",
           type: "circle",
           paint: {
@@ -354,45 +340,44 @@ export default {
         });
       }
 
-      if ((await res.highSymptomCollection.features.length) !== 0) {
-        console.log("adding layer!");
-        map.addLayer({
+      if (res.highSymptomCollection.features.length !== 0) {
+        this.map.addLayer({
           id: "points",
           type: "circle",
           paint: {
             "circle-radius": [
               "step",
               ["get", "total"],
-              30,
+              20,
               300,
-              40,
+              30,
               900,
-              50,
+              40,
               1500,
-              60
+              50
             ],
             "circle-color": [
               "step",
               ["get", "total"],
-              "#FFC107",
+              "#FFEE58",
               300,
-              "#FF8F00",
+              "#FFA000",
               900,
-              "#EF6C00",
+              "#F4511E",
               1500,
-              "#9C27B0"
+              "#E53935"
             ],
-            "circle-stroke-width": 5,
-            "circle-stroke-color": "#3E2723",
-            "circle-opacity": 0.6
+            "circle-stroke-width": 3,
+            "circle-stroke-color": "#fdfdfd",
+            "circle-opacity": 0.3
           },
           source: {
             type: "geojson",
             data: res.highSymptomCollection
           }
         });
-        var below_layer_id = "points";
-        map.addLayer(
+        let below_layer_id = "points";
+        this.map.addLayer(
           {
             id: "point-counts",
             type: "symbol",
@@ -403,11 +388,11 @@ export default {
             layout: {
               "text-field": ["get", "total"],
               "text-font": ["Ubuntu Medium", "Arial Unicode MS Regular"],
-              "text-size": 20,
+              "text-size": 16,
               "text-pitch-alignment": "map"
             },
             paint: {
-              "text-color": "white"
+              "text-color": this.$vuetify.theme.themes.light.secondary
             }
           },
           below_layer_id
@@ -421,6 +406,6 @@ export default {
 <style>
 #map {
   width: 100%;
-  height: 500px;
+  height: 100%;
 }
 </style>
