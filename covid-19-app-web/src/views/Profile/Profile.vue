@@ -66,6 +66,7 @@
                   <div>
                     <v-select
                       dense
+                      :rules="rules.ageGroupRules"
                       v-model="form_user.age_group"
                       :items="['10-20', '20-30', '30-40', '40-50']"
                       class="v-card--shaped"
@@ -76,6 +77,7 @@
                   <div>
                     <v-select
                       dense
+                      :rules="rules.genderRules"
                       v-model="form_user.gender"
                       :items="['Male', 'Female', 'Undisclosed']"
                       class="v-card--shaped"
@@ -120,7 +122,7 @@
           <v-container class="text-center px-md-10" v-if="!editing.symptoms">
             <div class="shadow-in v-card--shaped grey lighten-4 py-3">
               <v-list-item-subtitle
-                class="ma-5"
+                class="my-12 grey--text text--darken-1"
                 v-if="userSymptoms.length === 0"
                 v-text="'No Symptoms'"
               />
@@ -186,7 +188,7 @@
                       "
                     >
                       <v-icon
-                        style="position: absolute; right: 0; top: 0; z-index: 100; opacity: 0.7"
+                        style="position: absolute; right: 0; top: 0; z-index: 2; opacity: 0.7"
                         class="mt-1 mr-1"
                         color="primary"
                         @click="dialog = false"
@@ -216,6 +218,7 @@
                       <v-overlay
                         color="primary"
                         absolute
+                        z-index="2"
                         :opacity="0.3"
                         :value="active"
                       />

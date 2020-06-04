@@ -14,7 +14,7 @@
             <v-tab-item v-if="loggedInUser">
               <v-responsive
                 :aspect-ratio="
-                  $vuetify.breakpoint.smAndDown ? 12 / 18 : 16 / 12
+                  $vuetify.breakpoint.smAndDown ? 12 / 18 : 18 / 12
                 "
               >
                 <sym-track class="mx-md-5 mt-5" style="height: 95%" />

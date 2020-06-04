@@ -1,5 +1,5 @@
 <template>
-  <v-row align="center" justify="center">
+  <v-row align="center" justify="center" style="height: 100%">
     <v-col cols="12" sm="8" md="4">
       <v-card class="overflow-hidden" shaped outlined>
         <v-snackbar top color="primary" v-model="snackbar" :timeout="5000">
@@ -9,14 +9,16 @@
           </v-btn>
         </v-snackbar>
 
-        <v-toolbar class="shadow-sm" color="primary" dark flat>
+        <v-toolbar class="shadow-sm mb-3" color="primary" dark flat>
           <v-toolbar-title v-text="'Login'" />
         </v-toolbar>
+
         <v-card-text>
           <v-form class="mx-4 my-4" v-model="valid">
             <v-text-field
               dense
               outlined
+              prefix="@"
               class="v-card--shaped"
               :rules="rules.username"
               v-model="user.username"
@@ -28,12 +30,12 @@
               outlined
               class="v-card--shaped"
               :rules="rules.password"
-              :append-icon="!show1 ? mdiEyeOff : mdiEye"
+              :append-icon="!show_password ? mdiEyeOff : mdiEye"
               v-model="user.password"
               label="Password"
-              :type="show1 ? 'text' : 'password'"
+              :type="show_password ? 'text' : 'password'"
               required
-              @click:append="show1 = !show1"
+              @click:append="show_password = !show_password"
             />
 
             <div class="my-2 mx-auto align-center align-content-center">
@@ -52,7 +54,7 @@
                 class="d-block mx-auto my-2"
                 @click="$router.push('register')"
               >
-                Sign Up
+                Go to Sign Up
               </v-btn>
             </div>
           </v-form>
@@ -75,6 +77,7 @@ export default {
       mdiEyeOff,
       mdiCloseCircleOutline,
       valid: false,
+      show_password: false,
       snackbar: false,
       errorMsg: false,
       loading: false,
@@ -92,9 +95,10 @@ export default {
             store.dispatch("setUser", { user: res.data.user });
             store.dispatch("setToken", { token: res.data.token });
             store.dispatch("setStateMessage", "Successfully logged in");
+            this.$router.push("/");
           },
           error => {
-            store.dispatch("setStateMessage", error.message);
+            store.dispatch("setStateMessage", error.response.data);
           }
         )
         .finally(() => {
