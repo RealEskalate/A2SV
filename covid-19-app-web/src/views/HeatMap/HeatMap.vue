@@ -14,10 +14,10 @@
             <v-tab-item>
               <v-responsive
                 :aspect-ratio="
-                  $vuetify.breakpoint.smAndDown ? 12 / 13 : 16 / 10
+                  $vuetify.breakpoint.smAndDown ? 12 / 18 : 16 / 12
                 "
               >
-                <sym-track class="mx-md-5 my-5" style="height: 100%" />
+                <sym-track class="mx-md-5 mt-5" style="height: 95%" />
               </v-responsive>
             </v-tab-item>
             <v-tab-item>
@@ -34,14 +34,6 @@
                   marginwidth="0"
                   frameborder="0"
                 ></iframe>
-                <!--            <iframe-->
-                <!--              src="https://public.domo.com/cards/bWxVg"-->
-                <!--              width="100%"-->
-                <!--              height="100%"-->
-                <!--              marginheight="0"-->
-                <!--              marginwidth="0"-->
-                <!--              frameborder="0"-->
-                <!--            />-->
               </v-responsive>
             </v-tab-item>
           </v-tabs>

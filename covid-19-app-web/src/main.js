@@ -29,6 +29,9 @@ Vue.mixin({
       p.innerHTML = htmlString.trim();
       return p.innerText;
     }
+  },
+  computed: {
+    loggedInUser: () => store.getters.getUser
   }
 });
 

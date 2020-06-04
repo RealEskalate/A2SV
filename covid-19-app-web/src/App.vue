@@ -100,11 +100,6 @@ html {
   box-shadow: 0 0 5px #dededede inset !important;
 }
 
-canvas.mapboxgl-canvas{
-  border: 2px solid rgba(0, 0, 0, 0.06);
-}
-
-canvas.mapboxgl-canvas,
 .v-image__image,
 .v-card--shaped,
 .v-snack__wrapper,

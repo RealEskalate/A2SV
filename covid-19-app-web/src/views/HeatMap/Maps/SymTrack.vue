@@ -1,5 +1,5 @@
 <template>
-  <v-card flat shaped class="overflow-hidden">
+  <v-card outlined shaped class="shadow-in">
     <v-progress-linear
       style="position: absolute"
       v-if="mapLoaders.locationsSymptoms"
@@ -13,7 +13,7 @@
       :map-options="{
         style: 'mapbox://styles/mapbox/light-v10',
         center: [38.811684, 9.015326],
-        zoom: 15
+        zoom: 12
       }"
       :geolocate-control="{
         show: true,
@@ -403,6 +403,9 @@ export default {
 };
 </script>
 
+<style>
+@import url("https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.css");
+</style>
 <style>
 #map {
   width: 100%;
