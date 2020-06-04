@@ -22,7 +22,6 @@ const routes = [
     path: "/",
     name: "root",
     beforeEnter(to, from, next) {
-      console.log("this tooo");
       if (store.getters.getLanguagePreference === null) next("/en/");
       else {
         next(`/${store.getters.getLanguagePreference}/`);
@@ -35,8 +34,6 @@ const routes = [
       template: "<router-view />"
     },
     beforeEnter(to, from, next) {
-      console.log(to);
-      console.log(to.params);
       let lang = to.params.lang;
       if (languages.includes(lang)) {
         if (store.getters.getLanguagePreference !== lang) {

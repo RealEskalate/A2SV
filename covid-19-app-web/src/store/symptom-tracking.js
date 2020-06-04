@@ -45,20 +45,30 @@ const actions = {
   },
   setSymptomUser: ({ commit }, { userId }) => {
     ajax.get(`symptomuser/user/${userId}/demo=true`).then(res => {
-      console.log(res);
       commit("setSymptomUser", res.data);
     });
   },
   setCities: ({ commit }) => {
     ajax.get("cities").then(res => {
-      console.log(res);
       commit("setCities", res.data);
     });
   },
-  setLocationsSymptoms: ({ commit }, location) => {
-    ajax.post("locations_symptoms", location).then(res => {
-      console.log(res.data);
-      commit("setLocationsSymptoms", res);
+  setLocationsSymptoms: ({ commit }, input) => {
+    commit("setMapLoaders", { key: "locationsSymptoms", value: true });
+    ajax
+      .post("locations_symptoms", input, {
+        params: {
+          demo: true
+        }
+      })
+      .then(res => {
+        commit("setLocationsSymptoms", res.data);
+      })
+      .catch(err => {
+        console.log(err.response.data);
+      })
+      .finally(() => {
+        commit("setMapLoaders", { key: "locationsSymptoms", value: false });
     });
   }
 };
