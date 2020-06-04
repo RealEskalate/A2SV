@@ -1,9 +1,9 @@
 <template>
-  <v-card outlined shaped class="shadow-in">
+  <v-card outlined shaped class="shadow-in overflow-hidden">
     <v-progress-linear
-      style="position: absolute"
+      style="position: absolute; z-index: 10"
       v-if="mapLoaders.locationsSymptoms"
-      height="3"
+      height="2"
       striped
       indeterminate
       color="primary"
