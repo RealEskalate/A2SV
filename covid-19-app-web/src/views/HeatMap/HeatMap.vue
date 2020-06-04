@@ -5,13 +5,13 @@
         <v-col>
           <h3 class="display-1 font-weight-thin mb-5" v-text="'Heat Map'" />
           <v-tabs fixed-tabs centered>
-            <v-tab>
+            <v-tab v-if="loggedInUser">
               Symptom Tracker
             </v-tab>
             <v-tab>
               Global Statistics
             </v-tab>
-            <v-tab-item>
+            <v-tab-item v-if="loggedInUser">
               <v-responsive
                 :aspect-ratio="
                   $vuetify.breakpoint.smAndDown ? 12 / 18 : 16 / 12
