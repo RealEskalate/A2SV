@@ -3,7 +3,7 @@ import ajax from "../auth/ajax";
 const state = {
   symptomUser: [],
   cities: [],
-  locationsSymptoms: []
+  locationsSymptoms: null
 };
 
 const getters = {

@@ -85,9 +85,11 @@ export default {
     submit() {
       this.loadAnim = true;
       ajax.post("auth/login", this.user).then(
-        success => {
+        res => {
+          store.dispatch("setUser", { user: res.data.user });
+          store.dispatch("setToken", { token: res.data.token });
           alert("Login successful");
-          console.log(success);
+          console.log(res);
           this.loadAnim = false;
         },
         error => {
@@ -108,6 +110,10 @@ export default {
     getMessage() {
       return store.getters.getMessage;
     }
+  },
+  mounted() {
+    console.log(store.getters.getUser);
+    console.log(store.getters.getToken);
   }
 };
 </script>
