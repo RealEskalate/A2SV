@@ -18,7 +18,11 @@ exports.getPublicResources = async (req, res) => {
   if(!titles){
     titles= await StatisticsResource.findOne({ language: 'English', title: 'public-resource'});
   }
-  titles=titles.fields[0];
+  if(titles){
+    titles=titles.fields[0];
+  }else{
+    titles={'Physicians (per 1,000 people)':'Physicians','Nurses and midwives (per 1,000 people)':'Health Workers','Hospital beds (per 1,000 people)':'Hospital Beds','UHC service coverage index':'UHC service coverage index'}
+  }
 
   let result;
   try{
