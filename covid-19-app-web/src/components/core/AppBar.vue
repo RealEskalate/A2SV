@@ -116,21 +116,21 @@
 </template>
 
 <script>
-  import store from "@/store/";
-  import router from "@/router/";
-  import {
-    mdiAccountCog,
-    mdiAccountEdit,
-    mdiBookOpenVariant,
-    mdiHome,
-    mdiInformation,
-    mdiLogoutVariant,
-    mdiMap,
-    mdiNewspaper
-  } from "@mdi/js";
-  import {languages} from "../../plugins/i18n";
+import store from "@/store/";
+import router from "@/router/";
+import {
+  mdiAccountCog,
+  mdiAccountEdit,
+  mdiBookOpenVariant,
+  mdiHome,
+  mdiInformation,
+  mdiLogoutVariant,
+  mdiMap,
+  mdiNewspaper
+} from "@mdi/js";
+import { languages } from "../../plugins/i18n";
 
-  export default {
+export default {
   data: () => {
     return {
       mdiAccountCog,
@@ -177,9 +177,9 @@
       router.replace({ params: { lang: this.$i18n.locale } }).catch(() => {});
     },
     logout() {
-      console.log("Logging out");
       store.dispatch("setToken", { token: null });
       store.dispatch("setUser", { user: null });
+      router.replace("/");
     }
   },
   computed: {
