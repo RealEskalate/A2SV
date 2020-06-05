@@ -117,21 +117,21 @@
 </template>
 
 <script>
-  import store from "@/store/";
-  import router from "@/router/";
-  import {
-    mdiAccountCog,
-    mdiAccountEdit,
-    mdiBookOpenVariant,
-    mdiHome,
-    mdiInformation,
-    mdiLogoutVariant,
-    mdiMap,
-    mdiNewspaper
-  } from "@mdi/js";
-  import {languages} from "../../plugins/i18n";
+import store from "@/store/";
+import router from "@/router/";
+import {
+  mdiAccountCog,
+  mdiAccountEdit,
+  mdiBookOpenVariant,
+  mdiHome,
+  mdiInformation,
+  mdiLogoutVariant,
+  mdiMap,
+  mdiNewspaper
+} from "@mdi/js";
+import { languages } from "../../plugins/i18n";
 
-  export default {
+export default {
   data: () => {
     return {
       mdiAccountCog,
