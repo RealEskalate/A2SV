@@ -350,6 +350,18 @@ export let strings = new LocalizedStrings({
 
     InfoDetailMessageFromTrackSym:
       "You should be careful not to get infected and stay safe. Even if you are not heavily sick, there is a big risk that you might pass it to your loved ones before the symptoms arise.",
+    Jan: "Jan",
+    Feb: "Feb",
+    Mar: "Mar",
+    Apr: "Apr",
+    May: "May",
+    Jan: "Jun",
+    Jul: "Jul",
+    Aug: "Aug",
+    Sep: "Sep",
+    Oct: "Oct",
+    Nov: "Nov",
+    Dec: "Dec",
   },
   en: {
     Information: "Information",
@@ -696,6 +708,18 @@ export let strings = new LocalizedStrings({
 
     InfoDetailMessageFromTrackSym:
       "You should be careful not to get infected and stay safe. Even if you are not heavily sick, there is a big risk that you might pass it to your loved ones before the symptoms arise.",
+    Jan: "Jan",
+    Feb: "Feb",
+    Mar: "Mar",
+    Apr: "Apr",
+    May: "May",
+    Jan: "Jun",
+    Jul: "Jul",
+    Aug: "Aug",
+    Sep: "Sep",
+    Oct: "Oct",
+    Nov: "Nov",
+    Dec: "Dec",
   },
   am: {
     Information: "መረጃ",
@@ -970,6 +994,18 @@ export let strings = new LocalizedStrings({
     DetailInfoAuthorFullName: "Weakpeadia",
     InfoDetailMessageFromTrackSym:
       "በበሽታው እንዳይጠቁ እና ደህና እንዳይሆኑ መጠንቀቅ አለብዎት ፡፡ ምንም እንኳን በከባድ ሕመም ላይ ባይሆኑም እንኳ የበሽታው ምልክቶች ከመታየታቸው በፊት ለምትወዷቸው/ለምትቀርቧቸው ሰዎች ማሰራጨት ትልቅ አደጋ አለ፡፡",
+    Jan: "ጥር",
+    Feb: "የካቲ",
+    Mar: "መጋቢ",
+    Apr: "ሚያዚ",
+    May: "ግንቦ",
+    Jan: "ሰኔ",
+    Jul: "ሀምሌ",
+    Aug: "ነሐሴ",
+    Sep: "መስከ",
+    Oct: "ጥቅም",
+    Nov: "ህዳር",
+    Dec: "ታህሳ",
   },
   tr: {
     Information: "Information",
