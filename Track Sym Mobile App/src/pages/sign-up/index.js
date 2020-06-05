@@ -105,6 +105,15 @@ export default ({ navigation }) => {
   };
 
   const signUpRequest = async () => {
+    console.log(
+      username +
+        "," +
+        password +
+        "," +
+        displayAgeValue +
+        "," +
+        displayGenderValue
+    );
     const response = await fetch(
       "https://sym-track.herokuapp.com/api/auth/register",
       {
@@ -116,8 +125,8 @@ export default ({ navigation }) => {
         body: JSON.stringify({
           username: username,
           password: password,
-          age_group: displayAgeValue,
-          gender: displayGenderValue,
+          gender: genderData[selectedGenderIndex],
+          age_group: data[selectedAgeIndex],
         }),
       }
     );
@@ -268,7 +277,7 @@ export default ({ navigation }) => {
             status="primary"
             onPress={() => setModalState(false)}
           >
-            Dismiss
+            {strings.Dismiss}
           </Text>
         </Card>
       </Modal>

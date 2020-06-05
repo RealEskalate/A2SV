@@ -19,26 +19,17 @@ exports.get_ethiopia_data = async (req, res) => {
     }else{
         filter.test=null;
     }
-    if(req.query.region){
-        filter.region=req.query.region;
+    if(req.query.region_code){
+        filter.region_code=req.query.region_code;
     }
 
-    let today=new Date();
-    today.setHours(0,0,0,0);
-    let yesterday= new Date( today.getFullYear(),today.getMonth(),today.getDate()-1)
-
     try {
-        filter.date={ $gte: today};
         var ethiopiaData = await EthiopiaData.find(filter);
-        if (!ethiopiaData.length){
-            filter.date={ $gte: yesterday};
-            ethiopiaData = await EthiopiaData.find(filter);
-        }
 
         for (var index=0; index<ethiopiaData.length;index++){
             let data= ethiopiaData[index];
             if (regions){
-                data.region=regions[data.region];
+                data.region=regions[data.region_code];
             }
         }
         res.send(ethiopiaData);
@@ -61,14 +52,12 @@ let update_db = async function() {
         let date_str= data.tested[0].updatetimestamp.slice(0,10).split('/')
         let date= new Date(date_str[2],date_str[1]-1,date_str[0]);
 
-        let exists= await EthiopiaData.findOne({ date: date})
-        if (exists){
-            await EthiopiaData.deleteMany({ date: { $gte:date} });
-        }
-
+        await EthiopiaData.collection.drop();
+       
         let test= new EthiopiaData({
             _id: mongoose.Types.ObjectId(),
             region:"Ethiopia",
+            region_code:'ET',
             phone_number:phone_no["Ethiopia"],
             test: data.tested[0].totalindividualstested,
             date: date
@@ -79,10 +68,11 @@ let update_db = async function() {
         for (var index = 0; index < data.statewise.length; index++) {
             let case_data = data.statewise[index];
             let state=(case_data.state=="Total")? "Ethiopia": case_data.state;
-
+            let region_code= (case_data.statecode=="TT")? "ET":case_data.statecode;
             var ethiopia= new EthiopiaData({
                 _id: mongoose.Types.ObjectId(),
                 region: state,
+                region_code:region_code,
                 phone_number: phone_no[state],
                 total:{
                     'confirmed': case_data.confirmed,
