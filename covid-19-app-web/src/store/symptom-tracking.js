@@ -69,7 +69,7 @@ const actions = {
       })
       .finally(() => {
         commit("setMapLoaders", { key: "locationsSymptoms", value: false });
-    });
+      });
   }
 };
 
