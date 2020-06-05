@@ -20,26 +20,26 @@ const BackIcon = (props) => <Icon name="arrow-ios-back-outline" {...props} />;
 const methods = [
   {
     title: strings.HandWashing,
-    label: "Rub or wash your hand with soap and water for at least 20 sec",
-    tag: "> 20 Sec",
+    label: strings.InfoDetailPreventionMethodsLabelOne,
+    tag: strings.InfoDetailPreventionMethodsTagOne,
     image: require("../info-detail/assets/washing.jpg"),
   },
   {
     title: strings.SocialDistancing,
-    label: "Maintain at least 2m (6 ft) gap in groups.",
-    tag: "2 Meters",
+    label: strings.InfoDetailPreventionMethodsLabelTwo,
+    tag: strings.InfoDetailPreventionMethodsTagTwo,
     image: require("../info-detail/assets/social.jpg"),
   },
   {
     title: strings.RespiratoryHygiene,
-    label: "Use mouse and nose covering masks when going outside",
-    tag: "Face covering",
+    label: strings.InfoDetailPreventionMethodsLabelThree,
+    tag: strings.InfoDetailPreventionMethodsTagThree,
     image: require("../info-detail/assets/face.jpg"),
   },
   {
     title: strings.StayInformed,
-    label: "Follow the advice of healthcare provider and your government",
-    tag: "Truth vs Fake",
+    label: strings.InfoDetailPreventionMethodsLabelFour,
+    tag: strings.InfoDetailPreventionMethodsTagFour,
     image: require("../info-detail/assets/info.jpg"),
   },
 ];

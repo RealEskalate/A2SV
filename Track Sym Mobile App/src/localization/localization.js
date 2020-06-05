@@ -27,8 +27,8 @@ export let strings = new LocalizedStrings({
     SignIn: "Sign in",
     SignUp: "Sign up",
     AgeGroup: "Age Group",
-    Male: "Male",
-    Female: "Female",
+    Male: "MALE",
+    Female: "FEMALE",
     Gender: "Gender",
     ConfirmPassword: "Confirm Password",
     ReadMore: "Read More",
@@ -182,6 +182,174 @@ export let strings = new LocalizedStrings({
     Amharic: "Amharic",
     Oromiffa: "Oromiffa",
     Turkish: "Turkish",
+    WhatIsCOVID19ShortDescription:
+      "Coronavirus disease 2019 is an infectious disease caused by severe acute respiratory syndrome",
+
+    SyptomsShortDescription:
+      "Fever, Cough, and Shortness of breath are common symptoms reported by patients",
+
+    PreventionsShortDescription:
+      "Follow the guidelines to help protect yourself from catching, carrying, and passing on COVID-19",
+
+    HowDoesItSpreadShortDescription:
+      "COVID-19 virus primarily transmitted between people through respiratory droplets and contact routes",
+
+    MessageFromUsShortDescription:
+      "There is a lot of information circulating about COVID-19, so it is important to know what is right and what is not.",
+
+    WhatIsCOVID19DetailInfoTitle: "WHAT IS COVID-19 ?",
+    WhatIsCOVID19DetailInfoDescription: "CORONAVIRUS DESEASE 2019",
+    WhatIsCOVID19DetailInfoDescriptionContentOne:
+      "Severe Acute Respiratory Syndrome     Coronavirus-2 (SARS-CoV-2) is the name given to the 2019 novel coronavirus. COVID-19 is the name given to the disease associated with the virus.\n\nSARS-CoV-2 is a new strain of coronavirus that has not been previously identified in humans. Coronaviruses are viruses that circulate among animals with some of them also known to infect humans.",
+
+    SyptomsDetailInfoTitle: "SYMPTOMS of COVID-19",
+    SyptomsDetailInfoDescription: "COMMON SYMPTOMS OF CORONAVIRUS",
+    SyptomsDetailInfoDescriptionContentOne:
+      "From what is known so far, a person infected with this disease may suffer from dry cough, mild fever, tiredness, and breathing issues which may go unnoticed at first. ",
+    SyptomsDetailInfoDescriptionContentTwo:
+      "The virus is difficult to contain for the following reasons. The symptoms are similar to common cold or flue, and it spreads very rapidly.\n\n Some people will get COVID-19 but don 't show any symptoms. In fact, 80% of people infected with COVID-19 recover without any special treatment. As people move around the world, COVID-19 has spread in all parts of the world and is continuing to do so.",
+
+    SyptomsDetailInfoDescriptionMostListNameOne: "High Fever",
+    SyptomsDetailInfoDescriptionMostListNameTwo: "Dry Cough",
+    SyptomsDetailInfoDescriptionMostListNameThree: "Fatigue",
+    SyptomsDetailInfoDescriptionMostListNameFour: "Shortness of breath",
+    SyptomsDetailInfoDescriptionMostListNameFive: "Myalgia",
+
+    SyptomsDetailInfoDescriptionMostListInsideContentOne:
+      "It is a body temperature above 39 °C (103 °F). This is one of the most common symptoms of COVID-19 patients’ experience. The high fever is an indication of the Immune System fighting the viruses. ",
+
+    SyptomsDetailInfoDescriptionMostListInsideContentTwo:
+      "It is a cough that doesn't bring up mucus. It may feel like you have a tickle in the back of your throat triggering your cough reflex, giving you hacking coughs. Dry coughs are often caused by upper respiratory infections, such as COVID-19. More than 60% of cases have dry cough as a symptom.",
+
+    SyptomsDetailInfoDescriptionMostListInsideContentThree:
+      "Lack of enengy and Motivation (physical and mental)",
+    SyptomsDetailInfoDescriptionMostListInsideContentFour:
+      "Also known medically as dyspnea — is often described as an intense tightening in the chest, air hunger, difficulty breathing, breathlessness, or a feeling of suffocation. Very strenuous exercise, extreme temperatures, obesity, and higher altitude all can cause shortness of breath in a healthy person. Outside of these examples, shortness of breath is likely a sign of a medical problem.",
+    SyptomsDetailInfoDescriptionMostListInsideContentFive:
+      "It is pain or aches in muscles characterized by chronic pain, stiffness, and tenderness.  It describes muscle aches and pain, which can involve ligaments, tendons, and fascia, the soft tissues that connect muscles, bones, and organs.",
+
+    SyptomsDetailInfoDescriptionLessListNameOne: "Headache",
+    SyptomsDetailInfoDescriptionLessListNameTwo: "Ansomia",
+    SyptomsDetailInfoDescriptionLessListNameThree: "Sore Throat",
+    SyptomsDetailInfoDescriptionLessListNameFour: "Chills",
+
+    SyptomsDetailInfoDescriptionLessListInsideContentone:
+      "It can be a sharp, throbbing or dull feeling across the head.",
+    SyptomsDetailInfoDescriptionLessListInsideContentTwo:
+      "It is the partial or complete loss of the sense of smell.",
+    SyptomsDetailInfoDescriptionLessListInsideContentThree:
+      "It is a painful, dry, or scratchy feeling in the throat that often worsens when swallowing because of redness and swelling formed around the back of the mouth and larynx. ",
+    SyptomsDetailInfoDescriptionLessListInsideContentFour:
+      "It is the feeling of being cold without an apparent cause. You get this feeling when your muscles repeatedly expand and contract and the vessels in your skin constrict. Chills can occur with a fever and cause shivering or shaking.",
+
+    PreventionDetailInfoTitle: "Prevention",
+    PreventionDetailInfoDescription: "PREVENTION IS BETTER THAN CURE!",
+    PreventionDetailInfoDescriptionMethodOneNameOne: "Hand Washing",
+    PreventionDetailInfoDescriptionMethodOneNameTwo: "Social Distancing",
+
+    PreventionDetailInfoDescriptionMethodOneInsideContentOne:
+      "Regularly and thoroughly clean your hands with an alcohol-based hand rub or wash them with soap and water for at least 20 seconds. Hands touch many surfaces and can pick up viruses. Once contaminated, hands can transfer the virus to your eyes, nose, or mouth. From there, the virus can enter your body and can make you sick.",
+    PreventionDetailInfoDescriptionMethodOneInsideContetnTwo:
+      "Maintain at least 2 meters (6 feet) distance between yourself and anyone who is coughing or sneezing.",
+
+    PreventionDetailInfoDescriptionMethodTwoNameOne: "Respiratory hygiene",
+    PreventionDetailInfoDescriptionMethodTwoNameTwo: "Stay Informed",
+
+    PreventionDetailInfoDescriptionMethodTwoInsideContentOne:
+      "Make sure you, and the people around you, follow good respiratory hygiene. This means covering your mouth and nose with your bent elbow or tissue when you cough or sneeze. Then dispose of the used tissue immediately.",
+    PreventionDetailInfoDescriptionMethodTwoInsideContetnTwo:
+      "Stay informed on the latest developments about COVID-19. Follow the advice given by your healthcare provider, your national and local public health authority, or your employer on how to protect yourself and others from COVID-19.",
+
+    HowItSpreadsDetailInfoTitle: "How does it spread?",
+    HowItSpreadsDetailInfoDescription:
+      "How does coronavirus become contagious ?",
+    HowItSpreadsDetailInfoDescriptionContentOne:
+      "Unlike most deadly viruses who quickly hospitalize their hosts leading to their quarantine, it can be highly contagious and spread quickly because the patient may not even show any symptoms for days after infection.",
+    HowItSpreadsDetailInfoDescriptionContentTwo:
+      "Since most patients do not show symptoms for up to 14 days, they likely pass it to others before they are quarantined and treated. The coronavirus is not only able to spread to others by direct contacts like touching each other’s hands but also through indirect contacts like digital devices like phone, desks, chairs, stairs, and elevator buttons and then touching your face (eyes, nose, or mouth). ",
+
+    MessageFromUsDetailInfoTitle: "Message From TrackSym",
+    MessageFromUsDetailInfoDescriptionContentOne:
+      "We are dealing with a pandemic and we need to be prepared and be willing to accept the advice, instructions, and mandate of authorities and health officials to have it under control soon.\n\nParents should deal with the CoVID-19 pandemic calmly and confidently so that their children will be able to follow in the same direction. Parents can be more reassuring to others around them. Since this is a new virus and we do not know enough about how it affects children or pregnant women, people of any age can be infected and transmit the virus. ",
+    MessageFromUsDetailInfoDescriptionContentTwo:
+      "Children may be disproportionately affected by measures taken to control the outbreak, such as school closures and physical distancing measures. Special attention needs to be paid to prevent and minimize negative consequences for children as much as possible. ",
+
+    DetailInfoAuthorFullName: "Weakpeadia",
+
+    InfoCovidDetailParagraphOneSubOne:
+      "There is much more to coronaviruses than SARS-CoV-2. Coronaviruses are actually a family of hundreds of viruses. Most of these infect animals such as bats, chickens, camels and cats.",
+    InfoCovidDetailParagraphOneSubTwo:
+      "Occasionally, viruses that infect one species can mutate in such a way that allows them to start infecting other species. This is called cross-species transmission or spillover.",
+    InfoCovidDetailParagraphOneSubThree:
+      "The first coronavirus was discovered in chickens in the 1930s. It was a few decades until the first human coronaviruses were identified in the 1960s.",
+    InfoCovidDetailParagraphOneSubFour:
+      "To date, seven coronaviruses can cause disease in humans. Four are endemic (regularly found among particular people or in a certain area) and usually cause mild disease, but three can cause much more serious and even fatal disease.",
+
+    InfoCovidDetailParagraphTwoSubOne:
+      "It is said to have come from a market that sells meat and live animals. It is believed that the virus might have been transmitted through direct contact between humans and animals.InfoCovidDetailParagraphTwoSubTwo:  Either by touching those animals or by eating them. And it can also spread via the air. However, the actual source of thisdisease is not known yet.",
+    InfoCovidDetailParagraphTwoSubTwo:
+      "Either by touching those animals or by eating them. And it can also spread via the air. However, the actual source of this disease is not known yet.",
+
+    InfoCovidDetailParagraphThreeSubOne:
+      "A Common misconception regarding COVID-19 is that coronaviruses affect only old people. This is far from true and is killing many people from various age groups.",
+
+    InfoCovidDetailParagraphThreeSubTwo:
+      "The risk of dying due to COVID-19 is indeed significantly higher for 80+ age groups(as high as 14.8%) while it is below 1% for age groups below 40.",
+    InfoCovidDetailParagraphThreeSubThree:
+      "But this does not mean that teenagers will not be affected or die. So these and other false facts can lead to a dangerous road.",
+
+    InfoDetailMostCommonSyptomsListTitleOne: "High Fever",
+    InfoDetailMostCommonSyptomsListTitleTwo: "Dry Cough",
+    InfoDetailMostCommonSyptomsListTitleThree: "Fatigue",
+    InfoDetailMostCommonSyptomsListTitleFour: "Shortness of Breath",
+    InfoDetailMostCommonSyptomsListTitleFive: "Myalgia",
+
+    InfoDetailMostCommonSyptomsListLableOne:
+      "Body temperature is 103°F (39.4°C) or above",
+    InfoDetailMostCommonSyptomsListLableTwo:
+      "Does not bring up mucus and stays for eight weeks or more",
+    InfoDetailMostCommonSyptomsListLableThree:
+      "Lack of enengy and Motivation (physical and mental)",
+    InfoDetailMostCommonSyptomsListLableFour:
+      "Trouble inhaling or exhaling or feels as though they cannot get enough oxygen",
+    InfoDetailMostCommonSyptomsListLableFive:
+      "Pain or ache in muscles characterized by chronic pain, stiffness and tenderness",
+
+    InfoDetailLessCommonSyptomsListTitleOne: "Headache",
+    InfoDetailLessCommonSyptomsListTitleTwo: "Sore Throat",
+    InfoDetailLessCommonSyptomsListTitleThree: "Chills",
+    InfoDetailLessCommonSyptomsListTitleFour: "Anosmia",
+
+    InfoDetailLessCommonSyptomsListLableOne:
+      "Sharp, throbbing or dull feeling across the head",
+    InfoDetailLessCommonSyptomsListLableTwo:
+      "Scratchiness or irritation of the throat that often worsens when you swallow",
+    InfoDetailLessCommonSyptomsListLableThree:
+      "Feeling of being cold without an apparent cause",
+    InfoDetailLessCommonSyptomsListLableFour:
+      "Usually associated with partial loss of smell or a blocked nose",
+
+    InfoDetailPreventionMethodsTitleOne: "Hand Washing",
+    InfoDetailPreventionMethodsTitleTwo: "Social Distancing",
+    InfoDetailPreventionMethodsTitleThree: "Respiratory Hygiene",
+    InfoDetailPreventionMethodsTitleFour: "Stay Informed",
+
+    InfoDetailPreventionMethodsLabelOne:
+      "Rub or wash your hand with soap and water for at least 20 sec",
+    InfoDetailPreventionMethodsLabelTwo:
+      "Maintain at least 2m (6 ft) gap in groups.",
+    InfoDetailPreventionMethodsLabelThree:
+      "Use mouse and nose covering masks when going outside",
+    InfoDetailPreventionMethodsLabelFour:
+      "Follow the advice of healthcare provider and your government",
+
+    InfoDetailPreventionMethodsTagOne: "> 20 Sec",
+    InfoDetailPreventionMethodsTagTwo: "2 Meters",
+    InfoDetailPreventionMethodsTagThree: "Face covering",
+    InfoDetailPreventionMethodsTagFour: "Truth vs Fake",
+
+    InfoDetailMessageFromTrackSym:
+      "You should be careful not to get infected and stay safe. Even if you are not heavily sick, there is a big risk that you might pass it to your loved ones before the symptoms arise.",
   },
   en: {
     Information: "Information",
@@ -206,8 +374,8 @@ export let strings = new LocalizedStrings({
     SignIn: "Sign in",
     SignUp: "Sign up",
     AgeGroup: "Age Group",
-    Male: "Male",
-    Female: "Female",
+    Male: "MALE",
+    Female: "FEMALE",
     Gender: "Gender",
     ConfirmPassword: "Confirm Password",
     ReadMore: "Read More",
@@ -222,15 +390,15 @@ export let strings = new LocalizedStrings({
     DailyStatsGraph: "Daily Stats Graph",
     TotalStatsGraph: "Total Stats Graph",
     DailyRatesGraph: "Daily Rates Graph",
-    NewConfirmed: "New Confrimed",
+    NewConfirmed: "New Confirmed",
     NewRecovered: "New Recovered",
     NewDeath: "New Death",
-    TotalConfirmed: "Total Confrimed",
+    TotalConfirmed: "Total Confirmed",
     TotalRecovered: "Total Recovered",
     TotalDeath: "Total Death",
     StartDate: "Start Date",
     EndDate: "End Date",
-    Confirmed: "Confrimed",
+    Confirmed: "Confirmed",
     Recovered: "Recovered",
     Death: "Death",
     Deaths: "Deaths",
@@ -360,6 +528,174 @@ export let strings = new LocalizedStrings({
     Amharic: "Amharic",
     Oromiffa: "Oromiffa",
     Turkish: "Turkish",
+    WhatIsCOVID19ShortDescription:
+      "Coronavirus disease 2019 is an infectious disease caused by severe acute respiratory syndrome",
+
+    SyptomsShortDescription:
+      "Fever, Cough, and Shortness of breath are common symptoms reported by patients",
+
+    PreventionsShortDescription:
+      "Follow the guidelines to help protect yourself from catching, carrying, and passing on COVID-19",
+
+    HowDoesItSpreadShortDescription:
+      "COVID-19 virus primarily transmitted between people through respiratory droplets and contact routes",
+
+    MessageFromUsShortDescription:
+      "There is a lot of information circulating about COVID-19, so it is important to know what is right and what is not.",
+
+    WhatIsCOVID19DetailInfoTitle: "WHAT IS COVID-19 ?",
+    WhatIsCOVID19DetailInfoDescription: "CORONAVIRUS DESEASE 2019",
+    WhatIsCOVID19DetailInfoDescriptionContentOne:
+      "Severe Acute Respiratory Syndrome     Coronavirus-2 (SARS-CoV-2) is the name given to the 2019 novel coronavirus. COVID-19 is the name given to the disease associated with the virus.\n\nSARS-CoV-2 is a new strain of coronavirus that has not been previously identified in humans. Coronaviruses are viruses that circulate among animals with some of them also known to infect humans.",
+
+    SyptomsDetailInfoTitle: "SYMPTOMS of COVID-19",
+    SyptomsDetailInfoDescription: "COMMON SYMPTOMS OF CORONAVIRUS",
+    SyptomsDetailInfoDescriptionContentOne:
+      "From what is known so far, a person infected with this disease may suffer from dry cough, mild fever, tiredness, and breathing issues which may go unnoticed at first. ",
+    SyptomsDetailInfoDescriptionContentTwo:
+      "The virus is difficult to contain for the following reasons. The symptoms are similar to common cold or flue, and it spreads very rapidly. Some people will get COVID-19 but don 't show any symptoms. In fact, 80% of people infected with COVID-19 recover without any special treatment. As people move around the world, COVID-19 has spread in all parts of the world and is continuing to do so.",
+
+    SyptomsDetailInfoDescriptionMostListNameOne: "High Fever",
+    SyptomsDetailInfoDescriptionMostListNameTwo: "Dry Cough",
+    SyptomsDetailInfoDescriptionMostListNameThree: "Fatigue",
+    SyptomsDetailInfoDescriptionMostListNameFour: "Shortness of breath",
+    SyptomsDetailInfoDescriptionMostListNameFive: "Myalgia",
+
+    SyptomsDetailInfoDescriptionMostListInsideContentOne:
+      "It is a body temperature above 39 °C (103 °F). This is one of the most common symptoms of COVID-19 patients’ experience. The high fever is an indication of the Immune System fighting the viruses. ",
+
+    SyptomsDetailInfoDescriptionMostListInsideContentTwo:
+      "It is a cough that doesn't bring up mucus. It may feel like you have a tickle in the back of your throat triggering your cough reflex, giving you hacking coughs. Dry coughs are often caused by upper respiratory infections, such as COVID-19. More than 60% of cases have dry cough as a symptom.",
+
+    SyptomsDetailInfoDescriptionMostListInsideContentThree:
+      "Lack of enengy and Motivation (physical and mental)",
+    SyptomsDetailInfoDescriptionMostListInsideContentFour:
+      "Also known medically as dyspnea — is often described as an intense tightening in the chest, air hunger, difficulty breathing, breathlessness, or a feeling of suffocation. Very strenuous exercise, extreme temperatures, obesity, and higher altitude all can cause shortness of breath in a healthy person. Outside of these examples, shortness of breath is likely a sign of a medical problem.",
+    SyptomsDetailInfoDescriptionMostListInsideContentFive:
+      "It is pain or aches in muscles characterized by chronic pain, stiffness, and tenderness.  It describes muscle aches and pain, which can involve ligaments, tendons, and fascia, the soft tissues that connect muscles, bones, and organs.",
+
+    SyptomsDetailInfoDescriptionLessListNameOne: "Headache",
+    SyptomsDetailInfoDescriptionLessListNameTwo: "Ansomia",
+    SyptomsDetailInfoDescriptionLessListNameThree: "Sore Throat",
+    SyptomsDetailInfoDescriptionLessListNameFour: "Chills",
+
+    SyptomsDetailInfoDescriptionLessListInsideContentone:
+      "It can be a sharp, throbbing or dull feeling across the head.",
+    SyptomsDetailInfoDescriptionLessListInsideContentTwo:
+      "It is the partial or complete loss of the sense of smell.",
+    SyptomsDetailInfoDescriptionLessListInsideContentThree:
+      "It is a painful, dry, or scratchy feeling in the throat that often worsens when swallowing because of redness and swelling formed around the back of the mouth and larynx. ",
+    SyptomsDetailInfoDescriptionLessListInsideContentFour:
+      "It is the feeling of being cold without an apparent cause. You get this feeling when your muscles repeatedly expand and contract and the vessels in your skin constrict. Chills can occur with a fever and cause shivering or shaking.",
+
+    PreventionDetailInfoTitle: "Prevention",
+    PreventionDetailInfoDescription: "PREVENTION IS BETTER THAN CURE!",
+    PreventionDetailInfoDescriptionMethodOneNameOne: "Hand Washing",
+    PreventionDetailInfoDescriptionMethodOneNameTwo: "Social Distancing",
+
+    PreventionDetailInfoDescriptionMethodOneInsideContentOne:
+      "Regularly and thoroughly clean your hands with an alcohol-based hand rub or wash them with soap and water for at least 20 seconds. Hands touch many surfaces and can pick up viruses. Once contaminated, hands can transfer the virus to your eyes, nose, or mouth. From there, the virus can enter your body and can make you sick.",
+    PreventionDetailInfoDescriptionMethodOneInsideContetnTwo:
+      "Maintain at least 2 meters (6 feet) distance between yourself and anyone who is coughing or sneezing.",
+
+    PreventionDetailInfoDescriptionMethodTwoNameOne: "Respiratory hygiene",
+    PreventionDetailInfoDescriptionMethodTwoNameTwo: "Stay Informed",
+
+    PreventionDetailInfoDescriptionMethodTwoInsideContentOne:
+      "Make sure you, and the people around you, follow good respiratory hygiene. This means covering your mouth and nose with your bent elbow or tissue when you cough or sneeze. Then dispose of the used tissue immediately.",
+    PreventionDetailInfoDescriptionMethodTwoInsideContetnTwo:
+      "Stay informed on the latest developments about COVID-19. Follow the advice given by your healthcare provider, your national and local public health authority, or your employer on how to protect yourself and others from COVID-19.",
+
+    HowItSpreadsDetailInfoTitle: "How does it spread?",
+    HowItSpreadsDetailInfoDescription:
+      "How does coronavirus become contagious ?",
+    HowItSpreadsDetailInfoDescriptionContentOne:
+      "Unlike most deadly viruses who quickly hospitalize their hosts leading to their quarantine, it can be highly contagious and spread quickly because the patient may not even show any symptoms for days after infection.",
+    HowItSpreadsDetailInfoDescriptionContentTwo:
+      "Since most patients do not show symptoms for up to 14 days, they likely pass it to others before they are quarantined and treated. The coronavirus is not only able to spread to others by direct contacts like touching each other’s hands but also through indirect contacts like digital devices like phone, desks, chairs, stairs, and elevator buttons and then touching your face (eyes, nose, or mouth). ",
+
+    MessageFromUsDetailInfoTitle: "Message From TrackSym",
+    MessageFromUsDetailInfoDescriptionContentOne:
+      "We are dealing with a pandemic and we need to be prepared and be willing to accept the advice, instructions, and mandate of authorities and health officials to have it under control soon.\n\nParents should deal with the CoVID-19 pandemic calmly and confidently so that their children will be able to follow in the same direction. Parents can be more reassuring to others around them. Since this is a new virus and we do not know enough about how it affects children or pregnant women, people of any age can be infected and transmit the virus. ",
+    MessageFromUsDetailInfoDescriptionContentTwo:
+      "Children may be disproportionately affected by measures taken to control the outbreak, such as school closures and physical distancing measures. Special attention needs to be paid to prevent and minimize negative consequences for children as much as possible. ",
+
+    DetailInfoAuthorFullName: "Weakpeadia",
+
+    InfoCovidDetailParagraphOneSubOne:
+      "There is much more to coronaviruses than SARS-CoV-2. Coronaviruses are actually a family of hundreds of viruses. Most of these infect animals such as bats, chickens, camels and cats.",
+    InfoCovidDetailParagraphOneSubTwo:
+      "Occasionally, viruses that infect one species can mutate in such a way that allows them to start infecting other species. This is called cross-species transmission or spillover.",
+    InfoCovidDetailParagraphOneSubThree:
+      "The first coronavirus was discovered in chickens in the 1930s. It was a few decades until the first human coronaviruses were identified in the 1960s.",
+    InfoCovidDetailParagraphOneSubFour:
+      "To date, seven coronaviruses can cause disease in humans. Four are endemic (regularly found among particular people or in a certain area) and usually cause mild disease, but three can cause much more serious and even fatal disease.",
+
+    InfoCovidDetailParagraphTwoSubOne:
+      "It is said to have come from a market that sells meat and live animals. It is believed that the virus might have been transmitted through direct contact between humans and animals.InfoCovidDetailParagraphTwoSubTwo:  Either by touching those animals or by eating them. And it can also spread via the air. However, the actual source of thisdisease is not known yet.",
+    InfoCovidDetailParagraphTwoSubTwo:
+      "Either by touching those animals or by eating them. And it can also spread via the air. However, the actual source of this disease is not known yet.",
+
+    InfoCovidDetailParagraphThreeSubOne:
+      "A Common misconception regarding COVID-19 is that coronaviruses affect only old people. This is far from true and is killing many people from various age groups.",
+
+    InfoCovidDetailParagraphThreeSubTwo:
+      "The risk of dying due to COVID-19 is indeed significantly higher for 80+ age groups(as high as 14.8%) while it is below 1% for age groups below 40.",
+    InfoCovidDetailParagraphThreeSubThree:
+      "But this does not mean that teenagers will not be affected or die. So these and other false facts can lead to a dangerous road.",
+
+    InfoDetailMostCommonSyptomsListTitleOne: "High Fever",
+    InfoDetailMostCommonSyptomsListTitleTwo: "Dry Cough",
+    InfoDetailMostCommonSyptomsListTitleThree: "Fatigue",
+    InfoDetailMostCommonSyptomsListTitleFour: "Shortness of Breath",
+    InfoDetailMostCommonSyptomsListTitleFive: "Myalgia",
+
+    InfoDetailMostCommonSyptomsListLableOne:
+      "Body temperature is 103°F (39.4°C) or above",
+    InfoDetailMostCommonSyptomsListLableTwo:
+      "Does not bring up mucus and stays for eight weeks or more",
+    InfoDetailMostCommonSyptomsListLableThree:
+      "Lack of enengy and Motivation (physical and mental)",
+    InfoDetailMostCommonSyptomsListLableFour:
+      "Trouble inhaling or exhaling or feels as though they cannot get enough oxygen",
+    InfoDetailMostCommonSyptomsListLableFive:
+      "Pain or ache in muscles characterized by chronic pain, stiffness and tenderness",
+
+    InfoDetailLessCommonSyptomsListTitleOne: "Headache",
+    InfoDetailLessCommonSyptomsListTitleTwo: "Sore Throat",
+    InfoDetailLessCommonSyptomsListTitleThree: "Chills",
+    InfoDetailLessCommonSyptomsListTitleFour: "Anosmia",
+
+    InfoDetailLessCommonSyptomsListLableOne:
+      "Sharp, throbbing or dull feeling across the head",
+    InfoDetailLessCommonSyptomsListLableTwo:
+      "Scratchiness or irritation of the throat that often worsens when you swallow",
+    InfoDetailLessCommonSyptomsListLableThree:
+      "Feeling of being cold without an apparent cause",
+    InfoDetailLessCommonSyptomsListLableFour:
+      "Usually associated with partial loss of smell or a blocked nose",
+
+    InfoDetailPreventionMethodsTitleOne: "Hand Washing",
+    InfoDetailPreventionMethodsTitleTwo: "Social Distancing",
+    InfoDetailPreventionMethodsTitleThree: "Respiratory Hygiene",
+    InfoDetailPreventionMethodsTitleFour: "Stay Informed",
+
+    InfoDetailPreventionMethodsLabelOne:
+      "Rub or wash your hand with soap and water for at least 20 sec",
+    InfoDetailPreventionMethodsLabelTwo:
+      "Maintain at least 2m (6 ft) gap in groups.",
+    InfoDetailPreventionMethodsLabelThree:
+      "Use mouse and nose covering masks when going outside",
+    InfoDetailPreventionMethodsLabelFour:
+      "Follow the advice of healthcare provider and your government",
+
+    InfoDetailPreventionMethodsTagOne: "> 20 Sec",
+    InfoDetailPreventionMethodsTagTwo: "2 Meters",
+    InfoDetailPreventionMethodsTagThree: "Face covering",
+    InfoDetailPreventionMethodsTagFour: "Truth vs Fake",
+
+    InfoDetailMessageFromTrackSym:
+      "You should be careful not to get infected and stay safe. Even if you are not heavily sick, there is a big risk that you might pass it to your loved ones before the symptoms arise.",
   },
   am: {
     Information: "መረጃ",
@@ -384,8 +720,8 @@ export let strings = new LocalizedStrings({
     SignIn: "ግባ",
     SignUp: "ይመዝገቡ",
     AgeGroup: "እድሜ ክልል",
-    Male: "ወንድ",
-    Female: "ሴት",
+    Male: "MALE",
+    Female: "FEMALE",
     Gender: "ፃታ",
     ConfirmPassword: "የሚስጥር ቁልፎን ያረጋግጡ",
     ReadMore: "ገብተው ያንብቡ",
@@ -538,6 +874,102 @@ export let strings = new LocalizedStrings({
     Amharic: "አማርኛ",
     Oromiffa: "ኦሮምኛ",
     Turkish: "Turkish",
+    WhatIsCOVID19ShortDescription:
+      "ኮሮናቫይረስ በሽታ 2019 ተላላፊ በሽታ ሲሆን  በከባድ የመተንፈሻ አካላት ህመም የሚመጣ ነው።",
+
+    SyptomsShortDescription:
+      "ትኩሳት ፣ ሳል እና የትንፋሽ እጥረት በታካሚዎች ሪፖርት የተደረጉ የተለመዱ ምልክቶች ናቸው።",
+
+    PreventionsShortDescription:
+      "በCOVID-19 ከመያዝ ፣ ቫይረሱን ከማስተላለፍ እራስዎን ለመጠበቅ መመሪያዎቹን ይከተሉ",
+
+    HowDoesItSpreadShortDescription:
+      "COVID-19 ቫይረስ በዋነኝነት በሰዎች መካከል በትንፋሽ ጠብታዎች እና በመገናኛ መንገዶች በኩል ነው።",
+
+    MessageFromUsShortDescription:
+      "ስለ COVID-19 የሚዘወተሩ ብዙ መረጃዎች አሉ ፣ ስለሆነም ትክክል የሆነውን እና ያልሆነውን ማወቅ አስፈላጊ ነው ፡፡",
+
+    WhatIsCOVID19DetailInfoTitle: "COVID-19 ምንድነው ?",
+    WhatIsCOVID19DetailInfoDescription: "CORONAVIRUS DESEASE 2019",
+    WhatIsCOVID19DetailInfoDescriptionContentOne:
+      "Severe Acute Respiratory Syndrome Coronavirus-2 (ሳርስ ኮቭ 2) ለአዲሱ የኮሮና ቫይረስ የተሰጠው ስም ነው፡፡ ኮቪድ 19 ቫይረሱ ለሚያስከትለው በሽታ የተሰጠው ስም ነው። ኮሮናቫይረስ በእንስሳት ውስጥ የሚተላለፉ ቫይረሶች ሲሆኑ ከእነዚህም መካከል አንዳንዶቹ የሰው ልጆች ላይ በቀላሉ ሊጠቁ ይችላሉ ፡፡",
+
+    SyptomsDetailInfoTitle: "የኮ.ቪ.ድ. 19 የህመም ምልክቶች",
+    SyptomsDetailInfoDescription:
+      "የተለመዱ/ ኮ.ቪ.ድ. 19 የህመም ምልክቶች COMMON SYMPTOMS OF CORONAVIRUS",
+    SyptomsDetailInfoDescriptionContentOne:
+      "እስካሁን ከሚታወቀው የኮሮና ወይም COVID-19 ምልክቶች ደረቅ ሳል፣ ከፍተኛ ትኩሳት፣ ድካም ድካም ማለት እና የመተንፈስ ችግር ናቸው። ",
+    SyptomsDetailInfoDescriptionContentTwo:
+      "ነገር ግን አንዳንድ በቫይረሱ የተጠቁ ሰዎች እነዚህን ምልክቶች ላያሳዩ ይችላሉ። ቫይረሱን ለመቆጣጠር ከባድ እሚያደርገውም የነዚህ ምልክት አልባ ሰዎች መኖርና የቫይረሱ ከሰው ሰው በፍጥነት የመዛመት ችሎታው ነው።",
+
+    SyptomsDetailInfoDescriptionMostListNameOne: "ከፍተኛ ትኩሳት",
+    SyptomsDetailInfoDescriptionMostListNameTwo: "ደረቅ ሳል",
+    SyptomsDetailInfoDescriptionMostListNameThree: "የድካም ስሜት/ ፋቲግ",
+    SyptomsDetailInfoDescriptionMostListNameFour: "የትንፋሽ እጥረት",
+    SyptomsDetailInfoDescriptionMostListNameFive: "ማያልጅያ",
+
+    SyptomsDetailInfoDescriptionMostListInsideContentOne:
+      "ከ 39 ዲግሪ ሴንቲግሬድ (103 ዲግሪ ፋራናይት) በላይ የሆነ የሰውነት ሙቀት ነው ፡፡ በCOVID-19 ህመምተኞች ተሞክሮ በጣም ከተለመዱት ምልክቶች አንዱ ይህ ነው ፡፡ ከፍተኛ ትኩሳት ቫይረሶችን የሚዋጋ የበሽታ መቋቋም ስርዓት እየሰራ መሆኑን ማሳያ ነው ፡፡ ",
+
+    SyptomsDetailInfoDescriptionMostListInsideContentTwo:
+      "ሀክታ የሌለው ደረቅ ሳል ነው፡፡ ሲያስሉ በጉሮሮዎ ጀርባ ላይ የሆነ የሚከረክር ስሜት ሊሰማዎት ይችላል ፡፡ ደረቅ ሳል ብዙውን ጊዜ እንደ COVID-19 ባሉ የላይኛው የመተንፈሻ አካላት በሽታዎች ይከሰታል። ከ 60% በላይ የሚሆኑት የኮ.ቪ.ድ. 19 ተጠቂዎች ደረቅ ሳል እንደ ምልክት ያሳያሉ፡፡",
+
+    SyptomsDetailInfoDescriptionMostListInsideContentThree:
+      "የኃይል እጥረት እና ተነሳሽነት (አካላዊም ሆነ አእምሯዊ) አለመኖር።",
+    SyptomsDetailInfoDescriptionMostListInsideContentFour:
+      "የትንፋሽ እጥረት - በሕክምና “ዲስፕንያ” በመባል የሚታወቅ - ብዙውን ጊዜ በደረት ውስጥ በጣም የመጥበቅ ፣ የአየር ረሃብ ፣ የመተንፈስ ችግር ፣ የትንፋሽ ማጣት ወይም የመታፈን ስሜት መገለጫዎቹ ናቸው። በጣም ጠንካራ የሰውነት እንቅስቃሴ ፣ ከፍተኛ የሙቀት መጠኖች ፣ ውፍረት እና ከፍተኛ ከፍታ መውጣት ጤናማ በሆነ ሰው ላይ የትንፋሽ እጥረት ሊያስከትሉ ይችላሉ ፡፡ ከነዚህ ምሳሌዎች ውጭ የትንፋሽ እጥረት እንደ ኮቪድ–19 ያለ የህክምና ችግር ምልክት ሊሆንም ይችላል ፡፡",
+
+    SyptomsDetailInfoDescriptionMostListInsideContentFive:
+      "ከባድ የሆነ የጡንቻ መገታተር እና ከባድ ህመም ሲሆን መገጣጠሚያን እና አጥንትንም ያካትታል። ",
+
+    SyptomsDetailInfoDescriptionLessListNameOne: "ራስ ምታት",
+    SyptomsDetailInfoDescriptionLessListNameTwo: "አንሶምያ Ansomia",
+    SyptomsDetailInfoDescriptionLessListNameThree: "የቆሰለ ጉሮሮ",
+    SyptomsDetailInfoDescriptionLessListNameFour: "ብርድ ብርድ ማለት",
+
+    SyptomsDetailInfoDescriptionLessListInsideContentone:
+      "ሀይለኛ የእራስ ህመም/ ጭንቅላትን የሚከፍል፣ የመመታት ወይም የመደንዘዝ ስሜት የሚሰጥ።",
+    SyptomsDetailInfoDescriptionLessListInsideContentTwo:
+      "የማሽተት ስሜትን በከፊል ወይም ሙሉ በሙሉ ማጣት ማለት ነው።",
+    SyptomsDetailInfoDescriptionLessListInsideContentThree:
+      "ጉሮሮ ላይ የሚሰማ የድርቀት፣ የህመምና የማሳከክ ስሜት ነው። ",
+    SyptomsDetailInfoDescriptionLessListInsideContentFour:
+      "ያለ ምንም ግልጽ ምክንያት ብርድ ብርድ የማለት ስሜት ነው፡፡ ጡንቻዎችዎ ደጋግመው ሲወጠሩ እና ሲኮማተሩ እና በቆዳዎ ውስጥ ያሉት ስሮች ሲጠቡ ይህ ስሜት ይሰማዎታል፡፡ ብርድ ብርድ ከማለት ጋር አብሮ ትኩሳት እና መንቀጥቀጥም ሊከሰት ይችላል።",
+
+    PreventionDetailInfoTitle: "መከላከያ መንገዶች",
+    PreventionDetailInfoDescription: "መከላከል ከፈውስ ይሻላል",
+
+    PreventionDetailInfoDescriptionMethodOneNameOne: "እጅ መታጠብ",
+    PreventionDetailInfoDescriptionMethodOneNameTwo: "አካላዊ ርቀት",
+
+    PreventionDetailInfoDescriptionMethodOneInsideContentOne:
+      "እጃችንን በሳሙና እና በውሀ ቢያንስ ለ20 ሰኮንዶች እንታጠብ ወይም አልኮል ባለው የጀርም ማጽጃ እናጽዳ። እጆች ብዙ ነገሮችን ይነካሉ፣ ያን ጊዜም ቫይረሶችን ይይዛሉ ፡፡ አንዴ ከተበከለ እጆች ቫይረሱን ወደ ዓይኖችዎ ፣ አፍንጫዎ ወይም ወደ አፍዎ ያስተላልፉታል ፡፡ ከዚያ ቫይረሱ ከሰውነትዎ ውስጥ ገብቶ ሰውነትዎን ሊያሳምም ይችላል ፡፡",
+    PreventionDetailInfoDescriptionMethodOneInsideContetnTwo:
+      "በእራስዎ እና በማንኛውም ሰው(በተለይ በሚያስነጥስ ወይም በሚያስለው ሰው) መካከል ቢያንስ 2 ሜትር (6 ጫማ) ርቀት ይኑር ፡፡",
+
+    PreventionDetailInfoDescriptionMethodTwoNameOne: "የመተንፈሻ አካላት ንፅህና",
+    PreventionDetailInfoDescriptionMethodTwoNameTwo: "አዳዲስ መረጃዎችን ይከታተሉ",
+    PreventionDetailInfoDescriptionMethodTwoInsideContentOne:
+      "እርስዎ እና በአካባቢዎ ያሉ ሰዎች ጥሩ የመተንፈሻ ንፅህናን መከተላቸውን ያረጋግጡ ፡፡ ይህ ማለት በሚያስነጥሱበት ወይም በሚያስሉበት ጊዜ አፍዎን እና አፍንጫዎን በክርንዎ ወይም በሶፍት መሸፈን ማለት ነው ፡፡ ከዚያ የተጠከሙበትን ሶፍት በአግባቡ ያሶግዱ።",
+    PreventionDetailInfoDescriptionMethodTwoInsideContetnTwo:
+      "ስለ COVID-19 የቅርብ ጊዜ ዜናዎች ወይም አዲስ የጥናት ውጤቶች መረጃ ያግኙ ፡፡ እርስዎን እና ሌሎችን ከ COVID-19 እንዴት መጠበቅ እንደሚችሉ በጤና ባለሞያዎች ፣ በብሔራዊ እና በአከባቢዎ የህዝብ ጤና ባለስልጣን ወይም በአሠሪዎ የሚስጠውን ምክር ይከተሉ ፡፡",
+
+    HowItSpreadsDetailInfoTitle: "እንዴት ይተላለፋል",
+    HowItSpreadsDetailInfoDescription: "ኮሮና ቫይረስ እንዴት ይተላለፋል?",
+    HowItSpreadsDetailInfoDescriptionContentOne:
+      "ይህ ቫይረስ ከሌሎች በጣም አደገኛ ገዳይ ቫይረሶች የሚለይበት ዋነኛው ነገር የተያዙት ሰዎች በቫይረሱ ከተያዙ በኋላ ባሉት የተወሰኑ ቀናት ምንም ምልክቶች ላይታይ ይችላል፡፡ ",
+    HowItSpreadsDetailInfoDescriptionContentTwo:
+      "ስለዚህ በሽተኛው በበሽታው ከተያዘ በኋላ እስኪብስበት አና ምልክት እስኪያሳይ ድረስ እስከ 14 ቀናት ሳይታወቅ ለሌሎች ሊያስተላልፍ ይችላል ፡፡ አብዛኛዎቹ ህመምተኞች እስከ 14 ቀናት ድረስ ምልክቶችን የማያሳዩ እንደመሆናቸው መጠን ተገልለው ከመታከም እና ህክምና ከማድረጋቸው በፊት ለሌሎች ያስተላልፉ ይሆናል ፡፡ ኮሮናቫይረስ እርስ በእርስ እጆችን በመንካት በቀጥታ ወደ ሌሎች ከመሰራጨቱ በተጨማሪ እንደ ስልኮች ፣ ዴስኮች ፣ ወንበሮች ፣ ደረጃዎች ፣ እና ቁልፎች ያሉ በተዘዋዋሪ ግንኙነቶች በኩል እንዲሁ ወደ ሌሎች መሰራጨት ይችላል።(አይኖች ፣ አፍንጫ ወይም አፍ ) ",
+
+    MessageFromUsDetailInfoTitle: "ከTrackSym መልእክት",
+    MessageFromUsDetailInfoDescriptionContentOne:
+      "የተያያዝነው ከወረርሽኝ ጋር ነው፤ እናም ባለስልጣኖች እና የጤና ባለስልጣናት የሚሰጡትን ምክር ፣ መመሪያ እና ሀላፊነት በሚገባ በመከታተል ወረርሽኙን እንዲቆጣጠሩት ከኛ የሚጠበቀውን ለማድረግ ዝግጁ እና ፈቃደኛ መሆን አለብን ፡፡ ወላጆች ልጆቻቸው በተመሳሳይ አቅጣጫ መከታተል እንዲችሉ ወረርሽኙን በረጋ መንፈስና በልበ ሙሉነት መቀበል እና የበኩላቸውን መወጣት አለባቸው ፡፡ ወላጆች በዙሪያቸው ላሉት ሰዎች የበለጠ የሚያረጋጉ መሆን ይችላሉ ፡፡ ይህ አዲስ ቫይረስ ስለሆነ እና በልጆች ላይ ወይም እርጉዝ ሴቶችን እንዴት እንደሚጎዳ በበቂ ሁኔታ አናውቅም ፣ በየትኛውም ዕድሜ ያሉ ሰዎች በበሽታው ሊጠቁ እና ቫይረሱን ሊያስተላልፉ ይችላሉ ፡፡",
+    MessageFromUsDetailInfoDescriptionContentTwo:
+      "እንደ ትምህርት ቤት መዘጋት እና የአካል መራራቅ ያሉ ወረርሽኙን ለመቆጣጠር በሚወሰዱ እርምጃዎች ህጻናት ላይ በተዘዋዋሪ ተፅእኖ ሊኖራቸው ይችላል። ስለዚህም በተቻለ መጠን በልጆች ላይ አሉታዊ ተፅእኖዎችን ለመከላከል እና ለመቀነስ ልዩ ትኩረት መሰጠት አለበት። ",
+
+    DetailInfoAuthorFullName: "Weakpeadia",
+    InfoDetailMessageFromTrackSym:
+      "በበሽታው እንዳይጠቁ እና ደህና እንዳይሆኑ መጠንቀቅ አለብዎት ፡፡ ምንም እንኳን በከባድ ሕመም ላይ ባይሆኑም እንኳ የበሽታው ምልክቶች ከመታየታቸው በፊት ለምትወዷቸው/ለምትቀርቧቸው ሰዎች ማሰራጨት ትልቅ አደጋ አለ፡፡",
   },
   tr: {
     Information: "Information",
@@ -562,8 +994,8 @@ export let strings = new LocalizedStrings({
     SignIn: "Sign in",
     SignUp: "Sign up",
     AgeGroup: "Age Group",
-    Male: "Male",
-    Female: "Female",
+    Male: "MALE",
+    Female: "FEMALE",
     Gender: "Gender",
     ConfirmPassword: "Confirm Password",
     ReadMore: "Read More",
@@ -739,8 +1171,8 @@ export let strings = new LocalizedStrings({
     SignIn: "Sign in",
     SignUp: "Sign up",
     AgeGroup: "Age Group",
-    Male: "Male",
-    Female: "Female",
+    Male: "MALE",
+    Female: "FEMALE",
     Gender: "Gender",
     ConfirmPassword: "Confirm Password",
     ReadMore: "Read More",
