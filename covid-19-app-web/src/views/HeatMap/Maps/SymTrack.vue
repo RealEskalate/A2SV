@@ -1,8 +1,8 @@
 <template>
   <v-card outlined shaped class="shadow-in overflow-hidden">
     <v-progress-linear
-      style="position: absolute; z-index: 10"
-      v-if="mapLoaders.locationsSymptoms"
+      style="position: absolute; z-index: 1"
+      v-if="symTrackLoaders.map"
       height="2"
       striped
       indeterminate
@@ -133,7 +133,7 @@ export default {
   },
   computed: {
     loadedData: () => store.getters.getLocationsSymptoms,
-    mapLoaders: () => store.getters.getMapLoaders
+    symTrackLoaders: () => store.getters.getSymTrackLoaders
   },
   methods: {
     symptomsToGeoJson(symptoms) {

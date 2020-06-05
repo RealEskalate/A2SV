@@ -64,7 +64,7 @@
   </v-row>
 </template>
 <script>
-import ajax from "../../auth/ajax";
+import ajax from "@/auth/ajax";
 import store from "@/store/";
 import { Rules, User } from "./user.js";
 import { mdiEye, mdiEyeOff, mdiCloseCircleOutline } from "@mdi/js";

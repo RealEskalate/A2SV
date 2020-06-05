@@ -177,9 +177,9 @@
       router.replace({ params: { lang: this.$i18n.locale } }).catch(() => {});
     },
     logout() {
-      console.log("Logging out");
       store.dispatch("setToken", { token: null });
       store.dispatch("setUser", { user: null });
+      router.replace("/");
     }
   },
   computed: {
