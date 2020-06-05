@@ -1,104 +1,121 @@
 <template class="mx-auto">
-  <v-card class="mx-auto elevation-12 my-8" max-width="344" outlined>
-    <v-alert
-      dense
-      text
-      type="error"
-      v-show="show"
-      v-text="getMessage"
-    ></v-alert>
+  <v-row align="center" justify="center" style="height: 100%">
+    <v-col cols="12" sm="8" md="4">
+      <v-card class="overflow-hidden" shaped outlined>
+        <v-snackbar top color="primary" v-model="snackbar" :timeout="5000">
+          <h4 class="ma-2" v-text="getMessage" />
+          <v-btn text icon x-small color="white" @click="snackbar = false">
+            <v-icon v-text="mdiCloseCircleOutline" />
+          </v-btn>
+        </v-snackbar>
 
-    <v-toolbar color="blue darken-2" dark>
-      <v-toolbar-title>Create an account</v-toolbar-title>
+        <v-toolbar class="shadow-sm  mb-3" color="primary" dark flat>
+          <v-toolbar-title v-text="'Sign Up'" />
+        </v-toolbar>
 
-      <v-spacer></v-spacer>
+        <v-card-text>
+          <v-form class="mx-4 my-4" v-model="valid" ref="form">
+            <v-text-field
+              dense
+              outlined
+              prefix="@"
+              class="v-card--shaped"
+              v-model="user.username"
+              :rules="rules.username"
+              label="Username"
+              required
+            />
+            <v-row>
+              <v-col class="py-0">
+                <v-select
+                  dense
+                  outlined
+                  class="v-card--shaped"
+                  :items="age_group"
+                  label="Age group"
+                  v-model="user.age_group"
+                />
+              </v-col>
+              <v-col class="py-0">
+                <v-select
+                  dense
+                  outlined
+                  class="v-card--shaped"
+                  :items="gender"
+                  label="Gender"
+                  v-model="user.gender"
+                />
+              </v-col>
+            </v-row>
 
-      <v-progress-circular
-        v-if="loading"
-        class="mx-auto"
-        :size="50"
-        :width="7"
-        color="white"
-        indeterminate
-      ></v-progress-circular>
-    </v-toolbar>
-    <v-form class="mx-4 my-4" v-model="valid" ref="form">
-      <v-text-field
-        v-model="user.username"
-        :rules="rules.username"
-        label="Username"
-        required
-      ></v-text-field>
-      <v-row>
-        <v-col>
-          <v-select
-            :items="age_group"
-            label="Age group"
-            v-model="user.age_group"
-          ></v-select>
-        </v-col>
-        <v-col>
-          <v-select
-            :items="gender"
-            label="Gender"
-            v-model="user.gender"
-          ></v-select>
-        </v-col>
-      </v-row>
+            <v-text-field
+              dense
+              outlined
+              class="v-card--shaped"
+              :append-icon="!show_password ? mdiEyeOff : mdiEye"
+              :rules="rules.password"
+              v-model="user.password"
+              label="Password"
+              :type="show_password ? 'text' : 'password'"
+              required
+              ref="password"
+              @click:append="show_password = !show_password"
+            />
+            <v-text-field
+              dense
+              outlined
+              class="v-card--shaped"
+              :append-icon="!show_password ? mdiEyeOff : mdiEye"
+              :rules="match"
+              v-model="user.confirm_password"
+              label="Confirm password"
+              :type="show_password ? 'text' : 'password'"
+              required
+              @click:append="show_password = !show_password"
+            />
 
-      <v-text-field
-        :append-icon="!show1 ? mdiEyeOff : mdiEye"
-        :rules="rules.password"
-        v-model="user.password"
-        label="Password"
-        :type="show1 ? 'text' : 'password'"
-        required
-        ref="password"
-        @click:append="show1 = !show1"
-      ></v-text-field>
-      <v-text-field
-        :append-icon="!show ? mdiEyeOff : mdiEye"
-        :rules="match"
-        v-model="user.confirm_password"
-        label="Confirm password"
-        :type="show1 ? 'text' : 'password'"
-        required
-        @click:append="show1 = !show1"
-      ></v-text-field>
-
-      <div class="my-2 mx-auto align-center align-content-center">
-        <v-btn
-          :disabled="!valid"
-          color="success"
-          class="d-block mx-auto"
-          @click="submit"
-        >
-          Register
-        </v-btn>
-        <router-link
-          to="login"
-          class="mx-auto d-block text-center my-2 v-card--link"
-          >Login
-        </router-link>
-      </div>
-    </v-form>
-  </v-card>
+            <div class="my-2 mx-auto align-center align-content-center">
+              <v-btn
+                :disabled="!valid"
+                color="primary"
+                class="d-block mx-auto v-card--shaped"
+                @click="submit"
+                :loading="loading"
+              >
+                Sign Up
+              </v-btn>
+              <v-btn
+                text
+                small
+                class="d-block mx-auto my-2"
+                @click="$router.push('login')"
+              >
+                Go to Login
+              </v-btn>
+            </div>
+          </v-form>
+        </v-card-text>
+      </v-card>
+    </v-col>
+  </v-row>
 </template>
 
 <script>
 import store from "@/store/";
 import ajax from "../../auth/ajax";
 import { Rules, User } from "./user.js";
-import { mdiEye, mdiEyeOff } from "@mdi/js";
+import { mdiEye, mdiEyeOff, mdiCloseCircleOutline } from "@mdi/js";
 
 export default {
   data() {
     return {
       mdiEye,
       mdiEyeOff,
+      mdiCloseCircleOutline,
       valid: false,
-      show1: false,
-      loadAnim: false,
+      snackbar: false,
+      show_password: false,
+      loading: false,
       user: User,
       rules: Rules,
       match: [
@@ -121,29 +138,25 @@ export default {
   },
   methods: {
     submit() {
-      this.loadAnim = true;
-      ajax.post("auth/register", this.user).then(
-        user => {
-          alert("registration successful");
-          console.log(user);
-          this.loadAnim = false;
-          store.dispatch("setStateMessage", "User successfully created");
-        },
-        error => {
-          this.loadAnim = false;
-          store.dispatch("setStateMessage", error.message);
-        }
-      );
+      this.loading = true;
+      ajax
+        .post("auth/register", this.user)
+        .then(
+          () => {
+            store.dispatch("setStateMessage", "User successfully created");
+            this.$router.push("login");
+          },
+          error => {
+            store.dispatch("setStateMessage", error.message);
+          }
+        )
+        .finally(() => {
+          this.snackbar = true;
+          this.loading = false;
+        });
     }
   },
   computed: {
-    show() {
-      // show an alert message if only there is one
-      return store.getters.getMessage !== "";
-    },
-    loading() {
-      return this.loadAnim;
-    },
     getMessage() {
       return store.getters.getMessage;
     }

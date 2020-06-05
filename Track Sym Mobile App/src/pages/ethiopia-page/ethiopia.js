@@ -30,7 +30,7 @@ import { DotsLoader } from "react-native-indicator";
 import { strings } from "../../localization/localization";
 import languageStore from "../../data-management/language_data/languageStore";
 
-class DataAnalytics extends React.Component {
+class Ethiopia extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -49,10 +49,10 @@ class DataAnalytics extends React.Component {
       daily_newCases_data_set: [0],
       rate_label: [""],
       rate_data_set: [0],
-      searchedCountry: "World",
+      searchedCountry: "ETH",
       TotalStatisticsData: [],
       StatisticsData: {},
-      search: "World",
+      search: "Ethiopia",
       Months: [
         strings.Jan,
         strings.Feb,
@@ -584,7 +584,7 @@ class DataAnalytics extends React.Component {
     const HIEGHT = Dimensions.get("window").height;
     return (
       <Layout>
-        <Layout style={{ flexDirection: "row" }}>
+        {/* <Layout style={{ flexDirection: "row" }}>
           <SearchableDropdown
             onTextChange={(text) => {
               this.setState({ search: text });
@@ -624,22 +624,46 @@ class DataAnalytics extends React.Component {
             <MaterialCommunityIcons name="reload" color="#0080ff" size={30} />
             <Text style={{ fontSize: 12 }}>{strings.Refresh}</Text>
           </TouchableOpacity>
-        </Layout>
+        </Layout> */}
 
         <ScrollView>
           <Layout style={styles.container}>
             <Layout
               style={{
-                alignContent: "flex-start",
-                justifyContent: "flex-start",
-                margin: 10,
-                width: Dimensions.get("window").width - 20,
+                flexDirection: "row",
+                flex: 1,
+                paddingHorizontal: 10,
+                width: Dimensions.get("window").width,
                 backgroundColor: "#ffffff00",
               }}
             >
-              <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-                {strings.DailyStats}
-              </Text>
+              <Layout
+                style={{
+                  alignContent: "flex-start",
+                  width: Dimensions.get("window").width - 60,
+                  backgroundColor: "#ffffff00",
+                  marginTop: 15,
+                }}
+              >
+                <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+                  {strings.DailyStats}
+                </Text>
+              </Layout>
+              <Layout
+                style={{
+                  marginBottom: 5,
+                  backgroundColor: "#ffffff00",
+                }}
+              >
+                <TouchableOpacity onPress={() => this.componentDidMount()}>
+                  <MaterialCommunityIcons
+                    name="reload"
+                    color="#0080ff"
+                    size={30}
+                  />
+                  <Text style={{ fontSize: 12 }}>{strings.Refresh}</Text>
+                </TouchableOpacity>
+              </Layout>
             </Layout>
             <Layout
               style={{
@@ -1476,7 +1500,7 @@ class DataAnalytics extends React.Component {
                   </TouchableOpacity>
                 ) : null}
               </Layout>
-              <Layout padding={10} style={{ marginBottom: 80 }}>
+              <Layout padding={10} style={{ marginBottom: 40 }}>
                 {this.state.staticsDescriptionLoading ? (
                   <Layout flexDirection="row" alignSelf="center">
                     <ActivityIndicator size="small" color="gray" />
@@ -1880,6 +1904,6 @@ const styles = StyleSheet.create({
 
 export default () => (
   <ApplicationProvider {...eva} theme={eva.light}>
-    <DataAnalytics />
+    <Ethiopia />
   </ApplicationProvider>
 );

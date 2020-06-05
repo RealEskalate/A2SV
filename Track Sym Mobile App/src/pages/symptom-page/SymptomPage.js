@@ -47,10 +47,6 @@ export default class SymptomPage extends Component {
     localSymptomStore.subscribe(() => {
       this.fetchData();
     });
-    languageStore.subscribe(() => {
-      strings.setLanguage(languageStore.getState());
-      this.componentDidMount();
-    });
   }
 
   componentDidMount() {

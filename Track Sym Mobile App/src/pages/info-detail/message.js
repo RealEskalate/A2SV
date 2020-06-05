@@ -64,11 +64,7 @@ export default PrevDetailScreen = (props) => {
           </View>
           <Divider />
           <Layout style={styles.contentContainer}>
-            <Text>
-              You should be careful not to get infected and stay safe. Even if
-              you are not heavily sick, there is a big risk that you might pass
-              it to your loved ones before the symptoms arise.
-            </Text>
+            <Text>{strings.InfoDetailMessageFromTrackSym}</Text>
           </Layout>
         </ScrollView>
       </Layout>

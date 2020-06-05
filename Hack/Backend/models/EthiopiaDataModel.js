@@ -4,8 +4,9 @@ const ethiopiaDataSchema = new mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
   region: {
     type: String,
-    required: true,
-    enum: ["Ethiopia","Addis Abeba","Afar", "Amhara","Beneshangul Gumuz","Gambela", "Oromia","Somali", "Dire Dawa","Hareri","SNNP","Tigray"],
+  },
+  region_code: {
+    type: String,
   },
   phone_number: {
     type: String,

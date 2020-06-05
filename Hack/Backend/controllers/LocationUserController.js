@@ -301,9 +301,21 @@ exports.get_all_locations_with_symptoms = async (req, res) => {
   );
   let inPolygonCheck = min_coord_distance < 10000;
   let zoom = 0;
-  if (distance_check >= limit || !inPolygonCheck) {
-    zoom = 10;
+  let isDemo = false;
+  if (req.body.demo && req.body.demo == true) {
+    isDemo = true;
   }
+  console.log("H");
+  if (isDemo) {
+    if (distance_check >= limit) {
+      zoom = 10;
+    }
+  } else {
+    if (distance_check >= limit && inPolygonCheck === false) {
+      zoom = 10;
+    }
+  }
+  console.log("I");
   try {
     let result = [];
     if (zoom != 0) {
