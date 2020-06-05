@@ -6,8 +6,10 @@ import vuetify from "./plugins/vuetify";
 import i18n from "./plugins/i18n";
 import VueTour from "vue-tour";
 import VueProgressBar from "vue-progressbar";
-require("vue-tour/dist/vue-tour.css");
+import VTooltip from "v-tooltip";
 
+require("vue-tour/dist/vue-tour.css");
+Vue.use(VTooltip);
 Vue.use(VueTour);
 Vue.use(VueProgressBar, {
   color: "#019DE5",

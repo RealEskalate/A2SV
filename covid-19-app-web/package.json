@@ -20,6 +20,7 @@
     "mapbox-gl-vue": "^2.0.4",
     "moment": "^2.26.0",
     "supercluster": "^7.1.0",
+    "v-tooltip": "^2.0.3",
     "vue": "^2.6.11",
     "vue-carousel-3d": "^0.2.0",
     "vue-chartjs": "^3.5.0",

@@ -10,13 +10,16 @@ import axios from "axios";
 import messages from "./messages";
 import symptomTracking from "./symptom-tracking";
 import user from "./user";
+import ethiopia from "./ethiopia";
+
 import createPersistedState from "vuex-persistedstate";
 
 Vue.use(Vuex);
 
 export const langConverter = {
   en: "English",
-  am: "Amharic"
+  am: "Amharic",
+  ao: "Oromo"
 };
 
 export default new Vuex.Store({
@@ -97,6 +100,7 @@ export default new Vuex.Store({
     user,
     loaders,
     messages,
+    ethiopia,
     symptomTracking
   }
 });
