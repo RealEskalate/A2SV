@@ -1,9 +1,17 @@
 <template>
-  <div id="app">
+  <v-card outlined shaped class="shadow-in overflow-hidden">
+    <v-progress-linear
+      style="position: absolute; z-index: 10"
+      v-if="mapLoaders.locationsSymptoms"
+      height="2"
+      striped
+      indeterminate
+      color="primary"
+    />
     <mapbox
-      access-token="pk.eyJ1IjoiZmVyb3g5OCIsImEiOiJjazg0czE2ZWIwNHhrM2VtY3Y0a2JkNjI3In0.zrm7UtCEPg2mX8JCiixE4g"
+      :access-token="api_token"
       :map-options="{
-        style: 'mapbox://styles/mapbox/dark-v10',
+        style: 'mapbox://styles/mapbox/light-v10',
         center: [38.811684, 9.015326],
         zoom: 12
       }"
@@ -13,10 +21,17 @@
       }"
       @map-load="loaded"
     />
-  </div>
+  </v-card>
 </template>
 
 <script>
+=======
+  </v-card>
+</template>
+
+<script>
+import store from "@/store";
+>>>>>>> 8fd15c2d67cddfbbf56dd2472a12d6d350153252
 import Mapbox from "mapbox-gl-vue";
 import Supercluster from "supercluster";
 
@@ -31,6 +46,19 @@ export default {
   components: { Mapbox },
   data: function() {
     return {
+<<<<<<< HEAD
+=======
+      api_token: process.env.VUE_APP_MAPBOX_API,
+
+      small_cluster: null,
+      medium_cluster: null,
+      high_cluster: null,
+
+      small_superclusters: null,
+      medium_superclusters: null,
+      high_superclusters: null,
+
+>>>>>>> 8fd15c2d67cddfbbf56dd2472a12d6d350153252
       symptomCollections: {
         smallSymptomCollection: {
           type: "FeatureCollection",
@@ -61,10 +89,70 @@ export default {
       // bottom_left_bound: [38.79999690988012, 8.976957049826808],
       // bottom_right_bound: [38.82312696429011, 8.976957049826808],
     };
+<<<<<<< HEAD
   },
   methods: {
     symptomsToGeoJson(symptoms) {
       console.log("symptoms to GeoJson " + symptoms.length);
+=======
+  },
+  watch: {
+    loadedData(newValue) {
+      if (newValue.length > 0 && newValue[0].probability === undefined) {
+        // we're getting grid results
+        // just log them for now
+        const gridCollections = this.gridsToGeoJson(newValue);
+        const small_cluster = new Supercluster({ radius: 40, maxZoom: 14 });
+        const medium_cluster = new Supercluster({ radius: 40, maxZoom: 14 });
+        const high_cluster = new Supercluster({ radius: 40, maxZoom: 14 });
+
+        small_cluster.load(gridCollections.smallGridCollection.features);
+        medium_cluster.load(gridCollections.mediumGridCollection.features);
+        high_cluster.load(gridCollections.heavyGridCollection.features);
+
+        this.gridCollections = gridCollections;
+        this.small_cluster = small_cluster;
+        this.medium_cluster = medium_cluster;
+        this.high_cluster = high_cluster;
+        // this.grid_rendering = true;
+        // if (animating === true) {
+        //   animating = false;
+        // }
+        this.symptomCollections = this.updateClusters();
+      } else {
+        const featureCollections = this.symptomsToGeoJson(newValue);
+
+        const small_cluster = new Supercluster({ radius: 40, maxZoom: 14 });
+        const medium_cluster = new Supercluster({ radius: 40, maxZoom: 14 });
+        const high_cluster = new Supercluster({ radius: 40, maxZoom: 14 });
+
+        small_cluster.load(featureCollections.smallSymptomCollection.features);
+        medium_cluster.load(
+          featureCollections.mediumSymptomCollection.features
+        );
+        high_cluster.load(featureCollections.highSymptomCollection.features);
+
+        this.symptomCollections = featureCollections;
+        this.small_cluster = small_cluster;
+        this.medium_cluster = medium_cluster;
+        this.high_cluster = high_cluster;
+        this.grid_rendering = false;
+        // if (animating === true) {
+        //   animating = false;
+        // }
+        this.symptomCollections = this.updateClusters();
+      }
+
+      this.fillMapData();
+    }
+  },
+  computed: {
+    loadedData: () => store.getters.getLocationsSymptoms,
+    mapLoaders: () => store.getters.getMapLoaders
+  },
+  methods: {
+    symptomsToGeoJson(symptoms) {
+>>>>>>> 8fd15c2d67cddfbbf56dd2472a12d6d350153252
       const symptomCollections = {
         smallSymptomCollection: {
           type: "FeatureCollection",
@@ -107,6 +195,7 @@ export default {
         pointInfos[element.user_id] = element;
       }
       return symptomCollections;
+<<<<<<< HEAD
     },
 
     gridsToGeoJson(grids) {
@@ -324,6 +413,139 @@ export default {
       }
       const bounds = await this.map.getBounds();
       console.log(bounds);
+=======
+    },
+
+    gridsToGeoJson(grids) {
+      const gridCollections = {
+        smallGridCollection: {
+          type: "FeatureCollection",
+          features: []
+        },
+        mediumGridCollection: {
+          type: "FeatureCollection",
+          features: []
+        },
+        heavyGridCollection: {
+          type: "FeatureCollection",
+          features: []
+        }
+      };
+      for (let i = 0; i < grids.length; i++) {
+        const element = grids[i];
+        const total =
+          parseInt(grids[i].genders.MALE) +
+          parseInt(grids[i].genders.FEMALE) +
+          parseInt(grids[i].genders.UNDISCLOSED);
+
+        const feat = {
+          type: "Feature",
+          id: element._id,
+          properties: {
+            icon: "pin3",
+            total: total
+          },
+          geometry: {
+            type: "Point",
+            coordinates: [
+              parseFloat(element.location.coordinates[0]),
+              parseFloat(element.location.coordinates[1])
+            ]
+          }
+        };
+        // subtitute with number of infections later
+        gridCollections.heavyGridCollection.features.push(feat);
+        grid_infos[element._id] = element;
+      }
+      return gridCollections;
+    },
+
+    fetchLocationsSymptoms() {
+      const input = {
+        longitude: this.user_longitude,
+        latitude: this.user_latitude,
+
+        top_left_bound: this.top_left_bound,
+        top_right_bound: this.top_right_bound,
+        bottom_left_bound: this.bottom_left_bound,
+        bottom_right_bound: this.bottom_right_bound
+      };
+      store.dispatch("setLocationsSymptoms", input);
+    },
+
+    updateClusters() {
+      const small_cluster = this.small_cluster;
+      const medium_cluster = this.medium_cluster;
+      const high_cluster = this.high_cluster;
+
+      const SymptomCollection = {
+        smallSymptomCollection: {
+          type: "FeatureCollection",
+          features: []
+        },
+        mediumSymptomCollection: {
+          type: "FeatureCollection",
+          features: []
+        },
+        highSymptomCollection: {
+          type: "FeatureCollection",
+          features: []
+        }
+      };
+
+      if (small_cluster || medium_cluster || high_cluster) {
+        const bounds = this.map.getBounds();
+        const west_lng = bounds._sw.lng,
+          south_lat = bounds._sw.lat;
+        const east_lng = bounds._ne.lng,
+          north_lat = bounds._ne.lat;
+
+        const zoom = Math.round(this.map.getZoom());
+
+        if (small_cluster) {
+          small_cluster
+            .getClusters([west_lng, south_lat, east_lng, north_lat], zoom)
+            .forEach(feature => {
+              SymptomCollection.smallSymptomCollection.features.push(feature);
+            });
+          this.small_superclusters = small_cluster.getClusters(
+            [west_lng, south_lat, east_lng, north_lat],
+            zoom
+          );
+        }
+
+        if (medium_cluster) {
+          medium_cluster
+            .getClusters([west_lng, south_lat, east_lng, north_lat], zoom)
+            .forEach(feature => {
+              SymptomCollection.mediumSymptomCollection.features.push(feature);
+            });
+          this.medium_superclusters = medium_cluster.getClusters(
+            [west_lng, south_lat, east_lng, north_lat],
+            zoom
+          );
+        }
+        if (high_cluster) {
+          high_cluster
+            .getClusters([west_lng, south_lat, east_lng, north_lat], zoom)
+            .forEach(feature => {
+              SymptomCollection.highSymptomCollection.features.push(feature);
+            });
+          this.high_superclusters = high_cluster.getClusters(
+            [west_lng, south_lat, east_lng, north_lat],
+            zoom
+          );
+        }
+      }
+      return SymptomCollection;
+    },
+
+    loaded(map) {
+      if (!this.map) {
+        this.map = map; // save the map for use by other components
+      }
+      const bounds = this.map.getBounds();
+>>>>>>> 8fd15c2d67cddfbbf56dd2472a12d6d350153252
       const west_lng = bounds._sw.lng,
         south_lat = bounds._sw.lat;
       const east_lng = bounds._ne.lng,
@@ -334,6 +556,7 @@ export default {
       this.bottom_left_bound = [west_lng, south_lat];
       this.bottom_right_bound = [east_lng, south_lat];
 
+<<<<<<< HEAD
       var res = await this.fetchSymptoms();
 
       console.log(await res);
@@ -341,6 +564,15 @@ export default {
       console.log(await res.highSymptomCollection.features);
       if ((await res.smallSymptomCollection.features.length) !== 0) {
         map.addLayer({
+=======
+      this.fetchLocationsSymptoms();
+    },
+
+    fillMapData() {
+      let res = this.symptomCollections;
+      if (res.smallSymptomCollection.features.length !== 0) {
+        this.map.addLayer({
+>>>>>>> 8fd15c2d67cddfbbf56dd2472a12d6d350153252
           id: "points",
           type: "circle",
           paint: {
@@ -354,15 +586,21 @@ export default {
         });
       }
 
+<<<<<<< HEAD
       if ((await res.highSymptomCollection.features.length) !== 0) {
         console.log("adding layer!");
         map.addLayer({
+=======
+      if (res.highSymptomCollection.features.length !== 0) {
+        this.map.addLayer({
+>>>>>>> 8fd15c2d67cddfbbf56dd2472a12d6d350153252
           id: "points",
           type: "circle",
           paint: {
             "circle-radius": [
               "step",
               ["get", "total"],
+<<<<<<< HEAD
               30,
               300,
               40,
@@ -370,10 +608,20 @@ export default {
               50,
               1500,
               60
+=======
+              20,
+              300,
+              30,
+              900,
+              40,
+              1500,
+              50
+>>>>>>> 8fd15c2d67cddfbbf56dd2472a12d6d350153252
             ],
             "circle-color": [
               "step",
               ["get", "total"],
+<<<<<<< HEAD
               "#FFC107",
               300,
               "#FF8F00",
@@ -385,14 +633,32 @@ export default {
             "circle-stroke-width": 5,
             "circle-stroke-color": "#3E2723",
             "circle-opacity": 0.6
+=======
+              "#FFEE58",
+              300,
+              "#FFA000",
+              900,
+              "#F4511E",
+              1500,
+              "#E53935"
+            ],
+            "circle-stroke-width": 3,
+            "circle-stroke-color": "#fdfdfd",
+            "circle-opacity": 0.3
+>>>>>>> 8fd15c2d67cddfbbf56dd2472a12d6d350153252
           },
           source: {
             type: "geojson",
             data: res.highSymptomCollection
           }
         });
+<<<<<<< HEAD
         var below_layer_id = "points";
         map.addLayer(
+=======
+        let below_layer_id = "points";
+        this.map.addLayer(
+>>>>>>> 8fd15c2d67cddfbbf56dd2472a12d6d350153252
           {
             id: "point-counts",
             type: "symbol",
@@ -403,11 +669,19 @@ export default {
             layout: {
               "text-field": ["get", "total"],
               "text-font": ["Ubuntu Medium", "Arial Unicode MS Regular"],
+<<<<<<< HEAD
               "text-size": 20,
               "text-pitch-alignment": "map"
             },
             paint: {
               "text-color": "white"
+=======
+              "text-size": 16,
+              "text-pitch-alignment": "map"
+            },
+            paint: {
+              "text-color": this.$vuetify.theme.themes.light.secondary
+>>>>>>> 8fd15c2d67cddfbbf56dd2472a12d6d350153252
             }
           },
           below_layer_id
@@ -419,8 +693,17 @@ export default {
 </script>
 
 <style>
+<<<<<<< HEAD
 #map {
   width: 100%;
   height: 500px;
+=======
+@import url("https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.css");
+</style>
+<style>
+#map {
+  width: 100%;
+  height: 100%;
+>>>>>>> 8fd15c2d67cddfbbf56dd2472a12d6d350153252
 }
 </style>

@@ -1,59 +1,61 @@
 <template>
-  <v-row align="center" justify="center">
+  <v-row align="center" justify="center" style="height: 100%">
     <v-col cols="12" sm="8" md="4">
-      <v-card class="elevation-12">
-        <v-alert
-          dense
-          text
-          type="error"
-          v-show="show"
-          v-text="getMessage"
-        ></v-alert>
+      <v-card class="overflow-hidden" shaped outlined>
+        <v-snackbar top color="primary" v-model="snackbar" :timeout="5000">
+          <h4 class="ma-2" v-text="getMessage" />
+          <v-btn text icon x-small color="white" @click="snackbar = false">
+            <v-icon v-text="mdiCloseCircleOutline" />
+          </v-btn>
+        </v-snackbar>
 
-        <v-toolbar color="primary" dark flat>
-          <v-toolbar-title>Login form</v-toolbar-title>
-          <v-spacer />
-          <v-progress-circular
-            v-if="loading"
-            class="mx-auto"
-            :size="50"
-            :width="7"
-            color="white"
-            indeterminate
-          ></v-progress-circular>
+        <v-toolbar class="shadow-sm mb-3" color="primary" dark flat>
+          <v-toolbar-title v-text="'Login'" />
         </v-toolbar>
+
         <v-card-text>
           <v-form class="mx-4 my-4" v-model="valid">
             <v-text-field
+              dense
+              outlined
+              prefix="@"
+              class="v-card--shaped"
               :rules="rules.username"
               v-model="user.username"
               label="Username"
               required
-            ></v-text-field>
+            />
             <v-text-field
+              dense
+              outlined
+              class="v-card--shaped"
               :rules="rules.password"
-              :append-icon="!show1 ? mdiEyeOff : mdiEye"
+              :append-icon="!show_password ? mdiEyeOff : mdiEye"
               v-model="user.password"
               label="Password"
-              :type="show1 ? 'text' : 'password'"
+              :type="show_password ? 'text' : 'password'"
               required
-              @click:append="show1 = !show1"
-            ></v-text-field>
+              @click:append="show_password = !show_password"
+            />
 
             <div class="my-2 mx-auto align-center align-content-center">
               <v-btn
                 :disabled="!valid"
                 color="primary"
-                class="d-block mx-auto"
+                class="d-block mx-auto v-card--shaped"
                 @click="submit"
+                :loading="loading"
               >
                 Login
               </v-btn>
-              <router-link
-                to="register"
-                class="mx-auto d-block text-center my-2 v-card--link"
-                >Register
-              </router-link>
+              <v-btn
+                text
+                small
+                class="d-block mx-auto my-2"
+                @click="$router.push('register')"
+              >
+                Go to Sign Up
+              </v-btn>
             </div>
           </v-form>
         </v-card-text>
@@ -65,7 +67,7 @@
 import ajax from "../../auth/ajax";
 import store from "@/store/";
 import { Rules, User } from "./user.js";
-import { mdiEye, mdiEyeOff } from "@mdi/js";
+import { mdiEye, mdiEyeOff, mdiCloseCircleOutline } from "@mdi/js";
 
 export default {
   name: "Login",
@@ -73,47 +75,42 @@ export default {
     return {
       mdiEye,
       mdiEyeOff,
+      mdiCloseCircleOutline,
       valid: false,
-      show1: false,
+      show_password: false,
+      snackbar: false,
       errorMsg: false,
-      loadAnim: false,
+      loading: false,
       user: User,
       rules: Rules
     };
   },
   methods: {
     submit() {
-      this.loadAnim = true;
-      ajax.post("auth/login", this.user).then(
-        res => {
-          store.dispatch("setUser", { user: res.data.user });
-          store.dispatch("setToken", { token: res.data.token });
-          alert("Login successful");
-          console.log(res);
-          this.loadAnim = false;
-        },
-        error => {
-          store.dispatch("setStateMessage", error.message);
-          this.loadAnim = false;
-        }
-      );
+      this.loading = true;
+      ajax
+        .post("auth/login", this.user)
+        .then(
+          res => {
+            store.dispatch("setUser", { user: res.data.user });
+            store.dispatch("setToken", { token: res.data.token });
+            store.dispatch("setStateMessage", "Successfully logged in");
+            this.$router.push("/");
+          },
+          error => {
+            store.dispatch("setStateMessage", error.response.data);
+          }
+        )
+        .finally(() => {
+          this.snackbar = true;
+          this.loading = false;
+        });
     }
   },
   computed: {
-    show() {
-      // show an alert message if only there is one
-      return store.getters.getMessage !== "";
-    },
-    loading() {
-      return this.loadAnim;
-    },
     getMessage() {
       return store.getters.getMessage;
     }
-  },
-  mounted() {
-    console.log(store.getters.getUser);
-    console.log(store.getters.getToken);
   }
 };
 </script>

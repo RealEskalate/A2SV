@@ -11,11 +11,13 @@
       <v-card-text>
         <v-btn
           v-for="(icon, i) in icons"
-          class="mx-2 pa-3"
           :href="icon.link"
           target="_blank"
+          class="mx-2"
           :key="i"
-          icon
+          depressed
+          small
+          fab
         >
           <v-icon size="23px" v-text="icon.icon" />
         </v-btn>
