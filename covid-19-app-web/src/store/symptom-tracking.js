@@ -52,9 +52,8 @@ const actions = {
         commit("setSymTrackLoaders", { key: "allSymptoms", value: false });
       });
   },
-  setSymptomUser: ({ commit, getters }) => {
+  setSymptomUser: ({ commit }, userId) => {
     commit("setSymTrackLoaders", { key: "userSymptoms", value: true });
-    const userId = getters.getUser._id;
     ajax
       .get(`symptomuser/user/${userId}`)
       .then(res => {

@@ -1,5 +1,41 @@
 <template>
-  <v-card outlined shaped class="shadow-in overflow-hidden">
+  <v-card outlined shaped class="shadow-sm overflow-hidden">
+    <v-navigation-drawer
+      v-model="sidebar"
+      class="shadow-sm"
+      style="z-index: 1; position: absolute;"
+    >
+      <v-list-item>
+        <v-list-item-content>
+          <v-icon
+            style="position: absolute; right: 0; top: 0; z-index: 1"
+            class="mt-3 mr-3"
+            @click="sidebar = false"
+            v-text="mdiClose"
+          />
+          <v-list-item-title class="title">
+            Application
+          </v-list-item-title>
+          <v-list-item-subtitle>
+            subtext
+          </v-list-item-subtitle>
+        </v-list-item-content>
+      </v-list-item>
+
+      <v-divider />
+
+      <v-list dense nav>
+        <v-list-item v-for="item in items" :key="item.title" link>
+          <v-list-item-icon>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
     <v-progress-linear
       style="position: absolute; z-index: 1"
       v-if="symTrackLoaders.map"
@@ -20,7 +56,7 @@
         position: 'bottom-right'
       }"
       @map-load="loaded"
-      @map-zoomend="zoomend"
+      @map-zoomend="zoomEnd"
       @map-moveend="moved"
     />
   </v-card>
@@ -28,23 +64,27 @@
 
 <script>
 import store from "@/store";
+import { mdiClose } from "@mdi/js";
 import Mapbox from "mapbox-gl-vue";
 import Supercluster from "supercluster";
-
-const pointInfos = {};
-const grid_infos = {};
-
-// let currentPointInfo = null;
-// let current_grid_info = null;
 
 export default {
   name: "SymTrack",
   components: { Mapbox },
   data: function() {
     return {
+      mdiClose,
+      items: [
+        { title: "Dashboard", icon: "mdi-view-dashboard" },
+        { title: "Photos", icon: "mdi-image" },
+        { title: "About", icon: "mdi-help-box" }
+      ],
+      selectedInfo: null,
       api_token: process.env.VUE_APP_MAPBOX_API,
+      sidebar: false,
 
-      panel_displayed: false, // gets set to true when user clicks on data points
+      pointInfos: {},
+      gridInfos: {},
 
       small_cluster: null,
       medium_cluster: null,
@@ -103,9 +143,6 @@ export default {
         this.gridCollections = gridCollections;
 
         this.grid_rendering = true;
-        // if (animating === true) {
-        //   animating = false;
-        // }
         this.symptomCollections = this.updateClusters();
       } else {
         const featureCollections = this.symptomsToGeoJson(newValue);
@@ -118,9 +155,6 @@ export default {
 
         this.symptomCollections = featureCollections;
         this.grid_rendering = false;
-        // if (animating === true) {
-        //   animating = false;
-        // }
 
         this.symptomCollections = this.updateClusters();
       }
@@ -129,10 +163,14 @@ export default {
       this.medium_cluster = medium_cluster;
       this.high_cluster = high_cluster;
       this.fillMapData();
+    },
+    loadedDetail(newValue) {
+      this.selectedInfo = newValue;
     }
   },
   computed: {
     loadedData: () => store.getters.getLocationsSymptoms,
+    loadedDetail: () => store.getters.getSymptomUser,
     symTrackLoaders: () => store.getters.getSymTrackLoaders
   },
   methods: {
@@ -177,7 +215,7 @@ export default {
         } else {
           symptomCollections.highSymptomCollection.features.push(feat);
         }
-        pointInfos[element.user_id] = element;
+        this.pointInfos[element.user_id] = element;
       }
       return symptomCollections;
     },
@@ -222,7 +260,7 @@ export default {
         };
         // subtitute with number of infections later
         gridCollections.heavyGridCollection.features.push(feat);
-        grid_infos[element._id] = element;
+        this.gridInfos[element._id] = element;
       }
       return gridCollections;
     },
@@ -238,6 +276,17 @@ export default {
         bottom_right_bound: this.bottom_right_bound
       };
       store.dispatch("setLocationsSymptoms", input);
+    },
+
+    fetchSelectedItem(event) {
+      // const coordinates = event.features[0].geometry.coordinates;
+      // console.log(event.features);
+      this.sidebar = true;
+      const id = event.features[0].properties.id;
+      if (!id) this.selectedInfo = null;
+      else if (this.gridInfos[id]) this.selectedInfo = this.gridInfos[id];
+      else if (this.pointInfos[id]) this.selectedInfo = this.pointInfos[id];
+      else store.dispatch("setSymptomUser", id);
     },
 
     updateClusters() {
@@ -330,7 +379,7 @@ export default {
             type: "circle",
             paint: {
               "circle-radius": 8,
-              "circle-opacity": 0.8,
+              "circle-opacity": 0.7,
               "circle-stroke-color": "White",
               "circle-color": "#FFC107"
             },
@@ -365,9 +414,9 @@ export default {
                 750,
                 40
               ],
-              "circle-opacity": 0.6,
-              "circle-stroke-width": 4,
-              "circle-stroke-color": "#3E2723"
+              "circle-opacity": 0.3,
+              "circle-stroke-width": 1.5,
+              "circle-stroke-color": "#fcfcfc"
             },
             layout: {
               visibility: "visible"
@@ -386,20 +435,12 @@ export default {
               visibility: "visible"
             },
             paint: {
-              "text-color": "White"
+              "text-color": "#757575"
             }
           });
           // when user clicks on mildly symptomatic data points, call symptomuser API with his id
           // and display his symptoms
-          map.on("click", "small-points", function(e) {
-            this.panel_displayed = true;
-            console.log(e);
-            let coords = e.features[0].geometry.coordinates;
-            let user_id = e.features[0].properties.id;
-            console.log(coords);
-            console.log("user id: " + user_id);
-            // store.dispatch("setSymptomUser", user_id);
-          });
+          map.on("click", "small-points", this.fetchSelectedItem);
         }
 
         if (
@@ -409,22 +450,6 @@ export default {
           map.addSource("medium", {
             type: "geojson",
             data: res.mediumSymptomCollection
-          });
-          map.addLayer({
-            id: "medium-points",
-            type: "circle",
-            paint: {
-              "circle-radius": 8,
-              "circle-color": "#EF6C00",
-              "circle-opacity": 0.8,
-              "circle-stroke-width": 1,
-              "circle-stroke-color": "White"
-            },
-            source: "medium",
-            cluster: true,
-            layout: {
-              visibility: "visible"
-            }
           });
 
           map.addLayer({
@@ -451,9 +476,9 @@ export default {
                 750,
                 40
               ],
-              "circle-opacity": 0.6,
-              "circle-stroke-width": 4,
-              "circle-stroke-color": "#3E2723"
+              "circle-opacity": 0.3,
+              "circle-stroke-width": 1.5,
+              "circle-stroke-color": "#fcfcfc"
             },
             layout: {
               visibility: "visible"
@@ -472,20 +497,10 @@ export default {
               visibility: "visible"
             },
             paint: {
-              "text-color": "White"
+              "text-color": "#757575"
             }
           });
-          map.on("click", "medium-points", function(e) {
-            // set panel displayed to true
-            this.panel_displayed = true;
-            console.log(e);
-            let coords = e.features[0].geometry.coordinates;
-            let user_id = e.features[0].properties.id;
-            console.log(coords);
-            console.log("user id: " + user_id);
-            // make api calls
-            //store.dispatch("setSymptomUser", user_id);
-          });
+          map.on("click", "medium-clusters", this.fetchSelectedItem);
         }
 
         if (
@@ -495,22 +510,6 @@ export default {
           map.addSource("high", {
             type: "geojson",
             data: res.highSymptomCollection
-          });
-
-          map.addLayer({
-            id: "high-points",
-            type: "circle",
-            paint: {
-              "circle-color": "#B71C1C",
-              "circle-radius": 8,
-              "circle-stroke-width": 1,
-              "circle-stroke-color": "White",
-              "circle-opacity": 0.8
-            },
-            source: "high",
-            layout: {
-              visibility: "visible"
-            }
           });
 
           map.addLayer({
@@ -537,9 +536,9 @@ export default {
                 750,
                 40
               ],
-              "circle-opacity": 0.6,
-              "circle-stroke-width": 4,
-              "circle-stroke-color": "#3E2723"
+              "circle-opacity": 0.3,
+              "circle-stroke-width": 1.5,
+              "circle-stroke-color": "#fcfcfc"
             },
             layout: {
               visibility: "visible"
@@ -558,18 +557,10 @@ export default {
               visibility: "visible"
             },
             paint: {
-              "text-color": "White"
+              "text-color": "#757575"
             }
           });
-          map.on("click", "high-points", function(e) {
-            this.panel_displayed = true;
-            console.log(e);
-            let coords = e.features[0].geometry.coordinates;
-            let user_id = e.features[0].properties.id;
-            console.log(coords);
-            console.log("user id: " + user_id);
-            // store.dispatch("setUserSymptom", user_id);
-          });
+          map.on("click", "high-clusters", this.fetchSelectedItem);
         }
       } else {
         if (
@@ -606,16 +597,16 @@ export default {
                 1500,
                 "#9C27B0"
               ],
-              "circle-stroke-width": 5,
-              "circle-stroke-color": "#3E2723",
-              "circle-opacity": 0.6
+              "circle-opacity": 0.3,
+              "circle-stroke-width": 1.5,
+              "circle-stroke-color": "#fcfcfc"
             },
             source: "grid",
             layout: {
               visibility: "visible"
             }
           });
-          var below_layer_id = "grid-points";
+          let below_layer_id = "grid-points";
           map.addLayer(
             {
               id: "grid-point-counts",
@@ -631,24 +622,17 @@ export default {
                 visibility: "visible"
               },
               paint: {
-                "text-color": this.$vuetify.theme.themes.light.secondary
+                "text-color": "#757575"
               }
             },
             below_layer_id
           );
-          map.on("click", "grid-points", function(e) {
-            this.panel_displayed = true;
-            console.log(e);
-            let coords = e.features[0].geometry.coordinates;
-            let grid_id = e.features[0].properties.id;
-            console.log(coords);
-            console.log("grid id: " + grid_id);
-            // here, no need to make api calls. get the data from grid_infos[gird_id]
-          });
+          map.on("click", "grid-points", this.fetchSelectedItem);
         }
       }
     },
-    zoomend(map, e) {
+
+    zoomEnd(map) {
       // update clusters
       const grid_rendering = this.grid_rendering;
       this.symptomCollections = this.updateClusters();
@@ -691,11 +675,9 @@ export default {
           map.setLayoutProperty("small-clusters", "visibility", "none");
           map.setLayoutProperty("small-cluster-count", "visibility", "none");
 
-          map.setLayoutProperty("medium-points", "visibility", "none");
           map.setLayoutProperty("medium-clusters", "visibility", "none");
           map.setLayoutProperty("medium-cluster-count", "visibility", "none");
 
-          map.setLayoutProperty("high-points", "visibility", "none");
           map.setLayoutProperty("high-clusters", "visibility", "none");
           map.setLayoutProperty("high-cluster-count", "visibility", "none");
         }
@@ -749,9 +731,8 @@ export default {
           map.setLayoutProperty("small-clusters", "visibility", "visible");
           map.setLayoutProperty("small-cluster-count", "visibility", "visible");
         } else if (
-          map.getLayoutProperty("medium-points", "visibility") !== "visible"
+          map.getLayoutProperty("medium-clusters", "visibility") !== "visible"
         ) {
-          map.setLayoutProperty("medium-points", "visibility", "visible");
           map.setLayoutProperty("medium-clusters", "visibility", "visible");
           map.setLayoutProperty(
             "medium-cluster-count",
@@ -759,9 +740,8 @@ export default {
             "visible"
           );
         } else if (
-          map.getLayoutProperty("high-points", "visibility") !== "visible"
+          map.getLayoutProperty("high-clusters", "visibility") !== "visible"
         ) {
-          map.setLayoutProperty("high-points", "visibility", "visible");
           map.setLayoutProperty("high-clusters", "visibility", "visible");
           map.setLayoutProperty("high-cluster-count", "visibility", "visible");
         }
@@ -771,11 +751,9 @@ export default {
         map.getSource("medium").setData(res.mediumSymptomCollection);
         map.getSource("high").setData(res.highSymptomCollection);
       }
-      console.log(e);
     },
 
-    moved(map, e) {
-      console.log(e);
+    moved(map) {
       const bounds = map.getBounds();
       const west_lng = bounds._sw.lng,
         south_lat = bounds._sw.lat;
@@ -796,6 +774,7 @@ export default {
 <style>
 @import url("https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.css");
 </style>
+
 <style>
 #map {
   width: 100%;
