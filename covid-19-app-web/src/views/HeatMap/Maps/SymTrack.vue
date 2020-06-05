@@ -44,6 +44,8 @@ export default {
     return {
       api_token: process.env.VUE_APP_MAPBOX_API,
 
+      panel_displayed: false, // gets set to true when user clicks on data points
+
       small_cluster: null,
       medium_cluster: null,
       high_cluster: null,
@@ -85,22 +87,21 @@ export default {
   },
   watch: {
     loadedData(newValue) {
+      const small_cluster = new Supercluster({ radius: 40, maxZoom: 14 });
+      const medium_cluster = new Supercluster({ radius: 40, maxZoom: 14 });
+      const high_cluster = new Supercluster({ radius: 40, maxZoom: 14 });
+
       if (newValue.length > 0 && newValue[0].probability === undefined) {
         // we're getting grid results
         // just log them for now
-        const gridCollections = this.gridsToGeoJson(newValue);
-        const small_cluster = new Supercluster({ radius: 40, maxZoom: 14 });
-        const medium_cluster = new Supercluster({ radius: 40, maxZoom: 14 });
-        const high_cluster = new Supercluster({ radius: 40, maxZoom: 14 });
+        const gridCollections = this.gridsToGeoJson(newValue);  
 
         small_cluster.load(gridCollections.smallGridCollection.features);
         medium_cluster.load(gridCollections.mediumGridCollection.features);
         high_cluster.load(gridCollections.heavyGridCollection.features);
 
         this.gridCollections = gridCollections;
-        this.small_cluster = small_cluster;
-        this.medium_cluster = medium_cluster;
-        this.high_cluster = high_cluster;
+        
         this.grid_rendering = true;
         // if (animating === true) {
         //   animating = false;
@@ -109,10 +110,6 @@ export default {
       } else {
         const featureCollections = this.symptomsToGeoJson(newValue);
 
-        const small_cluster = new Supercluster({ radius: 40, maxZoom: 14 });
-        const medium_cluster = new Supercluster({ radius: 40, maxZoom: 14 });
-        const high_cluster = new Supercluster({ radius: 40, maxZoom: 14 });
-
         small_cluster.load(featureCollections.smallSymptomCollection.features);
         medium_cluster.load(
           featureCollections.mediumSymptomCollection.features
@@ -120,16 +117,17 @@ export default {
         high_cluster.load(featureCollections.highSymptomCollection.features);
 
         this.symptomCollections = featureCollections;
-        this.small_cluster = small_cluster;
-        this.medium_cluster = medium_cluster;
-        this.high_cluster = high_cluster;
         this.grid_rendering = false;
         // if (animating === true) {
         //   animating = false;
         // }
+        
         this.symptomCollections = this.updateClusters();
       }
 
+      this.small_cluster = small_cluster;
+      this.medium_cluster = medium_cluster;
+      this.high_cluster = high_cluster;
       this.fillMapData();
     }
   },
@@ -160,7 +158,8 @@ export default {
           type: "Feature",
           id: element.user_id,
           properties: {
-            icon: "pin3"
+            icon: "pin3",
+            id: element.user_id
           },
           geometry: {
             type: "Point",
@@ -210,7 +209,8 @@ export default {
           id: element._id,
           properties: {
             icon: "pin3",
-            total: total
+            total: total,
+            id: element._id
           },
           geometry: {
             type: "Point",
@@ -275,10 +275,6 @@ export default {
             .forEach(feature => {
               SymptomCollection.smallSymptomCollection.features.push(feature);
             });
-          this.small_superclusters = small_cluster.getClusters(
-            [west_lng, south_lat, east_lng, north_lat],
-            zoom
-          );
         }
 
         if (medium_cluster) {
@@ -287,10 +283,6 @@ export default {
             .forEach(feature => {
               SymptomCollection.mediumSymptomCollection.features.push(feature);
             });
-          this.medium_superclusters = medium_cluster.getClusters(
-            [west_lng, south_lat, east_lng, north_lat],
-            zoom
-          );
         }
         if (high_cluster) {
           high_cluster
@@ -298,10 +290,6 @@ export default {
             .forEach(feature => {
               SymptomCollection.highSymptomCollection.features.push(feature);
             });
-          this.high_superclusters = high_cluster.getClusters(
-            [west_lng, south_lat, east_lng, north_lat],
-            zoom
-          );
         }
       }
       return SymptomCollection;
@@ -341,13 +329,14 @@ export default {
             id: "small-points",
             type: "circle",
             paint: {
-              "circle-radius": 5,
+              "circle-radius": 8,
               "circle-opacity": 0.8,
               "circle-stroke-color": "White",
               "circle-color": "#FFC107"
             },
             source: "small",
             cluster: true,
+            
             layout: {
               visibility: "visible"
             }
@@ -400,6 +389,17 @@ export default {
               "text-color": "White"
             }
           });
+          // when user clicks on mildly symptomatic data points, call symptomuser API with his id 
+          // and display his symptoms 
+          map.on('click', 'small-points', function(e) {
+            this.panel_displayed = true;
+            console.log(e);
+            let coords = e.features[0].geometry.coordinates;
+            let user_id = e.features[0].properties.id;
+            console.log(coords);
+            console.log("user id: " + user_id);
+            // store.dispatch("setSymptomUser", user_id);
+          });
         }
 
         if (
@@ -414,7 +414,7 @@ export default {
             id: "medium-points",
             type: "circle",
             paint: {
-              "circle-radius": 6,
+              "circle-radius": 8,
               "circle-color": "#EF6C00",
               "circle-opacity": 0.8,
               "circle-stroke-width": 1,
@@ -475,6 +475,18 @@ export default {
               "text-color": "White"
             }
           });
+          map.on('click', 'medium-points', function(e) {
+            // set panel displayed to true
+            this.panel_displayed = true;
+            console.log(e);
+            let coords = e.features[0].geometry.coordinates;
+            let user_id = e.features[0].properties.id
+            console.log(coords);
+            console.log("user id: " + user_id);
+            // make api calls
+            //store.dispatch("setSymptomUser", user_id);
+          });
+          
         }
 
         if (
@@ -491,7 +503,7 @@ export default {
             type: "circle",
             paint: {
               "circle-color": "#B71C1C",
-              "circle-radius": 6,
+              "circle-radius": 8,
               "circle-stroke-width": 1,
               "circle-stroke-color": "White",
               "circle-opacity": 0.8
@@ -549,6 +561,15 @@ export default {
             paint: {
               "text-color": "White"
             }
+          });
+          map.on('click', 'high-points', function(e) {
+            this.panel_displayed = true;
+            console.log(e);
+            let coords = e.features[0].geometry.coordinates;
+            let user_id = e.features[0].properties.id;
+            console.log(coords);
+            console.log("user id: " + user_id);
+            // store.dispatch("setUserSymptom", user_id);
           });
         }
       } else {
@@ -616,6 +637,15 @@ export default {
             },
             below_layer_id
           );
+          map.on('click', 'grid-points', function(e) {
+            this.panel_displayed = true;
+            console.log(e);
+            let coords = e.features[0].geometry.coordinates;
+            let grid_id = e.features[0].properties.id;
+            console.log(coords);
+            console.log("grid id: " + grid_id);
+            // here, no need to make api calls. get the data from grid_infos[gird_id]
+          });
         }
       }
     },
@@ -759,7 +789,7 @@ export default {
       this.bottom_right_bound = [east_lng, south_lat];
 
       this.fetchLocationsSymptoms();
-    }
+    },
   }
 };
 </script>
