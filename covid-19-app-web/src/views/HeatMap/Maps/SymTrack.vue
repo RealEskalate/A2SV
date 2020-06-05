@@ -94,14 +94,14 @@ export default {
       if (newValue.length > 0 && newValue[0].probability === undefined) {
         // we're getting grid results
         // just log them for now
-        const gridCollections = this.gridsToGeoJson(newValue);  
+        const gridCollections = this.gridsToGeoJson(newValue);
 
         small_cluster.load(gridCollections.smallGridCollection.features);
         medium_cluster.load(gridCollections.mediumGridCollection.features);
         high_cluster.load(gridCollections.heavyGridCollection.features);
 
         this.gridCollections = gridCollections;
-        
+
         this.grid_rendering = true;
         // if (animating === true) {
         //   animating = false;
@@ -121,7 +121,7 @@ export default {
         // if (animating === true) {
         //   animating = false;
         // }
-        
+
         this.symptomCollections = this.updateClusters();
       }
 
@@ -336,7 +336,7 @@ export default {
             },
             source: "small",
             cluster: true,
-            
+
             layout: {
               visibility: "visible"
             }
@@ -389,9 +389,9 @@ export default {
               "text-color": "White"
             }
           });
-          // when user clicks on mildly symptomatic data points, call symptomuser API with his id 
-          // and display his symptoms 
-          map.on('click', 'small-points', function(e) {
+          // when user clicks on mildly symptomatic data points, call symptomuser API with his id
+          // and display his symptoms
+          map.on("click", "small-points", function(e) {
             this.panel_displayed = true;
             console.log(e);
             let coords = e.features[0].geometry.coordinates;
@@ -475,18 +475,17 @@ export default {
               "text-color": "White"
             }
           });
-          map.on('click', 'medium-points', function(e) {
+          map.on("click", "medium-points", function(e) {
             // set panel displayed to true
             this.panel_displayed = true;
             console.log(e);
             let coords = e.features[0].geometry.coordinates;
-            let user_id = e.features[0].properties.id
+            let user_id = e.features[0].properties.id;
             console.log(coords);
             console.log("user id: " + user_id);
             // make api calls
             //store.dispatch("setSymptomUser", user_id);
           });
-          
         }
 
         if (
@@ -562,7 +561,7 @@ export default {
               "text-color": "White"
             }
           });
-          map.on('click', 'high-points', function(e) {
+          map.on("click", "high-points", function(e) {
             this.panel_displayed = true;
             console.log(e);
             let coords = e.features[0].geometry.coordinates;
@@ -637,7 +636,7 @@ export default {
             },
             below_layer_id
           );
-          map.on('click', 'grid-points', function(e) {
+          map.on("click", "grid-points", function(e) {
             this.panel_displayed = true;
             console.log(e);
             let coords = e.features[0].geometry.coordinates;
@@ -789,7 +788,7 @@ export default {
       this.bottom_right_bound = [east_lng, south_lat];
 
       this.fetchLocationsSymptoms();
-    },
+    }
   }
 };
 </script>
