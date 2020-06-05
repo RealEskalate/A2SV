@@ -23,17 +23,8 @@ exports.get_ethiopia_data = async (req, res) => {
         filter.region_code=req.query.region_code;
     }
 
-    let today=new Date();
-    today.setHours(0,0,0,0);
-    let yesterday= new Date( today.getFullYear(),today.getMonth(),today.getDate()-1)
-
     try {
-        filter.date={ $gte: today};
         var ethiopiaData = await EthiopiaData.find(filter);
-        if (!ethiopiaData.length){
-            filter.date={ $gte: yesterday};
-            ethiopiaData = await EthiopiaData.find(filter);
-        }
 
         for (var index=0; index<ethiopiaData.length;index++){
             let data= ethiopiaData[index];
@@ -61,11 +52,8 @@ let update_db = async function() {
         let date_str= data.tested[0].updatetimestamp.slice(0,10).split('/')
         let date= new Date(date_str[2],date_str[1]-1,date_str[0]);
 
-        let exists= await EthiopiaData.findOne({ date: date})
-        if (exists){
-            await EthiopiaData.deleteMany({ date: { $gte:date} });
-        }
-
+        await EthiopiaData.collection.drop();
+       
         let test= new EthiopiaData({
             _id: mongoose.Types.ObjectId(),
             region:"Ethiopia",
