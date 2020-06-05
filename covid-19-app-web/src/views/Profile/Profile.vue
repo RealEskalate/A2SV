@@ -3,58 +3,19 @@
     <h3 class="display-1 font-weight-thin" v-text="$t('navbar.profile')" />
     <v-row>
       <v-col cols="12" md="4" class="text-center mb-10">
-        <v-form ref="form" v-model="valid.profile" class="mt-7">
+        <v-form ref="form" v-model="valid" class="mt-7">
           <v-avatar class="mb-5" width="90" height="90">
             <v-img cover src="/logo.png" />
           </v-avatar>
 
           <v-fade-transition>
-            <div v-if="!editing.profile">
-              <v-list-item>
-                <v-list-item-content>
-                  <h2
-                    class="font-weight-regular"
-                    v-text="'@' + user.username"
-                  />
-                  <h3 class="font-weight-thin mb-4 mt-2">
-                    Age Group:
-                    <span
-                      class="grey--text font-italic"
-                      v-text="user.age_group"
-                    />
-                  </h3>
-                  <v-list-item-subtitle v-text="user.gender" />
-                </v-list-item-content>
-              </v-list-item>
-              <div class="text-center my-3">
-                <v-btn
-                  depressed
-                  small
-                  color="primary"
-                  class="v-card--shaped ma-2"
-                  @click="editing.profile = true"
-                >
-                  <v-icon class="mr-2" small v-text="mdiAccountEdit" />
-                  Edit Profile
-                </v-btn>
-                <br />
-                <v-btn
-                  depressed
-                  small
-                  color="primary"
-                  class="v-card--shaped ma-2"
-                >
-                  <v-icon class="mr-2" small v-text="mdiKey" />
-                  Change Password
-                </v-btn>
-              </div>
-            </div>
-            <div v-else>
+            <div v-if="editing.profile">
               <v-list-item class="px-md-12">
                 <v-list-item-content>
                   <div>
                     <v-text-field
                       class="v-card--shaped"
+                      prefix="@"
                       outlined
                       dense
                       label="Username"
@@ -66,8 +27,9 @@
                   <div>
                     <v-select
                       dense
+                      :rules="rules.ageGroupRules"
                       v-model="form_user.age_group"
-                      :items="['10-20', '20-30', '30-40', '40-50']"
+                      :items="age_groups"
                       class="v-card--shaped"
                       label="Age Group"
                       outlined
@@ -76,8 +38,9 @@
                   <div>
                     <v-select
                       dense
+                      :rules="rules.genderRules"
                       v-model="form_user.gender"
-                      :items="['Male', 'Female', 'Undisclosed']"
+                      :items="genders"
                       class="v-card--shaped"
                       label="Gender"
                       outlined
@@ -88,8 +51,9 @@
                       depressed
                       small
                       color="secondary"
+                      :disabled="loading"
                       class="v-card--shaped my-5 mx-1"
-                      @click="editing.profile = false"
+                      @click="setMode()"
                     >
                       <v-icon class="mr-2" small v-text="mdiWindowClose" />
                       Cancel
@@ -98,6 +62,7 @@
                       depressed
                       small
                       color="success"
+                      :loading="loading"
                       class="v-card--shaped my-5 mx-1"
                       @click="updateProfile"
                     >
@@ -107,6 +72,109 @@
                   </div>
                 </v-list-item-content>
               </v-list-item>
+            </div>
+            <div v-else-if="editing.password">
+              <v-list-item class="px-md-12">
+                <v-list-item-content>
+                  <div>
+                    <v-text-field
+                      class="v-card--shaped"
+                      outlined
+                      dense
+                      label="Old Password"
+                      v-model="form_password.old"
+                      :rules="rules.password"
+                    />
+                  </div>
+                  <div>
+                    <v-text-field
+                      class="v-card--shaped"
+                      outlined
+                      dense
+                      label="New Password"
+                      v-model="form_password.new"
+                      :rules="rules.nameRules"
+                    />
+                  </div>
+                  <div>
+                    <v-text-field
+                      class="v-card--shaped"
+                      outlined
+                      dense
+                      label="Confirm Password"
+                      v-model="form_password.confirm"
+                      :rules="rules.password || rules.match"
+                    />
+                  </div>
+                  <div class="text-center">
+                    <v-btn
+                      depressed
+                      small
+                      color="secondary"
+                      :disabled="loading"
+                      class="v-card--shaped my-5 mx-1"
+                      @click="setMode()"
+                    >
+                      <v-icon class="mr-2" small v-text="mdiWindowClose" />
+                      Cancel
+                    </v-btn>
+                    <v-btn
+                      depressed
+                      small
+                      color="success"
+                      :loading="loading"
+                      class="v-card--shaped my-5 mx-1"
+                      @click="updatePassword"
+                    >
+                      <v-icon class="mr-2" small v-text="mdiCheck" />
+                      Save Changes
+                    </v-btn>
+                  </div>
+                </v-list-item-content>
+              </v-list-item>
+            </div>
+            <div v-else>
+              <v-list-item>
+                <v-list-item-content>
+                  <h2
+                    class="font-weight-regular"
+                    v-text="'@' + loggedInUser.username"
+                  />
+                  <h3 class="font-weight-thin mb-4 mt-2">
+                    Age Group:
+                    <span
+                      class="grey--text font-italic"
+                      v-text="loggedInUser.age_group"
+                    />
+                  </h3>
+                  <v-list-item-subtitle v-text="loggedInUser.gender" />
+                </v-list-item-content>
+              </v-list-item>
+              <div class="text-center my-3">
+                <v-btn
+                  depressed
+                  small
+                  color="primary"
+                  :disabled="loading"
+                  class="v-card--shaped ma-2"
+                  @click="setMode('profile')"
+                >
+                  <v-icon class="mr-2" small v-text="mdiAccountEdit" />
+                  Edit Profile
+                </v-btn>
+                <br />
+                <v-btn
+                  depressed
+                  small
+                  color="primary"
+                  :disabled="loading"
+                  class="v-card--shaped ma-2"
+                  @click="setMode('password')"
+                >
+                  <v-icon class="mr-2" small v-text="mdiKey" />
+                  Change Password
+                </v-btn>
+              </div>
             </div>
           </v-fade-transition>
         </v-form>
@@ -120,7 +188,7 @@
           <v-container class="text-center px-md-10" v-if="!editing.symptoms">
             <div class="shadow-in v-card--shaped grey lighten-4 py-3">
               <v-list-item-subtitle
-                class="ma-5"
+                class="my-8 grey--text text--darken-1"
                 v-if="userSymptoms.length === 0"
                 v-text="'No Symptoms'"
               />
@@ -156,8 +224,9 @@
               depressed
               small
               color="primary"
+              :disabled="loading"
               class="v-card--shaped ma-5"
-              @click="editing.symptoms = true"
+              @click="setMode('symptoms')"
             >
               <v-icon class="mr-2" small v-text="mdiAccountEdit" />
               Edit Symptoms
@@ -186,7 +255,7 @@
                       "
                     >
                       <v-icon
-                        style="position: absolute; right: 0; top: 0; z-index: 100; opacity: 0.7"
+                        style="position: absolute; right: 0; top: 0; z-index: 2; opacity: 0.7"
                         class="mt-1 mr-1"
                         color="primary"
                         @click="dialog = false"
@@ -216,6 +285,7 @@
                       <v-overlay
                         color="primary"
                         absolute
+                        z-index="2"
                         :opacity="0.3"
                         :value="active"
                       />
@@ -228,8 +298,9 @@
               depressed
               small
               color="secondary"
+              :disabled="loading"
               class="v-card--shaped my-5 mx-1"
-              @click="editing.symptoms = false"
+              @click="setMode()"
             >
               <v-icon class="mr-2" small v-text="mdiWindowClose" />
               Cancel
@@ -238,8 +309,9 @@
               depressed
               small
               color="success"
+              :loading="loading"
               class="v-card--shaped my-5 mx-1"
-              @click="editing.symptoms = false"
+              @click="updateSymptoms"
             >
               <v-icon class="mr-2" small v-text="mdiAccountEdit" />
               Save Changes
@@ -272,32 +344,78 @@ export default {
       mdiCheckboxMarkedCircle,
       mdiCheckboxBlankCircleOutline,
       mdiWindowClose,
-      valid: {
-        password: false,
-        profile: false
-      },
+      valid: false,
       editing: {
         profile: false,
         password: false,
         symptoms: false
       },
+      loading: false,
       selectedSymptoms: [],
       form_user: {
         username: "",
         age_group: "",
         gender: ""
       },
+      form_password: {
+        old: "",
+        new: "",
+        confirm: ""
+      },
       rules: {
         nameRules: [
-          v => !!v || "Name is required",
+          v => !!v || "Username is required",
           v => (v && v.length <= 30) || "Name must be less than 10 characters"
         ],
         ageGroupRules: [v => !!v || "Age Range is required"],
-        genderRules: [v => !!v || "Gender is required"]
-      }
+        genderRules: [v => !!v || "Gender is required"],
+        password: [v => !!v || "Password is required"],
+        match: [
+          value => value === this.form_password.new || "Password doesn't match"
+        ]
+      },
+      genders: ["MALE", "FEMALE", "UNDISCLOSED"],
+      age_groups: [
+        "0-10",
+        "11-20",
+        "21-30",
+        "31-40",
+        "41-50",
+        "51-60",
+        "61-70",
+        "71-80",
+        "81-90",
+        ">90"
+      ]
     };
   },
   methods: {
+    resetForms() {
+      this.form_user = {
+        username: this.loggedInUser.username,
+        age_group: this.loggedInUser.age_group,
+        gender: this.loggedInUser.gender
+      };
+      this.form_password = {
+        old: "",
+        new: "",
+        confirm: ""
+      };
+    },
+    setMode(mode = "none") {
+      this.resetForms();
+      if (mode === "none") {
+        this.editing = {
+          profile: false,
+          password: false,
+          symptoms: false
+        };
+      } else {
+        for (let key in this.editing) {
+          this.editing[key] = key === mode;
+        }
+      }
+    },
     relevanceColor(relevance) {
       switch (relevance.toLowerCase()) {
         case "high":
@@ -311,7 +429,19 @@ export default {
       }
     },
     updateProfile() {
-      this.editing.profile = false;
+      this.loading = true;
+      this.setMode();
+      this.loading = false;
+    },
+    updatePassword() {
+      this.loading = true;
+      this.setMode();
+      this.loading = false;
+    },
+    updateSymptoms() {
+      this.loading = true;
+      this.setMode();
+      this.loading = false;
     },
     userSymptomIndexes() {
       let res = [];
@@ -333,8 +463,7 @@ export default {
   },
   computed: {
     userSymptoms: () => store.getters.getSymptomUser,
-    allSymptoms: () => store.getters.getAllSymptoms,
-    user: () => store.getters.getUser
+    allSymptoms: () => store.getters.getAllSymptoms
   }
 };
 </script>

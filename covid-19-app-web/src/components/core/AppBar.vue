@@ -58,7 +58,17 @@
         </v-select>
       </div>
       <v-divider class="mr-2" vertical light />
-      <v-menu offset-y>
+      <v-btn
+        small
+        dark
+        color="primary"
+        v-if="!loggedInUser"
+        class="v-card--shaped mx-1"
+        depressed
+        to="login"
+        v-text="'Login'"
+      />
+      <v-menu offset-y v-else>
         <template v-slot:activator="{ on }">
           <v-btn fab text small color="primary" v-on="on">
             <v-icon small v-text="mdiAccountCog" />
@@ -79,6 +89,13 @@
               </v-list-item-content>
             </v-list-item>
           </template>
+          <v-divider />
+          <v-list-item link active-class="white--text primary" @click="logout">
+            <v-icon small class="mr-2" v-text="mdiLogoutVariant" />
+            <v-list-item-content>
+              <small v-text="'Logout'" />
+            </v-list-item-content>
+          </v-list-item>
         </v-list>
       </v-menu>
     </v-app-bar>
@@ -105,6 +122,7 @@ import {
   mdiBookOpenVariant,
   mdiAccountCog,
   mdiHome,
+  mdiLogoutVariant,
   mdiInformation,
   mdiMap,
   mdiNewspaper,
@@ -115,6 +133,7 @@ export default {
   data: () => {
     return {
       mdiAccountCog,
+      mdiLogoutVariant,
       drawer: false,
       navType: store.getters.getNavigationType,
       locationY: 0,
@@ -155,6 +174,11 @@ export default {
       store.dispatch("setLanguagePreference", { lang: this.$i18n.locale });
 
       router.replace({ params: { lang: this.$i18n.locale } }).catch(() => {});
+    },
+    logout() {
+      console.log("Logging out");
+      store.dispatch("setToken", { token: null });
+      store.dispatch("setUser", { user: null });
     }
   },
   computed: {
