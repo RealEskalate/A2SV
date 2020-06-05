@@ -128,6 +128,7 @@ import {
   mdiNewspaper,
   mdiAccountEdit
 } from "@mdi/js";
+import { languages } from "../../plugins/i18n";
 
 export default {
   data: () => {
@@ -139,10 +140,11 @@ export default {
       locationY: 0,
       curRoute: 0,
       activeBtn: 0,
-      languages: ["en", "am"],
+      languages,
       langText: {
         en: "EN",
-        am: "አማ"
+        am: "አማ",
+        ao: "AO"
       },
       links: [
         { text: "navbar.home", icon: mdiHome, to: "/" },

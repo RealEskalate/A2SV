@@ -82,11 +82,11 @@
                     </tr>
                   </thead>
                   <tbody>
-                  <tr v-for="item in regionalData" :key="item._id">
-                    <td>{{ item.region }}</td>
-                    <td>{{ item.total.confirmed }}</td>
-                    <td>{{ item.total.active }}</td>
-                    <td>{{ item.total.deaths }}</td>
+                    <tr v-for="item in regionalData" :key="item._id">
+                      <td>{{ item.region }}</td>
+                      <td>{{ item.total.confirmed }}</td>
+                      <td>{{ item.total.active }}</td>
+                      <td>{{ item.total.deaths }}</td>
                     </tr>
                   </tbody>
                 </template>
@@ -139,18 +139,18 @@
       </v-col>
     </v-row>
     <v-col cols="12">
-      <ethiopia-map/>
+      <ethiopia-map />
     </v-col>
   </v-container>
 </template>
 
 <script>
-  import EthiopiaMap from "./EthiopiaMap";
-  import {DoughnutChart} from "../Charts/charts.js";
-  import {mdiPhone} from "@mdi/js";
-  import store from "@/store/";
+import EthiopiaMap from "./EthiopiaMap";
+import { DoughnutChart } from "../Charts/charts.js";
+import { mdiPhone } from "@mdi/js";
+import store from "@/store/";
 
-  export default {
+export default {
   name: "Ethiopia",
   components: {
     DoughnutChart,
@@ -159,23 +159,23 @@
   created() {
     this.setChartData();
   },
-    mounted() {
-      store.dispatch("setEthiopia", {lang: this.$i18n.locale});
-    },
+  mounted() {
+    store.dispatch("setEthiopia", { lang: this.$i18n.locale });
+  },
   watch: {
     "$i18n.locale"() {
       this.setChartData();
     }
   },
-    computed: {
-      ethiopianData() {
-        console.log(store.getters.getEthiopia);
-        return store.getters.getEthiopia;
-      },
-      regionalData() {
-        return store.getters.getRegional;
-      }
+  computed: {
+    ethiopianData() {
+      console.log(store.getters.getEthiopia);
+      return store.getters.getEthiopia;
     },
+    regionalData() {
+      return store.getters.getRegional;
+    }
+  },
   methods: {
     setChartData() {
       this.chartData = {
