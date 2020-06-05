@@ -45,10 +45,6 @@ const actions = {
   },
   setSymptomUser: ({ commit }, { userId }) => {
     ajax.get(`symptomuser/user/${userId}/demo=true`).then(res => {
-
-
-
-
       commit("setSymptomUser", res.data);
     });
   },
@@ -73,8 +69,7 @@ const actions = {
       })
       .finally(() => {
         commit("setMapLoaders", { key: "locationsSymptoms", value: false });
->>>>>>> 8fd15c2d67cddfbbf56dd2472a12d6d350153252
-    });
+      });
   }
 };
 
