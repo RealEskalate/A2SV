@@ -24,7 +24,7 @@
                 src="/img/ethiopia/sick.svg"
                 class="small-icon mx-auto my-3"
               />
-              <h1 class="text-center">557</h1>
+              <h1 class="text-center">{{ ethiopianData.total.confirmed }}</h1>
               <p class="text-center">{{ $t("totalCases") }}</p>
             </v-col>
             <v-col sm="3" cols="6" class="border-right">
@@ -32,7 +32,7 @@
                 src="/img/ethiopia/recovered.svg"
                 class="small-icon mx-auto my-3"
               />
-              <h1 class="text-center">116</h1>
+              <h1 class="text-center">{{ ethiopianData.total.recovered }}</h1>
               <p class="text-center">{{ $t("recovered") }}</p>
             </v-col>
             <v-col sm="3" cols="6" class="border-right">
@@ -40,7 +40,7 @@
                 src="/img/ethiopia/dead.svg"
                 class="small-icon mx-auto my-3"
               />
-              <h1 class="text-center">5</h1>
+              <h1 class="text-center">{{ ethiopianData.total.deaths }}</h1>
               <p class="text-center">{{ $t("death") }}</p>
             </v-col>
             <v-col sm="3" cols="6">
@@ -48,7 +48,7 @@
                 src="/img/ethiopia/active.svg"
                 class="small-icon mx-auto my-3"
               />
-              <h1 class="text-center">229</h1>
+              <h1 class="text-center">{{ ethiopianData.total.active }}</h1>
               <p class="text-center">{{ $t("activeCases") }}</p>
             </v-col>
           </v-row>
@@ -77,14 +77,16 @@
                     <tr>
                       <th class="text-left">{{ $t("regions") }}</th>
                       <th class="text-left">{{ $t("totalCases") }}</th>
+                      <th class="text-left">{{ $t("activeCases") }}</th>
                       <th class="text-left">{{ $t("totalDeath") }}</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="item in coronaCases" :key="item.name">
-                      <td>{{ $t(item.name) }}</td>
-                      <td>{{ item.totalCases }}</td>
-                      <td>{{ item.totalDeath }}</td>
+                  <tr v-for="item in regionalData" :key="item._id">
+                    <td>{{ item.region }}</td>
+                    <td>{{ item.total.confirmed }}</td>
+                    <td>{{ item.total.active }}</td>
+                    <td>{{ item.total.deaths }}</td>
                     </tr>
                   </tbody>
                 </template>
@@ -136,26 +138,44 @@
         </v-card>
       </v-col>
     </v-row>
+    <v-col cols="12">
+      <ethiopia-map/>
+    </v-col>
   </v-container>
 </template>
 
 <script>
-import { DoughnutChart } from "./Charts/charts.js";
-import { mdiPhone } from "@mdi/js";
+  import EthiopiaMap from "./EthiopiaMap";
+  import {DoughnutChart} from "../Charts/charts.js";
+  import {mdiPhone} from "@mdi/js";
+  import store from "@/store/";
 
-export default {
+  export default {
   name: "Ethiopia",
   components: {
-    DoughnutChart
+    DoughnutChart,
+    EthiopiaMap
   },
   created() {
     this.setChartData();
   },
+    mounted() {
+      store.dispatch("setEthiopia", {lang: this.$i18n.locale});
+    },
   watch: {
     "$i18n.locale"() {
       this.setChartData();
     }
   },
+    computed: {
+      ethiopianData() {
+        console.log(store.getters.getEthiopia);
+        return store.getters.getEthiopia;
+      },
+      regionalData() {
+        return store.getters.getRegional;
+      }
+    },
   methods: {
     setChartData() {
       this.chartData = {
@@ -178,7 +198,7 @@ export default {
             label: "Data One",
             backgroundColor: [
               "#41B883",
-              "#E46651",
+              "#e443dc",
               "#00D8FF",
               "#00e676",
               "#ffff00",
@@ -241,53 +261,6 @@ export default {
         {
           name: "ethiopiaRegions.gambela",
           phone: 6184
-        }
-      ],
-      coronaCases: [
-        {
-          name: "ethiopiaRegions.addisAbaba",
-          totalCases: 159,
-          totalDeath: 4
-        },
-        {
-          name: "ethiopiaRegions.oromia",
-          totalCases: 53,
-          totalDeath: 1
-        },
-        {
-          name: "ethiopiaRegions.tigrai",
-          totalCases: 262,
-          totalDeath: 2
-        },
-        {
-          name: "ethiopiaRegions.benishangulGumuz",
-          totalCases: 22,
-          totalDeath: 2
-        },
-        {
-          name: "ethiopiaRegions.gambela",
-          totalCases: 12,
-          totalDeath: 0
-        },
-        {
-          name: "ethiopiaRegions.snnpr",
-          totalCases: 22,
-          totalDeath: 2
-        },
-        {
-          name: "ethiopiaRegions.afar",
-          totalCases: 5,
-          totalDeath: 2
-        },
-        {
-          name: "ethiopiaRegions.somali",
-          totalCases: 5,
-          totalDeath: 0
-        },
-        {
-          name: "ethiopiaRegions.direDawa",
-          totalCases: 2,
-          totalDeath: 2
         }
       ],
       chartOptions: {

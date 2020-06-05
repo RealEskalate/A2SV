@@ -6,11 +6,11 @@
 </template>
 
 <script>
-// @ is an alias to /src
-import Statistics from "./Statistics.vue";
-import Ethiopia from "./Ethiopia";
+  // @ is an alias to /src
+  import Statistics from "./Statistics.vue";
+  import Ethiopia from "./Ethiopia/Ethiopia";
 
-export default {
+  export default {
   name: "Home",
   components: {
     Statistics,

@@ -99,19 +99,21 @@
 </template>
 
 <script>
-import store from "@/store/";
-import router from "@/router/";
-import {
-  mdiBookOpenVariant,
-  mdiAccountCog,
-  mdiHome,
-  mdiInformation,
-  mdiMap,
-  mdiNewspaper,
-  mdiAccountEdit
-} from "@mdi/js";
+  import store from "@/store/";
+  import router from "@/router/";
+  import {languages} from "../../plugins/i18n";
 
-export default {
+  import {
+    mdiAccountCog,
+    mdiAccountEdit,
+    mdiBookOpenVariant,
+    mdiHome,
+    mdiInformation,
+    mdiMap,
+    mdiNewspaper
+  } from "@mdi/js";
+
+  export default {
   data: () => {
     return {
       mdiAccountCog,
@@ -120,10 +122,11 @@ export default {
       locationY: 0,
       curRoute: 0,
       activeBtn: 0,
-      languages: ["en", "am"],
+      languages,
       langText: {
         en: "EN",
-        am: "አማ"
+        am: "አማ",
+        ao: "AO"
       },
       links: [
         { text: "navbar.home", icon: mdiHome, to: "/" },

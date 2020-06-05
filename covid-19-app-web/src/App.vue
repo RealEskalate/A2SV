@@ -13,12 +13,12 @@
 </template>
 
 <script>
-import AppFooter from "./components/core/AppFooter.vue";
-import AppBar from "./components/core/AppBar.vue";
-import Tour from "./components/core/Tour.vue";
-import store from "@/store/";
+  import AppFooter from "./components/core/AppFooter.vue";
+  import AppBar from "./components/core/AppBar.vue";
+  import Tour from "./components/core/Tour.vue";
+  import store from "@/store/";
 
-export default {
+  export default {
   name: "App",
   components: { AppBar, AppFooter, Tour },
   mounted() {
@@ -100,7 +100,7 @@ html {
   box-shadow: 0 0 5px #dededede inset !important;
 }
 
-canvas.mapboxgl-canvas{
+canvas.mapboxgl-canvas {
   border: 2px solid rgba(0, 0, 0, 0.06);
 }
 
