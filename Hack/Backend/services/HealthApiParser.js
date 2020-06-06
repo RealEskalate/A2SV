@@ -6,6 +6,7 @@ const { Tests } = require("../models/TestModel");
 const Papa = require("papaparse");
 const mongoose = require("mongoose");
 const schedule = require('node-schedule');
+const WorldDataModel = require("../models/WorldDataModel");
 
 const getRate = (criteria, startDate, endDate, res, respond) => {
     axios.get('https://covidtracking.com/api/v1/us/daily.json')
@@ -372,4 +373,97 @@ let update_db = async function() {
 // Schedules fetching everyday
 schedule.scheduleJob('0 0 * * *', async function() {
     await update_db();
+});
+
+
+
+
+
+exports.getWorldStatistics= async(req,rates)=>{
+    let startDate = new Date(Date.parse(setStartDate(req)));
+    let endDate = new Date(Date.parse(setEndDate(req)));
+    let criteria= req.query.criteria;
+
+    if (req.query.daily){
+        startDate.setDate(startDate.getDate()-1);
+    }
+
+    let caseData= await WorldDataModel.find({date:{
+        $gte: startDate,
+        $lt: endDate
+    }});
+
+    let dailyConfirmed={};
+    let results=[];
+
+    for (var index=0; index<caseData.length;index++){
+        let item= caseData[index];
+
+        if (rates) {
+            dailyConfirmed[new Date(item.date)] = item.Confirmed;
+        }
+
+        if (criteria === "All") {
+           results.push(item);
+        } else if (criteria === "Active") {
+            results.push({
+                t: new Date(item.date),
+                y: (item.Confirmed - item.Recovered - item.Deaths)
+            });
+        } else if (item[criteria] != undefined && item[criteria] != null) {
+            results.push({
+                t: new Date(item.date),
+                y: item[criteria]
+            });
+        }
+    }
+
+    results.sort((a, b) => (a.t > b.t) ? 1 : -1)
+    if (criteria !== "All") {
+        if (req.query.daily && req.query.daily === "true") {
+            results = calculateDaily(results)
+        }
+        if (rates) {
+            results = calculateRate(results, dailyConfirmed, criteria)
+        }
+    }
+    
+    return results;
+}
+
+
+let update_world_db = async function() {
+
+    let request_url = "https://datahub.io/core/covid-19/r/worldwide-aggregated.csv";
+    let wldData = await axios.get(request_url);
+
+    let data = wldData.data;
+    if (data) {
+        const options = { delimiter: ',', quote: '"' };
+        data = csvjson.toObject(data, options);
+
+        await WorldDataModel.collection.drop();
+
+        for (var index=0; index<data.length;index++){
+            let item= data[index];
+
+            let world_data= new WorldDataModel({
+                _id: mongoose.Types.ObjectId(),
+                Confirmed:item['Confirmed'],
+                Recovered:item['Recovered'],
+                Deaths:item['Deaths'],
+                date: new Date(item.Date)
+            });
+            await world_data.save();
+        }
+
+        
+    }
+    
+    console.log("update-completed")
+};
+
+// Schedules fetching every day
+schedule.scheduleJob('0 0 * * *', async function() {
+    await update_world_db();
 });
