@@ -5,6 +5,7 @@ const { Symptom, validateSymptom } = require("../models/Symptom");
 const UserModels = require("./../models/UserModel");
 const User = UserModels.User;
 const jwt = require("jsonwebtoken");
+const ProbabilityCalculator = require("../services/ProbabilityCalculator");
 
 // Display list of all symptoms.
 exports.get_all_symptomusers = async (req, res) => {
@@ -155,7 +156,23 @@ exports.get_symptomuser_by_user_id = async (req, res) => {
         Symptom: symptom,
       });
     }
-    res.status(200).send(result);
+    
+    // sending probability
+
+    if(req.query.probability!=null && req.query.iso){
+      let symptoms_name = [];
+      result.forEach(symptom_info=>{ symptoms_name.push(symptom_info.Symptom.name)})
+    
+      let probability = await ProbabilityCalculator.calculateProbability(
+        symptoms_name,
+        req.query.iso
+      );
+      res.status(200).send({"probability":probability,"symptom_info":result});
+    } else{
+
+      // sending normal one
+      res.status(200).send(result);
+    }   
   } catch (err) {
     console.log(err.toString())
     res.status(500).send(err.toString());
