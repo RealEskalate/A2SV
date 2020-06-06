@@ -17,7 +17,7 @@
                   $vuetify.breakpoint.smAndDown ? 12 / 18 : 18 / 12
                 "
               >
-                <sym-track class="mx-md-5 mt-5" style="height: 95%" />
+                <sym-track class="mt-5" style="height: 95%" />
               </v-responsive>
             </v-tab-item>
             <v-tab-item>

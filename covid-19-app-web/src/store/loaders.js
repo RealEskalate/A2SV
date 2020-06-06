@@ -17,7 +17,8 @@ export default {
     symTrackLoaders: {
       map: false,
       userSymptoms: false,
-      allSymptoms: false
+      allSymptoms: false,
+      cities: false
     },
     graphLoaders: {
       counts: 0,

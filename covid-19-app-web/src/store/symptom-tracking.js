@@ -66,10 +66,21 @@ const actions = {
         commit("setSymTrackLoaders", { key: "userSymptoms", value: false });
       });
   },
-  setCities: ({ commit }) => {
-    ajax.get("cities").then(res => {
-      commit("setCities", res.data);
-    });
+  setCities: ({ commit }, { keyword, limit }) => {
+    commit("setSymTrackLoaders", { key: "cities", value: true });
+    ajax
+      .get("cities", {
+        params: {
+          matches: keyword,
+          limit: limit
+        }
+      })
+      .then(res => {
+        commit("setCities", res.data);
+      })
+      .finally(function() {
+        commit("setSymTrackLoaders", { key: "cities", value: false });
+      });
   },
   setLocationsSymptoms: ({ commit }, input) => {
     commit("setSymTrackLoaders", { key: "map", value: true });

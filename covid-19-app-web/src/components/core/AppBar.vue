@@ -11,16 +11,21 @@
         v-if="$vuetify.breakpoint.smAndDown && navOption === '2'"
         @click.stop="drawer = !drawer"
       />
-      <router-link data-v-step="0" class="d-flex align-center" to="/">
+      <v-btn
+        text
+        data-v-step="0"
+        class="d-flex align-center ml-3"
+        @click="$router.push({ name: 'Home' })"
+      >
         <v-img
           alt="Company Logo"
-          class="shrink ml-3"
+          class="shrink"
           contain
           src="/img/brand/blue.png"
           style="transition: width 0.2s ease"
           :width="brandWidth"
         />
-      </router-link>
+      </v-btn>
 
       <v-spacer />
       <v-btn
