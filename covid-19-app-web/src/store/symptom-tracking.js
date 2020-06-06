@@ -86,6 +86,7 @@ const actions = {
         console.log(err.response.data);
       })
       .finally(() => {
+        commit("setMapLoaders", { key: "locationsSymptoms", value: false });
         commit("setSymTrackLoaders", { key: "map", value: false });
       });
   }

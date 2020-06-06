@@ -64,12 +64,12 @@
   </v-row>
 </template>
 <script>
-import ajax from "@/auth/ajax";
-import store from "@/store/";
-import { Rules, User } from "./user.js";
-import { mdiEye, mdiEyeOff, mdiCloseCircleOutline } from "@mdi/js";
+  import ajax from "@/auth/ajax";
+  import store from "@/store/";
+  import {Rules, User} from "./user.js";
+  import {mdiCloseCircleOutline, mdiEye, mdiEyeOff} from "@mdi/js";
 
-export default {
+  export default {
   name: "Login",
   data() {
     return {
@@ -95,7 +95,7 @@ export default {
             store.dispatch("setUser", { user: res.data.user });
             store.dispatch("setToken", { token: res.data.token });
             store.dispatch("setStateMessage", "Successfully logged in");
-            this.$router.push("/");
+            this.$router.push({name: 'Home'});
           },
           error => {
             store.dispatch("setStateMessage", error.response.data);

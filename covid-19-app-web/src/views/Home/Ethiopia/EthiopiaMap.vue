@@ -79,16 +79,16 @@
 </template>
 
 <script>
-import store from "@/store/";
-import VTooltip from "v-tooltip";
-// Set custom CSS class
+  import store from "@/store/";
+  import VTooltip from "v-tooltip";
+  // Set custom CSS class
+
 VTooltip.options.defaultClass = "tooltip";
 export default {
   name: "EthiopiaMap",
   methods: {
     getToolTip(key) {
       let data = this.getRegionalData[key];
-      console.log(data);
       return {
         content:
           '<div class="primary tooltip" style="width: 10rem">' +

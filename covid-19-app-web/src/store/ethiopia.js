@@ -41,7 +41,6 @@ const actions = {
       })
       .then(
         res => {
-          console.log(res);
           // split data
           categorizeData(commit, res.data);
         },
