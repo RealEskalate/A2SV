@@ -6,7 +6,6 @@ const mongoose = require("mongoose");
 
 
 exports.get_ethiopia_data = async (req, res) => {
-    await update_db();
     let filter = {};
     let regions=null;
 
