@@ -120,7 +120,7 @@ export default PrevDetailScreen = (props) => {
     <SafeAreaView style={styles.container}>
       <TopNavigation
         alignment="center"
-        title={strings.Symptoms}
+        title={strings.COVID19Symptoms}
         accessoryLeft={renderBackAction}
       />
       <Layout style={styles.container} level="2">

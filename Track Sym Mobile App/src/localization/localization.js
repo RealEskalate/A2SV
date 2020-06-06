@@ -73,11 +73,11 @@ export let strings = new LocalizedStrings({
     TrackSYM: "TRACK SYM",
     WhoWeAre: "WHO WE ARE",
     YourData: "YOUR DATA",
-    CheckOutOurWebsite: "CHECK OUT OUR WESITE",
+    CheckOutOurWebsite: "CHECK OUT OUR WEBSITE",
     SignInToYourAccount: "Sign In To Your Accout",
     DoNotHaveAccount: "Don't have account? Sign up",
-    CovidDetail: "COVID DETAIL",
-    CoronaVirusDesease2019: "CORONAVIRUS DESEASE 2019",
+    CovidDetail: "COVID-19 INFORMATION",
+    CoronaVirusDesease2019: "CORONAVIRUS DISEASE 2019",
     WhatDoWeKnowSoFar: "WHAT DO WE KNOW SO FAR ?",
     WhereDidItComeFrom: "WHERE DID IT COME FROM ?",
     Misconceptions: "MISCONCEPTIONS",
@@ -89,7 +89,7 @@ export let strings = new LocalizedStrings({
     ShortnessOfBreath: "Shortness of Breath",
     Myalgia: "Myalgia",
     LessCommon: "LESS COMMON",
-    Headache: "HeadAche",
+    Headache: "Headache",
     SoreThroat: "Sore Throat",
     Chills: "Chills",
     Anosmia: "Anosmia",
@@ -198,7 +198,7 @@ export let strings = new LocalizedStrings({
       "There is a lot of information circulating about COVID-19, so it is important to know what is right and what is not.",
 
     WhatIsCOVID19DetailInfoTitle: "WHAT IS COVID-19 ?",
-    WhatIsCOVID19DetailInfoDescription: "CORONAVIRUS DESEASE 2019",
+    WhatIsCOVID19DetailInfoDescription: "CORONAVIRUS DISEASE 2019",
     WhatIsCOVID19DetailInfoDescriptionContentOne:
       "Severe Acute Respiratory Syndrome     Coronavirus-2 (SARS-CoV-2) is the name given to the 2019 novel coronavirus. COVID-19 is the name given to the disease associated with the virus.\n\nSARS-CoV-2 is a new strain of coronavirus that has not been previously identified in humans. Coronaviruses are viruses that circulate among animals with some of them also known to infect humans.",
 
@@ -207,7 +207,7 @@ export let strings = new LocalizedStrings({
     SyptomsDetailInfoDescriptionContentOne:
       "From what is known so far, a person infected with this disease may suffer from dry cough, mild fever, tiredness, and breathing issues which may go unnoticed at first. ",
     SyptomsDetailInfoDescriptionContentTwo:
-      "The virus is difficult to contain for the following reasons. The symptoms are similar to common cold or flue, and it spreads very rapidly.\n\n Some people will get COVID-19 but don 't show any symptoms. In fact, 80% of people infected with COVID-19 recover without any special treatment. As people move around the world, COVID-19 has spread in all parts of the world and is continuing to do so.",
+      "The virus is difficult to contain for the following reasons. The symptoms are similar to common cold or flu, and it spreads very rapidly.\n\n Some people will get COVID-19 but don 't show any symptoms. In fact, 80% of people infected with COVID-19 recover without any special treatment. As people move around the world, COVID-19 has spread in all parts of the world and is continuing to do so.",
 
     SyptomsDetailInfoDescriptionMostListNameOne: "High Fever",
     SyptomsDetailInfoDescriptionMostListNameTwo: "Dry Cough",
@@ -250,13 +250,13 @@ export let strings = new LocalizedStrings({
     PreventionDetailInfoDescriptionMethodOneInsideContentOne:
       "Regularly and thoroughly clean your hands with an alcohol-based hand rub or wash them with soap and water for at least 20 seconds. Hands touch many surfaces and can pick up viruses. Once contaminated, hands can transfer the virus to your eyes, nose, or mouth. From there, the virus can enter your body and can make you sick.",
     PreventionDetailInfoDescriptionMethodOneInsideContetnTwo:
-      "Maintain at least 2 meters (6 feet) distance between yourself and anyone who is coughing or sneezing.",
+      "Maintain at least 2 meters (6 feet) distance between yourself and other people to avoid spreading illness.",
 
     PreventionDetailInfoDescriptionMethodTwoNameOne: "Respiratory hygiene",
     PreventionDetailInfoDescriptionMethodTwoNameTwo: "Stay Informed",
 
     PreventionDetailInfoDescriptionMethodTwoInsideContentOne:
-      "Make sure you, and the people around you, follow good respiratory hygiene. This means covering your mouth and nose with your bent elbow or tissue when you cough or sneeze. Then dispose of the used tissue immediately.",
+      "Make sure you, and the people around you, follow good respiratory hygiene. This means covering your mouth and nose with your bent elbow or tissue when you cough or sneeze. Then dispose of the used tissue immediately. Use mouth and nose covering masks when going outside.",
     PreventionDetailInfoDescriptionMethodTwoInsideContetnTwo:
       "Stay informed on the latest developments about COVID-19. Follow the advice given by your healthcare provider, your national and local public health authority, or your employer on how to protect yourself and others from COVID-19.",
 
@@ -266,7 +266,7 @@ export let strings = new LocalizedStrings({
     HowItSpreadsDetailInfoDescriptionContentOne:
       "Unlike most deadly viruses who quickly hospitalize their hosts leading to their quarantine, it can be highly contagious and spread quickly because the patient may not even show any symptoms for days after infection.",
     HowItSpreadsDetailInfoDescriptionContentTwo:
-      "Since most patients do not show symptoms for up to 14 days, they likely pass it to others before they are quarantined and treated. The coronavirus is not only able to spread to others by direct contacts like touching each other’s hands but also through indirect contacts like digital devices like phone, desks, chairs, stairs, and elevator buttons and then touching your face (eyes, nose, or mouth). ",
+      "Since most patients do not show symptoms for up to 14 days, they likely pass it to others before they are quarantined and treated. COVID-19 is not only able to spread to others by direct contacts like touching each other’s hands but also through indirect contacts like digital devices like phone, desks, chairs, stairs, and elevator buttons and then touching your face (eyes, nose, or mouth). ",
 
     MessageFromUsDetailInfoTitle: "Message From TrackSym",
     MessageFromUsDetailInfoDescriptionContentOne:
@@ -339,7 +339,7 @@ export let strings = new LocalizedStrings({
     InfoDetailPreventionMethodsLabelTwo:
       "Maintain at least 2m (6 ft) gap in groups.",
     InfoDetailPreventionMethodsLabelThree:
-      "Use mouse and nose covering masks when going outside",
+      "Use mouth and nose covering masks when going outside",
     InfoDetailPreventionMethodsLabelFour:
       "Follow the advice of healthcare provider and your government",
 
@@ -432,11 +432,11 @@ export let strings = new LocalizedStrings({
     TrackSYM: "TRACK SYM",
     WhoWeAre: "WHO WE ARE",
     YourData: "YOUR DATA",
-    CheckOutOurWebsite: "CHECK OUT OUR WESITE",
+    CheckOutOurWebsite: "CHECK OUT OUR WEBSITE",
     SignInToYourAccount: "Sign In To Your Accout",
     DoNotHaveAccount: "Don't have account? Sign up",
-    CovidDetail: "COVID DETAIL",
-    CoronaVirusDesease2019: "CORONAVIRUS DESEASE 2019",
+    CovidDetail: "COVID-19 INFORMATION",
+    CoronaVirusDesease2019: "CORONAVIRUS DISEASE 2019",
     WhatDoWeKnowSoFar: "WHAT DO WE KNOW SO FAR ?",
     WhereDidItComeFrom: "WHERE DID IT COME FROM ?",
     Misconceptions: "MISCONCEPTIONS",
@@ -448,7 +448,7 @@ export let strings = new LocalizedStrings({
     ShortnessOfBreath: "Shortness of Breath",
     Myalgia: "Myalgia",
     LessCommon: "LESS COMMON",
-    Headache: "HeadAche",
+    Headache: "Headache",
     SoreThroat: "Sore Throat",
     Chills: "Chills",
     Anosmia: "Anosmia",
@@ -556,7 +556,7 @@ export let strings = new LocalizedStrings({
       "There is a lot of information circulating about COVID-19, so it is important to know what is right and what is not.",
 
     WhatIsCOVID19DetailInfoTitle: "WHAT IS COVID-19 ?",
-    WhatIsCOVID19DetailInfoDescription: "CORONAVIRUS DESEASE 2019",
+    WhatIsCOVID19DetailInfoDescription: "CORONAVIRUS DISEASE 2019",
     WhatIsCOVID19DetailInfoDescriptionContentOne:
       "Severe Acute Respiratory Syndrome     Coronavirus-2 (SARS-CoV-2) is the name given to the 2019 novel coronavirus. COVID-19 is the name given to the disease associated with the virus.\n\nSARS-CoV-2 is a new strain of coronavirus that has not been previously identified in humans. Coronaviruses are viruses that circulate among animals with some of them also known to infect humans.",
 
@@ -565,7 +565,7 @@ export let strings = new LocalizedStrings({
     SyptomsDetailInfoDescriptionContentOne:
       "From what is known so far, a person infected with this disease may suffer from dry cough, mild fever, tiredness, and breathing issues which may go unnoticed at first. ",
     SyptomsDetailInfoDescriptionContentTwo:
-      "The virus is difficult to contain for the following reasons. The symptoms are similar to common cold or flue, and it spreads very rapidly. Some people will get COVID-19 but don 't show any symptoms. In fact, 80% of people infected with COVID-19 recover without any special treatment. As people move around the world, COVID-19 has spread in all parts of the world and is continuing to do so.",
+      "The virus is difficult to contain for the following reasons. The symptoms are similar to common cold or flu, and it spreads very rapidly. Some people will get COVID-19 but don 't show any symptoms. In fact, 80% of people infected with COVID-19 recover without any special treatment. As people move around the world, COVID-19 has spread in all parts of the world and is continuing to do so.",
 
     SyptomsDetailInfoDescriptionMostListNameOne: "High Fever",
     SyptomsDetailInfoDescriptionMostListNameTwo: "Dry Cough",
@@ -608,13 +608,13 @@ export let strings = new LocalizedStrings({
     PreventionDetailInfoDescriptionMethodOneInsideContentOne:
       "Regularly and thoroughly clean your hands with an alcohol-based hand rub or wash them with soap and water for at least 20 seconds. Hands touch many surfaces and can pick up viruses. Once contaminated, hands can transfer the virus to your eyes, nose, or mouth. From there, the virus can enter your body and can make you sick.",
     PreventionDetailInfoDescriptionMethodOneInsideContetnTwo:
-      "Maintain at least 2 meters (6 feet) distance between yourself and anyone who is coughing or sneezing.",
+      "Maintain at least 2 meters (6 feet) distance between yourself and other people to avoid spreading illness.",
 
     PreventionDetailInfoDescriptionMethodTwoNameOne: "Respiratory hygiene",
     PreventionDetailInfoDescriptionMethodTwoNameTwo: "Stay Informed",
 
     PreventionDetailInfoDescriptionMethodTwoInsideContentOne:
-      "Make sure you, and the people around you, follow good respiratory hygiene. This means covering your mouth and nose with your bent elbow or tissue when you cough or sneeze. Then dispose of the used tissue immediately.",
+      "Make sure you, and the people around you, follow good respiratory hygiene. This means covering your mouth and nose with your bent elbow or tissue when you cough or sneeze. Then dispose of the used tissue immediately. Use mouth and nose covering masks when going outside.",
     PreventionDetailInfoDescriptionMethodTwoInsideContetnTwo:
       "Stay informed on the latest developments about COVID-19. Follow the advice given by your healthcare provider, your national and local public health authority, or your employer on how to protect yourself and others from COVID-19.",
 
@@ -624,7 +624,7 @@ export let strings = new LocalizedStrings({
     HowItSpreadsDetailInfoDescriptionContentOne:
       "Unlike most deadly viruses who quickly hospitalize their hosts leading to their quarantine, it can be highly contagious and spread quickly because the patient may not even show any symptoms for days after infection.",
     HowItSpreadsDetailInfoDescriptionContentTwo:
-      "Since most patients do not show symptoms for up to 14 days, they likely pass it to others before they are quarantined and treated. The coronavirus is not only able to spread to others by direct contacts like touching each other’s hands but also through indirect contacts like digital devices like phone, desks, chairs, stairs, and elevator buttons and then touching your face (eyes, nose, or mouth). ",
+      "Since most patients do not show symptoms for up to 14 days, they likely pass it to others before they are quarantined and treated. COVID-19 is not only able to spread to others by direct contacts like touching each other’s hands but also through indirect contacts like digital devices like phone, desks, chairs, stairs, and elevator buttons and then touching your face (eyes, nose, or mouth). ",
 
     MessageFromUsDetailInfoTitle: "Message From TrackSym",
     MessageFromUsDetailInfoDescriptionContentOne:
@@ -697,7 +697,7 @@ export let strings = new LocalizedStrings({
     InfoDetailPreventionMethodsLabelTwo:
       "Maintain at least 2m (6 ft) gap in groups.",
     InfoDetailPreventionMethodsLabelThree:
-      "Use mouse and nose covering masks when going outside",
+      "Use mouth and nose covering masks when going outside",
     InfoDetailPreventionMethodsLabelFour:
       "Follow the advice of healthcare provider and your government",
 
@@ -713,7 +713,7 @@ export let strings = new LocalizedStrings({
     Mar: "Mar",
     Apr: "Apr",
     May: "May",
-    Jan: "Jun",
+    Jun: "Jun",
     Jul: "Jul",
     Aug: "Aug",
     Sep: "Sep",
@@ -910,7 +910,7 @@ export let strings = new LocalizedStrings({
       "ስለ COVID-19 የሚዘወተሩ ብዙ መረጃዎች አሉ ፣ ስለሆነም ትክክል የሆነውን እና ያልሆነውን ማወቅ አስፈላጊ ነው ፡፡",
 
     WhatIsCOVID19DetailInfoTitle: "COVID-19 ምንድነው ?",
-    WhatIsCOVID19DetailInfoDescription: "CORONAVIRUS DESEASE 2019",
+    WhatIsCOVID19DetailInfoDescription: "CORONAVIRUS DISEASE 2019",
     WhatIsCOVID19DetailInfoDescriptionContentOne:
       "Severe Acute Respiratory Syndrome Coronavirus-2 (ሳርስ ኮቭ 2) ለአዲሱ የኮሮና ቫይረስ የተሰጠው ስም ነው፡፡ ኮቪድ 19 ቫይረሱ ለሚያስከትለው በሽታ የተሰጠው ስም ነው። ኮሮናቫይረስ በእንስሳት ውስጥ የሚተላለፉ ቫይረሶች ሲሆኑ ከእነዚህም መካከል አንዳንዶቹ የሰው ልጆች ላይ በቀላሉ ሊጠቁ ይችላሉ ፡፡",
 
@@ -995,7 +995,7 @@ export let strings = new LocalizedStrings({
     Mar: "መጋቢ",
     Apr: "ሚያዚ",
     May: "ግንቦ",
-    Jan: "ሰኔ",
+    Jun: "ሰኔ",
     Jul: "ሀምሌ",
     Aug: "ነሐሴ",
     Sep: "መስከ",
