@@ -1,5 +1,5 @@
 import ajax from "../auth/ajax";
-import { langConverter } from "./index";
+import {langConverter} from "./index";
 
 const state = {
   regionalIndexed: null,
@@ -41,7 +41,6 @@ const actions = {
       })
       .then(
         res => {
-          console.log(res);
           // split data
           categorizeData(commit, res.data);
         },

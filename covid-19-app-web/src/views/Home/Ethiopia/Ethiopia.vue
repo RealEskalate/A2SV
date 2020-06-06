@@ -138,16 +138,16 @@
         </v-card>
       </v-col>
     </v-row>
-    <v-col cols="12">
+    <v-col cols="12" v-if="!isMobile()">
       <ethiopia-map />
     </v-col>
   </v-container>
 </template>
 
 <script>
-import EthiopiaMap from "./EthiopiaMap";
-import { DoughnutChart } from "../Charts/charts.js";
-import { mdiPhone } from "@mdi/js";
+  const EthiopiaMap = () => import("./EthiopiaMap");
+  import {DoughnutChart} from "../Charts/charts.js";
+  import {mdiPhone} from "@mdi/js";
 import store from "@/store/";
 
 export default {
@@ -169,7 +169,6 @@ export default {
   },
   computed: {
     ethiopianData() {
-      console.log(store.getters.getEthiopia);
       return store.getters.getEthiopia;
     },
     regionalData() {
@@ -177,6 +176,16 @@ export default {
     }
   },
   methods: {
+    isMobile() {
+      console.log(
+          /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+              navigator.userAgent
+          )
+      );
+      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+          navigator.userAgent
+      );
+    },
     setChartData() {
       this.chartData = {
         hoverBackgroundColor: "red",
