@@ -37,3 +37,19 @@ exports.get_country_slugs = async (req, res) => {
     healthParser.countrySlugList(res, respond);
 
 };
+
+
+
+exports.getWorldStats= async (req,res) => {
+    let rates=false;
+    if (["Tests_Rate", "Recovered_Rate", "Deaths_Rate", "Active_Rate"].includes(req.query.criteria)) {
+        req.query.criteria = req.query.criteria.split("_")[0];
+        rates=true;
+    }
+    try{
+        let results=await healthParser.getWorldStatistics(req,rates);
+        res.status(200).send(results);
+    }catch(err){
+        res.status(500).send(err)
+    }
+}
