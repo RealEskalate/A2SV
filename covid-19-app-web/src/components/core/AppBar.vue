@@ -60,14 +60,14 @@
       </div>
       <v-divider class="mr-2" vertical light />
       <v-btn
-        small
-        dark
-        color="primary"
-        v-if="!loggedInUser"
-        class="v-card--shaped mx-1"
-        depressed
-        to="login"
-        v-text="'Login'"
+              small
+              dark
+              color="primary"
+              v-if="!loggedInUser"
+              class="v-card--shaped mx-1"
+              depressed
+              :to="{name: 'Login'}"
+              v-text="'Login'"
       />
       <v-menu offset-y v-else>
         <template v-slot:activator="{ on }">
@@ -117,21 +117,21 @@
 </template>
 
 <script>
-import store from "@/store/";
-import router from "@/router/";
-import {
-  mdiAccountCog,
-  mdiAccountEdit,
-  mdiBookOpenVariant,
-  mdiHome,
-  mdiInformation,
-  mdiLogoutVariant,
-  mdiMap,
-  mdiNewspaper
-} from "@mdi/js";
-import { languages } from "../../plugins/i18n";
+  import store from "@/store/";
+  import router from "@/router/";
+  import {
+    mdiAccountCog,
+    mdiAccountEdit,
+    mdiBookOpenVariant,
+    mdiHome,
+    mdiInformation,
+    mdiLogoutVariant,
+    mdiMap,
+    mdiNewspaper
+  } from "@mdi/js";
+  import {languages} from "../../plugins/i18n";
 
-export default {
+  export default {
   data: () => {
     return {
       mdiAccountCog,
@@ -159,7 +159,7 @@ export default {
         { text: "navbar.map", icon: mdiMap, to: "Map" }
       ],
       more_links: [
-        { text: "navbar.profile", icon: mdiAccountEdit, to: "profile" }
+        {text: "navbar.profile", icon: mdiAccountEdit, to: "Profile"}
       ]
     };
   },
@@ -180,7 +180,7 @@ export default {
     logout() {
       store.dispatch("setToken", { token: null });
       store.dispatch("setUser", { user: null });
-      router.replace("/");
+      router.push({name: 'Home'});
     }
   },
   computed: {
