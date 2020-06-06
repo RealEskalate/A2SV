@@ -39,14 +39,32 @@ const mutations = {
 
 const actions = {
   setAllSymptoms: ({ commit }) => {
-    ajax.get(`symptoms`).then(res => {
-      commit("setAllSymptoms", res.data);
-    });
+    commit("setSymTrackLoaders", { key: "allSymptoms", value: true });
+    ajax
+      .get(`symptoms`)
+      .then(res => {
+        commit("setAllSymptoms", res.data);
+      })
+      .catch(err => {
+        console.log(err.response.data);
+      })
+      .finally(function() {
+        commit("setSymTrackLoaders", { key: "allSymptoms", value: false });
+      });
   },
-  setSymptomUser: ({ commit }, { userId }) => {
-    ajax.get(`symptomuser/user/${userId}/demo=true`).then(res => {
-      commit("setSymptomUser", res.data);
-    });
+  setSymptomUser: ({ commit }, userId) => {
+    commit("setSymTrackLoaders", { key: "userSymptoms", value: true });
+    ajax
+      .get(`symptomuser/user/${userId}`)
+      .then(res => {
+        commit("setSymptomUser", res.data);
+      })
+      .catch(err => {
+        console.log(err.response.data);
+      })
+      .finally(function() {
+        commit("setSymTrackLoaders", { key: "userSymptoms", value: false });
+      });
   },
   setCities: ({ commit }) => {
     ajax.get("cities").then(res => {
@@ -54,7 +72,7 @@ const actions = {
     });
   },
   setLocationsSymptoms: ({ commit }, input) => {
-    commit("setMapLoaders", { key: "locationsSymptoms", value: true });
+    commit("setSymTrackLoaders", { key: "map", value: true });
     ajax
       .post("locations_symptoms", input, {
         params: {
@@ -69,6 +87,7 @@ const actions = {
       })
       .finally(() => {
         commit("setMapLoaders", { key: "locationsSymptoms", value: false });
+        commit("setSymTrackLoaders", { key: "map", value: false });
       });
   }
 };

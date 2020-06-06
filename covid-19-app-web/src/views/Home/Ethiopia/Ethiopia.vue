@@ -145,9 +145,9 @@
 </template>
 
 <script>
-  const EthiopiaMap = () => import("./EthiopiaMap");
-  import {DoughnutChart} from "../Charts/charts.js";
-  import {mdiPhone} from "@mdi/js";
+const EthiopiaMap = () => import("./EthiopiaMap");
+import { DoughnutChart } from "../Charts/charts.js";
+import { mdiPhone } from "@mdi/js";
 import store from "@/store/";
 
 export default {
@@ -177,13 +177,8 @@ export default {
   },
   methods: {
     isMobile() {
-      console.log(
-          /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-              navigator.userAgent
-          )
-      );
       return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-          navigator.userAgent
+        navigator.userAgent
       );
     },
     setChartData() {

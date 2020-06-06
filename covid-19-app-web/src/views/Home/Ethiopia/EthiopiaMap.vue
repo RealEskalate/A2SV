@@ -82,6 +82,7 @@
   import store from "@/store/";
   import VTooltip from "v-tooltip";
   // Set custom CSS class
+
 VTooltip.options.defaultClass = "tooltip";
 export default {
   name: "EthiopiaMap",

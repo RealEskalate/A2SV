@@ -29,5 +29,13 @@ exports.lookup_cities = (req, res) => {
         }
         return res.send(cities_all[req.query.filter]);
     }
+    if (req.query.matches) {
+        var arr = [];
+        Object.keys(cities_all).forEach((key) => {
+            if (key.includes(req.query.matches)) arr.push(cities_all[key]);
+        });
+        return res.send(arr);
+    }
+
     return res.send(cities_all);
 }
