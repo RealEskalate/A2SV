@@ -40,7 +40,6 @@ exports.get_ethiopia_data = async (req, res) => {
 };
 
 
-
 let update_db = async function() {
     let phone_no= await StatisticsResource.findOne({ language: 'English', title: 'ethiopia-phone-call'});
     phone_no=phone_no.fields[0];
