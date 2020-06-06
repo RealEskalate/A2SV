@@ -1,41 +1,137 @@
 <template>
   <v-card outlined shaped class="shadow-sm overflow-hidden">
-    <v-navigation-drawer
-      v-model="sidebar"
-      class="shadow-sm"
-      style="z-index: 1; position: absolute;"
+    <v-btn
+      fab
+      color="white"
+      depressed
+      v-show="!sidebar"
+      @click="sidebar = true"
+      class="shadow-sm v-card--outlined v-card--shaped"
+      style="position: absolute; left: 0; top: 0; z-index: 2"
     >
-      <v-list-item>
+      <v-icon v-text="mdiForwardburger" />
+    </v-btn>
+    <v-navigation-drawer
+      width="350"
+      v-model="sidebar"
+      class="shadow-sm pb-9"
+      style="z-index: 2; position: absolute;"
+    >
+      <v-list-item class="my-2 shadow-sm p-sticky">
         <v-list-item-content>
-          <v-icon
-            style="position: absolute; right: 0; top: 0; z-index: 1"
-            class="mt-3 mr-3"
-            @click="sidebar = false"
-            v-text="mdiClose"
+          <v-autocomplete
+            dense
+            outlined
+            class="v-card--shaped"
+            append-icon=""
+            v-model="selectedCity"
+            :items="loadedCities"
+            :loading="symTrackLoaders.cities"
+            :search-input.sync="keyword"
+            no-data-text="Found Nothing"
+            hide-no-data
+            hide-selected
+            hide-details
+            :item-text="autoCompleteValue"
+            :item-value="autoCompleteValue"
+            label="Search City"
+            placeholder="Start Typing"
+            return-object
           />
-          <v-list-item-title class="title">
-            Application
-          </v-list-item-title>
-          <v-list-item-subtitle>
-            subtext
-          </v-list-item-subtitle>
         </v-list-item-content>
+        <v-list-item-action>
+          <v-btn class="v-card--shaped" large @click="sidebar = false" icon>
+            <v-icon v-text="mdiBackburger" />
+          </v-btn>
+        </v-list-item-action>
       </v-list-item>
 
-      <v-divider />
-
-      <v-list dense nav>
-        <v-list-item v-for="item in items" :key="item.title" link>
-          <v-list-item-icon>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-icon>
+      <v-progress-linear
+        height="2px"
+        style="margin-top: -8px"
+        indeterminate
+        v-if="symTrackLoaders.userSymptoms"
+      />
+      <v-subheader
+        class="my-5 justify-center"
+        v-else-if="!selectedInfo"
+        v-text="'Nothing Selected on the Map'"
+      />
+      <v-list v-else>
+        <v-subheader v-text="'Selected Item Details'" />
+        <v-list-item>
+          <v-list-item-avatar size="20">
+            <v-icon v-text="mdiCrosshairsGps" />
+          </v-list-item-avatar>
 
           <v-list-item-content>
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
+            <span>
+              Location:
+              <span
+                class="grey--text darken-2"
+                v-text="
+                  `[ ${selectedInfo.location.coordinates[0].toFixed(
+                    3
+                  )}, ${selectedInfo.location.coordinates[0].toFixed(3)} ]`
+                "
+              />
+            </span>
           </v-list-item-content>
         </v-list-item>
+
+        <v-list-item v-if="selectedInfo.user_id">
+          <v-list-item-avatar size="20">
+            <v-icon v-text="mdiPercent" />
+          </v-list-item-avatar>
+          <v-list-item-content>
+            <span>
+              Sickness Probability:
+              <span
+                class="grey--text darken-2"
+                v-text="selectedInfo.probability.toFixed(3) + ' %'"
+              />
+            </span>
+          </v-list-item-content>
+        </v-list-item>
+
+        <template v-for="(feature, index) in detailFeatures">
+          <v-divider
+            :class="`mt-${index === 0 ? 0 : 3} mb-2`"
+            :key="'divider_' + index"
+          />
+          <v-list-item :key="'title_' + index">
+            <v-list-item-avatar size="20">
+              <v-icon v-text="feature.icon" />
+            </v-list-item-avatar>
+            <v-list-item-content v-text="feature.name" />
+          </v-list-item>
+          <div
+            :key="feature.name + index"
+            class="grey lighten-5 shadow-in v-card--shaped text-center pa-3 mx-5"
+          >
+            <v-subheader
+              class="mx-auto my-2 justify-center"
+              v-if="
+                !selectedInfo[feature.key] ||
+                  selectedInfo[feature.key].length === 0
+              "
+              v-text="'Found Nothing'"
+            />
+            <v-chip
+              v-else
+              small
+              class="ma-1 v-card--shaped"
+              :key="key"
+              v-for="(value, key) in selectedInfo[feature.key]"
+            >
+              <span v-if="!selectedInfo.user_id" v-text="key + ' : '" />
+              <span class="grey--text darken-3" v-text="value" />
+            </v-chip>
+          </div>
+        </template>
       </v-list>
     </v-navigation-drawer>
+
     <v-progress-linear
       style="position: absolute; z-index: 1"
       v-if="symTrackLoaders.map"
@@ -64,7 +160,15 @@
 
 <script>
 import store from "@/store";
-import { mdiClose } from "@mdi/js";
+import {
+  mdiBackburger,
+  mdiForwardburger,
+  mdiBandage,
+  mdiCrosshairsGps,
+  mdiBabyCarriage,
+  mdiPercent,
+  mdiGenderMaleFemaleVariant
+} from "@mdi/js";
 import Mapbox from "mapbox-gl-vue";
 import Supercluster from "supercluster";
 
@@ -73,15 +177,16 @@ export default {
   components: { Mapbox },
   data: function() {
     return {
-      mdiClose,
-      items: [
-        { title: "Dashboard", icon: "mdi-view-dashboard" },
-        { title: "Photos", icon: "mdi-image" },
-        { title: "About", icon: "mdi-help-box" }
-      ],
-      selectedInfo: null,
+      mdiPercent,
+      mdiCrosshairsGps,
+      mdiBackburger,
+      mdiForwardburger,
       api_token: process.env.VUE_APP_MAPBOX_API,
+
       sidebar: false,
+      keyword: null,
+      selectedCity: null,
+      selectedInfo: null,
 
       pointInfos: {},
       gridInfos: {},
@@ -118,14 +223,14 @@ export default {
 
       user_longitude: 38.811684,
       user_latitude: 9.015326
-
-      // top_left_bound: [38.78505631763457, 9.071317349756356],
-      // top_right_bound: [38.83802611148582, 9.071317349756356],
-      // bottom_left_bound: [38.79999690988012, 8.976957049826808],
-      // bottom_right_bound: [38.82312696429011, 8.976957049826808],
     };
   },
   watch: {
+    keyword(newValue) {
+      if (newValue && newValue.length >= 2) {
+        store.dispatch("setCities", { keyword: newValue, limit: 10 });
+      }
+    },
     loadedData(newValue) {
       const small_cluster = new Supercluster({ radius: 40, maxZoom: 14 });
       const medium_cluster = new Supercluster({ radius: 40, maxZoom: 14 });
@@ -164,16 +269,43 @@ export default {
       this.high_cluster = high_cluster;
       this.fillMapData();
     },
-    loadedDetail(newValue) {
-      this.selectedInfo = newValue;
+    loadedSymptoms(newValue) {
+      this.selectedInfo.value = newValue;
     }
   },
   computed: {
     loadedData: () => store.getters.getLocationsSymptoms,
-    loadedDetail: () => store.getters.getSymptomUser,
-    symTrackLoaders: () => store.getters.getSymTrackLoaders
+    userSymptoms: () => {
+      let res = [];
+      let retrieved = store.getters.getSymptomUser;
+      retrieved.forEach(function(sym) {
+        res.push(sym.Symptom.name);
+      });
+      return res;
+    },
+    loadedCities: () => store.getters.getCities,
+    symTrackLoaders: () => store.getters.getSymTrackLoaders,
+    detailFeatures() {
+      if (!this.selectedInfo) return [];
+      let gridDetailFeatures = [
+        { name: "Genders", key: "genders", icon: mdiGenderMaleFemaleVariant },
+        { name: "Age Groups", key: "ages", icon: mdiBabyCarriage },
+        { name: "Symptoms", key: "value", icon: mdiBandage }
+      ];
+      let userDetailFeatures = [
+        { name: "Symptoms", key: "value", icon: mdiBandage }
+      ];
+
+      return this.selectedInfo.user_id
+        ? userDetailFeatures
+        : gridDetailFeatures;
+    }
   },
+
   methods: {
+    // Displayable value for country autocomplete list
+    autoCompleteValue: item => item.city + ", " + item.country,
+
     symptomsToGeoJson(symptoms) {
       const symptomCollections = {
         smallSymptomCollection: {
@@ -279,14 +411,15 @@ export default {
     },
 
     fetchSelectedItem(event) {
-      // const coordinates = event.features[0].geometry.coordinates;
-      // console.log(event.features);
       this.sidebar = true;
       const id = event.features[0].properties.id;
       if (!id) this.selectedInfo = null;
       else if (this.gridInfos[id]) this.selectedInfo = this.gridInfos[id];
-      else if (this.pointInfos[id]) this.selectedInfo = this.pointInfos[id];
-      else store.dispatch("setSymptomUser", id);
+      else if (this.pointInfos[id]) {
+        store.dispatch("setSymptomUser", id);
+        this.selectedInfo = this.pointInfos[id];
+        this.selectedInfo.value = [];
+      }
     },
 
     updateClusters() {
@@ -779,5 +912,9 @@ export default {
 #map {
   width: 100%;
   height: 100%;
+}
+
+.v-menu__content {
+  border-radius: 3px 3px 20px 3px !important;
 }
 </style>
