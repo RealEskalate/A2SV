@@ -380,7 +380,6 @@ schedule.scheduleJob('0 0 * * *', async function() {
 
 
 exports.getWorldStatistics= async(req,rates)=>{
-    await update_world_db();
     let startDate = new Date(Date.parse(setStartDate(req)));
     let endDate = new Date(Date.parse(setEndDate(req)));
     let criteria= req.query.criteria;
