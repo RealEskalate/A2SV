@@ -34,17 +34,32 @@ exports.lookup_cities = (req, res) => {
         let limit = req.query.limit || 10;
         let keys = Object.keys(cities_all);
         for (let ind = 0; ind < keys.length; ind++) {
-            if (arr.length === limit) {
+            if (arr.length == limit) {
                 break;
             }
             let key = keys[ind];
-            if (
-                key.toLowerCase().includes(req.query.matches.toLowerCase()) ||
-                cities_all[key][0]["country"]
-                  .toLowerCase()
-                  .includes(req.query.matches.toLowerCase())
-              )
-                arr.push(cities_all[key]);
+            if (key.toLowerCase().includes(req.query.matches.toLowerCase())) {
+                for (let i = 0; i < cities_all[key].length; i++) {
+                    let item = cities_all[key][i];
+                    if (arr.length == limit) {
+                        break;
+                    }
+                    arr.push(item);
+                }
+            } 
+            else {
+                for (let i = 0; i < cities_all[key].length; i++) {
+                    let item = cities_all[key][i];
+                    if (arr.length == limit) {
+                        break;
+                    }
+                    if (
+                        item.country.toLowerCase().includes(req.query.matches.toLowerCase())
+                    ) {
+                        arr.push(item);
+                    }
+                }
+            }
         }
         return res.send(arr);
     }
