@@ -25,11 +25,12 @@
       <v-spacer />
       <v-btn
         :key="link.to"
-        :to="link.to"
+        :to="{ name: link.to }"
         text
         v-for="link in links"
         active-class="border-bottom"
         class="hidden-sm-and-down v-card--shaped nav-btn"
+        exact
       >
         <span class="text-capitalize"> {{ $t(link.text) }}</span>
       </v-btn>
@@ -116,21 +117,21 @@
 </template>
 
 <script>
-  import store from "@/store/";
-  import router from "@/router/";
-  import {
-    mdiAccountCog,
-    mdiAccountEdit,
-    mdiBookOpenVariant,
-    mdiHome,
-    mdiInformation,
-    mdiLogoutVariant,
-    mdiMap,
-    mdiNewspaper
-  } from "@mdi/js";
-  import {languages} from "../../plugins/i18n";
+import store from "@/store/";
+import router from "@/router/";
+import {
+  mdiAccountCog,
+  mdiAccountEdit,
+  mdiBookOpenVariant,
+  mdiHome,
+  mdiInformation,
+  mdiLogoutVariant,
+  mdiMap,
+  mdiNewspaper
+} from "@mdi/js";
+import { languages } from "../../plugins/i18n";
 
-  export default {
+export default {
   data: () => {
     return {
       mdiAccountCog,
@@ -147,15 +148,15 @@
         ao: "AO"
       },
       links: [
-        { text: "navbar.home", icon: mdiHome, to: "/" },
+        { text: "navbar.home", icon: mdiHome, to: "Home" },
         {
           text: "navbar.learn",
           icon: mdiBookOpenVariant,
-          to: "information"
+          to: "Learn"
         },
-        { text: "navbar.about", icon: mdiInformation, to: "about" },
-        { text: "navbar.news", icon: mdiNewspaper, to: "news" },
-        { text: "navbar.map", icon: mdiMap, to: "map" }
+        { text: "navbar.about", icon: mdiInformation, to: "About" },
+        { text: "navbar.news", icon: mdiNewspaper, to: "News" },
+        { text: "navbar.map", icon: mdiMap, to: "Map" }
       ],
       more_links: [
         { text: "navbar.profile", icon: mdiAccountEdit, to: "profile" }
