@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 
 
 exports.get_ethiopia_data = async (req, res) => {
+    await update_db();
     let filter = {};
     let regions=null;
 
@@ -64,16 +65,18 @@ let update_db = async function() {
         })
         await test.save();
 
+        let ethioStat=[]
 
         for (var index = 0; index < data.statewise.length; index++) {
             let case_data = data.statewise[index];
             let state=(case_data.state=="Total")? "Ethiopia": case_data.state;
             let region_code= (case_data.statecode=="TT")? "ET":case_data.statecode;
-            var ethiopia= new EthiopiaData({
+            
+            ethioStat.push( new EthiopiaData({
                 _id: mongoose.Types.ObjectId(),
                 region: state,
                 region_code:region_code,
-                phone_number: phone_no[state],
+                phone_number: phone_no[region_code],
                 total:{
                     'confirmed': case_data.confirmed,
                     'recovered': case_data.recovered,
@@ -86,9 +89,9 @@ let update_db = async function() {
                     'deaths': case_data.deltadeaths,
                 },
                 date: date
-            })
-            await ethiopia.save();
+            }));
         }
+        await EthiopiaData.insertMany(ethioStat);
     }
     console.log("update-completed")
 };

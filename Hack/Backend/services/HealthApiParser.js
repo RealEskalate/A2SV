@@ -380,6 +380,7 @@ schedule.scheduleJob('0 0 * * *', async function() {
 
 
 exports.getWorldStatistics= async(req,rates)=>{
+    await update_world_db();
     let startDate = new Date(Date.parse(setStartDate(req)));
     let endDate = new Date(Date.parse(setEndDate(req)));
     let criteria= req.query.criteria;
@@ -442,22 +443,23 @@ let update_world_db = async function() {
         const options = { delimiter: ',', quote: '"' };
         data = csvjson.toObject(data, options);
 
-        await WorldDataModel.collection.drop();
-
+        let caseData=[]
         for (var index=0; index<data.length;index++){
             let item= data[index];
 
-            let world_data= new WorldDataModel({
-                _id: mongoose.Types.ObjectId(),
-                Confirmed:item['Confirmed'],
-                Recovered:item['Recovered'],
-                Deaths:item['Deaths'],
-                date: new Date(item.Date)
-            });
-            await world_data.save();
+            caseData.push( 
+                new WorldDataModel({
+                    _id: mongoose.Types.ObjectId(),
+                    Confirmed:item['Confirmed'],
+                    Recovered:item['Recovered'],
+                    Deaths:item['Deaths'],
+                    date: new Date(item.Date)
+                })
+            )
         }
 
-        
+        await WorldDataModel.collection.drop();
+        await WorldDataModel.insertMany(caseData);
     }
     
     console.log("update-completed")

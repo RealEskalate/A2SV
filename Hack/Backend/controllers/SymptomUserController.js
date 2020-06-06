@@ -159,7 +159,7 @@ exports.get_symptomuser_by_user_id = async (req, res) => {
     
     // sending probability
 
-    if(req.query.probability!=null && req.query.iso){
+    if(req.query.probability!=null){
       let symptoms_name = [];
       result.forEach(symptom_info=>{ symptoms_name.push(symptom_info.Symptom.name)})
     
