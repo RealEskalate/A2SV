@@ -56,7 +56,7 @@ const About = (props) => {
           symptoms. Users can anonymously report their symptoms and choose a
           location to see the density of symptoms in a map view. {"\n\n"} It
           represents publicly avaible data with a short description on how to
-          see the trend going on . The dat includes the number of confirmed
+          see the trend going on . The data includes the number of confirmed
           cases, deaths, recovered, and tests conducted of any selected country
           or globally. It is also a great place to look for global and local
           news about Covid-19.{"\n"}

@@ -22,7 +22,7 @@ export default InformationScreen = (props) => {
       link: "InfoDetailScreen",
     },
     {
-      name: strings.Symptoms,
+      name: strings.COVID19Symptoms,
       description: strings.SyptomsShortDescription,
       photo: require("./assets/sym.jpg"),
       time: 2,
