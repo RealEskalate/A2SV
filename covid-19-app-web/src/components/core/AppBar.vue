@@ -60,14 +60,14 @@
       </div>
       <v-divider class="mr-2" vertical light />
       <v-btn
-              small
-              dark
-              color="primary"
-              v-if="!loggedInUser"
-              class="v-card--shaped mx-1"
-              depressed
-              :to="{name: 'Login'}"
-              v-text="'Login'"
+        small
+        dark
+        color="primary"
+        v-if="!loggedInUser"
+        class="v-card--shaped mx-1"
+        depressed
+        :to="{ name: 'Login' }"
+        v-text="'Login'"
       />
       <v-menu offset-y v-else>
         <template v-slot:activator="{ on }">
@@ -159,7 +159,7 @@ export default {
         { text: "navbar.map", icon: mdiMap, to: "Map" }
       ],
       more_links: [
-        {text: "navbar.profile", icon: mdiAccountEdit, to: "Profile"}
+        { text: "navbar.profile", icon: mdiAccountEdit, to: "Profile" }
       ]
     };
   },
@@ -180,7 +180,7 @@ export default {
     logout() {
       store.dispatch("setToken", { token: null });
       store.dispatch("setUser", { user: null });
-      router.push({name: 'Home'});
+      router.push({ name: "Home" });
     }
   },
   computed: {

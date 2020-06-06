@@ -1,9 +1,20 @@
 <template>
   <v-card outlined shaped class="shadow-sm overflow-hidden">
+    <v-btn
+      fab
+      color="white"
+      depressed
+      v-show="!sidebar"
+      @click="sidebar = true"
+      class="shadow-sm v-card--outlined v-card--shaped"
+      style="position: absolute; left: 0; top: 0; z-index: 2"
+    >
+      <v-icon v-text="mdiMenu" />
+    </v-btn>
     <v-navigation-drawer
       v-model="sidebar"
       class="shadow-sm"
-      style="z-index: 1; position: absolute;"
+      style="z-index: 2; position: absolute;"
     >
       <v-list-item>
         <v-list-item-content>
@@ -36,6 +47,7 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
+
     <v-progress-linear
       style="position: absolute; z-index: 1"
       v-if="symTrackLoaders.map"
@@ -59,12 +71,20 @@
       @map-zoomend="zoomEnd"
       @map-moveend="moved"
     />
+
+    <!--    <v-navigation-drawer-->
+    <!--      v-model="sidebar"-->
+    <!--      class="shadow-sm"-->
+    <!--      style="z-index: 1; position: absolute;"-->
+    <!--    >-->
+    <!--      -->
+    <!--    </v-navigation-drawer>-->
   </v-card>
 </template>
 
 <script>
 import store from "@/store";
-import { mdiClose } from "@mdi/js";
+import { mdiClose, mdiMenu } from "@mdi/js";
 import Mapbox from "mapbox-gl-vue";
 import Supercluster from "supercluster";
 
@@ -74,6 +94,7 @@ export default {
   data: function() {
     return {
       mdiClose,
+      mdiMenu,
       items: [
         { title: "Dashboard", icon: "mdi-view-dashboard" },
         { title: "Photos", icon: "mdi-image" },
