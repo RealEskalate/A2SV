@@ -863,7 +863,6 @@ export default {
       this.fetchLocationsSymptoms();
     }
   }
-
 };
 </script>
 
