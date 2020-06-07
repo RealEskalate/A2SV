@@ -58,18 +58,7 @@ export default LanguagesScreen = (props) => {
 
   const saveLanguages = async (languageCode) => {
     await AsyncStorage.setItem("lang", languageCode);
-  };
-
-  const logOutAction = async () => {
-    setVisible(true);
-    try {
-      await AsyncStorage.removeItem("userID");
-      await AsyncStorage.removeItem("userName");
-      await AsyncStorage.removeItem("gender");
-      await AsyncStorage.removeItem("age_group");
-    } catch (error) {}
-    userIDStore.dispatch(actions.removeUser()); //remove user id from redux state
-    props.navigation.navigate("HOME");
+    languageStore.dispatch(languageActions.changeLanguage(languageCode));
   };
 
   const data = [
