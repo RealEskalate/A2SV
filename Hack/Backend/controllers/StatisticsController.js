@@ -8,13 +8,18 @@ const healthParser = require("../services/HealthApiParser");
 
 
 exports.get_statistics = async (req, res) => {
-    console.log("getting statistics");
     if (req.query.criteria == "Confirmed_Rate") {
         req.query.criteria = "Tests_Rate";
     }
     if (["Confirmed", "Recovered", "Deaths", "Active", "Tests", "All"].includes(req.query.criteria)) {
+        if(req.query.country=='World'){
+            return this.getWorldStats(req,res);
+        }
         healthParser.getHealthStatistics(req, res, respond);
     } else if (["Tests_Rate", "Recovered_Rate", "Deaths_Rate", "Active_Rate"].includes(req.query.criteria)) {
+        if(req.query.country=='World'){
+            return this.getWorldStats(req,res);
+        }
         req.query.criteria = req.query.criteria.split("_")[0];
         healthParser.getHealthStatistics(req, res, respond, true);
     } else if (["Hospitalization", "ICU"].includes(req.query.criteria)) {
@@ -33,16 +38,18 @@ function respond(res, payload, status = 200) {
 
 
 exports.get_country_slugs = async (req, res) => {
-
-    healthParser.countrySlugList(res, respond);
-
+    let countries = await healthParser.countrySlugList(req);
+    res.status(200).send(countries);
 };
 
 
 
 exports.getWorldStats= async (req,res) => {
+    if (req.query.criteria == "Confirmed_Rate") {
+        req.query.criteria = "Test_Rate";
+    }
     let rates=false;
-    if (["Tests_Rate", "Recovered_Rate", "Deaths_Rate", "Active_Rate"].includes(req.query.criteria)) {
+    if (["Test_Rate", "Recovered_Rate", "Deaths_Rate", "Active_Rate"].includes(req.query.criteria)) {
         req.query.criteria = req.query.criteria.split("_")[0];
         rates=true;
     }

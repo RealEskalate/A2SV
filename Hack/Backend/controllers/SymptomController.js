@@ -1,9 +1,25 @@
 const { Symptom, validateSymptom } = require("../models/Symptom");
 const jwt = require("jsonwebtoken");
+const { StatisticsResource } = require("../models/StatisticsResourceModel.js");
 
 // Display list of all locations.
 exports.get_all_symptoms = async (req, res) => {
     const symptoms = await Symptom.find({});
+    let language=null;
+
+    if (req.query.language){
+        language= await StatisticsResource.findOne({ language:req.query.language , title: 'sypmtom-list'});
+        if (language){language=language.fields[0];}
+    } 
+    for (var index=0; index<symptoms.length;index++){
+        let data= symptoms[index];
+        let key=data._id;
+        if (language && language[key]){
+            data.name=language[key].name;
+            data.description= language[key].description
+            data.relevance=language[key].relevance;
+        }
+    }
 
     try {
         return res.status(200).send(symptoms);
@@ -48,6 +64,17 @@ exports.post_symptom = async (req, res) => {
 exports.get_symptom_by_id = async (req, res) => {
 
     const symptom = await Symptom.findById(req.params.id);
+
+    if (req.query.language){
+        let language= await StatisticsResource.findOne({ language:req.query.language , title: 'sypmtom-list'});
+        let key=symptom._id;
+        if (language && language.fields[0][key]){
+            symptom.name=language.fields[0][key].name;
+            symptom.description= language.fields[0][key].description
+            symptom.relevance=language.fields[0][key].relevance;
+        }
+    } 
+
     try {
         res.send(symptom);
     } catch (err) {
