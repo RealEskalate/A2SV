@@ -23,13 +23,15 @@ import {
   Divider,
   Datepicker as KittenDatepicker,
   Icon,
-} from '@ui-kitten/components';
-import * as eva from '@eva-design/eva';
-import SearchableDropdown from 'react-native-searchable-dropdown';
-import userIDStore from '../../data-management/user-id-data/userIDStore';
-import { DotsLoader } from 'react-native-indicator';
-import { strings } from '../../localization/localization';
-import languageStore from '../../data-management/language_data/languageStore';
+} from "@ui-kitten/components";
+import * as eva from "@eva-design/eva";
+import SearchableDropdown from "react-native-searchable-dropdown";
+import userIDStore from "../../data-management/user-id-data/userIDStore";
+import { DotsLoader } from "react-native-indicator";
+import { strings } from "../../localization/localization";
+import languageStore from "../../data-management/language_data/languageStore";
+import { ThemeContext } from "../../../assets/themes/theme-context";
+
 
 const CalendarIcon = (props) => <Icon {...props} name='calendar' />;
 
@@ -55,7 +57,13 @@ class DataAnalytics extends React.Component {
       searchedCountry: 'World',
       TotalStatisticsData: [],
       StatisticsData: {},
+<<<<<<< Updated upstream
       search: 'World',
+=======
+      search: "World",
+      currLanguage: "English",
+      currLangCode: languageStore.getState(),
+>>>>>>> Stashed changes
       Months: [
         strings.Jan,
         strings.Feb,
@@ -85,11 +93,27 @@ class DataAnalytics extends React.Component {
     };
     languageStore.subscribe(() => {
       strings.setLanguage(languageStore.getState());
+      this.setState({ currLangCode: languageStore.getState() });
       this.componentDidMount();
     });
   }
-
+  static contextType = ThemeContext;
   componentDidMount = async () => {
+    await this.setState({ currLangCode: languageStore.getState() });
+    switch (this.state.currLangCode) {
+      case "am":
+        await this.setState({ currLanguage: "Amharic" });
+        break;
+      case "en":
+        await this.setState({ currLanguage: "English" });
+        break;
+      case "orm":
+        await this.setState({ currLanguage: "Oromo" });
+        break;
+      case "tr":
+        await this.setState({ currLanguage: "English" });
+        break;
+    }
     await this.getTotalData()
       .then(this.fetchTotalStats())
       .then(this.fetchDailyNewsCases())
@@ -532,7 +556,9 @@ class DataAnalytics extends React.Component {
   getDescriptions = async () => {
     let newThis = this;
     await fetch(
-      'https://sym-track.herokuapp.com/api/resources/mobile/statistics?filter=adults',
+      "https://sym-track.herokuapp.com/api/resources/mobile/statistics?language=" +
+        this.state.currLanguage +
+        "&filter=adults",
       {
         method: 'GET',
         headers: {
@@ -567,7 +593,9 @@ class DataAnalytics extends React.Component {
   getCriteriaDescriptions = async (title, position) => {
     let newThis = this;
     var query =
-      'http://sym-track.herokuapp.com/api/resources/mobile/statistics?filter=adults&title=' +
+      "http://sym-track.herokuapp.com/api/resources/mobile/statistics?language=" +
+      this.state.currLanguage +
+      "&filter=adults&title=" +
       title;
     await fetch(query, {
       method: 'GET',
@@ -600,8 +628,8 @@ class DataAnalytics extends React.Component {
   };
 
   render() {
-    const HIEGHT = Dimensions.get('window').height;
-
+    const HIEGHT = Dimensions.get("window").height;
+    const customTheme = this.context;
     return (
       <Layout style={{ flex: 1 }}>
         {/* search area and referesh button */}
@@ -617,11 +645,12 @@ class DataAnalytics extends React.Component {
               });
               this.componentDidMount();
             }}
-            containerStyle={{ padding: 5, flex: 6 }}
+            containerStyle={{ padding: 5, flex: 6, color: "#fff" }}
             textInputStyle={{
               padding: 10,
               borderWidth: 1,
               borderColor: "#ccc",
+
               borderRadius: 5,
             }}
             itemStyle={{
@@ -629,12 +658,14 @@ class DataAnalytics extends React.Component {
               marginTop: 2,
               backgroundColor: "#fff",
               borderColor: "#bbb",
+
               borderWidth: 1,
             }}
             itemTextStyle={{ color: "#000" }}
             items={this.state.countries}
             defaultIndex={0}
             placeholder={this.state.search}
+            placeholderStyle={{ color: "#fff" }}
             resetValue={false}
             underlineColorAndroid="transparent"
           />
@@ -692,12 +723,14 @@ class DataAnalytics extends React.Component {
                   <Text style={{ fontSize: 24, color: '#ffa500' }}>
                     {this.reformatNumber(
                       String(
-                        this.state.TotalStatisticsData[
-                          this.state.TotalStatisticsData.length - 1
-                        ].Confirmed -
+                        Math.abs(
                           this.state.TotalStatisticsData[
-                            this.state.TotalStatisticsData.length - 2
-                          ].Confirmed
+                            this.state.TotalStatisticsData.length - 1
+                          ].Confirmed -
+                            this.state.TotalStatisticsData[
+                              this.state.TotalStatisticsData.length - 2
+                            ].Confirmed
+                        )
                       )
                     )}
                   </Text>
@@ -723,12 +756,14 @@ class DataAnalytics extends React.Component {
                   <Text style={{ fontSize: 24, color: '#039be5' }}>
                     {this.reformatNumber(
                       String(
-                        this.state.TotalStatisticsData[
-                          this.state.TotalStatisticsData.length - 1
-                        ].Recovered -
+                        Math.abs(
                           this.state.TotalStatisticsData[
-                            this.state.TotalStatisticsData.length - 2
-                          ].Recovered
+                            this.state.TotalStatisticsData.length - 1
+                          ].Recovered -
+                            this.state.TotalStatisticsData[
+                              this.state.TotalStatisticsData.length - 2
+                            ].Recovered
+                        )
                       )
                     )}
                   </Text>
@@ -754,12 +789,14 @@ class DataAnalytics extends React.Component {
                   <Text style={{ fontSize: 24, color: 'red' }}>
                     {this.reformatNumber(
                       String(
-                        this.state.TotalStatisticsData[
-                          this.state.TotalStatisticsData.length - 1
-                        ].Deaths -
+                        Math.abs(
                           this.state.TotalStatisticsData[
-                            this.state.TotalStatisticsData.length - 2
-                          ].Deaths
+                            this.state.TotalStatisticsData.length - 1
+                          ].Deaths -
+                            this.state.TotalStatisticsData[
+                              this.state.TotalStatisticsData.length - 2
+                            ].Deaths
+                        )
                       )
                     )}
                   </Text>
