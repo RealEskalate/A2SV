@@ -1,10 +1,10 @@
 <template>
-  <section class="map pb-10">
+  <section class="map pb-5">
     <v-container>
       <v-row>
         <v-col>
           <h3 class="display-1 font-weight-thin mb-5" v-text="'Heat Map'" />
-          <v-tabs fixed-tabs centered>
+          <v-tabs show-arrows fixed-tabs centered>
             <v-tab v-if="loggedInUser">
               Symptom Tracker
             </v-tab>
@@ -17,13 +17,13 @@
                   $vuetify.breakpoint.smAndDown ? 12 / 18 : 18 / 12
                 "
               >
-                <sym-track class="mx-md-5 mt-5" style="height: 95%" />
+                <sym-track class="mt-5" style="height: 95%" />
               </v-responsive>
             </v-tab-item>
             <v-tab-item>
               <v-responsive
                 :aspect-ratio="
-                  $vuetify.breakpoint.smAndDown ? 12 / 16 : 16 / 13
+                  $vuetify.breakpoint.smAndDown ? 12 / 14 : 16 / 12
                 "
               >
                 <iframe

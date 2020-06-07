@@ -2,7 +2,6 @@ import React from "react";
 import { SearchBar } from "react-native-elements";
 import {
   StyleSheet,
-  View,
   Dimensions,
   Alert,
   TouchableOpacity,
@@ -16,12 +15,14 @@ import * as criterias from "./Criterias";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import DatePicker from "react-native-datepicker";
 import {
-  ApplicationProvider,
   Card,
   Modal,
   Button,
   Text,
   Layout,
+  Divider,
+  Datepicker as KittenDatepicker,
+  Icon,
 } from "@ui-kitten/components";
 import * as eva from "@eva-design/eva";
 import SearchableDropdown from "react-native-searchable-dropdown";
@@ -31,7 +32,9 @@ import { strings } from "../../localization/localization";
 import languageStore from "../../data-management/language_data/languageStore";
 import { ThemeContext } from "../../../assets/themes/theme-context";
 
-class Ethiopia extends React.Component {
+const CalendarIcon = (props) => <Icon {...props} name="calendar" />;
+
+class DataAnalytics extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -81,6 +84,7 @@ class Ethiopia extends React.Component {
       staticsDescriptionLoading: true,
       discriptionTitle: "",
       description: "",
+      kittenStartDate: new Date(),
     };
     languageStore.subscribe(() => {
       strings.setLanguage(languageStore.getState());
@@ -158,6 +162,7 @@ class Ethiopia extends React.Component {
         Alert.alert(strings.ConnectionProblem, strings.CouldNotConnectToServer);
       });
   };
+
   //gets rate statistics data based on selected criteria and populate UI
   fetchRateStatistics = async () => {
     let newThis = this;
@@ -199,6 +204,7 @@ class Ethiopia extends React.Component {
         Alert.alert(strings.ConnectionProblem, strings.CouldNotConnectToServer);
       });
   };
+
   //Converts date in to appropriate format
   dateConverter(date) {
     let dateList = date.split("-");
@@ -206,6 +212,7 @@ class Ethiopia extends React.Component {
     let monthInWord = this.state.Months[month - 1];
     return monthInWord + " " + dateList[2];
   }
+
   //get total numbers of the specified country and populate UI
   getTotalData = async () => {
     this.setState({
@@ -240,6 +247,7 @@ class Ethiopia extends React.Component {
         Alert.alert(strings.ConnectionProblem, strings.CouldNotConnectToServer);
       });
   };
+
   //fetch list of countries available
   getCountryList = async () => {
     let newThis = this;
@@ -265,6 +273,7 @@ class Ethiopia extends React.Component {
         Alert.alert(strings.ConnectionProblem, strings.CouldNotConnectToServer);
       });
   };
+
   //fetch daily new cases reported
   fetchDailyNewsCases = async () => {
     let newThis = this;
@@ -308,6 +317,7 @@ class Ethiopia extends React.Component {
         Alert.alert(strings.ConnectionProblem, strings.CouldNotConnectToServer);
       });
   };
+
   //populate daily data
   populateDailyData = (objList) => {
     this.state.daily_newCases_label = [""]; //reseting all data point labels
@@ -355,6 +365,7 @@ class Ethiopia extends React.Component {
       graphLebel_counter += interval;
     }
   };
+
   //Populates statistics data in to our state
   populate = (objList) => {
     this.state.graph_label = [""]; //reseting data label
@@ -401,6 +412,7 @@ class Ethiopia extends React.Component {
       graphLebel_counter += interval;
     }
   };
+
   //populate daily data
   populateRateData = (objList) => {
     this.state.rate_label = [""]; //reseting all data point labels
@@ -447,6 +459,7 @@ class Ethiopia extends React.Component {
       graphLebel_counter += interval;
     }
   };
+
   //Reformat number
   reformatNumber(nStr) {
     var x = nStr.split(".");
@@ -458,6 +471,7 @@ class Ethiopia extends React.Component {
     }
     return x1 + x2;
   }
+
   //Reformat numbers with large number suffix
   intToString(value) {
     let newValue = value;
@@ -473,6 +487,7 @@ class Ethiopia extends React.Component {
     newValue += suffixes[suffixNum];
     return newValue;
   }
+
   //Check if test count data is available
   checkIfDataExist(filterCriteria) {
     let newThis = this;
@@ -518,6 +533,7 @@ class Ethiopia extends React.Component {
         console.log(error);
       });
   }
+
   //gets the current date and return in yyyy-mm-dd format
   getCurrentDate() {
     var day = new Date().getDate();
@@ -525,10 +541,12 @@ class Ethiopia extends React.Component {
     var year = new Date().getFullYear();
     return year + "-" + month + "-" + day;
   }
+
   //get minimum date for selection
   getMinimumDate() {
     return "2019-12-31";
   }
+
   //fetches description for different age group
   getDescriptions = async () => {
     let newThis = this;
@@ -565,6 +583,7 @@ class Ethiopia extends React.Component {
         // });
       });
   };
+
   //fetch description of graphs
   getCriteriaDescriptions = async (title, position) => {
     let newThis = this;
@@ -605,8 +624,10 @@ class Ethiopia extends React.Component {
 
   render() {
     const HIEGHT = Dimensions.get("window").height;
+
     return (
-      <Layout>
+      <Layout style={{ flex: 1 }}>
+        {/* search area and referesh button */}
         {/* <Layout style={{ flexDirection: "row" }}>
           <SearchableDropdown
             onTextChange={(text) => {
@@ -621,7 +642,7 @@ class Ethiopia extends React.Component {
             }}
             containerStyle={{ padding: 5, flex: 6 }}
             textInputStyle={{
-              padding: 12,
+              padding: 10,
               borderWidth: 1,
               borderColor: "#ccc",
               borderRadius: 5,
@@ -662,7 +683,7 @@ class Ethiopia extends React.Component {
             >
               <Layout
                 style={{
-                  alignContent: "flex-start",
+                  alignContent: "center",
                   width: Dimensions.get("window").width - 60,
                   backgroundColor: "#ffffff00",
                   marginTop: 15,
@@ -694,16 +715,16 @@ class Ethiopia extends React.Component {
               </Layout>
             </Layout>
             <Layout
+              level="3"
               style={{
                 flexDirection: "row",
                 width: Dimensions.get("screen").width - 10,
                 alignContent: "center",
                 alignItems: "center",
                 justifyContent: "space-evenly",
-                marginBottom: 20,
-                backgroundColor: "white",
-                borderRadius: 20,
-                padding: 10,
+                marginBottom: 10,
+                borderRadius: 10,
+                paddingVertical: 10,
               }}
             >
               <TouchableOpacity
@@ -779,7 +800,7 @@ class Ethiopia extends React.Component {
                 style={{ alignItems: "center" }}
               >
                 <Image
-                  source={require("../../../assets/images/angel.jpg")}
+                  source={require("../../../assets/images/angel.png")}
                   style={{ height: 30, width: 30 }}
                 />
 
@@ -811,29 +832,32 @@ class Ethiopia extends React.Component {
 
             <Layout
               style={{
-                alignContent: "flex-start",
-                justifyContent: "flex-start",
+                flex: 1,
+                alignContent: "center",
+                justifyContent: "center",
                 margin: 10,
-                width: Dimensions.get("window").width - 20,
-                backgroundColor: "#ffffff00",
+                alignContent: "flex-start",
+                // width: Dimensions.get('window').width - 20,
+                // backgroundColor: '#ffffff00',
               }}
             >
-              <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+              <Text category="h6" style={{ fontWeight: "bold" }}>
                 {strings.TotalStats}
               </Text>
             </Layout>
 
             <Layout
+              level="3"
               style={{
                 flexDirection: "row",
-                width: Dimensions.get("screen").width,
+                width: Dimensions.get("screen").width - 10,
                 alignContent: "center",
                 alignItems: "center",
                 justifyContent: "space-evenly",
-                marginBottom: 20,
-                backgroundColor: "white",
-                borderRadius: 20,
-                padding: 10,
+                marginBottom: 10,
+                // backgroundColor: 'white',
+                borderRadius: 10,
+                paddingVertical: 10,
               }}
             >
               <TouchableOpacity
@@ -897,7 +921,7 @@ class Ethiopia extends React.Component {
                 style={{ alignItems: "center" }}
               >
                 <Image
-                  source={require("../../../assets/images/angel.jpg")}
+                  source={require("../../../assets/images/angel.png")}
                   style={{ height: 30, width: 30 }}
                 />
 
@@ -985,41 +1009,60 @@ class Ethiopia extends React.Component {
             </Layout>
 
             <Layout style={styles.container_graph}>
-              <Text
+              <Divider />
+              <Layout
+                level="2"
                 style={{
-                  fontSize: 20,
-                  fontWeight: "bold",
-                  marginLeft: 10,
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  padding: 5,
                 }}
               >
-                {strings.DailyStatsGraph}
-              </Text>
+                <Text category="h6" style={{ fontWeight: "bold" }}>
+                  {strings.DailyStatsGraph}
+                </Text>
+              </Layout>
+              <Divider />
               {this.state.staticsDescriptionLoading ? (
-                <Layout flexDirection="row">
-                  <ActivityIndicator
-                    size="small"
-                    color="gray"
-                    marginLeft={10}
-                  />
-                  <Text style={{ fontSize: 16, color: "gray" }}>
+                <Layout
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    margin: 5,
+                  }}
+                >
+                  <ActivityIndicator size="small" color="gray" />
+                  <Text appearance="hint" style={{ fontSize: 16 }}>
                     {strings.LoadingGraphDescription}
                   </Text>
                 </Layout>
               ) : (
-                <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
-                  {this.state.staticsDescription[1].descriptions[0].description}
-                </Text>
+                <>
+                  <Text
+                    appearance="hint"
+                    style={{ fontSize: 16, margin: 5, padding: 5 }}
+                  >
+                    {
+                      this.state.staticsDescription[1].descriptions[0]
+                        .description
+                    }
+                  </Text>
+                  <Divider />
+                </>
               )}
 
               <Layout
                 style={{
                   flexDirection: "row",
-                  marginLeft: 10,
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  marginHorizontal: 10,
                   marginTop: 5,
-                  alignSelf: "center",
                 }}
               >
-                <Layout style={{ flexDirection: "row", marginRight: 20 }}>
+                <Layout style={{ flexDirection: "row" }}>
                   <DatePicker
                     date={this.state.selected_daily_start_date}
                     mode="date" //The enum of date, datetime and
@@ -1030,7 +1073,6 @@ class Ethiopia extends React.Component {
                         : this.state.selected_daily_end_date
                     }
                     format="YYYY-MM-DD"
-                    style={{ color: "#000000" }}
                     customStyles={{
                       dateIcon: {
                         position: "absolute",
@@ -1040,9 +1082,9 @@ class Ethiopia extends React.Component {
                       },
                       dateInput: {
                         marginLeft: 36,
-                        borderRadius: 20,
+                        borderRadius: 10,
                         height: 30,
-                        borderColor: "#000000",
+                        borderColor: "#000",
                       },
                     }}
                     onDateChange={async (date) => {
@@ -1050,6 +1092,17 @@ class Ethiopia extends React.Component {
                       this.fetchDailyNewsCases();
                     }}
                   />
+
+                  {/* <KittenDatepicker
+                    placeholder='Pick Start Date'
+                    
+                    date={this.state.selected_daily_start_date}
+                    onSelect={(nextDate) => {
+                      this.setState({ selected_daily_start_date: nextDate });
+                      this.fetchDailyNewsCases();
+                    }}
+                    accessoryRight={CalendarIcon}
+                  /> */}
                 </Layout>
                 <Layout style={{ flexDirection: "row" }}>
                   <DatePicker
@@ -1074,7 +1127,7 @@ class Ethiopia extends React.Component {
                       },
                       dateInput: {
                         marginLeft: 36,
-                        borderRadius: 20,
+                        borderRadius: 10,
                         height: 30,
                         borderColor: "#000000",
                       },
@@ -1084,6 +1137,16 @@ class Ethiopia extends React.Component {
                       this.fetchDailyNewsCases();
                     }}
                   />
+                  {/* <KittenDatepicker
+                    placeholder='Pick Start Date'
+                    
+                    date={this.state.selected_daily_start_date}
+                    onSelect={(nextDate) => {
+                      this.setState({ selected_daily_start_date: nextDate });
+                      this.fetchDailyNewsCases();
+                    }}
+                    accessoryRight={CalendarIcon}
+                  /> */}
                 </Layout>
               </Layout>
 
@@ -1129,21 +1192,24 @@ class Ethiopia extends React.Component {
                 >
                   <DotsLoader size={15} />
                 </Layout>
-              ) : null}
+              ) : (
+                <></>
+              )}
 
               <Layout
                 style={{
                   flexDirection: "row",
-                  backgroundColor: "#ffffff00",
                   justifyContent: "space-evenly",
+                  marginBottom: 10,
                 }}
               >
-                <TouchableOpacity
-                  style={
+                <Button
+                  size="tiny"
+                  appearance={
                     this.state.selected_filter_daily_status ===
                     criterias.confirmed
-                      ? styles.touchable_buttons
-                      : styles.touchable_buttons_pressed
+                      ? "filled"
+                      : "outline"
                   }
                   onPress={async () => {
                     await this.setState({
@@ -1152,24 +1218,15 @@ class Ethiopia extends React.Component {
                     this.fetchDailyNewsCases();
                   }}
                 >
-                  <Text
-                    style={
-                      this.state.selected_filter_daily_status ===
-                      criterias.confirmed
-                        ? styles.text_style
-                        : styles.text_style_pressed
-                    }
-                  >
-                    {strings.Confirmed}
-                  </Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                  style={
+                  {strings.Confirmed}
+                </Button>
+                <Button
+                  size="tiny"
+                  appearance={
                     this.state.selected_filter_daily_status ===
                     criterias.recoveries
-                      ? styles.touchable_buttons
-                      : styles.touchable_buttons_pressed
+                      ? "filled"
+                      : "outline"
                   }
                   onPress={async () => {
                     await this.setState({
@@ -1178,23 +1235,14 @@ class Ethiopia extends React.Component {
                     this.fetchDailyNewsCases();
                   }}
                 >
-                  <Text
-                    style={
-                      this.state.selected_filter_daily_status ===
-                      criterias.recoveries
-                        ? styles.text_style
-                        : styles.text_style_pressed
-                    }
-                  >
-                    {strings.Recovered}
-                  </Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                  style={
+                  {strings.Recovered}
+                </Button>
+                <Button
+                  size="tiny"
+                  appearance={
                     this.state.selected_filter_daily_status === criterias.deaths
-                      ? styles.touchable_buttons
-                      : styles.touchable_buttons_pressed
+                      ? "filled"
+                      : "outline"
                   }
                   onPress={async () => {
                     await this.setState({
@@ -1203,25 +1251,17 @@ class Ethiopia extends React.Component {
                     this.fetchDailyNewsCases();
                   }}
                 >
-                  <Text
-                    style={
-                      this.state.selected_filter_daily_status ===
-                      criterias.deaths
-                        ? styles.text_style
-                        : styles.text_style_pressed
-                    }
-                  >
-                    {strings.Death}
-                  </Text>
-                </TouchableOpacity>
+                  {strings.Death}
+                </Button>
 
                 {this.state.testCountDataExist ? (
-                  <TouchableOpacity
-                    style={
+                  <Button
+                    size="tiny"
+                    appearance={
                       this.state.selected_filter_daily_status ===
                       criterias.numberOfTests
-                        ? styles.touchable_buttons
-                        : styles.touchable_buttons_pressed
+                        ? "filled"
+                        : "outline"
                     }
                     onPress={async () => {
                       await this.setState({
@@ -1230,19 +1270,13 @@ class Ethiopia extends React.Component {
                       this.fetchDailyNewsCases();
                     }}
                   >
-                    <Text
-                      style={
-                        this.state.selected_filter_daily_status ===
-                        criterias.numberOfTests
-                          ? styles.text_style
-                          : styles.text_style_pressed
-                      }
-                    >
-                      {strings.TestCounts}
-                    </Text>
-                  </TouchableOpacity>
-                ) : null}
+                    {strings.TestCounts}
+                  </Button>
+                ) : (
+                  <></>
+                )}
               </Layout>
+              {/* <Divider /> */}
               <Layout padding={10}>
                 {this.state.staticsDescriptionLoading ? (
                   <Layout flexDirection="row" alignSelf="center">
@@ -1289,39 +1323,69 @@ class Ethiopia extends React.Component {
                 )}
               </Layout>
             </Layout>
+
             <Layout style={styles.container_graph}>
-              <Text
+              <Divider />
+              <Layout
+                level="2"
                 style={{
-                  fontSize: 20,
-                  fontWeight: "bold",
-                  marginLeft: 10,
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  padding: 5,
                 }}
               >
-                {strings.TotalStatsGraph}
-              </Text>
+                <Text
+                  category="h6"
+                  style={{
+                    fontWeight: "bold",
+                  }}
+                >
+                  {strings.TotalStatsGraph}
+                </Text>
+              </Layout>
+              <Divider />
+
               {this.state.staticsDescriptionLoading ? (
-                <Layout flexDirection="row">
+                <Layout
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    margin: 5,
+                  }}
+                >
                   <ActivityIndicator
                     size="small"
                     color="gray"
-                    marginLeft={10}
+                    style={{ marginHorizontal: 10 }}
                   />
-                  <Text style={{ fontSize: 16, color: "gray" }}>
+                  <Text appearance="hint" style={{ fontSize: 16 }}>
                     {strings.LoadingGraphDescription}
                   </Text>
                 </Layout>
               ) : (
-                <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
-                  {this.state.staticsDescription[0].descriptions[0].description}
-                </Text>
+                <>
+                  <Text
+                    appearance="hint"
+                    style={{ fontSize: 16, margin: 5, padding: 5 }}
+                  >
+                    {
+                      this.state.staticsDescription[0].descriptions[0]
+                        .description
+                    }
+                  </Text>
+                  <Divider />
+                </>
               )}
 
               <Layout
                 style={{
                   flexDirection: "row",
-                  marginLeft: 10,
+                  marginHorizontal: 10,
                   marginTop: 5,
-                  alignSelf: "center",
+                  alignItems: "center",
+                  justifyContent: "space-between",
                 }}
               >
                 <Layout style={{ flexDirection: "row", marginRight: 20 }}>
@@ -1344,7 +1408,7 @@ class Ethiopia extends React.Component {
                       },
                       dateInput: {
                         marginLeft: 36,
-                        borderRadius: 20,
+                        borderRadius: 10,
                         height: 30,
                         borderColor: "#000000",
                       },
@@ -1378,7 +1442,7 @@ class Ethiopia extends React.Component {
                       },
                       dateInput: {
                         marginLeft: 36,
-                        borderRadius: 20,
+                        borderRadius: 10,
                         height: 30,
                         borderColor: "#000000",
                       },
@@ -1429,91 +1493,73 @@ class Ethiopia extends React.Component {
                 >
                   <DotsLoader size={15} />
                 </Layout>
-              ) : null}
+              ) : (
+                <></>
+              )}
 
               <Layout
                 style={{
                   flexDirection: "row",
-                  backgroundColor: "#ffffff00",
+                  alignItems: "center",
                   justifyContent: "space-evenly",
                 }}
               >
-                <TouchableOpacity
-                  style={
+                <Button
+                  size="tiny"
+                  appearance={
                     this.state.selected_filter === criterias.confirmed
-                      ? styles.touchable_buttons
-                      : styles.touchable_buttons_pressed
+                      ? "filled"
+                      : "outline"
                   }
                   onPress={async () => {
-                    await this.setState({
+                    this.setState({
                       selected_filter: criterias.confirmed,
                     });
-                    this.fetchTotalStats();
+                    await this.fetchTotalStats();
                   }}
                 >
-                  <Text
-                    style={
-                      this.state.selected_filter === criterias.confirmed
-                        ? styles.text_style
-                        : styles.text_style_pressed
-                    }
-                  >
-                    {strings.Confirmed}
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={
+                  {strings.Confirmed}
+                </Button>
+                <Button
+                  size="tiny"
+                  appearance={
                     this.state.selected_filter === criterias.recoveries
-                      ? styles.touchable_buttons
-                      : styles.touchable_buttons_pressed
+                      ? "filled"
+                      : "outline"
                   }
                   onPress={async () => {
-                    await this.setState({
+                    this.setState({
                       selected_filter: criterias.recoveries,
                     });
-                    this.fetchTotalStats();
+
+                    await this.fetchTotalStats();
                   }}
                 >
-                  <Text
-                    style={
-                      this.state.selected_filter === criterias.recoveries
-                        ? styles.text_style
-                        : styles.text_style_pressed
-                    }
-                  >
-                    {strings.Recovered}
-                  </Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                  style={
+                  {strings.Recovered}
+                </Button>
+                <Button
+                  size="tiny"
+                  appearance={
                     this.state.selected_filter === criterias.deaths
-                      ? styles.touchable_buttons
-                      : styles.touchable_buttons_pressed
+                      ? "filled"
+                      : "outline"
                   }
                   onPress={async () => {
-                    await this.setState({
+                    this.setState({
                       selected_filter: criterias.deaths,
                     });
-                    this.fetchTotalStats();
+                    await this.fetchTotalStats();
                   }}
                 >
-                  <Text
-                    style={
-                      this.state.selected_filter === criterias.deaths
-                        ? styles.text_style
-                        : styles.text_style_pressed
-                    }
-                  >
-                    {strings.Death}
-                  </Text>
-                </TouchableOpacity>
+                  {strings.Deaths}
+                </Button>
                 {this.state.testCountDataExist ? (
-                  <TouchableOpacity
-                    style={
+                  <Button
+                    size="tiny"
+                    appearance={
                       this.state.selected_filter === criterias.numberOfTests
-                        ? styles.touchable_buttons
-                        : styles.touchable_buttons_pressed
+                        ? "filled"
+                        : "outline"
                     }
                     onPress={async () => {
                       await this.setState({
@@ -1522,19 +1568,11 @@ class Ethiopia extends React.Component {
                       this.fetchTotalStats();
                     }}
                   >
-                    <Text
-                      style={
-                        this.state.selected_filter === criterias.numberOfTests
-                          ? styles.text_style
-                          : styles.text_style_pressed
-                      }
-                    >
-                      {strings.TestCounts}
-                    </Text>
-                  </TouchableOpacity>
+                    {strings.TestCounts}
+                  </Button>
                 ) : null}
               </Layout>
-              <Layout padding={10} style={{ marginBottom: 40 }}>
+              <Layout padding={10} style={{ marginBottom: 20 }}>
                 {this.state.staticsDescriptionLoading ? (
                   <Layout flexDirection="row" alignSelf="center">
                     <ActivityIndicator size="small" color="gray" />
@@ -1577,279 +1615,6 @@ class Ethiopia extends React.Component {
                 )}
               </Layout>
             </Layout>
-
-            {/* <Layout style={styles.container_graph}>
-              <Text
-                style={{
-                  fontSize: 20,
-                  fontWeight: "bold",
-                  marginLeft: 10,
-                }}
-              >
-                {strings.DailyRatesGraph}
-              </Text>
-              {this.state.staticsDescriptionLoading ? (
-                <Layout flexDirection="row">
-                  <ActivityIndicator
-                    size="small"
-                    color="gray"
-                    marginLeft={10}
-                  />
-                  <Text style={{ fontSize: 16, color: "gray" }}>
-                    {strings.LoadingGraphDescription}
-                  </Text>
-                </Layout>
-              ) : (
-                <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
-                  {this.state.staticsDescription[2].descriptions[0].description}
-                </Text>
-              )}
-
-              <Layout
-                style={{
-                  flexDirection: "row",
-                  marginLeft: 10,
-                  marginTop: 5,
-                  alignSelf: "center",
-                }}
-              >
-                <Layout style={{ flexDirection: "row", marginRight: 20 }}>
-                  <DatePicker
-                    date={this.state.selected_rate_start_date}
-                    mode="date" //The enum of date, datetime and
-                    placeholder={strings.StartDate}
-                    format="YYYY-MM-DD"
-                    maxDate={
-                      this.state.selected_rate_end_date === ""
-                        ? this.getCurrentDate()
-                        : this.state.selected_rate_end_date
-                    }
-                    customStyles={{
-                      dateIcon: {
-                        position: "absolute",
-                        left: 0,
-                        top: 4,
-                        marginLeft: 0,
-                      },
-                      dateInput: {
-                        marginLeft: 36,
-                        borderRadius: 20,
-                        height: 30,
-                        borderColor: "#000000",
-                      },
-                    }}
-                    onDateChange={async (date) => {
-                      await this.setState({ selected_rate_start_date: date });
-                      this.fetchRateStatistics();
-                    }}
-                  />
-                </Layout>
-                <Layout style={{ flexDirection: "row" }}>
-                  <DatePicker
-                    date={this.state.selected_rate_end_date}
-                    mode="date" //The enum of date, datetime and time
-                    placeholder={strings.EndDate}
-                    minDate={
-                      this.state.selected_rate_start_date === ""
-                        ? this.getMinimumDate()
-                        : this.state.selected_rate_start_date
-                    }
-                    maxDate={this.getCurrentDate()}
-                    format="YYYY-MM-DD"
-                    confirmBtnText="Confirm"
-                    cancelBtnText="Cancel"
-                    customStyles={{
-                      dateIcon: {
-                        position: "absolute",
-                        left: 0,
-                        top: 4,
-                        marginLeft: 0,
-                      },
-                      dateInput: {
-                        marginLeft: 36,
-                        borderRadius: 20,
-                        height: 30,
-                        borderColor: "#000000",
-                      },
-                    }}
-                    onDateChange={async (date) => {
-                      await this.setState({ selected_rate_end_date: date });
-                      this.fetchRateStatistics();
-                    }}
-                  />
-                </Layout>
-              </Layout>
-
-              <LineChart
-                data={{
-                  labels: this.state.rate_label,
-                  datasets: [{ data: this.state.rate_data_set }],
-                }}
-                verticalLabelRotation={60}
-                width={Dimensions.get("window").width} // from react-native
-                height={HIEGHT / 2}
-                fromZero={true}
-                chartConfig={{
-                  backgroundColor: "#0080ff",
-                  backgroundGradientFrom: "#0080ff",
-                  backgroundGradientTo: "#0080ff",
-                  scrollableDotFill: "#ffffff",
-                  barPercentage: 0.1,
-                  decimalPlaces: 1, // optional, defaults to 2dp
-                  color: (opacity = 0) => `rgba(255, 266, 255, ${opacity})`,
-                  style: {
-                    borderRadius: 10,
-                  },
-                }}
-                bezier
-                style={{
-                  margin: 5,
-                  borderRadius: 10,
-                }}
-              />
-              {this.state.rateGraphLoading ? (
-                <Layout
-                  style={{
-                    width: Dimensions.get("window").width,
-                    flexDirection: "column",
-                    alignItems: "center",
-                  }}
-                >
-                  <DotsLoader size={15} />
-                </Layout>
-              ) : null}
-
-              <Layout
-                style={{
-                  flexDirection: "row",
-                  backgroundColor: "#ffffff00",
-                  justifyContent: "space-evenly",
-                }}
-              >
-                {this.state.testCountDataExist ? (
-                  <TouchableOpacity
-                    style={
-                      this.state.selected_filter_rate ===
-                      criterias.confirmedRate
-                        ? styles.touchable_buttons
-                        : styles.touchable_buttons_pressed
-                    }
-                    onPress={async () => {
-                      await this.setState({
-                        selected_filter_rate: criterias.confirmedRate,
-                      });
-                      this.fetchRateStatistics();
-                    }}
-                  >
-                    <Text
-                      style={
-                        this.state.selected_filter_rate ===
-                        criterias.confirmedRate
-                          ? styles.text_style
-                          : styles.text_style_pressed
-                      }
-                    >
-                      {strings.ConfirmedRate}
-                    </Text>
-                  </TouchableOpacity>
-                ) : null}
-                <TouchableOpacity
-                  style={
-                    this.state.selected_filter_rate === criterias.recoveryRate
-                      ? styles.touchable_buttons
-                      : styles.touchable_buttons_pressed
-                  }
-                  onPress={async () => {
-                    await this.setState({
-                      selected_filter_rate: criterias.recoveryRate,
-                    });
-                    this.fetchRateStatistics();
-                  }}
-                >
-                  <Text
-                    style={
-                      this.state.selected_filter_rate === criterias.recoveryRate
-                        ? styles.text_style
-                        : styles.text_style_pressed
-                    }
-                  >
-                    {strings.RecoveryRate}
-                  </Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                  style={
-                    this.state.selected_filter_rate === criterias.deathRate
-                      ? styles.touchable_buttons
-                      : styles.touchable_buttons_pressed
-                  }
-                  onPress={async () => {
-                    await this.setState({
-                      selected_filter_rate: criterias.deathRate,
-                    });
-                    this.fetchRateStatistics();
-                  }}
-                >
-                  <Text
-                    style={
-                      this.state.selected_filter_rate === criterias.deathRate
-                        ? styles.text_style
-                        : styles.text_style_pressed
-                    }
-                  >
-                    {strings.DeathRate}
-                  </Text>
-                </TouchableOpacity>
-              </Layout>
-              <Layout style={{ padding: 10, marginBottom: 80 }}>
-                {this.state.staticsDescriptionLoading ? (
-                  <Layout flexDirection="row" alignSelf="center">
-                    <ActivityIndicator
-                      size="small"
-                      color="gray"
-                      marginLeft={10}
-                    />
-                    <Text style={{ fontSize: 16, color: "gray" }}>
-                      {strings.LoadingCriteriaDescription}
-                    </Text>
-                  </Layout>
-                ) : this.state.selected_filter_rate ===
-                  criterias.confirmedRate ? (
-                  <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
-                    {this.state.staticsDescription[2].descriptions[0]
-                      .criteria[0].name +
-                      ": " +
-                      this.state.staticsDescription[2].descriptions[0]
-                        .criteria[0].explanation}
-                  </Text>
-                ) : this.state.selected_filter_rate ===
-                  criterias.recoveryRate ? (
-                  <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
-                    {this.state.staticsDescription[2].descriptions[0]
-                      .criteria[1].name +
-                      ": " +
-                      this.state.staticsDescription[2].descriptions[0]
-                        .criteria[1].explanation}
-                  </Text>
-                ) : this.state.selected_filter_rate === criterias.deathRate ? (
-                  <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
-                    {this.state.staticsDescription[2].descriptions[0]
-                      .criteria[3].name +
-                      ": " +
-                      this.state.staticsDescription[2].descriptions[0]
-                        .criteria[3].explanation}
-                  </Text>
-                ) : (
-                  <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
-                    {this.state.staticsDescription[2].descriptions[0]
-                      .criteria[0].name +
-                      ": " +
-                      this.state.staticsDescription[2].descriptions[0]
-                        .criteria[0].explanation}
-                  </Text>
-                )}
-              </Layout>
-            </Layout> */}
           </Layout>
         </ScrollView>
       </Layout>
@@ -1857,11 +1622,15 @@ class Ethiopia extends React.Component {
   } // end of render function
 } // end of class StaticsPage
 
+const screenHeight = Dimensions.get("window").height;
+const screenWidth = Dimensions.get("window").width;
+
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#eee",
+    // backgroundColor: "#eee",
   },
   backdrop_container: {
     minHeight: 0,
@@ -1873,8 +1642,8 @@ const styles = StyleSheet.create({
   cards_total: {
     backgroundColor: "#fc2314",
     borderRadius: 20,
-    height: Dimensions.get("window").height / 10,
-    width: Dimensions.get("window").width / 2 - 30,
+    height: screenHeight / 10,
+    width: screenWidth / 2 - 30,
     margin: 10,
     marginTop: 15,
     alignItems: "center",
@@ -1883,8 +1652,8 @@ const styles = StyleSheet.create({
   cards_active: {
     backgroundColor: "#4da6ff",
     borderRadius: 20,
-    height: Dimensions.get("window").height / 10,
-    width: Dimensions.get("window").width / 2 - 30,
+    height: screenHeight / 10,
+    width: screenWidth / 2 - 30,
     margin: 10,
     marginTop: 30,
     alignItems: "center",
@@ -1894,8 +1663,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#30cc2a",
     borderRadius: 20,
     marginTop: 15,
-    height: Dimensions.get("window").height / 10,
-    width: Dimensions.get("window").width / 2 - 30,
+    height: screenHeight / 10,
+    width: screenWidth / 2 - 30,
     margin: 10,
     alignItems: "center",
     justifyContent: "center",
@@ -1903,14 +1672,15 @@ const styles = StyleSheet.create({
   cards_death: {
     backgroundColor: "#514443",
     borderRadius: 20,
-    height: Dimensions.get("window").height / 10,
-    width: Dimensions.get("window").width / 2 - 30,
+    height: screenHeight / 10,
+    width: screenWidth / 2 - 30,
     margin: 10,
     alignItems: "center",
     justifyContent: "center",
   },
   container_graph: {
-    marginTop: 10,
+    marginTop: 5,
+    flex: 1,
   },
   touchable_buttons: {
     backgroundColor: "#1976d2",
@@ -1936,8 +1706,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default () => (
-  <ApplicationProvider {...eva} theme={eva.light}>
-    <Ethiopia />
-  </ApplicationProvider>
-);
+export default DataAnalytics;

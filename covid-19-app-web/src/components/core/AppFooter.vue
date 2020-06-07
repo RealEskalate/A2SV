@@ -63,13 +63,15 @@
 
 <script>
 import { mdiWeb } from "@mdi/js";
+import { languages } from "../../plugins/i18n";
 
 export default {
   data: () => ({
-    languages: ["en", "am"],
+    languages,
     langText: {
       en: "EN",
-      am: "አማ"
+      am: "አማ",
+      ao: "AO"
     },
     icons: [{ link: "http://a2sv.org/", icon: mdiWeb }]
   })

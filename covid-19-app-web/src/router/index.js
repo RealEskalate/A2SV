@@ -22,9 +22,9 @@ const routes = [
     path: "/",
     name: "root",
     beforeEnter(to, from, next) {
-      if (store.getters.getLanguagePreference === null) next("/en/");
+      if (store.getters.getLanguagePreference === null) next("en");
       else {
-        next(`/${store.getters.getLanguagePreference}/`);
+        next(`${store.getters.getLanguagePreference}`);
       }
     }
   },
@@ -41,7 +41,7 @@ const routes = [
         }
         return next();
       }
-      return next({ path: `/${store.getters.getLanguagePreference}/` });
+      return next({ path: `${store.getters.getLanguagePreference}` });
     },
     children: [
       { path: "information", name: "Learn", component: Information },

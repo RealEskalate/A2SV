@@ -106,12 +106,10 @@ export default {
   },
   methods: {
     fetchLearningPaths() {
-      if (!this.learningPaths || !this.learningPaths[this.selected_age]) {
-        store.dispatch("setLearningPaths", {
-          age_group: this.selected_age,
-          lang: this.$i18n.locale
-        });
-      }
+      store.dispatch("setLearningPaths", {
+        age_group: this.selected_age,
+        lang: this.$i18n.locale
+      });
     }
   },
   created() {

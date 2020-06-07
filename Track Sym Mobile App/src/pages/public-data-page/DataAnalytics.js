@@ -1,5 +1,5 @@
-import React from 'react';
-import { SearchBar } from 'react-native-elements';
+import React from "react";
+import { SearchBar } from "react-native-elements";
 import {
   StyleSheet,
   Dimensions,
@@ -8,12 +8,12 @@ import {
   ScrollView,
   ActivityIndicator,
   Image,
-} from 'react-native';
-import { LineChart, BarChart } from 'react-native-chart-kit';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import * as criterias from './Criterias';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import DatePicker from 'react-native-datepicker';
+} from "react-native";
+import { LineChart, BarChart } from "react-native-chart-kit";
+import { SafeAreaView } from "react-native-safe-area-context";
+import * as criterias from "./Criterias";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import DatePicker from "react-native-datepicker";
 import {
   Card,
   Modal,
@@ -32,8 +32,7 @@ import { strings } from "../../localization/localization";
 import languageStore from "../../data-management/language_data/languageStore";
 import { ThemeContext } from "../../../assets/themes/theme-context";
 
-
-const CalendarIcon = (props) => <Icon {...props} name='calendar' />;
+const CalendarIcon = (props) => <Icon {...props} name="calendar" />;
 
 class DataAnalytics extends React.Component {
   constructor(props) {
@@ -42,28 +41,25 @@ class DataAnalytics extends React.Component {
       selected_filter: criterias.confirmed, // sets the current filtering parameter on the graph
       selected_filter_daily_status: criterias.confirmed,
       selected_filter_rate: criterias.recoveryRate,
-      selected_daily_start_date: '',
-      selected_daily_end_date: '',
-      selected_total_start_date: '',
-      selected_total_end_date: '',
-      selected_rate_start_date: '',
-      selected_rate_end_date: '',
-      graph_label: [''],
+      selected_daily_start_date: "",
+      selected_daily_end_date: "",
+      selected_total_start_date: "",
+      selected_total_end_date: "",
+      selected_rate_start_date: "",
+      selected_rate_end_date: "",
+      graph_label: [""],
       data_set: [0],
-      daily_newCases_label: [''],
+      daily_newCases_label: [""],
       daily_newCases_data_set: [0],
-      rate_label: [''],
+      rate_label: [""],
       rate_data_set: [0],
-      searchedCountry: 'World',
+      searchedCountry: "World",
       TotalStatisticsData: [],
       StatisticsData: {},
-<<<<<<< Updated upstream
-      search: 'World',
-=======
       search: "World",
       currLanguage: "English",
       currLangCode: languageStore.getState(),
->>>>>>> Stashed changes
+
       Months: [
         strings.Jan,
         strings.Feb,
@@ -87,8 +83,8 @@ class DataAnalytics extends React.Component {
       discriptionVisiblity: false,
       staticsDescription: [],
       staticsDescriptionLoading: true,
-      discriptionTitle: '',
-      description: '',
+      discriptionTitle: "",
+      description: "",
       kittenStartDate: new Date(),
     };
     languageStore.subscribe(() => {
@@ -122,7 +118,7 @@ class DataAnalytics extends React.Component {
       .then(this.checkIfDataExist(criterias.numberOfTests)) //check if number of test case data exist
       .then(this.getDescriptions)
       .catch((error) => {
-        console.log('Concurrency Issue');
+        console.log("Concurrency Issue");
       });
   };
 
@@ -133,24 +129,24 @@ class DataAnalytics extends React.Component {
     var query =
       this.state.selected_total_start_date.length > 1 &&
       this.state.selected_total_end_date.length > 1
-        ? 'https://sym-track.herokuapp.com/api/statistics?criteria=' +
+        ? "https://sym-track.herokuapp.com/api/statistics?criteria=" +
           this.state.selected_filter +
-          '&country=' +
+          "&country=" +
           this.state.searchedCountry +
-          '&start_date=' +
+          "&start_date=" +
           this.state.selected_total_start_date +
-          '&end_date=' +
+          "&end_date=" +
           this.state.selected_total_end_date
-        : 'https://sym-track.herokuapp.com/api/statistics?criteria=' +
+        : "https://sym-track.herokuapp.com/api/statistics?criteria=" +
           this.state.selected_filter +
-          '&country=' +
+          "&country=" +
           this.state.searchedCountry;
     await fetch(query, {
-      method: 'GET',
+      method: "GET",
       headers: {
-        Authorization: 'Bearer ' + userIDStore.getState().userToken,
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
+        Authorization: "Bearer " + userIDStore.getState().userToken,
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
     })
       .then((response) => response.json())
@@ -175,24 +171,24 @@ class DataAnalytics extends React.Component {
     var query =
       this.state.selected_rate_start_date.length > 1 &&
       this.state.selected_rate_end_date.length > 1
-        ? 'https://sym-track.herokuapp.com/api/statistics?criteria=' +
+        ? "https://sym-track.herokuapp.com/api/statistics?criteria=" +
           this.state.selected_filter_rate +
-          '&country=' +
+          "&country=" +
           this.state.searchedCountry +
-          '&start_date=' +
+          "&start_date=" +
           this.state.selected_rate_start_date +
-          '&end_date=' +
+          "&end_date=" +
           this.state.selected_rate_end_date
-        : 'https://sym-track.herokuapp.com/api/statistics?criteria=' +
+        : "https://sym-track.herokuapp.com/api/statistics?criteria=" +
           this.state.selected_filter_rate +
-          '&country=' +
+          "&country=" +
           this.state.searchedCountry;
     await fetch(query, {
-      method: 'GET',
+      method: "GET",
       headers: {
-        Authorization: 'Bearer ' + userIDStore.getState().userToken,
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
+        Authorization: "Bearer " + userIDStore.getState().userToken,
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
     })
       .then((response) => response.json())
@@ -212,10 +208,10 @@ class DataAnalytics extends React.Component {
 
   //Converts date in to appropriate format
   dateConverter(date) {
-    let dateList = date.split('-');
+    let dateList = date.split("-");
     let month = parseInt(dateList[1]);
     let monthInWord = this.state.Months[month - 1];
-    return monthInWord + ' ' + dateList[2];
+    return monthInWord + " " + dateList[2];
   }
 
   //get total numbers of the specified country and populate UI
@@ -225,14 +221,14 @@ class DataAnalytics extends React.Component {
     });
     let newThis = this;
     await fetch(
-      'https://sym-track.herokuapp.com/api/statistics?criteria=All&country=' +
+      "https://sym-track.herokuapp.com/api/statistics?criteria=All&country=" +
         this.state.searchedCountry,
       {
-        method: 'GET',
+        method: "GET",
         headers: {
-          Authorization: 'Bearer ' + userIDStore.getState().userToken,
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
+          Authorization: "Bearer " + userIDStore.getState().userToken,
+          Accept: "application/json",
+          "Content-Type": "application/json",
         },
       }
     )
@@ -256,12 +252,12 @@ class DataAnalytics extends React.Component {
   //fetch list of countries available
   getCountryList = async () => {
     let newThis = this;
-    await fetch('https://sym-track.herokuapp.com/api/statistics/countries', {
-      method: 'GET',
+    await fetch("https://sym-track.herokuapp.com/api/statistics/countries", {
+      method: "GET",
       headers: {
-        Authorization: 'Bearer ' + userIDStore.getState().userToken,
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
+        Authorization: "Bearer " + userIDStore.getState().userToken,
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
     })
       .then((response) => response.json())
@@ -286,26 +282,26 @@ class DataAnalytics extends React.Component {
     var query =
       this.state.selected_daily_start_date.length > 1 &&
       this.state.selected_daily_end_date.length > 1
-        ? 'https://sym-track.herokuapp.com/api/statistics?criteria=' +
+        ? "https://sym-track.herokuapp.com/api/statistics?criteria=" +
           this.state.selected_filter_daily_status +
-          '&country=' +
+          "&country=" +
           this.state.searchedCountry +
-          '&start_date=' +
+          "&start_date=" +
           this.state.selected_daily_start_date +
-          '&end_date=' +
+          "&end_date=" +
           this.state.selected_daily_end_date +
-          '&daily=true'
-        : 'https://sym-track.herokuapp.com/api/statistics?criteria=' +
+          "&daily=true"
+        : "https://sym-track.herokuapp.com/api/statistics?criteria=" +
           this.state.selected_filter_daily_status +
-          '&country=' +
+          "&country=" +
           this.state.searchedCountry +
-          '&daily=true';
+          "&daily=true";
     await fetch(query, {
-      method: 'GET',
+      method: "GET",
       headers: {
-        Authorization: 'Bearer ' + userIDStore.getState().userToken,
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
+        Authorization: "Bearer " + userIDStore.getState().userToken,
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
     })
       .then((response) => response.json())
@@ -325,7 +321,7 @@ class DataAnalytics extends React.Component {
 
   //populate daily data
   populateDailyData = (objList) => {
-    this.state.daily_newCases_label = ['']; //reseting all data point labels
+    this.state.daily_newCases_label = [""]; //reseting all data point labels
     this.state.daily_newCases_data_set = [0]; //reseting all data point labels
 
     //generating interval
@@ -357,7 +353,7 @@ class DataAnalytics extends React.Component {
     let indexCounter = 0;
     while (graphLebel_counter < objList.length) {
       this.state.daily_newCases_label[indexCounter] = this.dateConverter(
-        objList[graphLebel_counter].t.split('T')[0]
+        objList[graphLebel_counter].t.split("T")[0]
       );
       indexCounter += 1;
       if (
@@ -373,7 +369,7 @@ class DataAnalytics extends React.Component {
 
   //Populates statistics data in to our state
   populate = (objList) => {
-    this.state.graph_label = ['']; //reseting data label
+    this.state.graph_label = [""]; //reseting data label
     this.state.data_set = [0]; // reseting data set
 
     //generating interval
@@ -404,7 +400,7 @@ class DataAnalytics extends React.Component {
     let indexCounter = 0;
     while (graphLebel_counter < objList.length) {
       this.state.graph_label[indexCounter] = this.dateConverter(
-        objList[graphLebel_counter].t.split('T')[0]
+        objList[graphLebel_counter].t.split("T")[0]
       );
       indexCounter += 1;
       if (
@@ -420,7 +416,7 @@ class DataAnalytics extends React.Component {
 
   //populate daily data
   populateRateData = (objList) => {
-    this.state.rate_label = ['']; //reseting all data point labels
+    this.state.rate_label = [""]; //reseting all data point labels
     this.state.rate_data_set = [0]; //reseting all data point labels
 
     //generating interval
@@ -451,7 +447,7 @@ class DataAnalytics extends React.Component {
     let indexCounter = 0;
     while (graphLebel_counter < objList.length) {
       this.state.rate_label[indexCounter] = this.dateConverter(
-        objList[graphLebel_counter].t.split('T')[0]
+        objList[graphLebel_counter].t.split("T")[0]
       );
       indexCounter += 1;
       if (
@@ -467,12 +463,12 @@ class DataAnalytics extends React.Component {
 
   //Reformat number
   reformatNumber(nStr) {
-    var x = nStr.split('.');
+    var x = nStr.split(".");
     var x1 = x[0];
-    var x2 = x.length > 1 ? '.' + x[1] : '';
+    var x2 = x.length > 1 ? "." + x[1] : "";
     var rgx = /(\d+)(\d{3})/;
     while (rgx.test(x1)) {
-      x1 = x1.replace(rgx, '$1' + ',' + '$2');
+      x1 = x1.replace(rgx, "$1" + "," + "$2");
     }
     return x1 + x2;
   }
@@ -480,7 +476,7 @@ class DataAnalytics extends React.Component {
   //Reformat numbers with large number suffix
   intToString(value) {
     let newValue = value;
-    const suffixes = ['', 'K', 'M', 'B', 'T'];
+    const suffixes = ["", "K", "M", "B", "T"];
     let suffixNum = 0;
     while (newValue >= 1000) {
       newValue /= 1000;
@@ -502,26 +498,26 @@ class DataAnalytics extends React.Component {
     var query =
       this.state.selected_daily_start_date.length > 1 &&
       this.state.selected_daily_end_date.length > 1
-        ? 'https://sym-track.herokuapp.com/api/statistics?criteria=' +
+        ? "https://sym-track.herokuapp.com/api/statistics?criteria=" +
           filterCriteria +
-          '&country=' +
+          "&country=" +
           this.state.searchedCountry +
-          '&start_date=' +
+          "&start_date=" +
           this.state.selected_daily_start_date +
-          '&end_date=' +
+          "&end_date=" +
           this.state.selected_daily_end_date +
-          '&daily=true'
-        : 'https://sym-track.herokuapp.com/api/statistics?criteria=' +
+          "&daily=true"
+        : "https://sym-track.herokuapp.com/api/statistics?criteria=" +
           filterCriteria +
-          '&country=' +
+          "&country=" +
           this.state.searchedCountry +
-          '&daily=true';
+          "&daily=true";
     fetch(query, {
-      method: 'GET',
+      method: "GET",
       headers: {
-        Authorization: 'Bearer ' + userIDStore.getState().userToken,
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
+        Authorization: "Bearer " + userIDStore.getState().userToken,
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
     })
       .then((response) => response.json())
@@ -544,12 +540,12 @@ class DataAnalytics extends React.Component {
     var day = new Date().getDate();
     var month = new Date().getMonth() + 1;
     var year = new Date().getFullYear();
-    return year + '-' + month + '-' + day;
+    return year + "-" + month + "-" + day;
   }
 
   //get minimum date for selection
   getMinimumDate() {
-    return '2019-12-31';
+    return "2019-12-31";
   }
 
   //fetches description for different age group
@@ -560,11 +556,11 @@ class DataAnalytics extends React.Component {
         this.state.currLanguage +
         "&filter=adults",
       {
-        method: 'GET',
+        method: "GET",
         headers: {
-          Authorization: 'Bearer ' + userIDStore.getState().userToken,
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
+          Authorization: "Bearer " + userIDStore.getState().userToken,
+          Accept: "application/json",
+          "Content-Type": "application/json",
         },
       }
     )
@@ -596,13 +592,14 @@ class DataAnalytics extends React.Component {
       "http://sym-track.herokuapp.com/api/resources/mobile/statistics?language=" +
       this.state.currLanguage +
       "&filter=adults&title=" +
+
       title;
     await fetch(query, {
-      method: 'GET',
+      method: "GET",
       headers: {
-        Authorization: 'Bearer ' + userIDStore.getState().userToken,
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
+        Authorization: "Bearer " + userIDStore.getState().userToken,
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
     })
       .then((response) => response.json())
@@ -621,7 +618,7 @@ class DataAnalytics extends React.Component {
       .catch((error) => {
         newThis.setState({
           descriptionTitle: strings.ConnectionProblem,
-          description: 'Unable to connect',
+          description: "Unable to connect",
         });
         // Alert.alert(strings.ConnectionProblem, strings.CouldNotConnectToServer);
       });
@@ -633,7 +630,7 @@ class DataAnalytics extends React.Component {
     return (
       <Layout style={{ flex: 1 }}>
         {/* search area and referesh button */}
-        <Layout style={{ flexDirection: 'row' }}>
+        <Layout style={{ flexDirection: "row" }}>
           <SearchableDropdown
             onTextChange={(text) => {
               this.setState({ search: text });
@@ -683,44 +680,47 @@ class DataAnalytics extends React.Component {
             <Layout
               style={{
                 flex: 1,
-                alignContent: 'center',
-                justifyContent: 'center',
+                alignContent: "center",
+                justifyContent: "center",
                 margin: 10,
                 // width: Dimensions.get('window').width - 20,
                 // backgroundColor: '#ffffff00',
-              }}>
-              <Text category='h6' style={{ fontWeight: 'bold' }}>
+              }}
+            >
+              <Text category="h6" style={{ fontWeight: "bold" }}>
                 {strings.DailyStats}
               </Text>
             </Layout>
             <Layout
-              level='3'
+              level="3"
               style={{
-                flexDirection: 'row',
-                width: Dimensions.get('screen').width - 10,
-                alignContent: 'center',
-                alignItems: 'center',
-                justifyContent: 'space-evenly',
+                flexDirection: "row",
+                width: Dimensions.get("screen").width - 10,
+                alignContent: "center",
+                alignItems: "center",
+                justifyContent: "space-evenly",
                 marginBottom: 10,
                 borderRadius: 10,
                 paddingVertical: 10,
-              }}>
+              }}
+            >
               <TouchableOpacity
                 disabled={true}
-                style={{ alignItems: 'center' }}>
+                style={{ alignItems: "center" }}
+              >
                 <Image
-                  source={require('../../../assets/images/sick.png')}
+                  source={require("../../../assets/images/sick.png")}
                   style={{ height: 30, width: 30 }}
                 />
 
                 {this.state.totalLoading ? (
                   <ActivityIndicator
-                    size='small'
-                    color='#ffa500'
+                    size="small"
+                    color="#ffa500"
                     style={{ margin: 5 }}
                   />
                 ) : (
-                  <Text style={{ fontSize: 24, color: '#ffa500' }}>
+                  <Text style={{ fontSize: 24, color: "#ffa500" }}>
                     {this.reformatNumber(
                       String(
                         Math.abs(
@@ -740,20 +740,21 @@ class DataAnalytics extends React.Component {
 
               <TouchableOpacity
                 disabled={true}
-                style={{ alignItems: 'center' }}>
+                style={{ alignItems: "center" }}
+              >
                 <Image
-                  source={require('../../../assets/images/recovered.png')}
+                  source={require("../../../assets/images/recovered.png")}
                   style={{ height: 30, width: 30 }}
                 />
 
                 {this.state.totalLoading ? (
                   <ActivityIndicator
-                    size='small'
-                    color='#039be5'
+                    size="small"
+                    color="#039be5"
                     style={{ margin: 5 }}
                   />
                 ) : (
-                  <Text style={{ fontSize: 24, color: '#039be5' }}>
+                  <Text style={{ fontSize: 24, color: "#039be5" }}>
                     {this.reformatNumber(
                       String(
                         Math.abs(
@@ -773,20 +774,21 @@ class DataAnalytics extends React.Component {
 
               <TouchableOpacity
                 disabled={true}
-                style={{ alignItems: 'center' }}>
+                style={{ alignItems: "center" }}
+              >
                 <Image
-                  source={require('../../../assets/images/angel.jpg')}
+                  source={require("../../../assets/images/angel.png")}
                   style={{ height: 30, width: 30 }}
                 />
 
                 {this.state.totalLoading ? (
                   <ActivityIndicator
-                    size='small'
-                    color='red'
+                    size="small"
+                    color="red"
                     style={{ margin: 5 }}
                   />
                 ) : (
-                  <Text style={{ fontSize: 24, color: 'red' }}>
+                  <Text style={{ fontSize: 24, color: "red" }}>
                     {this.reformatNumber(
                       String(
                         Math.abs(
@@ -808,46 +810,49 @@ class DataAnalytics extends React.Component {
             <Layout
               style={{
                 flex: 1,
-                alignContent: 'center',
-                justifyContent: 'center',
+                alignContent: "center",
+                justifyContent: "center",
                 margin: 10,
                 // width: Dimensions.get('window').width - 20,
                 // backgroundColor: '#ffffff00',
-              }}>
-              <Text category='h6' style={{ fontWeight: 'bold' }}>
+              }}
+            >
+              <Text category="h6" style={{ fontWeight: "bold" }}>
                 {strings.TotalStats}
               </Text>
             </Layout>
 
             <Layout
-              level='3'
+              level="3"
               style={{
-                flexDirection: 'row',
-                width: Dimensions.get('screen').width - 10,
-                alignContent: 'center',
-                alignItems: 'center',
-                justifyContent: 'space-evenly',
+                flexDirection: "row",
+                width: Dimensions.get("screen").width - 10,
+                alignContent: "center",
+                alignItems: "center",
+                justifyContent: "space-evenly",
                 marginBottom: 10,
                 // backgroundColor: 'white',
                 borderRadius: 10,
                 paddingVertical: 10,
-              }}>
+              }}
+            >
               <TouchableOpacity
                 disabled={true}
-                style={{ alignItems: 'center' }}>
+                style={{ alignItems: "center" }}
+              >
                 <Image
-                  source={require('../../../assets/images/sick.png')}
+                  source={require("../../../assets/images/sick.png")}
                   style={{ height: 30, width: 30 }}
                 />
 
                 {this.state.totalLoading ? (
                   <ActivityIndicator
-                    size='small'
-                    color='#ffa500'
+                    size="small"
+                    color="#ffa500"
                     style={{ margin: 5 }}
                   />
                 ) : (
-                  <Text style={{ fontSize: 24, color: '#ffa500' }}>
+                  <Text style={{ fontSize: 24, color: "#ffa500" }}>
                     {this.reformatNumber(
                       String(
                         this.state.TotalStatisticsData[
@@ -861,20 +866,21 @@ class DataAnalytics extends React.Component {
               </TouchableOpacity>
               <TouchableOpacity
                 disabled={true}
-                style={{ alignItems: 'center' }}>
+                style={{ alignItems: "center" }}
+              >
                 <Image
-                  source={require('../../../assets/images/recovered.png')}
+                  source={require("../../../assets/images/recovered.png")}
                   style={{ height: 30, width: 30 }}
                 />
 
                 {this.state.totalLoading ? (
                   <ActivityIndicator
-                    size='small'
-                    color='#039be5'
+                    size="small"
+                    color="#039be5"
                     style={{ margin: 5 }}
                   />
                 ) : (
-                  <Text style={{ fontSize: 24, color: '#039be5' }}>
+                  <Text style={{ fontSize: 24, color: "#039be5" }}>
                     {this.reformatNumber(
                       String(
                         this.state.TotalStatisticsData[
@@ -888,20 +894,21 @@ class DataAnalytics extends React.Component {
               </TouchableOpacity>
               <TouchableOpacity
                 disabled={true}
-                style={{ alignItems: 'center' }}>
+                style={{ alignItems: "center" }}
+              >
                 <Image
-                  source={require('../../../assets/images/angel.jpg')}
+                  source={require("../../../assets/images/angel.png")}
                   style={{ height: 30, width: 30 }}
                 />
 
                 {this.state.totalLoading ? (
                   <ActivityIndicator
-                    size='small'
-                    color='red'
+                    size="small"
+                    color="red"
                     style={{ margin: 5 }}
                   />
                 ) : (
-                  <Text style={{ fontSize: 24, color: 'red' }}>
+                  <Text style={{ fontSize: 24, color: "red" }}>
                     {this.reformatNumber(
                       String(
                         this.state.TotalStatisticsData[
@@ -921,49 +928,53 @@ class DataAnalytics extends React.Component {
                 backdropStyle={styles.backdrop}
                 onBackdropPress={() => {
                   this.setState({ descriptionVisiblity: false });
-                  this.setState({ descriptionTitle: '' });
-                  this.setState({ description: '' });
-                }}>
+                  this.setState({ descriptionTitle: "" });
+                  this.setState({ description: "" });
+                }}
+              >
                 <Card
                   disabled={true}
                   header={
                     // style={{padding:10}}
 
-                    this.state.descriptionTitle != ''
+                    this.state.descriptionTitle != ""
                       ? () => (
                           <Text
                             style={{
                               minHeight: 0,
                               fontSize: 20,
-                              fontFamily: 'Roboto-Black',
+                              fontFamily: "Roboto-Black",
                               margin: 10,
-                            }}>
+                            }}
+                          >
                             {this.state.descriptionTitle}
                           </Text>
                         )
                       : null
                   }
                   footer={
-                    this.state.description != ''
+                    this.state.description != ""
                       ? () => (
                           <Button
                             style={styles.footerControl}
-                            appearance='ghost'
+                            appearance="ghost"
                             onPress={() => {
                               this.setState({ descriptionVisiblity: false });
-                              this.setState({ descriptionTitle: '' });
-                              this.setState({ description: '' });
+                              this.setState({ descriptionTitle: "" });
+                              this.setState({ description: "" });
                               this.setState({ graphDescriptionLoading: true });
-                            }}>
+                            }}
+                          >
                             {strings.Dismiss}
                           </Button>
                         )
                       : null
-                  }>
-                  {this.state.description == '' ? (
+                  }
+                >
+                  {this.state.description == "" ? (
                     <ActivityIndicator
-                      size='large'
-                      color='#F57B35'
+                      size="large"
+                      color="#F57B35"
                       style={{ margin: 5 }}
                     />
                   ) : (
@@ -976,14 +987,15 @@ class DataAnalytics extends React.Component {
             <Layout style={styles.container_graph}>
               <Divider />
               <Layout
-                level='2'
+                level="2"
                 style={{
                   flex: 1,
-                  justifyContent: 'center',
-                  alignItems: 'center',
+                  justifyContent: "center",
+                  alignItems: "center",
                   padding: 5,
-                }}>
-                <Text category='h6' style={{ fontWeight: 'bold' }}>
+                }}
+              >
+                <Text category="h6" style={{ fontWeight: "bold" }}>
                   {strings.DailyStatsGraph}
                 </Text>
               </Layout>
@@ -991,21 +1003,23 @@ class DataAnalytics extends React.Component {
               {this.state.staticsDescriptionLoading ? (
                 <Layout
                   style={{
-                    flexDirection: 'row',
-                    justifyContent: 'center',
-                    alignItems: 'center',
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
                     margin: 5,
-                  }}>
-                  <ActivityIndicator size='small' color='gray' />
-                  <Text appearance='hint' style={{ fontSize: 16 }}>
+                  }}
+                >
+                  <ActivityIndicator size="small" color="gray" />
+                  <Text appearance="hint" style={{ fontSize: 16 }}>
                     {strings.LoadingGraphDescription}
                   </Text>
                 </Layout>
               ) : (
                 <>
                   <Text
-                    appearance='hint'
-                    style={{ fontSize: 16, margin: 5, padding: 5 }}>
+                    appearance="hint"
+                    style={{ fontSize: 16, margin: 5, padding: 5 }}
+                  >
                     {
                       this.state.staticsDescription[1].descriptions[0]
                         .description
@@ -1017,26 +1031,27 @@ class DataAnalytics extends React.Component {
 
               <Layout
                 style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between",
                   marginHorizontal: 10,
                   marginTop: 5,
-                }}>
-                <Layout style={{ flexDirection: 'row' }}>
+                }}
+              >
+                <Layout style={{ flexDirection: "row" }}>
                   <DatePicker
                     date={this.state.selected_daily_start_date}
-                    mode='date' //The enum of date, datetime and
+                    mode="date" //The enum of date, datetime and
                     placeholder={strings.StartDate}
                     maxDate={
-                      this.state.selected_daily_end_date === ''
+                      this.state.selected_daily_end_date === ""
                         ? this.getCurrentDate()
                         : this.state.selected_daily_end_date
                     }
-                    format='YYYY-MM-DD'
+                    format="YYYY-MM-DD"
                     customStyles={{
                       dateIcon: {
-                        position: 'absolute',
+                        position: "absolute",
                         left: 0,
                         top: 4,
                         marginLeft: 0,
@@ -1045,7 +1060,7 @@ class DataAnalytics extends React.Component {
                         marginLeft: 36,
                         borderRadius: 10,
                         height: 30,
-                        borderColor: '#000',
+                        borderColor: "#000",
                       },
                     }}
                     onDateChange={async (date) => {
@@ -1065,23 +1080,23 @@ class DataAnalytics extends React.Component {
                     accessoryRight={CalendarIcon}
                   /> */}
                 </Layout>
-                <Layout style={{ flexDirection: 'row' }}>
+                <Layout style={{ flexDirection: "row" }}>
                   <DatePicker
                     date={this.state.selected_daily_end_date}
-                    mode='date' //The enum of date, datetime and time
+                    mode="date" //The enum of date, datetime and time
                     placeholder={strings.EndDate}
-                    format='YYYY-MM-DD'
-                    confirmBtnText='Confirm'
+                    format="YYYY-MM-DD"
+                    confirmBtnText="Confirm"
                     minDate={
-                      this.state.selected_daily_start_date === ''
+                      this.state.selected_daily_start_date === ""
                         ? this.getMinimumDate
                         : this.state.selected_daily_start_date
                     }
                     maxDate={this.getCurrentDate()}
-                    cancelBtnText='Cancel'
+                    cancelBtnText="Cancel"
                     customStyles={{
                       dateIcon: {
-                        position: 'absolute',
+                        position: "absolute",
                         left: 0,
                         top: 4,
                         marginLeft: 0,
@@ -1090,7 +1105,7 @@ class DataAnalytics extends React.Component {
                         marginLeft: 36,
                         borderRadius: 10,
                         height: 30,
-                        borderColor: '#000000',
+                        borderColor: "#000000",
                       },
                     }}
                     onDateChange={async (date) => {
@@ -1121,15 +1136,15 @@ class DataAnalytics extends React.Component {
                   ],
                 }}
                 verticalLabelRotation={60}
-                width={Dimensions.get('window').width} // from react-nativ
+                width={Dimensions.get("window").width} // from react-nativ
                 height={HIEGHT / 2}
                 formatYLabel={(Y) => this.intToString(Number(Y))}
                 fromZero={true}
                 chartConfig={{
-                  backgroundColor: '#0080ff',
-                  backgroundGradientFrom: '#0080ff',
-                  backgroundGradientTo: '#0080ff',
-                  scrollableDotFill: '#ffffff',
+                  backgroundColor: "#0080ff",
+                  backgroundGradientFrom: "#0080ff",
+                  backgroundGradientTo: "#0080ff",
+                  scrollableDotFill: "#ffffff",
                   barPercentage: 0.1,
                   decimalPlaces: 0, // optional, defaults to 2dp
                   color: (opacity = 0) => `rgba(255, 266, 255, ${opacity})`,
@@ -1146,10 +1161,11 @@ class DataAnalytics extends React.Component {
               {this.state.dailyGraphLoading ? (
                 <Layout
                   style={{
-                    width: Dimensions.get('window').width,
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                  }}>
+                    width: Dimensions.get("window").width,
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
                   <DotsLoader size={15} />
                 </Layout>
               ) : (
@@ -1158,82 +1174,79 @@ class DataAnalytics extends React.Component {
 
               <Layout
                 style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-evenly',
+                  flexDirection: "row",
+                  justifyContent: "space-evenly",
                   marginBottom: 10,
-                }}>
+                }}
+              >
                 <Button
-                  size='tiny'
+                  size="tiny"
                   appearance={
                     this.state.selected_filter_daily_status ===
                     criterias.confirmed
-                      ? 'filled'
-                      : 'outline'
+                      ? "filled"
+                      : "outline"
                   }
                   onPress={async () => {
                     await this.setState({
                       selected_filter_daily_status: criterias.confirmed,
                     });
                     this.fetchDailyNewsCases();
-                  }}>
+                  }}
+                >
                   {strings.Confirmed}
                 </Button>
                 <Button
-                  size='tiny'
+                  size="tiny"
                   appearance={
                     this.state.selected_filter_daily_status ===
                     criterias.recoveries
-                      ? 'filled'
-                      : 'outline'
+                      ? "filled"
+                      : "outline"
                   }
                   onPress={async () => {
                     await this.setState({
                       selected_filter_daily_status: criterias.recoveries,
                     });
                     this.fetchDailyNewsCases();
-                  }}>
+                  }}
+                >
                   {strings.Recovered}
                 </Button>
                 <Button
-                  size='tiny'
+                  size="tiny"
                   appearance={
                     this.state.selected_filter_daily_status === criterias.deaths
-                      ? 'filled'
-                      : 'outline'
+                      ? "filled"
+                      : "outline"
                   }
                   onPress={async () => {
                     await this.setState({
                       selected_filter_daily_status: criterias.deaths,
                     });
                     this.fetchDailyNewsCases();
-                  }}>
+                  }}
+                >
                   {strings.Death}
                 </Button>
 
                 {this.state.testCountDataExist ? (
-                  <TouchableOpacity
-                    style={
-                      this.state.selected_filter_daily_status ===
-                      criterias.numberOfTests
-                        ? styles.touchable_buttons
-                        : styles.touchable_buttons_pressed
+                  <Button
+                    size="tiny"
+                    appearance={
+                      this.state.selected_filter === criterias.numberOfTests
+                        ? "filled"
+                        : "outline"
                     }
                     onPress={async () => {
                       await this.setState({
                         selected_filter_daily_status: criterias.numberOfTests,
                       });
                       this.fetchDailyNewsCases();
-                    }}>
-                    <Text
-                      style={
-                        this.state.selected_filter_daily_status ===
-                        criterias.numberOfTests
-                          ? styles.text_style
-                          : styles.text_style_pressed
-                      }>
-                      {strings.TestCounts}
-                    </Text>
-                  </TouchableOpacity>
+                    }}
+                  >
+                    {strings.TestCounts}
+                  </Button>
                 ) : (
                   <></>
                 )}
@@ -1241,44 +1254,44 @@ class DataAnalytics extends React.Component {
               {/* <Divider /> */}
               <Layout padding={10}>
                 {this.state.staticsDescriptionLoading ? (
-                  <Layout flexDirection='row' alignSelf='center'>
-                    <ActivityIndicator size='small' color='gray' />
-                    <Text style={{ fontSize: 16, color: 'gray' }}>
+                  <Layout flexDirection="row" alignSelf="center">
+                    <ActivityIndicator size="small" color="gray" />
+                    <Text style={{ fontSize: 16, color: "gray" }}>
                       {strings.LoadingCriteriaDescription}
                     </Text>
                   </Layout>
                 ) : this.state.selected_filter_daily_status ===
                   criterias.confirmed ? (
-                  <Text style={{ fontSize: 16, color: 'gray', marginLeft: 10 }}>
+                  <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
                     {this.state.staticsDescription[1].descriptions[0]
                       .criteria[1].name +
-                      ': ' +
+                      ": " +
                       this.state.staticsDescription[1].descriptions[0]
                         .criteria[1].explanation}
                   </Text>
                 ) : this.state.selected_filter_daily_status ===
                   criterias.recoveries ? (
-                  <Text style={{ fontSize: 16, color: 'gray', marginLeft: 10 }}>
+                  <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
                     {this.state.staticsDescription[1].descriptions[0]
                       .criteria[3].name +
-                      ': ' +
+                      ": " +
                       this.state.staticsDescription[1].descriptions[0]
                         .criteria[3].explanation}
                   </Text>
                 ) : this.state.selected_filter_daily_status ===
                   criterias.deaths ? (
-                  <Text style={{ fontSize: 16, color: 'gray', marginLeft: 10 }}>
+                  <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
                     {this.state.staticsDescription[1].descriptions[0]
                       .criteria[2].name +
-                      ': ' +
+                      ": " +
                       this.state.staticsDescription[1].descriptions[0]
                         .criteria[2].explanation}
                   </Text>
                 ) : (
-                  <Text style={{ fontSize: 16, color: 'gray', marginLeft: 10 }}>
+                  <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
                     {this.state.staticsDescription[1].descriptions[0]
                       .criteria[0].name +
-                      ': ' +
+                      ": " +
                       this.state.staticsDescription[1].descriptions[0]
                         .criteria[0].explanation}
                   </Text>
@@ -1289,18 +1302,20 @@ class DataAnalytics extends React.Component {
             <Layout style={styles.container_graph}>
               <Divider />
               <Layout
-                level='2'
+                level="2"
                 style={{
                   flex: 1,
-                  justifyContent: 'center',
-                  alignItems: 'center',
+                  justifyContent: "center",
+                  alignItems: "center",
                   padding: 5,
-                }}>
+                }}
+              >
                 <Text
-                  category='h6'
+                  category="h6"
                   style={{
-                    fontWeight: 'bold',
-                  }}>
+                    fontWeight: "bold",
+                  }}
+                >
                   {strings.TotalStatsGraph}
                 </Text>
               </Layout>
@@ -1309,25 +1324,27 @@ class DataAnalytics extends React.Component {
               {this.state.staticsDescriptionLoading ? (
                 <Layout
                   style={{
-                    flexDirection: 'row',
-                    justifyContent: 'center',
-                    alignItems: 'center',
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
                     margin: 5,
-                  }}>
+                  }}
+                >
                   <ActivityIndicator
-                    size='small'
-                    color='gray'
+                    size="small"
+                    color="gray"
                     style={{ marginHorizontal: 10 }}
                   />
-                  <Text appearance='hint' style={{ fontSize: 16 }}>
+                  <Text appearance="hint" style={{ fontSize: 16 }}>
                     {strings.LoadingGraphDescription}
                   </Text>
                 </Layout>
               ) : (
                 <>
                   <Text
-                    appearance='hint'
-                    style={{ fontSize: 16, margin: 5, padding: 5 }}>
+                    appearance="hint"
+                    style={{ fontSize: 16, margin: 5, padding: 5 }}
+                  >
                     {
                       this.state.staticsDescription[0].descriptions[0]
                         .description
@@ -1339,26 +1356,27 @@ class DataAnalytics extends React.Component {
 
               <Layout
                 style={{
-                  flexDirection: 'row',
+                  flexDirection: "row",
                   marginHorizontal: 10,
                   marginTop: 5,
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                }}>
-                <Layout style={{ flexDirection: 'row', marginRight: 20 }}>
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Layout style={{ flexDirection: "row", marginRight: 20 }}>
                   <DatePicker
                     date={this.state.selected_total_start_date}
-                    mode='date' //The enum of date, datetime and
+                    mode="date" //The enum of date, datetime and
                     placeholder={strings.StartDate}
                     maxDate={
-                      this.state.selected_total_end_date === ''
+                      this.state.selected_total_end_date === ""
                         ? this.getCurrentDate()
                         : this.state.selected_total_end_date
                     }
-                    format='YYYY-MM-DD'
+                    format="YYYY-MM-DD"
                     customStyles={{
                       dateIcon: {
-                        position: 'absolute',
+                        position: "absolute",
                         left: 0,
                         top: 4,
                         marginLeft: 0,
@@ -1367,7 +1385,7 @@ class DataAnalytics extends React.Component {
                         marginLeft: 36,
                         borderRadius: 10,
                         height: 30,
-                        borderColor: '#000000',
+                        borderColor: "#000000",
                       },
                     }}
                     onDateChange={async (date) => {
@@ -1376,23 +1394,23 @@ class DataAnalytics extends React.Component {
                     }}
                   />
                 </Layout>
-                <Layout style={{ flexDirection: 'row' }}>
+                <Layout style={{ flexDirection: "row" }}>
                   <DatePicker
                     date={this.state.selected_total_end_date}
-                    mode='date' //The enum of date, datetime and time
+                    mode="date" //The enum of date, datetime and time
                     placeholder={strings.EndDate}
-                    format='YYYY-MM-DD'
+                    format="YYYY-MM-DD"
                     minDate={
-                      this.state.selected_total_start_date === ''
+                      this.state.selected_total_start_date === ""
                         ? this.getMinimumDate()
                         : this.state.selected_total_start_date
                     }
                     maxDate={this.getCurrentDate()}
-                    confirmBtnText='Confirm'
-                    cancelBtnText='Cancel'
+                    confirmBtnText="Confirm"
+                    cancelBtnText="Cancel"
                     customStyles={{
                       dateIcon: {
-                        position: 'absolute',
+                        position: "absolute",
                         left: 0,
                         top: 4,
                         marginLeft: 0,
@@ -1401,7 +1419,7 @@ class DataAnalytics extends React.Component {
                         marginLeft: 36,
                         borderRadius: 10,
                         height: 30,
-                        borderColor: '#000000',
+                        borderColor: "#000000",
                       },
                     }}
                     onDateChange={async (date) => {
@@ -1418,15 +1436,15 @@ class DataAnalytics extends React.Component {
                   datasets: [{ data: this.state.data_set }],
                 }}
                 verticalLabelRotation={60}
-                width={Dimensions.get('window').width} // from react-native
+                width={Dimensions.get("window").width} // from react-native
                 height={HIEGHT / 2}
                 fromZero={true}
                 formatYLabel={(Y) => this.intToString(Number(Y))}
                 chartConfig={{
-                  backgroundColor: '#0080ff',
-                  backgroundGradientFrom: '#0080ff',
-                  backgroundGradientTo: '#0080ff',
-                  scrollableDotFill: '#ffffff',
+                  backgroundColor: "#0080ff",
+                  backgroundGradientFrom: "#0080ff",
+                  backgroundGradientTo: "#0080ff",
+                  scrollableDotFill: "#ffffff",
                   barPercentage: 0.1,
                   decimalPlaces: 0, // optional, defaults to 2dp
                   color: (opacity = 0) => `rgba(255, 266, 255, ${opacity})`,
@@ -1443,10 +1461,11 @@ class DataAnalytics extends React.Component {
               {this.state.totalGraphLoading ? (
                 <Layout
                   style={{
-                    width: Dimensions.get('window').width,
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                  }}>
+                    width: Dimensions.get("window").width,
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
                   <DotsLoader size={15} />
                 </Layout>
               ) : (
@@ -1455,31 +1474,33 @@ class DataAnalytics extends React.Component {
 
               <Layout
                 style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'space-evenly',
-                }}>
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-evenly",
+                }}
+              >
                 <Button
-                  size='tiny'
+                  size="tiny"
                   appearance={
                     this.state.selected_filter === criterias.confirmed
-                      ? 'filled'
-                      : 'outline'
+                      ? "filled"
+                      : "outline"
                   }
                   onPress={async () => {
                     this.setState({
                       selected_filter: criterias.confirmed,
                     });
                     await this.fetchTotalStats();
-                  }}>
+                  }}
+                >
                   {strings.Confirmed}
                 </Button>
                 <Button
-                  size='tiny'
+                  size="tiny"
                   appearance={
                     this.state.selected_filter === criterias.recoveries
-                      ? 'filled'
-                      : 'outline'
+                      ? "filled"
+                      : "outline"
                   }
                   onPress={async () => {
                     this.setState({
@@ -1487,85 +1508,82 @@ class DataAnalytics extends React.Component {
                     });
 
                     await this.fetchTotalStats();
-                  }}>
+                  }}
+                >
                   {strings.Recovered}
                 </Button>
                 <Button
-                  size='tiny'
+                  size="tiny"
                   appearance={
                     this.state.selected_filter === criterias.deaths
-                      ? 'filled'
-                      : 'outline'
+                      ? "filled"
+                      : "outline"
                   }
                   onPress={async () => {
                     this.setState({
                       selected_filter: criterias.deaths,
                     });
                     await this.fetchTotalStats();
-                  }}>
-                  {strings.Confirmed}
+                  }}
+                >
+                  {strings.Deaths}
                 </Button>
                 {this.state.testCountDataExist ? (
-                  <TouchableOpacity
-                    style={
+                  <Button
+                    size="tiny"
+                    appearance={
                       this.state.selected_filter === criterias.numberOfTests
-                        ? styles.touchable_buttons
-                        : styles.touchable_buttons_pressed
+                        ? "filled"
+                        : "outline"
                     }
                     onPress={async () => {
                       await this.setState({
                         selected_filter: criterias.numberOfTests,
                       });
-                       this.fetchTotalStats();
-                    }}>
-                    <Text
-                      style={
-                        this.state.selected_filter === criterias.numberOfTests
-                          ? styles.text_style
-                          : styles.text_style_pressed
-                      }>
-                      {strings.TestCounts}
-                    </Text>
-                  </TouchableOpacity>
+                      this.fetchTotalStats();
+                    }}
+                  >
+                    {strings.TestCounts}
+                  </Button>
                 ) : null}
               </Layout>
-              <Layout padding={10} style={{ marginBottom: 80 }}>
+              <Layout padding={10} style={{ marginBottom: 20 }}>
                 {this.state.staticsDescriptionLoading ? (
-                  <Layout flexDirection='row' alignSelf='center'>
-                    <ActivityIndicator size='small' color='gray' />
-                    <Text style={{ fontSize: 16, color: 'gray' }}>
+                  <Layout flexDirection="row" alignSelf="center">
+                    <ActivityIndicator size="small" color="gray" />
+                    <Text style={{ fontSize: 16, color: "gray" }}>
                       {strings.LoadingCriteriaDescription}
                     </Text>
                   </Layout>
                 ) : this.state.selected_filter === criterias.confirmed ? (
-                  <Text style={{ fontSize: 16, color: 'gray', marginLeft: 10 }}>
+                  <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
                     {this.state.staticsDescription[0].descriptions[0]
                       .criteria[1].name +
-                      ': ' +
+                      ": " +
                       this.state.staticsDescription[0].descriptions[0]
                         .criteria[1].explanation}
                   </Text>
                 ) : this.state.selected_filter === criterias.recoveries ? (
-                  <Text style={{ fontSize: 16, color: 'gray', marginLeft: 10 }}>
+                  <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
                     {this.state.staticsDescription[0].descriptions[0]
                       .criteria[3].name +
-                      ': ' +
+                      ": " +
                       this.state.staticsDescription[0].descriptions[0]
                         .criteria[3].explanation}
                   </Text>
                 ) : this.state.selected_filter === criterias.deaths ? (
-                  <Text style={{ fontSize: 16, color: 'gray', marginLeft: 10 }}>
+                  <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
                     {this.state.staticsDescription[0].descriptions[0]
                       .criteria[2].name +
-                      ': ' +
+                      ": " +
                       this.state.staticsDescription[0].descriptions[0]
                         .criteria[2].explanation}
                   </Text>
                 ) : (
-                  <Text style={{ fontSize: 16, color: 'gray', marginLeft: 10 }}>
+                  <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
                     {this.state.staticsDescription[0].descriptions[0]
                       .criteria[0].name +
-                      ': ' +
+                      ": " +
                       this.state.staticsDescription[0].descriptions[0]
                         .criteria[0].explanation}
                   </Text>
@@ -1579,87 +1597,87 @@ class DataAnalytics extends React.Component {
   } // end of render function
 } // end of class StaticsPage
 
-const screenHeight = Dimensions.get('window').height;
-const screenWidth = Dimensions.get('window').width;
+const screenHeight = Dimensions.get("window").height;
+const screenWidth = Dimensions.get("window").width;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     // backgroundColor: "#eee",
   },
   backdrop_container: {
     minHeight: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   backdrop: {
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   cards_total: {
-    backgroundColor: '#fc2314',
+    backgroundColor: "#fc2314",
     borderRadius: 20,
     height: screenHeight / 10,
     width: screenWidth / 2 - 30,
     margin: 10,
     marginTop: 15,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   cards_active: {
-    backgroundColor: '#4da6ff',
+    backgroundColor: "#4da6ff",
     borderRadius: 20,
     height: screenHeight / 10,
     width: screenWidth / 2 - 30,
     margin: 10,
     marginTop: 30,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   cards_recovered: {
-    backgroundColor: '#30cc2a',
+    backgroundColor: "#30cc2a",
     borderRadius: 20,
     marginTop: 15,
     height: screenHeight / 10,
     width: screenWidth / 2 - 30,
     margin: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   cards_death: {
-    backgroundColor: '#514443',
+    backgroundColor: "#514443",
     borderRadius: 20,
     height: screenHeight / 10,
     width: screenWidth / 2 - 30,
     margin: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   container_graph: {
     marginTop: 5,
     flex: 1,
   },
   touchable_buttons: {
-    backgroundColor: '#1976d2',
+    backgroundColor: "#1976d2",
     padding: 5,
     marginRight: 5,
     borderRadius: 10,
   },
   touchable_buttons_pressed: {
-    backgroundColor: '#F5F6FA',
+    backgroundColor: "#F5F6FA",
     padding: 5,
     marginRight: 5,
     borderRadius: 10,
   },
   text_style: {
-    color: 'white',
+    color: "white",
     fontSize: 15,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   text_style_pressed: {
-    color: '#1976d2',
+    color: "#1976d2",
     fontSize: 15,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
 });
 

@@ -1,0 +1,113 @@
+{
+  "sources": "Maddeen",
+  "country": "Biyya",
+  "dateRange": "Dheerina Yeroo",
+  "world": "Addunyaa",
+  "resourcesPer1K": "Dhiyeessii nama kuma tokkoof",
+  "totalCases": "Waliigala Kan Qabaman",
+  "recovered": "Kan Dandamatan",
+  "death": "Du'a",
+  "deathRate": "Hanga Du'aa",
+  "activeCases": "Yaalarra Kan Jiran",
+  "regions": "Naannoolee",
+  "totalDeath": "Waliigala Kan Du'an",
+  "clearbitMessage": "Loogoo 'Clearbit'dhaan dhiyaate",
+  "freeReportingPhoneNumbers": "Lakkoofsa tajaajila bilbila tolaa COVID-19",
+  "aboutSectionDescription": "TrackSym appilikeeshinii miti-daldalaa kan mallattoolee COVID-19 funaanuudhaafi mallattoolee wal fakkaatan kan iddoo adda addaa irraa walitti funaanuun Ummataaf dhiyeessuudha. Umrii fi saala qofaan galmaa'uun namoonni appilikeeshinii kana fayyaddamuun osoo enyuummaan isaanii hin beekamin mallattoolee COVID-19 gabaasuu fi iddoo filachuun  kaartaa irratti rukkina namoota mallattoolee COVID-19'n qabamanii ilaaluu ni danda'u. Daataan kan walitti qabamu iddoodhaan waan ta'eef appilikeeshinichi namoota iddoo gara namoonni mallattoo COVID-19 agarsiisan itti baay'atan deemuu irraa hanbisuuf ni gargaara. Dabalataanis odeeffannoo haarawaa fi oduu COVID-19 wajjin walqabatu kan biyyoota hundumaa kan isiniif dhiyeessuudha.",
+  "moreInfo": "Odeeffannoo Dabalataa",
+  "learnEvenMoreDescription": "Waa'ee COVID-19 dabalataan hubachuuf 'Daandii Beekumsaa' keenya hordofaa. Kan umurii keessanii wajjin deemu isiniif dhiyeessineerra.",
+  "regionalStatistics": "Istaatistiksii Naannoo",
+  "privacy": "Kan Dhuunfaa",
+  "references": "Wabii",
+  "NA": "Kan Hin Beekamne",
+  "readMore": "Dabalataan Dubbisi",
+  "close": "Cufi",
+  "dateRange": "Dheerina Yeroo",
+  "metrics": "Safartuu",
+  "states": {
+    "statesTransitionTitle": "Adeemsa Jijjiiramaa",
+    "statesTransitionSubtitle": "Adeemsa Akkamii Keessa Darba?",
+    "incubation": "Of Dhoksuu Vaayirasichaa",
+    "mildOrNoSymptom": "Mallattoo Sasalphaa",
+    "heavySymptoms": "Mallattoo Ulfaataa",
+    "hospitalization": "Hospitaala Ciisanii Yaalamuu",
+    "icu": "Kutaa Yaala Addaa",
+    "recovery": "Dandamachuu"
+  },
+  "navbar": {
+    "home": "Seensa",
+    "learn": "Baradhaa",
+    "about": "Waa'ee",
+    "news": "Oduu",
+    "map": "Kaartaa"
+  },
+  "titles": {
+    "globalStatisticsTitle": "Istaatistiksii COVID-19 Akka Addunyaatti",
+    "ethiopiaStatisticsTitle": "COVID-19 Itiyoophiyaa Keessatti",
+    "aboutCovid": "Waa'ee COVID-19",
+    "actions": "Maal Haa Goonu?",
+    "states": "Sadarkaa Jijjiirama Dhukkubichaa",
+    "learningPath": "Dabalataan Barachuuf",
+    "news": "Oduu"
+  },
+  "graphNames": {
+    "totalCounts": "Baay'ina Waliigalaa",
+    "dailyCounts": "Lakkoofsa Guyyaa-guyyaan",
+    "viewRates": "Sadarkaa Jijjiiramaa",
+    "compareCountries": "Biyyoota Wal Madaalchisi",
+    "compareDiseases": "Dhukkuboota Wal Fakkaatan Wal Madaalchisi"
+  },
+  "learningPathHeaders": {
+    "taskName": "Hojiirra Oolmaa",
+    "what": "Maal",
+    "why": "Maaliif",
+    "duration": "Turtii",
+    "how": "Akkamitti",
+    "sources": "Maddeen",
+    "show": "Mul'isi",
+    "kids": "Daa'immaniif",
+    "teens": "Dargaggootaaf",
+    "adults": "Ga'eessotaaf",
+    "seniors": "Buleeyyiif",
+    "learningPathFor": "Daandii Beekumsaa"
+  },
+  "ethiopiaRegions": {
+    "addisAbaba": "Finfinnee",
+    "oromia": "Oromiyaa",
+    "tigrai": "Tigraay",
+    "benishangulGumuz": "Benishaangul Gumuz",
+    "gambela": "Gaambeellaa",
+    "snnpr": "Naannoo Ummattoota Kibbaa",
+    "afar": "Affaar",
+    "harari": "Hararii",
+    "amhara": "Amaaraa",
+    "somali": "Somaalii",
+    "direDawa": "Dirree Dhaawaa"
+  },
+  "aboutTitles": {
+    "aboutTrackSym": "TrackSym",
+    "theMission": "Ergama",
+    "yourData": "Dataa Keessan",
+    "we": "Nuti eenyudha?",
+    "contact": "Nu quunnamuuf"
+  },
+  "ageGroups": {
+    "kids": "Daa'imman",
+    "teens": "Dargaggoota",
+    "adults": "Ga'eessota",
+    "seniors": "Buleeyyii"
+  },
+  "tourLabels": {
+    "start": "Daawii Eegali",
+    "skip": "Irra Darbi",
+    "previous": "Kan Darbe",
+    "next": "Kan Itti Aanu",
+    "finish": "Xumuri"
+  },
+  "contactUs": {
+    "name": "Maqaa",
+    "email": "Email",
+    "message": "Yaada",
+    "send": "Ergi"
+  }
+}

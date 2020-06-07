@@ -14,8 +14,11 @@ export default {
       descriptions: false,
       actions: false
     },
-    mapLoaders: {
-      locationsSymptoms: false
+    symTrackLoaders: {
+      map: false,
+      userSymptoms: false,
+      allSymptoms: false,
+      cities: false
     },
     graphLoaders: {
       counts: 0,
@@ -37,8 +40,8 @@ export default {
     getAboutLoaders(state) {
       return state.aboutLoaders;
     },
-    getMapLoaders(state) {
-      return state.mapLoaders;
+    getSymTrackLoaders(state) {
+      return state.symTrackLoaders;
     },
     getGraphLoaders(state) {
       return state.graphLoaders;
@@ -54,8 +57,8 @@ export default {
     setAboutLoaders(state, { key, value }) {
       state.aboutLoaders[key] = value;
     },
-    setMapLoaders(state, { key, value }) {
-      state.mapLoaders[key] = value;
+    setSymTrackLoaders(state, { key, value }) {
+      state.symTrackLoaders[key] = value;
     },
     setGraphLoaders(state, { key, value }) {
       state.graphLoaders[key] = value;
