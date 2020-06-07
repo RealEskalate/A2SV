@@ -128,7 +128,7 @@ export default {
         onSkip: this.onNewEnd
       },
       tour_options: {
-        useKeyboardNavigation: true,
+        useKeyboardNavigation: false,
         highlight: true,
         labels: {
           buttonStart: "start",
