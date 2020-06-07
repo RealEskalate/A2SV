@@ -1,18 +1,17 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import graphs from "./graphs";
-import heatmap from "./heatmap";
 import learn from "./learn";
 import about from "./about";
 import news from "./news";
 import loaders from "./loaders";
-import axios from "axios";
 import messages from "./messages";
-import symptomTracking from "./symptom-tracking";
+import symptomTracking from "./sym-track";
 import user from "./user";
 import ethiopia from "./ethiopia";
 
 import createPersistedState from "vuex-persistedstate";
+import ajax from "../auth/ajax";
 
 Vue.use(Vuex);
 
@@ -70,16 +69,14 @@ export default new Vuex.Store({
   },
   actions: {
     fillCountriesList({ commit }) {
-      axios
-        .get(`${process.env.VUE_APP_BASE_URL}/api/statistics/countries`)
-        .then(
-          response => {
-            commit("setCountriesList", response.data);
-          },
-          error => {
-            console.log(error);
-          }
-        );
+      ajax.get(`statistics/countries`).then(
+        response => {
+          commit("setCountriesList", response.data);
+        },
+        error => {
+          console.log(error);
+        }
+      );
     },
     setNavState({ commit }, { type }) {
       commit("setNavigationType", type);
@@ -93,7 +90,6 @@ export default new Vuex.Store({
   },
   modules: {
     graphs,
-    heatmap,
     learn,
     about,
     news,

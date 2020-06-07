@@ -113,7 +113,7 @@
       style="border-radius: 20px 0 0 0"
       class="px-3 overflow-hidden"
     >
-      <v-btn v-for="(item, i) in links" :to="{ name: item.to }" :key="i">
+      <v-btn v-for="(item, i) in links" :to="{ name: item.to }" :key="i" exact>
         <span>{{ $t(item.text) }}</span>
         <v-icon> {{ item.icon }}</v-icon>
       </v-btn>

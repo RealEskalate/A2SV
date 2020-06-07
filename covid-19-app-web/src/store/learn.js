@@ -1,4 +1,4 @@
-import axios from "axios";
+import ajax from "../auth/ajax";
 import { langConverter } from "./index";
 
 export default {
@@ -44,8 +44,8 @@ export default {
   actions: {
     setInformation: ({ commit }, { lang }) => {
       commit("setLearnLoaders", { key: "information", value: true });
-      axios
-        .get(`${process.env.VUE_APP_BASE_URL}/api/resources/information`, {
+      ajax
+        .get(`resources/information`, {
           params: {
             language: langConverter[lang]
           }
@@ -64,8 +64,8 @@ export default {
     },
     setActions: ({ commit }, { lang }) => {
       commit("setLearnLoaders", { key: "actions", value: true });
-      axios
-        .get(`${process.env.VUE_APP_BASE_URL}/api/resources/information`, {
+      ajax
+        .get(`resources/information`, {
           params: {
             type: "action",
             language: langConverter[lang]
@@ -85,8 +85,8 @@ export default {
     },
     setStates: ({ commit }, { lang }) => {
       commit("setLearnLoaders", { key: "states", value: true });
-      axios
-        .get(`${process.env.VUE_APP_BASE_URL}/api/resources/information`, {
+      ajax
+        .get(`resources/information`, {
           params: {
             type: "state",
             language: langConverter[lang]
@@ -106,8 +106,8 @@ export default {
     },
     setLearningPaths: ({ commit }, { age_group, lang }) => {
       commit("setLearnLoaders", { key: "learningPaths", value: true });
-      axios
-        .get(`${process.env.VUE_APP_BASE_URL}/api/resources/learning-path`, {
+      ajax
+        .get(`resources/learning-path`, {
           params: {
             age_group: age_group,
             language: langConverter[lang]

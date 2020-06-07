@@ -54,8 +54,8 @@ export default {
   },
   watch: {
     "$i18n.locale": newValue => {
+      store.dispatch("setEthiopia", { lang: newValue });
       store.dispatch("setLanguagePreference", { lang: newValue });
-
       store.dispatch("setGraphDescriptions", { lang: newValue });
       store.dispatch("setAboutDescriptions", { lang: newValue });
       store.dispatch("setAboutActions", { lang: newValue });
