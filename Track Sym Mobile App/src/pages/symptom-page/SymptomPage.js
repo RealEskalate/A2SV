@@ -25,6 +25,8 @@ import localSymptomStore from "../../data-management/local_symptom_data/localSym
 import * as localSymptomActions from "../../data-management/local_symptom_data/localSymptomActions";
 import { strings } from "../../localization/localization";
 import { CheckBox, Icon } from "react-native-elements";
+import { LangContext } from "../../../assets/lang/language-context";
+import languageStore from "../../data-management/language_data/languageStore";
 
 export default class SymptomPage extends Component {
   constructor(props) {
@@ -43,18 +45,41 @@ export default class SymptomPage extends Component {
       modalStatus: "",
       changesMade: false,
       numberOfChanges: 0,
+      currLanguage: "English",
+      currLangCode: languageStore.getState(),
     };
+
     localSymptomStore.subscribe(() => {
       this.fetchData();
     });
+    languageStore.subscribe(() => {
+      strings.setLanguage(languageStore.getState());
+      this.setState({ currLangCode: languageStore.getState() });
+      this.componentDidMount();
+    });
   }
-
-  componentDidMount() {
+  componentDidMount = async () => {
+    await this.setState({ currLangCode: languageStore.getState() });
+    switch (this.state.currLangCode) {
+      case "am":
+        console.log("Check");
+        await this.setState({ currLanguage: "Amharic" });
+        break;
+      case "en":
+        await this.setState({ currLanguage: "English" });
+        break;
+      case "orm":
+        await this.setState({ currLanguage: "Oromo" });
+        break;
+      case "tr":
+        await this.setState({ currLanguage: "English" });
+        break;
+    }
     this.fetchSymptoms();
     this.fetchUserSymptoms(userIDStore.getState().userId);
     this.sync();
     this.fetchData();
-  }
+  };
 
   //fetches symptoms that user has already registere
   fetchData() {
@@ -130,14 +155,18 @@ export default class SymptomPage extends Component {
     });
     console.log("Bearer " + userIDStore.getState().userToken);
     let newThis = this; // create variable for referencing 'this'
-    await fetch("https://sym-track.herokuapp.com/api/symptoms", {
-      method: "GET",
-      headers: {
-        Authorization: "Bearer " + userIDStore.getState().userToken,
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    })
+    await fetch(
+      "http://sym-track.herokuapp.com/api/symptoms?language=" +
+        this.state.currLanguage,
+      {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + userIDStore.getState().userToken,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }
+    )
       .then((response) => response.json())
       .then((json) => {
         // fetching symptoms from the database is successful and storing in to our state
@@ -157,7 +186,10 @@ export default class SymptomPage extends Component {
   fetchUserSymptoms = async (userId) => {
     let newThis = this; // create variable for referencing 'this'
     await fetch(
-      "https://sym-track.herokuapp.com/api/symptomuser/user/" + userId,
+      "https://sym-track.herokuapp.com/api/symptomuser/user/" +
+        userId +
+        "?language=" +
+        this.state.currLanguage,
       {
         method: "GET",
         headers: {
@@ -243,7 +275,7 @@ export default class SymptomPage extends Component {
     if (response.status === 201) {
       this.fetchUserSymptoms(userIDStore.getState().userId); // get the update from database and update local state
       this.setState({
-        modalMessage: "Successfully Saved!",
+        modalMessage: strings.SuccessfullySave,
         modalState: true,
         registerLoading: false,
         modalStatus: "success",
