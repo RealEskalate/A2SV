@@ -54,7 +54,7 @@
                 class="d-block mx-auto my-2"
                 @click="$router.push('register')"
               >
-                Go to Sign Up
+                Sign Up Instead
               </v-btn>
             </div>
           </v-form>

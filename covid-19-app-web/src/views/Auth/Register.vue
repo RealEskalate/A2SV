@@ -90,7 +90,7 @@
                 class="d-block mx-auto my-2"
                 @click="$router.push('login')"
               >
-                Go to Login
+                Login Instead
               </v-btn>
             </div>
           </v-form>

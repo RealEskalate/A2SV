@@ -59,42 +59,41 @@
       />
       <v-list v-else>
         <v-subheader v-text="'Selected Item Details'" />
-        <v-list-item>
+        <v-list-item
+          :key="index"
+          v-for="(feature, index) in detailSingleFeatures"
+        >
           <v-list-item-avatar size="20">
-            <v-icon v-text="mdiCrosshairsGps" />
+            <v-icon v-text="feature.icon" />
           </v-list-item-avatar>
 
           <v-list-item-content>
             <span>
-              Location:
+              {{ feature.name }} :
               <span
-                class="grey--text darken-2"
+                v-if="feature.key === 'location'"
+                class="grey--text"
                 v-text="
                   `[ ${selectedInfo.location.coordinates[0].toFixed(
                     3
                   )}, ${selectedInfo.location.coordinates[0].toFixed(3)} ]`
                 "
               />
-            </span>
-          </v-list-item-content>
-        </v-list-item>
-
-        <v-list-item v-if="selectedInfo.user_id">
-          <v-list-item-avatar size="20">
-            <v-icon v-text="mdiPercent" />
-          </v-list-item-avatar>
-          <v-list-item-content>
-            <span>
-              Sickness Probability:
               <span
-                class="grey--text darken-2"
-                v-text="selectedInfo.probability.toFixed(3) + ' %'"
+                v-else-if="feature.key === 'probability'"
+                class="grey--text"
+                v-text="(selectedInfo.probability * 100).toFixed(2) + ' %'"
+              />
+              <span
+                v-else
+                class="grey--text"
+                v-text="selectedInfo[feature.key]"
               />
             </span>
           </v-list-item-content>
         </v-list-item>
 
-        <template v-for="(feature, index) in detailFeatures">
+        <template v-for="(feature, index) in detailListFeatures">
           <v-divider
             :class="`mt-${index === 0 ? 0 : 3} mb-2`"
             :key="'divider_' + index"
@@ -124,8 +123,8 @@
               :key="key"
               v-for="(value, key) in selectedInfo[feature.key]"
             >
-              <span v-if="!selectedInfo.user_id" v-text="key + ' : '" />
-              <span class="grey--text darken-3" v-text="value" />
+              <span v-if="!selectedInfo.user_id" v-text="key + '  : '" />
+              <span class="grey--text text--darken-2" v-text="' ' + value" />
             </v-chip>
           </div>
         </template>
@@ -181,6 +180,8 @@ export default {
       mdiCrosshairsGps,
       mdiBackburger,
       mdiForwardburger,
+      mdiBabyCarriage,
+      mdiGenderMaleFemaleVariant,
       api_token: process.env.VUE_APP_MAPBOX_API,
 
       sidebar: false,
@@ -269,23 +270,52 @@ export default {
       this.high_cluster = high_cluster;
       this.fillMapData();
     },
-    loadedSymptoms(newValue) {
-      this.selectedInfo.value = newValue;
+    userSymptoms(newValue) {
+      this.selectedInfo.gender = newValue[0];
+      this.selectedInfo.age_group = newValue[1];
+      this.selectedInfo.value = newValue[2];
+    },
+    selectedCity(newValue) {
+      this.map.flyTo({
+        center: [newValue.longitude, newValue.latitude],
+        essential: true
+      });
     }
   },
+
   computed: {
     loadedData: () => store.getters.getLocationsSymptoms,
     userSymptoms: () => {
       let res = [];
+      let gender = null;
+      let age_group = null;
       let retrieved = store.getters.getSymptomUser;
       retrieved.forEach(function(sym) {
         res.push(sym.Symptom.name);
+        if (!gender) gender = sym.gender;
+        if (!age_group) age_group = sym.age_group;
       });
-      return res;
+      return [gender, age_group, res];
     },
     loadedCities: () => store.getters.getCities,
     symTrackLoaders: () => store.getters.getSymTrackLoaders,
-    detailFeatures() {
+    detailSingleFeatures() {
+      if (!this.selectedInfo) return [];
+      let gridDetailFeatures = [
+        { name: "Location", key: "location", icon: mdiCrosshairsGps }
+      ];
+      let userDetailFeatures = [
+        { name: "Location", key: "location", icon: mdiCrosshairsGps },
+        { name: "Gender", key: "gender", icon: mdiGenderMaleFemaleVariant },
+        { name: "Age Group", key: "age_group", icon: mdiBabyCarriage },
+        { name: "Sickness Probability", key: "probability", icon: mdiPercent }
+      ];
+
+      return this.selectedInfo.user_id
+        ? userDetailFeatures
+        : gridDetailFeatures;
+    },
+    detailListFeatures() {
       if (!this.selectedInfo) return [];
       let gridDetailFeatures = [
         { name: "Genders", key: "genders", icon: mdiGenderMaleFemaleVariant },
@@ -398,7 +428,7 @@ export default {
     },
 
     fetchLocationsSymptoms() {
-      const input = {
+      store.dispatch("setLocationsSymptoms", {
         longitude: this.user_longitude,
         latitude: this.user_latitude,
 
@@ -406,8 +436,7 @@ export default {
         top_right_bound: this.top_right_bound,
         bottom_left_bound: this.bottom_left_bound,
         bottom_right_bound: this.bottom_right_bound
-      };
-      store.dispatch("setLocationsSymptoms", input);
+      });
     },
 
     fetchSelectedItem(event) {
@@ -418,6 +447,8 @@ export default {
       else if (this.pointInfos[id]) {
         store.dispatch("setSymptomUser", id);
         this.selectedInfo = this.pointInfos[id];
+        this.selectedInfo.gender = null;
+        this.selectedInfo.age_group = null;
         this.selectedInfo.value = [];
       }
     },
@@ -495,6 +526,78 @@ export default {
       this.fetchLocationsSymptoms();
     },
 
+    makeDataPoint(type, color) {
+      return {
+        id: type + "-points",
+        type: "circle",
+        paint: {
+          "circle-radius": 8,
+          "circle-opacity": 0.7,
+          "circle-stroke-color": "White",
+          "circle-color": color
+        },
+        source: type,
+        cluster: true,
+
+        layout: {
+          visibility: "visible"
+        }
+      };
+    },
+
+    makeDataClusters(size, colors) {
+      return {
+        id: size + "-clusters",
+        type: "circle",
+        source: size,
+        filter: ["has", "point_count"],
+        paint: {
+          "circle-color": [
+            "step",
+            ["get", "point_count"],
+            colors[0],
+            100,
+            colors[1],
+            750,
+            colors[2]
+          ],
+          "circle-radius": [
+            "step",
+            ["get", "point_count"],
+            20,
+            100,
+            30,
+            750,
+            40
+          ],
+          "circle-opacity": 0.3,
+          "circle-stroke-width": 1.5,
+          "circle-stroke-color": "#fcfcfc"
+        },
+        layout: {
+          visibility: "visible"
+        }
+      };
+    },
+
+    makeDataCounts(size, color) {
+      return {
+        id: size + "-cluster-count",
+        type: "symbol",
+        source: size,
+        filter: ["has", "point_count"],
+        layout: {
+          "text-field": "{point_count_abbreviated}",
+          "text-font": ["Ubuntu Medium", "Arial Unicode MS Regular"],
+          "text-size": 12,
+          visibility: "visible"
+        },
+        paint: {
+          "text-color": color
+        }
+      };
+    },
+
     fillMapData() {
       let res = this.symptomCollections;
       let map = this.map;
@@ -507,73 +610,14 @@ export default {
             type: "geojson",
             data: res.smallSymptomCollection
           });
-          map.addLayer({
-            id: "small-points",
-            type: "circle",
-            paint: {
-              "circle-radius": 8,
-              "circle-opacity": 0.7,
-              "circle-stroke-color": "White",
-              "circle-color": "#FFC107"
-            },
-            source: "small",
-            cluster: true,
+          map.addLayer(this.makeDataPoint("small", "#FFC107"));
+          map.addLayer(
+            this.makeDataClusters("small", ["#FFC107", "#FF8F00", "#FF6F00"])
+          );
+          map.addLayer(this.makeDataCounts("small", "#757575"));
 
-            layout: {
-              visibility: "visible"
-            }
-          });
-          map.addLayer({
-            id: "small-clusters",
-            type: "circle",
-            source: "small",
-            filter: ["has", "point_count"],
-            paint: {
-              "circle-color": [
-                "step",
-                ["get", "point_count"],
-                "#FFC107",
-                100,
-                "#FF8F00",
-                750,
-                "#FF6F00"
-              ],
-              "circle-radius": [
-                "step",
-                ["get", "point_count"],
-                20,
-                100,
-                30,
-                750,
-                40
-              ],
-              "circle-opacity": 0.3,
-              "circle-stroke-width": 1.5,
-              "circle-stroke-color": "#fcfcfc"
-            },
-            layout: {
-              visibility: "visible"
-            }
-          });
-
-          map.addLayer({
-            id: "small-cluster-count",
-            type: "symbol",
-            source: "small",
-            filter: ["has", "point_count"],
-            layout: {
-              "text-field": "{point_count_abbreviated}",
-              "text-font": ["Ubuntu Medium", "Arial Unicode MS Regular"],
-              "text-size": 12,
-              visibility: "visible"
-            },
-            paint: {
-              "text-color": "#757575"
-            }
-          });
-          // when user clicks on mildly symptomatic data points, call symptomuser API with his id
-          // and display his symptoms
           map.on("click", "small-points", this.fetchSelectedItem);
+          map.on("click", "small-clusters", this.fetchSelectedItem);
         }
 
         if (
@@ -585,54 +629,13 @@ export default {
             data: res.mediumSymptomCollection
           });
 
-          map.addLayer({
-            id: "medium-clusters",
-            type: "circle",
-            source: "medium",
-            filter: ["has", "point_count"],
-            paint: {
-              "circle-color": [
-                "step",
-                ["get", "point_count"],
-                "#EF6C00",
-                100,
-                "#E65100",
-                750,
-                "#FF5722"
-              ],
-              "circle-radius": [
-                "step",
-                ["get", "point_count"],
-                20,
-                100,
-                30,
-                750,
-                40
-              ],
-              "circle-opacity": 0.3,
-              "circle-stroke-width": 1.5,
-              "circle-stroke-color": "#fcfcfc"
-            },
-            layout: {
-              visibility: "visible"
-            }
-          });
+          map.addLayer(this.makeDataPoint("medium", "#EF6C00"));
+          map.addLayer(
+            this.makeDataClusters("medium", ["#EF6C00", "#E65100", "#FF5722"])
+          );
+          map.addLayer(this.makeDataCounts("medium", "#757575"));
 
-          map.addLayer({
-            id: "medium-cluster-count",
-            type: "symbol",
-            source: "medium",
-            filter: ["has", "point_count"],
-            layout: {
-              "text-field": "{point_count_abbreviated}",
-              "text-font": ["Ubuntu Medium", "Arial Unicode MS Regular"],
-              "text-size": 12,
-              visibility: "visible"
-            },
-            paint: {
-              "text-color": "#757575"
-            }
-          });
+          map.on("click", "medium-points", this.fetchSelectedItem);
           map.on("click", "medium-clusters", this.fetchSelectedItem);
         }
 
@@ -644,55 +647,13 @@ export default {
             type: "geojson",
             data: res.highSymptomCollection
           });
+          map.addLayer(this.makeDataPoint("high", "#B71C1C"));
+          map.addLayer(
+            this.makeDataClusters("high", ["#B71C1C", "#E91E63", "#9C27B0"])
+          );
+          map.addLayer(this.makeDataCounts("high", "#757575"));
 
-          map.addLayer({
-            id: "high-clusters",
-            type: "circle",
-            source: "high",
-            filter: ["has", "point_count"],
-            paint: {
-              "circle-color": [
-                "step",
-                ["get", "point_count"],
-                "#B71C1C",
-                100,
-                "#E91E63",
-                750,
-                "#9C27B0"
-              ],
-              "circle-radius": [
-                "step",
-                ["get", "point_count"],
-                20,
-                100,
-                30,
-                750,
-                40
-              ],
-              "circle-opacity": 0.3,
-              "circle-stroke-width": 1.5,
-              "circle-stroke-color": "#fcfcfc"
-            },
-            layout: {
-              visibility: "visible"
-            }
-          });
-
-          map.addLayer({
-            id: "high-cluster-count",
-            type: "symbol",
-            source: "high",
-            filter: ["has", "point_count"],
-            layout: {
-              "text-field": "{point_count_abbreviated}",
-              "text-font": ["Ubuntu Medium", "Arial Unicode MS Regular"],
-              "text-size": 12,
-              visibility: "visible"
-            },
-            paint: {
-              "text-color": "#757575"
-            }
-          });
+          map.on("click", "high-points", this.fetchSelectedItem);
           map.on("click", "high-clusters", this.fetchSelectedItem);
         }
       } else {
@@ -808,9 +769,11 @@ export default {
           map.setLayoutProperty("small-clusters", "visibility", "none");
           map.setLayoutProperty("small-cluster-count", "visibility", "none");
 
+          map.setLayoutProperty("medium-points", "visibility", "none");
           map.setLayoutProperty("medium-clusters", "visibility", "none");
           map.setLayoutProperty("medium-cluster-count", "visibility", "none");
 
+          map.setLayoutProperty("high-points", "visibility", "none");
           map.setLayoutProperty("high-clusters", "visibility", "none");
           map.setLayoutProperty("high-cluster-count", "visibility", "none");
         }
@@ -861,6 +824,8 @@ export default {
           map.getLayoutProperty("small-points", "visibility") !== "visible"
         ) {
           map.setLayoutProperty("small-points", "visibility", "visible");
+          map.setLayoutProperty("medium-points", "visibility", "visible");
+          map.setLayoutProperty("high-points", "visibility", "visible");
           map.setLayoutProperty("small-clusters", "visibility", "visible");
           map.setLayoutProperty("small-cluster-count", "visibility", "visible");
         } else if (
