@@ -175,11 +175,6 @@ export default {
     }
   },
   methods: {
-    isMobile() {
-      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-        navigator.userAgent
-      );
-    },
     parseRegionalData(data) {
       let allRegions = [];
       let addresses = [];
