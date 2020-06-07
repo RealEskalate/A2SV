@@ -16,6 +16,7 @@ import {
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { ThemeContext } from "../../../assets/themes/theme-context";
 import { strings } from "../../localization/localization";
+import { LangContext } from "../../../assets/lang/language-context";
 
 MapboxGL.setAccessToken(
   "pk.eyJ1IjoiZmVyb3g5OCIsImEiOiJjazg0czE2ZWIwNHhrM2VtY3Y0a2JkNjI3In0.zrm7UtCEPg2mX8JCiixE4g"
@@ -29,12 +30,16 @@ export default class UserSymptomPage extends Component {
       loading: true,
       user_longitude: 0.0,
       user_latitude: 0.0,
+      currLanguage: "English",
+      currLangCode: languageStore.getState(),
     };
     symptomStore.subscribe(() => {
       this.fetchUserSymptoms(userIDStore.getState().userId);
+      this.fetchData();
     });
     languageStore.subscribe(() => {
       strings.setLanguage(languageStore.getState());
+      this.setState({ currLangCode: languageStore.getState() });
       this.componentDidMount();
     });
 
@@ -48,12 +53,24 @@ export default class UserSymptomPage extends Component {
     this.setState({ user_longitude: location.coords.longitude });
   }
 
-  componentDidMount() {
+  componentDidMount = async () => {
+    await this.setState({ currLangCode: languageStore.getState() });
+    switch (this.state.currLangCode) {
+      case "am":
+        await this.setState({ currLanguage: "Amharic" });
+        break;
+      case "en":
+        await this.setState({ currLanguage: "English" });
+        break;
+      case "orm":
+        await this.setState({ currLanguage: "Oromo" });
+        break;
+      case "tr":
+        await this.setState({ currLanguage: "English" });
+        break;
+    }
     this.fetchUserSymptoms(userIDStore.getState().userId);
     this.fetchData();
-    let interval = setInterval(() => {
-      this.fetchData();
-    }, 1000);
 
     this.timer = setInterval(() => {
       if (this.state.userSymptoms.length != 0) {
@@ -73,7 +90,7 @@ export default class UserSymptomPage extends Component {
         })
           .then((response) => response.json())
           .then((json) => {
-            console.log(json);
+            //console.log(json);
           })
           .catch((err) => {
             console.log(err);
@@ -85,7 +102,7 @@ export default class UserSymptomPage extends Component {
         );
       }
     }, 10000);
-  }
+  };
 
   fetchData() {
     this.setState({ userSymptoms: symptomStore.getState() });
@@ -94,14 +111,20 @@ export default class UserSymptomPage extends Component {
   //gets the list of symptoms from database
   fetchUserSymptoms(userId) {
     let newThis = this; // create variable for referencing 'this'
-    fetch("https://sym-track.herokuapp.com/api/symptomuser/user/" + userId, {
-      method: "GET",
-      headers: {
-        Authorization: "Bearer " + userIDStore.getState().userToken,
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    })
+    fetch(
+      "https://sym-track.herokuapp.com/api/symptomuser/user/" +
+        userId +
+        "?language=" +
+        this.state.currLanguage,
+      {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + userIDStore.getState().userToken,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }
+    )
       .then((response) => response.json())
       .then((json) => {
         // fetching user symptoms from the database is successful and updating local state using redux
