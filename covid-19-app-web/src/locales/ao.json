@@ -109,5 +109,30 @@
     "email": "Email",
     "message": "Yaada",
     "send": "Ergi"
+  },
+  "auth": {
+    "profile": "Eenyummeessaa",
+    "logOut": "Cufii Ba’i",
+    "ageGroup": "Gita Umurii",
+    "male": "Dhiira",
+    "female": "Dhalaa",
+    "editProfile": "Eenyummeessaa Gulaali",
+    "changePassword": "Jecha Darbii Jijjiiri",
+    "symptoms": "Mallattoolee Kiyya",
+    "noSymptoms": "Mallattoolee hin galmeessifne",
+    "editSymptoms": "Mallattoolee Gulaali",
+    "login": "Seeni",
+    "username": "Maqaa",
+    "password": "Jecha Darbii",
+    "signUp": "Galmaa'i",
+    "goToSignUp": "Eenyummeessaa hin qabduu? Galmaa’i!",
+    "goToLogin": "Eenyummeessaa qabda? Seeni",
+    "foundNothing": "Nan dhabe",
+    "passwordInputMessage": "Jechi Darbii durii ni barbaachisa",
+    "passwordConfirmation": "Jecha Darbi( Mirkanessa )",
+    "gender": "Koorniyaa",
+    "undisclosed": "Ifa kan hin baanee",
+    "cancel": "Dhiisi",
+    "saveChanges": "Jijjiirama ol kaa’i"
   }
 }

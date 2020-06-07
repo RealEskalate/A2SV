@@ -10,7 +10,7 @@
         </v-snackbar>
 
         <v-toolbar class="shadow-sm mb-3" color="primary" dark flat>
-          <v-toolbar-title v-text="'Login'" />
+          <v-toolbar-title v-text="$t('auth.login')" />
         </v-toolbar>
 
         <v-card-text>
@@ -22,7 +22,7 @@
               class="v-card--shaped"
               :rules="rules.username"
               v-model="user.username"
-              label="Username"
+              :label="$t('auth.username')"
               required
             />
             <v-text-field
@@ -32,7 +32,7 @@
               :rules="rules.password"
               :append-icon="!show_password ? mdiEyeOff : mdiEye"
               v-model="user.password"
-              label="Password"
+              :label="$t('auth.password')"
               :type="show_password ? 'text' : 'password'"
               required
               @click:append="show_password = !show_password"
@@ -46,7 +46,7 @@
                 @click="submit"
                 :loading="loading"
               >
-                Login
+                {{ $t("auth.login") }}
               </v-btn>
               <v-btn
                 text
@@ -54,7 +54,7 @@
                 class="d-block mx-auto my-2"
                 @click="$router.push('register')"
               >
-                Sign Up Instead
+                {{ $t("auth.goToSignUp") }}
               </v-btn>
             </div>
           </v-form>

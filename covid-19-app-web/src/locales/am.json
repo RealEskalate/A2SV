@@ -121,5 +121,31 @@
     "email": "ኢ-ሜል",
     "message": "መልዕክት",
     "send": "ላክ"
+  },
+  "auth": {
+    "profile": "ፕሮፋይል",
+    "logOut": "ውጣ",
+    "ageGroup": "እድሜ ክልል",
+    "male": "ወንድ",
+    "female": "ሴት",
+    "editProfile": "ፕሮፋይል ለውጥ",
+    "changePassword": "የይለፍ ቃል ይቀይሩ",
+    "symptoms": "የህመም ምልክቶች",
+    "noSymptoms": "ምንም የህመም ምልክቶች የሉም",
+    "editSymptoms": "የህመም ምልክትዎን ያርትዑ",
+    "login": "ግባ",
+    "username": "የተጠቃሚ ስም",
+    "password": "የይለፍ ቃል",
+    "signUp": "መለያ ፍጠር",
+    "goToSignUp": "መለያ ፍጠር",
+    "goToLogin": "ግባ",
+    "foundNothing": "ምንም አልተገኘም",
+    "passwordInputMessage": "የድሮ የይለፍ ቃል ያስፈልጋል",
+    "passwordConfirmation": "የይለፍ ቃል (ማረጋገጫ)",
+    "gender": "ጾታ",
+    "undisclosed": "አልገልጽም",
+    "cancel": "ሰርዝ",
+    "saveChanges": "ለውጦችን አስቀምጥ"
   }
 }
+

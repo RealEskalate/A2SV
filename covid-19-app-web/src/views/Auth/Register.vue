@@ -10,7 +10,7 @@
         </v-snackbar>
 
         <v-toolbar class="shadow-sm  mb-3" color="primary" dark flat>
-          <v-toolbar-title v-text="'Sign Up'" />
+          <v-toolbar-title v-text="$t('auth.signUp')" />
         </v-toolbar>
 
         <v-card-text>
@@ -22,7 +22,7 @@
               class="v-card--shaped"
               v-model="user.username"
               :rules="rules.username"
-              label="Username"
+              :label="$t('auth.username')"
               required
             />
             <v-row>
@@ -32,7 +32,7 @@
                   outlined
                   class="v-card--shaped"
                   :items="age_group"
-                  label="Age group"
+                  :label="$t('auth.ageGroup')"
                   v-model="user.age_group"
                 />
               </v-col>
@@ -42,7 +42,8 @@
                   outlined
                   class="v-card--shaped"
                   :items="gender"
-                  label="Gender"
+                  :item-text="$t(item)"
+                  :label="$t('auth.gender')"
                   v-model="user.gender"
                 />
               </v-col>
@@ -55,7 +56,7 @@
               :append-icon="!show_password ? mdiEyeOff : mdiEye"
               :rules="rules.password"
               v-model="user.password"
-              label="Password"
+              :label="$t('auth.password')"
               :type="show_password ? 'text' : 'password'"
               required
               ref="password"
@@ -68,7 +69,7 @@
               :append-icon="!show_password ? mdiEyeOff : mdiEye"
               :rules="match"
               v-model="user.confirm_password"
-              label="Confirm password"
+              :label="$t('auth.passwordConfirmation')"
               :type="show_password ? 'text' : 'password'"
               required
               @click:append="show_password = !show_password"
@@ -82,7 +83,7 @@
                 @click="submit"
                 :loading="loading"
               >
-                Sign Up
+                {{ $t("auth.signUp") }}
               </v-btn>
               <v-btn
                 text
@@ -90,7 +91,7 @@
                 class="d-block mx-auto my-2"
                 @click="$router.push('login')"
               >
-                Login Instead
+                {{ $t("auth.goToLogin") }}
               </v-btn>
             </div>
           </v-form>
@@ -104,7 +105,7 @@
 import store from "@/store/";
 import ajax from "../../auth/ajax";
 import { Rules, User } from "./user.js";
-import { mdiEye, mdiEyeOff, mdiCloseCircleOutline } from "@mdi/js";
+import { mdiCloseCircleOutline, mdiEye, mdiEyeOff } from "@mdi/js";
 
 export default {
   data() {
