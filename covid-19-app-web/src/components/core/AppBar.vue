@@ -66,8 +66,8 @@
               v-if="!loggedInUser"
               class="v-card--shaped mx-1"
               depressed
-              :to="{name: 'Login'}"
-              v-text="'Login'"
+              :to="{ name: 'Login' }"
+              v-text="$t('auth.login')"
       />
       <v-menu offset-y v-else>
         <template v-slot:activator="{ on }">
@@ -94,7 +94,7 @@
           <v-list-item link active-class="white--text primary" @click="logout">
             <v-icon small class="mr-2" v-text="mdiLogoutVariant" />
             <v-list-item-content>
-              <small v-text="'Logout'" />
+              <small v-text="$t('auth.logOut')"/>
             </v-list-item-content>
           </v-list-item>
         </v-list>
@@ -108,7 +108,7 @@
       style="border-radius: 20px 0 0 0"
       class="px-3 overflow-hidden"
     >
-      <v-btn v-for="(item, i) in links" :to="item.to" :key="i">
+      <v-btn v-for="(item, i) in links" :to="{ name: item.to }" :key="i">
         <span>{{ $t(item.text) }}</span>
         <v-icon> {{ item.icon }}</v-icon>
       </v-btn>
@@ -180,7 +180,7 @@
     logout() {
       store.dispatch("setToken", { token: null });
       store.dispatch("setUser", { user: null });
-      router.push({name: 'Home'});
+      router.push({name: "Home"});
     }
   },
   computed: {

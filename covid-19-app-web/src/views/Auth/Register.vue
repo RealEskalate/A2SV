@@ -10,68 +10,69 @@
         </v-snackbar>
 
         <v-toolbar class="shadow-sm  mb-3" color="primary" dark flat>
-          <v-toolbar-title v-text="'Sign Up'" />
+          <v-toolbar-title v-text="$t('auth.signUp')"/>
         </v-toolbar>
 
         <v-card-text>
           <v-form class="mx-4 my-4" v-model="valid" ref="form">
             <v-text-field
-              dense
-              outlined
-              prefix="@"
-              class="v-card--shaped"
-              v-model="user.username"
-              :rules="rules.username"
-              label="Username"
-              required
+                    dense
+                    outlined
+                    prefix="@"
+                    class="v-card--shaped"
+                    v-model="user.username"
+                    :rules="rules.username"
+                    :label="$t('auth.username')"
+                    required
             />
             <v-row>
               <v-col class="py-0">
                 <v-select
-                  dense
-                  outlined
-                  class="v-card--shaped"
-                  :items="age_group"
-                  label="Age group"
-                  v-model="user.age_group"
+                        dense
+                        outlined
+                        class="v-card--shaped"
+                        :items="age_group"
+                        :label="$t('auth.ageGroup')"
+                        v-model="user.age_group"
                 />
               </v-col>
               <v-col class="py-0">
                 <v-select
-                  dense
-                  outlined
-                  class="v-card--shaped"
-                  :items="gender"
-                  label="Gender"
-                  v-model="user.gender"
+                        dense
+                        outlined
+                        class="v-card--shaped"
+                        :items="gender"
+                        :item-text="$t(item)"
+                        :label="$t('auth.gender')"
+                        v-model="user.gender"
                 />
               </v-col>
             </v-row>
 
             <v-text-field
-              dense
-              outlined
-              class="v-card--shaped"
-              :append-icon="!show_password ? mdiEyeOff : mdiEye"
-              :rules="rules.password"
-              v-model="user.password"
-              label="Password"
-              :type="show_password ? 'text' : 'password'"
-              required
-              ref="password"
-              @click:append="show_password = !show_password"
+                    dense
+                    outlined
+                    class="v-card--shaped"
+                    :append-icon="!show_password ? mdiEyeOff : mdiEye"
+                    :rules="rules.password"
+                    v-model="user.password"
+                    :label="$t('auth.password')"
+                    :type="show_password ? 'text' : 'password'"
+                    required
+                    ref="password"
+                    @click:append="show_password = !show_password"
             />
             <v-text-field
-              dense
-              outlined
-              class="v-card--shaped"
-              :append-icon="!show_password ? mdiEyeOff : mdiEye"
-              :rules="match"
-              v-model="user.confirm_password"
-              label="Confirm password"
-              :type="show_password ? 'text' : 'password'"
-              required
-              @click:append="show_password = !show_password"
+                    dense
+                    outlined
+                    class="v-card--shaped"
+                    :append-icon="!show_password ? mdiEyeOff : mdiEye"
+                    :rules="match"
+                    v-model="user.confirm_password"
+                    :label="$t('auth.passwordConfirmation')"
+                    :type="show_password ? 'text' : 'password'"
+                    required
+                    @click:append="show_password = !show_password"
             />
 
             <div class="my-2 mx-auto align-center align-content-center">
@@ -82,7 +83,7 @@
                 @click="submit"
                 :loading="loading"
               >
-                Sign Up
+                {{ $t("auth.signUp") }}
               </v-btn>
               <v-btn
                 text
@@ -90,7 +91,7 @@
                 class="d-block mx-auto my-2"
                 @click="$router.push('login')"
               >
-                Go to Login
+                {{ $t("auth.goToLogin") }}
               </v-btn>
             </div>
           </v-form>
@@ -101,12 +102,12 @@
 </template>
 
 <script>
-import store from "@/store/";
-import ajax from "../../auth/ajax";
-import { Rules, User } from "./user.js";
-import { mdiEye, mdiEyeOff, mdiCloseCircleOutline } from "@mdi/js";
+  import store from "@/store/";
+  import ajax from "../../auth/ajax";
+  import {Rules, User} from "./user.js";
+  import {mdiCloseCircleOutline, mdiEye, mdiEyeOff} from "@mdi/js";
 
-export default {
+  export default {
   data() {
     return {
       mdiEye,

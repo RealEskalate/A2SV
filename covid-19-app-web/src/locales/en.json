@@ -121,5 +121,30 @@
     "email": "Email",
     "message": "Message",
     "send": "Send"
+  },
+  "auth": {
+    "profile": "Profile",
+    "logOut": "Logout",
+    "ageGroup": "Age Group",
+    "male": "MALE",
+    "female": "FEMALE",
+    "editProfile": "EDIT PROFILE",
+    "changePassword": "CHANGE PASSWORD",
+    "symptoms": "Symptoms",
+    "noSymptoms": "No Symptoms",
+    "editSymptoms": "EDIT SYMPTOMS",
+    "login": "LOGIN",
+    "username": "Username",
+    "password": "Password",
+    "signUp": "Sign Up",
+    "goToSignUp": "SIGN UP INSTEAD",
+    "goToLogin": "LOGIN INSTEAD",
+    "foundNothing": "Found Nothing",
+    "passwordInputMessage": "Old Password is required",
+    "passwordConfirmation": "Password( Confirmation )",
+    "gender": "Gender",
+    "undisclosed": "Undisclosed",
+    "cancel": "Cancel",
+    "saveChanges": "Save Changes"
   }
 }

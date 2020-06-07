@@ -21,36 +21,36 @@
                 <v-list-item-content>
                   <div>
                     <v-text-field
-                      class="v-card--shaped"
-                      prefix="@"
-                      outlined
-                      dense
-                      label="Username"
-                      v-model="form_user.username"
-                      :rules="rules.nameRules"
-                      counter="30"
+                            class="v-card--shaped"
+                            prefix="@"
+                            outlined
+                            dense
+                            :label="$t('auth.userName')"
+                            v-model="form_user.username"
+                            :rules="rules.nameRules"
+                            counter="30"
                     />
                   </div>
                   <div>
                     <v-select
-                      dense
-                      :rules="rules.ageGroupRules"
-                      v-model="form_user.age_group"
-                      :items="age_groups"
-                      class="v-card--shaped"
-                      label="Age Group"
-                      outlined
+                            dense
+                            :rules="rules.ageGroupRules"
+                            v-model="form_user.age_group"
+                            :items="age_groups"
+                            class="v-card--shaped"
+                            :label="$t('auth.ageGroup')"
+                            outlined
                     />
                   </div>
                   <div>
                     <v-select
-                      dense
-                      :rules="rules.genderRules"
-                      v-model="form_user.gender"
-                      :items="genders"
-                      class="v-card--shaped"
-                      label="Gender"
-                      outlined
+                            dense
+                            :rules="rules.genderRules"
+                            v-model="form_user.gender"
+                            :items="genders"
+                            class="v-card--shaped"
+                            :label="$t('auth.gender')"
+                            outlined
                     />
                   </div>
                   <div>
@@ -85,7 +85,7 @@
                       @click="updateProfile"
                     >
                       <v-icon class="mr-2" small v-text="mdiCheck" />
-                      Save Changes
+                      {{ $tt("saveChanges") }}
                     </v-btn>
                   </div>
                 </v-list-item-content>
@@ -96,32 +96,32 @@
                 <v-list-item-content>
                   <div>
                     <v-text-field
-                      class="v-card--shaped"
-                      outlined
-                      dense
-                      label="Old Password"
-                      v-model="form_password.old"
-                      :rules="rules.old_password"
+                            class="v-card--shaped"
+                            outlined
+                            dense
+                            :label="$t('auth.oldPassword')"
+                            v-model="form_password.old"
+                            :rules="rules.old_password"
                     />
                   </div>
                   <div>
                     <v-text-field
-                      class="v-card--shaped"
-                      outlined
-                      dense
-                      label="New Password"
-                      v-model="form_password.new"
-                      :rules="rules.new_password"
+                            class="v-card--shaped"
+                            outlined
+                            dense
+                            :label="$t('auth.newPassword')"
+                            v-model="form_password.new"
+                            :rules="rules.new_password"
                     />
                   </div>
                   <div>
                     <v-text-field
-                      class="v-card--shaped"
-                      outlined
-                      dense
-                      label="Confirm Password"
-                      v-model="form_password.confirm"
-                      :rules="rules.confirm_password"
+                            class="v-card--shaped"
+                            outlined
+                            dense
+                            :label="$t('auth.confirmPassword')"
+                            v-model="form_password.confirm"
+                            :rules="rules.confirm_password"
                     />
                   </div>
                   <div class="text-center">
@@ -134,7 +134,7 @@
                       @click="setMode()"
                     >
                       <v-icon class="mr-2" small v-text="mdiWindowClose" />
-                      Cancel
+                      {{ $t("auth.cancel") }}
                     </v-btn>
                     <v-btn
                       depressed
@@ -146,7 +146,7 @@
                       @click="updatePassword"
                     >
                       <v-icon class="mr-2" small v-text="mdiCheck" />
-                      Save Changes
+                      {{ $t("auth.saveChanges") }}
                     </v-btn>
                   </div>
                 </v-list-item-content>
@@ -160,13 +160,15 @@
                     v-text="'@' + loggedInUser.username"
                   />
                   <h4 class="font-weight-thin mb-4 mt-2">
-                    Age Group:
+                    {{ $t("auth.ageGroup") }}:
                     <span
                       class="grey--text font-italic"
                       v-text="loggedInUser.age_group"
                     />
                   </h4>
-                  <v-list-item-subtitle v-text="loggedInUser.gender" />
+                  <v-list-item-subtitle
+                          v-text="$t('auth.' + loggedInUser.gender.toLowerCase())"
+                  />
                 </v-list-item-content>
               </v-list-item>
               <div class="text-center my-3">
@@ -179,7 +181,7 @@
                   @click="setMode('profile')"
                 >
                   <v-icon class="mr-2" small v-text="mdiAccountEdit" />
-                  Edit Profile
+                  {{ $t("auth.editProfile") }}
                 </v-btn>
                 <br />
                 <v-btn
@@ -191,7 +193,7 @@
                   @click="setMode('password')"
                 >
                   <v-icon class="mr-2" small v-text="mdiKey" />
-                  Change Password
+                  {{ $t("auth.changePassword") }}
                 </v-btn>
               </div>
             </div>
@@ -199,10 +201,9 @@
         </v-form>
       </v-col>
       <v-col cols="12" md="9">
-        <h1
-          class="text-center font-weight-regular primary--text"
-          v-text="'Symptoms'"
-        />
+        <h1 class="text-center font-weight-regular primary--text">
+          {{ $t("auth.symptoms") }}
+        </h1>
         <v-fade-transition hide-on-leave>
           <v-container class="text-center" v-if="!editing.symptoms">
             <div class="shadow-in v-card--shaped grey lighten-4 px-6 py-2">
@@ -220,9 +221,9 @@
                 />
               </div>
               <v-list-item-subtitle
-                class="my-8 grey--text text--darken-1"
-                v-else-if="userSymptoms.length === 0"
-                v-text="'No Symptoms'"
+                      class="my-8 grey--text text--darken-1"
+                      v-else-if="userSymptoms.length === 0"
+                      v-text="$t('auth.noSymptoms')"
               />
               <v-row v-else>
                 <v-col cols="3" :key="i" v-for="(symptom, i) in userSymptoms">
@@ -264,7 +265,7 @@
               @click="setMode('symptoms')"
             >
               <v-icon class="mr-2" small v-text="mdiAccountEdit" />
-              Edit Symptoms
+              {{ $t("auth.editSymptoms") }}
             </v-btn>
           </v-container>
 
@@ -286,9 +287,9 @@
                   />
                 </div>
                 <v-list-item-subtitle
-                  class="my-8 grey--text text--darken-1"
-                  v-else-if="allSymptoms.length === 0"
-                  v-text="'No Symptoms'"
+                        class="my-8 grey--text text--darken-1"
+                        v-else-if="allSymptoms.length === 0"
+                        v-text="$t('auth.noSymptoms')"
                 />
                 <v-row v-else>
                   <v-col cols="3" :key="i" v-for="(symptom, i) in allSymptoms">
@@ -363,7 +364,7 @@
               @click="setMode()"
             >
               <v-icon class="mr-2" small v-text="mdiWindowClose" />
-              Cancel
+              {{ $t("auth.cancel") }}
             </v-btn>
             <v-btn
               depressed
@@ -374,7 +375,7 @@
               @click="updateSymptoms"
             >
               <v-icon class="mr-2" small v-text="mdiAccountEdit" />
-              Save Changes
+              {{ $t("auth.saveChanges") }}
             </v-btn>
           </v-container>
         </v-fade-transition>
@@ -384,20 +385,20 @@
 </template>
 
 <script>
-import {
-  mdiAccountEdit,
-  mdiKey,
-  mdiCheck,
-  mdiCloseCircleOutline,
-  mdiCheckboxMarkedCircle,
-  mdiCheckboxBlankCircleOutline,
-  mdiWindowClose
-} from "@mdi/js";
-import store from "@/store";
-import ajax from "@/auth/ajax";
-import bcrypt from "bcryptjs";
+  import {
+    mdiAccountEdit,
+    mdiCheck,
+    mdiCheckboxBlankCircleOutline,
+    mdiCheckboxMarkedCircle,
+    mdiCloseCircleOutline,
+    mdiKey,
+    mdiWindowClose
+  } from "@mdi/js";
+  import store from "@/store";
+  import ajax from "@/auth/ajax";
+  import bcrypt from "bcryptjs";
 
-export default {
+  export default {
   name: "Profile",
   data() {
     return {
