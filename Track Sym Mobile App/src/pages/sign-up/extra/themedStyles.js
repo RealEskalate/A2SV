@@ -9,6 +9,7 @@ const themedStyles = StyleService.create({
     paddingHorizontal: 16,
     paddingTop: 24,
     paddingBottom: 44,
+    overlayColor: 'rgba(0, 0, 0, 0.25)',
   },
   signUpContainer: {
     flexDirection: 'row',

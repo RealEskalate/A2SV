@@ -8,7 +8,7 @@ const themedStyles = StyleService.create({
     justifyContent: "center",
     alignItems: "center",
     minHeight: 216,
-    backgroundColor: "color-primary-default",
+    overlayColor: 'rgba(0, 0, 0, 0.15)',
   },
   formContainer: {
     flex: 1,
