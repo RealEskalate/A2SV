@@ -1,5 +1,5 @@
-import React from "react";
-import { View, SafeAreaView, ScrollView } from "react-native";
+import React from 'react';
+import { View, SafeAreaView, ScrollView } from 'react-native';
 import {
   TopNavigation,
   TopNavigationAction,
@@ -8,39 +8,38 @@ import {
   Text,
   Icon,
   List,
-} from "@ui-kitten/components";
-import { ImageOverlay } from "./extra/image-overlay.component";
-import { preventionData as data } from "./extra/data";
-import styles from "./extra/styles";
-import { InfoCard } from "./extra/InfoCard";
-import { strings } from "../../localization/localization";
-import { LangContext } from "../../../assets/lang/language-context";
+} from '@ui-kitten/components';
+import { ImageOverlay } from './extra/image-overlay.component';
+import styles from './extra/styles';
+import { InfoCard } from './extra/InfoCard';
+import { strings } from '../../localization/localization';
+import { LangContext } from '../../../assets/lang/language-context';
 
-const BackIcon = (props) => <Icon name="arrow-ios-back-outline" {...props} />;
+const BackIcon = (props) => <Icon name='arrow-ios-back-outline' {...props} />;
 const methods = [
   {
     title: strings.HandWashing,
     label: strings.InfoDetailPreventionMethodsLabelOne,
     tag: strings.InfoDetailPreventionMethodsTagOne,
-    image: require("../info-detail/assets/washing.jpg"),
+    image: require('../info-detail/assets/washing.jpg'),
   },
   {
     title: strings.SocialDistancing,
     label: strings.InfoDetailPreventionMethodsLabelTwo,
     tag: strings.InfoDetailPreventionMethodsTagTwo,
-    image: require("../info-detail/assets/social.jpg"),
+    image: require('../info-detail/assets/social.jpg'),
   },
   {
     title: strings.RespiratoryHygiene,
     label: strings.InfoDetailPreventionMethodsLabelThree,
     tag: strings.InfoDetailPreventionMethodsTagThree,
-    image: require("../info-detail/assets/face.jpg"),
+    image: require('../info-detail/assets/face.jpg'),
   },
   {
     title: strings.StayInformed,
     label: strings.InfoDetailPreventionMethodsLabelFour,
     tag: strings.InfoDetailPreventionMethodsTagFour,
-    image: require("../info-detail/assets/info.jpg"),
+    image: require('../info-detail/assets/info.jpg'),
   },
 ];
 
@@ -49,6 +48,37 @@ export default PrevDetailScreen = (props) => {
   const langContext = React.useContext(LangContext);
   const lang = langContext.lang;
   strings.setLanguage(lang);
+
+  const data = {
+    title: strings.Prevention,
+    description: strings.PreventionIsBetterThanCure,
+    image: require('./assets/wash.jpg'),
+    methods1: [
+      {
+        name: strings.HandWashing,
+        inside:
+          strings.PreventionDetailInfoDescriptionMethodOneInsideContentOne,
+      },
+      {
+        name: strings.SocialDistancing,
+        inside:
+          strings.PreventionDetailInfoDescriptionMethodOneInsideContetnTwo,
+      },
+    ],
+    methods2: [
+      {
+        name: strings.RespiratoryHygiene,
+        inside:
+          strings.PreventionDetailInfoDescriptionMethodTwoInsideContentOne,
+      },
+      {
+        name: strings.StayInformed,
+        inside:
+          strings.PreventionDetailInfoDescriptionMethodTwoInsideContetnTwo,
+      },
+    ],
+  };
+
   const navigateBack = () => {
     props.navigation.goBack();
   };
@@ -68,7 +98,7 @@ export default PrevDetailScreen = (props) => {
           <Layout key={item.key}>
             <Divider />
             <View style={styles.authoringContainer}>
-              <Text style={styles.dateLabel} appearance="hint" category="p2">
+              <Text style={styles.dateLabel} appearance='hint' category='p2'>
                 {item.name}
               </Text>
             </View>
@@ -85,27 +115,26 @@ export default PrevDetailScreen = (props) => {
   return (
     <SafeAreaView style={styles.container}>
       <TopNavigation
-        alignment="center"
+        alignment='center'
         title={strings.Prevention}
         accessoryLeft={renderBackAction}
       />
-      <Layout style={styles.container} level="2">
+      <Layout style={styles.container} level='2'>
         <ScrollView>
           <ImageOverlay style={styles.headerContainer} source={data.image}>
-            <Text style={styles.headerTitle} category="h1" status="control">
+            <Text style={styles.headerTitle} category='h1' status='control'>
               {data.title}
             </Text>
             <Text
               style={styles.headerDescription}
-              category="s1"
-              status="control"
-            >
+              category='s1'
+              status='control'>
               {data.description}
             </Text>
           </ImageOverlay>
           {renderDetail(data.methods1)}
           <View style={{ marginTop: 10 }}>
-            <Text style={styles.headerTitle} appearance="hint">
+            <Text style={styles.headerTitle} appearance='hint'>
               {strings.RecommendedMethods}
             </Text>
             <List

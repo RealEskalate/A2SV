@@ -10,7 +10,6 @@ import {
   List,
 } from "@ui-kitten/components";
 import { ImageOverlay } from "./extra/image-overlay.component";
-import { messageData as data } from "./extra/data";
 import styles from "./extra/styles";
 import { InfoCard } from "./extra/InfoCard";
 import { strings } from "../../localization/localization";
@@ -26,6 +25,18 @@ export default PrevDetailScreen = (props) => {
   const langContext = React.useContext(LangContext);
   const lang = langContext.lang;
   strings.setLanguage(lang);
+
+  const data = {
+    title: strings.MessageFromTrackSym,
+    description: "",
+    content: strings.MessageFromUsDetailInfoDescriptionContentOne,
+    content_two: strings.MessageFromUsDetailInfoDescriptionContentTwo,
+    image: require("./assets/home.jpg"),
+    date: "19 Sep, 2018",
+    author: {
+      fullName: strings.DetailInfoAuthorFullName,
+    },
+  };
 
   const renderBackAction = () => (
     <TopNavigationAction icon={BackIcon} onPress={navigateBack} />
