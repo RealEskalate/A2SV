@@ -29,6 +29,7 @@ import userIDStore from "../../data-management/user-id-data/userIDStore";
 import { DotsLoader } from "react-native-indicator";
 import { strings } from "../../localization/localization";
 import languageStore from "../../data-management/language_data/languageStore";
+import { ThemeContext } from "../../../assets/themes/theme-context";
 
 class Ethiopia extends React.Component {
   constructor(props) {
@@ -53,6 +54,8 @@ class Ethiopia extends React.Component {
       TotalStatisticsData: [],
       StatisticsData: {},
       search: "Ethiopia",
+      currLanguage: "English",
+      currLangCode: languageStore.getState(),
       Months: [
         strings.Jan,
         strings.Feb,
@@ -81,11 +84,27 @@ class Ethiopia extends React.Component {
     };
     languageStore.subscribe(() => {
       strings.setLanguage(languageStore.getState());
+      this.setState({ currLangCode: languageStore.getState() });
       this.componentDidMount();
     });
   }
-
+  static contextType = ThemeContext;
   componentDidMount = async () => {
+    await this.setState({ currLangCode: languageStore.getState() });
+    switch (this.state.currLangCode) {
+      case "am":
+        await this.setState({ currLanguage: "Amharic" });
+        break;
+      case "en":
+        await this.setState({ currLanguage: "English" });
+        break;
+      case "orm":
+        await this.setState({ currLanguage: "Oromo" });
+        break;
+      case "tr":
+        await this.setState({ currLanguage: "English" });
+        break;
+    }
     await this.getTotalData()
       .then(this.fetchTotalStats())
       .then(this.fetchDailyNewsCases())
@@ -514,7 +533,9 @@ class Ethiopia extends React.Component {
   getDescriptions = async () => {
     let newThis = this;
     await fetch(
-      "https://sym-track.herokuapp.com/api/resources/mobile/statistics?filter=adults",
+      "https://sym-track.herokuapp.com/api/resources/mobile/statistics?language=" +
+        this.state.currLanguage +
+        "&filter=adults",
       {
         method: "GET",
         headers: {
@@ -548,7 +569,9 @@ class Ethiopia extends React.Component {
   getCriteriaDescriptions = async (title, position) => {
     let newThis = this;
     var query =
-      "http://sym-track.herokuapp.com/api/resources/mobile/statistics?filter=adults&title=" +
+      "http://sym-track.herokuapp.com/api/resources/mobile/statistics?language=" +
+      this.state.currLanguage +
+      "&filter=adults&title=" +
       title;
     await fetch(query, {
       method: "GET",
@@ -645,7 +668,12 @@ class Ethiopia extends React.Component {
                   marginTop: 15,
                 }}
               >
-                <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+                <Text
+                  category="h6"
+                  style={{
+                    fontWeight: "bold",
+                  }}
+                >
                   {strings.DailyStats}
                 </Text>
               </Layout>
@@ -697,12 +725,14 @@ class Ethiopia extends React.Component {
                   <Text style={{ fontSize: 24, color: "#ffa500" }}>
                     {this.reformatNumber(
                       String(
-                        this.state.TotalStatisticsData[
-                          this.state.TotalStatisticsData.length - 1
-                        ].Confirmed -
+                        Math.abs(
                           this.state.TotalStatisticsData[
-                            this.state.TotalStatisticsData.length - 2
-                          ].Confirmed
+                            this.state.TotalStatisticsData.length - 1
+                          ].Confirmed -
+                            this.state.TotalStatisticsData[
+                              this.state.TotalStatisticsData.length - 2
+                            ].Confirmed
+                        )
                       )
                     )}
                   </Text>
@@ -729,12 +759,14 @@ class Ethiopia extends React.Component {
                   <Text style={{ fontSize: 24, color: "#039be5" }}>
                     {this.reformatNumber(
                       String(
-                        this.state.TotalStatisticsData[
-                          this.state.TotalStatisticsData.length - 1
-                        ].Recovered -
+                        Math.abs(
                           this.state.TotalStatisticsData[
-                            this.state.TotalStatisticsData.length - 2
-                          ].Recovered
+                            this.state.TotalStatisticsData.length - 1
+                          ].Recovered -
+                            this.state.TotalStatisticsData[
+                              this.state.TotalStatisticsData.length - 2
+                            ].Recovered
+                        )
                       )
                     )}
                   </Text>
@@ -761,12 +793,14 @@ class Ethiopia extends React.Component {
                   <Text style={{ fontSize: 24, color: "red" }}>
                     {this.reformatNumber(
                       String(
-                        this.state.TotalStatisticsData[
-                          this.state.TotalStatisticsData.length - 1
-                        ].Deaths -
+                        Math.abs(
                           this.state.TotalStatisticsData[
-                            this.state.TotalStatisticsData.length - 2
-                          ].Deaths
+                            this.state.TotalStatisticsData.length - 1
+                          ].Deaths -
+                            this.state.TotalStatisticsData[
+                              this.state.TotalStatisticsData.length - 2
+                            ].Deaths
+                        )
                       )
                     )}
                   </Text>
