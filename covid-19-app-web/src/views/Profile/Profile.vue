@@ -21,36 +21,36 @@
                 <v-list-item-content>
                   <div>
                     <v-text-field
-                            class="v-card--shaped"
-                            prefix="@"
-                            outlined
-                            dense
-                            :label="$t('auth.userName')"
-                            v-model="form_user.username"
-                            :rules="rules.nameRules"
-                            counter="30"
+                      class="v-card--shaped"
+                      prefix="@"
+                      outlined
+                      dense
+                      :label="$t('auth.userName')"
+                      v-model="form_user.username"
+                      :rules="rules.nameRules"
+                      counter="30"
                     />
                   </div>
                   <div>
                     <v-select
-                            dense
-                            :rules="rules.ageGroupRules"
-                            v-model="form_user.age_group"
-                            :items="age_groups"
-                            class="v-card--shaped"
-                            :label="$t('auth.ageGroup')"
-                            outlined
+                      dense
+                      :rules="rules.ageGroupRules"
+                      v-model="form_user.age_group"
+                      :items="age_groups"
+                      class="v-card--shaped"
+                      :label="$t('auth.ageGroup')"
+                      outlined
                     />
                   </div>
                   <div>
                     <v-select
-                            dense
-                            :rules="rules.genderRules"
-                            v-model="form_user.gender"
-                            :items="genders"
-                            class="v-card--shaped"
-                            :label="$t('auth.gender')"
-                            outlined
+                      dense
+                      :rules="rules.genderRules"
+                      v-model="form_user.gender"
+                      :items="genders"
+                      class="v-card--shaped"
+                      :label="$t('auth.gender')"
+                      outlined
                     />
                   </div>
                   <div>
@@ -96,32 +96,32 @@
                 <v-list-item-content>
                   <div>
                     <v-text-field
-                            class="v-card--shaped"
-                            outlined
-                            dense
-                            :label="$t('auth.oldPassword')"
-                            v-model="form_password.old"
-                            :rules="rules.old_password"
+                      class="v-card--shaped"
+                      outlined
+                      dense
+                      :label="$t('auth.oldPassword')"
+                      v-model="form_password.old"
+                      :rules="rules.old_password"
                     />
                   </div>
                   <div>
                     <v-text-field
-                            class="v-card--shaped"
-                            outlined
-                            dense
-                            :label="$t('auth.newPassword')"
-                            v-model="form_password.new"
-                            :rules="rules.new_password"
+                      class="v-card--shaped"
+                      outlined
+                      dense
+                      :label="$t('auth.newPassword')"
+                      v-model="form_password.new"
+                      :rules="rules.new_password"
                     />
                   </div>
                   <div>
                     <v-text-field
-                            class="v-card--shaped"
-                            outlined
-                            dense
-                            :label="$t('auth.confirmPassword')"
-                            v-model="form_password.confirm"
-                            :rules="rules.confirm_password"
+                      class="v-card--shaped"
+                      outlined
+                      dense
+                      :label="$t('auth.confirmPassword')"
+                      v-model="form_password.confirm"
+                      :rules="rules.confirm_password"
                     />
                   </div>
                   <div class="text-center">
@@ -167,7 +167,7 @@
                     />
                   </h4>
                   <v-list-item-subtitle
-                          v-text="$t('auth.' + loggedInUser.gender.toLowerCase())"
+                    v-text="$t('auth.' + loggedInUser.gender.toLowerCase())"
                   />
                 </v-list-item-content>
               </v-list-item>
@@ -221,9 +221,9 @@
                 />
               </div>
               <v-list-item-subtitle
-                      class="my-8 grey--text text--darken-1"
-                      v-else-if="userSymptoms.length === 0"
-                      v-text="$t('auth.noSymptoms')"
+                class="my-8 grey--text text--darken-1"
+                v-else-if="userSymptoms.length === 0"
+                v-text="$t('auth.noSymptoms')"
               />
               <v-row v-else>
                 <v-col cols="3" :key="i" v-for="(symptom, i) in userSymptoms">
@@ -287,9 +287,9 @@
                   />
                 </div>
                 <v-list-item-subtitle
-                        class="my-8 grey--text text--darken-1"
-                        v-else-if="allSymptoms.length === 0"
-                        v-text="$t('auth.noSymptoms')"
+                  class="my-8 grey--text text--darken-1"
+                  v-else-if="allSymptoms.length === 0"
+                  v-text="$t('auth.noSymptoms')"
                 />
                 <v-row v-else>
                   <v-col cols="3" :key="i" v-for="(symptom, i) in allSymptoms">
@@ -385,20 +385,20 @@
 </template>
 
 <script>
-  import {
-    mdiAccountEdit,
-    mdiCheck,
-    mdiCheckboxBlankCircleOutline,
-    mdiCheckboxMarkedCircle,
-    mdiCloseCircleOutline,
-    mdiKey,
-    mdiWindowClose
-  } from "@mdi/js";
-  import store from "@/store";
-  import ajax from "@/auth/ajax";
-  import bcrypt from "bcryptjs";
+import {
+  mdiAccountEdit,
+  mdiCheck,
+  mdiCheckboxBlankCircleOutline,
+  mdiCheckboxMarkedCircle,
+  mdiCloseCircleOutline,
+  mdiKey,
+  mdiWindowClose
+} from "@mdi/js";
+import store from "@/store";
+import ajax from "@/auth/ajax";
+import bcrypt from "bcryptjs";
 
-  export default {
+export default {
   name: "Profile",
   data() {
     return {

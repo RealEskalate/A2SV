@@ -10,32 +10,32 @@
         </v-snackbar>
 
         <v-toolbar class="shadow-sm mb-3" color="primary" dark flat>
-          <v-toolbar-title v-text="$t('auth.login')"/>
+          <v-toolbar-title v-text="$t('auth.login')" />
         </v-toolbar>
 
         <v-card-text>
           <v-form class="mx-4 my-4" v-model="valid">
             <v-text-field
-                    dense
-                    outlined
-                    prefix="@"
-                    class="v-card--shaped"
-                    :rules="rules.username"
-                    v-model="user.username"
-                    :label="$t('auth.username')"
-                    required
+              dense
+              outlined
+              prefix="@"
+              class="v-card--shaped"
+              :rules="rules.username"
+              v-model="user.username"
+              :label="$t('auth.username')"
+              required
             />
             <v-text-field
-                    dense
-                    outlined
-                    class="v-card--shaped"
-                    :rules="rules.password"
-                    :append-icon="!show_password ? mdiEyeOff : mdiEye"
-                    v-model="user.password"
-                    :label="$t('auth.password')"
-                    :type="show_password ? 'text' : 'password'"
-                    required
-                    @click:append="show_password = !show_password"
+              dense
+              outlined
+              class="v-card--shaped"
+              :rules="rules.password"
+              :append-icon="!show_password ? mdiEyeOff : mdiEye"
+              v-model="user.password"
+              :label="$t('auth.password')"
+              :type="show_password ? 'text' : 'password'"
+              required
+              @click:append="show_password = !show_password"
             />
 
             <div class="my-2 mx-auto align-center align-content-center">
@@ -64,12 +64,12 @@
   </v-row>
 </template>
 <script>
-  import ajax from "@/auth/ajax";
-  import store from "@/store/";
-  import {Rules, User} from "./user.js";
-  import {mdiCloseCircleOutline, mdiEye, mdiEyeOff} from "@mdi/js";
+import ajax from "@/auth/ajax";
+import store from "@/store/";
+import { Rules, User } from "./user.js";
+import { mdiCloseCircleOutline, mdiEye, mdiEyeOff } from "@mdi/js";
 
-  export default {
+export default {
   name: "Login",
   data() {
     return {
@@ -95,7 +95,7 @@
             store.dispatch("setUser", { user: res.data.user });
             store.dispatch("setToken", { token: res.data.token });
             store.dispatch("setStateMessage", "Successfully logged in");
-            this.$router.push({name: "Home"});
+            this.$router.push({ name: "Home" });
           },
           error => {
             store.dispatch("setStateMessage", error.response.data);

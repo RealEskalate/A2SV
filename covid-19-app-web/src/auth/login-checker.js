@@ -10,7 +10,7 @@ export const ifNotAuthenticated = (to, from, next) => {
     next();
     return; // return if not authenticated
   }
-  router.push({name: "Login"});
+  router.push({ name: "Login" });
 };
 
 export const ifAuthenticated = (to, from, next) => {

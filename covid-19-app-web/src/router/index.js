@@ -1,8 +1,8 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import store from "@/store/";
-import {languages} from "@/plugins/i18n";
-import {ifAuthenticated, ifNotAuthenticated} from "../auth/login-checker";
+import { languages } from "@/plugins/i18n";
+import { ifAuthenticated, ifNotAuthenticated } from "../auth/login-checker";
 
 const NotFound = () => import("@/views/Errors/404.vue");
 const Home = () => import("@/views/Home/Home.vue");

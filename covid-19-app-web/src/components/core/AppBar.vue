@@ -11,16 +11,21 @@
         v-if="$vuetify.breakpoint.smAndDown && navOption === '2'"
         @click.stop="drawer = !drawer"
       />
-      <router-link data-v-step="0" class="d-flex align-center" to="/">
+      <v-btn
+        text
+        data-v-step="0"
+        class="d-flex align-center ml-3"
+        @click="$router.push({ name: 'Home' })"
+      >
         <v-img
           alt="Company Logo"
-          class="shrink ml-3"
+          class="shrink"
           contain
           src="/img/brand/blue.png"
           style="transition: width 0.2s ease"
           :width="brandWidth"
         />
-      </router-link>
+      </v-btn>
 
       <v-spacer />
       <v-btn
@@ -60,14 +65,14 @@
       </div>
       <v-divider class="mr-2" vertical light />
       <v-btn
-              small
-              dark
-              color="primary"
-              v-if="!loggedInUser"
-              class="v-card--shaped mx-1"
-              depressed
-              :to="{ name: 'Login' }"
-              v-text="$t('auth.login')"
+        small
+        dark
+        color="primary"
+        v-if="!loggedInUser"
+        class="v-card--shaped mx-1"
+        depressed
+        :to="{ name: 'Login' }"
+        v-text="$t('auth.login')"
       />
       <v-menu offset-y v-else>
         <template v-slot:activator="{ on }">
@@ -94,7 +99,7 @@
           <v-list-item link active-class="white--text primary" @click="logout">
             <v-icon small class="mr-2" v-text="mdiLogoutVariant" />
             <v-list-item-content>
-              <small v-text="$t('auth.logOut')"/>
+              <small v-text="$t('auth.logOut')" />
             </v-list-item-content>
           </v-list-item>
         </v-list>
@@ -117,21 +122,21 @@
 </template>
 
 <script>
-  import store from "@/store/";
-  import router from "@/router/";
-  import {
-    mdiAccountCog,
-    mdiAccountEdit,
-    mdiBookOpenVariant,
-    mdiHome,
-    mdiInformation,
-    mdiLogoutVariant,
-    mdiMap,
-    mdiNewspaper
-  } from "@mdi/js";
-  import {languages} from "../../plugins/i18n";
+import store from "@/store/";
+import router from "@/router/";
+import {
+  mdiAccountCog,
+  mdiAccountEdit,
+  mdiBookOpenVariant,
+  mdiHome,
+  mdiInformation,
+  mdiLogoutVariant,
+  mdiMap,
+  mdiNewspaper
+} from "@mdi/js";
+import { languages } from "../../plugins/i18n";
 
-  export default {
+export default {
   data: () => {
     return {
       mdiAccountCog,
@@ -159,7 +164,7 @@
         { text: "navbar.map", icon: mdiMap, to: "Map" }
       ],
       more_links: [
-        {text: "navbar.profile", icon: mdiAccountEdit, to: "Profile"}
+        { text: "navbar.profile", icon: mdiAccountEdit, to: "Profile" }
       ]
     };
   },
@@ -180,7 +185,7 @@
     logout() {
       store.dispatch("setToken", { token: null });
       store.dispatch("setUser", { user: null });
-      router.push({name: "Home"});
+      router.push({ name: "Home" });
     }
   },
   computed: {
