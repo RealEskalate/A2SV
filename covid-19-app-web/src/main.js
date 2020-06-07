@@ -26,6 +26,13 @@ Vue.mixin({
     };
   },
   methods: {
+    percentToColor(percentage, hue0 = 0, hue1 = 100) {
+      if (percentage >= 100) {
+        return hue1;
+      }
+      let hue = (percentage / 100) * (hue1 - hue0) + hue0;
+      return "hsl(" + hue + ", 100%, 45%)";
+    },
     htmlToText(htmlString) {
       let p = document.createElement("div");
       p.innerHTML = htmlString.trim();

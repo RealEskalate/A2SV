@@ -55,7 +55,11 @@ const actions = {
   setSymptomUser: ({ commit }, userId) => {
     commit("setSymTrackLoaders", { key: "userSymptoms", value: true });
     ajax
-      .get(`symptomuser/user/${userId}`)
+      .get(`symptomuser/user/${userId}`, {
+        params: {
+          demo: true
+        }
+      })
       .then(res => {
         commit("setSymptomUser", res.data);
       })
@@ -66,10 +70,21 @@ const actions = {
         commit("setSymTrackLoaders", { key: "userSymptoms", value: false });
       });
   },
-  setCities: ({ commit }) => {
-    ajax.get("cities").then(res => {
-      commit("setCities", res.data);
-    });
+  setCities: ({ commit }, { keyword, limit }) => {
+    commit("setSymTrackLoaders", { key: "cities", value: true });
+    ajax
+      .get("cities", {
+        params: {
+          matches: keyword,
+          limit: limit
+        }
+      })
+      .then(res => {
+        commit("setCities", res.data);
+      })
+      .finally(function() {
+        commit("setSymTrackLoaders", { key: "cities", value: false });
+      });
   },
   setLocationsSymptoms: ({ commit }, input) => {
     commit("setSymTrackLoaders", { key: "map", value: true });
@@ -86,7 +101,6 @@ const actions = {
         console.log(err.response.data);
       })
       .finally(() => {
-        commit("setMapLoaders", { key: "locationsSymptoms", value: false });
         commit("setSymTrackLoaders", { key: "map", value: false });
       });
   }
