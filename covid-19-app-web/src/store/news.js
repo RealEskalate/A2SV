@@ -1,4 +1,5 @@
 import axios from "axios";
+import ajax from "../auth/ajax";
 
 const state = {
   news: null,
@@ -67,8 +68,8 @@ const actions = {
   },
   setNews: ({ commit }, { page, size, country, sources }) => {
     commit("setNewsLoaders", { key: "list", value: true });
-    axios
-      .get(`${process.env.VUE_APP_BASE_URL}/api/news`, {
+    ajax
+      .get(`news`, {
         params: {
           page: page,
           size: size,

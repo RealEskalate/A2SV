@@ -58,7 +58,7 @@
         v-text="'Nothing Selected on the Map'"
       />
       <v-list v-else>
-        <v-subheader v-text="'Selected Item Details'" />
+        <v-subheader v-text="'Details'" />
         <v-list-item
           :key="index"
           v-for="(feature, index) in detailSingleFeatures"
@@ -173,15 +173,17 @@ import Supercluster from "supercluster";
 
 export default {
   name: "SymTrack",
+
   components: { Mapbox },
+
+  created() {
+    setInterval(this.fetchLocationsSymptoms, 5 * 60 * 1000);
+  },
+
   data: function() {
     return {
-      mdiPercent,
-      mdiCrosshairsGps,
       mdiBackburger,
       mdiForwardburger,
-      mdiBabyCarriage,
-      mdiGenderMaleFemaleVariant,
       api_token: process.env.VUE_APP_MAPBOX_API,
 
       sidebar: false,
@@ -226,6 +228,7 @@ export default {
       user_latitude: 9.015326
     };
   },
+
   watch: {
     keyword(newValue) {
       if (newValue && newValue.length >= 2) {
@@ -420,7 +423,7 @@ export default {
             ]
           }
         };
-        // subtitute with number of infections later
+        // substitute with number of infections later
         gridCollections.heavyGridCollection.features.push(feat);
         this.gridInfos[element._id] = element;
       }
@@ -614,7 +617,6 @@ export default {
           map.addLayer(this.makeDataCounts("small", "#fcfcfc"));
 
           map.on("click", "small-points", this.fetchSelectedItem);
-          map.on("click", "small-clusters", this.fetchSelectedItem);
         }
 
         if (
@@ -633,7 +635,6 @@ export default {
           map.addLayer(this.makeDataCounts("medium", "#fcfcfc"));
 
           map.on("click", "medium-points", this.fetchSelectedItem);
-          map.on("click", "medium-clusters", this.fetchSelectedItem);
         }
 
         if (
@@ -651,7 +652,6 @@ export default {
           map.addLayer(this.makeDataCounts("high", "#fcfcfc"));
 
           map.on("click", "high-points", this.fetchSelectedItem);
-          map.on("click", "high-clusters", this.fetchSelectedItem);
         }
       } else {
         if (
