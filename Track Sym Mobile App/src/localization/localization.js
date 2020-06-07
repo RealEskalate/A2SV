@@ -362,6 +362,7 @@ export let strings = new LocalizedStrings({
     Oct: "Oct",
     Nov: "Nov",
     Dec: "Dec",
+    SuccessfullySave : "Successfully Saved!",
   },
   en: {
     Information: "Information",
@@ -720,6 +721,7 @@ export let strings = new LocalizedStrings({
     Oct: "Oct",
     Nov: "Nov",
     Dec: "Dec",
+    SuccessfullySave : "Successfully Saved!",
   },
   am: {
     Information: "መረጃ",
@@ -1002,40 +1004,40 @@ export let strings = new LocalizedStrings({
     Oct: "ጥቅም",
     Nov: "ህዳር",
     Dec: "ታህሳ",
+    SuccessfullySave : "ተሳክቷል!",
   },
   tr: {
-    Information: "Information",
-    Data: "Data",
-    Map: "Map",
-    Symptoms: "My Symptoms",
-    Home: "Home",
-    News: "News",
-    Ethiopia: "Ethiopia",
-    About: "About",
-    Settings: "Settings",
-    EditProfile: "Edit Profile",
-    ChangePassword: "Change Password",
-    TermsAndPrivacy: "Terms & Privacy",
-    DarkMode: "Dark Mode",
-    LightMode: "Light Mode",
-    LogOut: "Log Out",
-    Search: "Search..",
-    Welcome: "Welcome",
-    Username: "User Name",
-    Password: "Password",
-    SignIn: "Sign in",
-    SignUp: "Sign up",
-    AgeGroup: "Age Group",
-    Male: "MALE",
-    Female: "FEMALE",
-    Gender: "Gender",
-    ConfirmPassword: "Confirm Password",
-    ReadMore: "Read More",
-    WhatIsCOVID19: "WHAT IS COVID-19 ?",
-    COVID19Symptoms: "SYMPTOMS",
-    Prevention: "PREVENTION",
-    HowDoesItSpreads: "HOW DOES IT SPREAD ?",
-    MessageFromUs: "MESSAGE FROM US",
+    Information: "Bilgi",
+    Data: "Veri",
+    Map: "Harita",
+    Symptoms: "Semptomlar",
+    Home: "Ana Sayfa",
+    News: "Haberler",
+    Ethiopia: "Etitopya",
+    About: "Hakkında",
+    Settings: "Ayarlar",
+    EditProfile: "Profili Düzenle",
+    ChangePassword: "Parolayı Değiştir",
+    TermsAndPrivacy: "Şartlar ve Gizlilik",
+    DarkMode: "Karanlık Mod",
+    LightMode: "Aydınlık Mod",
+    LogOut: "Çıkış",
+    Search: "Ara",
+    Welcome: "Hoşgeldiniz",
+    Username: "Kullanıcı Adı",
+    Password: "Parola",
+    SignIn: "Giriş Yap",
+    SignUp: "Kayıt Ol",
+    AgeGroup: "Yaş Grubu",
+    Male: "Bay",
+    Female: "Bayan",
+    Gender: "Cinsiyet",
+    ConfirmPassword: "Parolayı Onayla",
+    ReadMore: "Daha Fazla Oku",
+    WhatIsCOVID19: "COVID-19 Nedir?",
+    COVID19Symptoms: "Semptomlar",
+    Prevention: "Korunma",
+    MessageFromUs: "Mesajımız",
     Refresh: "Yenile",
     DailyStats: "Günlük İstatistikler",
     TotalStats: "Toplam İstatistikler",
@@ -1131,54 +1133,202 @@ export let strings = new LocalizedStrings({
     TermsAndConditions: "Şartlar ve Koşullar",
     ChangesToThisTermsAndConditions: "Bu Hüküm ve Koşulların Şartları",
     ComingSoon: "Yakında!!",
-    Heat: "Heat",
-    Regional: "Regional",
-    SaveChanges: "Save Changes",
-    PleaseTryAgain: "Please try again!",
+
+    Heat: "Sıcaklık",
+    Regional: "Bölgesel",
+    SaveChanges: "Değişiklikleri Kaydet",
+    Done: "Tamamlandı",
+    PleaseTryAgain: "Lütfen Tekrar Deneyiniz!",
     YouHaveEnteredWrongUsernameOrPasswordPleaseTryAgain:
-      "You have entered wrong username or password, Please try again",
-    SigninValidationText:
-      "You have entered wrong username or password, Please try again",
-    Dismiss: "Dismiss",
-    UsernameAlreadyExists: "Username already exists!",
+      "Yanlış kullanıcı adı veya parola girdiniz, lütfen tekrar deneyiniz!",
+    SigninValidationText: "Oturum Açma Doğrulama Metni!",
+    Dismiss: "Reddet",
+    UsernameAlreadyExists: "Bu kullanıcı adı zaten mevcut",
+
     PrivacyPolicyShortText:
-      "By creating an account, I agree to the Track Sym Terms of Use and Privacy Policy",
-    PassWordIsRequired: "Password is required",
-    PasswordDoesNotMatch: "Password doesn't match",
-    PleaseEnterYourUsername: "Please enter your username!",
-    UsernameIsRequired: "User name is required",
-    PleaseEnterYourPassword: "Please enter your password!",
-    PasswordDoNotMatch: "Password Don't match",
-    WrongCurrentPassword: "Wrong current password!",
-    Required: "required",
-    CurrentPassword: "CURRENT PASSWORD",
-    ConfirmNewPassword: "CONFIRM NEW PASSWORD",
-    ConfirmNewPassword: "Confirm New Password",
+      "Bir hesap oluşturarak TrackSym Kullanım Şartları ve Gizlilik Politikasını kabul ediyorum",
+
+    PassWordIsRequired: "Parola gerekli",
+    PasswordDoesNotMatch: "Parola eşleşmiyor",
+    PleaseEnterYourUsername: "Lütfen kullanıcı adınızı giriniz!",
+    UsernameIsRequired: "kullanıcı adı gerekli",
+    PleaseEnterYourPassword: "Lütfen parolanızı giriniz!",
+    PasswordDoNotMatch: "Parola eşleşmiyor",
+    WrongCurrentPassword: "Hatalı Parola!",
+    Required: "Gerekli",
+    CurrentPassword: "Geçerli Parola",
+    ConfirmNewPassword: "Yeni parolayı onayla",
+    ConfirmNewPassword: "Yeni parolayı onayla",
     YouHaveSuccessfullyChangedYourPassword:
-      "You have successfully changed your password",
+      "Parolanızı başarıyla değiştirdiniz!",
     YouHaveSuccessfullyChangedYourProfile:
-      "You have successfully changed your profile",
-    Default: "Default",
-    PasswordCanNotBeEmpty: "Password cannot be empty",
-    Cancel: "CANCEL",
-    Ok: "OK",
-    ConnectionProblem: "Connection Problem",
-    CouldNotConnectToServer: "Couldn't connect to server",
-    Done: "Done",
-    PleaseCheckYourConnection: "Check your internet connection and try again!",
-    AgreeingTermsAndServiceOnSignUp:
-      "By creating an account, I agree to the Track Sym Terms of\nUse and Privacy Policy",
-    CantConnectDueToConnection:
-      "Oops, looks like we have connection problem, please try again!",
-    PleaseSelectGender: "Please select your gender",
-    PleaseSelectAgeGroup: "Please select your age group",
-    LoadingGraphDescription: "Loading graph description",
-    LoadingCriteriaDescription: "Loading criteria description",
-    Languages: "Languages",
-    English: "English",
-    Amharic: "Amharic",
+      "Profilinizi başarıyla değiştirdiniz!",
+    Default: "Varsayılan",
+    PasswordCanNotBeEmpty: "Parola boş olamaz",
+    Cancel: "İptal",
+    Ok: "Tamam",
+    ConnectionProblem: "Bağlantı Hatası",
+    CouldNotConnectToServer: "Sunucuya Bağlanılamadı",
+    PleaseSelectGender: "Lütfen cinsiyetinizi seçiniz",
+    PleaseSelectAgeGroup: "Lütefn yaş grubunuzu seçiniz",
+    LoadingGraphDescription: "Grafik açıklaması yükleniyor",
+    LoadingCriteriaDescription: "Ölçüt açıklaması yükleniyor",
+    Languages: "Diller",
+    English: "İngilizce",
+    Amharic: "Amharca",
     Oromiffa: "Oromiffa",
-    Turkish: "Turkish",
+    Turkish: "Türkçe",
+    WhatIsCOVID19ShortDescription:
+      "Yeni Koronavirüs hastalığı akut solunum yetmezliği nedeniyle ortaya çıkan bulaşıcı bir hastalıktır",
+    SyptomsShortDescription:
+      "Ateş, Öksürük ve Nefes Darlığı hastalar tarafından rapor edilen genel belirtilerdir",
+    PreventionsShortDescription:
+      "Yönergelerde belirtilen maddeleri uygulayarak SARS-CoV-2 virüsünü kapmaktan, taşımaktan ve bulaştırmaktan kendinizi koruyunuz",
+    HowDoesItSpreadShortDescription:
+      "KOVİD-19 hastalığına sebep olan virüs, insandan insana en çok damlacık ve temas yoluyla geçmektedir",
+    MessageFromUsShortDescription:
+      "KOVİD-19 hastalığı hakkında dolaşan birçok bilgi arasında hangilerinin doğru, hangilerinin yanlış olduğunu bilmek önem arz etmektedir",
+    WhatIsCOVID19DetailInfoTitle: "KOVİD-19 NEDİR?",
+    WhatIsCOVID19DetailInfoDescription: "2019 KOROVİRÜS HASTALIĞI",
+    WhatIsCOVID19DetailInfoDescriptionContentOne:
+      "2019 yılında gerçekleşen koronovirüs hastalığına sebeb olan virüse; ağır akut solunum yolu yetersizliği sendromu Koronovirüs-2 (SARS-CoV-2) ismi verilmiştir. Bu KOVİD-19 hastalığına sebeb olan SARS-CoV-2 virüsü, insanlarda daha önce tespit edilmemiş bir koronovirüs türüdür. Genel olarak koronovirüsler, hayvanlarda görülen ve bazı hayvanlardan insanlara da bulaşabilen virüs türleridir.",
+    SyptomsDetailInfoTitle: "KOVİD-19 BELİRTİLERİ",
+    SyptomsDetailInfoDescription: "KOVİD-19’un GENEL BELİRTİLERİ",
+    SyptomsDetailInfoDescriptionContentOne:
+      "Şimdiye kadar bilinenlere göre, bu hastalığa yakalanmış bir kişi kuru öksürük, hafif ateş, yorgunluk ve solunum zorluğu gibi ilk başta fark edilmeyebilecek sorunlardan muzdarip olabilir.",
+    SyptomsDetailInfoDescriptionContentTwo:
+      "Salgını kontrol altına almak birkaç sebeple zor olmaktadır. Örneğin, belirtiler yaygın soğuk algınlığı veya grip ile çok benzerdir ve çok hızlı yayılır. Bununla birlikte, bazı insanlar virüse yakalansalar dahi herhangi bir belirti göstermezler. Ayrıca, KOVİD-19 ile enfekte olan kişilerin %80'i herhangi bir tedavi görmeden iyileşirler. İnsanlar dünyayı dolaştıkça, KOVİD-19’u dünyanın her yerine yaymışlar ve yaymaya da devam etmektedirler.",
+    SyptomsDetailInfoDescriptionMostListNameOne: "Yüksek Ateş",
+    SyptomsDetailInfoDescriptionMostListNameTwo: "Kuru Öksürük",
+    SyptomsDetailInfoDescriptionMostListNameThree: "Yorgunluk",
+    SyptomsDetailInfoDescriptionMostListNameFour: "Nefes Darlığı",
+    SyptomsDetailInfoDescriptionMostListNameFive: "Kas Ağrısı",
+    SyptomsDetailInfoDescriptionMostListInsideContentOne:
+      "39 derece ve üzeri ateş, KOVİD-19 hastaları tarafından rapor edilen en yaygın belirtilerden biri olup bu yüksek ateş bağışıklık sisteminin virüsle savaştığının bir göstergesidir.",
+    SyptomsDetailInfoDescriptionMostListInsideContentTwo:
+      "Mukus getirmeyen bir öksürüktür. Boğazınızın arkasında öksürük refleksinizi tetikleyen bu öksürüklere neden olan bir gıcıklanma hissi olabilir. Kuru öksürüklere genellikle KOVİD-19 gibi üst solunum yolu enfeksiyonları neden olur. Vakaların %60'ından fazlasında kuru öksürük semptom gözlenmektedir.",
+    SyptomsDetailInfoDescriptionMostListInsideContentThree:
+      "Enerji ve Motivasyon Eksikliği (fiziksel ve zihinsel)",
+    SyptomsDetailInfoDescriptionMostListInsideContentFour:
+      " Tıbbi olarak dispne olarak da bilinir - genellikle göğüste yoğun bir sıkışma, hava açlığı, nefes almada zorluk, nefes darlığı veya boğulma hissi olarak tanımlanır. Çok yorucu egzersiz, aşırı sıcaklıklar, obezite ve daha yüksek irtifada bulunulması gibi durumlar sağlıklı bir insanda nefes darlığına neden olabilir. Bu örneklerin dışında ise nefes darlığı büyük olasılıkla tıbbi bir sorunun belirtisidir.",
+    SyptomsDetailInfoDescriptionMostListInsideContentFive:
+      "Kronik ağrı, sertlik ve hassasiyet ile kendini gösteren kaslardaki ağrıdır. Bağları, tendonları, fasyayı, kasları, kemikleri ve organları bağlayan yumuşak dokularda gelişen kas ağrılarını tanımlar.",
+    SyptomsDetailInfoDescriptionLessListNameOne: "Baş Ağrısı",
+    SyptomsDetailInfoDescriptionLessListNameTwo: "Koku Duyusu Eksikliği",
+    SyptomsDetailInfoDescriptionLessListNameThree: "Boğaz Ağrısı",
+    SyptomsDetailInfoDescriptionLessListNameFour: "Üşüme",
+    SyptomsDetailInfoDescriptionLessListInsideContentone:
+      "Kafada keskin, zonklayan veya donuk bir his olabilir.",
+    SyptomsDetailInfoDescriptionLessListInsideContentTwo:
+      "It is the partial or complete loss of the sense of smell.",
+    SyptomsDetailInfoDescriptionLessListInsideContentTwo:
+      "Koku duyusunun kısmi veya tamamen kaybıdır.",
+    SyptomsDetailInfoDescriptionLessListInsideContentThree:
+      " Ağız ve gırtlak arkasında oluşan kızarıklık ve şişlik nedeniyle yutulduğunda daha da kötüleşen boğazdaki ağrılı, kuru veya cızırtılı bir his.",
+    SyptomsDetailInfoDescriptionLessListInsideContentFour:
+      "Görünür bir sebep olmadan gelen üşüme hissi. Bu hissi genellikle kaslarınız tekrar tekrar genişleyip büzüştüğünde ve cildinizdeki damarlar kasıldığında hissedersiniz. Üşüme hissi bir ateşle ortaya çıkabilir ve titremeye neden olabilir.",
+    PreventionDetailInfoTitle: "Yakalanmamak",
+    PreventionDetailInfoDescription: "TEDAVİ ETMEK DEĞİL ÖNLEMEK!",
+    PreventionDetailInfoDescriptionMethodOneNameOne: "El Yıkama",
+    PreventionDetailInfoDescriptionMethodOneNameTwo: "Sosyal Mesafe",
+    PreventionDetailInfoDescriptionMethodOneInsideContentOne:
+      "Ellerinizi düzenli olarak ya alkol bazlı bir dezenfektan ile ovarak temizleyin ya da en az 20 saniye boyunca sabun ve suyla yıkayın. Elleriniz birçok yüzeye dokunur ve virüsle temas edebilir. Ellerinizi gözlerinize, burnunuza veya ağzınıza götürdüğünüzde virüsü bu bölgelere aktarabilirsiniz. Bu bölgelerden de virüs vücudunuza girebilir ve sizi hasta edebilir.",
+    PreventionDetailInfoDescriptionMethodOneInsideContetnTwo:
+      "Öksüren veya hapşuran kişilerden en az 2 metre mesafede durmalısınız",
+    PreventionDetailInfoDescriptionMethodTwoNameOne: "Solunum Hijyeni",
+    PreventionDetailInfoDescriptionMethodTwoNameTwo: "Haberleri Takip Edin",
+    PreventionDetailInfoDescriptionMethodTwoInsideContentOne:
+      " Kendinizin ve çevrenizdeki insanların iyi bir solunum hijyeni uyguladığından emin olun. Öksürdüğünüzde veya hapşırdığınızda ağzınızı ve burnunuzu bir mendil ile veya dirseğinizin içi ile kapatın. Kullanılmış mendilleri beklemeden çöpe atın.",
+    PreventionDetailInfoDescriptionMethodTwoInsideContetnTwo:
+      " KOVİD-19 hakkındaki son gelişmelerden mutlaka haberdar olun. Kendinizi ve başkalarını KOVİD-19'dan nasıl koruyacağınız konusunda Sağlık Bankanlığı ve bakanlığa bağlı kuruluşlar ile işvereniniz tarafından verilen tavsiyelere uyun.",
+    HowItSpreadsDetailInfoTitle: "Nasıl Yayılır?",
+    HowItSpreadsDetailInfoDescription: "Koronovirüs nasıl bulaşıcı hale gelir?",
+    HowItSpreadsDetailInfoDescriptionContentOne:
+      "Konakçılarını hızla hastaneye yatırtan ve kısa sürede karantina altına alınmalarını sağlayan çoğu ölümcül virüsün aksine, Virüsü kapan kişi ilk bulaşmadan günler sonra bile herhangi bir semptom göstermeyebilir ve virüs bu durumda oldukça bulaşıcı olacağından hızla yayılabilir.",
+    HowItSpreadsDetailInfoDescriptionContentTwo:
+      " Çoğu hasta 14 güne kadar herhangi bir belirti göstermediği için, karantinaya alınmadan ve tedavi edilmeden önce birçok kişiyi enfekte eder. Koronavirüs sadece başkalarının ellerine dokunmak gibi doğrudan temaslarla değil, telefon, masa, sandalye, merdiven ve asansör düğmeleri gibi dijital cihazlar ile dolaylı temaslarla ve bu yüzeylere temas eden ellerinizi yüzünüze götürmenizle size de bulaşır.",
+    MessageFromUsDetailInfoTitle: " TrackSym’in Mesajı",
+    MessageFromUsDetailInfoDescriptionContentOne:
+      " İçinde bulunduğumuz pandemi sürecinde durumun kontrol altına alınabilmesi için hazır ve istekli bir şekilde yetkililerin ve sağlık görevlilerinin tavsiyelerini, talimatlarını ve görevlerini uygulamalı ve kabul etmeliyiz. Ebeveynler bu süreçte soğukkanlı ve kendilerinden emin bir şekilde hareket etmeli ve çocuklarına da bu yönde örnek olmalıdırlar. Bu yeni virüsün hastalığın çocukları veya hamile kadınları nasıl etkilediği hakkında yeterince bilgimiz olmadığından, her yaştan insan virüsle enfekte olabilir ve virüsü bulaştırabilir.",
+    MessageFromUsDetailInfoDescriptionContentTwo:
+      "Salgını kontrol altına almak için alınan önlemlerden okulların kapatılması ve fiziksel mesafe kısıtlamaları gibi uygulamalar çocuklar üzerinde daha fazla etki bırakabilir. Bu nedenle söz konusu uygulamaların negatif etkisini minimuma indirmek için çocuklar bu süreçte özel ilgi gösterilmelidir. ",
+    DetailInfoAuthorFullName: "Weakpeadia",
+    InfoCovidDetailParagraphOneSubOne:
+      "Koronavirüsler sadece SARS-CoV-2 ile sınırlı olmayıp bu ailede yüzlerce virüs bulunmaktadır. Bu virüslerden çoğu yarasalar, tavuklar, develer ve kediler gibi hayvanları enfekte eder.",
+    InfoCovidDetailParagraphOneSubTwo:
+      "Bazen bir türü enfekte eden virüsler, diğer türleri enfekte etmeye başlayacak şekilde mutasyona uğrayabilirler. Buna türler arası iletim veya yayılma denir.",
+    InfoCovidDetailParagraphOneSubThree:
+      "İlk koronavirüs 1930'larda tavuklarda keşfedildi. Yaklaşık 30 sene sonra 1960'larda ise insanlarda ilk kez koronavirüslere rastlanıldı.",
+    InfoCovidDetailParagraphOneSubFour:
+      "Bugüne kadar insanlarda hastalığa neden olan yedi koronavirüs türü keşfedildi. Bunlardan dört tanesi endemik (belirli insanlar arasında veya belirli bir bölgede düzenli olarak bulunur) olup genellikle hafif hastalığa neden olur, ancak üçü çok daha ciddi ve hatta ölümcül hastalığa neden olabilir.",
+    InfoCovidDetailParagraphTwoSubOne:
+      "Virüsün ilk olarak et ve canlı hayvan satan bir pazardan çıktığı söyleniyor. Hayvanlar ile doğrudan temas eden insanların virüsü ilk kapan ve sonrasında yayanlar olduğuna inanılıyor.",
+    InfoCovidDetailParagraphTwoSubTwo:
+      "Ya bu hayvanlara dokunarak ya da etlerini yiyerek. Virüs hava yoluyla da yayılabilmektedir. Ancak, bu hastalığın gerçek kaynağı henüz bilinmemektedir.",
+    InfoCovidDetailParagraphThreeSubOne:
+      "KOVİD-19 ile ilgili yaygın bir yanlış kanı, koronavirüslerin sadece yaşlıları etkilediğidir. Söz konusu inanış gerçekten oldukça uzak olup virüs çeşitli yaş gruplarından birçok insanı öldürmektedir.",
+    InfoCovidDetailParagraphThreeSubTwo:
+      "KOVİD-19'a bağlı ölüm riski 80 ve üzeri yaş grubunda önemli ölçüde yüksektir (%14.8'e kadar), 40 yaşın altındaki yaş grupları için ise bu oran %1 in altındadır.",
+    InfoCovidDetailParagraphThreeSubThree:
+      "Ancak bu durum gençlerin etkilenmeyeceği veya ölmeyeceği anlamına gelmez. Dolayısıyla bu ve bunun gibi yanlış bilgilerin felakete yol açabileceği unutulmamalıdır. ",
+    SyptomsDetailInfoDescriptionMostListNameOne: "Yüksek Ateş",
+    SyptomsDetailInfoDescriptionMostListNameTwo: "Kuru Öksürük",
+    SyptomsDetailInfoDescriptionMostListNameThree: "Yorgunluk",
+    SyptomsDetailInfoDescriptionMostListNameFour: "Nefes Darlığı",
+    SyptomsDetailInfoDescriptionMostListNameFive: "Kas Ağrısı",
+    SyptomsDetailInfoDescriptionMostListInsideContentOne:
+      "39 derece ve üzeri ateş.",
+    SyptomsDetailInfoDescriptionMostListInsideContentTwo:
+      "Mukus getirmeyen bir öksürük olup 8 haftadan daha fazla kalabilir.",
+    SyptomsDetailInfoDescriptionMostListInsideContentThree:
+      "Enerji ve Motivasyon Eksikliği (fiziksel ve zihinsel)",
+    SyptomsDetailInfoDescriptionMostListInsideContentFour:
+      "Nefes alıp vermede zorlanmak, yeterince oksijen alamadığı hissine kapılmak.",
+    SyptomsDetailInfoDescriptionMostListInsideContentFive:
+      "Kronik ağrı, sertlik ve hassasiyet ile kendini gösteren kaslardaki ağrı.",
+    SyptomsDetailInfoDescriptionLessListNameOne: "Baş Ağrısı",
+    SyptomsDetailInfoDescriptionLessListNameTwo: "Boğaz Ağrısı",
+    SyptomsDetailInfoDescriptionLessListNameThree: "Üşüme",
+    SyptomsDetailInfoDescriptionLessListNameFour: "Koku Duyusu Eksikliği",
+    SyptomsDetailInfoDescriptionLessListInsideContentone:
+      "Kafada keskin, zonklayan veya donuk bir his",
+    InfoDetailLessCommonSyptomsListLableTwo:
+      "Yutkundukça daha da kötü hala gelen kızarıklık ve kaşıntı hissi",
+    SyptomsDetailInfoDescriptionLessListInsideContentFour:
+      "Görünür bir sebep olmadan gelen üşüme hissi",
+    SyptomsDetailInfoDescriptionLessListInsideContentTwo:
+      "Koku duyusunun kısmi kaybı veya burun tıkanıklığıyla ilişkilidir",
+    InfoDetailPreventionMethodsTitleOne: "El Yıkama",
+    InfoDetailPreventionMethodsTitleTwo: "Sosyal Mesafe",
+    InfoDetailPreventionMethodsTitleThree: "Solunum Hijyeni",
+    InfoDetailPreventionMethodsTitleFour: "Haberleri Takip Edin",
+    InfoDetailPreventionMethodsLabelOne:
+      "Ellerinizi su ve sabunla en az 20 saniye boyunca yıkayınız",
+    InfoDetailPreventionMethodsLabelTwo:
+      "Grup içerisinde diğer insanlardan en az 2 metre uzakta durun.",
+    InfoDetailPreventionMethodsLabelThree:
+      "Dışarı çıkarken ağız ve burnunuzu kapatan maske takınız",
+    InfoDetailPreventionMethodsLabelFour:
+      "Sağlık Bakanlığı ve ilgili kurumlar tarafından önerilen tavsiyelere uyunuz",
+    InfoDetailPreventionMethodsTagOne: "> 20 Saniye",
+    InfoDetailPreventionMethodsTagTwo: "2 Metre",
+    InfoDetailPreventionMethodsTagThree: "Yüzü Örten",
+    InfoDetailPreventionMethodsTagFour: "Doğru ile Yanlış",
+    InfoDetailMessageFromTrackSym:
+      "Enfekte olmamaya ve güvende kalmaya dikkat etmelisiniz. Ağır hasta olmasanız bile, belirtiler ortaya çıkmadan önce sevdiklerinize hastalığı bulaştırabilirsiniz.",
+    Jan: "Jan",
+    Feb: "Feb",
+    Mar: "Mar",
+    Apr: "Apr",
+    May: "May",
+    Jan: "Jun",
+    Jul: "Jul",
+    Aug: "Aug",
+    Sep: "Sep",
+    Oct: "Oct",
+    Nov: "Nov",
+    Dec: "Dec",
+    SuccessfullySave : "Successfully Saved!",
   },
   orm: {
     Information: "Information",
