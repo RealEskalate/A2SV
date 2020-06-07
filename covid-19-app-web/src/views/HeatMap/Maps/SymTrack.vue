@@ -69,7 +69,7 @@
 
           <v-list-item-content>
             <span>
-              {{ feature.name }} :
+              {{ feature.name }}:
               <span
                 v-if="feature.key === 'location'"
                 class="grey--text"
@@ -123,8 +123,8 @@
               :key="key"
               v-for="(value, key) in selectedInfo[feature.key]"
             >
-              <span v-if="!selectedInfo.user_id" v-text="key + '  : '" />
-              <span class="grey--text text--darken-2" v-text="' ' + value" />
+              <span v-if="!selectedInfo.user_id" v-text="key + ' : '" />
+              <span class="grey--text text--darken-2" v-text="value" />
             </v-chip>
           </div>
         </template>
@@ -447,9 +447,6 @@ export default {
       else if (this.pointInfos[id]) {
         store.dispatch("setSymptomUser", id);
         this.selectedInfo = this.pointInfos[id];
-        this.selectedInfo.gender = null;
-        this.selectedInfo.age_group = null;
-        this.selectedInfo.value = [];
       }
     },
 
@@ -614,7 +611,7 @@ export default {
           map.addLayer(
             this.makeDataClusters("small", ["#FFC107", "#FF8F00", "#FF6F00"])
           );
-          map.addLayer(this.makeDataCounts("small", "#757575"));
+          map.addLayer(this.makeDataCounts("small", "#fcfcfc"));
 
           map.on("click", "small-points", this.fetchSelectedItem);
           map.on("click", "small-clusters", this.fetchSelectedItem);
@@ -633,7 +630,7 @@ export default {
           map.addLayer(
             this.makeDataClusters("medium", ["#EF6C00", "#E65100", "#FF5722"])
           );
-          map.addLayer(this.makeDataCounts("medium", "#757575"));
+          map.addLayer(this.makeDataCounts("medium", "#fcfcfc"));
 
           map.on("click", "medium-points", this.fetchSelectedItem);
           map.on("click", "medium-clusters", this.fetchSelectedItem);
@@ -651,7 +648,7 @@ export default {
           map.addLayer(
             this.makeDataClusters("high", ["#B71C1C", "#E91E63", "#9C27B0"])
           );
-          map.addLayer(this.makeDataCounts("high", "#757575"));
+          map.addLayer(this.makeDataCounts("high", "#fcfcfc"));
 
           map.on("click", "high-points", this.fetchSelectedItem);
           map.on("click", "high-clusters", this.fetchSelectedItem);
