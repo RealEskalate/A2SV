@@ -119,7 +119,7 @@
             <v-chip
               v-else
               small
-              class="ma-1 v-card--shaped"
+              class="ma-1 v-card--shaped shadow-sm"
               :key="key"
               v-for="(value, key) in selectedInfo[feature.key]"
             >
@@ -570,20 +570,20 @@ export default {
     },
 
     makeDataPoint(
-      type,
+      size,
       cluster = true,
-      size = 8,
+      radius = 8,
       opacity = ["get", "point_opacity"]
     ) {
       return {
-        id: type + "-points",
+        id: size + "-points",
         type: "circle",
         paint: {
-          "circle-radius": size,
+          "circle-radius": radius,
           "circle-opacity": opacity,
           "circle-color": ["get", "color"]
         },
-        source: type,
+        source: size,
         cluster: cluster,
 
         layout: {
