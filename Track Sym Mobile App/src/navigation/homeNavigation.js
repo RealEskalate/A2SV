@@ -32,7 +32,7 @@ import { LangContext } from "../../assets/lang/language-context";
 const BottomTab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-const initialTabRoute = "Information";
+const initialTabRoute = "Data";
 
 const MenuIcon = (props) => <Icon name="menu-2-outline" {...props} />;
 const EditIcon = (props) => <Icon name="edit-2-outline" {...props} />;
