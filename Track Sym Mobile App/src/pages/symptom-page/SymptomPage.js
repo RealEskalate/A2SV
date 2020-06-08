@@ -155,7 +155,7 @@ export default class SymptomPage extends Component {
 
     let newThis = this; // create variable for referencing 'this'
     await fetch(
-      "http://sym-track.herokuapp.com/api/symptoms?language=" +
+      "https://sym-track.herokuapp.com/api/symptoms?language=" +
         this.state.currLanguage,
       {
         method: "GET",
