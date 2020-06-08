@@ -40,7 +40,7 @@ exports.get_all_news = async (req, res) => {
 
   news = news.concat(await fetchGoogleNews(req));
 
-  let policies;  
+  let policies = [];  
   if(req.query.country == "World"){
     news = news.concat(await fetchCDCNews());
   }else if(req.query.country){
@@ -274,9 +274,9 @@ function paginateAndFilter(data, req) {
   var size = parseInt(req.query.size) || 15;
 
   if (req.query.source) {
-    data = data.filter((item) => req.query.source.split(",").includes(item.source)
-    );
+    data = data.filter((item) => req.query.source.split(",").includes(item.source));
   }
+
 
   data.sort((a, b) => (a.date < b.date ? 1 : b.date < a.date ? -1 : 0));
 
