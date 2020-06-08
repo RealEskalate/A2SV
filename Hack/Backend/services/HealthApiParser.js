@@ -1011,7 +1011,7 @@ exports.getWorldStatistics = async (req, rates) => {
       results = calculateRate(results, dailyConfirmed, criteria);
     }
   }
-
+  results.sort((a, b) => (a.t > b.t ? 1 : -1));
   return results;
 };
 
