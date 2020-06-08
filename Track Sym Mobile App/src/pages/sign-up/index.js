@@ -305,7 +305,7 @@ export default ({ navigation }) => {
             ></Button>
           </View>
           <Text style={styles.signInLabel} category="h4" status="control">
-            {strings.Password}
+            {strings.SignUp}
           </Text>
         </View>
       </ImageOverlay>

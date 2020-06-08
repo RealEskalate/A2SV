@@ -8,7 +8,7 @@ import {
   Icon,
 } from "@ui-kitten/components";
 import { ImageOverlay } from "./extra/image-overlay.component";
-import { spreadData as data } from "./extra/data";
+// import { spreadData as data } from "./extra/data";
 import styles from "./extra/styles";
 import { strings } from "../../localization/localization";
 import { LangContext } from "../../../assets/lang/language-context";
@@ -20,6 +20,18 @@ export default PrevDetailScreen = (props) => {
   const langContext = React.useContext(LangContext);
   const lang = langContext.lang;
   strings.setLanguage(lang);
+
+  const data = {
+    title: strings.HowItSpreadsDetailInfoTitle,
+    description: strings.HowDoesCoronavirusBecomeContagious,
+    content: strings.HowItSpreadsDetailInfoDescriptionContentOne,
+    content_two: strings.HowItSpreadsDetailInfoDescriptionContentTwo,
+    image: require("./assets/spread.jpg"),
+    date: "19 Sep, 2018",
+    author: {
+      fullName: strings.DetailInfoAuthorFullName,
+    },
+  };
 
   const navigateBack = () => {
     props.navigation.goBack();

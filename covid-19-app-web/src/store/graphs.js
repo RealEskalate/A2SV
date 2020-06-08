@@ -1,4 +1,4 @@
-import axios from "axios";
+import ajax from "../auth/ajax";
 import moment from "moment";
 import { langConverter } from "./index";
 
@@ -303,8 +303,8 @@ export default {
       for (let i = 0; i < criteria.length; i++) {
         let cr = criteria[i];
         commit("incrementGraphLoaders", mode);
-        axios
-          .get(`${process.env.VUE_APP_BASE_URL}/api/statistics`, {
+        ajax
+          .get(`statistics`, {
             params: {
               criteria: converter[cr.label],
               country: country,
@@ -336,8 +336,8 @@ export default {
     setDailyCounts({ commit }, { criteria, country, start_date, end_date }) {
       commit("resetGraphLoaders", "daily");
       commit("incrementGraphLoaders", "daily");
-      axios
-        .get(`${process.env.VUE_APP_BASE_URL}/api/statistics`, {
+      ajax
+        .get(`statistics`, {
           params: {
             criteria: converter[criteria],
             country: country,
@@ -361,8 +361,8 @@ export default {
       { criteria, country, start_date, end_date, mode }
     ) {
       commit("incrementGraphLoaders", "countryCompare");
-      axios
-        .get(`${process.env.VUE_APP_BASE_URL}/api/statistics`, {
+      ajax
+        .get(`statistics`, {
           params: {
             criteria: converter[criteria],
             country: country,
@@ -412,8 +412,8 @@ export default {
       };
       commit("resetGraphLoaders", "diseaseCompare");
       commit("incrementGraphLoaders", "diseaseCompare");
-      axios
-        .get(`${process.env.VUE_APP_BASE_URL}/api/diseases`)
+      ajax
+        .get(`diseases`)
         .then(response => {
           let collection = [];
           response.data.forEach(function(load) {
@@ -440,8 +440,8 @@ export default {
     },
     setCountryResources({ commit }, { country, lang }) {
       commit("setGraphLoaders", { key: "countryResources", value: true });
-      axios
-        .get(`${process.env.VUE_APP_BASE_URL}/api/publicResources/${country}`, {
+      ajax
+        .get(`publicResources/${country}`, {
           params: {
             language: langConverter[lang]
           }
@@ -475,15 +475,12 @@ export default {
     },
     setGraphDescriptions({ commit }, { lang }) {
       commit("setGraphLoaders", { key: "descriptions", value: true });
-      axios
-        .get(
-          `${process.env.VUE_APP_BASE_URL}/api/resources/statistics-description`,
-          {
-            params: {
-              language: langConverter[lang]
-            }
+      ajax
+        .get(`resources/statistics-description`, {
+          params: {
+            language: langConverter[lang]
           }
-        )
+        })
         .then(response => {
           let res = {};
           response.data.forEach(function(desc) {

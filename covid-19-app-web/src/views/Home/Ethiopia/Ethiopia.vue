@@ -4,52 +4,34 @@
       <v-col cols="12">
         <h3 class="display-1 font-weight-thin mb-5" data-v-step="3">
           {{ $t("titles.ethiopiaStatisticsTitle") }}
-          <v-img
-            src="/img/ethiopia/under-construction.svg"
-            class="v-icon mx-auto"
-            width="15rem"
-          />
+          <!--          <v-img-->
+          <!--            src="/img/ethiopia/under-construction.svg"-->
+          <!--            class="v-icon mx-auto"-->
+          <!--            width="15rem"-->
+          <!--          />-->
         </h3>
-        <small class="red--text"
-          >*The following statistical data of Ethiopia is not accurate.</small
-        >
+        <!--        <small-->
+        <!--          class="red&#45;&#45;text"-->
+        <!--          v-text="-->
+        <!--            '*The following statistical data of Ethiopia is not accurate.'-->
+        <!--          "-->
+        <!--        />-->
       </v-col>
     </v-row>
-    <v-row class="my-5">
+    <v-row class="my-5" v-if="ethiopianData">
       <v-col cols="12">
         <v-card class="overflow-hidden" outlined shaped>
           <v-row>
-            <v-col sm="3" cols="6" class="border-right">
-              <v-img
-                src="/img/ethiopia/sick.svg"
-                class="small-icon mx-auto my-3"
-              />
-              <h1 class="text-center">{{ ethiopianData.total.confirmed }}</h1>
-              <p class="text-center">{{ $t("totalCases") }}</p>
-            </v-col>
-            <v-col sm="3" cols="6" class="border-right">
-              <v-img
-                src="/img/ethiopia/recovered.svg"
-                class="small-icon mx-auto my-3"
-              />
-              <h1 class="text-center">{{ ethiopianData.total.recovered }}</h1>
-              <p class="text-center">{{ $t("recovered") }}</p>
-            </v-col>
-            <v-col sm="3" cols="6" class="border-right">
-              <v-img
-                src="/img/ethiopia/dead.svg"
-                class="small-icon mx-auto my-3"
-              />
-              <h1 class="text-center">{{ ethiopianData.total.deaths }}</h1>
-              <p class="text-center">{{ $t("death") }}</p>
-            </v-col>
-            <v-col sm="3" cols="6">
-              <v-img
-                src="/img/ethiopia/active.svg"
-                class="small-icon mx-auto my-3"
-              />
-              <h1 class="text-center">{{ ethiopianData.total.active }}</h1>
-              <p class="text-center">{{ $t("activeCases") }}</p>
+            <v-col
+              sm="3"
+              cols="6"
+              class="border-right"
+              :key="item.key"
+              v-for="item in totalData"
+            >
+              <v-img :src="item.icon" class="small-icon mx-auto my-3" />
+              <h1 class="text-center" v-text="ethiopianData.total[item.key]" />
+              <p class="text-center" v-text="$t(item.label)" />
             </v-col>
           </v-row>
         </v-card>
@@ -60,6 +42,15 @@
         <v-card class="px-7 py-5" outlined shaped>
           <v-row>
             <v-col md="6" cols="12">
+              <v-select
+                dense
+                outlined
+                :label="$t('metrics')"
+                class="v-card--shaped"
+                v-model="regional_criteria"
+                :items="allCriteria"
+                @input="setChartData"
+              />
               <doughnut-chart
                 class="v-card--shaped grey lighten-5 shadow-in pb-6 px-3 px-xl-12"
                 :chartData="chartData"
@@ -75,18 +66,33 @@
                 <template v-slot:default>
                   <thead>
                     <tr>
-                      <th class="text-left">{{ $t("regions") }}</th>
-                      <th class="text-left">{{ $t("totalCases") }}</th>
-                      <th class="text-left">{{ $t("activeCases") }}</th>
-                      <th class="text-left">{{ $t("totalDeath") }}</th>
+                      <th class="text-left" v-text="$t('regions')" />
+                      <th class="text-left" v-text="$t('totalCases')" />
+                      <th class="text-left" v-text="$t('recovered')" />
+                      <th
+                        class="text-left"
+                        v-text="$t('activeCases')"
+                        v-if="regional_criteria.split('_')[0] === 'total'"
+                      />
+                      <th class="text-left" v-text="$t('death')" />
                     </tr>
                   </thead>
                   <tbody>
                     <tr v-for="item in regionalData" :key="item._id">
-                      <td>{{ item.region }}</td>
-                      <td>{{ item.total.confirmed }}</td>
-                      <td>{{ item.total.active }}</td>
-                      <td>{{ item.total.deaths }}</td>
+                      <td v-text="item.region" />
+                      <td
+                        v-text="item[regional_criteria.split('_')[0]].confirmed"
+                      />
+                      <td
+                        v-text="item[regional_criteria.split('_')[0]].recovered"
+                      />
+                      <td
+                        v-if="regional_criteria.split('_')[0] === 'total'"
+                        v-text="item[regional_criteria.split('_')[0]].active"
+                      />
+                      <td
+                        v-text="item[regional_criteria.split('_')[0]].deaths"
+                      />
                     </tr>
                   </tbody>
                 </template>
@@ -128,9 +134,7 @@
                   </v-btn>
                 </v-col>
                 <v-col class="py-0" cols="7" sm="6" md="7" xl="9">
-                  <small class="d-inline-block my-2">
-                    {{ $t(add.name) }}
-                  </small>
+                  <small class="d-inline-block my-2" v-text="add.name" />
                 </v-col>
               </v-row>
             </v-col>
@@ -138,14 +142,10 @@
         </v-card>
       </v-col>
     </v-row>
-    <v-col cols="12" v-if="!isMobile()">
-      <ethiopia-map />
-    </v-col>
   </v-container>
 </template>
 
 <script>
-const EthiopiaMap = () => import("./EthiopiaMap");
 import { DoughnutChart } from "../Charts/charts.js";
 import { mdiPhone } from "@mdi/js";
 import store from "@/store/";
@@ -153,18 +153,17 @@ import store from "@/store/";
 export default {
   name: "Ethiopia",
   components: {
-    DoughnutChart,
-    EthiopiaMap
+    DoughnutChart
   },
   created() {
-    this.setChartData();
-  },
-  mounted() {
     store.dispatch("setEthiopia", { lang: this.$i18n.locale });
   },
   watch: {
     "$i18n.locale"() {
       this.setChartData();
+    },
+    regionalData(newValue) {
+      this.parseRegionalData(newValue);
     }
   },
   computed: {
@@ -176,30 +175,45 @@ export default {
     }
   },
   methods: {
-    isMobile() {
-      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-        navigator.userAgent
-      );
+    parseRegionalData(data) {
+      let allRegions = [];
+      let addresses = [];
+      let regionalStats = {
+        total_confirmed: [],
+        total_recovered: [],
+        total_active: [],
+        total_deaths: [],
+
+        daily_confirmed: [],
+        daily_recovered: [],
+        daily_deaths: []
+      };
+
+      data.forEach(d => {
+        allRegions.push(d.region);
+        addresses.push({
+          name: d.region,
+          phone: d.phone_number
+        });
+
+        ["daily", "total"].forEach(i => {
+          for (let key in d[i]) {
+            regionalStats[i + "_" + key].push(d[i][key]);
+          }
+        });
+      });
+
+      this.allRegions = allRegions;
+      this.addresses = addresses;
+      this.regionalStats = regionalStats;
+      this.setChartData();
     },
     setChartData() {
       this.chartData = {
-        hoverBackgroundColor: "red",
-        hoverBorderWidth: 10,
-        labels: [
-          this.$t("ethiopiaRegions.addisAbaba"),
-          this.$t("ethiopiaRegions.oromia"),
-          this.$t("ethiopiaRegions.amhara"),
-          this.$t("ethiopiaRegions.tigrai"),
-          this.$t("ethiopiaRegions.benishangulGumuz"),
-          this.$t("ethiopiaRegions.gambela"),
-          this.$t("ethiopiaRegions.snnpr"),
-          this.$t("ethiopiaRegions.afar"),
-          this.$t("ethiopiaRegions.somali"),
-          this.$t("ethiopiaRegions.direDawa")
-        ],
+        labels: this.allRegions,
         datasets: [
           {
-            label: "Data One",
+            label: "Regional Statistics",
             backgroundColor: [
               "#41B883",
               "#e443dc",
@@ -212,7 +226,7 @@ export default {
               "#8e24aa",
               "#dd2c00"
             ],
-            data: [219, 20, 13, 11, 2, 0, 6, 22, 51, 8]
+            data: this.regionalStats[this.regional_criteria]
           }
         ]
       };
@@ -221,52 +235,42 @@ export default {
   data() {
     return {
       mdiPhone,
-      addresses: [
+      allCriteria: [
+        { text: "Total Confirmed", value: "total_confirmed" },
+        { text: "Total Recovered", value: "total_recovered" },
+        { text: "Total Active", value: "total_active" },
+        { text: "Total Deaths", value: "total_deaths" },
+
+        { text: "Daily Confirmed", value: "daily_confirmed" },
+        { text: "Daily Recovered", value: "daily_recovered" },
+        { text: "Daily Deaths", value: "daily_deaths" }
+      ],
+      regional_criteria: "total_confirmed",
+      regionalStats: {},
+      allRegions: [],
+      totalData: [
         {
-          name: "ethiopiaRegions.addisAbaba",
-          phone: 6406
+          icon: "/img/ethiopia/sick.svg",
+          key: "confirmed",
+          label: "totalCases"
         },
         {
-          name: "ethiopiaRegions.oromia",
-          phone: 6955
+          icon: "/img/ethiopia/recovered.svg",
+          key: "recovered",
+          label: "recovered"
         },
         {
-          name: "ethiopiaRegions.amhara",
-          phone: 6981
+          icon: "/img/ethiopia/dead.svg",
+          key: "deaths",
+          label: "death"
         },
         {
-          name: "ethiopiaRegions.snnpr",
-          phone: 6929
-        },
-        {
-          name: "ethiopiaRegions.tigrai",
-          phone: 6244
-        },
-        {
-          name: "ethiopiaRegions.somali",
-          phone: 6599
-        },
-        {
-          name: "ethiopiaRegions.direDawa",
-          phone: 6407
-        },
-        {
-          name: "ethiopiaRegions.afar",
-          phone: 6220
-        },
-        {
-          name: "ethiopiaRegions.benishangulGumuz",
-          phone: 6016
-        },
-        {
-          name: "ethiopiaRegions.harari",
-          phone: 6864
-        },
-        {
-          name: "ethiopiaRegions.gambela",
-          phone: 6184
+          icon: "/img/ethiopia/active.svg",
+          key: "active",
+          label: "activeCases"
         }
       ],
+      addresses: [],
       chartOptions: {
         hoverBorderWidth: 20,
         legend: {

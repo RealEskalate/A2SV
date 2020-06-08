@@ -29,6 +29,8 @@ function App() {
   const [theme, setTheme] = React.useState("light");
   const [lang, setLang] = React.useState("en");
   const [init, setInit] = React.useState("Welcome");
+  const [gen, setGen] = React.useState("");
+  const [age, setAge] = React.useState("");
 
   const navigatorTheme = {
     ...DefaultTheme,
@@ -84,11 +86,14 @@ function App() {
         languageStore.dispatch(languageActions.changeLanguage("en"));
       }
 
+      setAge(userAgeGroup);
+      setGen(userGender);
+
       if (fisrtSession) {
         setInit("LoginScreen");
       }
     } catch (e) {
-      alert(e);
+      // alert(e);
     }
     setUserId(userID);
     setLoading(false);
@@ -150,7 +155,7 @@ function App() {
           >
             <NavigationContainer theme={navigatorTheme}>
               {userId !== "" && userId !== null ? (
-                <AppNavigator /> // if user has already signed in go to main page
+                <AppNavigator age={age} gen={gen}/> // if user has already signed in go to main page
               ) : (
                 <AuthNavigator init={init} /> //else go to sign in
               )}

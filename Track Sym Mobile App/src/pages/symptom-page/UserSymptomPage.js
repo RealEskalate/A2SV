@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { ScrollView, StyleSheet, View, SafeAreaView } from "react-native";
+import { StyleSheet, Image, SafeAreaView } from "react-native";
 import userIDStore from "../../data-management/user-id-data/userIDStore";
 import symptomStore from "../../data-management/user-symptom-data/symptomStore";
 import languageStore from "../../data-management/language_data/languageStore";
@@ -13,10 +13,8 @@ import {
   ListItem,
   Divider,
 } from "@ui-kitten/components";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { ThemeContext } from "../../../assets/themes/theme-context";
 import { strings } from "../../localization/localization";
-import { LangContext } from "../../../assets/lang/language-context";
 
 MapboxGL.setAccessToken(
   "pk.eyJ1IjoiZmVyb3g5OCIsImEiOiJjazg0czE2ZWIwNHhrM2VtY3Y0a2JkNjI3In0.zrm7UtCEPg2mX8JCiixE4g"
@@ -69,8 +67,8 @@ export default class UserSymptomPage extends Component {
         await this.setState({ currLanguage: "English" });
         break;
     }
-    this.fetchUserSymptoms(userIDStore.getState().userId);
-    this.fetchData();
+    await this.fetchUserSymptoms(userIDStore.getState().userId);
+    await this.fetchData();
 
     this.timer = setInterval(() => {
       if (this.state.userSymptoms.length != 0) {
@@ -89,7 +87,7 @@ export default class UserSymptomPage extends Component {
           }),
         })
           .then((response) => response.json())
-          .then((json) => {
+          .then(() => {
             //console.log(json);
           })
           .catch((err) => {
@@ -157,15 +155,19 @@ export default class UserSymptomPage extends Component {
 
   //If user hasn't registered any symptoms
   emptySymptomList = () => {
-    const customTheme = this.context;
     return (
       <Layout
         style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
       >
-        <MaterialCommunityIcons
+        {/* <MaterialCommunityIcons
           name="grease-pencil"
           size={60}
           color={customTheme.theme === "light" ? "black" : "white"}
+        /> */}
+        <Image
+          style={{ width: 200, height: 250 }}
+          resizeMode="contain"
+          source={require("../../../assets/images/empty.png")}
         />
         <Text>{strings.YouHaveNotRegisteredAnySymptom}</Text>
       </Layout>
@@ -205,29 +207,3 @@ export default class UserSymptomPage extends Component {
     );
   }
 }
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  symptoms: {
-    borderColor: "#000000",
-    marginBottom: 5,
-    borderRadius: 10,
-    backgroundColor: "#1976d2",
-    color: "#ffffff",
-    flex: 1,
-  },
-  subtitle: {
-    borderColor: "#000000",
-    marginBottom: 5,
-    borderRadius: 30,
-    backgroundColor: "#1976d2",
-    color: "#ffffff",
-    flex: 1,
-    fontSize: 14,
-  },
-  emptyCard: {
-    marginTop: 80,
-    borderRadius: 50,
-  },
-});

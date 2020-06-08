@@ -58,7 +58,6 @@ function categorizeData(commit, data) {
   for (let i = 0; i < len; i++) {
     if (data[i]["region_code"] === "ET") {
       commit("setEthiopia", data[i]);
-      console.log(data[i]);
     } else {
       regional.push(data[i]);
       regionalByKey[data[i]["region_code"]] = data[i];
