@@ -15,7 +15,7 @@ steps:
         "run",
         "deploy",
         "a2sv-web",
-        "--region=us-central1",
+        "--region=us-east4",
         "--platform=managed",
         "--image=gcr.io/zeta-ascent-272907/a2sv-web:$SHORT_SHA",
       ]
