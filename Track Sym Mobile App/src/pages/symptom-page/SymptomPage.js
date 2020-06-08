@@ -62,7 +62,6 @@ export default class SymptomPage extends Component {
     await this.setState({ currLangCode: languageStore.getState() });
     switch (this.state.currLangCode) {
       case "am":
-        console.log("Check");
         await this.setState({ currLanguage: "Amharic" });
         break;
       case "en":
