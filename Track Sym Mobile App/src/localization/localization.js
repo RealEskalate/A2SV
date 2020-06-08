@@ -918,7 +918,7 @@ export let strings = new LocalizedStrings({
 
     SyptomsDetailInfoTitle: "የኮ.ቪ.ድ. 19 የህመም ምልክቶች",
     SyptomsDetailInfoDescription:
-      "የተለመዱ/ ኮ.ቪ.ድ. 19 የህመም ምልክቶች COMMON SYMPTOMS OF CORONAVIRUS",
+      "የተለመዱ/ ኮ.ቪ.ድ. 19 የህመም ምልክቶች",
     SyptomsDetailInfoDescriptionContentOne:
       "እስካሁን ከሚታወቀው የኮሮና ወይም COVID-19 ምልክቶች ደረቅ ሳል፣ ከፍተኛ ትኩሳት፣ ድካም ድካም ማለት እና የመተንፈስ ችግር ናቸው። ",
     SyptomsDetailInfoDescriptionContentTwo:

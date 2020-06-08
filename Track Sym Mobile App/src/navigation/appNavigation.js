@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import {
   Drawer,
@@ -13,7 +13,7 @@ import {
   TopNavigation,
   TopNavigationAction,
 } from '@ui-kitten/components';
-import { StyleSheet, SafeAreaView } from 'react-native';
+import { SafeAreaView } from 'react-native';
 import { HomeStackNavigator } from './homeNavigation';
 import { SettingNavigator } from '../pages/settings/settingStack';
 import userIDStore from '../data-management/user-id-data/userIDStore';
@@ -22,7 +22,7 @@ import AboutPage from '../pages/about-page/About';
 import { strings } from '../localization/localization';
 import { LangContext } from '../../assets/lang/language-context';
 import Ethiopia from '../pages/ethiopia-page/ethiopia';
-import AsyncStorage from '@react-native-community/async-storage';
+import {ReferenceScreen} from '../pages/references';
 const { Navigator, Screen } = createDrawerNavigator();
 
 const HomeIcon = (props) => <Icon {...props} name='home-outline' />;
@@ -31,7 +31,7 @@ const InfoIcon = (props) => <Icon {...props} name='info-outline' />;
 const FlagIcon = (props) => <Icon {...props} name='flag-outline' />;
 const SettingIcon = (props) => <Icon {...props} name='settings-2-outline' />;
 const ArrowIosBackIcon = (style) => <Icon {...style} name='arrow-ios-back' />;
-const reloadIcon = (style) => <Icon {...style} name='refresh-outline' />;
+const LinkIcon = (style) => <Icon {...style} name='external-link-outline' />;
 
 export const AppNavigator = (props) => {
   //setting up the language
@@ -104,7 +104,7 @@ export const AppNavigator = (props) => {
     </React.Fragment>
   );
 
-  const Footer = (props) => (
+  const Footer = () => (
     <React.Fragment>
       <Divider />
       <Layout level='2' style={{ padding: 10 }}>
@@ -126,6 +126,7 @@ export const AppNavigator = (props) => {
       <DrawerItem title={strings.Ethiopia} accessoryLeft={FlagIcon} />
       <DrawerItem title={strings.About} accessoryLeft={InfoIcon} />
       <DrawerItem title={strings.Settings} accessoryLeft={SettingIcon} />
+      <DrawerItem title='REFERENCES' accessoryLeft={LinkIcon} />
     </Drawer>
   );
 
@@ -181,6 +182,7 @@ export const AppNavigator = (props) => {
       <Screen name='ETHIOPIA' component={GoToEthiopia} />
       <Screen name='ABOUT' component={GoToAboutPage} />
       <Screen name='SETTINGS' component={SettingNavigator} />
+      <Screen name='REFERENCES' component={ReferenceScreen} />
     </Navigator>
   );
 };

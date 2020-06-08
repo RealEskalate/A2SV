@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { StyleSheet, SafeAreaView } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
 import {
@@ -19,8 +19,6 @@ import { LangContext } from "../../../assets/lang/language-context";
 import * as actions from "../../data-management/user-id-data/userIDActions";
 import userIDStore from "../../data-management/user-id-data/userIDStore";
 import { strings } from "../../localization/localization";
-import languageStore from "../../data-management/language_data/languageStore";
-import * as languageActions from "../../data-management/language_data/languageActions";
 
 const ArrowIosBackIcon = (style) => <Icon {...style} name="arrow-ios-back" />;
 const EditProfile = (style) => <Icon {...style} name="edit-2-outline" />;
