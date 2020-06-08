@@ -74,10 +74,10 @@ export default class SymptomPage extends Component {
         await this.setState({ currLanguage: "English" });
         break;
     }
-    this.fetchSymptoms();
-    this.fetchUserSymptoms(userIDStore.getState().userId);
-    this.sync();
-    this.fetchData();
+    await this.fetchSymptoms();
+    await this.fetchUserSymptoms(userIDStore.getState().userId);
+    await this.sync();
+    await this.fetchData();
   };
 
   //fetches symptoms that user has already registere
@@ -152,7 +152,7 @@ export default class SymptomPage extends Component {
     this.setState({
       loading: true,
     });
-    console.log("Bearer " + userIDStore.getState().userToken);
+
     let newThis = this; // create variable for referencing 'this'
     await fetch(
       "http://sym-track.herokuapp.com/api/symptoms?language=" +
