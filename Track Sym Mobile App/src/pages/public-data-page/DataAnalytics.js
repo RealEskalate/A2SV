@@ -592,7 +592,6 @@ class DataAnalytics extends React.Component {
       "http://sym-track.herokuapp.com/api/resources/mobile/statistics?language=" +
       this.state.currLanguage +
       "&filter=adults&title=" +
-
       title;
     await fetch(query, {
       method: "GET",
@@ -643,12 +642,18 @@ class DataAnalytics extends React.Component {
               this.componentDidMount();
             }}
             containerStyle={{ padding: 5, flex: 6, color: "#fff" }}
-            textInputStyle={{
-              padding: 10,
-              borderWidth: 1,
-              borderColor: "#ccc",
-
-              borderRadius: 5,
+            textInputProps={{
+              placeholder: this.state.search,
+              placeholderTextColor:
+                customTheme.theme === "light" ? "black" : "white",
+              underlineColorAndroid: "transparent",
+              style: {
+                padding: 10,
+                borderWidth: 1,
+                borderColor: "#ccc",
+                borderRadius: 5,
+                color: "black",
+              },
             }}
             itemStyle={{
               padding: 10,
@@ -661,8 +666,6 @@ class DataAnalytics extends React.Component {
             itemTextStyle={{ color: "#000" }}
             items={this.state.countries}
             defaultIndex={0}
-            placeholder={this.state.search}
-            placeholderStyle={{ color: "#fff" }}
             resetValue={false}
             underlineColorAndroid="transparent"
           />
