@@ -4,7 +4,6 @@ import {
   Platform,
   StyleSheet,
   Image,
-  TouchableOpacity,
   SafeAreaView,
 } from "react-native";
 import {
@@ -61,7 +60,7 @@ const NewsScreen = (props) => {
             refreshing: false,
           });
         })
-        .catch((error) => {
+        .catch(() => {
           // alert('Wrong');
         });
     } else {
@@ -85,7 +84,7 @@ const NewsScreen = (props) => {
             searching: false,
           });
         })
-        .catch((error) => {
+        .catch(() => {
           alert(
             "Couldn't connect",
             "Unable to connect to server, please try again!"

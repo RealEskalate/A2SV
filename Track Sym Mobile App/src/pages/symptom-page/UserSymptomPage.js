@@ -13,10 +13,8 @@ import {
   ListItem,
   Divider,
 } from '@ui-kitten/components';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { ThemeContext } from '../../../assets/themes/theme-context';
 import { strings } from '../../localization/localization';
-import { LangContext } from '../../../assets/lang/language-context';
 
 MapboxGL.setAccessToken(
   'pk.eyJ1IjoiZmVyb3g5OCIsImEiOiJjazg0czE2ZWIwNHhrM2VtY3Y0a2JkNjI3In0.zrm7UtCEPg2mX8JCiixE4g'
@@ -89,7 +87,7 @@ export default class UserSymptomPage extends Component {
           }),
         })
           .then((response) => response.json())
-          .then((json) => {
+          .then(() => {
             //console.log(json);
           })
           .catch((err) => {
@@ -157,7 +155,6 @@ export default class UserSymptomPage extends Component {
 
   //If user hasn't registered any symptoms
   emptySymptomList = () => {
-    const customTheme = this.context;
     return (
       <Layout
         style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -208,29 +205,4 @@ export default class UserSymptomPage extends Component {
     );
   }
 }
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  symptoms: {
-    borderColor: '#000000',
-    marginBottom: 5,
-    borderRadius: 10,
-    backgroundColor: '#1976d2',
-    color: '#ffffff',
-    flex: 1,
-  },
-  subtitle: {
-    borderColor: '#000000',
-    marginBottom: 5,
-    borderRadius: 30,
-    backgroundColor: '#1976d2',
-    color: '#ffffff',
-    flex: 1,
-    fontSize: 14,
-  },
-  emptyCard: {
-    marginTop: 80,
-    borderRadius: 50,
-  },
-});
+
