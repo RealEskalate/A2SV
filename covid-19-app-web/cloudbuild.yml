@@ -1,0 +1,21 @@
+steps:
+  - name: node
+    entrypoint: npm
+    args: ["install"]
+  - name: "gcr.io/cloud-builders/docker"
+    args: ["build", "-t", "gcr.io/zeta-ascent-272907/a2sv:$SHORT_SHA", "."]
+    dir: "covid-19-app-web"
+  - name: "gcr.io/cloud-builders/docker"
+    args: ["push", "gcr.io/zeta-ascent-272907/a2sv:$SHORT_SHA"]
+    dir: "covid-19-app-web"
+  - name: "gcr.io/cloud-builders/gcloud"
+    args:
+      [
+        "beta",
+        "run",
+        "deploy",
+        "a2sv-web",
+        "--region=us-central1",
+        "--platform=managed",
+        "--image=gcr.io/zeta-ascent-272907/a2sv:$SHORT_SHA",
+      ]
