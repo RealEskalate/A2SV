@@ -1055,7 +1055,9 @@ schedule.scheduleJob("0 */4 * * *", async function () {
 let sort_countries = async () => {
   let date = new Date();
   date.setDate(date.getDate() - 2);
-  let dateKey = date.toLocaleDateString().slice(0, -2);
+  let local = date.toLocaleDateString();
+  let dateKey =
+    local.slice(0, local.length - 4) + local.slice(local.length - 2);
   let data = await MapData.find({}).select(`Data.Country Data.${dateKey} -_id`);
   let countryDict = {};
   data.forEach(
