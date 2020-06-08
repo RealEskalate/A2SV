@@ -1,9 +1,9 @@
 From node:13-slim
 
-WORKDIR /api
+WORKDIR /web
 
 
-ADD . /api
+ADD . /web
 
 RUN npm install
 CMD node server.js
