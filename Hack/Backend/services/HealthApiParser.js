@@ -931,33 +931,34 @@ let update_db = async function () {
   request_url = "https://covid.ourworldindata.org/data/owid-covid-data.csv";
   let testData = await axios.get(request_url);
   let data = testData.data;
+  let tests = [];
   if (data) {
     let options = { delimiter: ",", quote: '"' };
     data = csvjson.toObject(data, options);
     for (var index = 0; index < data.length; index++) {
       let item = data[index];
       if (item.total_tests) {
-        let test_data = await Tests.findOne({
-          date: new Date(item.date),
+        let test = new Tests({
+          _id: mongoose.Types.ObjectId(),
+          country: item.location,
           country_slug: item.iso_code,
+          tests: item.total_tests,
+          date: item.date,
         });
-        if (!test_data) {
-          let test = new Tests({
-            _id: mongoose.Types.ObjectId(),
-            country: item.location,
-            country_slug: item.iso_code,
-            tests: item.total_tests,
-            date: item.date,
-          });
-          await test.save();
-        }
+        tests.push(test);
       }
+    }
+    if (tests.length > 0) {
+      try {
+        await Tests.collection.drop();
+      } catch (err) {}
+      await Tests.insertMany(tests);
     }
   }
   console.log("Finished Saving Data");
 };
 // Schedules fetching everyday
-schedule.scheduleJob("0 0 * * *", async function () {
+schedule.scheduleJob("0 */4 * * *", async function () {
   await update_db();
 });
 
@@ -1024,8 +1025,8 @@ let update_world_db = async function () {
   if (data) {
     const options = { delimiter: ",", quote: '"' };
     data = csvjson.toObject(data, options);
-
     let caseData = [];
+    console.log(data.length);
     for (var index = 0; index < data.length; index++) {
       let item = data[index];
 
@@ -1039,9 +1040,12 @@ let update_world_db = async function () {
         })
       );
     }
-
-    await WorldDataModel.collection.drop();
-    await WorldDataModel.insertMany(caseData);
+    if (caseData.length > 0) {
+      try {
+        await WorldDataModel.collection.drop();
+      } catch (err) {}
+      await WorldDataModel.insertMany(caseData);
+    }
   }
 
   console.log("update-completed");
