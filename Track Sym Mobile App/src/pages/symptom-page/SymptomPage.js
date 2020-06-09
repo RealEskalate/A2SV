@@ -74,10 +74,10 @@ export default class SymptomPage extends Component {
         await this.setState({ currLanguage: "English" });
         break;
     }
-    await this.fetchSymptoms();
-    await this.fetchUserSymptoms(userIDStore.getState().userId);
-    await this.sync();
-    await this.fetchData();
+    this.fetchSymptoms();
+    this.fetchUserSymptoms(userIDStore.getState().userId);
+    this.sync();
+    this.fetchData();
   };
 
   //fetches symptoms that user has already registere
