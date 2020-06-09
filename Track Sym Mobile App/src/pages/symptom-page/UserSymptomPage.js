@@ -67,8 +67,8 @@ export default class UserSymptomPage extends Component {
         await this.setState({ currLanguage: "English" });
         break;
     }
-    await this.fetchUserSymptoms(userIDStore.getState().userId);
-    await this.fetchData();
+    this.fetchUserSymptoms(userIDStore.getState().userId);
+    this.fetchData();
 
     this.timer = setInterval(() => {
       if (this.state.userSymptoms.length != 0) {
