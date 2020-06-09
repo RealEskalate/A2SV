@@ -15,7 +15,7 @@
       width="350"
       v-model="sidebar"
       class="shadow-sm pb-9"
-      style="z-index: 2; position: absolute;"
+      style="z-index: 3; position: absolute;"
     >
       <v-list-item class="my-2 shadow-sm p-sticky">
         <v-list-item-content>
@@ -74,9 +74,8 @@
                 v-if="feature.key === 'location'"
                 class="grey--text"
                 v-text="
-                  `[ ${selectedInfo.location.coordinates[0].toFixed(
-                    3
-                  )}, ${selectedInfo.location.coordinates[0].toFixed(3)} ]`
+                  `[ ${selectedInfo.location.coordinates[0].toFixed(3)},
+                  ${selectedInfo.location.coordinates[1].toFixed(3)} ]`
                 "
               />
               <span
@@ -452,7 +451,11 @@ export default {
       if (!id) this.selectedInfo = null;
       else if (this.gridInfos[id]) this.selectedInfo = this.gridInfos[id];
       else if (this.pointInfos[id]) {
-        store.dispatch("setSymptomUser", { userId: id, demo: true });
+        store.dispatch("setSymptomUser", {
+          userId: id,
+          lang: this.$i18n.locale,
+          demo: true
+        });
         this.selectedInfo = this.pointInfos[id];
       }
     },

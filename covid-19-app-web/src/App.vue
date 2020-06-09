@@ -54,7 +54,7 @@ export default {
     firstVisit: () => store.getters.getFirstVisit
   },
   watch: {
-    "$i18n.locale": newValue => {
+    "$i18n.locale"(newValue) {
       store.dispatch("setEthiopia", { lang: newValue });
       store.dispatch("setLanguagePreference", { lang: newValue });
       store.dispatch("setGraphDescriptions", { lang: newValue });
@@ -67,6 +67,12 @@ export default {
         age_group: "Adults",
         lang: newValue
       });
+      store.dispatch("setSymptomUser", {
+        userId: this.loggedInUser._id,
+        demo: false,
+        lang: newValue
+      });
+      store.dispatch("setAllSymptoms", { lang: newValue });
     }
   }
 };

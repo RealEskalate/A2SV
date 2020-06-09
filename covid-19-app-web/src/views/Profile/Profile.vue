@@ -226,7 +226,13 @@
                 v-text="$t('auth.noSymptoms')"
               />
               <v-row v-else>
-                <v-col cols="3" :key="i" v-for="(symptom, i) in userSymptoms">
+                <v-col
+                  cols="12"
+                  sm="4"
+                  md="3"
+                  :key="i"
+                  v-for="(symptom, i) in userSymptoms"
+                >
                   <v-card
                     shaped
                     outlined
@@ -292,7 +298,13 @@
                   v-text="$t('auth.noSymptoms')"
                 />
                 <v-row v-else>
-                  <v-col cols="3" :key="i" v-for="(symptom, i) in allSymptoms">
+                  <v-col
+                    cols="12"
+                    sm="4"
+                    md="3"
+                    :key="i"
+                    v-for="(symptom, i) in allSymptoms"
+                  >
                     <v-item v-slot:default="{ active, toggle }">
                       <v-hover v-slot:default="{ hover }">
                         <v-card
@@ -521,7 +533,6 @@ export default {
       ajax
         .patch(`users`, this.form_user)
         .then(res => {
-          console.log(res.data);
           store.dispatch("setUser", { user: res.data });
           this.setMode();
           this.setAlert("Successfully Updated Profile", "success");
@@ -559,7 +570,11 @@ export default {
           symptoms: this.symptomIDs()
         })
         .then(() => {
-          store.dispatch("setSymptomUser", { userId: this.loggedInUser._id, demo: true });
+          store.dispatch("setSymptomUser", {
+            userId: this.loggedInUser._id,
+            lang: this.$i18n.locale,
+            demo: true
+          });
           this.setMode();
           this.setAlert("Successfully Updated Symptoms", "success");
         })
@@ -591,8 +606,12 @@ export default {
     }
   },
   created() {
-    store.dispatch("setSymptomUser", { userId: this.loggedInUser._id, demo: true });
-    store.dispatch("setAllSymptoms");
+    store.dispatch("setSymptomUser", {
+      userId: this.loggedInUser._id,
+      demo: false,
+      lang: this.$i18n.locale
+    });
+    store.dispatch("setAllSymptoms", { lang: this.$i18n.locale });
   },
   watch: {
     userSymptoms() {
@@ -603,7 +622,7 @@ export default {
     userSymptoms: () => {
       let res = [];
       let retrieved = store.getters.getSymptomUser;
-      retrieved.forEach(function(sym) {
+      retrieved.symptom_info.forEach(function(sym) {
         res.push(sym.Symptom);
       });
       return res;

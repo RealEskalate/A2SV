@@ -1,4 +1,5 @@
 import ajax from "../auth/ajax";
+import { langConverter } from "./index";
 
 const state = {
   allSymptoms: [],
@@ -41,10 +42,14 @@ const mutations = {
 };
 
 const actions = {
-  setAllSymptoms: ({ commit }) => {
+  setAllSymptoms: ({ commit }, { lang }) => {
     commit("setSymTrackLoaders", { key: "allSymptoms", value: true });
     ajax
-      .get(`symptoms`)
+      .get(`symptoms`, {
+        params: {
+          language: langConverter[lang]
+        }
+      })
       .then(res => {
         commit("setAllSymptoms", res.data);
       })
@@ -55,11 +60,12 @@ const actions = {
         commit("setSymTrackLoaders", { key: "allSymptoms", value: false });
       });
   },
-  setSymptomUser: ({ commit, getters }, { userId, demo }) => {
+  setSymptomUser: ({ commit, getters }, { userId, lang, demo }) => {
     commit("setSymTrackLoaders", { key: "userSymptoms", value: true });
     ajax
       .get(`symptomuser/user/${userId}`, {
         params: {
+          language: langConverter[lang],
           probability: true,
           iso: getters.getCurrentCountry.code,
           demo: demo
