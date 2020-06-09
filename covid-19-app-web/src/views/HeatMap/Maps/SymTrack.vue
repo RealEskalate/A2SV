@@ -293,7 +293,7 @@ export default {
       let gender = null;
       let age_group = null;
       let retrieved = store.getters.getSymptomUser;
-      retrieved.forEach(function(sym) {
+      retrieved.symptom_info.forEach(function(sym) {
         res.push(sym.Symptom.name);
         if (!gender) gender = sym.gender;
         if (!age_group) age_group = sym.age_group;
@@ -452,7 +452,7 @@ export default {
       if (!id) this.selectedInfo = null;
       else if (this.gridInfos[id]) this.selectedInfo = this.gridInfos[id];
       else if (this.pointInfos[id]) {
-        store.dispatch("setSymptomUser", id);
+        store.dispatch("setSymptomUser", { userId: id, demo: true });
         this.selectedInfo = this.pointInfos[id];
       }
     },

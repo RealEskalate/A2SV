@@ -2,7 +2,10 @@ import ajax from "../auth/ajax";
 
 const state = {
   allSymptoms: [],
-  symptomUser: [],
+  symptomUser: {
+    probability: 0,
+    symptom_info: []
+  },
   cities: [],
   locationsSymptoms: null
 };
@@ -52,12 +55,14 @@ const actions = {
         commit("setSymTrackLoaders", { key: "allSymptoms", value: false });
       });
   },
-  setSymptomUser: ({ commit }, userId) => {
+  setSymptomUser: ({ commit, getters }, { userId, demo }) => {
     commit("setSymTrackLoaders", { key: "userSymptoms", value: true });
     ajax
       .get(`symptomuser/user/${userId}`, {
         params: {
-          demo: true
+          probability: true,
+          iso: getters.getCurrentCountry.code,
+          demo: demo
         }
       })
       .then(res => {

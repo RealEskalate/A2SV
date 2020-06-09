@@ -203,13 +203,14 @@ export default {
   },
   watch: {
     localCountry(newValue) {
-      this.country = newValue;
+      this.country = newValue.name;
       this.resetPage();
     }
   },
   mounted() {
     store.dispatch("setSources");
-    store.dispatch("setCurrentCountry");
+    this.country = this.localCountry.name;
+    this.resetPage();
   },
   computed: {
     news: () => store.getters.getNews,

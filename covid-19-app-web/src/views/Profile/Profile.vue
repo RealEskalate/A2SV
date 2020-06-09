@@ -559,7 +559,7 @@ export default {
           symptoms: this.symptomIDs()
         })
         .then(() => {
-          store.dispatch("setSymptomUser", this.loggedInUser._id);
+          store.dispatch("setSymptomUser", { userId: this.loggedInUser._id, demo: true });
           this.setMode();
           this.setAlert("Successfully Updated Symptoms", "success");
         })
@@ -591,7 +591,7 @@ export default {
     }
   },
   created() {
-    store.dispatch("setSymptomUser", this.loggedInUser._id);
+    store.dispatch("setSymptomUser", { userId: this.loggedInUser._id, demo: true });
     store.dispatch("setAllSymptoms");
   },
   watch: {
