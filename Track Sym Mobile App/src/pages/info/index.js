@@ -39,7 +39,7 @@ export default InformationScreen = (props) => {
       link: "PrevDetailScreen",
     },
     {
-      name: strings.HowDoesItSpreads,
+      name: strings.HowItSpreadsDetailInfoTitle,
       description: strings.HowDoesItSpreadShortDescription,
       photo: require("./assets/cough.jpg"),
       time: 16,

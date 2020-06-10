@@ -95,8 +95,8 @@ const HomeTabsNavigator = ({ navigation }) => {
   };
 
   const names = [
-    strings.Information,
     strings.Data,
+    strings.Information,
     strings.Map,
     strings.MySymptoms,
   ];
@@ -131,8 +131,8 @@ const HomeTabsNavigator = ({ navigation }) => {
           navigation.navigate(state.routeNames[index]);
         }}
       >
-        <BottomNavigationTab title={strings.Information} icon={InfoIcon} />
         <BottomNavigationTab title={strings.Data} icon={DataIcon} />
+        <BottomNavigationTab title={strings.Information} icon={InfoIcon} />
         <BottomNavigationTab title={strings.Map} icon={MapIcon} />
         <BottomNavigationTab title={strings.Symptoms} icon={PersonIcon} />
       </BottomNavigation>
@@ -161,8 +161,8 @@ const HomeTabsNavigator = ({ navigation }) => {
         backBehavior="initialRoute"
         tabBar={(props) => <HomeBottomNavigation {...props} />}
       >
-        <BottomTab.Screen name="Information" component={InformationScreen} />
         <BottomTab.Screen name="Data" component={DataAnalytics} />
+        <BottomTab.Screen name="Information" component={InformationScreen} />
         <BottomTab.Screen name="Map" component={MapScreen} />
         <BottomTab.Screen name="Symptoms" component={UserSymptomPage} />
       </BottomTab.Navigator>

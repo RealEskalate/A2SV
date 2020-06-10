@@ -167,8 +167,7 @@ export let strings = new LocalizedStrings({
     Ok: "OK",
     ConnectionProblem: "Connection Problem",
     CouldNotConnectToServer: "Couldn't connect to server",
-    PleaseCheckYourConnection:
-      "Please check your internet connection and try again!",
+    PleaseCheckYourConnection: "Check your internet connection and try again!",
     AgreeingTermsAndServiceOnSignUp:
       "By creating an account, I agree to the Track Sym Terms of\nUse and Privacy Policy",
     CantConnectDueToConnection:
@@ -207,7 +206,7 @@ export let strings = new LocalizedStrings({
     SyptomsDetailInfoDescriptionContentOne:
       "From what is known so far, a person infected with this disease may suffer from dry cough, mild fever, tiredness, and breathing issues which may go unnoticed at first. ",
     SyptomsDetailInfoDescriptionContentTwo:
-      "The virus is difficult to contain for the following reasons. The symptoms are similar to common cold or flu, and it spreads very rapidly.\n\n Some people will get COVID-19 but don 't show any symptoms. In fact, 80% of people infected with COVID-19 recover without any special treatment. As people move around the world, COVID-19 has spread in all parts of the world and is continuing to do so.",
+      "The virus is difficult to contain for the following reasons. The symptoms are similar to common cold or flu, and it spreads very rapidly. Some people will get COVID-19 but don 't show any symptoms. In fact, 80% of people infected with COVID-19 recover without any special treatment. As people move around the world, COVID-19 has spread in all parts of the world and is continuing to do so.",
 
     SyptomsDetailInfoDescriptionMostListNameOne: "High Fever",
     SyptomsDetailInfoDescriptionMostListNameTwo: "Dry Cough",
@@ -355,14 +354,14 @@ export let strings = new LocalizedStrings({
     Mar: "Mar",
     Apr: "Apr",
     May: "May",
-    Jan: "Jun",
+    Jun: "Jun",
     Jul: "Jul",
     Aug: "Aug",
     Sep: "Sep",
     Oct: "Oct",
     Nov: "Nov",
     Dec: "Dec",
-    SuccessfullySave : "Successfully Saved!",
+    SuccessfullySave: "Successfully Saved!",
   },
   en: {
     Information: "Information",
@@ -721,7 +720,7 @@ export let strings = new LocalizedStrings({
     Oct: "Oct",
     Nov: "Nov",
     Dec: "Dec",
-    SuccessfullySave : "Successfully Saved!",
+    SuccessfullySave: "Successfully Saved!",
   },
   am: {
     Information: "መረጃ",
@@ -917,8 +916,7 @@ export let strings = new LocalizedStrings({
       "Severe Acute Respiratory Syndrome Coronavirus-2 (ሳርስ ኮቭ 2) ለአዲሱ የኮሮና ቫይረስ የተሰጠው ስም ነው፡፡ ኮቪድ 19 ቫይረሱ ለሚያስከትለው በሽታ የተሰጠው ስም ነው። ኮሮናቫይረስ በእንስሳት ውስጥ የሚተላለፉ ቫይረሶች ሲሆኑ ከእነዚህም መካከል አንዳንዶቹ የሰው ልጆች ላይ በቀላሉ ሊጠቁ ይችላሉ ፡፡",
 
     SyptomsDetailInfoTitle: "የኮ.ቪ.ድ. 19 የህመም ምልክቶች",
-    SyptomsDetailInfoDescription:
-      "የተለመዱ/ ኮ.ቪ.ድ. 19 የህመም ምልክቶች",
+    SyptomsDetailInfoDescription: "የተለመዱ/ ኮ.ቪ.ድ. 19 የህመም ምልክቶች",
     SyptomsDetailInfoDescriptionContentOne:
       "እስካሁን ከሚታወቀው የኮሮና ወይም COVID-19 ምልክቶች ደረቅ ሳል፣ ከፍተኛ ትኩሳት፣ ድካም ድካም ማለት እና የመተንፈስ ችግር ናቸው። ",
     SyptomsDetailInfoDescriptionContentTwo:
@@ -990,6 +988,77 @@ export let strings = new LocalizedStrings({
       "እንደ ትምህርት ቤት መዘጋት እና የአካል መራራቅ ያሉ ወረርሽኙን ለመቆጣጠር በሚወሰዱ እርምጃዎች ህጻናት ላይ በተዘዋዋሪ ተፅእኖ ሊኖራቸው ይችላል። ስለዚህም በተቻለ መጠን በልጆች ላይ አሉታዊ ተፅእኖዎችን ለመከላከል እና ለመቀነስ ልዩ ትኩረት መሰጠት አለበት። ",
 
     DetailInfoAuthorFullName: "Weakpeadia",
+    InfoCovidDetailParagraphOneSubOne:
+      "There is much more to coronaviruses than SARS-CoV-2. Coronaviruses are actually a family of hundreds of viruses. Most of these infect animals such as bats, chickens, camels and cats.",
+    InfoCovidDetailParagraphOneSubTwo:
+      "Occasionally, viruses that infect one species can mutate in such a way that allows them to start infecting other species. This is called cross-species transmission or spillover.",
+    InfoCovidDetailParagraphOneSubThree:
+      "The first coronavirus was discovered in chickens in the 1930s. It was a few decades until the first human coronaviruses were identified in the 1960s.",
+    InfoCovidDetailParagraphOneSubFour:
+      "To date, seven coronaviruses can cause disease in humans. Four are endemic (regularly found among particular people or in a certain area) and usually cause mild disease, but three can cause much more serious and even fatal disease.",
+
+    InfoCovidDetailParagraphTwoSubOne:
+      "It is said to have come from a market that sells meat and live animals. It is believed that the virus might have been transmitted through direct contact between humans and animals.InfoCovidDetailParagraphTwoSubTwo:  Either by touching those animals or by eating them. And it can also spread via the air. However, the actual source of thisdisease is not known yet.",
+    InfoCovidDetailParagraphTwoSubTwo:
+      "Either by touching those animals or by eating them. And it can also spread via the air. However, the actual source of this disease is not known yet.",
+
+    InfoCovidDetailParagraphThreeSubOne:
+      "A Common misconception regarding COVID-19 is that coronaviruses affect only old people. This is far from true and is killing many people from various age groups.",
+
+    InfoCovidDetailParagraphThreeSubTwo:
+      "The risk of dying due to COVID-19 is indeed significantly higher for 80+ age groups(as high as 14.8%) while it is below 1% for age groups below 40.",
+    InfoCovidDetailParagraphThreeSubThree:
+      "But this does not mean that teenagers will not be affected or die. So these and other false facts can lead to a dangerous road.",
+
+    InfoDetailMostCommonSyptomsListTitleOne: "High Fever",
+    InfoDetailMostCommonSyptomsListTitleTwo: "Dry Cough",
+    InfoDetailMostCommonSyptomsListTitleThree: "Fatigue",
+    InfoDetailMostCommonSyptomsListTitleFour: "Shortness of Breath",
+    InfoDetailMostCommonSyptomsListTitleFive: "Myalgia",
+
+    InfoDetailMostCommonSyptomsListLableOne:
+      "Body temperature is 103°F (39.4°C) or above",
+    InfoDetailMostCommonSyptomsListLableTwo:
+      "Does not bring up mucus and stays for eight weeks or more",
+    InfoDetailMostCommonSyptomsListLableThree:
+      "Lack of enengy and Motivation (physical and mental)",
+    InfoDetailMostCommonSyptomsListLableFour:
+      "Trouble inhaling or exhaling or feels as though they cannot get enough oxygen",
+    InfoDetailMostCommonSyptomsListLableFive:
+      "Pain or ache in muscles characterized by chronic pain, stiffness and tenderness",
+
+    InfoDetailLessCommonSyptomsListTitleOne: "Headache",
+    InfoDetailLessCommonSyptomsListTitleTwo: "Sore Throat",
+    InfoDetailLessCommonSyptomsListTitleThree: "Chills",
+    InfoDetailLessCommonSyptomsListTitleFour: "Anosmia",
+
+    InfoDetailLessCommonSyptomsListLableOne:
+      "Sharp, throbbing or dull feeling across the head",
+    InfoDetailLessCommonSyptomsListLableTwo:
+      "Scratchiness or irritation of the throat that often worsens when you swallow",
+    InfoDetailLessCommonSyptomsListLableThree:
+      "Feeling of being cold without an apparent cause",
+    InfoDetailLessCommonSyptomsListLableFour:
+      "Usually associated with partial loss of smell or a blocked nose",
+
+    InfoDetailPreventionMethodsTitleOne: "Hand Washing",
+    InfoDetailPreventionMethodsTitleTwo: "Social Distancing",
+    InfoDetailPreventionMethodsTitleThree: "Respiratory Hygiene",
+    InfoDetailPreventionMethodsTitleFour: "Stay Informed",
+
+    InfoDetailPreventionMethodsLabelOne:
+      "Rub or wash your hand with soap and water for at least 20 sec",
+    InfoDetailPreventionMethodsLabelTwo:
+      "Maintain at least 2m (6 ft) gap in groups.",
+    InfoDetailPreventionMethodsLabelThree:
+      "Use mouth and nose covering masks when going outside",
+    InfoDetailPreventionMethodsLabelFour:
+      "Follow the advice of healthcare provider and your government",
+
+    InfoDetailPreventionMethodsTagOne: "> 20 Sec",
+    InfoDetailPreventionMethodsTagTwo: "2 Meters",
+    InfoDetailPreventionMethodsTagThree: "Face covering",
+    InfoDetailPreventionMethodsTagFour: "Truth vs Fake",
     InfoDetailMessageFromTrackSym:
       "በበሽታው እንዳይጠቁ እና ደህና እንዳይሆኑ መጠንቀቅ አለብዎት ፡፡ ምንም እንኳን በከባድ ሕመም ላይ ባይሆኑም እንኳ የበሽታው ምልክቶች ከመታየታቸው በፊት ለምትወዷቸው/ለምትቀርቧቸው ሰዎች ማሰራጨት ትልቅ አደጋ አለ፡፡",
     Jan: "ጥር",
@@ -1004,7 +1073,7 @@ export let strings = new LocalizedStrings({
     Oct: "ጥቅም",
     Nov: "ህዳር",
     Dec: "ታህሳ",
-    SuccessfullySave : "ተሳክቷል!",
+    SuccessfullySave: "ተሳክቷል!",
   },
   tr: {
     Information: "Bilgi",
@@ -1328,7 +1397,7 @@ export let strings = new LocalizedStrings({
     Oct: "Oct",
     Nov: "Nov",
     Dec: "Dec",
-    SuccessfullySave : "Successfully Saved!",
+    SuccessfullySave: "Successfully Saved!",
   },
   orm: {
     Information: "Information",
