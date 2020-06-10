@@ -47,6 +47,10 @@ class DataAnalytics extends React.Component {
       selected_total_end_date: "",
       selected_rate_start_date: "",
       selected_rate_end_date: "",
+      placeholder_daily_start_date: "",
+      placeholder_daily_end_date: "",
+      placeholder_total_start_date: "",
+      placeholder_total_end_date: "",
       graph_label: [""],
       data_set: [0],
       daily_newCases_label: [""],
@@ -154,7 +158,11 @@ class DataAnalytics extends React.Component {
         if (json !== undefined && json.length !== 0) {
           await newThis.populate(json);
           newThis.forceUpdate(); //refresh page
-          newThis.setState({ totalGraphLoading: false });
+          newThis.setState({
+            totalGraphLoading: false,
+            placeholder_total_start_date: json[0].t.split("T")[0],
+            placeholder_total_end_date: json[json.length - 1].t.split("T")[0],
+          });
         } else {
           newThis.fetchTotalStats();
         }
@@ -309,7 +317,11 @@ class DataAnalytics extends React.Component {
         if (json !== undefined && json.length !== 0) {
           await newThis.populateDailyData(json);
           newThis.forceUpdate(); //refresh page
-          newThis.setState({ dailyGraphLoading: false });
+          newThis.setState({
+            dailyGraphLoading: false,
+            placeholder_daily_start_date: json[0].t.split("T")[0],
+            placeholder_daily_end_date: json[json.length - 1].t.split("T")[0],
+          });
         } else {
           newThis.fetchDailyNewsCases();
         }
@@ -1045,7 +1057,10 @@ class DataAnalytics extends React.Component {
                   <DatePicker
                     date={this.state.selected_daily_start_date}
                     mode="date" //The enum of date, datetime and
-                    placeholder={strings.StartDate}
+                    placeholder={this.state.placeholder_daily_start_date}
+                    placeholderTextColor={
+                      customTheme.theme === "light" ? "black" : "white"
+                    }
                     maxDate={
                       this.state.selected_daily_end_date === ""
                         ? this.getCurrentDate()
@@ -1064,6 +1079,10 @@ class DataAnalytics extends React.Component {
                         borderRadius: 10,
                         height: 30,
                         borderColor: "#000",
+                      },
+                      placeholderText: {
+                        color:
+                          customTheme.theme === "light" ? "black" : "white",
                       },
                     }}
                     onDateChange={async (date) => {
@@ -1087,7 +1106,7 @@ class DataAnalytics extends React.Component {
                   <DatePicker
                     date={this.state.selected_daily_end_date}
                     mode="date" //The enum of date, datetime and time
-                    placeholder={strings.EndDate}
+                    placeholder={this.state.placeholder_daily_end_date}
                     format="YYYY-MM-DD"
                     confirmBtnText="Confirm"
                     minDate={
@@ -1109,6 +1128,10 @@ class DataAnalytics extends React.Component {
                         borderRadius: 10,
                         height: 30,
                         borderColor: "#000000",
+                      },
+                      placeholderText: {
+                        color:
+                          customTheme.theme === "light" ? "black" : "white",
                       },
                     }}
                     onDateChange={async (date) => {
@@ -1370,7 +1393,7 @@ class DataAnalytics extends React.Component {
                   <DatePicker
                     date={this.state.selected_total_start_date}
                     mode="date" //The enum of date, datetime and
-                    placeholder={strings.StartDate}
+                    placeholder={this.state.placeholder_total_start_date}
                     maxDate={
                       this.state.selected_total_end_date === ""
                         ? this.getCurrentDate()
@@ -1390,6 +1413,10 @@ class DataAnalytics extends React.Component {
                         height: 30,
                         borderColor: "#000000",
                       },
+                      placeholderText: {
+                        color:
+                          customTheme.theme === "light" ? "black" : "white",
+                      },
                     }}
                     onDateChange={async (date) => {
                       await this.setState({ selected_total_start_date: date });
@@ -1401,7 +1428,7 @@ class DataAnalytics extends React.Component {
                   <DatePicker
                     date={this.state.selected_total_end_date}
                     mode="date" //The enum of date, datetime and time
-                    placeholder={strings.EndDate}
+                    placeholder={this.state.placeholder_total_end_date}
                     format="YYYY-MM-DD"
                     minDate={
                       this.state.selected_total_start_date === ""
@@ -1423,6 +1450,10 @@ class DataAnalytics extends React.Component {
                         borderRadius: 10,
                         height: 30,
                         borderColor: "#000000",
+                      },
+                      placeholderText: {
+                        color:
+                          customTheme.theme === "light" ? "black" : "white",
                       },
                     }}
                     onDateChange={async (date) => {
@@ -1490,10 +1521,11 @@ class DataAnalytics extends React.Component {
                       : "outline"
                   }
                   onPress={async () => {
-                    this.setState({
+                    await this.setState({
                       selected_filter: criterias.confirmed,
                     });
-                    await this.fetchTotalStats();
+
+                    this.fetchTotalStats();
                   }}
                 >
                   {strings.Confirmed}
@@ -1506,11 +1538,11 @@ class DataAnalytics extends React.Component {
                       : "outline"
                   }
                   onPress={async () => {
-                    this.setState({
+                    await this.setState({
                       selected_filter: criterias.recoveries,
                     });
 
-                    await this.fetchTotalStats();
+                    this.fetchTotalStats();
                   }}
                 >
                   {strings.Recovered}
@@ -1523,10 +1555,10 @@ class DataAnalytics extends React.Component {
                       : "outline"
                   }
                   onPress={async () => {
-                    this.setState({
+                    await this.setState({
                       selected_filter: criterias.deaths,
                     });
-                    await this.fetchTotalStats();
+                    this.fetchTotalStats();
                   }}
                 >
                   {strings.Deaths}
