@@ -69,14 +69,20 @@ export default new Vuex.Store({
   },
   actions: {
     fillCountriesList({ commit }) {
-      ajax.get(`statistics/countries`).then(
-        response => {
-          commit("setCountriesList", response.data);
-        },
-        error => {
-          console.log(error);
-        }
-      );
+      ajax
+        .get(`statistics/countries`, {
+          params: {
+            sort: true
+          }
+        })
+        .then(
+          response => {
+            commit("setCountriesList", response.data);
+          },
+          error => {
+            console.log(error);
+          }
+        );
     },
     setNavState({ commit }, { type }) {
       commit("setNavigationType", type);

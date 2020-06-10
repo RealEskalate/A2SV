@@ -6,7 +6,10 @@ const state = {
   newsMeta: "",
   totalCount: 0,
   sources: [],
-  currentCountry: []
+  currentCountry: {
+    name: "World",
+    code: "World"
+  }
 };
 
 const getters = {
@@ -59,7 +62,10 @@ const actions = {
   setCurrentCountry: ({ commit }) => {
     axios.get("http://ip-api.com/json").then(
       response => {
-        commit("setCurrentCountry", response.data.country);
+        commit("setCurrentCountry", {
+          name: response.data.country,
+          code: response.data.countryCode
+        });
       },
       () => {
         commit("setCurrentCountry", "World");
