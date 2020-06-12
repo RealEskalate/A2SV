@@ -25,7 +25,7 @@
                       prefix="@"
                       outlined
                       dense
-                      :label="$t('auth.userName')"
+                      :label="$t('auth.username')"
                       v-model="form_user.username"
                       :rules="rules.nameRules"
                       counter="30"
@@ -58,7 +58,7 @@
                       class="v-card--shaped"
                       outlined
                       dense
-                      label="Password (Confirmation)"
+                      :label="$t('auth.passwordConfirmation')"
                       v-model="form_password.old"
                       :rules="rules.old_password"
                     />
@@ -85,7 +85,7 @@
                       @click="updateProfile"
                     >
                       <v-icon class="mr-2" small v-text="mdiCheck" />
-                      {{ $tt("saveChanges") }}
+                      {{ $t("saveChanges") }}
                     </v-btn>
                   </div>
                 </v-list-item-content>
