@@ -39,7 +39,8 @@
     "learn": "Baradhaa",
     "about": "Waa'ee",
     "news": "Oduu",
-    "map": "Kaartaa"
+    "map": "Kaartaa",
+    "profile": "Eenyummeessaa"
   },
   "titles": {
     "globalStatisticsTitle": "Istaatistiksii COVID-19 Akka Addunyaatti",
@@ -118,6 +119,9 @@
     "female": "Dhalaa",
     "editProfile": "Eenyummeessaa Gulaali",
     "changePassword": "Jecha Darbii Jijjiiri",
+    "oldPassword": "Jecha Darbii Duraa",
+    "newPassword": "Jecha Darbii Haaraa",
+    "confirmPassword": "Jecha Darbii Irra Deebii",
     "symptoms": "Mallattoolee Kiyya",
     "noSymptoms": "Mallattoolee hin galmeessifne",
     "editSymptoms": "Mallattoolee Gulaali",

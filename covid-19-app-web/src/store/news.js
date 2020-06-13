@@ -60,11 +60,11 @@ const actions = {
       });
   },
   setCurrentCountry: ({ commit }) => {
-    axios.get("http://ip-api.com/json").then(
+    axios.get("https://geolocation-db.com/json/").then(
       response => {
         commit("setCurrentCountry", {
-          name: response.data.country,
-          code: response.data.countryCode
+          name: response.data.country_name,
+          code: response.data.country_code
         });
       },
       () => {

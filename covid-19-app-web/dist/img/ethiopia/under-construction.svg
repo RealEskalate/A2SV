@@ -1,0 +1,62 @@
+<svg width="580" height="400" xmlns="http://www.w3.org/2000/svg">
+    <!-- Created with Method Draw - http://github.com/duopixel/Method-Draw/ -->
+
+    <g>
+        <title>Layer 1</title>
+        <g id="svg_81">
+            <g transform="matrix(4.3401423438359075,0,0,4.3401423438359075,0,0) " id="svg_54">
+                <g id="svg_56">
+                    <rect id="svg_57" fill="#B3B3B3" y="61.924696" x="51.279399" width="32" height="8"/>
+                </g>
+            </g>
+            <g transform="matrix(4.3401423438359075,0,0,4.3401423438359075,0,0) " id="svg_53">
+                <g id="svg_58">
+                    <path id="svg_59" fill="#CCCCCC"
+                          d="m43.279399,73.924696c0,2.209 1.791,4 4,4s4,-1.791 4,-4l0,-50l-8,0l0,50zm40,-50l0,50c0,2.209 1.79,4 4,4c2.209,0 4,-1.791 4,-4l0,-50l-8,0z"/>
+                </g>
+            </g>
+            <g transform="matrix(4.3401423438359075,0,0,4.3401423438359075,0,0) " id="svg_52">
+                <g id="svg_60">
+                    <path id="svg_61" fill="#E6E6E6"
+                          d="m95.723399,33.923696l-56.889,0c-1.964,0 -3.556,1.61 -3.556,3.597l0,8.789c0,1.986 1.592,3.597 3.556,3.597l56.89,0c1.963,0 3.555,-1.61 3.555,-3.597l0,-8.789c-0.001,-1.987 -1.593,-3.597 -3.556,-3.597z"/>
+                </g>
+            </g>
+            <g transform="matrix(4.3401423438359075,0,0,4.3401423438359075,0,0) " id="svg_51">
+                <g id="svg_62">
+                    <path id="svg_63" fill-rule="evenodd" clip-rule="evenodd" fill="#FF8833"
+                          d="m45.279399,33.924696l-10,10l0,2.395c0.005,1.981 1.594,3.587 3.555,3.587l2.464,0l15.981,-15.982l-12,0zm50.454,0l-2.454,0l-15.981,15.981l12,0l9.98,-9.98l0,-2.405c0,-1.984 -1.587,-3.59 -3.545,-3.596zm-26.454,0l-16,16l12,0l16,-16l-12,0z"/>
+                </g>
+            </g>
+            <g transform="matrix(4.3401423438359075,0,0,4.3401423438359075,0,0) " id="svg_50">
+                <g id="svg_64">
+                    <path id="svg_65" fill-rule="evenodd" clip-rule="evenodd" fill="#FFCC66"
+                          d="m47.279399,17.924696c-3.313,0 -6,2.686 -6,6c0,3.313 2.687,6 6,6s6,-2.687 6,-6c0,-3.314 -2.687,-6 -6,-6zm40,0c-3.313,0 -6,2.686 -6,6c0,3.313 2.687,6 6,6s6,-2.687 6,-6c0,-3.314 -2.687,-6 -6,-6z"/>
+                </g>
+            </g>
+            <g transform="matrix(4.3401423438359075,0,0,4.3401423438359075,0,0) " id="svg_66"/>
+            <g transform="matrix(4.3401423438359075,0,0,4.3401423438359075,0,0) " id="svg_67"/>
+            <g transform="matrix(4.3401423438359075,0,0,4.3401423438359075,0,0) " id="svg_68"/>
+            <g transform="matrix(4.3401423438359075,0,0,4.3401423438359075,0,0) " id="svg_69"/>
+            <g transform="matrix(4.3401423438359075,0,0,4.3401423438359075,0,0) " id="svg_70"/>
+            <g transform="matrix(4.3401423438359075,0,0,4.3401423438359075,0,0) " id="svg_71"/>
+            <g transform="matrix(4.3401423438359075,0,0,4.3401423438359075,0,0) " id="svg_72"/>
+            <g transform="matrix(4.3401423438359075,0,0,4.3401423438359075,0,0) " id="svg_73"/>
+            <g transform="matrix(4.3401423438359075,0,0,4.3401423438359075,0,0) " id="svg_74"/>
+            <g transform="matrix(4.3401423438359075,0,0,4.3401423438359075,0,0) " id="svg_75"/>
+            <g transform="matrix(4.3401423438359075,0,0,4.3401423438359075,0,0) " id="svg_76"/>
+            <g transform="matrix(4.3401423438359075,0,0,4.3401423438359075,0,0) " id="svg_77"/>
+            <g transform="matrix(4.3401423438359075,0,0,4.3401423438359075,0,0) " id="svg_78"/>
+            <g transform="matrix(4.3401423438359075,0,0,4.3401423438359075,0,0) " id="svg_79"/>
+            <g transform="matrix(4.3401423438359075,0,0,4.3401423438359075,0,0) " id="svg_80"/>
+            <text stroke="#000"
+                  transform="matrix(1.0509058567298935,0,0,1.3139968678949998,-9.814009011748016,-56.083597843350475) "
+                  xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="22"
+                  id="svg_84" y="200.4375" x="192.5" stroke-opacity="null" stroke-width="0"
+                  fill="#564e4e">CONSTRUCTION</text>
+        </g>
+        <text stroke="#000"
+              transform="matrix(1.2987083196640015,0,0,1.3200000524520874,-58.098768174648285,-48.78000799566507) "
+              xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="22"
+              id="svg_83" y="172.4375" x="194.5" stroke-opacity="null" stroke-width="0" fill="#564e4e">PAGE UNDER</text>
+    </g>
+</svg>
