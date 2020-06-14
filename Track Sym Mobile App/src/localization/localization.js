@@ -1106,6 +1106,7 @@ export let strings = new LocalizedStrings({
     WhatIsCOVID19: "COVID-19 Nedir?",
     COVID19Symptoms: "Semptomlar",
     Prevention: "Korunma",
+    HowDoesItSpreads: "NASIL YAYILIR ?",
     MessageFromUs: "Mesajımız",
     Refresh: "Yenile",
     DailyStats: "Günlük İstatistikler",
@@ -1233,13 +1234,19 @@ export let strings = new LocalizedStrings({
     YouHaveSuccessfullyChangedYourProfile:
       "Profilinizi başarıyla değiştirdiniz!",
     Default: "Varsayılan",
-    PasswordCanNotBeEmpty: "Parola boş olamaz",
+    PasswordCanNotBeEmpty: "Parola boş olamaz!",
     Cancel: "İptal",
     Ok: "Tamam",
     ConnectionProblem: "Bağlantı Hatası",
     CouldNotConnectToServer: "Sunucuya Bağlanılamadı",
+    PleaseCheckYourConnection:
+      "İnternet bağlantınızı kontrol edip tekrar deneyiniz!",
+    AgreeingTermsAndServiceOnSignUp:
+      "Bir hesap oluşturarak TrackSym ullanım Şartları ve Gizlilik Politikasını kabul ediyorum",
+    CantConnectDueToConnection:
+      "Eyvah!, bağlantı problemimiz var gibi görünüyor, lütfen tekrar deneyin!",
     PleaseSelectGender: "Lütfen cinsiyetinizi seçiniz",
-    PleaseSelectAgeGroup: "Lütefn yaş grubunuzu seçiniz",
+    PleaseSelectAgeGroup: "Lütfen yaş grubunuzu seçiniz",
     LoadingGraphDescription: "Grafik açıklaması yükleniyor",
     LoadingCriteriaDescription: "Ölçüt açıklaması yükleniyor",
     Languages: "Diller",
@@ -1279,7 +1286,7 @@ export let strings = new LocalizedStrings({
     SyptomsDetailInfoDescriptionMostListInsideContentThree:
       "Enerji ve Motivasyon Eksikliği (fiziksel ve zihinsel)",
     SyptomsDetailInfoDescriptionMostListInsideContentFour:
-      " Tıbbi olarak dispne olarak da bilinir - genellikle göğüste yoğun bir sıkışma, hava açlığı, nefes almada zorluk, nefes darlığı veya boğulma hissi olarak tanımlanır. Çok yorucu egzersiz, aşırı sıcaklıklar, obezite ve daha yüksek irtifada bulunulması gibi durumlar sağlıklı bir insanda nefes darlığına neden olabilir. Bu örneklerin dışında ise nefes darlığı büyük olasılıkla tıbbi bir sorunun belirtisidir.",
+      "Tıbbi olarak dispne olarak da bilinir - genellikle göğüste yoğun bir sıkışma, hava açlığı, nefes almada zorluk, nefes darlığı veya boğulma hissi olarak tanımlanır. Çok yorucu egzersiz, aşırı sıcaklıklar, obezite ve daha yüksek irtifada bulunulması gibi durumlar sağlıklı bir insanda nefes darlığına neden olabilir. Bu örneklerin dışında ise nefes darlığı büyük olasılıkla tıbbi bir sorunun belirtisidir.",
     SyptomsDetailInfoDescriptionMostListInsideContentFive:
       "Kronik ağrı, sertlik ve hassasiyet ile kendini gösteren kaslardaki ağrıdır. Bağları, tendonları, fasyayı, kasları, kemikleri ve organları bağlayan yumuşak dokularda gelişen kas ağrılarını tanımlar.",
     SyptomsDetailInfoDescriptionLessListNameOne: "Baş Ağrısı",
@@ -1289,11 +1296,9 @@ export let strings = new LocalizedStrings({
     SyptomsDetailInfoDescriptionLessListInsideContentone:
       "Kafada keskin, zonklayan veya donuk bir his olabilir.",
     SyptomsDetailInfoDescriptionLessListInsideContentTwo:
-      "It is the partial or complete loss of the sense of smell.",
-    SyptomsDetailInfoDescriptionLessListInsideContentTwo:
       "Koku duyusunun kısmi veya tamamen kaybıdır.",
     SyptomsDetailInfoDescriptionLessListInsideContentThree:
-      " Ağız ve gırtlak arkasında oluşan kızarıklık ve şişlik nedeniyle yutulduğunda daha da kötüleşen boğazdaki ağrılı, kuru veya cızırtılı bir his.",
+      "Ağız ve gırtlak arkasında oluşan kızarıklık ve şişlik nedeniyle yutulduğunda daha da kötüleşen boğazdaki ağrılı, kuru veya cızırtılı bir his.",
     SyptomsDetailInfoDescriptionLessListInsideContentFour:
       "Görünür bir sebep olmadan gelen üşüme hissi. Bu hissi genellikle kaslarınız tekrar tekrar genişleyip büzüştüğünde ve cildinizdeki damarlar kasıldığında hissedersiniz. Üşüme hissi bir ateşle ortaya çıkabilir ve titremeye neden olabilir.",
     PreventionDetailInfoTitle: "Yakalanmamak",
@@ -1307,18 +1312,18 @@ export let strings = new LocalizedStrings({
     PreventionDetailInfoDescriptionMethodTwoNameOne: "Solunum Hijyeni",
     PreventionDetailInfoDescriptionMethodTwoNameTwo: "Haberleri Takip Edin",
     PreventionDetailInfoDescriptionMethodTwoInsideContentOne:
-      " Kendinizin ve çevrenizdeki insanların iyi bir solunum hijyeni uyguladığından emin olun. Öksürdüğünüzde veya hapşırdığınızda ağzınızı ve burnunuzu bir mendil ile veya dirseğinizin içi ile kapatın. Kullanılmış mendilleri beklemeden çöpe atın.",
+      "Kendinizin ve çevrenizdeki insanların iyi bir solunum hijyeni uyguladığından emin olun. Öksürdüğünüzde veya hapşırdığınızda ağzınızı ve burnunuzu bir mendil ile veya dirseğinizin içi ile kapatın. Kullanılmış mendilleri beklemeden çöpe atın.",
     PreventionDetailInfoDescriptionMethodTwoInsideContetnTwo:
-      " KOVİD-19 hakkındaki son gelişmelerden mutlaka haberdar olun. Kendinizi ve başkalarını KOVİD-19'dan nasıl koruyacağınız konusunda Sağlık Bankanlığı ve bakanlığa bağlı kuruluşlar ile işvereniniz tarafından verilen tavsiyelere uyun.",
+      "KOVİD-19 hakkındaki son gelişmelerden mutlaka haberdar olun. Kendinizi ve başkalarını KOVİD-19'dan nasıl koruyacağınız konusunda Sağlık Bankanlığı ve bakanlığa bağlı kuruluşlar ile işvereniniz tarafından verilen tavsiyelere uyun.",
     HowItSpreadsDetailInfoTitle: "Nasıl Yayılır?",
     HowItSpreadsDetailInfoDescription: "Koronovirüs nasıl bulaşıcı hale gelir?",
     HowItSpreadsDetailInfoDescriptionContentOne:
       "Konakçılarını hızla hastaneye yatırtan ve kısa sürede karantina altına alınmalarını sağlayan çoğu ölümcül virüsün aksine, Virüsü kapan kişi ilk bulaşmadan günler sonra bile herhangi bir semptom göstermeyebilir ve virüs bu durumda oldukça bulaşıcı olacağından hızla yayılabilir.",
     HowItSpreadsDetailInfoDescriptionContentTwo:
-      " Çoğu hasta 14 güne kadar herhangi bir belirti göstermediği için, karantinaya alınmadan ve tedavi edilmeden önce birçok kişiyi enfekte eder. Koronavirüs sadece başkalarının ellerine dokunmak gibi doğrudan temaslarla değil, telefon, masa, sandalye, merdiven ve asansör düğmeleri gibi dijital cihazlar ile dolaylı temaslarla ve bu yüzeylere temas eden ellerinizi yüzünüze götürmenizle size de bulaşır.",
+      "Çoğu hasta 14 güne kadar herhangi bir belirti göstermediği için, karantinaya alınmadan ve tedavi edilmeden önce birçok kişiyi enfekte eder. Koronavirüs sadece başkalarının ellerine dokunmak gibi doğrudan temaslarla değil, telefon, masa, sandalye, merdiven ve asansör düğmeleri gibi dijital cihazlar ile dolaylı temaslarla ve bu yüzeylere temas eden ellerinizi yüzünüze götürmenizle size de bulaşır.",
     MessageFromUsDetailInfoTitle: " TrackSym’in Mesajı",
     MessageFromUsDetailInfoDescriptionContentOne:
-      " İçinde bulunduğumuz pandemi sürecinde durumun kontrol altına alınabilmesi için hazır ve istekli bir şekilde yetkililerin ve sağlık görevlilerinin tavsiyelerini, talimatlarını ve görevlerini uygulamalı ve kabul etmeliyiz. Ebeveynler bu süreçte soğukkanlı ve kendilerinden emin bir şekilde hareket etmeli ve çocuklarına da bu yönde örnek olmalıdırlar. Bu yeni virüsün hastalığın çocukları veya hamile kadınları nasıl etkilediği hakkında yeterince bilgimiz olmadığından, her yaştan insan virüsle enfekte olabilir ve virüsü bulaştırabilir.",
+      "İçinde bulunduğumuz pandemi sürecinde durumun kontrol altına alınabilmesi için hazır ve istekli bir şekilde yetkililerin ve sağlık görevlilerinin tavsiyelerini, talimatlarını ve görevlerini uygulamalı ve kabul etmeliyiz. Ebeveynler bu süreçte soğukkanlı ve kendilerinden emin bir şekilde hareket etmeli ve çocuklarına da bu yönde örnek olmalıdırlar. Bu yeni virüsün hastalığın çocukları veya hamile kadınları nasıl etkilediği hakkında yeterince bilgimiz olmadığından, her yaştan insan virüsle enfekte olabilir ve virüsü bulaştırabilir.",
     MessageFromUsDetailInfoDescriptionContentTwo:
       "Salgını kontrol altına almak için alınan önlemlerden okulların kapatılması ve fiziksel mesafe kısıtlamaları gibi uygulamalar çocuklar üzerinde daha fazla etki bırakabilir. Bu nedenle söz konusu uygulamaların negatif etkisini minimuma indirmek için çocuklar bu süreçte özel ilgi gösterilmelidir. ",
     DetailInfoAuthorFullName: "Weakpeadia",
@@ -1340,32 +1345,31 @@ export let strings = new LocalizedStrings({
       "KOVİD-19'a bağlı ölüm riski 80 ve üzeri yaş grubunda önemli ölçüde yüksektir (%14.8'e kadar), 40 yaşın altındaki yaş grupları için ise bu oran %1 in altındadır.",
     InfoCovidDetailParagraphThreeSubThree:
       "Ancak bu durum gençlerin etkilenmeyeceği veya ölmeyeceği anlamına gelmez. Dolayısıyla bu ve bunun gibi yanlış bilgilerin felakete yol açabileceği unutulmamalıdır. ",
-    SyptomsDetailInfoDescriptionMostListNameOne: "Yüksek Ateş",
-    SyptomsDetailInfoDescriptionMostListNameTwo: "Kuru Öksürük",
-    SyptomsDetailInfoDescriptionMostListNameThree: "Yorgunluk",
-    SyptomsDetailInfoDescriptionMostListNameFour: "Nefes Darlığı",
-    SyptomsDetailInfoDescriptionMostListNameFive: "Kas Ağrısı",
-    SyptomsDetailInfoDescriptionMostListInsideContentOne:
-      "39 derece ve üzeri ateş.",
-    SyptomsDetailInfoDescriptionMostListInsideContentTwo:
+    InfoDetailMostCommonSyptomsListTitleOne: "Yüksek Ateş",
+    InfoDetailMostCommonSyptomsListTitleTwo: "Kuru Öksürük",
+    InfoDetailMostCommonSyptomsListTitleThree: "Yorgunluk",
+    InfoDetailMostCommonSyptomsListTitleFour: "Nefes Darlığı",
+    InfoDetailMostCommonSyptomsListTitleFive: "Kas Ağrısı",
+    InfoDetailMostCommonSyptomsListLableOne: "39 derece ve üzeri ateş.",
+    InfoDetailMostCommonSyptomsListLableTwo:
       "Mukus getirmeyen bir öksürük olup 8 haftadan daha fazla kalabilir.",
-    SyptomsDetailInfoDescriptionMostListInsideContentThree:
+    InfoDetailMostCommonSyptomsListLableThree:
       "Enerji ve Motivasyon Eksikliği (fiziksel ve zihinsel)",
-    SyptomsDetailInfoDescriptionMostListInsideContentFour:
+    InfoDetailMostCommonSyptomsListLableFour:
       "Nefes alıp vermede zorlanmak, yeterince oksijen alamadığı hissine kapılmak.",
-    SyptomsDetailInfoDescriptionMostListInsideContentFive:
+    InfoDetailMostCommonSyptomsListLableFive:
       "Kronik ağrı, sertlik ve hassasiyet ile kendini gösteren kaslardaki ağrı.",
-    SyptomsDetailInfoDescriptionLessListNameOne: "Baş Ağrısı",
-    SyptomsDetailInfoDescriptionLessListNameTwo: "Boğaz Ağrısı",
-    SyptomsDetailInfoDescriptionLessListNameThree: "Üşüme",
-    SyptomsDetailInfoDescriptionLessListNameFour: "Koku Duyusu Eksikliği",
-    SyptomsDetailInfoDescriptionLessListInsideContentone:
+    InfoDetailLessCommonSyptomsListTitleOne: "Baş Ağrısı",
+    InfoDetailLessCommonSyptomsListTitleTwo: "Boğaz Ağrısı",
+    InfoDetailLessCommonSyptomsListTitleThree: "Üşüme",
+    InfoDetailLessCommonSyptomsListTitleFour: "Koku Duyusu Eksikliği",
+    InfoDetailLessCommonSyptomsListLableOne:
       "Kafada keskin, zonklayan veya donuk bir his",
     InfoDetailLessCommonSyptomsListLableTwo:
       "Yutkundukça daha da kötü hala gelen kızarıklık ve kaşıntı hissi",
-    SyptomsDetailInfoDescriptionLessListInsideContentFour:
+    InfoDetailLessCommonSyptomsListLableThree:
       "Görünür bir sebep olmadan gelen üşüme hissi",
-    SyptomsDetailInfoDescriptionLessListInsideContentTwo:
+    InfoDetailLessCommonSyptomsListLableFour:
       "Koku duyusunun kısmi kaybı veya burun tıkanıklığıyla ilişkilidir",
     InfoDetailPreventionMethodsTitleOne: "El Yıkama",
     InfoDetailPreventionMethodsTitleTwo: "Sosyal Mesafe",
@@ -1385,19 +1389,19 @@ export let strings = new LocalizedStrings({
     InfoDetailPreventionMethodsTagFour: "Doğru ile Yanlış",
     InfoDetailMessageFromTrackSym:
       "Enfekte olmamaya ve güvende kalmaya dikkat etmelisiniz. Ağır hasta olmasanız bile, belirtiler ortaya çıkmadan önce sevdiklerinize hastalığı bulaştırabilirsiniz.",
-    Jan: "Jan",
-    Feb: "Feb",
+    Jan: "Oca",
+    Feb: "Şub",
     Mar: "Mar",
-    Apr: "Apr",
+    Apr: "Nis",
     May: "May",
-    Jan: "Jun",
-    Jul: "Jul",
-    Aug: "Aug",
-    Sep: "Sep",
-    Oct: "Oct",
-    Nov: "Nov",
-    Dec: "Dec",
-    SuccessfullySave: "Successfully Saved!",
+    Jan: "Haz",
+    Jul: "Tem",
+    Aug: "Ağu",
+    Sep: "Eyl",
+    Oct: "Eki",
+    Nov: "Kas",
+    Dec: "Ara",
+    SuccessfullySave: "Kayıt Başarılı!",
   },
   orm: {
     Information: "Information",
