@@ -16,32 +16,6 @@ import { strings } from '../../localization/localization';
 import { LangContext } from '../../../assets/lang/language-context';
 
 const BackIcon = (props) => <Icon name='arrow-ios-back-outline' {...props} />;
-const methods = [
-  {
-    title: strings.HandWashing,
-    label: strings.InfoDetailPreventionMethodsLabelOne,
-    tag: strings.InfoDetailPreventionMethodsTagOne,
-    image: require('../info-detail/assets/washing.jpg'),
-  },
-  {
-    title: strings.SocialDistancing,
-    label: strings.InfoDetailPreventionMethodsLabelTwo,
-    tag: strings.InfoDetailPreventionMethodsTagTwo,
-    image: require('../info-detail/assets/social.jpg'),
-  },
-  {
-    title: strings.RespiratoryHygiene,
-    label: strings.InfoDetailPreventionMethodsLabelThree,
-    tag: strings.InfoDetailPreventionMethodsTagThree,
-    image: require('../info-detail/assets/face.jpg'),
-  },
-  {
-    title: strings.StayInformed,
-    label: strings.InfoDetailPreventionMethodsLabelFour,
-    tag: strings.InfoDetailPreventionMethodsTagFour,
-    image: require('../info-detail/assets/info.jpg'),
-  },
-];
 
 export default PrevDetailScreen = (props) => {
   //setting up the language
@@ -49,6 +23,33 @@ export default PrevDetailScreen = (props) => {
   const lang = langContext.lang;
   strings.setLanguage(lang);
 
+  const methods = [
+    {
+      title: strings.HandWashing,
+      label: strings.InfoDetailPreventionMethodsLabelOne,
+      tag: strings.InfoDetailPreventionMethodsTagOne,
+      image: require('../info-detail/assets/washing.jpg'),
+    },
+    {
+      title: strings.SocialDistancing,
+      label: strings.InfoDetailPreventionMethodsLabelTwo,
+      tag: strings.InfoDetailPreventionMethodsTagTwo,
+      image: require('../info-detail/assets/social.jpg'),
+    },
+    {
+      title: strings.RespiratoryHygiene,
+      label: strings.InfoDetailPreventionMethodsLabelThree,
+      tag: strings.InfoDetailPreventionMethodsTagThree,
+      image: require('../info-detail/assets/face.jpg'),
+    },
+    {
+      title: strings.StayInformed,
+      label: strings.InfoDetailPreventionMethodsLabelFour,
+      tag: strings.InfoDetailPreventionMethodsTagFour,
+      image: require('../info-detail/assets/info.jpg'),
+    },
+  ];
+  
   const data = {
     title: strings.Prevention,
     description: strings.PreventionIsBetterThanCure,
