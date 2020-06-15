@@ -17,71 +17,72 @@ import { strings } from '../../localization/localization';
 import { LangContext } from '../../../assets/lang/language-context';
 
 const BackIcon = (props) => <Icon name='arrow-ios-back-outline' {...props} />;
-const mostCommon = [
-  {
-    title: strings.HighFever,
-    label: strings.InfoDetailMostCommonSyptomsListLableOne,
-    tag: '83% - 99%',
-    image: require('../info-detail/assets/fever.jpg'),
-  },
-  {
-    title: strings.DryCough,
-    label: strings.InfoDetailMostCommonSyptomsListLableTwo,
-    tag: '59% - 82%',
-    image: require('../info-detail/assets/cough2.jpg'),
-  },
-  {
-    title: strings.Fatigue,
-    label: strings.InfoDetailMostCommonSyptomsListLableThree,
-    tag: '44% - 70%',
-    image: require('../info-detail/assets/tired.jpg'),
-  },
-  {
-    title: strings.ShortnessOfBreath,
-    label: strings.InfoDetailMostCommonSyptomsListLableFour,
-    tag: '31% - 40%',
-    image: require('../info-detail/assets/short.jpg'),
-  },
-  {
-    title: strings.Myalgia,
-    label: strings.InfoDetailMostCommonSyptomsListLableFive,
-    tag: '11% - 35%',
-    image: require('../info-detail/assets/ache.jpg'),
-  },
-];
-
-const lessCommon = [
-  {
-    title: strings.Headache,
-    label: strings.InfoDetailLessCommonSyptomsListLableOne,
-    tag: '< 14%',
-    image: require('../info-detail/assets/headache.jpg'),
-  },
-  {
-    title: strings.SoreThroat,
-    label: strings.InfoDetailLessCommonSyptomsListLableTwo,
-    tag: '< 14%',
-    image: require('../info-detail/assets/cough.jpg'),
-  },
-  {
-    title: strings.Chills,
-    label: strings.InfoDetailLessCommonSyptomsListLableThree,
-    tag: '< 11%',
-    image: require('../info-detail/assets/cold2.jpg'),
-  },
-  {
-    title: strings.Anosmia,
-    label: strings.InfoDetailLessCommonSyptomsListLableFour,
-    tag: '< 5%',
-    image: require('../info-detail/assets/smell.jpg'),
-  },
-];
 
 export default PrevDetailScreen = (props) => {
   //setting up the language
   const langContext = React.useContext(LangContext);
   const lang = langContext.lang;
   strings.setLanguage(lang);
+
+  const mostCommon = [
+    {
+      title: strings.HighFever,
+      label: strings.InfoDetailMostCommonSyptomsListLableOne,
+      tag: '83% - 99%',
+      image: require('../info-detail/assets/fever.jpg'),
+    },
+    {
+      title: strings.DryCough,
+      label: strings.InfoDetailMostCommonSyptomsListLableTwo,
+      tag: '59% - 82%',
+      image: require('../info-detail/assets/cough2.jpg'),
+    },
+    {
+      title: strings.Fatigue,
+      label: strings.InfoDetailMostCommonSyptomsListLableThree,
+      tag: '44% - 70%',
+      image: require('../info-detail/assets/tired.jpg'),
+    },
+    {
+      title: strings.ShortnessOfBreath,
+      label: strings.InfoDetailMostCommonSyptomsListLableFour,
+      tag: '31% - 40%',
+      image: require('../info-detail/assets/short.jpg'),
+    },
+    {
+      title: strings.Myalgia,
+      label: strings.InfoDetailMostCommonSyptomsListLableFive,
+      tag: '11% - 35%',
+      image: require('../info-detail/assets/ache.jpg'),
+    },
+  ];
+
+  const lessCommon = [
+    {
+      title: strings.Headache,
+      label: strings.InfoDetailLessCommonSyptomsListLableOne,
+      tag: '< 14%',
+      image: require('../info-detail/assets/headache.jpg'),
+    },
+    {
+      title: strings.SoreThroat,
+      label: strings.InfoDetailLessCommonSyptomsListLableTwo,
+      tag: '< 14%',
+      image: require('../info-detail/assets/cough.jpg'),
+    },
+    {
+      title: strings.Chills,
+      label: strings.InfoDetailLessCommonSyptomsListLableThree,
+      tag: '< 11%',
+      image: require('../info-detail/assets/cold2.jpg'),
+    },
+    {
+      title: strings.Anosmia,
+      label: strings.InfoDetailLessCommonSyptomsListLableFour,
+      tag: '< 5%',
+      image: require('../info-detail/assets/smell.jpg'),
+    },
+  ];
 
   const data = {
     title: strings.SymptomsOfCOVID19,
@@ -176,6 +177,7 @@ export default PrevDetailScreen = (props) => {
         title={strings.COVID19Symptoms}
         accessoryLeft={renderBackAction}
       />
+      <Divider />
       <Layout style={styles.container} level='2'>
         <ScrollView>
           <ImageOverlay style={styles.headerContainer} source={data.image}>
