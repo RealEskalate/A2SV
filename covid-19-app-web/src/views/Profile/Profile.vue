@@ -573,7 +573,7 @@ export default {
           store.dispatch("setSymptomUser", {
             userId: this.loggedInUser._id,
             lang: this.$i18n.locale,
-            demo: true
+            demo: false
           });
           this.setMode();
           this.setAlert("Successfully Updated Symptoms", "success");
