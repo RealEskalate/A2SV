@@ -86,7 +86,7 @@
             <v-list-item
               link
               :key="index"
-              :to="item.to"
+              :to="{ name: 'Profile' }"
               active-class="white--text primary"
             >
               <v-icon small class="mr-2" v-text="item.icon" />
