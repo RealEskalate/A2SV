@@ -105,6 +105,16 @@
           />
           <v-card-title class="headline my-2" v-text="selectedInfo.title" />
           <v-card-text class="text-justify" v-html="selectedInfo.description" />
+          <v-card-text>
+            <span
+              class="grey--text text--darken-1"
+              v-text="$t('references') + ': '"
+            />
+            <template v-for="(source, key) in selectedInfo.references">
+              <a :key="key" :href="source" v-text="key" />
+              <span :key="key" v-text="', '" />
+            </template>
+          </v-card-text>
           <v-card-actions>
             <v-spacer />
             <v-btn color="primary" text @click="dialog = false">
