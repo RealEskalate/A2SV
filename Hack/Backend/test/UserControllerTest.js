@@ -196,7 +196,6 @@ describe("User API", () => {
 
   it("It should delete user", async () => {
     let username = "Testing " + Date.now();
-    let saved_response = await chai.request(server);
     let saved_response = await chai
       .request(server)
       .post("/api/auth/register")
