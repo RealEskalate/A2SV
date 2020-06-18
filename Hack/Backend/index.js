@@ -3,8 +3,6 @@ const cors = require('cors');
 const mongoose = require("./db.js");
 
 //Routers
-const alertRouter = require("./routes/AlertRoutes");
-const alertUserRouter = require("./routes/AlertUserRoutes");
 const locationUserRouter = require("./routes/LocationUserRoutes");
 const medicalhistoryRouter = require("./routes/MedicalHistoryRoutes.js");
 const medicalhistoryuserRouter = require("./routes/MedicalHistoryUserRoutes.js");
@@ -42,8 +40,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(publicResourceRouter);
 
-app.use(alertRouter);
-app.use(alertUserRouter);
 app.use(locationUserRouter);
 app.use(logRouter);
 app.use(statisticsRouter);

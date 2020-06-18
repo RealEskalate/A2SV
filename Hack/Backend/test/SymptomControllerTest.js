@@ -63,7 +63,7 @@ describe('Symptoms API', function () {
             );
         expect(response).to.have.status(200)
     });
-
+    /* /api/symptoms POST is deprecated
     it('should add symptom on /symptoms POST', async () => {
         let response = await chai.request(server)
             .post('/api/symptoms')
@@ -75,7 +75,7 @@ describe('Symptoms API', function () {
         expect(response).to.have.status(200)
 
     });
-
+    */
     it('should list a single symptom by id on /symptom/:id GET', async () => {
         let response = await chai.request(server)
             .get('/api/symptoms/' + symptom._id)
@@ -86,6 +86,7 @@ describe('Symptoms API', function () {
         expect(response).to.have.status(200)
     });
 
+    /* /api/symptoms PATCH is deprecated
     it('should update a single symptom on api/symptoms/ PATCH', async () => {
         let response = await chai.request(server)
             .patch('/api/symptoms/' + symptom._id)
@@ -96,7 +97,8 @@ describe('Symptoms API', function () {
             .send({ 'description': 'an abnormally soar throat' })
         expect(response).to.have.status(200)
     });
-
+    */
+   /* /api/symptoms DELETE is deprecated
     it('should delete a single symptom on api/symptoms/ DELETE', async () => {
         let response = await chai.request(server)
             .delete('/api/symptoms/')
@@ -107,5 +109,5 @@ describe('Symptoms API', function () {
             .send({ '_id': symptom._id })
         expect(response).to.have.status(200)
     });
-
+    */
 });

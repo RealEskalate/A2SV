@@ -43,7 +43,7 @@ describe("Symptom Users API", () => {
 
         symptom_user = new SymptomUser({
             _id: mongoose.Types.ObjectId(),
-            user_id: mongoose.Types.ObjectId(),
+            user_id: user._id,
             symptom_id: mongoose.Types.ObjectId()
         });
         await symptom_user.save();
