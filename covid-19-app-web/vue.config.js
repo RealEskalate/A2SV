@@ -40,7 +40,10 @@ module.exports = {
             .replace(/<script (.*?)>/g, "<script $1 defer>")
             .replace('id="app"', 'id="app" data-server-rendered="true"');
           return route;
-        }
+        },
+        renderer: new PrerenderSPAPlugin.PuppeteerRenderer({
+          renderAfterTime: 5000
+        })
       }),
       new CompressionPlugin(),
       new webpack.ProvidePlugin({
