@@ -62,10 +62,10 @@
 </template>
 
 <script>
-  import {mdiWeb} from "@mdi/js";
-  import {languages} from "../../plugins/i18n";
+import { mdiWeb } from "@mdi/js";
+import { languages } from "../../plugins/i18n";
 
-  export default {
+export default {
   data: () => ({
     languages,
     langText: {
