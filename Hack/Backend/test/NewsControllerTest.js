@@ -6,8 +6,6 @@ let chaiHttp = require("chai-http");
 let server = require("../index");
 let { News } = require("../models/NewsModel");
 let { User } = require("../models/UserModel");
-let Alert = require("../models/AlertModel");
-let AlertUser = require("../models/AlertUserModel");
 let mongoose = require("mongoose");
 const { expect } = chai;
 chai.use(chaiHttp);
@@ -184,8 +182,6 @@ describe("News API", () => {
   //Post News - Valid News
   describe("POST /api/news", () => {
     let news;
-    let alert;
-    let alert_user;
     let new_news;
     let user;
     beforeEach(async () => {
@@ -215,8 +211,6 @@ describe("News API", () => {
       await News.findByIdAndDelete(news._id);
       await User.findByIdAndDelete(user._id);
       await News.findByIdAndDelete(new_news._id);
-      await Alert.findByIdAndDelete(alert._id);
-      await AlertUser.findByIdAndDelete(alert_user._id);
     });
     it("It should insert news", async () => {
       let response = await chai
@@ -242,14 +236,6 @@ describe("News API", () => {
 
       new_news = response.body;
 
-      expect(await Alert.find()).to.have.length.greaterThan(0);
-      expect(await AlertUser.find()).to.have.length.greaterThan(0);
-
-      alert = await Alert.find({ "title": news.title });
-      alert_user = await AlertUser.find({ user_id: user._id, alert_id: alert._id });
-
-      expect(alert).to.be.not.a('null');
-      expect(alert_user).to.be.not.a('null');
 
     });
   });

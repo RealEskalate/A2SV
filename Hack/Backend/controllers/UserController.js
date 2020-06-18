@@ -31,7 +31,8 @@ exports.get_user_by_id = async (req, res) => {
   }else{
     var User = UserModels.User;
   }
-  if(req.body.id !== req.body.loggedInUser){
+  if(req.params.id !== req.body.loggedInUser){
+
     return res.status(403).send("User not authorized to access this endpoint with id: " + req.body.id);
   }
   const user = await User.findById(req.params.id);
@@ -146,7 +147,7 @@ exports.delete_user = async (req, res) => {
 
   try {
     if(req.body._id !== req.body.loggedInUser){
-      console.log(`${req.boday._id} is not the same as ${req.body.loggedInUser}`);
+      console.log(`${req.body._id} is not the same as ${req.body.loggedInUser}`);
       
       return res.status(403).send("User not authorized to access this endpoint with id: " + req.body._id);
     }
@@ -156,6 +157,8 @@ exports.delete_user = async (req, res) => {
     }
     res.status(201).send(user);
   } catch (err) {
+    console.log(err.toString());
+    
     res.status(500).send(err.toString());
   }
 };

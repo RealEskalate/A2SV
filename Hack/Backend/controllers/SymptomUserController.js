@@ -202,7 +202,7 @@ exports.get_symptomuser_by_user_id = async (req, res) => {
 exports.update_symptomuser = async (req, res) => {
   try {
     const symptomuserCheck = await SymptomUser.findById(req.body._id);
-    if(symptomuserCheck._id !== req.body.loggedInUser){
+    if(symptomuserCheck.user_id.toString() !== req.body.loggedInUser){
       return res.status(403).send("User not authorized to access this endpoint with id: " + req.body.loggedInUser);
     }
     const symptomuser = await SymptomUser.findByIdAndUpdate(
@@ -231,7 +231,7 @@ exports.update_symptomuser = async (req, res) => {
 exports.delete_symptomuser = async (req, res) => {
   try {
     const symptomuserCheck = await SymptomUser.findById(req.body._id);
-    if(symptomuserCheck._id !== req.body.loggedInUser){
+    if(symptomuserCheck.user_id.toString() !== req.body.loggedInUser){
       return res.status(403).send("User not authorized to access this endpoint with id: " + req.body.loggedInUser);
     }
     const symptomuser = await SymptomUser.findByIdAndDelete(req.body._id);

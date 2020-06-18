@@ -1,8 +1,4 @@
 const { News } = require("./../models/NewsModel");
-const AlertController = require("./AlertController");
-const AlertUserController = require("./AlertUserController");
-let Alert = require("./../models/AlertModel");
-let AlertUser = require("./../models/AlertUserModel");
 let { User } = require("./../models/UserModel");
 const http = require("http");
 const https = require("https");
@@ -103,43 +99,13 @@ exports.post_news = async (req, res) => {
   });
   try {
     await news.save();
-    await saveAlert(news);
     res.status(201).send(news);
   } catch (err) {
     res.status(500).send(err.toString());
   }
 };
 
-async function saveAlert(news){
-  try {
-    let alert = new Alert({
-      _id: mongoose.Types.ObjectId(),
-      title: news.title,
-      type: "NEWS",
-      degree: "NORMAL",
-      content: news.description,
-      timestamp: news.date,
-    });
-    await alert.save();
-    let users = await User.find({ current_country: news.country });
-    for (let i = 0; i < users.length; i++) {
-      const alert_user = new AlertUser({
-        _id: mongoose.Types.ObjectId(),
-        user_id: users[i]._id,
-        alert_id: alert._id,
-      });
-      const check = await AlertUser.findOne({
-        user_id: alert_user.user_id,
-        alert_id: alert_user.alert_id,
-      });
-      if (!check) {
-        await alert_user.save();
-      }
-    }
-  } catch (err) {
-    console.log(err);
-  }
-}
+
 
 // fetch government measures every day
 schedule.scheduleJob("0 0 * * *", function () {
@@ -219,7 +185,6 @@ async function populateDatabase() {
         currentPolicy.date > week
       ) {
         currentPolicy.save();
-        await saveAlert(currentPolicy);
       }
 
       currentPolicy = new News({
@@ -265,7 +230,6 @@ async function populateDatabase() {
     currentPolicy.date > week
   ) {
     currentPolicy.save();
-    await saveAlert(currentPolicy);
   }
 }
 

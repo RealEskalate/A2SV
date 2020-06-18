@@ -40,7 +40,7 @@ describe("User API", () => {
     await User.findByIdAndDelete(user._id);
   });
 
-  /* /api/users is deprecated 
+  /* /api/users is deprecated
 
   it("It should Get all users", async () => {
     let response = await chai.request(server)
@@ -210,19 +210,26 @@ describe("User API", () => {
   });
 
   it("It should delete user", async () => {
+    let username = "Testing " + Date.now();
     let saved_response = await chai.request(server)
       .post("/api/auth/register")
       .send({
-        username: "Testing " + Date.now(),
+        username,
         password: "UnitTesting",
         gender: "MALE",
         age_group: "21-30",
+      });
+    let request = await chai.request(server)
+      .post("/api/auth/login")
+      .send({
+        username,
+        password: "UnitTesting",
       });
     let response = await chai.request(server)
       .delete("/api/users")
       .set(
         "Authorization",
-        "Bearer " + tokens
+        "Bearer " + request.body.token
       )
       .send({
         _id: saved_response.body._id
@@ -240,7 +247,7 @@ describe("User API", () => {
       .send({
         _id: "5e904cce7a1c6b627ae9f507"
       });
-    expect(response).to.have.status(404);
+    expect(response).to.have.status(403);
   });
 
 });
