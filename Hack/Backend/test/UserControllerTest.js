@@ -16,9 +16,7 @@ describe("User API", () => {
   beforeEach(async () => {
     user = new User({
       _id: mongoose.Types.ObjectId(),
-      username: `${
-        Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000
-      }`,
+      username: `${Date.now().toString()}`,
       password: "$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
       gender: "FEMALE",
       age_group: "21-30",
