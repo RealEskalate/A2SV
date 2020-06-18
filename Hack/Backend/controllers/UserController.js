@@ -10,6 +10,8 @@ const User = UserModels.User;
 exports.get_all_users = async (req, res) => {
   if (req.query.demo && req.query.demo == "true"){
     var User = UserModels.DemoUser;
+  }else if(req.query.stress && req.query.stress === "true"){
+    var User = UserModels.StressUser;
   }else{
     var User = UserModels.User;
   }
@@ -24,6 +26,8 @@ exports.get_all_users = async (req, res) => {
 exports.get_user_by_id = async (req, res) => {
   if (req.query.demo && req.query.demo == "true"){
     var User = UserModels.DemoUser;
+  }else if(req.query.stress && req.query.stress === "true"){
+    var User = UserModels.StressUser;
   }else{
     var User = UserModels.User;
   }
@@ -41,6 +45,8 @@ exports.get_user_by_id = async (req, res) => {
 exports.get_user_by_credentials = async (req, res) => {
   if (req.query.demo && req.query.demo == "true"){
     var User = UserModels.DemoUser;
+  }else if(req.query.stress && req.query.stress === "true"){
+    var User = UserModels.StressUser;
   }else{
     var User = UserModels.User;
   }

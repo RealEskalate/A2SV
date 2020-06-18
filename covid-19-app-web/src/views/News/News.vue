@@ -65,7 +65,7 @@
                           outlined
                           class="float-right v-card--shaped"
                           :href="item.reference_link"
-                          v-text="'Read More'"
+                          v-text="$t('readMore')"
                           target="blank"
                         />
                       </div>
@@ -131,7 +131,7 @@
                   :value="source.source"
                 >
                   <template v-slot:default="{ active, toggle }">
-                    <v-list-item-avatar>
+                    <v-list-item-avatar style="border-radius: 8px 3px 8px 3px">
                       <v-img
                         contain
                         :src="source.logo"
@@ -161,7 +161,7 @@
           small
           target="_blank"
           href="https://clearbit.com"
-          v-text="'Logos provided by Clearbit'"
+          v-text="$t('clearbitMessage')"
         />
       </v-col>
     </v-row>
@@ -201,13 +201,14 @@ export default {
   },
   watch: {
     localCountry(newValue) {
-      this.country = newValue;
+      this.country = newValue.name;
       this.resetPage();
     }
   },
   mounted() {
     store.dispatch("setSources");
-    store.dispatch("setCurrentCountry");
+    this.country = this.localCountry.name;
+    this.resetPage();
   },
   computed: {
     news: () => store.getters.getNews,

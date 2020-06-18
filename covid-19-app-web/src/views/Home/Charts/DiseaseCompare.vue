@@ -14,10 +14,25 @@
           :chart-data="diseaseData"
           :options="chartOptions"
         />
-        <small
-          class="d-block grey--text my-3 text--darken-2"
-          v-text="short_description"
-        />
+        <v-fade-transition hide-on-leave>
+          <div class="ma-2" v-if="graphLoaders.descriptions">
+            <v-skeleton-loader
+              ref="skeleton"
+              type="text,text"
+              class="mx-auto my-3"
+            />
+          </div>
+          <small
+            v-else-if="!short_description"
+            class="d-block grey--text my-3 text--darken-1"
+            v-text="'No Description'"
+          />
+          <small
+            v-else
+            class="d-block grey--text my-3 text--darken-2"
+            v-text="short_description"
+          />
+        </v-fade-transition>
       </v-col>
     </v-row>
   </v-container>

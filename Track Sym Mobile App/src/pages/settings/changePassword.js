@@ -14,8 +14,10 @@ import {
   Text,
 } from "@ui-kitten/components";
 import { SafeAreaView, View, TouchableWithoutFeedback } from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { KeyboardAvoidingView } from "../../components/3rd-party";
 import userIDStore from "../../data-management/user-id-data/userIDStore";
+import { strings } from "../../localization/localization";
+import { LangContext } from "../../../assets/lang/language-context";
 
 const ArrowIosBackIcon = (style) => <Icon {...style} name="arrow-ios-back" />;
 
@@ -37,6 +39,11 @@ const ChangePassScreen = (props) => {
   const [isLoading, setIsLoading] = React.useState(false);
   const [modalState, setModalState] = React.useState(false);
   const [modalMessage, setModalMessage] = React.useState("");
+  const [modalStatus, setModalStatus] = React.useState("");
+  //setting up the language
+  const langContext = React.useContext(LangContext);
+  const lang = langContext.lang;
+  strings.setLanguage(lang);
 
   const renderBackAction = () => (
     <TopNavigationAction
@@ -48,8 +55,7 @@ const ChangePassScreen = (props) => {
   const onCurrPasswordChange = (pass) => {
     if (pass === "") {
       setCurrPasswordStatus("danger");
-      setCurrPasswordCap("required*");
-      return;
+      setCurrPasswordCap(strings.Required);
     } else {
       setCurrPasswordStatus("basic");
       setCurrPasswordCap();
@@ -60,8 +66,7 @@ const ChangePassScreen = (props) => {
   const onNewPasswordChange = (pass) => {
     if (pass === "") {
       setNewPasswordStatus("danger");
-      setNewPasswordCap("required*");
-      return;
+      setNewPasswordCap(strings.Required);
     } else {
       setNewPasswordStatus("basic");
       setNewPasswordCap();
@@ -73,8 +78,7 @@ const ChangePassScreen = (props) => {
   const onConNewPasswordChange = (pass) => {
     if (pass !== newPassword) {
       setConNewPasswordStatus("danger");
-      setConNewPasswordCap("Password donot match !");
-      return;
+      setConNewPasswordCap(strings.PasswordDoNotMatch);
     } else {
       setConNewPasswordStatus("basic");
       setConNewPasswordCap();
@@ -125,8 +129,10 @@ const ChangePassScreen = (props) => {
           updatePassword();
         })
         .catch((error) => {
-          setModalMessage("Wrong current passowrd");
+          setModalMessage(strings.WrongCurrentPassword);
           setModalState(true);
+          setModalStatus("danger");
+          setIsLoading(false);
         });
     }
   };
@@ -147,13 +153,16 @@ const ChangePassScreen = (props) => {
     })
       .then((response) => response.json())
       .then((json) => {
-        setModalMessage("You have successfully changed your password");
+        setModalMessage(strings.YouHaveSuccessfullyChangedYourPassword);
         setModalState(true);
         setIsLoading(false);
+        setModalStatus("success");
       })
       .catch((error) => {
-        setModalMessage("Oops, couldn't update your password! Please retry!");
+        setModalMessage(strings.CantConnectDueToConnection);
         setModalState(true);
+        setModalStatus("danger");
+        setIsLoading(false);
       });
   };
 
@@ -164,37 +173,33 @@ const ChangePassScreen = (props) => {
         backdropStyle={styles.backdrop}
         onBackdropPress={() => setModalState(false)}
       >
-        <Card disabled={true}>
-          <Text status="success" category="h6" style={{ marginBottom: 10 }}>
+        <Card disabled={true} style={{ marginLeft: 10, marginRight: 10 }}>
+          <Text status={modalStatus} category="h6" style={{ marginBottom: 10 }}>
             {modalMessage}
           </Text>
           <Text
             style={{ alignSelf: "flex-end", color: "#0080ff" }}
             onPress={() => {
               setModalState(false);
-              setConNewPassword("");
-              setCurrPassword("");
-              setNewPassword("");
-              setIsLoading(false);
             }}
           >
-            Dismiss
+            {strings.Dismiss}
           </Text>
         </Card>
       </Modal>
       <TopNavigation
         alignment="center"
-        title="CHANGE PASSWORD"
+        title={strings.ChangePassword}
         accessoryLeft={renderBackAction}
       />
       <Divider />
       <Layout style={{ flex: 1 }}>
-        <KeyboardAwareScrollView>
+        <KeyboardAvoidingView>
           <View style={styles.formContainer}>
             <Input
               style={styles.formInput}
-              label="CURRENT PASSWORD"
-              placeholder="Password"
+              label={strings.CurrentPassword}
+              placeholder={strings.Password}
               caption={currPasswordCap}
               status={currPasswordStatus}
               secureTextEntry={!currPasswordVisible}
@@ -204,8 +209,8 @@ const ChangePassScreen = (props) => {
             />
             <Input
               style={styles.formInput}
-              label="NEW PASSWORD"
-              placeholder="Password"
+              label={strings.NewPassword}
+              placeholder={strings.Password}
               caption={newPasswordCap}
               status={newPasswordStatus}
               secureTextEntry={!newPasswordVisible}
@@ -216,8 +221,8 @@ const ChangePassScreen = (props) => {
             <Input
               style={styles.formInput}
               caption={conNewPasswordCap}
-              placeholder="Confirm New Password"
-              label="CONFIRM NEW PASSWORD"
+              placeholder={strings.ConfirmNewPassword}
+              label={strings.ConfirmNewPassword}
               status={conNewPasswordStatus}
               value={conNewPassword}
               secureTextEntry={true}
@@ -233,9 +238,9 @@ const ChangePassScreen = (props) => {
               changePassword();
             }}
           >
-            DONE
+            {strings.Done}
           </Button>
-        </KeyboardAwareScrollView>
+        </KeyboardAvoidingView>
       </Layout>
     </SafeAreaView>
   );

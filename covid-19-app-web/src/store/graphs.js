@@ -1,4 +1,4 @@
-import axios from "axios";
+import ajax from "../auth/ajax";
 import moment from "moment";
 import { langConverter } from "./index";
 
@@ -44,7 +44,9 @@ export default {
     },
     countryCompare: {
       one: [],
-      two: []
+      two: [],
+      start_one: "2019-10-01",
+      start_two: "2019-10-01"
     },
     countryResources: {
       World: null,
@@ -301,8 +303,8 @@ export default {
       for (let i = 0; i < criteria.length; i++) {
         let cr = criteria[i];
         commit("incrementGraphLoaders", mode);
-        axios
-          .get(`${process.env.VUE_APP_BASE_URL}/api/statistics`, {
+        ajax
+          .get(`statistics`, {
             params: {
               criteria: converter[cr.label],
               country: country,
@@ -334,8 +336,8 @@ export default {
     setDailyCounts({ commit }, { criteria, country, start_date, end_date }) {
       commit("resetGraphLoaders", "daily");
       commit("incrementGraphLoaders", "daily");
-      axios
-        .get(`${process.env.VUE_APP_BASE_URL}/api/statistics`, {
+      ajax
+        .get(`statistics`, {
           params: {
             criteria: converter[criteria],
             country: country,
@@ -355,12 +357,12 @@ export default {
         });
     },
     setCountryCompare(
-      { commit },
+      { commit, getters },
       { criteria, country, start_date, end_date, mode }
     ) {
       commit("incrementGraphLoaders", "countryCompare");
-      axios
-        .get(`${process.env.VUE_APP_BASE_URL}/api/statistics`, {
+      ajax
+        .get(`statistics`, {
           params: {
             criteria: converter[criteria],
             country: country,
@@ -369,13 +371,27 @@ export default {
           }
         })
         .then(response => {
+          let start = getters.getCountryCompare;
+          let first = true;
           let data = [];
           for (let i in response.data) {
             let val = response.data[i];
-            data.push({
-              x: `Day ${moment(val.t).diff(moment(start_date), "days")}`,
-              y: val.y
-            });
+            if (val.y && val.y > 0) {
+              if (first) {
+                commit("setCountryCompare", {
+                  key: `start_${mode}`,
+                  payload: val.t.slice(0, 10)
+                });
+                first = false;
+              }
+              data.push({
+                x: `Day ${moment(val.t).diff(
+                  moment(start[`start_${mode}`]),
+                  "days"
+                )}`,
+                y: val.y
+              });
+            }
           }
           commit("setCountryCompare", { key: mode, payload: data });
         })
@@ -396,8 +412,8 @@ export default {
       };
       commit("resetGraphLoaders", "diseaseCompare");
       commit("incrementGraphLoaders", "diseaseCompare");
-      axios
-        .get(`${process.env.VUE_APP_BASE_URL}/api/diseases`)
+      ajax
+        .get(`diseases`)
         .then(response => {
           let collection = [];
           response.data.forEach(function(load) {
@@ -422,13 +438,21 @@ export default {
           commit("decrementGraphLoaders", "diseaseCompare");
         });
     },
-    setCountryResources({ commit }, { country }) {
-      axios
-        .get(`${process.env.VUE_APP_BASE_URL}/api/publicResources/${country}`)
+    setCountryResources({ commit }, { country, lang }) {
+      commit("setGraphLoaders", { key: "countryResources", value: true });
+      ajax
+        .get(`publicResources/${country}`, {
+          params: {
+            language: langConverter[lang]
+          }
+        })
         .then(response => {
           let data = [];
           for (let i in response.data) {
             let val = response.data[i];
+            let zero = val.TimeSeries["2019"]
+              ? val.TimeSeries["2019"].toFixed(2)
+              : null;
             let one = val.TimeSeries["2017"]
               ? val.TimeSeries["2017"].toFixed(2)
               : null;
@@ -437,25 +461,26 @@ export default {
               : null;
             data.push({
               key: val.Indicator.split("(")[0],
-              value: one || two
+              value: zero || one || two
             });
           }
           commit("setCountryResources", { key: country, payload: data });
         })
         .catch(error => {
           console.log(error);
+        })
+        .finally(function() {
+          commit("setGraphLoaders", { key: "countryResources", value: false });
         });
     },
     setGraphDescriptions({ commit }, { lang }) {
-      axios
-        .get(
-          `${process.env.VUE_APP_BASE_URL}/api/resources/statistics-description`,
-          {
-            params: {
-              language: langConverter[lang]
-            }
+      commit("setGraphLoaders", { key: "descriptions", value: true });
+      ajax
+        .get(`resources/statistics-description`, {
+          params: {
+            language: langConverter[lang]
           }
-        )
+        })
         .then(response => {
           let res = {};
           response.data.forEach(function(desc) {
@@ -465,6 +490,9 @@ export default {
         })
         .catch(error => {
           console.log(error);
+        })
+        .finally(function() {
+          commit("setGraphLoaders", { key: "descriptions", value: false });
         });
     }
   }

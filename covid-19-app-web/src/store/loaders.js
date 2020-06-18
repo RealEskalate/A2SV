@@ -14,13 +14,20 @@ export default {
       descriptions: false,
       actions: false
     },
+    symTrackLoaders: {
+      map: false,
+      userSymptoms: false,
+      allSymptoms: false,
+      cities: false
+    },
     graphLoaders: {
       counts: 0,
       rates: 0,
       daily: 0,
       countryCompare: 0,
       diseaseCompare: 0,
-      descriptions: false
+      descriptions: false,
+      countryResources: false
     }
   },
   getters: {
@@ -32,6 +39,9 @@ export default {
     },
     getAboutLoaders(state) {
       return state.aboutLoaders;
+    },
+    getSymTrackLoaders(state) {
+      return state.symTrackLoaders;
     },
     getGraphLoaders(state) {
       return state.graphLoaders;
@@ -46,6 +56,12 @@ export default {
     },
     setAboutLoaders(state, { key, value }) {
       state.aboutLoaders[key] = value;
+    },
+    setSymTrackLoaders(state, { key, value }) {
+      state.symTrackLoaders[key] = value;
+    },
+    setGraphLoaders(state, { key, value }) {
+      state.graphLoaders[key] = value;
     },
     incrementGraphLoaders(state, key) {
       state.graphLoaders[key]++;

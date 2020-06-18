@@ -87,7 +87,7 @@
                         }
                       "
                     >
-                      Read More
+                      {{ $t("readMore") }}
                     </v-btn>
                   </v-card-actions>
                 </v-card>
@@ -108,7 +108,7 @@
           <v-card-actions>
             <v-spacer />
             <v-btn color="primary" text @click="dialog = false">
-              Close
+              {{ $t("close") }}
             </v-btn>
           </v-card-actions>
         </v-card>

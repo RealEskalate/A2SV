@@ -4,7 +4,6 @@ import {
   Platform,
   StyleSheet,
   Image,
-  TouchableOpacity,
   SafeAreaView,
 } from "react-native";
 import {
@@ -17,8 +16,11 @@ import {
   Divider,
   TopNavigation,
   TopNavigationAction,
+  Button,
 } from "@ui-kitten/components";
 import userIDStore from "../../data-management/user-id-data/userIDStore";
+import { strings } from "../../localization/localization";
+import { LangContext } from "../../../assets/lang/language-context";
 
 const SearchIcon = (props) => <Icon {...props} name="search-outline" />;
 
@@ -30,6 +32,10 @@ const NewsScreen = (props) => {
     searching: false,
     refreshing: false,
   });
+  //setting up the language
+  const langContext = React.useContext(LangContext);
+  const lang = langContext.lang;
+  strings.setLanguage(lang);
 
   React.useEffect(() => {
     fetchNews();
@@ -54,8 +60,8 @@ const NewsScreen = (props) => {
             refreshing: false,
           });
         })
-        .catch((error) => {
-          alert("Wrong");
+        .catch(() => {
+          // alert('Wrong');
         });
     } else {
       fetch(
@@ -78,7 +84,7 @@ const NewsScreen = (props) => {
             searching: false,
           });
         })
-        .catch((error) => {
+        .catch(() => {
           alert(
             "Couldn't connect",
             "Unable to connect to server, please try again!"
@@ -123,9 +129,14 @@ const NewsScreen = (props) => {
     setState({
       ...state,
       searchTag: searchTag,
-      searching: searchTag !== "",
     });
+  };
 
+  const searchNews = () => {
+    setState({
+      ...state,
+      searching: state.searchTag !== "",
+    });
     fetchNews();
   };
 
@@ -135,11 +146,11 @@ const NewsScreen = (props) => {
   };
 
   const goToNews = (reference_link) => {
-    // if (Platform.Version > 22) {
-    //   props.navigation.navigate("NewsView", { uri: reference_link });
-    // } else {
-    Linking.openURL(reference_link);
-    // }
+    if (Platform.Version > 22) {
+      props.navigation.navigate("NewsView", { uri: reference_link });
+    } else {
+      Linking.openURL(reference_link);
+    }
   };
 
   const ArrowIosBackIcon = (style) => <Icon {...style} name="arrow-ios-back" />;
@@ -155,7 +166,7 @@ const NewsScreen = (props) => {
     <SafeAreaView style={styles.container}>
       <TopNavigation
         alignment="center"
-        title="Top News"
+        title={strings.News}
         accessoryLeft={renderBackAction}
       />
       <Divider />
@@ -168,10 +179,12 @@ const NewsScreen = (props) => {
       ) : (
         <Layout style={{ flex: 1, flexDirection: "column" }}>
           <Input
-            placeholder="Search.."
+            placeholder={strings.Search}
             value={state.searchTag}
             accessoryLeft={SearchIcon}
             size="large"
+            onSubmitEditing={() => searchNews()}
+            returnKeyType="done"
             accessoryRight={() =>
               state.searching ? <Spinner {...props} /> : <></>
             }
@@ -186,9 +199,15 @@ const NewsScreen = (props) => {
               <>
                 <Layout style={styles.newsRow}>
                   <Image
-                    source={require("../../../assets/news/people.png")}
+                    source={{ uri: item.logo }}
                     resizeMethod="auto"
-                    style={{ width: 50, height: 50 }}
+                    style={{
+                      width: 50,
+                      height: 50,
+                      marginRight: 10,
+                      borderRadius: 25,
+                      backgroundColor: "#eee",
+                    }}
                   />
                   <Layout style={{ flex: 1 }}>
                     <Layout
@@ -214,16 +233,12 @@ const NewsScreen = (props) => {
                         justifyContent: "flex-end",
                       }}
                     >
-                      <TouchableOpacity
-                        style={{
-                          backgroundColor: "#bbdefb",
-                          padding: 5,
-                          borderRadius: 5,
-                        }}
+                      <Button
+                        size="tiny"
                         onPress={() => goToNews(item.reference_link)}
                       >
-                        <Text status="primary">GO TO NEWS</Text>
-                      </TouchableOpacity>
+                        {strings.GoToNews}
+                      </Button>
                     </Layout>
                   </Layout>
                 </Layout>

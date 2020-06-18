@@ -40,7 +40,7 @@ exports.get_all_news = async (req, res) => {
 
   news = news.concat(await fetchGoogleNews(req));
 
-  let policies;  
+  let policies = [];  
   if(req.query.country == "World"){
     news = news.concat(await fetchCDCNews());
   }else if(req.query.country){
@@ -76,7 +76,7 @@ exports.get_sources = async (req, res) => {
   sources = sources.filter((item) => default_sources.includes(item.source))
                    .map((item) => { return {source: item.source, logo: clearBitLogo(item.reference_link)}});
 
-  if(!req.query.country){
+  if(!req.query.country || req.query.country == "World"){
     sources.unshift({
       source: "CDC Newsroom",
       logo: "http://logo.clearbit.com/cdc.gov" 
@@ -274,9 +274,9 @@ function paginateAndFilter(data, req) {
   var size = parseInt(req.query.size) || 15;
 
   if (req.query.source) {
-    data = data.filter((item) => req.query.source.split(",").includes(item.source)
-    );
+    data = data.filter((item) => req.query.source.split(",").includes(item.source));
   }
+
 
   data.sort((a, b) => (a.date < b.date ? 1 : b.date < a.date ? -1 : 0));
 

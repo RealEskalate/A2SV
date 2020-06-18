@@ -7,25 +7,43 @@
   "totalCases": "Total cases",
   "recovered": "Recovered",
   "death": "Death",
+  "deathRate": "Death Rate",
   "activeCases": "Active Cases",
   "regions": "Regions",
   "totalDeath": "Total Death",
 
-  "freeReportingPhoneNumbers": "Free COVID-19 Reporting Phone Numbers",
-  "getOurApp": "Get our App",
+  "clearbitMessage": "Logos provided by Clearbit",
+  "freeReportingPhoneNumbers": "Free COVID-19 Report Hotlines",
   "aboutSectionDescription": "TrackSym is a non-commercial app that uses crowd-sourcing to collect and visualize the density of the relevant symptoms. Registration only asks about age and gender to be used for data science purposes. Users can anonymously report symptoms and choose a location to see the density of symptoms in a map view. The data is aggregated by places, therefore, the app can help people avoid visiting a grocery store or a gas station that is heavily used by symptomatic people. In addition it provide Play-ground for the Data and News related to Covid-19 by country.",
   "moreInfo": "More Info",
-  "contactUs": "Contact us",
-
-  "statesTransitionSubtitle": "What phases are there?",
   "learnEvenMoreDescription": "Go through our Learning paths to explore more about Covid 19. Whatever age you are, we have something for you.",
+  "regionalStatistics": "Regional Statistics",
+  "privacy": "Privacy",
+  "references": "References",
+  "NA": "N/A",
+  "readMore": "READ MORE",
+  "close": "Close",
+  "dateRange": "Date Range",
+  "metrics": "Metrics",
+
+  "states": {
+    "statesTransitionTitle": "States of Transition",
+    "statesTransitionSubtitle": "What phases are there?",
+    "incubation": "Incubation",
+    "mildOrNoSymptom": "Mild or no symptoms",
+    "heavySymptoms": "Heavy symptoms",
+    "hospitalization": "Hospitalization",
+    "icu": "ICU",
+    "recovery": "Recovery"
+  },
 
   "navbar": {
     "home": "Home",
     "learn": "Learn",
     "about": "About",
     "news": "News",
-    "map": "Map"
+    "map": "Map",
+    "profile": "Profile"
   },
 
   "titles": {
@@ -53,7 +71,12 @@
     "duration": "Duration",
     "how": "How",
     "sources": "Sources",
-    "show": "Show"
+    "show": "Show",
+    "kids": "Kids",
+    "teens": "Teens",
+    "adults": "adults",
+    "seniors": "Seniors",
+    "learningPathFor": "Learning path for"
   },
 
   "ethiopiaRegions": {
@@ -71,10 +94,60 @@
   },
 
   "aboutTitles": {
-    "aboutTrackSym": "Corona App",
+    "aboutTrackSym": "TrackSym",
     "theMission": "The Mission",
     "yourData": "Your Data",
     "we": "Who we are",
     "contact": "Contact us"
+  },
+
+  "ageGroups": {
+    "kids": "Kids",
+    "teens": "Teens",
+    "adults": "Adults",
+    "seniors": "Seniors"
+  },
+
+  "tourLabels": {
+    "start": "Start Tour",
+    "skip": "Skip",
+    "previous": "Previous",
+    "next": "Next",
+    "finish": "Finish"
+  },
+
+  "contactUs": {
+    "name": "Name",
+    "email": "Email",
+    "message": "Message",
+    "send": "Send"
+  },
+  "auth": {
+    "profile": "Profile",
+    "logOut": "Logout",
+    "ageGroup": "Age Group",
+    "male": "Male",
+    "female": "Female",
+    "editProfile": "Edit Profile",
+    "changePassword": "Change Password",
+    "oldPassword": "Old Password",
+    "newPassword": "New Password",
+    "confirmPassword": "Confirm Password",
+    "symptoms": "Symptoms",
+    "noSymptoms": "No Symptoms",
+    "editSymptoms": "Edit Symptoms",
+    "login": "Login",
+    "username": "Username",
+    "password": "Password",
+    "signUp": "Sign Up",
+    "goToSignUp": "Sign up Instead",
+    "goToLogin": "Sign in Instead",
+    "foundNothing": "Found Nothing",
+    "passwordInputMessage": "Old Password is required",
+    "passwordConfirmation": "Password (Confirmation)",
+    "gender": "Gender",
+    "undisclosed": "Undisclosed",
+    "cancel": "Cancel",
+    "saveChanges": "Save Changes"
   }
 }

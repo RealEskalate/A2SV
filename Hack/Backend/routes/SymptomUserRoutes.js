@@ -10,6 +10,7 @@ router.get("/api/symptomuser/symptom/:symptom_id", verifyToken.verifyToken, symp
 router.get("/api/symptomuser/user/:user_id", verifyToken.verifyToken, symptomuser_controller.get_symptomuser_by_user_id);
 
 router.post("/api/symptomuser", verifyToken.verifyToken, symptomuser_controller.post_symptomuser);
+router.post("/api/symptomuser/multiple", verifyToken.verifyToken, symptomuser_controller.post_multiple_symptoms);
 router.patch("/api/symptomuser", verifyToken.verifyToken, symptomuser_controller.update_symptomuser);
 router.delete("/api/symptomuser", verifyToken.verifyToken, symptomuser_controller.delete_symptomuser);
 

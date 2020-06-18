@@ -3,29 +3,47 @@
   "country": "ሀገር",
   "dateRange": "መጀመሪያ - መጨረሻ",
   "world": "አለም",
-  "resourcesPer1K": "በአማካኝ ለየ1000 ሰዎች ያለው ቁሳቁሶች እና አገልግሎቶች",
-  "totalCases": "አጠቃላይ ኬዞች",
+  "resourcesPer1K": "ለየ1ሺ ሰዎች ያለው አቅራቦት",
+  "totalCases": "ጠቅላላ በበሽታው የተያዘ",
   "recovered": "ያገገሙ",
   "death": "ሞት",
+  "deathRate": "የሞት መጠን",
   "activeCases": "የተያዙ /ያልዳኑ",
   "regions": "ከልል",
   "totalDeath": "አጠቃላይ ሞት",
 
-  "freeReportingPhoneNumbers": "ነፃ የኮቪድ-19 ሪፖርት ማድረጊያ ስልክ ቁጥሮች",
-  "getOurApp": "የእኛን መተግበሪያ/አፕሊኬሽን/ ያግኙ",
+  "clearbitMessage": "አርማዎች የቀረቡት ከClearBit ነው",
+  "freeReportingPhoneNumbers": "ነፃ የኮቪድ-19 ሪፖርት ማድረጊያ መስመሮች",
   "aboutSectionDescription": "ይህ የእኛ መተግበሪያ/አፕሊኬሽን/ ተዛማጅ የሆነውን የኮ.ቪ.ድ. 19 ምልክቶችን ለመሰብሰብ እና የምልክቶቹ በተለያዪ ቦታዎች ያለውን መቀራራብ በካርታ ለሕዝብ ለማቅረብ የሚጠቅም የንግድ ያልሆነ መተግበሪያ ነው። ከዚህ በተጨማሪም ከ Covid-19 ጋር ለተዛመዱ መረጃዎች እና ዜናዎች በመረጡት ሀገር መሰረት ያቀርባል ፡፡",
   "moreInfo": "ለተጨማሪ መረጃ",
-  "contactUs": "አግኙን",
-
-  "statesTransitionSubtitle": "ምን ምን ሂደቶች አሉት?",
   "learnEvenMoreDescription": "ስለ ኮ.ቪ.ድ. 19 የበለጠ ለመመርመር ባዘጋጀነው የመማር ጎዳናዎች ውስጥ ይሂዱ። እድሜዎ ምንም ይሁን ምን ፣ ለእርስዎ የሆነ አንድ ነገር አለን ፡፡",
+  "regionalStatistics": "ክልላዊ ስታቲስቲክስ",
+  "privacy": "ግላዊነት",
+  "references": "ዋቢዎች",
+  "NA": "መ/የ",
+  "readMore": "ተጨማሪ መረጃ",
+  "close": "ዝጋ",
+  "dateRange": "የቀን ገድብ",
+  "metrics": "መለኪያዎች",
+
+  "states": {
+    "statesTransitionTitle": "የቫይረሱ የሽግግር ሂደት",
+    "statesTransitionSubtitle": "ምን ምን ሂደቶች አሉት?",
+    "incubation": "ኢንኩቤሽን",
+    "mildOrNoSymptom": "መካከለኛ ወይም ምንም ምልክቶች የሉም",
+    "heavySymptoms": "ከባድ የህመም ምልክቶች",
+    "hospitalization": "ሆስፒታል መተኛት",
+    "icu": "አይ.ሲ.ዩ.",
+    "recovery": "ማገገም"
+  },
 
   "navbar": {
     "home": "መግቢያ",
     "learn": "ይማሩ",
     "about": "ስለኛ",
     "news": "ዜና",
-    "map": "ካርታ"
+    "map": "ካርታ",
+    "profile": "መገለጫ"
   },
 
   "titles": {
@@ -53,12 +71,17 @@
     "duration": "ቆይታ",
     "how": "እንዴት",
     "sources": "ምንጭ",
-    "show": "አሳይ"
+    "show": "አሳይ",
+    "kids": "ህጻናት እና ልጆች",
+    "teens": "ታዳጊ",
+    "adults": "ወጣቶች",
+    "seniors": "አዛውንት",
+    "learningPathFor": "የመማር መንገድ ለ"
   },
 
   "ethiopiaRegions": {
     "addisAbaba": "አዲስ አበባ",
-    "oromia": "ኦሮምያ",
+    "oromia": "ኦሮሚያ",
     "tigrai": "ትግራይ",
     "benishangulGumuz": "ቤንሻንጉል ጉሙዝ",
     "gambela": "ጋምቤላ",
@@ -76,5 +99,56 @@
     "yourData": "ስለ እናንተ መረጃ",
     "we": "ስለ እኛ ማንነት",
     "contact": "መልእክቶን ይላኩ"
+  },
+
+  "ageGroups": {
+    "kids": "ልጆች",
+    "teens": "ታዳጊዎች",
+    "adults": "እዋቂዎች",
+    "seniors": "አዛውንቶች"
+  },
+
+  "tourLabels": {
+    "start": "ጉብኝት ጀምር",
+    "skip": "ይቅር",
+    "previous": "ቀዳሚ",
+    "next": "ቀጣይ",
+    "finish": "ጨርስ"
+  },
+
+  "contactUs": {
+    "name": "ስም",
+    "email": "ኢ-ሜል",
+    "message": "መልዕክት",
+    "send": "ላክ"
+  },
+  "auth": {
+    "profile": "ፕሮፋይል",
+    "logOut": "ውጣ",
+    "ageGroup": "እድሜ ክልል",
+    "male": "ወንድ",
+    "female": "ሴት",
+    "editProfile": "ፕሮፋይል ለውጥ",
+    "changePassword": "የይለፍ ቃል ይቀይሩ",
+    "oldPassword": "የቀድሞ የይለፍ ቃል",
+    "newPassword": "አዲስ የይለፍ ቃል",
+    "confirmPassword": "ማረጋገጫ የይለፍ ቃል",
+    "symptoms": "የህመም ምልክቶች",
+    "noSymptoms": "ምንም የህመም ምልክቶች የሉም",
+    "editSymptoms": "የህመም ምልክትዎን ያርትዑ",
+    "login": "ግባ",
+    "username": "የተጠቃሚ ስም",
+    "password": "የይለፍ ቃል",
+    "signUp": "መለያ ፍጠር",
+    "goToSignUp": "መለያ ፍጠር",
+    "goToLogin": "ግባ",
+    "foundNothing": "ምንም አልተገኘም",
+    "passwordInputMessage": "የድሮ የይለፍ ቃል ያስፈልጋል",
+    "passwordConfirmation": "የይለፍ ቃል (ማረጋገጫ)",
+    "gender": "ጾታ",
+    "undisclosed": "አልገልጽም",
+    "cancel": "ሰርዝ",
+    "saveChanges": "ለውጦችን አስቀምጥ"
   }
 }
+

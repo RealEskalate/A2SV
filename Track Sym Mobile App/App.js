@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
-import { AsyncStorage } from "react-native";
+import AsyncStorage from "@react-native-community/async-storage";
 import userIDStore from "./src/data-management/user-id-data/userIDStore";
 import * as actions from "./src/data-management/user-id-data/userIDActions";
 
@@ -10,19 +10,27 @@ import {
   IconRegistry,
   Spinner,
   Layout,
-  Avatar,
 } from "@ui-kitten/components";
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import { default as customTheme } from "./assets/themes/custom-theme.json"; // <-- Import app theme
 import { ThemeContext } from "./assets/themes/theme-context";
+import { LangContext } from "./assets/lang/language-context";
 import { AuthNavigator } from "./src/navigation/authNavigation";
 import { AppNavigator } from "./src/navigation/appNavigation.js";
 import { default as mapping } from "./assets/fonts/mapping.json"; // <-- Import app mapping
+import languageStore from "./src/data-management/language_data/languageStore";
+import * as languageActions from "./src/data-management/language_data/languageActions";
+
+import { Image } from "react-native";
 
 function App() {
   const [userId, setUserId] = useState("");
   const [isLoading, setLoading] = useState(true);
   const [theme, setTheme] = React.useState("light");
+  const [lang, setLang] = React.useState("en");
+  const [init, setInit] = React.useState("Welcome");
+  const [gen, setGen] = React.useState("");
+  const [age, setAge] = React.useState("");
 
   const navigatorTheme = {
     ...DefaultTheme,
@@ -36,6 +44,9 @@ function App() {
   const toggleTheme = () => {
     setTheme(theme === "light" ? "dark" : "light");
   };
+  const changeLang = (langCode) => {
+    setLang(langCode);
+  };
 
   //signify whenever there is a state change in redux
   userIDStore.subscribe(async () => {
@@ -45,7 +56,6 @@ function App() {
 
   const checkLoggedIn = async () => {
     let userID = null;
-    let themeVar = "light";
     try {
       userID = await AsyncStorage.getItem("userID");
       let userName = await AsyncStorage.getItem("userName");
@@ -53,16 +63,37 @@ function App() {
       let userGender = await AsyncStorage.getItem("gender");
       let userAgeGroup = await AsyncStorage.getItem("age_group");
       let themeVar = await AsyncStorage.getItem("theme");
+      let langVar = await AsyncStorage.getItem("lang");
+      let fisrtSession = await AsyncStorage.getItem("isFirstInterance");
+
       if (userID != null) {
         userIDStore.dispatch(
           actions.addUser(userID, userName, userToken, userAgeGroup, userGender)
         ); //repopulate redux state
       }
+
+      if (themeVar != null) {
+        setTheme(themeVar);
+      } else {
+        setTheme("light");
+      }
+
+      if (langVar != null) {
+        setLang(langVar);
+        languageStore.dispatch(languageActions.changeLanguage(langVar));
+      } else {
+        setLang("en");
+        languageStore.dispatch(languageActions.changeLanguage("en"));
+      }
+
+      setAge(userAgeGroup);
+      setGen(userGender);
+
+      if (fisrtSession) {
+        setInit("LoginScreen");
+      }
     } catch (e) {
-      alert(e);
-    }
-    if (themeVar != null) {
-      setTheme(themeVar);
+      // alert(e);
     }
     setUserId(userID);
     setLoading(false);
@@ -77,14 +108,37 @@ function App() {
   if (isLoading) {
     return (
       <Layout
+        level="2"
         style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
       >
-        <Avatar
-          size="giant"
-          source={require("./assets/images/app_icon.png")}
-          style={{ marginBottom: 50 }}
-        />
-        <Spinner size="large" color="#1976d2" />
+        <Layout
+          level="3"
+          style={{
+            width: 100,
+            height: 100,
+            borderRadius: 50,
+            shadowColor: "#000",
+            shadowOffset: {
+              width: 0,
+              height: 1,
+            },
+            shadowOpacity: 0.2,
+            shadowRadius: 1.41,
+
+            elevation: 2,
+            marginBottom: 30,
+          }}
+        >
+          <Image
+            source={require("./assets/images/app_icon.png")}
+            style={{
+              width: 100,
+              height: 100,
+              borderRadius: 50,
+            }}
+          />
+        </Layout>
+        <Spinner size="medium" status="info" />
       </Layout>
     );
   }
@@ -92,21 +146,23 @@ function App() {
   return (
     <>
       <IconRegistry icons={EvaIconsPack} />
-      <ThemeContext.Provider value={{ theme, toggleTheme }}>
-        <ApplicationProvider
-          {...eva}
-          theme={{ ...eva[theme], ...customTheme }}
-          customMapping={mapping}
-        >
-          <NavigationContainer theme={navigatorTheme}>
-            {userId !== "" && userId !== null ? (
-              <AppNavigator /> // if user has already signed in go to main page
-            ) : (
-              <AuthNavigator /> //else go to sign in
-            )}
-          </NavigationContainer>
-        </ApplicationProvider>
-      </ThemeContext.Provider>
+      <LangContext.Provider value={{ lang, changeLang }}>
+        <ThemeContext.Provider value={{ theme, toggleTheme }}>
+          <ApplicationProvider
+            {...eva}
+            theme={{ ...eva[theme], ...customTheme }}
+            customMapping={mapping}
+          >
+            <NavigationContainer theme={navigatorTheme}>
+              {userId !== "" && userId !== null ? (
+                <AppNavigator age={age} gen={gen}/> // if user has already signed in go to main page
+              ) : (
+                <AuthNavigator init={init} /> //else go to sign in
+              )}
+            </NavigationContainer>
+          </ApplicationProvider>
+        </ThemeContext.Provider>
+      </LangContext.Provider>
     </>
   );
 }

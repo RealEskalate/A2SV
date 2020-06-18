@@ -1,5 +1,5 @@
 import React from "react";
-import { View, TouchableWithoutFeedback, AsyncStorage } from "react-native";
+import { View, TouchableWithoutFeedback } from "react-native";
 import {
   Button,
   Input,
@@ -10,12 +10,16 @@ import {
   Modal,
   Card,
   Spinner,
+  Divider,
 } from "@ui-kitten/components";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { ImageOverlay } from "../../components/ImageOverlay/image-overlay.component";
 import userIDStore from "../../data-management/user-id-data/userIDStore";
 import * as actions from "../../data-management/user-id-data/userIDActions";
+import AsyncStorage from "@react-native-community/async-storage";
 import themedStyles from "./extra/themedStyles";
+import { KeyboardAvoidingView } from "../../components/3rd-party";
+import { strings } from "../../localization/localization";
+import { LangContext } from "../../../assets/lang/language-context";
 
 const PersonIcon = (style) => <Icon {...style} name="person" />;
 
@@ -30,15 +34,15 @@ export default ({ navigation }) => {
   const [modalState, setModalState] = React.useState(false);
   const [modalMessage, setModalMessage] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(false);
+  //setting up the language
+  const langContext = React.useContext(LangContext);
+  const lang = langContext.lang;
+  strings.setLanguage(lang);
 
   const styles = useStyleSheet(themedStyles);
 
   const onSignUpButtonPress = () => {
     navigation && navigation.navigate("SignUpScreen");
-  };
-
-  const onForgotPasswordButtonPress = () => {
-    // navigation && navigation.navigate('ForgotPassword');
   };
 
   const onPasswordIconPress = () => {
@@ -65,7 +69,7 @@ export default ({ navigation }) => {
       setUsernameCap("");
     } else {
       setUsernameStatus("danger");
-      setUsernameCap("User name is required");
+      setUsernameCap(strings.Required);
     }
     setUsername(name);
   };
@@ -76,7 +80,7 @@ export default ({ navigation }) => {
       setPasswordCap("");
     } else {
       setPasswordStatus("danger");
-      setPasswordCap("Please enter your password!");
+      setPasswordCap(strings.Required);
     }
     setPassword(pass);
   };
@@ -84,14 +88,14 @@ export default ({ navigation }) => {
   const onSubmitForm = () => {
     if (username === "") {
       setUsernameStatus("danger");
-      setModalMessage("Please enter your user name!");
+      setModalMessage(strings.PleaseEnterYourUsername);
       setModalState(true);
       return;
     }
 
     if (password === "") {
       setPasswordStatus("danger");
-      setModalMessage("Password cannot be empty!");
+      setModalMessage(strings.PleaseEnterYourPassword);
       setModalState(true);
       return;
     }
@@ -109,55 +113,65 @@ export default ({ navigation }) => {
       await AsyncStorage.setItem("gender", gender); //save gender on async storage
       await AsyncStorage.setItem("theme", "light");
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
   //Log in authentication
-  const login = () => {
-    fetch("https://sym-track.herokuapp.com/api/auth/login", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username: username,
-        password: password,
-      }),
-    })
-      .then((response) => response.json())
-      .then((json) => {
-        userIDStore.dispatch(
-          actions.addUser(
-            json.user._id,
-            json.user.username,
-            json.token,
-            json.user.age_group,
-            json.user.gender
-          )
-        );
-        saveUser(
-          json.user._id,
-          json.user.username,
-          json.token,
-          json.user.age_group,
-          json.user.gender
-        ); //storing the user id in async storage
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        setModalMessage(
-          "Invalid Credentials",
-          "You have entered wrong user name or password, please try again!"
-        );
-        setModalState(true);
-        setIsLoading(false);
-      });
+  const login = async () => {
+    const response = await fetch(
+      "https://sym-track.herokuapp.com/api/auth/login",
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: username,
+          password: password,
+        }),
+      }
+    );
+
+    console.log(response);
+    if (!response) {
+      setModalMessage(strings.PleaseCheckYourConnection);
+      setModalState(true);
+      setIsLoading(false);
+      return;
+    }
+
+    if (response.status === 404) {
+      setModalMessage(
+        strings.YouHaveEnteredWrongUsernameOrPasswordPleaseTryAgain
+      );
+      setModalState(true);
+      setIsLoading(false);
+    }
+
+    const json = await response.json();
+    userIDStore.dispatch(
+      actions.addUser(
+        json.user._id,
+        json.user.username,
+        json.token,
+        json.user.age_group,
+        json.user.gender
+      )
+    );
+    saveUser(
+      json.user._id,
+      json.user.username,
+      json.token,
+      json.user.age_group,
+      json.user.gender
+    ); //storing the user id in async storage
+    setIsLoading(false);
   };
 
   return (
-    <KeyboardAwareScrollView style={styles.container}>
+    <KeyboardAvoidingView style={styles.container}>
       <Modal
         visible={modalState}
         backdropStyle={styles.backdrop}
@@ -167,11 +181,17 @@ export default ({ navigation }) => {
           <Text status="danger" category="h6" style={{ marginBottom: 10 }}>
             {modalMessage}
           </Text>
+          <Divider />
           <Text
-            style={{ alignSelf: "flex-end", color: "#0080ff" }}
+            style={{
+              alignSelf: "flex-end",
+              justifyContent: "center",
+              marginTop: 5,
+            }}
+            status="primary"
             onPress={() => setModalState(false)}
           >
-            Dismiss
+            {strings.Dismiss}
           </Text>
         </Card>
       </Modal>
@@ -185,20 +205,20 @@ export default ({ navigation }) => {
           category="h1"
           status="control"
         >
-          WELCOME
+          {strings.Welcome}
         </Text>
         <Text
           style={{ alignSelf: "flex-start", marginLeft: 20 }}
           category="s1"
           status="control"
         >
-          Sign in to your account
+          {strings.SignInToYourAccount}
         </Text>
       </ImageOverlay>
 
       <Layout style={styles.formContainer} level="1">
         <Input
-          placeholder="Username"
+          placeholder={strings.Username}
           status={usernameStatus}
           accessoryRight={PersonIcon}
           value={username}
@@ -208,7 +228,7 @@ export default ({ navigation }) => {
         <Input
           style={styles.passwordInput}
           status={passwordStatus}
-          placeholder="Password"
+          placeholder={strings.Password}
           caption={passwordCap}
           accessoryRight={renderIcon}
           value={password}
@@ -216,16 +236,6 @@ export default ({ navigation }) => {
           onChangeText={onPasswordChange}
           onIconPress={onPasswordIconPress}
         />
-        {/* <View style={styles.forgotPasswordContainer}>
-          <Button
-            style={styles.forgotPasswordButton}
-            appearance="ghost"
-            status="basic"
-            onPress={onForgotPasswordButtonPress}
-          >
-            Forgot your password?
-          </Button>
-        </View> */}
       </Layout>
       <Button
         style={styles.signInButton}
@@ -234,7 +244,7 @@ export default ({ navigation }) => {
         accessoryLeft={() => (isLoading ? <LoadingIndicator /> : <></>)}
         onPress={() => onSubmitForm()}
       >
-        SIGN IN
+        {strings.SignIn}
       </Button>
       <Button
         style={styles.signUpButton}
@@ -242,8 +252,8 @@ export default ({ navigation }) => {
         status="basic"
         onPress={onSignUpButtonPress}
       >
-        Don't have an account? Sign up
+        {strings.DoNotHaveAccount}
       </Button>
-    </KeyboardAwareScrollView>
+    </KeyboardAvoidingView>
   );
 };

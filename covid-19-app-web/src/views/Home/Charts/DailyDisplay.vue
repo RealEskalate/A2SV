@@ -6,7 +6,7 @@
           class="v-card--shaped"
           v-model="country"
           :items="countries"
-          label="Country"
+          :label="$t('country')"
           hint="Search Country"
           persistent-hint
           item-text="name"
@@ -29,7 +29,7 @@
               outlined
               dense
               v-model="dateRangeText"
-              label="Date Range"
+              :label="$t('dateRange')"
               hint="Date Range"
               :prepend-inner-icon="mdiCalendar"
               readonly
@@ -58,7 +58,7 @@
           item-text="label"
           v-model="criterion"
           :items="criteria.daily"
-          label="Criteria"
+          :label="$t('metrics')"
           hint="Criteria"
           outlined
           dense
@@ -80,10 +80,25 @@
           :chart-data="data"
           :options="chartOptions"
         />
-        <small
-          class="d-block grey--text my-3 text--darken-2"
-          v-text="short_description"
-        />
+        <v-fade-transition hide-on-leave>
+          <div class="ma-2" v-if="graphLoaders.descriptions">
+            <v-skeleton-loader
+              ref="skeleton"
+              type="text,text"
+              class="mx-auto my-3"
+            />
+          </div>
+          <small
+            v-else-if="!short_description"
+            class="d-block grey--text my-3 text--darken-1"
+            v-text="'No Description'"
+          />
+          <small
+            v-else
+            class="d-block grey--text my-3 text--darken-2"
+            v-text="short_description"
+          />
+        </v-fade-transition>
       </v-col>
       <v-col cols="12" md="3">
         <country-resources :country="country" />

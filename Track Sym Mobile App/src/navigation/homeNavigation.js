@@ -26,11 +26,13 @@ import DataAnalyticsMap from "../pages/public-data-page/DataAnalyticsMap.js";
 import SymDetailScreen from "../pages/info-detail/symptoms.js";
 import SpdDetailScreen from "../pages/info-detail/spread.js";
 import MsgDetailScreen from "../pages/info-detail/message.js";
+import { strings } from "../localization/localization";
+import { LangContext } from "../../assets/lang/language-context";
 
 const BottomTab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-const initialTabRoute = "Information";
+const initialTabRoute = "Data";
 
 const MenuIcon = (props) => <Icon name="menu-2-outline" {...props} />;
 const EditIcon = (props) => <Icon name="edit-2-outline" {...props} />;
@@ -52,7 +54,7 @@ const EditSymptomScreen = (props) => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <TopNavigation
-        title="Edit Your Simptoms"
+        title={strings.EditYourSymptoms}
         alignment="center"
         accessoryLeft={renderBackAction}
       />
@@ -73,7 +75,7 @@ const DataMap = (props) => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <TopNavigation
-        title="Edit Your Simptoms"
+        title={strings.Data}
         alignment="center"
         accessoryLeft={renderBackAction}
       />
@@ -84,11 +86,20 @@ const DataMap = (props) => {
 };
 
 const HomeTabsNavigator = ({ navigation }) => {
+  //setting up the language
+  const langContext = React.useContext(LangContext);
+  const lang = langContext.lang;
+  strings.setLanguage(lang);
   const openDrawer = () => {
     navigation.openDrawer();
   };
 
-  const names = ["Information", "Data", "Map", "My Symptoms"];
+  const names = [
+    strings.Data,
+    strings.Information,
+    strings.Map,
+    strings.MySymptoms,
+  ];
   const [i, setI] = React.useState(0);
 
   const OpenDrawerAction = () => (
@@ -120,10 +131,10 @@ const HomeTabsNavigator = ({ navigation }) => {
           navigation.navigate(state.routeNames[index]);
         }}
       >
-        <BottomNavigationTab title="Information" icon={InfoIcon} />
-        <BottomNavigationTab title="Data" icon={DataIcon} />
-        <BottomNavigationTab title="Map" icon={MapIcon} />
-        <BottomNavigationTab title="Symptoms" icon={PersonIcon} />
+        <BottomNavigationTab title={strings.Data} icon={DataIcon} />
+        <BottomNavigationTab title={strings.Information} icon={InfoIcon} />
+        <BottomNavigationTab title={strings.Map} icon={MapIcon} />
+        <BottomNavigationTab title={strings.Symptoms} icon={PersonIcon} />
       </BottomNavigation>
     </SafeAreaView>
   );
@@ -150,8 +161,8 @@ const HomeTabsNavigator = ({ navigation }) => {
         backBehavior="initialRoute"
         tabBar={(props) => <HomeBottomNavigation {...props} />}
       >
-        <BottomTab.Screen name="Information" component={InformationScreen} />
         <BottomTab.Screen name="Data" component={DataAnalytics} />
+        <BottomTab.Screen name="Information" component={InformationScreen} />
         <BottomTab.Screen name="Map" component={MapScreen} />
         <BottomTab.Screen name="Symptoms" component={UserSymptomPage} />
       </BottomTab.Navigator>

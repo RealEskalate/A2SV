@@ -8,7 +8,7 @@
 <script>
 // @ is an alias to /src
 import Statistics from "./Statistics.vue";
-import Ethiopia from "./Ethiopia";
+import Ethiopia from "./Ethiopia/Ethiopia";
 
 export default {
   name: "Home",

@@ -10,57 +10,75 @@
             small
             color="primary darken-1"
             @click="dialog = true"
-          >
-            {{ mdiHelpCircleOutline }}
-          </v-icon>
+            v-text="mdiHelpCircleOutline"
+          />
         </v-col>
       </v-row>
     </v-card-subtitle>
     <v-divider class="mx-4" />
     <v-list disabled dense>
-      <v-card-subtitle
-        v-if="!countryResources[country.name]"
-        v-text="'Found Nothing'"
-      />
-      <v-list-item-group v-else color="primary">
-        <v-list-item
-          v-for="(resource, i) in countryResources[country.name]"
-          :key="i"
-        >
-          <v-list-item-content>
-            <span>
-              <span v-text="resource.key" /> :
-              <span class="grey--text" v-text="resource.value || 'N/A'" />
-            </span>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list-item-group>
+      <v-fade-transition hide-on-leave>
+        <v-skeleton-loader
+          v-if="graphLoaders.countryResources"
+          ref="skeleton"
+          type="list-item,list-item,list-item,list-item"
+          class="mx-auto"
+        />
+        <v-card-subtitle
+          v-else-if="!countryResources[country.name]"
+          v-text="'Found Nothing'"
+        />
+        <v-list-item-group v-else color="primary">
+          <v-list-item
+            v-for="(resource, i) in countryResources[country.name]"
+            :key="i"
+          >
+            <v-list-item-content>
+              <span>
+                <span v-text="resource.key" /> :
+                <span class="grey--text" v-text="resource.value || $t('NA')" />
+              </span>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list-item-group>
+      </v-fade-transition>
     </v-list>
-    <v-dialog v-model="dialog" width="400" v-if="description">
+    <v-dialog v-model="dialog" width="500">
       <v-card class="px-2" shaped style="overflow: hidden">
         <v-icon
-          style="position: absolute; right: 0; top: 0"
+          style="position: absolute; right: 0; top: 0; z-index: 100"
           class="mt-3 mr-3"
           @click="dialog = false"
-        >
-          {{ mdiClose }}
-        </v-icon>
-        <v-card-title class="headline mt-2" v-text="description.title" />
-        <v-card-text v-text="description.description" />
-        <v-card-text>
-          <v-list dense>
-            <h4 v-text="'Metrics'" />
-            <v-list-item :key="i" v-for="(re, i) in description.fields">
-              <p>
-                <span v-text="re.name + ':  '" />
-                <span
-                  class="grey--text text--darken-1 font-italic"
-                  v-text="re.explanation"
-                />
-              </p>
-            </v-list-item>
-          </v-list>
-        </v-card-text>
+          v-text="mdiClose"
+        />
+        <v-fade-transition hide-on-leave>
+          <div class="ma-2" v-if="graphLoaders.descriptions">
+            <v-skeleton-loader ref="skeleton" type="article" class="mx-auto" />
+          </div>
+          <p
+            class="text-muted text-center my-8"
+            v-else-if="!description"
+            v-text="'Found Nothing'"
+          />
+          <div v-else>
+            <v-card-title class="headline mt-2" v-text="description.title" />
+            <v-card-text v-text="description.description" />
+            <v-card-text>
+              <v-list dense>
+                <h4 v-text="'Metrics'" />
+                <v-list-item :key="i" v-for="(re, i) in description.fields">
+                  <p>
+                    <span v-text="re.name + ':  '" />
+                    <span
+                      class="grey--text text--darken-1 font-italic"
+                      v-text="re.explanation"
+                    />
+                  </p>
+                </v-list-item>
+              </v-list>
+            </v-card-text>
+          </div>
+        </v-fade-transition>
       </v-card>
     </v-dialog>
   </v-card>
@@ -87,27 +105,32 @@ export default {
       handler() {
         this.fetchCountryResources();
       }
+    },
+    "$i18n.locale"(newValue) {
+      store.dispatch("setCountryResources", {
+        country: this.country.name,
+        lang: newValue
+      });
     }
   },
   methods: {
     fetchCountryResources() {
       if (!this.countryResources[this.country.name])
-        store.dispatch("setCountryResources", { country: this.country.name });
+        store.dispatch("setCountryResources", {
+          country: this.country.name,
+          lang: this.$i18n.locale
+        });
     }
   },
   computed: {
+    graphLoaders: () => store.getters.getGraphLoaders,
     countryResources: () => store.getters.getCountryResources,
     descriptions: () => store.getters.getGraphDescriptions,
     description() {
       if (this.descriptions) {
         return this.descriptions["Available Resources"];
       }
-      return {
-        title: "",
-        description: "",
-        fields: [],
-        criteria: []
-      };
+      return null;
     }
   }
 };

@@ -1,163 +1,475 @@
 process.env.NODE_ENV = 'test';
 var chai = require('chai');
 var { MedicalHistory } = require('../models/MedicalHistory');
-var chai = require('chai');
+let { User } = require("../models/UserModel");
+const jwt = require("jsonwebtoken");
+const config = require("config");
 var chaiHttp = require('chai-http');
 var server = require('../index');
-var should = chai.should();
 let mongoose = require("mongoose");
-
+const { expect } = chai;
 chai.use(chaiHttp);
 
-describe('Medical History API', function () {
+describe('Medical History API', () => {
+    describe('GET /api/medicalhistory', () => {
+        let medicalHistory;
+        let user;
+        let tokens;
+        beforeEach(async () => {
+            // MedicalHistory.collection.drop();
+            medicalHistory = new MedicalHistory({
+                _id: mongoose.Types.ObjectId(),
+                name: 'HyperTens.',
+                description: 'High blood pressure'
+            });
+            await medicalHistory.save();
+            user = new User({
+                _id: mongoose.Types.ObjectId(),
+                username: `${Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000}`,
+                password:
+                    "$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
+                gender: "FEMALE",
+                age_group: "21-30",
+            });
+            await user.save();
+            try {
+                jwt.sign({ user }, config.get("secretkey"), (err, token) => {
+                    tokens = token;
+                });
+            } catch (err) {
+                console.log(err.toString());
+            }
 
-    let medicalHistory;
-    let newMedicalHistory;
-    beforeEach(function (done) {
-
-        // MedicalHistory.collection.drop();
-        medicalHistory = new MedicalHistory({
-            _id: mongoose.Types.ObjectId(),
-            name: 'HyperTens.',
-            description: 'High blood pressure'
         });
-        medicalHistory.save(function (err) {
-            // console.log("added " + newMedicalHistory);
-            done();
+
+        afterEach(async () => {
+            await MedicalHistory.findByIdAndDelete(medicalHistory._id);
+            await User.findByIdAndDelete(user._id);
+        });
+
+        it('should list all medical histories on /api/medicalhistory GET', async () => {
+            let response = await chai.request(server)
+                .get('/api/medicalhistory')
+                .set(
+                    "Authorization",
+                    "Bearer " + tokens
+                );
+            //Because we don't want to allow data for all users to be shown right now, status will be 404
+            expect(response).to.have.status(404);
         });
     });
 
-    afterEach(function (done) {
-        MedicalHistory.findByIdAndRemove(medicalHistory._id, function () {
-            if(newMedicalHistory){
-                MedicalHistory.findByIdAndDelete(newMedicalHistory._id, function () {
+    describe('POST /api/medicalhistory', () => {
+        let medicalHistory;
+        let user;
+        let tokens;
+        beforeEach(async () => {
+            medicalHistory = new MedicalHistory({
+                _id: mongoose.Types.ObjectId(),
+                name: 'HyperTens.',
+                description: 'High blood pressure'
+            });
+            await medicalHistory.save();
+            user = new User({
+                _id: mongoose.Types.ObjectId(),
+                username: `${Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000}`,
+                password:
+                    "$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
+                gender: "FEMALE",
+                age_group: "21-30",
+            });
+            try {
+                jwt.sign({ user }, config.get("secretkey"), (err, token) => {
+                    tokens = token;
+                });
+            } catch (err) {
+                console.log(err.toString());
+            }
+            await user.save();
+
+        });
+
+        afterEach(async () => {
+            await MedicalHistory.findByIdAndDelete(medicalHistory._id);
+            await User.findByIdAndDelete(user._id);
+        });
+
+        it('should add a medical history on /medicalhistory POST', async () => {
+            let response = await chai
+                .request(server)
+                .post("/api/medicalhistory")
+                .set(
+                    "Authorization",
+                    "Bearer " + tokens
+                )
+                .send({ 'name': 'Pneumonia', 'description': 'inflammatory condition of lung' });
+            expect(response).to.have.status(200);
+            expect(response.body).to.have.property('name');
+            expect(response.body).to.have.property('description');
+        });
+    });
+
+    describe('GET /api/medicalhistory/:id', () => {
+        let medicalHistory;
+        let user;
+        let tokens;
+        beforeEach(async () => {
+            // MedicalHistory.collection.drop();
+            medicalHistory = new MedicalHistory({
+                _id: mongoose.Types.ObjectId(),
+                name: 'HyperTens.',
+                description: 'High blood pressure'
+            });
+            await medicalHistory.save();
+            user = new User({
+                _id: mongoose.Types.ObjectId(),
+                username: `${Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000}`,
+                password:
+                    "$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
+                gender: "FEMALE",
+                age_group: "21-30",
+            });
+            try {
+                jwt.sign({ user }, config.get("secretkey"), (err, token) => {
+                    tokens = token;
+                });
+            } catch (err) {
+                console.log(err.toString());
+            }
+            await user.save();
+        });
+
+        afterEach(async () => {
+            await MedicalHistory.findByIdAndDelete(medicalHistory._id);
+            await User.findByIdAndDelete(user._id);
+        });
+
+        it('should list a single medical history by id on /medicalhistory/:id GET', function (done) {
+            chai.request(server)
+                .get('/api/medicalhistory/' + medicalHistory._id)
+                .set(
+                    "Authorization",
+                    "Bearer " + tokens
+                )
+                .end(function (err, response) {
+                    expect(response).to.have.status(200);
+                    expect(response.body).to.have.property('name')
+                    expect(response.body).to.have.property('description')
+                    expect(response.body).to.have.property('_id')
                     done();
                 });
-            }else{
-                done();
-            }
         });
     });
 
 
-    it('should list all medical histories on /api/medicalhistory GET', function (done) {
-        chai.request(server)
-            .get('/api/medicalhistory')
-            .set(
-                "Authorization",
-                "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6Ik1BTEUiLCJhZ2VfZ3JvdXAiOiI-OTAiLCJfaWQiOiI1ZWI3ZjMwYzNlMmE4ODRhYzgzYWE3NjAiLCJ1c2VybmFtZSI6ImF1dGh0ZXN0IiwicGFzc3dvcmQiOiIkMmEkMTAkYjJmYTZHTTJMTDlLVlJ4UzhVVEkzdS5SQ2JjUWw0WXc5OExaWVVHUHRnUVdBdVFGOERqNXUiLCJfX3YiOjAsImN1cnJlbnRfY291bnRyeSI6IiJ9LCJpYXQiOjE1ODkxODc5Mjd9.ZJQHbK7cVmDOf87uuhUttlnyAFYe5KA0Afnq0iBptF0"
-              )
-            .end(function (err, res) {
-                res.should.have.status(200);
-                res.should.be.json;
-                res.body.should.be.a('array');
-                res.body[0].should.have.property('_id');
-                res.body[0].should.have.property('name');
-                res.body[0].should.have.property('description');
-                res.body[0].name.should.equal('HyperTens.');
-                done();
+    describe('GET /api/medicalhistory/name/:name', () => {
+        let medicalHistory;
+        let user;
+        let tokens;
+        beforeEach(async () => {
+            // MedicalHistory.collection.drop();
+            medicalHistory = new MedicalHistory({
+                _id: mongoose.Types.ObjectId(),
+                name: 'HyperTens.',
+                description: 'High blood pressure'
             });
-    });
-
-    it('should add a medical history on /medicalhistory POST', function (done) {
-        chai.request(server)
-            .post('/api/medicalhistory')
-            .set(
-                "Authorization",
-                "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6Ik1BTEUiLCJhZ2VfZ3JvdXAiOiI-OTAiLCJfaWQiOiI1ZWI3ZjMwYzNlMmE4ODRhYzgzYWE3NjAiLCJ1c2VybmFtZSI6ImF1dGh0ZXN0IiwicGFzc3dvcmQiOiIkMmEkMTAkYjJmYTZHTTJMTDlLVlJ4UzhVVEkzdS5SQ2JjUWw0WXc5OExaWVVHUHRnUVdBdVFGOERqNXUiLCJfX3YiOjAsImN1cnJlbnRfY291bnRyeSI6IiJ9LCJpYXQiOjE1ODkxODc5Mjd9.ZJQHbK7cVmDOf87uuhUttlnyAFYe5KA0Afnq0iBptF0"
-              )
-            .send({ 'name': 'Pneumonia', 'description': 'inflammatory condition of lung' })
-            .end(function (err, res) {
-                res.should.have.status(200);
-                res.should.be.json;
-                res.body.should.be.a('object');
-                res.body.should.have.property('name');
-                res.body.should.have.property('description');
-                res.body.should.have.property('_id');
-                res.body.name.should.equal('Pneumonia');
-
-                newMedicalHistory = res.body;
-                done();
+            await medicalHistory.save();
+            user = new User({
+                _id: mongoose.Types.ObjectId(),
+                username: `${Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000}`,
+                password:
+                    "$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
+                gender: "FEMALE",
+                age_group: "21-30",
             });
+            try {
+                jwt.sign({ user }, config.get("secretkey"), (err, token) => {
+                    tokens = token;
+                });
+            } catch (err) {
+                console.log(err.toString());
+            }
+            await user.save();
+        });
+
+        afterEach(async () => {
+            await MedicalHistory.findByIdAndDelete(medicalHistory._id);
+            await User.findByIdAndDelete(user._id);
+        });
+
+        it('should list a single medical history by name on /medicalhistory/name/:name GET', function (done) {
+            chai.request(server)
+                .get('/api/medicalhistory/name/' + medicalHistory.name)
+                .set(
+                    "Authorization",
+                    "Bearer " + tokens
+                )
+                .end(function (err, response) {
+                    expect(response).to.have.status(200);
+                    expect(response.body).to.have.property('_id');
+                    expect(response.body).to.have.property('name');
+                    expect(response.body.name).to.be.equal(medicalHistory.name);
+                    done();
+                })
+        });
     });
 
-    it('should list a single medical history by id on /medicalhistory/:id GET', function (done) {
-        chai.request(server)
-            .get('/api/medicalhistory/' + medicalHistory._id)
-            .set(
-                "Authorization",
-                "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6Ik1BTEUiLCJhZ2VfZ3JvdXAiOiI-OTAiLCJfaWQiOiI1ZWI3ZjMwYzNlMmE4ODRhYzgzYWE3NjAiLCJ1c2VybmFtZSI6ImF1dGh0ZXN0IiwicGFzc3dvcmQiOiIkMmEkMTAkYjJmYTZHTTJMTDlLVlJ4UzhVVEkzdS5SQ2JjUWw0WXc5OExaWVVHUHRnUVdBdVFGOERqNXUiLCJfX3YiOjAsImN1cnJlbnRfY291bnRyeSI6IiJ9LCJpYXQiOjE1ODkxODc5Mjd9.ZJQHbK7cVmDOf87uuhUttlnyAFYe5KA0Afnq0iBptF0"
-              )
-            .end(function (err, response) {
-                response.should.have.status(200);
-                response.should.be.json;
-                response.body.should.be.a('object');
-                response.body.should.have.property('_id');
-                response.body.should.have.property('name');
-                response.body.should.have.property('description');
-                response.body.name.should.equal('HyperTens.');
-                done();
+    describe('PATCH /api/medicalhistory', () => {
+        let medicalHistory;
+        let user;
+        let tokens;
+        beforeEach(async () => {
+            // MedicalHistory.collection.drop();
+            medicalHistory = new MedicalHistory({
+                _id: mongoose.Types.ObjectId(),
+                name: 'HyperTens.',
+                description: 'High blood pressure'
             });
+            await medicalHistory.save();
+            user = new User({
+                _id: mongoose.Types.ObjectId(),
+                username: `${Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000}`,
+                password:
+                    "$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
+                gender: "FEMALE",
+                age_group: "21-30",
+            });
+            try {
+                jwt.sign({ user }, config.get("secretkey"), (err, token) => {
+                    tokens = token;
+                });
+            } catch (err) {
+                console.log(err.toString());
+            }
+            await user.save();
+        });
 
+        afterEach(async () => {
+            await MedicalHistory.findByIdAndDelete(medicalHistory._id);
+            await User.findByIdAndDelete(user._id);
+        });
+
+        it('should update a single medical history on api/medicalhistory/ PATCH', function (done) {
+            chai.request(server)
+                .patch('/api/medicalhistory/' + medicalHistory._id)
+                .send({ 'name': 'FAILURE OF THE KIDNEY' })
+                .set(
+                    "Authorization",
+                    "Bearer " + tokens
+                )
+                .end(function (err, response) {
+                    expect(response).to.have.status(200);
+                    expect(response.body).to.have.property('_id');
+                    expect(response.body).to.have.property('name');
+                    done();
+                })
+        });
     });
 
-    it('should list a single medical history by name on /medicalhistory/name/:name GET', function (done) {
-        chai.request(server)
-            .get('/api/medicalhistory/name/' + medicalHistory.name)
-            .set(
-                "Authorization",
-                "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6Ik1BTEUiLCJhZ2VfZ3JvdXAiOiI-OTAiLCJfaWQiOiI1ZWI3ZjMwYzNlMmE4ODRhYzgzYWE3NjAiLCJ1c2VybmFtZSI6ImF1dGh0ZXN0IiwicGFzc3dvcmQiOiIkMmEkMTAkYjJmYTZHTTJMTDlLVlJ4UzhVVEkzdS5SQ2JjUWw0WXc5OExaWVVHUHRnUVdBdVFGOERqNXUiLCJfX3YiOjAsImN1cnJlbnRfY291bnRyeSI6IiJ9LCJpYXQiOjE1ODkxODc5Mjd9.ZJQHbK7cVmDOf87uuhUttlnyAFYe5KA0Afnq0iBptF0"
-              )
-            .end(function (err, res) {
-                res.should.have.status(200);
-                res.should.be.json;
-                res.body.should.be.a('object');
-                res.body.should.have.property('_id');
-                res.body.should.have.property('name');
-                res.body.should.have.property('description');
-                res.body.name.should.equal(medicalHistory.name);
-                done();
-            })
+    describe('DELETE /api/medicalhistory', () => {
+        let medicalHistory;
+        let user;
+        let tokens;
+        beforeEach(async () => {
+            // MedicalHistory.collection.drop();
+            medicalHistory = new MedicalHistory({
+                _id: mongoose.Types.ObjectId(),
+                name: 'HyperTens.',
+                description: 'High blood pressure'
+            });
+            await medicalHistory.save();
+            user = new User({
+                _id: mongoose.Types.ObjectId(),
+                username: `${Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000}`,
+                password:
+                    "$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
+                gender: "FEMALE",
+                age_group: "21-30",
+            });
+            try {
+                jwt.sign({ user }, config.get("secretkey"), (err, token) => {
+                    tokens = token;
+                });
+            } catch (err) {
+                console.log(err.toString());
+            }
+            await user.save();
+        });
+
+        afterEach(async () => {
+            await MedicalHistory.findByIdAndDelete(medicalHistory._id);
+            await User.findByIdAndDelete(user._id);
+        });
+
+        it('should delete a single medical history on api/medicalhistory/ DELETE', function (done) {
+            chai.request(server)
+                .delete('/api/medicalhistory/')
+                .set(
+                    "Authorization",
+                    "Bearer " + tokens
+                )
+                .send({ '_id': medicalHistory._id })
+                .end(function (err, response) {
+                    expect(response).to.have.status(200);
+                    expect(response.body).to.have.property('_id');
+                    expect(response.body).to.have.property('name');
+                    done();
+                })
+        })
+    })
+    describe('GET /api/medicalhistory/name/:name', () => {
+        let medicalHistory;
+        let user;
+        let tokens;
+        beforeEach(async () => {
+            // MedicalHistory.collection.drop();
+            medicalHistory = new MedicalHistory({
+                _id: mongoose.Types.ObjectId(),
+                name: 'HyperTens.',
+                description: 'High blood pressure'
+            });
+            await medicalHistory.save();
+            user = new User({
+                _id: mongoose.Types.ObjectId(),
+                username: `${Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000}`,
+                password:
+                    "$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
+                gender: "FEMALE",
+                age_group: "21-30",
+            });
+            try {
+                jwt.sign({ user }, config.get("secretkey"), (err, token) => {
+                    tokens = token;
+                });
+            } catch (err) {
+                console.log(err.toString());
+            }
+            await user.save();
+        });
+
+        afterEach(async () => {
+            await MedicalHistory.findByIdAndDelete(medicalHistory._id);
+            await User.findByIdAndDelete(user._id);
+        });
+
+        it('should list a single medical history by name on /medicalhistory/name/:name GET', function (done) {
+            chai.request(server)
+                .get('/api/medicalhistory/name/' + medicalHistory.name)
+                .set(
+                    "Authorization",
+                    "Bearer " + tokens
+                )
+                .end(function (err, response) {
+                    expect(response).to.have.status(200);
+                    expect(response.body).to.have.property('_id');
+                    expect(response.body).to.have.property('name');
+                    done();
+                })
+        });
     });
 
-    it('should update a single medical history on api/medicalhistory/ PATCH', function (done) {
-        chai.request(server)
-            .patch('/api/medicalhistory/' + medicalHistory._id)
-            .send({ 'name': 'FAILURE OF THE KIDNEY' })
-            .set(
-                "Authorization",
-                "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6Ik1BTEUiLCJhZ2VfZ3JvdXAiOiI-OTAiLCJfaWQiOiI1ZWI3ZjMwYzNlMmE4ODRhYzgzYWE3NjAiLCJ1c2VybmFtZSI6ImF1dGh0ZXN0IiwicGFzc3dvcmQiOiIkMmEkMTAkYjJmYTZHTTJMTDlLVlJ4UzhVVEkzdS5SQ2JjUWw0WXc5OExaWVVHUHRnUVdBdVFGOERqNXUiLCJfX3YiOjAsImN1cnJlbnRfY291bnRyeSI6IiJ9LCJpYXQiOjE1ODkxODc5Mjd9.ZJQHbK7cVmDOf87uuhUttlnyAFYe5KA0Afnq0iBptF0"
-              )
-            .end(function (err, res) {
-                res.should.have.status(200);
-                res.should.be.json;
-                res.body.should.be.a('object');
-                res.body.should.have.property('_id');
-                res.body.should.have.property('name');
-                res.body.should.have.property('description');
-                res.body.name.should.equal('FAILURE OF THE KIDNEY');
-                done();
-            })
+    describe('PATCH /api/medicalhistory', () => {
+        let medicalHistory;
+        let user;
+        let tokens;
+        beforeEach(async () => {
+            // MedicalHistory.collection.drop();
+            medicalHistory = new MedicalHistory({
+                _id: mongoose.Types.ObjectId(),
+                name: 'HyperTens.',
+                description: 'High blood pressure'
+            });
+            await medicalHistory.save();
+            user = new User({
+                _id: mongoose.Types.ObjectId(),
+                username: `${Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000}`,
+                password:
+                    "$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
+                gender: "FEMALE",
+                age_group: "21-30",
+            });
+            try {
+                jwt.sign({ user }, config.get("secretkey"), (err, token) => {
+                    tokens = token;
+                });
+            } catch (err) {
+                console.log(err.toString());
+            }
+            await user.save();
+        });
+
+        afterEach(async () => {
+            await MedicalHistory.findByIdAndDelete(medicalHistory._id);
+            await User.findByIdAndDelete(user._id);
+        });
+
+        it('should update a single medical history on api/medicalhistory/ PATCH', function (done) {
+            chai.request(server)
+                .patch('/api/medicalhistory/' + medicalHistory._id)
+                .send({ 'name': 'FAILURE OF THE KIDNEY' })
+                .set(
+                    "Authorization",
+                    "Bearer " + tokens
+                )
+                .end(function (err, response) {
+                    expect(response).to.have.status(200);
+                    expect(response.body).to.have.property('_id');
+                    expect(response.body).to.have.property('name');
+                    done();
+                })
+        });
     });
 
-    it('should delete a single medical history on api/medicalhistory/ DELETE', function (done) {
-        chai.request(server)
-            .delete('/api/medicalhistory/')
-            .set(
-                "Authorization",
-                "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImdlbmRlciI6Ik1BTEUiLCJhZ2VfZ3JvdXAiOiI-OTAiLCJfaWQiOiI1ZWI3ZjMwYzNlMmE4ODRhYzgzYWE3NjAiLCJ1c2VybmFtZSI6ImF1dGh0ZXN0IiwicGFzc3dvcmQiOiIkMmEkMTAkYjJmYTZHTTJMTDlLVlJ4UzhVVEkzdS5SQ2JjUWw0WXc5OExaWVVHUHRnUVdBdVFGOERqNXUiLCJfX3YiOjAsImN1cnJlbnRfY291bnRyeSI6IiJ9LCJpYXQiOjE1ODkxODc5Mjd9.ZJQHbK7cVmDOf87uuhUttlnyAFYe5KA0Afnq0iBptF0"
-              )
-            .send({ '_id': medicalHistory._id })
-            .end(function (err, res) {
-                res.should.have.status(200);
-                res.should.be.json;
-                res.body.should.be.a('object');
-                res.body.should.have.property('_id');
-                res.body.should.have.property('name');
-                res.body.should.have.property('description');
-                done();
-            })
-    });
+    describe('DELETE /api/medicalhistory', () => {
+        let medicalHistory;
+        let user;
+        let tokens;
+        beforeEach(async () => {
+            // MedicalHistory.collection.drop();
+            medicalHistory = new MedicalHistory({
+                _id: mongoose.Types.ObjectId(),
+                name: 'HyperTens.',
+                description: 'High blood pressure'
+            });
+            await medicalHistory.save();
+            user = new User({
+                _id: mongoose.Types.ObjectId(),
+                username: `${Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000}`,
+                password:
+                    "$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
+                gender: "FEMALE",
+                age_group: "21-30",
+            });
+            try {
+                jwt.sign({ user }, config.get("secretkey"), (err, token) => {
+                    tokens = token;
+                });
+            } catch (err) {
+                console.log(err.toString());
+            }
+            await user.save();
+        });
 
+        afterEach(async () => {
+            await MedicalHistory.findByIdAndDelete(medicalHistory._id);
+            await User.findByIdAndDelete(user._id);
+        });
+
+        it('should delete a single medical history on api/medicalhistory/ DELETE', function (done) {
+            chai.request(server)
+                .delete('/api/medicalhistory/')
+                .set(
+                    "Authorization",
+                    "Bearer " + tokens
+                )
+                .send({ '_id': medicalHistory._id })
+                .end(function (err, response) {
+                    expect(response).to.have.status(200);
+                    expect(response.body).to.have.property('_id');
+                    expect(response.body).to.have.property('name');
+                    done();
+                })
+        });
+    });
 });
 

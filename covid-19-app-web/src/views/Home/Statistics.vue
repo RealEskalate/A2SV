@@ -12,8 +12,8 @@
       <v-row>
         <v-col>
           <v-card flat class="overflow-hidden">
-            <v-tabs fixed-tabs value="this" v-model="selectedGraph">
-              <v-tab>
+            <v-tabs fixed-tabs v-model="selectedGraph" show-arrows>
+              <v-tab data-v-step="1">
                 <v-icon left>{{ mdiNumeric }}</v-icon>
                 {{ $t(graphNames[0]) }}
                 <v-spacer />
@@ -98,63 +98,78 @@
         </v-col>
       </v-row>
       <v-dialog v-model="dialog" width="500">
-        <v-card class="px-2" shaped style="overflow: hidden">
+        <v-card class="px-3" shaped style="overflow: hidden">
           <v-icon
-            style="position: absolute; right: 0; top: 0"
+            style="position: absolute; right: 0; top: 0; z-index: 100"
             class="mt-3 mr-3"
             @click="dialog = false"
-          >
-            {{ mdiClose }}
-          </v-icon>
-          <v-card-title
-            class="headline mt-2"
-            v-text="selectedDescription.title"
+            v-text="mdiClose"
           />
-          <v-card-text v-text="selectedDescription.description" />
-          <v-card-text>
-            <v-list
-              dense
-              v-if="
-                selectedDescription.fields &&
-                  selectedDescription.fields.length > 0
-              "
-            >
-              <h4 v-text="'Fields'" />
-              <v-list-item
-                :key="i"
-                v-for="(field, i) in selectedDescription.fields"
-              >
-                <p>
-                  <span v-text="field.name + ':  '" />
-                  <span
-                    class="grey--text text--darken-1 font-italic"
-                    v-text="field.explanation"
-                  />
-                </p>
-              </v-list-item>
-            </v-list>
-            <v-list
-              dense
-              v-if="
-                selectedDescription.criteria &&
-                  selectedDescription.criteria.length > 0
-              "
-            >
-              <h4 v-text="'Metrics'" />
-              <v-list-item
-                :key="i"
-                v-for="(cr, i) in selectedDescription.criteria"
-              >
-                <p>
-                  <span v-text="cr.name + ':  '" />
-                  <span
-                    class="grey--text text--darken-1 font-italic"
-                    v-text="cr.explanation"
-                  />
-                </p>
-              </v-list-item>
-            </v-list>
-          </v-card-text>
+          <v-fade-transition hide-on-leave>
+            <div class="ma-2" v-if="graphLoaders.descriptions">
+              <v-skeleton-loader
+                ref="skeleton"
+                type="article"
+                class="mx-auto"
+              />
+            </div>
+            <p
+              class="text-muted text-center my-8"
+              v-else-if="!selectedDescription"
+              v-text="'Found Nothing'"
+            />
+            <div v-else>
+              <v-card-title
+                class="headline mt-2"
+                v-text="selectedDescription.title"
+              />
+              <v-card-text v-text="selectedDescription.description" />
+              <v-card-text>
+                <v-list
+                  dense
+                  v-if="
+                    selectedDescription.fields &&
+                      selectedDescription.fields.length > 0
+                  "
+                >
+                  <h4 v-text="'Fields'" />
+                  <v-list-item
+                    :key="i"
+                    v-for="(field, i) in selectedDescription.fields"
+                  >
+                    <p>
+                      <span v-text="field.name + ':  '" />
+                      <span
+                        class="grey--text text--darken-1 font-italic"
+                        v-text="field.explanation"
+                      />
+                    </p>
+                  </v-list-item>
+                </v-list>
+                <v-list
+                  dense
+                  v-if="
+                    selectedDescription.criteria &&
+                      selectedDescription.criteria.length > 0
+                  "
+                >
+                  <h4 v-text="'Metrics'" />
+                  <v-list-item
+                    :key="i"
+                    v-for="(cr, i) in selectedDescription.criteria"
+                  >
+                    <p>
+                      <span v-text="cr.name + ':  '" />
+                      <span
+                        class="grey--text text--darken-1 font-italic"
+                        v-text="cr.explanation"
+                      />
+                    </p>
+                  </v-list-item>
+                </v-list>
+              </v-card-text>
+            </div>
+          </v-fade-transition>
         </v-card>
       </v-dialog>
     </v-container>
@@ -210,6 +225,7 @@ export default {
     }
   },
   computed: {
+    graphLoaders: () => store.getters.getGraphLoaders,
     graphDescriptions: () => store.getters.getGraphDescriptions,
     selectedDescription() {
       if (this.graphDescriptions) {

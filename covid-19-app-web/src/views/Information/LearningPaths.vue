@@ -22,7 +22,14 @@
           label="Learning Path for"
           v-model="selected_age"
           @input="fetchLearningPaths"
-        />
+        >
+          <template v-slot:selection="{ item }">
+            <span v-text="$t(`ageGroups.${item.toLowerCase()}`)" />
+          </template>
+          <template v-slot:item="{ item }">
+            <span v-text="$t(`ageGroups.${item.toLowerCase()}`)" />
+          </template>
+        </v-select>
       </v-col>
     </v-row>
     <v-row>
@@ -99,12 +106,10 @@ export default {
   },
   methods: {
     fetchLearningPaths() {
-      if (!this.learningPaths || !this.learningPaths[this.selected_age]) {
-        store.dispatch("setLearningPaths", {
-          age_group: this.selected_age,
-          lang: this.$i18n.locale
-        });
-      }
+      store.dispatch("setLearningPaths", {
+        age_group: this.selected_age,
+        lang: this.$i18n.locale
+      });
     }
   },
   created() {

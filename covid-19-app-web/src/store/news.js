@@ -1,11 +1,15 @@
 import axios from "axios";
+import ajax from "../auth/ajax";
 
 const state = {
   news: null,
   newsMeta: "",
   totalCount: 0,
   sources: [],
-  currentCountry: []
+  currentCountry: {
+    name: "World",
+    code: "World"
+  }
 };
 
 const getters = {
@@ -56,14 +60,22 @@ const actions = {
       });
   },
   setCurrentCountry: ({ commit }) => {
-    axios.get("http://ip-api.com/json").then(response => {
-      commit("setCurrentCountry", response.data.country);
-    });
+    axios.get("https://geolocation-db.com/json/").then(
+      response => {
+        commit("setCurrentCountry", {
+          name: response.data.country_name,
+          code: response.data.country_code
+        });
+      },
+      () => {
+        commit("setCurrentCountry", "World");
+      }
+    );
   },
   setNews: ({ commit }, { page, size, country, sources }) => {
     commit("setNewsLoaders", { key: "list", value: true });
-    axios
-      .get(`${process.env.VUE_APP_BASE_URL}/api/news`, {
+    ajax
+      .get(`news`, {
         params: {
           page: page,
           size: size,

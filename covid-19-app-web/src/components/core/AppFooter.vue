@@ -1,14 +1,23 @@
 <template>
   <v-footer padless class="white pb-md-0 pb-5">
-    <v-card flat tile class="lighten-1 text-center" shaped outlined>
+    <v-card
+      flat
+      tile
+      class="lighten-1 text-center"
+      style="width: 100%"
+      shaped
+      outlined
+    >
       <v-card-text>
         <v-btn
           v-for="(icon, i) in icons"
-          class="mx-2 pa-3"
           :href="icon.link"
           target="_blank"
+          class="mx-2"
           :key="i"
-          icon
+          depressed
+          small
+          fab
         >
           <v-icon size="23px" v-text="icon.icon" />
         </v-btn>
@@ -19,8 +28,10 @@
       </v-card-text>
 
       <v-card-text>
-        <v-btn text small v-text="'Resources'" href="/" /> |
-        <v-btn text small v-text="'Terms of Privacy'" href="/" /> |
+        <v-btn text small v-text="$t('references')" to="references" />
+        |
+        <v-btn text small v-text="$t('privacy')" to="privacy-policy" />
+        |
         <span class="pa-3">
           {{ new Date().getFullYear() }} — <strong>TrackSym</strong>
         </span>
@@ -51,20 +62,18 @@
 </template>
 
 <script>
-import { mdiTelegram, mdiWeb, mdiYoutube } from "@mdi/js";
+import { mdiWeb } from "@mdi/js";
+import { languages } from "../../plugins/i18n";
 
 export default {
   data: () => ({
-    languages: ["en", "am"],
+    languages,
     langText: {
       en: "EN",
-      am: "አማ"
+      am: "አማ",
+      ao: "AO"
     },
-    icons: [
-      { link: "http://a2sv.org/", icon: mdiWeb },
-      { link: "http://www.youtube.com/", icon: mdiYoutube },
-      { link: "http://www.youtube.com/", icon: mdiTelegram }
-    ]
+    icons: [{ link: "http://a2sv.org/", icon: mdiWeb }]
   })
 };
 </script>

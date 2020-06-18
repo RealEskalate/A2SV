@@ -56,18 +56,18 @@
                 class="display-1 font-weight-thin mb-5"
                 v-text="$t('aboutTitles.contact')"
               />
-              <v-alert
-                v-if="showAlert"
-                :type="type"
-                v-text="message"
-                dismissible
-              />
-              <v-form class="mt-7">
+              <v-snackbar top :color="type" v-model="showAlert" :timeout="5000">
+                <h4 class="ma-2" v-text="message" />
+                <v-btn icon x-small color="white" @click="showAlert = false">
+                  <v-icon v-text="mdiCloseCircleOutline" />
+                </v-btn>
+              </v-snackbar>
+              <v-form ref="form" v-model="valid" class="mt-7">
                 <v-text-field
                   class="v-card--shaped"
                   outlined
                   dense
-                  label="Name"
+                  :label="$t('contactUs.name')"
                   v-model="contact.name"
                   :rules="rules.nameRules"
                   counter="30"
@@ -76,7 +76,7 @@
                   class="v-card--shaped"
                   outlined
                   dense
-                  label="Email"
+                  :label="$t('contactUs.email')"
                   v-model="contact.email"
                   :rules="rules.emailRules"
                 />
@@ -85,18 +85,17 @@
                   outlined
                   dense
                   rows="5"
-                  label="Message"
+                  :label="$t('contactUs.message')"
                   :rules="rules.messageRules"
                   v-model="contact.message"
                 />
                 <div class="text-center py-3">
                   <v-btn
                     width="100"
-                    :loading="submitting"
                     class="primary mx-auto v-card--shaped"
                     @click="sendForm"
                   >
-                    Send
+                    {{ $t("contactUs.send") }}
                     <v-icon class="ml-2" small v-text="mdiSend" />
                   </v-btn>
                 </div>
@@ -123,7 +122,7 @@
             v-for="(action, action_i) in actions"
           >
             <v-icon
-              class="white--text mb-7"
+              class="white--text mb-5"
               x-large
               v-text="$data[action.icon]"
             />
@@ -176,6 +175,7 @@
 import axios from "axios";
 import store from "@/store";
 import {
+  mdiCloseCircleOutline,
   mdiCloudDownloadOutline,
   mdiSearchWeb,
   mdiSend,
@@ -186,9 +186,11 @@ export default {
   data: () => {
     return {
       mdiCloudDownloadOutline,
+      mdiCloseCircleOutline,
       mdiSearchWeb,
       mdiSend,
       mdiYoutube,
+      valid: false,
       showAlert: false,
       submitting: false,
       message: "",
@@ -201,7 +203,7 @@ export default {
       rules: {
         nameRules: [
           v => !!v || "Name is required",
-          v => (v && v.length <= 30) || "Name must be less than 10 characters"
+          v => (v && v.length <= 30) || "Name must be less than 30 characters"
         ],
         emailRules: [
           v => !!v || "E-mail is required",
@@ -240,16 +242,17 @@ export default {
       let self = this;
       self.submitting = true;
       axios
-        .post(`${process.env.VUE_APP_BASE_URL}/messages`, this.contact)
+        .post(`${process.env.VUE_APP_BASE_URL}/api/messages`, this.contact)
         .then(
           () => {
             this.showAlert = true;
             this.type = "success";
             this.message = "Your feedback is successfully submitted!";
+            this.$refs.form.reset();
           },
           () => {
             this.showAlert = true;
-            this.type = "error";
+            this.type = "danger";
             this.message = "Something went wrong!";
           }
         )

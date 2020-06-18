@@ -1,5 +1,5 @@
 import React from "react";
-import { View, TouchableWithoutFeedback } from "react-native";
+import { View, TouchableWithoutFeedback, ScrollView } from "react-native";
 import {
   Button,
   CheckBox,
@@ -14,11 +14,17 @@ import {
   Modal,
   Card,
   Spinner,
+  Layout,
 } from "@ui-kitten/components";
 import { ImageOverlay } from "../../components/ImageOverlay/image-overlay.component";
 import { BackIcon, GoogleIcon, FacebookIcon, TwitterIcon } from "./extra/icons";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import themedStyles from "./extra/themedStyles.js";
+import { KeyboardAvoidingView } from "../../components/3rd-party";
+import userIDStore from "../../data-management/user-id-data/userIDStore";
+import * as actions from "../../data-management/user-id-data/userIDActions";
+import { strings } from "../../localization/localization";
+import AsyncStorage from "@react-native-community/async-storage";
+import { LangContext } from "../../../assets/lang/language-context";
 
 const data = [
   "0-10",
@@ -33,7 +39,7 @@ const data = [
   ">90",
 ];
 
-const genderData = ["MALE", "FEMALE"];
+const genderData = [strings.Male, strings.Female];
 
 export default ({ navigation }) => {
   const [username, setUsername] = React.useState("");
@@ -58,63 +64,139 @@ export default ({ navigation }) => {
     new IndexPath(0)
   );
   const [passwordVisible, setPasswordVisible] = React.useState(false);
+  const [termStat, setTermStat] = React.useState("basic");
 
   const styles = useStyleSheet(themedStyles);
 
+  //setting up the language
+  const langContext = React.useContext(LangContext);
+  const lang = langContext.lang;
+  strings.setLanguage(lang);
+
   const onSignUpButtonPress = () => {
     if (username === "") {
-      setModalMessage("Please enter your username!");
+      setModalMessage(strings.PleaseEnterYourUsername);
       setModalState(true);
       setUsernameStatus("danger");
       return;
     }
 
     if (password === "") {
-      setModalMessage("Please enter your password!");
+      setModalMessage(strings.PleaseEnterYourPassword);
       setModalState(true);
       setPasswordStatus("danger");
       return;
     }
 
     if (confirmPassword !== password) {
-      setModalMessage("Password Don't match !");
+      setModalMessage(strings.PasswordDoesNotMatch);
       setModalState(true);
       setConfirmPasswordStatus("danger");
       return;
     }
 
+    if (!termsAccepted) {
+      setTermStat("danger");
+      return;
+    }
+
     setIsLoading(true);
-    fetch("https://sym-track.herokuapp.com/api/auth/register", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username: username,
-        password: password,
-        age_group: displayAgeValue,
-        gender: displayGenderValue,
-      }),
-    })
-      .then((response) => response.json())
-      .then((json) => {
-        navigation.goBack();
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.log(username);
-        console.log(password);
-        console.log(displayAgeValue);
-        console.log(displayGenderValue);
-        console.log(error);
-        setModalMessage(
-          "Poor connection",
-          "Couldn't resgister, please try again!"
-        );
-        setModalState(true);
-        setIsLoading(false);
-      });
+    signUpRequest();
+  };
+
+  const signUpRequest = async () => {
+    console.log(
+      username +
+        "," +
+        password +
+        "," +
+        displayAgeValue +
+        "," +
+        displayGenderValue
+    );
+    const response = await fetch(
+      "https://sym-track.herokuapp.com/api/auth/register",
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: username,
+          password: password,
+          gender: genderData[selectedGenderIndex],
+          age_group: data[selectedAgeIndex],
+        }),
+      }
+    );
+
+    if (response.status === 404) {
+      setModalMessage("");
+      setModalState(true);
+      setIsLoading(false);
+      return;
+    }
+
+    if (response.status === 500) {
+      setModalMessage(strings.UsernameAlreadyExists);
+      setModalState(true);
+      setIsLoading(false);
+      return;
+    }
+
+    if (response.status === 200) {
+      login();
+    }
+  };
+
+  const saveUser = async (userID, userName, token, age_group, gender) => {
+    try {
+      await AsyncStorage.setItem("userID", userID); //save user id on async storage
+      await AsyncStorage.setItem("userName", userName); //save user name on async storage
+      await AsyncStorage.setItem("token", token); //save token on async storage
+      await AsyncStorage.setItem("age_group", age_group); //save age group on async storage
+      await AsyncStorage.setItem("gender", gender); //save gender on async storage
+      await AsyncStorage.setItem("theme", "light");
+    } catch (error) {
+      // console.log(error);
+    }
+  };
+
+  const login = async () => {
+    const response = await fetch(
+      "https://sym-track.herokuapp.com/api/auth/login",
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: username,
+          password: password,
+        }),
+      }
+    );
+
+    const json = await response.json();
+    userIDStore.dispatch(
+      actions.addUser(
+        json.user._id,
+        json.user.username,
+        json.token,
+        json.user.age_group,
+        json.user.gender
+      )
+    );
+    saveUser(
+      json.user._id,
+      json.user.username,
+      json.token,
+      json.user.age_group,
+      json.user.gender
+    ); //storing the user id in async storage
+    setIsLoading(false);
   };
 
   const onSignInButtonPress = () => {
@@ -147,7 +229,7 @@ export default ({ navigation }) => {
       setUsernameCap("");
     } else {
       setUsernameStatus("danger");
-      setUsernameCap("Username is required");
+      setUsernameCap(strings.Required);
     }
     setUsername(name);
   };
@@ -158,7 +240,7 @@ export default ({ navigation }) => {
       setPasswordCap("");
     } else {
       setPasswordStatus("danger");
-      setPasswordCap("Password is required");
+      setPasswordCap(strings.Required);
     }
     setPassword(pass);
   };
@@ -169,13 +251,13 @@ export default ({ navigation }) => {
       setConfirmPasswordCap("");
     } else {
       setConfirmPasswordStatus("danger");
-      setConfirmPasswordCap("Password doesn't match");
+      setConfirmPasswordCap(strings.PasswordDoNotMatch);
     }
     setConfirmPassword(pass);
   };
 
   return (
-    <KeyboardAwareScrollView style={styles.container}>
+    <KeyboardAvoidingView style={styles.container}>
       <Modal
         visible={modalState}
         backdropStyle={styles.backdrop}
@@ -185,11 +267,17 @@ export default ({ navigation }) => {
           <Text status="danger" category="h6" style={{ marginBottom: 10 }}>
             {modalMessage}
           </Text>
+          <Divider />
           <Text
-            style={{ alignSelf: "flex-end", color: "#0080ff" }}
+            style={{
+              alignSelf: "flex-end",
+              justifyContent: "center",
+              marginTop: 5,
+            }}
+            status="primary"
             onPress={() => setModalState(false)}
           >
-            Dismiss
+            {strings.Dismiss}
           </Text>
         </Card>
       </Modal>
@@ -203,7 +291,7 @@ export default ({ navigation }) => {
           status="control"
           size="large"
         >
-          TRACK SYM
+          {strings.TrackSYM}
         </Button>
         <View style={styles.signUpContainer}>
           <View style={styles.backContainer}>
@@ -217,14 +305,14 @@ export default ({ navigation }) => {
             ></Button>
           </View>
           <Text style={styles.signInLabel} category="h4" status="control">
-            SIGN UP
+            {strings.SignUp}
           </Text>
         </View>
       </ImageOverlay>
       <View style={[styles.container, styles.formContainer]}>
         <Input
-          placeholder="Username"
-          label="Username"
+          placeholder={strings.Username}
+          label={strings.Username}
           caption={usernameCap}
           status={usernameStatus}
           autoCapitalize="words"
@@ -233,7 +321,7 @@ export default ({ navigation }) => {
         />
         <Select
           style={styles.select}
-          label="Age Group"
+          label={strings.AgeGroup}
           style={styles.formInput}
           placeholder="Default"
           value={displayAgeValue}
@@ -244,7 +332,7 @@ export default ({ navigation }) => {
         </Select>
         <Select
           style={styles.select}
-          label="Gender"
+          label={strings.Gender}
           style={styles.formInput}
           placeholder="Default"
           value={displayGenderValue}
@@ -255,8 +343,8 @@ export default ({ navigation }) => {
         </Select>
         <Input
           style={styles.formInput}
-          label="Password"
-          placeholder="Password"
+          label={strings.Password}
+          placeholder={strings.Password}
           caption={passwordCap}
           status={passwordStatus}
           secureTextEntry={!passwordVisible}
@@ -267,25 +355,27 @@ export default ({ navigation }) => {
         <Input
           style={styles.formInput}
           caption={confirmPasswordCap}
-          placeholder="Confirm Password"
-          label="Confirm Password"
+          placeholder={strings.ConfirmPassword}
+          label={strings.ConfirmPassword}
           status={confirmPasswordStatus}
           value={confirmPassword}
           secureTextEntry={true}
           onChangeText={(pass) => onConfirmPasswordChange(pass)}
         />
-        {/* <CheckBox
+        <CheckBox
           style={styles.termsCheckBox}
           textStyle={styles.termsCheckBoxText}
           checked={termsAccepted}
-          onChange={(checked) => setTermsAccepted(checked)}
+          status={termStat}
+          onChange={(checked) => {
+            setTermsAccepted(checked);
+            setTermStat("basic");
+          }}
         >
-          <Text style={styles.termsCheckBoxText}>
-            {
-              "By creating an account, I agree to the Track Sym Terms of\nUse and Privacy Policy"
-            }
+          <Text appearance="hint" category="c1" status={termStat}>
+            {strings.AgreeingTermsAndServiceOnSignUp}
           </Text>
-        </CheckBox> */}
+        </CheckBox>
       </View>
       <Button
         style={styles.signUpButton}
@@ -294,11 +384,21 @@ export default ({ navigation }) => {
         accessoryLeft={() => (isLoading ? <Spinner /> : <></>)}
         onPress={onSignUpButtonPress}
       >
-        SIGN UP
+        {strings.SignUp}
       </Button>
-      <View style={styles.orContainer}>
+      <Button
+        style={styles.termsButton}
+        appearance="ghost"
+        status="basic"
+        onPress={() => {
+          navigation.navigate("TermsAndPrivacyScreen");
+        }}
+      >
+        {strings.TermsAndPrivacy}
+      </Button>
+      {/* <View style={styles.orContainer}>
         <Divider style={styles.divider} />
-        <Text style={styles.orLabel} category="h5">
+        <Text style={styles.orLabel} category='h5'>
           OR
         </Text>
         <Divider style={styles.divider} />
@@ -309,25 +409,25 @@ export default ({ navigation }) => {
         </Text>
         <View style={styles.socialAuthButtonsContainer}>
           <Button
-            appearance="ghost"
-            size="giant"
-            status="primary"
+            appearance='ghost'
+            size='giant'
+            status='primary'
             accessoryLeft={GoogleIcon}
           />
           <Button
-            appearance="ghost"
-            size="giant"
-            status="primary"
+            appearance='ghost'
+            size='giant'
+            status='primary'
             accessoryLeft={FacebookIcon}
           />
           <Button
-            appearance="ghost"
-            size="giant"
-            status="primary"
+            appearance='ghost'
+            size='giant'
+            status='primary'
             accessoryLeft={TwitterIcon}
           />
-        </View>
-      </View>
-    </KeyboardAwareScrollView>
+        </View> */}
+      {/* </View> */}
+    </KeyboardAvoidingView>
   );
 };

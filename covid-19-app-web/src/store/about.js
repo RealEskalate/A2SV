@@ -1,4 +1,4 @@
-import axios from "axios";
+import ajax from "../auth/ajax";
 import { langConverter } from "./index";
 
 export default {
@@ -25,8 +25,8 @@ export default {
   actions: {
     setAboutDescriptions: ({ commit }, { lang }) => {
       commit("setAboutLoaders", { key: "descriptions", value: true });
-      axios
-        .get(`${process.env.VUE_APP_BASE_URL}/api/resources/information`, {
+      ajax
+        .get(`resources/information`, {
           params: {
             type: "about",
             language: langConverter[lang]
@@ -50,16 +50,13 @@ export default {
     },
     setAboutActions({ commit }, { lang }) {
       commit("setAboutLoaders", { key: "actions", value: true });
-      axios
-        .get(
-          `${process.env.VUE_APP_BASE_URL}/api/resources/statistics-description`,
-          {
-            params: {
-              title: "image-description",
-              language: langConverter[lang]
-            }
+      ajax
+        .get(`/resources/statistics-description`, {
+          params: {
+            title: "image-description",
+            language: langConverter[lang]
           }
-        )
+        })
         .then(response => {
           commit("setAboutActions", response.data[0].fields);
         })
