@@ -46,7 +46,7 @@ const Sk = {
 
 exports.calculateProbability = async (symptoms, country) => {
   if(symptoms.length==0) return 0;
-  let total_prob = 1.0;
+  let total_prob = prevalence;
   const prevalence = await getCountryStat(country);
   for (let i = 0; i < symptoms.length; i++) {
     var symptom = `${symptoms[i]}`.toLowerCase();
@@ -60,10 +60,8 @@ exports.calculateProbability = async (symptoms, country) => {
     } else if (symptom == "repeated shaking with chills") {
       symptom = "chills";
     }
-    const prob = 1 - (prevalence * Ak[symptom]) / Sk[symptom];
-    total_prob *= prob;
+    total_prob *= Ak[symptom] / Sk[symptom];
   }
-  total_prob = 1.0 - total_prob;
   console.log("Probabilty = " + total_prob);
   return total_prob;
 };
