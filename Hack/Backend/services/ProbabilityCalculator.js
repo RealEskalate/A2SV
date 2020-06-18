@@ -46,8 +46,8 @@ const Sk = {
 
 exports.calculateProbability = async (symptoms, country) => {
   if(symptoms.length==0) return 0;
-  let total_prob = prevalence;
   const prevalence = await getCountryStat(country);
+  let total_prob = prevalence;
   for (let i = 0; i < symptoms.length; i++) {
     var symptom = `${symptoms[i]}`.toLowerCase();
     if (symptom == "persistent dry cough") {
