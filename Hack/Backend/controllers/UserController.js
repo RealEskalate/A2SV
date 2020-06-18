@@ -2,17 +2,16 @@ var UserModels = require("../models/UserModel.js");
 var mongoose = require("mongoose");
 const Bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const axios = require('axios');
-const config = require('config');
+const axios = require("axios");
 const User = UserModels.User;
 
 // Get All Users. - [DEPRECATED: The information is too sensitive to share with API consumers]
 exports.get_all_users = async (req, res) => {
-  if (req.query.demo && req.query.demo == "true"){
+  if (req.query.demo && req.query.demo == "true") {
     var User = UserModels.DemoUser;
-  }else if(req.query.stress && req.query.stress === "true"){
+  } else if (req.query.stress && req.query.stress === "true") {
     var User = UserModels.StressUser;
-  }else{
+  } else {
     var User = UserModels.User;
   }
   const users = await User.find();
@@ -24,11 +23,11 @@ exports.get_all_users = async (req, res) => {
 };
 // Get User by ID.
 exports.get_user_by_id = async (req, res) => {
-  if (req.query.demo && req.query.demo == "true"){
+  if (req.query.demo && req.query.demo == "true") {
     var User = UserModels.DemoUser;
-  }else if(req.query.stress && req.query.stress === "true"){
+  } else if (req.query.stress && req.query.stress === "true") {
     var User = UserModels.StressUser;
-  }else{
+  } else {
     var User = UserModels.User;
   }
   if(req.params.id !== req.body.loggedInUser){
@@ -44,11 +43,11 @@ exports.get_user_by_id = async (req, res) => {
 };
 // Get User by Username and Password.
 exports.get_user_by_credentials = async (req, res) => {
-  if (req.query.demo && req.query.demo == "true"){
+  if (req.query.demo && req.query.demo == "true") {
     var User = UserModels.DemoUser;
-  }else if(req.query.stress && req.query.stress === "true"){
+  } else if (req.query.stress && req.query.stress === "true") {
     var User = UserModels.StressUser;
-  }else{
+  } else {
     var User = UserModels.User;
   }
   let user = await User.findOne({
@@ -59,33 +58,35 @@ exports.get_user_by_credentials = async (req, res) => {
     if (!user || !Bcrypt.compareSync(req.body.password, user.password)) {
       res.status(404).send("Username and Password combination doesn't exist");
     } else {
-      let country = '';
+      let country = "";
       try {
-        const result = await axios.get('http://www.geoplugin.net/json.gp?ip=' + req.connection.remoteAddress.substring(2))
-          .then(response => {
+        const result = await axios
+          .get(
+            "http://www.geoplugin.net/json.gp?ip=" +
+              req.connection.remoteAddress.substring(2)
+          )
+          .then((response) => {
             if (response.data) {
-              country = response.data.geoplugin_countryName
+              country = response.data.geoplugin_countryName;
             }
           })
-          .catch(error => {
+          .catch((error) => {
             console.log(error.toString());
           });
         user.set({
-          current_country: country
+          current_country: country,
         });
         await user.save();
-      }
-      catch (err) {
+      } catch (err) {
         console.log(err);
       }
       // jwt authentication(signing in) is  done here ...
-      jwt.sign({ user }, config.get('secretkey'), (err, token) => {
+      jwt.sign({ user }, process.env.APP_SECRET_KEY, (err, token) => {
         res.json({
           user: user,
-          token: token
+          token: token,
         });
-      })
-
+      });
     }
   } catch (err) {
     res.status(500).send(err.toString());
@@ -103,7 +104,9 @@ exports.post_user = async (req, res) => {
   try {
     const check = await User.findOne({ username: user.username });
     if (check) {
-      return res.status(500).send("Username and Password combination already exists");
+      return res
+        .status(500)
+        .send("Username and Password combination already exists");
     }
     if (user.password.length < 5) {
       res.status(500).send("Password Length Too Short");
@@ -118,11 +121,10 @@ exports.post_user = async (req, res) => {
 };
 // Update User by ID.
 exports.update_user = async (req, res) => {
-
   try {
     let exists = await User.findOne({ username: req.body.username });
     // Change user info by _id
-    let change = await User.findOne({ _id: req.body._id })
+    let change = await User.findOne({ _id: req.body._id });
     if (exists && exists._id != req.body._id) {
       return res.status(400).send("Username already exists ");
     } else if(req.body._id !== req.body.loggedInUser){
@@ -144,7 +146,6 @@ exports.update_user = async (req, res) => {
 };
 // Delete User by ID.
 exports.delete_user = async (req, res) => {
-
   try {
     if(req.body._id !== req.body.loggedInUser){
       return res.status(403).send("User not authorized to access this endpoint with id: " + req.body._id);
