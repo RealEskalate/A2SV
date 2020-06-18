@@ -1,5 +1,5 @@
 const express = require("express");
-const cors = require('cors');
+const cors = require("cors");
 const mongoose = require("./db.js");
 
 //Routers
@@ -25,16 +25,18 @@ const MobileInformationDetailRouter = require("./routes/MobileInformationDetailR
 const citiesRouter = require("./routes/CitiesRoutes");
 const ethiopiaDataRouter = require("./routes/EthiopiaDataRoutes");
 
-const logger = require('./middlewares/logger');
+const logger = require("./middlewares/logger");
 const bodyParser = require("body-parser");
-const compression = require('compression');
+const compression = require("compression");
+
+require("dotenv").config();
 
 const app = express();
 const port = process.env.PORT || 3000;
 app.use(cors());
 
 app.use(logger.requestLog);
-app.use(compression({ filter: shouldCompress }))
+app.use(compression({ filter: shouldCompress }));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -61,24 +63,26 @@ app.use(MobileInformationRouter);
 app.use(citiesRouter);
 app.use(ethiopiaDataRouter);
 
-app.use(express.static('public'));
-app.use('/img', express.static(__dirname + '/img'));
+app.use(express.static("public"));
+app.use("/img", express.static(__dirname + "/img"));
 
 app.listen(port, () => {
-    console.log("Server is running... at port " + port);
+  console.log("Server is running... at port " + port);
 });
 
+function shouldCompress(req, res) {
+  let routeToCompress = [
+    "/api/resources/information",
+    "/api/resources/learning-path",
+    "/api/resources/statistics-description",
+  ];
+  if (req.route == null || !routeToCompress.includes(req.route.path)) {
+    // " not compressed"
+    return false;
+  }
 
-
-function shouldCompress (req, res) {
-    let routeToCompress=["/api/resources/information", "/api/resources/learning-path", "/api/resources/statistics-description" ];
-    if (req.route==null ||  !(routeToCompress.includes(req.route.path) )){
-       // " not compressed"
-       return false
-    }
-    
-    // "compressed"
-    return compression.filter(req, res)
+  // "compressed"
+  return compression.filter(req, res);
 }
 
 module.exports = app;

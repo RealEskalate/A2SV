@@ -7,7 +7,6 @@ let Log = require("../models/LogModel");
 let mongoose = require("mongoose");
 let { User } = require("../models/UserModel");
 const jwt = require("jsonwebtoken");
-const config = require("config");
 const { expect } = chai;
 chai.use(chaiHttp);
 
@@ -20,7 +19,9 @@ describe("Logs API", () => {
     beforeEach(async () => {
       user = new User({
         _id: mongoose.Types.ObjectId(),
-        username: `${Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000}`,
+        username: `${
+          Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000
+        }`,
         password:
           "$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
         gender: "FEMALE",
@@ -28,7 +29,7 @@ describe("Logs API", () => {
       });
       await user.save();
       try {
-        jwt.sign({ user }, config.get("secretkey"), (err, token) => {
+        jwt.sign({ user }, process.env.APP_SECRET_KEY, (err, token) => {
           tokens = token;
         });
       } catch (err) {
@@ -48,9 +49,9 @@ describe("Logs API", () => {
             query: [],
           },
           res: {
-            statusCode: 200
+            statusCode: 200,
           },
-          responseTime: 1000
+          responseTime: 1000,
         },
       });
       await log.save();
@@ -64,10 +65,7 @@ describe("Logs API", () => {
       let response = await chai
         .request(server)
         .get("/api/logs")
-        .set(
-          "Authorization",
-          "Bearer " + tokens
-        );
+        .set("Authorization", "Bearer " + tokens);
       expect(response).to.have.status(200);
       expect(response.body).to.have.length.greaterThan(0);
     });
@@ -80,7 +78,9 @@ describe("Logs API", () => {
     beforeEach(async () => {
       user = new User({
         _id: mongoose.Types.ObjectId(),
-        username: `${Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000}`,
+        username: `${
+          Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000
+        }`,
         password:
           "$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
         gender: "FEMALE",
@@ -88,7 +88,7 @@ describe("Logs API", () => {
       });
       await user.save();
       try {
-        jwt.sign({ user }, config.get("secretkey"), (err, token) => {
+        jwt.sign({ user }, process.env.APP_SECRET_KEY, (err, token) => {
           tokens = token;
         });
       } catch (err) {
@@ -108,9 +108,9 @@ describe("Logs API", () => {
             query: [],
           },
           res: {
-            statusCode: 200
+            statusCode: 200,
           },
-          responseTime: 1000
+          responseTime: 1000,
         },
       });
       await log.save();
@@ -124,10 +124,7 @@ describe("Logs API", () => {
       let response = await chai
         .request(server)
         .get("/api/logss")
-        .set(
-          "Authorization",
-          "Bearer " + tokens
-        );
+        .set("Authorization", "Bearer " + tokens);
       expect(response).to.have.status(404);
     });
   });
@@ -140,7 +137,9 @@ describe("Logs API", () => {
     beforeEach(async () => {
       user = new User({
         _id: mongoose.Types.ObjectId(),
-        username: `${Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000}`,
+        username: `${
+          Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000
+        }`,
         password:
           "$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
         gender: "FEMALE",
@@ -148,7 +147,7 @@ describe("Logs API", () => {
       });
       await user.save();
       try {
-        jwt.sign({ user }, config.get("secretkey"), (err, token) => {
+        jwt.sign({ user }, process.env.APP_SECRET_KEY, (err, token) => {
           tokens = token;
         });
       } catch (err) {
@@ -168,9 +167,9 @@ describe("Logs API", () => {
             query: [],
           },
           res: {
-            statusCode: 200
+            statusCode: 200,
           },
-          responseTime: 1000
+          responseTime: 1000,
         },
       });
       await log.save();
@@ -184,14 +183,11 @@ describe("Logs API", () => {
       let response = await chai
         .request(server)
         .get("/api/logs/" + log._id)
-        .set(
-          "Authorization",
-          "Bearer " + tokens
-        );
+        .set("Authorization", "Bearer " + tokens);
       expect(response).to.have.status(200);
-      expect(response.body).to.have.property('level');
-      expect(response.body).to.have.property('message');
-      expect(response.body).to.have.property('meta');
+      expect(response.body).to.have.property("level");
+      expect(response.body).to.have.property("message");
+      expect(response.body).to.have.property("meta");
     });
   });
 
@@ -203,7 +199,9 @@ describe("Logs API", () => {
     beforeEach(async () => {
       user = new User({
         _id: mongoose.Types.ObjectId(),
-        username: `${Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000}`,
+        username: `${
+          Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000
+        }`,
         password:
           "$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
         gender: "FEMALE",
@@ -211,7 +209,7 @@ describe("Logs API", () => {
       });
       await user.save();
       try {
-        jwt.sign({ user }, config.get("secretkey"), (err, token) => {
+        jwt.sign({ user }, process.env.APP_SECRET_KEY, (err, token) => {
           tokens = token;
         });
       } catch (err) {
@@ -231,9 +229,9 @@ describe("Logs API", () => {
             query: [],
           },
           res: {
-            statusCode: 200
+            statusCode: 200,
           },
-          responseTime: 1000
+          responseTime: 1000,
         },
       });
       await log.save();
@@ -247,10 +245,7 @@ describe("Logs API", () => {
       let response = await chai
         .request(server)
         .get("/api/logs/" + mongoose.Types.ObjectId())
-        .set(
-          "Authorization",
-          "Bearer " + tokens
-        );
+        .set("Authorization", "Bearer " + tokens);
       expect(response).to.have.status(404);
     });
   });
@@ -263,7 +258,9 @@ describe("Logs API", () => {
     beforeEach(async () => {
       user = new User({
         _id: mongoose.Types.ObjectId(),
-        username: `${Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000}`,
+        username: `${
+          Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000
+        }`,
         password:
           "$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
         gender: "FEMALE",
@@ -271,7 +268,7 @@ describe("Logs API", () => {
       });
       await user.save();
       try {
-        jwt.sign({ user }, config.get("secretkey"), (err, token) => {
+        jwt.sign({ user }, process.env.APP_SECRET_KEY, (err, token) => {
           tokens = token;
         });
       } catch (err) {
@@ -291,9 +288,9 @@ describe("Logs API", () => {
             query: [],
           },
           res: {
-            statusCode: 200
+            statusCode: 200,
           },
-          responseTime: 1000
+          responseTime: 1000,
         },
       });
       await log.save();
@@ -307,11 +304,8 @@ describe("Logs API", () => {
       let response = await chai
         .request(server)
         .get("/api/logs")
-        .query({ statusCode: 200, url: '/api/logs' })
-        .set(
-          "Authorization",
-          "Bearer " + tokens
-        );
+        .query({ statusCode: 200, url: "/api/logs" })
+        .set("Authorization", "Bearer " + tokens);
       expect(response).to.have.status(200);
       expect(response.body).to.have.length.greaterThan(0);
     });
@@ -325,7 +319,9 @@ describe("Logs API", () => {
     beforeEach(async () => {
       user = new User({
         _id: mongoose.Types.ObjectId(),
-        username: `${Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000}`,
+        username: `${
+          Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000
+        }`,
         password:
           "$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
         gender: "FEMALE",
@@ -333,7 +329,7 @@ describe("Logs API", () => {
       });
       await user.save();
       try {
-        jwt.sign({ user }, config.get("secretkey"), (err, token) => {
+        jwt.sign({ user }, process.env.APP_SECRET_KEY, (err, token) => {
           tokens = token;
         });
       } catch (err) {
@@ -353,9 +349,9 @@ describe("Logs API", () => {
             query: [],
           },
           res: {
-            statusCode: 200
+            statusCode: 200,
           },
-          responseTime: 1000
+          responseTime: 1000,
         },
       });
       await log.save();
@@ -369,15 +365,10 @@ describe("Logs API", () => {
       let response = await chai
         .request(server)
         .get("/api/logs")
-        .query({ statusCode: 400, url: '/api/logs' })
-        .set(
-          "Authorization",
-          "Bearer " + tokens
-        );
+        .query({ statusCode: 400, url: "/api/logs" })
+        .set("Authorization", "Bearer " + tokens);
       expect(response).to.have.status(200);
       expect(response.body).to.have.lengthOf(0);
     });
   });
 });
-
-

@@ -10,7 +10,6 @@ let { SymptomUser } = require("../models/SymptomUser");
 let mongoose = require("mongoose");
 const { expect } = chai;
 const jwt = require("jsonwebtoken");
-const config = require("config");
 chai.use(chaiHttp);
 
 describe("Location Users API", () => {
@@ -22,7 +21,9 @@ describe("Location Users API", () => {
     beforeEach(async () => {
       user = new User({
         _id: mongoose.Types.ObjectId(),
-        username: `${Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000}`,
+        username: `${
+          Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000
+        }`,
         password:
           "$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
         gender: "FEMALE",
@@ -30,7 +31,7 @@ describe("Location Users API", () => {
       });
       await user.save();
       try {
-        jwt.sign({ user }, config.get("secretkey"), (err, token) => {
+        jwt.sign({ user }, process.env.APP_SECRET_KEY, (err, token) => {
           tokens = token;
         });
       } catch (err) {
@@ -67,7 +68,9 @@ describe("Location Users API", () => {
     beforeEach(async () => {
       user = new User({
         _id: mongoose.Types.ObjectId(),
-        username: `${Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000}`,
+        username: `${
+          Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000
+        }`,
         password:
           "$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
         gender: "FEMALE",
@@ -75,7 +78,7 @@ describe("Location Users API", () => {
       });
       await user.save();
       try {
-        jwt.sign({ user }, config.get("secretkey"), (err, token) => {
+        jwt.sign({ user }, process.env.APP_SECRET_KEY, (err, token) => {
           tokens = token;
         });
       } catch (err) {
@@ -99,10 +102,7 @@ describe("Location Users API", () => {
       let response = await chai
         .request(server)
         .get("/api/user_locationsssss/")
-        .set(
-          "Authorization",
-          `Bearer ${tokens}`
-        );
+        .set("Authorization", `Bearer ${tokens}`);
       expect(response).to.have.status(404);
     });
   });
@@ -115,7 +115,9 @@ describe("Location Users API", () => {
     beforeEach(async () => {
       user = new User({
         _id: mongoose.Types.ObjectId(),
-        username: `${Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000}`,
+        username: `${
+          Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000
+        }`,
         password:
           "$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
         gender: "FEMALE",
@@ -123,7 +125,7 @@ describe("Location Users API", () => {
       });
       await user.save();
       try {
-        jwt.sign({ user }, config.get("secretkey"), (err, token) => {
+        jwt.sign({ user }, process.env.APP_SECRET_KEY, (err, token) => {
           tokens = token;
         });
       } catch (err) {
@@ -147,10 +149,7 @@ describe("Location Users API", () => {
       let response = await chai
         .request(server)
         .get("/api/user_locations/user/" + user_location.user_id)
-        .set(
-          "Authorization",
-          `Bearer ${tokens}`
-        );
+        .set("Authorization", `Bearer ${tokens}`);
       expect(response).to.have.status(200);
       expect(response.body).to.be.a("array");
     });
@@ -164,7 +163,9 @@ describe("Location Users API", () => {
     beforeEach(async () => {
       user = new User({
         _id: mongoose.Types.ObjectId(),
-        username: `${Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000}`,
+        username: `${
+          Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000
+        }`,
         password:
           "$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
         gender: "FEMALE",
@@ -172,7 +173,7 @@ describe("Location Users API", () => {
       });
       await user.save();
       try {
-        jwt.sign({ user }, config.get("secretkey"), (err, token) => {
+        jwt.sign({ user }, process.env.APP_SECRET_KEY, (err, token) => {
           tokens = token;
         });
       } catch (err) {
@@ -196,10 +197,7 @@ describe("Location Users API", () => {
       let response = await chai
         .request(server)
         .get("/api/user_locations/user/5e904cce7a1c6b627ae9f507")
-        .set(
-          "Authorization",
-          `Bearer ${tokens}`
-        );
+        .set("Authorization", `Bearer ${tokens}`);
       expect(response).to.have.status(200);
       expect(response.body).to.be.a("array");
       expect(response.body).to.have.lengthOf(0);
@@ -214,7 +212,9 @@ describe("Location Users API", () => {
     beforeEach(async () => {
       user = new User({
         _id: mongoose.Types.ObjectId(),
-        username: `${Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000}`,
+        username: `${
+          Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000
+        }`,
         password:
           "$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
         gender: "FEMALE",
@@ -222,7 +222,7 @@ describe("Location Users API", () => {
       });
       await user.save();
       try {
-        jwt.sign({ user }, config.get("secretkey"), (err, token) => {
+        jwt.sign({ user }, process.env.APP_SECRET_KEY, (err, token) => {
           tokens = token;
         });
       } catch (err) {
@@ -246,10 +246,7 @@ describe("Location Users API", () => {
       let response = await chai
         .request(server)
         .get("/api/user_locations/" + user_location._id)
-        .set(
-          "Authorization",
-          `Bearer ${tokens}`
-        );
+        .set("Authorization", `Bearer ${tokens}`);
 
       expect(response).to.have.status(200);
       expect(response.body).to.have.property("_id");
@@ -263,7 +260,9 @@ describe("Location Users API", () => {
     beforeEach(async () => {
       user = new User({
         _id: mongoose.Types.ObjectId(),
-        username: `${Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000}`,
+        username: `${
+          Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000
+        }`,
         password:
           "$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
         gender: "FEMALE",
@@ -271,7 +270,7 @@ describe("Location Users API", () => {
       });
       await user.save();
       try {
-        jwt.sign({ user }, config.get("secretkey"), (err, token) => {
+        jwt.sign({ user }, process.env.APP_SECRET_KEY, (err, token) => {
           tokens = token;
         });
       } catch (err) {
@@ -295,10 +294,7 @@ describe("Location Users API", () => {
       let response = await chai
         .request(server)
         .get("/api/user_locations/" + mongoose.Types.ObjectId())
-        .set(
-          "Authorization",
-          `Bearer ${tokens}`
-        );
+        .set("Authorization", `Bearer ${tokens}`);
 
       expect(response).to.have.status(404);
     });
@@ -312,7 +308,9 @@ describe("Location Users API", () => {
     beforeEach(async () => {
       user = new User({
         _id: mongoose.Types.ObjectId(),
-        username: `${Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000}`,
+        username: `${
+          Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000
+        }`,
         password:
           "$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
         gender: "FEMALE",
@@ -320,7 +318,7 @@ describe("Location Users API", () => {
       });
       await user.save();
       try {
-        jwt.sign({ user }, config.get("secretkey"), (err, token) => {
+        jwt.sign({ user }, process.env.APP_SECRET_KEY, (err, token) => {
           tokens = token;
         });
       } catch (err) {
@@ -344,10 +342,7 @@ describe("Location Users API", () => {
       let response = await chai
         .request(server)
         .post("/api/user_locations/")
-        .set(
-          "Authorization",
-          `Bearer ${tokens}`
-        )
+        .set("Authorization", `Bearer ${tokens}`)
         .send({
           latitude: 10,
           longitude: 21,
@@ -369,7 +364,9 @@ describe("Location Users API", () => {
     beforeEach(async () => {
       user = new User({
         _id: mongoose.Types.ObjectId(),
-        username: `${Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000}`,
+        username: `${
+          Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000
+        }`,
         password:
           "$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
         gender: "FEMALE",
@@ -377,7 +374,7 @@ describe("Location Users API", () => {
       });
       await user.save();
       try {
-        jwt.sign({ user }, config.get("secretkey"), (err, token) => {
+        jwt.sign({ user }, process.env.APP_SECRET_KEY, (err, token) => {
           tokens = token;
         });
       } catch (err) {
@@ -401,10 +398,7 @@ describe("Location Users API", () => {
       let response = await chai
         .request(server)
         .post("/api/user_locations/")
-        .set(
-          "Authorization",
-          `Bearer ${tokens}`
-        )
+        .set("Authorization", `Bearer ${tokens}`)
         .send({
           user_id: mongoose.Types.ObjectId(),
         });
@@ -420,7 +414,9 @@ describe("Location Users API", () => {
     beforeEach(async () => {
       user = new User({
         _id: mongoose.Types.ObjectId(),
-        username: `${Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000}`,
+        username: `${
+          Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000
+        }`,
         password:
           "$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
         gender: "FEMALE",
@@ -428,7 +424,7 @@ describe("Location Users API", () => {
       });
       await user.save();
       try {
-        jwt.sign({ user }, config.get("secretkey"), (err, token) => {
+        jwt.sign({ user }, process.env.APP_SECRET_KEY, (err, token) => {
           tokens = token;
         });
       } catch (err) {
@@ -452,10 +448,7 @@ describe("Location Users API", () => {
       let response = await chai
         .request(server)
         .patch("/api/user_locations/")
-        .set(
-          "Authorization",
-          `Bearer ${tokens}`
-        )
+        .set("Authorization", `Bearer ${tokens}`)
         .send({
           _id: user_location._id,
           user_id: user._id,
@@ -477,7 +470,9 @@ describe("Location Users API", () => {
     beforeEach(async () => {
       user = new User({
         _id: mongoose.Types.ObjectId(),
-        username: `${Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000}`,
+        username: `${
+          Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000
+        }`,
         password:
           "$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
         gender: "FEMALE",
@@ -485,7 +480,7 @@ describe("Location Users API", () => {
       });
       await user.save();
       try {
-        jwt.sign({ user }, config.get("secretkey"), (err, token) => {
+        jwt.sign({ user }, process.env.APP_SECRET_KEY, (err, token) => {
           tokens = token;
         });
       } catch (err) {
@@ -509,10 +504,7 @@ describe("Location Users API", () => {
       let response = await chai
         .request(server)
         .patch("/api/user_locations/")
-        .set(
-          "Authorization",
-          `Bearer ${tokens}`
-        )
+        .set("Authorization", `Bearer ${tokens}`)
         .send({
           id: user_location._id,
           user_id: mongoose.Types.ObjectId(),
@@ -529,7 +521,9 @@ describe("Location Users API", () => {
     beforeEach(async () => {
       user = new User({
         _id: mongoose.Types.ObjectId(),
-        username: `${Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000}`,
+        username: `${
+          Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000
+        }`,
         password:
           "$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
         gender: "FEMALE",
@@ -537,7 +531,7 @@ describe("Location Users API", () => {
       });
       await user.save();
       try {
-        jwt.sign({ user }, config.get("secretkey"), (err, token) => {
+        jwt.sign({ user }, process.env.APP_SECRET_KEY, (err, token) => {
           tokens = token;
         });
       } catch (err) {
@@ -561,10 +555,7 @@ describe("Location Users API", () => {
       let response = await chai
         .request(server)
         .delete("/api/user_locations/")
-        .set(
-          "Authorization",
-          `Bearer ${tokens}`
-        )
+        .set("Authorization", `Bearer ${tokens}`)
         .send({
           _id: user_location._id,
         });
@@ -580,7 +571,9 @@ describe("Location Users API", () => {
     beforeEach(async () => {
       user = new User({
         _id: mongoose.Types.ObjectId(),
-        username: `${Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000}`,
+        username: `${
+          Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000
+        }`,
         password:
           "$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
         gender: "FEMALE",
@@ -588,7 +581,7 @@ describe("Location Users API", () => {
       });
       await user.save();
       try {
-        jwt.sign({ user }, config.get("secretkey"), (err, token) => {
+        jwt.sign({ user }, process.env.APP_SECRET_KEY, (err, token) => {
           tokens = token;
         });
       } catch (err) {
@@ -612,10 +605,7 @@ describe("Location Users API", () => {
       let response = await chai
         .request(server)
         .delete("/api/user_locations/")
-        .set(
-          "Authorization",
-          `Bearer ${tokens}`
-        )
+        .set("Authorization", `Bearer ${tokens}`)
         .send({
           _id: "5e904cce7a1c6b627ae9f507",
         });
@@ -632,7 +622,9 @@ describe("Location Users API", () => {
     beforeEach(async () => {
       user = new User({
         _id: mongoose.Types.ObjectId(),
-        username: `${Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000}`,
+        username: `${
+          Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000
+        }`,
         password:
           "$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
         gender: "FEMALE",
@@ -640,7 +632,7 @@ describe("Location Users API", () => {
       });
       await user.save();
       try {
-        jwt.sign({ user }, config.get("secretkey"), (err, token) => {
+        jwt.sign({ user }, process.env.APP_SECRET_KEY, (err, token) => {
           tokens = token;
         });
       } catch (err) {
@@ -664,7 +656,7 @@ describe("Location Users API", () => {
           coordinates: [10, 10],
         },
         TTL: 10000,
-        probability: 0.5
+        probability: 0.5,
       });
       await user_location.save();
     });
@@ -678,10 +670,7 @@ describe("Location Users API", () => {
       let response = await chai
         .request(server)
         .post("/api/locations_symptoms")
-        .set(
-          "Authorization",
-          `Bearer ${tokens}`
-        )
+        .set("Authorization", `Bearer ${tokens}`)
         .send({
           latitude: 10,
           longitude: 10,
@@ -705,7 +694,9 @@ describe("Location Users API", () => {
     beforeEach(async () => {
       user = new User({
         _id: mongoose.Types.ObjectId(),
-        username: `${Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000}`,
+        username: `${
+          Math.floor(Math.random() * (1000000 - 100000 + 1)) + 100000
+        }`,
         password:
           "$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
         gender: "FEMALE",
@@ -713,7 +704,7 @@ describe("Location Users API", () => {
       });
       await user.save();
       try {
-        jwt.sign({ user }, config.get("secretkey"), (err, token) => {
+        jwt.sign({ user }, process.env.APP_SECRET_KEY, (err, token) => {
           tokens = token;
         });
       } catch (err) {
@@ -752,10 +743,7 @@ describe("Location Users API", () => {
       let response = await chai
         .request(server)
         .post("/api/locations_symptoms")
-        .set(
-          "Authorization",
-          `Bearer ${tokens}`
-        )
+        .set("Authorization", `Bearer ${tokens}`)
         .send({
           latitude: 9.999,
           longitude: 9.999,
