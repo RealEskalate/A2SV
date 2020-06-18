@@ -62,16 +62,17 @@
 </template>
 
 <script>
-import { mdiWeb } from "@mdi/js";
-import { languages } from "../../plugins/i18n";
+  import {mdiWeb} from "@mdi/js";
+  import {languages} from "../../plugins/i18n";
 
-export default {
+  export default {
   data: () => ({
     languages,
     langText: {
       en: "EN",
       am: "አማ",
-      ao: "AO"
+      ao: "AO",
+      tr: "TR"
     },
     icons: [{ link: "http://a2sv.org/", icon: mdiWeb }]
   })
