@@ -18,7 +18,8 @@ Vue.use(Vuex);
 export const langConverter = {
   en: "English",
   am: "Amharic",
-  ao: "Oromo"
+  ao: "Oromo",
+  tr: "Turkish"
 };
 
 export default new Vuex.Store({
