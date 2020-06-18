@@ -40,6 +40,8 @@ describe("User API", () => {
     await User.findByIdAndDelete(user._id);
   });
 
+  /* /api/users is deprecated 
+
   it("It should Get all users", async () => {
     let response = await chai.request(server)
       .get("/api/users")
@@ -58,6 +60,8 @@ describe("User API", () => {
       .get("/api/userss");
     expect(response).to.have.status(404);
   });
+
+  */
 
   it("It should Get user By ID", async () => {
     let response = await chai.request(server)

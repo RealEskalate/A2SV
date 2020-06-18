@@ -146,6 +146,8 @@ exports.delete_user = async (req, res) => {
 
   try {
     if(req.body._id !== req.body.loggedInUser){
+      console.log(`${req.boday._id} is not the same as ${req.body.loggedInUser}`);
+      
       return res.status(403).send("User not authorized to access this endpoint with id: " + req.body._id);
     }
     const user = await User.findByIdAndDelete(req.body._id);
