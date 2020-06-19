@@ -937,7 +937,7 @@ export let strings = new LocalizedStrings({
     SyptomsDetailInfoDescriptionMostListInsideContentThree:
       "የኃይል እጥረት እና ተነሳሽነት (አካላዊም ሆነ አእምሯዊ) አለመኖር።",
     SyptomsDetailInfoDescriptionMostListInsideContentFour:
-      "የትንፋሽ እጥረት - በሕክምና “ዲስፕንያ” በመባል የሚታወቅ - ብዙውን ጊዜ በደረት ውስጥ በጣም የመጥበቅ ፣ የአየር ረሃብ ፣ የመተንፈስ ችግር ፣ የትንፋሽ ማጣት ወይም የመታፈን ስሜት መገለጫዎቹ ናቸው። በጣም ጠንካራ የሰውነት እንቅስቃሴ ፣ ከፍተኛ የሙቀት መጠኖች ፣ ውፍረት እና ከፍተኛ ከፍታ መውጣት ጤናማ በሆነ ሰው ላይ የትንፋሽ እጥረት ሊያስከትሉ ይችላሉ ፡፡ ከነዚህ ምሳሌዎች ውጭ የትንፋሽ እጥረት እንደ ኮቪድ–19 ያለ የህክምና ችግር ምልክት ሊሆንም ይችላል ፡፡",
+      'የትንፋሽ እጥረት - በሕክምና "ስፕንያ" በመባል የሚታወቅ - ብዙውን ጊዜ በደረት ውስጥ በጣም የመጥበቅ ፣ የአየር ረሃብ ፣ የመተንፈስ ችግር ፣ የትንፋሽ ማጣት ወይም የመታፈን ስሜት መገለጫዎቹ ናቸው። በጣም ጠንካራ የሰውነት እንቅስቃሴ ፣ ከፍተኛ የሙቀት መጠኖች ፣ ውፍረት እና ከፍተኛ ከፍታ መውጣት ጤናማ በሆነ ሰው ላይ የትንፋሽ እጥረት ሊያስከትሉ ይችላሉ ፡፡ ከነዚህ ምሳሌዎች ውጭ የትንፋሽ እጥረት እንደ ኮቪድ–19 ያለ የህክምና ችግር ምልክት ሊሆንም ይችላል ፡፡',
 
     SyptomsDetailInfoDescriptionMostListInsideContentFive:
       "ከባድ የሆነ የጡንቻ መገታተር እና ከባድ ህመም ሲሆን መገጣጠሚያን እና አጥንትንም ያካትታል። ",
@@ -989,76 +989,80 @@ export let strings = new LocalizedStrings({
 
     DetailInfoAuthorFullName: "Weakpeadia",
     InfoCovidDetailParagraphOneSubOne:
-      "There is much more to coronaviruses than SARS-CoV-2. Coronaviruses are actually a family of hundreds of viruses. Most of these infect animals such as bats, chickens, camels and cats.",
+      "ኮሮና ቫይረስ አሁን ከሚታወቀው ሳርስ ኮቭ 2(SARS-CoV-2) በተጨማሪ ሌሎች በ 100 የሚቆጠሩ የቫይረስ ቤተሰቦችን ያካትታል። አብዛኞቹ አነዚህ ቫይረሶች እንደ የለሊት ወፍ፣ ዶሮ፤ ግመል እና ድመት የመሳሰሉ እንሥሣትን ያጠቃሉ።",
+
     InfoCovidDetailParagraphOneSubTwo:
-      "Occasionally, viruses that infect one species can mutate in such a way that allows them to start infecting other species. This is called cross-species transmission or spillover.",
+      "አልፎ አልፎ አንድን ዝርያ የሚያጠቁ ቫይረሶች ሌሎች ዝርያዎችን መበከል እንዲጀምሩ በሚያስችላቸው መንገድ ሊለወጡ ይችላሉ ፡፡ ይህም ከዝርያ ዝርያ መተላለፍ (cross-species transmission) በመባል ይታወቃል።",
+
     InfoCovidDetailParagraphOneSubThree:
-      "The first coronavirus was discovered in chickens in the 1930s. It was a few decades until the first human coronaviruses were identified in the 1960s.",
+      "የመጀመሪያው ኮሮና ቫይረስ እ.ኤ.አ በ 1930 ዓ.ም በዶሮ ላይ የተገኘ ሲሆን። ከጥቂት አስርት አመታት  በኋላ የመጀመሪያው በኮሮና የተጠቃ ሰው እ.ኤ.አ በ 1960 ዓ.ም ነው የተገኘው።",
     InfoCovidDetailParagraphOneSubFour:
-      "To date, seven coronaviruses can cause disease in humans. Four are endemic (regularly found among particular people or in a certain area) and usually cause mild disease, but three can cause much more serious and even fatal disease.",
+      "እስካሁን ሰባት የኮሮና ቫይረስ ዝርያዎች በሰዎች ላይ በሽታ እንደሚያስከትሉ ይታወቃል። ከነዚህ መሃል አራቱ አለም ላይ በተወሰኑ ቦታዎች ሐገር በቀል ሆነው የሚገኙ  ሲሆኑ የሚፈጥሩት ህመምም በአንፃሩ አነስተኛ የሚባል ነው። ቀሪዎቹ ሶስቱ ቫይረሶች ግን በአንፃሩ ከፍተኛ የሆነ ምናልባትም እስከ ሞት ሊያደርስ እሚችል ህመም ያስከትላሉ።",
 
     InfoCovidDetailParagraphTwoSubOne:
-      "It is said to have come from a market that sells meat and live animals. It is believed that the virus might have been transmitted through direct contact between humans and animals.InfoCovidDetailParagraphTwoSubTwo:  Either by touching those animals or by eating them. And it can also spread via the air. However, the actual source of thisdisease is not known yet.",
+      "ስጋን እና እንስሳትን ከሚሸጥ ገበያ የመጣ ነው ተብሏል ፡፡ ቫይረሱ በሰዎችና በእንስሳት መካከል በቀጥታ ግንኙነት በማድረግ ይተላለፋል ተብሎ ይታመናል ፡፡",
+
     InfoCovidDetailParagraphTwoSubTwo:
-      "Either by touching those animals or by eating them. And it can also spread via the air. However, the actual source of this disease is not known yet.",
+      "ይህም እንስሳትን በመንካት ወይም በመመገብ ሊሆን ይችላል ፡፡ ከዚህ በተጨማሪም በዋናነት በአየር በኩል ሊሰራጭ ይችላል። ሆኖም የዚህ በሽታ ትክክለኛ ምንጭ እስካሁን አልታወቀም።",
 
     InfoCovidDetailParagraphThreeSubOne:
-      "A Common misconception regarding COVID-19 is that coronaviruses affect only old people. This is far from true and is killing many people from various age groups.",
+      "ኮቪድ 19 ወረርሽኝን በተመለከተ የተለመደው የተሳሳተ ግንዛቤ በዕድሜ የገፉ ሰዎችን ብቻ የሚነካ ነው የሚባለው ነው። ይህ ከእውነታው በጣም የራቀ እና ከተለያዩ የዕድሜ ክልሎች የመጡ ብዙ ሰዎችን እየገደለ ያለ በሽታ ነው ፡፡",
 
     InfoCovidDetailParagraphThreeSubTwo:
-      "The risk of dying due to COVID-19 is indeed significantly higher for 80+ age groups(as high as 14.8%) while it is below 1% for age groups below 40.",
-    InfoCovidDetailParagraphThreeSubThree:
-      "But this does not mean that teenagers will not be affected or die. So these and other false facts can lead to a dangerous road.",
+      "በ ኮቪድ-19 ሳቢያ የመሞት እድሉ ለ 80 + የእድሜ ክልሎች በጣም ከፍ ያለ ነው (እስከ 14.8% ድረስ) እንዲሁም ዕድሜያቸው ከ 40 በታች ለሆኑ የዕድሜ ክልሎች ከ 1% በታች መሆኑ እውነት ነው ፡፡",
 
-    InfoDetailMostCommonSyptomsListTitleOne: "High Fever",
-    InfoDetailMostCommonSyptomsListTitleTwo: "Dry Cough",
-    InfoDetailMostCommonSyptomsListTitleThree: "Fatigue",
-    InfoDetailMostCommonSyptomsListTitleFour: "Shortness of Breath",
+    InfoCovidDetailParagraphThreeSubThree:
+      "ይህ ማለት ግን ልጆች እና ወጣቶች አይታመሙም ወይም አይሞቱም ማለት አይደለም፡፡ ስለዚህ እነዚህ እና ሌሎች የሀሰት መረጃዎች ወደ አደገኛ መንገድ ሊመሩ ይችላሉ ፡፡",
+
+    InfoDetailMostCommonSyptomsListTitleOne: "ከፍተኛ ትኩሳት",
+    InfoDetailMostCommonSyptomsListTitleTwo: "ደረቅ ሳል",
+    InfoDetailMostCommonSyptomsListTitleThree: "ፋቲግ፣ ድካም",
+    InfoDetailMostCommonSyptomsListTitleFour: "የትንፋሽ እጥረት",
     InfoDetailMostCommonSyptomsListTitleFive: "Myalgia",
 
     InfoDetailMostCommonSyptomsListLableOne:
-      "Body temperature is 103°F (39.4°C) or above",
+      "103 ዲግሪ ፋራናይት(39 ዲግሪ ሴንቲግሬድ) ወይም ከዚያ በላይ የሆነ የሰውነት ሙቀት ነው።",
     InfoDetailMostCommonSyptomsListLableTwo:
-      "Does not bring up mucus and stays for eight weeks or more",
+      "ሀክታ የሌለው ደረቅ ሳል ለ8ሳምንት ወይም ከዚያ በላይ፡፡",
     InfoDetailMostCommonSyptomsListLableThree:
-      "Lack of enengy and Motivation (physical and mental)",
+      "የኃይል እጥረት እና ተነሳሽነት (አካላዊም ሆነ አእምሯዊ) አለመኖር።",
     InfoDetailMostCommonSyptomsListLableFour:
-      "Trouble inhaling or exhaling or feels as though they cannot get enough oxygen",
+      "አየር ስናስገባ እና ስናስወጣ የመተንፈስ ችግር እና በቂ ኦክስጂን አለማግኘት ስሜት",
     InfoDetailMostCommonSyptomsListLableFive:
-      "Pain or ache in muscles characterized by chronic pain, stiffness and tenderness",
+      "ከባድ የሆነ የጡንቻ መገታተር እና ከባድ ህመም ሲሆን መገጣጠሚያን እና አጥንትንም ያካትታል።",
 
-    InfoDetailLessCommonSyptomsListTitleOne: "Headache",
-    InfoDetailLessCommonSyptomsListTitleTwo: "Sore Throat",
-    InfoDetailLessCommonSyptomsListTitleThree: "Chills",
-    InfoDetailLessCommonSyptomsListTitleFour: "Anosmia",
+    InfoDetailLessCommonSyptomsListTitleOne: "የእራስ ህመም",
+    InfoDetailLessCommonSyptomsListTitleTwo: "የተዘጋ ጉሮሮ",
+    InfoDetailLessCommonSyptomsListTitleThree: "ብርድ ብርድ ማለት",
+    InfoDetailLessCommonSyptomsListTitleFour: "ማሽተት አለመቻል",
 
     InfoDetailLessCommonSyptomsListLableOne:
-      "Sharp, throbbing or dull feeling across the head",
+      "ሀይለኛ የእራስ ህመም/ ጭንቅላትን የሚከፍል፣ የመመታት ወይም የመደንዘዝ ስሜት የሚሰጥ።",
     InfoDetailLessCommonSyptomsListLableTwo:
-      "Scratchiness or irritation of the throat that often worsens when you swallow",
+      "ጉሮሮ ላይ የሚሰማ የድርቀት፣ የህመምና የማሳከክ ስሜት ነው።",
     InfoDetailLessCommonSyptomsListLableThree:
-      "Feeling of being cold without an apparent cause",
+      "ያለ ምንም ግልጽ ምክንያት ብርድ ብርድ የማለት ስሜት ነው፡፡",
     InfoDetailLessCommonSyptomsListLableFour:
-      "Usually associated with partial loss of smell or a blocked nose",
-
-    InfoDetailPreventionMethodsTitleOne: "Hand Washing",
-    InfoDetailPreventionMethodsTitleTwo: "Social Distancing",
-    InfoDetailPreventionMethodsTitleThree: "Respiratory Hygiene",
-    InfoDetailPreventionMethodsTitleFour: "Stay Informed",
+      "የማሽተት ስሜትን በከፊል ወይም ሙሉ በሙሉ ማጣት ማለት ነው።",
+    InfoDetailPreventionMethodsTitleOne: "እጅ መታጠብ",
+    InfoDetailPreventionMethodsTitleTwo: "የማህበራዊ ርቀት",
+    InfoDetailPreventionMethodsTitleThree: "የመተንፈሻ አካላት ንፅህና",
+    InfoDetailPreventionMethodsTitleFour: "አዳዲስ መረጃዎችን ይከታተሉ",
 
     InfoDetailPreventionMethodsLabelOne:
-      "Rub or wash your hand with soap and water for at least 20 sec",
+      "እጃችንን በሳሙና እና በውሀ ቢያንስ ለ20 ሰኮንዶች እንታጠብ ወይም አልኮል ባለው የጀርም ማጽጃ እናጽዳ።",
     InfoDetailPreventionMethodsLabelTwo:
-      "Maintain at least 2m (6 ft) gap in groups.",
+      "በእራስዎ እና በማንኛውም ሰው(በተለይ በሚያስነጥስ ወይም በሚያስለው ሰው) መካከል ቢያንስ 2 ሜትር (6 ጫማ) ርቀት ይኑር ፡፡",
     InfoDetailPreventionMethodsLabelThree:
-      "Use mouth and nose covering masks when going outside",
-    InfoDetailPreventionMethodsLabelFour:
-      "Follow the advice of healthcare provider and your government",
+      "ከቤት ሲወጡ አፍ እና አፍንጫ የሚሸፍን ጭንብል ወይም ማስክ ይጠቀሙ",
 
-    InfoDetailPreventionMethodsTagOne: "> 20 Sec",
-    InfoDetailPreventionMethodsTagTwo: "2 Meters",
-    InfoDetailPreventionMethodsTagThree: "Face covering",
-    InfoDetailPreventionMethodsTagFour: "Truth vs Fake",
+    InfoDetailPreventionMethodsLabelFour:
+      "እርስዎን እና ሌሎችን ከ COVID-19 እንዴት መጠበቅ እንደሚችሉ በጤና ባለሞያዎች ፣ በብሔራዊ እና በአከባቢዎ የህዝብ ጤና ባለስልጣን ወይም በአሠሪዎ የሚስጠውን ምክር ይከተሉ ፡፡",
+
+    InfoDetailPreventionMethodsTagOne: "> 20 ሰከንድ",
+    InfoDetailPreventionMethodsTagTwo: "2 ሜትር",
+    InfoDetailPreventionMethodsTagThree: "ፊትን መሸፈን",
+    InfoDetailPreventionMethodsTagFour: "እውነት ከውሸት",
     InfoDetailMessageFromTrackSym:
       "በበሽታው እንዳይጠቁ እና ደህና እንዳይሆኑ መጠንቀቅ አለብዎት ፡፡ ምንም እንኳን በከባድ ሕመም ላይ ባይሆኑም እንኳ የበሽታው ምልክቶች ከመታየታቸው በፊት ለምትወዷቸው/ለምትቀርቧቸው ሰዎች ማሰራጨት ትልቅ አደጋ አለ፡፡",
     Jan: "ጥር",
@@ -1404,38 +1408,37 @@ export let strings = new LocalizedStrings({
     SuccessfullySave: "Kayıt Başarılı!",
   },
   orm: {
-    Information: "Information",
-    Data: "Data",
-    Map: "Map",
-    Symptoms: "My Symptoms",
-    Home: "Home",
-    News: "News",
-    Ethiopia: "Ethiopia",
-    About: "About",
-    Settings: "Settings",
-    EditProfile: "Edit Profile",
-    ChangePassword: "Change Password",
-    TermsAndPrivacy: "Terms & Privacy",
-    DarkMode: "Dark Mode",
-    LightMode: "Light Mode",
-    LogOut: "Log Out",
-    Search: "Search..",
-    Welcome: "Welcome",
+    Information: "Odeeffannoo",
+    Data: "Daataa",
+    Map: "Kaartaa",
+    Symptoms: "Mallattoolee Kiyya",
+    Home: "Seensa",
+    News: "Oduu",
+    Ethiopia: "Itiyoophiyaa",
+    About: "Waa’ee",
+    Settings: "Hojmaata",
+    EditProfile: "Eenyummeessaa Gulaali",
+    ChangePassword: "jecha Darbii Jijjiiri",
+    TermsAndPrivacy: "ImaammataafiWaliigaltee",
+    DarkMode: "Bifa Dukkana’aa",
+    LightMode: "BifaIfaa",
+    LogOut: "Cufii Ba’i",
+    Search: "Barbaadi..",
+    Welcome: "Anaa Dhufu!",
     Username: "User Name",
     Password: "Password",
-    SignIn: "Sign in",
-    SignUp: "Sign up",
-    AgeGroup: "Age Group",
-    Male: "MALE",
-    Female: "FEMALE",
-    Gender: "Gender",
+    SignIn: "Seeni",
+    SignUp: "Galmaa’i",
+    AgeGroup: "Gita Umrii",
+    Male: "Dhiira",
+    Female: "Dhalaa",
+    Gender: "Saala",
     ConfirmPassword: "Confirm Password",
-    ReadMore: "Read More",
-    WhatIsCOVID19: "WHAT IS COVID-19 ?",
-    COVID19Symptoms: "SYMPTOMS",
-    Prevention: "PREVENTION",
-    HowDoesItSpreads: "HOW DOES IT SPREAD ?",
-    MessageFromUs: "MESSAGE FROM US",
+    ReadMore: "Dabalataan Dubbisi",
+    COVID19Symptoms: "Mallattoolee COVID-19",
+    Prevention: "ITTISA",
+    HowDoesItSpreads: "Akkamitti Daddarba?",
+    MessageFromUs: "Ergaa Nuti Qabnu",
     Refresh: "Haaromsi",
     DailyStats: "Istaatistiksii Guyyuu",
     TotalStats: "Istaatistiksii Waliigalaa",
@@ -1500,7 +1503,7 @@ export let strings = new LocalizedStrings({
     StayInformed: "Odeeffannoolee Haaraa Ba’an Hordofaa",
     Spread: "TAMSA’INA",
     HowDoesCoronavirusBecomeContagious:
-      "How does coronavirus become contagious ?",
+      "Vaayirasiin Koronaa dhukkubaa daddarbaa akkamiiti?",
     MessageFromTrackSym: "Ergaa TrackSym Irraa",
     MajorConcern: "MAJOR CONCERN",
     MySymptoms: "Mallattoolee Ani Agarsiisu",
@@ -1532,54 +1535,294 @@ export let strings = new LocalizedStrings({
     TermsAndConditions: "Terms & Conditions",
     ChangesToThisTermsAndConditions: "Terms to This Terms and Conditions",
     ComingSoon: "Yeroo Dhiyootti Nu Eegaa!!",
-    Heat: "Heat",
-    Regional: "Regional",
-    SaveChanges: "Save Changes",
-    Done: "Done",
-    PleaseTryAgain: "Please try again!",
+    SaveChanges: "Jijjiirama ol kaa’i",
+    Done: "Xumurame",
+    PleaseTryAgain: "Irra deebi’ii yaali!",
     YouHaveEnteredWrongUsernameOrPasswordPleaseTryAgain:
-      "You have entered wrong username or password, Please try again",
+      "Maqaa fayyadamaa yookiin jecha darbii dogoggora galchite. Irra deebi’ii yaali!",
     SigninValidationText:
-      "You have entered wrong username or password, Please try again",
-    Dismiss: "Dismiss",
-    UsernameAlreadyExists: "Username already exists!",
+      "Maqaa fayyadamaa yookiin jecha darbii dogoggora galchite. Irra deebi’ii yaali!",
+    Dismiss: "Balleessi",
+    UsernameAlreadyExists: "Maqaa kanaan fayyadamaa biraan jira.",
     PrivacyPolicyShortText:
-      "By creating an account, I agree to the Track Sym Terms of Use and Privacy Policy",
-    PassWordIsRequired: "Password is required",
-    PasswordDoesNotMatch: "Password doesn't match",
-    PleaseEnterYourUsername: "Please enter your username!",
-    UsernameIsRequired: "User name is required",
-    PleaseEnterYourPassword: "Please enter your password!",
-    PasswordDoNotMatch: "Password Don't match",
-    WrongCurrentPassword: "Wrong current password!",
-    Required: "required",
-    CurrentPassword: "CURRENT PASSWORD",
-    ConfirmNewPassword: "CONFIRM NEW PASSWORD",
-    ConfirmNewPassword: "Confirm New Password",
+      "Eenyummeessaa banachuun imaammata dhuunfaa fi qajeelfamoota TrackSym waliin gala.",
+
+    PassWordIsRequired: "Jechi Darbii ni barbaachisa.",
+    PasswordDoesNotMatch: "Jechi Darbii wal hin simu!",
+    PleaseEnterYourUsername: "Maaloo maqaa fayyadamaa kee galchi!",
+    UsernameIsRequired: "Maqaa fayyadamaan ni barbaachisa.",
+    PleaseEnterYourPassword: "Maaloo jecha darbii galchi!",
+    PasswordDoNotMatch: "Jechootni darbii wal hin siman",
+    WrongCurrentPassword: "Jecha Darbii ammaa dogoggora!",
+    Required: "Barbaachisaa",
+    CurrentPassword: "Jecha Darbee ammaa",
+    ConfirmNewPassword: "Jecha Darbii haaraa mirkaneessi.",
+    ConfirmNewPassword: "Jecha Darbii haaraa mirkaneessi.",
     YouHaveSuccessfullyChangedYourPassword:
-      "You have successfully changed your password",
+      "Jecha Darbii kee karaa milkaa’een jijjiirteetta!",
     YouHaveSuccessfullyChangedYourProfile:
-      "You have successfully changed your profile",
-    Default: "Default",
-    PasswordCanNotBeEmpty: "Password cannot be empty",
-    Cancel: "CANCEL",
-    Ok: "OK",
-    ConnectionProblem: "Connection Problem",
-    CouldNotConnectToServer: "Couldn't connect to server",
-    Done: "Done",
-    PleaseCheckYourConnection: "Check your internet connection and try again!",
+      "Eenyummeessaa kee karaa milkaa’een jijjiirteetta!",
+    Default: "Idilee",
+    PasswordCanNotBeEmpty: "Jechi Darbii duwwaa ta’uu hin danda’u.",
+    Cancel: "Dhiisi",
+    Ok: "Tole",
+    ConnectionProblem: "Rakkoo Walquunnamtii",
+    CouldNotConnectToServer: "Serveerii quunnamuu hin dandeenye.",
+    PleaseCheckYourConnection: "Quunnamtii mirkaneessii irra deebi’ii yaali!",
     AgreeingTermsAndServiceOnSignUp:
-      "By creating an account, I agree to the Track Sym Terms of\nUse and Privacy Policy",
+      "Imaammata dhuunfaafi tajaajila TrackSym ittan walii gala.",
     CantConnectDueToConnection:
-      "Oops, looks like we have connection problem, please try again!",
-    PleaseSelectGender: "Please select your gender",
-    PleaseSelectAgeGroup: "Please select your age group",
-    LoadingGraphDescription: "Loading graph description",
-    LoadingCriteriaDescription: "Loading criteria description",
-    Languages: "Languages",
-    English: "English",
-    Amharic: "Amharic",
-    Oromiffa: "Oromiffa",
-    Turkish: "Turkish",
+      "Rakkoon Quunnamtii waan jiru fakkaata. Irra deebi’ii yaali!",
+    PleaseSelectGender: "Maaloo saala kee filadhu!",
+    PleaseSelectAgeGroup: "Maaloo gita umrii kee filadhu!",
+    LoadingGraphDescription: "Ibsa Giraafii Banaa Jira.",
+    LoadingCriteriaDescription: "Ibsa Safartuu Banaa Jira.",
+    Languages: "Afaanota",
+    English: "Afaan Ingilizii",
+    Amharic: "Afaan Amaaraa",
+    Oromiffa: "Afaan Oromoo",
+    Turkish: "Afaan Turkii",
+    WhatIsCOVID19ShortDescription:
+      "hukkubni Vaayirasii Koronaa 2019 dhukkuba daddarbaa sababa ‘Severe Acute Respiratory Syndrome’n uumamudha",
+
+    SyptomsShortDescription:
+      "Dhaqna gubaa, Qufaa, fi Harganuu dadhabuun mallattoo dhukkubsattoota hedduu irratti mul’atudha",
+
+    PreventionsShortDescription:
+      "aaayirasii Koronaan qabamuu, baachuu fi daddabarsuu irraa of-eeguuf gorsa kennamu hordofaa",
+
+    HowDoesItSpreadShortDescription:
+      "COVID-19 kan tamsa'u yeroo cophawwan xixinnoon Vaayirasicha of keessaa qaban gara qaama sirna hargansuu seenaniidha. Kunis kan ta’u yeroo baay’ee tuttuqaa harkaatiin. Kana jechuunis cophawwan xixinnoo vaayirasicha of keessaa qaban harkan tuqnee utuu Saamunaadhaan hin dhiqatin yoo fuula keenya--funyaan, ija, fi afaan--keenya tuqneedha. ",
+
+    MessageFromUsShortDescription:
+      "Yeroo ammaa odeeffannoowwan baay’een dabarsamaa waan jiranif dhugaa ta'uu isaanii mirkaneeffachuun barbaachisaadha",
+
+    WhatIsCOVID19DetailInfoTitle: "OVID-19 MAALI?",
+
+    WhatIsCOVID19DetailInfoDescription: "HUKKUBA VAAYIRASII KORONAA (COVID-19)",
+
+    WhatIsCOVID19DetailInfoDescriptionContentOne:
+      "ARS-COV-2 Maali? COVID_19(COrona Virus Disease 2019) Maali? 'Severe Acute Respiratory Syndrome Coronavirus-2' (SARS-CoV-2) maqaa Vaayiraasii Koronaaf kennameedha. COVID-19 immoo maqaa dhukkuba vaayirasiicha waliin wal qabatee dhufuuf kennameedha. SARS-CoV-2'n gosa Vaayirasii Koronaa haarawaa kan kana dura argamee hin beeknedha. Vaayirasootni koronaa bineensotaa gara bineensotaatti kan daddarban yommuu ta'an muraasni isaanii gara namaatti ni darbu.",
+
+    SyptomsDetailInfoTitle: "ALLATTOOLEE COVID_19",
+
+    SyptomsDetailInfoDescription: "ALLATTOOLEE VAAYIRASII KORONAA BARAMAN",
+
+    SyptomsDetailInfoDescriptionContentOne:
+      "aala amma ammaatti bira gahameen namni Vaayirasii Koronaan qabame tokko qufaa gogaa, bowwoo mataa, dadhabbii, fi harganuu dadhabuun rakkachuu kan danda’u yoo ta’u kunis yeroo jalqabaa osoo hin beekamin gara nama biraatti dabarsuu danda’a.",
+
+    SyptomsDetailInfoDescriptionContentTwo:
+      "ababoota armaan gadiif vaayirasi kana to'achuun cimaa ta'eera. Mallattoleen isaa qufaa wajjin walfakkaata yoo ta’eyyuu saffisni daddarba isaa baay’ee guddaadha. Namoonni tokko tokko COVID-19’n qabamanis mallattoo dhukkubichaa hin agarsiisan. Namoota qabaman keessaas 80% kan ta’an yaala addaa malee ni fayyu. COVID-19 sababa namponi bakkaa bakkatti imalanif addunyaa irratti faca’uu danda’eera",
+
+    SyptomsDetailInfoDescriptionMostListNameOne: "Ho’ina Qaamaa Olaanaa",
+
+    SyptomsDetailInfoDescriptionMostListNameTwo: "Qufaa Gogaa",
+
+    SyptomsDetailInfoDescriptionMostListNameThree: "Dadhabbii",
+
+    SyptomsDetailInfoDescriptionMostListNameFour: "Hafuura Baafachuu Rakkachuu",
+
+    SyptomsDetailInfoDescriptionMostListNameFive: "adhabbii Maashaalee",
+
+    SyptomsDetailInfoDescriptionMostListInsideContentOne:
+      "o'ina qaamaa 39 °C(103 °F) ol ta'edha. Mallattoon kun dhibamtoota Vaayirasii Koronaa biratti kan barameedha. Ho'inni qaamaa olaanaan kan mul’isu qaamni keenya vaayirasichaa ofiraa ittisuuf akka yaalaa jirudha.",
+
+    SyptomsDetailInfoDescriptionMostListInsideContentTwo:
+      "ufaa jiidhinsa hin qabnedha. Yeroo qufaanu duuba qoonqoo keenyaa irratti dhukkubbiitu nutti dhaga’ama. Qufaa gogaan yeroo baay'ee mallattoo dhibamtoota qaama hargansuu miidhan kan akka COVID-19ti. Dhibbantaa 60 ol ta'an qufaa addaan hin cinne qabu.",
+
+    SyptomsDetailInfoDescriptionMostListInsideContentThree:
+      "Kaka’umsaa fi humna dhabuu (qaamaan fi  sammuun)",
+
+    SyptomsDetailInfoDescriptionMostListInsideContentFour:
+      "afuura Baafachuu Rakkachuun—’Dispiiniyaa’ jedhamee kan beekamu—yeroo baay’ee dhukkubbii qoma keessaa, qilleensa fudhachuu dadhabuu, hargansuu ulfaataa, hafuura baafachuu dadhabuu, akkasumas ukkaamamuudhaan beekama. Sochii qaamaa olaanaa adeemsisuun, haalli qilleensaa ulfaataa, furdinni gar-malee, fi lafa ol ka’insa olaanaa qabu ba’uun hafuura baafachuu dadhabuu fiduu mala. Wantoota kanaan alatti harganuu dadhabuun mallattoo dhibee Vaayirasii Koronaa ta’uu danda’a.",
+
+    SyptomsDetailInfoDescriptionLessListNameOne: "Mataa Dhukkubbii",
+
+    SyptomsDetailInfoDescriptionLessListNameTwo:
+      "Dandeettii Foolii Fuudhuu Dadhabuu",
+
+    SyptomsDetailInfoDescriptionLessListNameThree: "Cufamuu Qoonqoo (Kokkee)",
+
+    SyptomsDetailInfoDescriptionLessListNameFour: "Qorrisiisuu / Dhaamochiisuu",
+
+    SyptomsDetailInfoDescriptionLessListInsideContentone:
+      "hukkubbii mataa cimaa kan akka dha’annaa mataa akkasumas joonjiin mataa namatti dhaga’aamuu danda’a.",
+
+    SyptomsDetailInfoDescriptionLessListInsideContentTwo:
+      "uutumaan guutuutti yookaan gar-tokkken foolii fuudhuu dadhabuu",
+
+    SyptomsDetailInfoDescriptionLessListInsideContentThree:
+      "hukkubbii kokkee, diimachuu qoonqoo, akkasumas gorora liqimsuu dadhabuu.",
+
+    SyptomsDetailInfoDescriptionLessListInsideContentFour:
+      "ababa ga’aa tokko malee miira qorraa namatti dhaga’amu. Miirri kunis yeroo maashaaleen keenya diriiran, kottoonfatan, akkasumas hiddi gogaa keenya dhiphatu nutti dhaga’amuu danda’a. Qorra kana qabatees kirkirri fi hoollannaan dhufuu mala.",
+
+    PreventionDetailInfoTitle: "Ittisa",
+
+    PreventionDetailInfoDescription:
+      "OF IRRAA ITTISUUN OF WAL’AANUU IRRA WAYYA!",
+
+    PreventionDetailInfoDescriptionMethodOneNameOne: "Harka Dhiqannaa",
+
+    PreventionDetailInfoDescriptionMethodOneNameTwo: "Walirraa Fageenya Qaamaa",
+
+    PreventionDetailInfoDescriptionMethodOneInsideContentOne:
+      "arka keessan yeroo yerootti alkooliidhaan haxaa’adhaa yookaan Saamunaa fi Bishaaniin yoo xiqqaate sekoondii 20f sukkuumuun dhiqadhaa. Harki keenya faalameera taanaan ija, funyaan fi afaan keenya tuquun Vaayirasicha daddabarsuuf salphaa waan ta’uuf vaayirasiin qaama keessa seenuun dhukkubaaf nu saaxila.",
+
+    PreventionDetailInfoDescriptionMethodOneInsideContetnTwo:
+      "Nama qufa’u yookiin haxxiffatu irraa meetira 2 yookiin tarkaanfii miilaa 6 hiiqaa.",
+
+    PreventionDetailInfoDescriptionMethodTwoNameOne:
+      "Qulqullina Qaamolee Sirna Hargansuu",
+
+    PreventionDetailInfoDescriptionMethodTwoNameTwo:
+      "Odeeffannoolee Haaraa Ba’an Hordofaa",
+
+    PreventionDetailInfoDescriptionMethodTwoInsideContentOne:
+      "Qulqullina qaamolee sirna hargansuu keessanii eeggadhaa; namoonni naannoo keessanitti argamanis akka eeggataniif gorsaa, jajjabeessaas. Yeroo qufaatan yookaan haxxiffattan afaanii fi funyaan keessan ciqilee yookaan sooftiin golgaa yookaan haguugaa. Sooftii fayyadamtanis akkuma xumurtaniin gataa.",
+
+    PreventionDetailInfoDescriptionMethodTwoInsideContetnTwo:
+      "Odeefannoowwan haarawaa COVID-19’n walqabatan hordofaa. Ergaawwan haala COVID-19 of-irraa ittisuun dada’amu karaa ogeeyyii fayyaa fi qoondaltoota fayyaa biyyoolessaa fi naannooleen kennamu hojiirra oolchaa.",
+
+    HowItSpreadsDetailInfoTitle: "Akkamitti Daddarba?",
+
+    HowItSpreadsDetailInfoDescription:
+      "aayirasiin Koronaa dhukkuba daddarbaa akkamiiti?",
+
+    HowItSpreadsDetailInfoDescriptionContentOne:
+      "Vaayirasoota du'aaf nama saaxilani fi saffisaan gara mana yaalaatti nama geessan irraa haala adda ta'een namni Vaayirasii Koronaan qabame mallattoowwan dhukkubichaa osoo hin agarsiisin guyyoota hedduudhaaf turuu danda’a. Kunis vaayirasichi daran saffisaan akka daddarbu godha.",
+
+    HowItSpreadsDetailInfoDescriptionContentTwo:
+      "amoonni dhukkubsatan baay'een isaanii mallattoowwan osoo hin agarsiisin hamma guyyaa 14 turuu danda'u, kun immoo osoo nama irraa adda hin baasamin fi wal'aansa hin argatin dura dhukkubicha akka daddabarsan taasisa. Vaayirasiin Koronaa kan tamsa'u kallattiidhaan namoota waliin tuttuqaa qabaachuun qofa osoo hintaane, karaa kallattii hin taaneen meeshaalee elektirooniksii kan akka bilbilaa, minjaala, barcuma, yaabbannoo manaa fi bantuu liiftii tuquudhaan osoo harka hin dhiqatiin Fuula (Ija, Funyaan yookaan Afaan) tuquudhaan. ",
+
+    MessageFromUsDetailInfoTitle: "ergaa TrackSym Irraa",
+
+    MessageFromUsDetailInfoDescription: "",
+
+    MessageFromUsDetailInfoDescriptionContentOne:
+      "Nuti hundi keenya weerara COVID-19 wajjin wal-falmaa jirra. Kanaafuu dhaamsaa fi ajaja qondaaltoota olaanoo fi ogessoota fayyaa fudhachuuf qophaa’oo ta’uu qabna. Maatiin weerara COVID-19 haala tasgabbaa’ina qabuun to’achuuf yaaluu qabu. Sababni isaas ijoolleen akkuma maatii isaan hordoofanii of-eggannoo godhan waan taasisuuf. Waa’een weerara Vaayirasii Koronaa haarawaa kanaa waan hubannoon ga’aan haala kamiin ijoollee fi haadholii ulfa ta’an akka miidhu hin beekamneef, akkasumas namoota umurii hunda irra jiran miidhuu waan danda’uuf maatiin namoota isaan wajjin argaman hubachisuuf carraa guddaa qabaatu.",
+
+    MessageFromUsDetailInfoDescriptionContentTwo:
+      "joolleen karaa biraatiin tarkaanfii weerara kana to’achuf godhamu kan akka cufinsa mana barnootaa, akkasumas qaamaan keessatti miidhamuu danda’u. Kanaafuu ijoolleef xiyyeeffannaan addaa hamma danda’ametti, akka isaan hin midhamneef, gochuun barbaachisaa.dha.",
+
+    DetailInfoAuthorFullName: "ikipedia",
+
+    InfoCovidDetailParagraphOneSubOne:
+      "‘SARS-CoV-2’n alatti Gosoota Vaayirasii Koronaa baay’eetu argama. Vaayirasoonni Koronaa maatii vaayirasoota dhibbaan lakkaa’aamanidha. Baay’een isaanii bineensota akka sinbirroota halkanii, lukkuuwwan, gaalotaa fi adurreewwan keessatti kan argamaniidha.",
+
+    InfoCovidDetailParagraphOneSubTwo:
+      "eroo tokko tokko vaayirasoonni gosa/sanyii (species) tokkoo miidhan gara gosa/sanyii (species) biraas miidhuutti darbuu danda’u. Kunis ‘ispiiloveerii  (cross-species transmission)’ jedhama.",
+
+    InfoCovidDetailParagraphOneSubThree:
+      "Vaayirasiin Koronaa inni jalqabaa bara 1930 lukkuuwwan irratti argame. Kunis waggoota kurnan muraasa booda osoo bara 1960tti Vaayirasoonni Koronaa nama miidhan hin argamiin ture.",
+
+    InfoCovidDetailParagraphOneSubFour:
+      "anga ammaatti gosoonni Vaayirasoota Koronaa 7 dhukkubaaf nama kan saaxiilan ni jiru. Afur ‘endemic’ (weerara naannoo yookiin ummata murtaawaa midhu) yoo ta’an, sadan hafan garuu weerara baay’ee guddaa ta’eefi du’a nama kumaatamaaf sababa ta’uu danda’aniiru.",
+
+    InfoCovidDetailParagraphTwoSubOne:
+      "akka gabaa gurgurtaa foonii fi bineensaa irraa akka ka’e dubbatama. Sababa wal-tuttuqii kallattiin bineensota irraa gara namaatti akka darbe himama.",
+
+    InfoCovidDetailParagraphTwoSubTwo:
+      "ineensota kana tuquun yookiin nyaachuun ta’uu danda’a. Qilleensa irraanillee tamsa’uu danda’a. Garuu maddi sirrii dhukkuba kanaa hanga ammaatti hin baramne.",
+
+    InfoCovidDetailParagraphThreeSubOne:
+      "ubannoon dogoggoraa COVID-19 wajjin wal-qabatee jiru keessaa tokko dukkubichi maanguddoota qofa miidha kan jedhudha. Kun dhugaa irraa kan fagaatedha. Dhukkubichi namoota umurii adda addaa irra jiran du'aaf saaxilaa jira.",
+
+    InfoCovidDetailParagraphThreeSubTwo:
+      "Wanti dhugaa ta'e namootni umriin isaanii waggaa 80 ol ta'e 14.8% dhibee kanaan miidhamoo yommuu ta'an namootni umriin isaanii waggaa 40 gadi ta'e 1% qofa miidhamu.",
+
+    InfoCovidDetailParagraphThreeSubThree:
+      "aruu akkas jechuun dargaggoota hin qabu yookaan hin ajjeesu jechuu miti. Kanaafuu odeeffannoowwan akka kanaa fi biroo balaa guddaa geessisuu danda’u.",
+
+    InfoDetailMostCommonSyptomsListTitleOne: "Ho’ina Qaamaa Olaanaa",
+
+    InfoDetailMostCommonSyptomsListTitleTwo: "Qufaa Gogaa",
+
+    InfoDetailMostCommonSyptomsListTitleThree: "Dadhabbii",
+
+    InfoDetailMostCommonSyptomsListTitleFour: "Hafuura Baafachuu Rakkachuu",
+
+    InfoDetailMostCommonSyptomsListTitleFive: "adhabbii Maashaalee",
+
+    InfoDetailMostCommonSyptomsListLableOne:
+      "o’ina qaamaa 103°F (39.4°C) yookaan ol ",
+
+    InfoDetailMostCommonSyptomsListLableTwo:
+      "iidhinsa kan hin qabneefi hanga torban 8 yookaan isaa ol turu kan danda'u",
+
+    InfoDetailMostCommonSyptomsListLableThree:
+      "Humnaa fi kaka’umsa dhabuu (qaaman fi  sammuun)",
+
+    InfoDetailMostCommonSyptomsListLableFour:
+      "Qilleensa fudhachuufi baasuu dadhabu, kanaaf oksiijinii gahaa argachuu hin danda’aan",
+
+    InfoDetailMostCommonSyptomsListLableFive:
+      "hukkubbii qaamaa naannoo irree kan akka sochii dadhabuu",
+
+    InfoDetailLessCommonSyptomsListTitleOne: "Mataa Dhukkubbii",
+
+    InfoDetailLessCommonSyptomsListTitleTwo: "Cufamuu Qoonqoo (Kokkee)",
+
+    InfoDetailLessCommonSyptomsListTitleThree: "Qorrisiisuu / Dhaamochiisuu",
+
+    InfoDetailLessCommonSyptomsListTitleFour: "Foolii Fuudhuu Dadhabuu",
+
+    InfoDetailLessCommonSyptomsListLableOne:
+      "hukkubbii mataa cimaa kan akka dha’annaa mataa akkasumas joonjiin mataa namaatti dhaga’amu",
+
+    InfoDetailLessCommonSyptomsListLableTwo:
+      "aannoo qoonqoo (kokkee) hooqsisuu fi dhukkubbiin dhagahamuu, yeroo waa liqimsitan ammoo miirri dhukkubbii kan baay’ee dabaludha.",
+
+    InfoDetailLessCommonSyptomsListLableThree:
+      "orra (dhaamonnaa) sababa ga’aa tokko malee",
+
+    InfoDetailLessCommonSyptomsListLableFour:
+      "eroo baay’ee foolii fuudhuu dadhabuu, gartokkeen yookaan guutumaan guutuutti cufamuu funyaanii  waliin wal qabata.",
+
+    InfoDetailPreventionMethodsTitleOne: "Harka Dhiqannaa",
+
+    InfoDetailPreventionMethodsTitleTwo: "Walirraa Fageenya Qaamaa",
+
+    InfoDetailPreventionMethodsTitleThree:
+      "Qulqullina Qaamolee Sirna Hargansuu",
+
+    InfoDetailPreventionMethodsTitleFour:
+      "Odeeffannoolee Haaraa Ba’an Hordofaa",
+
+    InfoDetailPreventionMethodsLabelOne:
+      "arka keenya bishaanii fi saamunaadhaan sukkuumuun yoo xiqqaate sekondii 20f dhiqachuu ",
+
+    InfoDetailPreventionMethodsLabelTwo:
+      "oo xiqqaaate fageenya meetira 2 (tarkaanfii 6) walirraa fagaachuu",
+
+    InfoDetailPreventionMethodsLabelThree:
+      "eroo manaa baatan haguuggii funyaanifi  afaanii kaawwadhaa",
+
+    InfoDetailPreventionMethodsLabelFour:
+      "Gorsa ogeeyyii fayyaafi mootummaa hoordofaa",
+
+    InfoDetailPreventionMethodsTagOne: "ekondii 20 ol",
+
+    InfoDetailPreventionMethodsTagTwo: "eetira 2",
+
+    InfoDetailPreventionMethodsTagThree: "Fuula golguu",
+
+    InfoDetailPreventionMethodsTagFour: "hugaa moo Soba?",
+
+    InfoDetailMessageFromTrackSym:
+      "hukkuba kanaan hedduu miidhamuu baatanis carraan dhukkubichaan qabamuu fi nama irraa gara namaatti daddabarsuu baay'ee guddaa waan ta'eef of eeggannoo gochuun barbaachisaadha.",
+    Jan: "Ama",
+    Feb: "Gur",
+    Mar: "Bit",
+    Apr: "Ebla",
+    May: "Caam",
+    Jun: "Wax",
+    Jul: "Ado",
+    Aug: "Hag",
+    Sep: "Ful",
+    Oct: "Onk",
+    Nov: "Sad",
+    Dec: "Mud",
+    SuccessfullySave: "Milkaa'eera!",
   },
 });
