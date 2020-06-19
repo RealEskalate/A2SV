@@ -1,14 +1,14 @@
 <template>
   <v-card outlined shaped class="shadow-sm overflow-hidden">
     <v-btn
-            v-if="loggedInUser"
-            fab
-            color="white"
-            depressed
-            v-show="!sidebar"
-            @click="sidebar = true"
-            class="shadow-sm v-card--outlined v-card--shaped"
-            style="position: absolute; left: 0; top: 0; z-index: 2"
+      v-if="loggedInUser"
+      fab
+      color="white"
+      depressed
+      v-show="!sidebar"
+      @click="sidebar = true"
+      class="shadow-sm v-card--outlined v-card--shaped"
+      style="position: absolute; left: 0; top: 0; z-index: 2"
     >
       <v-icon v-text="mdiForwardburger" />
     </v-btn>
@@ -158,40 +158,39 @@
 </template>
 
 <script>
-  import store from "@/store/";
-  import {
-    mdiBabyCarriage,
-    mdiBackburger,
-    mdiBandage,
-    mdiCrosshairsGps,
-    mdiForwardburger,
-    mdiGenderMaleFemaleVariant,
-    mdiPercent
-  } from "@mdi/js";
-  import Mapbox from "mapbox-gl-vue";
-  import Supercluster from "supercluster";
+import store from "@/store/";
+import {
+  mdiBabyCarriage,
+  mdiBackburger,
+  mdiBandage,
+  mdiCrosshairsGps,
+  mdiForwardburger,
+  mdiGenderMaleFemaleVariant,
+  mdiPercent
+} from "@mdi/js";
+import Mapbox from "mapbox-gl-vue";
+import Supercluster from "supercluster";
 
-  export default {
+export default {
   name: "SymTrack",
 
   components: { Mapbox },
 
-    mounted() {
-      if (this.loggedInUser && store.getters.getSymRequestInterval === null) {
-        let requestInterval = setInterval(
-            this.fetchLocationsSymptoms,
-            5 * 60 * 1000
-        );
-        store.dispatch("setSymRequestInterval", requestInterval);
-      }
+  mounted() {
+    if (this.loggedInUser && store.getters.getSymRequestInterval === null) {
+      let requestInterval = setInterval(
+        this.fetchLocationsSymptoms,
+        5 * 60 * 1000
+      );
+      store.dispatch("setSymRequestInterval", requestInterval);
+    }
   },
-    beforeDestroy() {
-      clearInterval(store.getters.getSymRequestInterval);
-      store.dispatch("setSymRequestInterval", null);
-    },
+  beforeDestroy() {
+    clearInterval(store.getters.getSymRequestInterval);
+    store.dispatch("setSymRequestInterval", null);
+  },
   data: function() {
     return {
-
       mdiBackburger,
       mdiForwardburger,
       api_token: process.env.VUE_APP_MAPBOX_API,
