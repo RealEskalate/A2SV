@@ -92,8 +92,15 @@
       </template>
     </v-tour>
     <v-snackbar top color="primary" v-model="snackbar" :timeout="5000">
-      <h4 class="ma-2" v-text="'You have completed the tour'" />
-      <v-btn text icon x-small color="white" @click="snackbar = false">
+      <span class="ma-2" v-text="'You have completed the tour'" />
+      <v-btn
+        text
+        icon
+        x-small
+        class="float-right"
+        color="white"
+        @click="snackbar = false"
+      >
         <v-icon v-text="mdiCloseCircleOutline" />
       </v-btn>
     </v-snackbar>

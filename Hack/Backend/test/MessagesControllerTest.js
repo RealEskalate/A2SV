@@ -9,6 +9,7 @@ const { expect } = chai;
 chai.use(chaiHttp);
 
 describe("Messages API", () => {
+  /* GET and DELETE routes are deprecated
   //Get All Alerts - Valid Route
   describe("GET /api/messages", () => {
     let message;
@@ -177,6 +178,7 @@ describe("Messages API", () => {
     });
   });
 
+  */
   //Post Message - Valid Message
   describe("POST /api/messages", () => {
     let message;
@@ -245,7 +247,8 @@ describe("Messages API", () => {
       expect(response.error.text).to.include("name: Path `name` is required., email: Path `email` is required., message: Path `message` is required.");
     });
   });
-
+  
+  /*
   //Delete Message - Valid Message
   describe("DELETE /api/messages/", () => {
     let message;
@@ -304,5 +307,5 @@ describe("Messages API", () => {
       expect(response).to.have.status(404);
     });
   });
-
+  */
 });

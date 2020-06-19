@@ -839,8 +839,4 @@ export default {
   width: 100%;
   height: 100%;
 }
-
-.v-menu__content {
-  border-radius: 3px 3px 20px 3px !important;
-}
 </style>
