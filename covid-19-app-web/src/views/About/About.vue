@@ -57,8 +57,14 @@
                 v-text="$t('aboutTitles.contact')"
               />
               <v-snackbar top :color="type" v-model="showAlert" :timeout="5000">
-                <h4 class="ma-2" v-text="message" />
-                <v-btn icon x-small color="white" @click="showAlert = false">
+                <span class="ma-2" v-text="message" />
+                <v-btn
+                  icon
+                  x-small
+                  class="float-right"
+                  color="white"
+                  @click="showAlert = false"
+                >
                   <v-icon v-text="mdiCloseCircleOutline" />
                 </v-btn>
               </v-snackbar>
