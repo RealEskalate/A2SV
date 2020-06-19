@@ -59,6 +59,7 @@ export default {
       store.dispatch("setLanguagePreference", { lang: newValue });
       store.dispatch("setGraphDescriptions", { lang: newValue });
       store.dispatch("setAboutDescriptions", { lang: newValue });
+      store.dispatch("setPrivacyPolicy", { lang: newValue });
       store.dispatch("setAboutActions", { lang: newValue });
       store.dispatch("setInformation", { lang: newValue });
       store.dispatch("setActions", { lang: newValue });
