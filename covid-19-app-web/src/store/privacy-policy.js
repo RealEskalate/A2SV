@@ -1,5 +1,5 @@
-import ajax from "../../auth/ajax";
-import { langConverter } from "../../store";
+import ajax from "../auth/ajax";
+import { langConverter } from "./index";
 
 export default {
   state: {
@@ -27,6 +27,7 @@ export default {
         .then(
           res => {
             commit("setPrivacyPolicy", res.data);
+            console.log(res.data);
           },
           error => {
             console.log(error);

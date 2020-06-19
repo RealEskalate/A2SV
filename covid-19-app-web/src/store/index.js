@@ -9,6 +9,7 @@ import messages from "./messages";
 import symptomTracking from "./sym-track";
 import user from "./user";
 import ethiopia from "./ethiopia";
+import privacyPolicy from "./privacy-policy";
 
 import createPersistedState from "vuex-persistedstate";
 import ajax from "../auth/ajax";
@@ -98,6 +99,7 @@ export default new Vuex.Store({
     loaders,
     messages,
     ethiopia,
-    symptomTracking
+    symptomTracking,
+    privacyPolicy
   }
 });
