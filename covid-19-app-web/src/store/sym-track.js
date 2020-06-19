@@ -1,5 +1,5 @@
 import ajax from "../auth/ajax";
-import { langConverter } from "./index";
+import {langConverter} from "./index";
 
 const state = {
   allSymptoms: [],
@@ -8,7 +8,8 @@ const state = {
     symptom_info: []
   },
   cities: [],
-  locationsSymptoms: null
+  locationsSymptoms: null,
+  symRequestInterval: null
 };
 
 const getters = {
@@ -23,6 +24,9 @@ const getters = {
   },
   getLocationsSymptoms: state => {
     return state.locationsSymptoms;
+  },
+  getSymRequestInterval: state => {
+    return state.symRequestInterval;
   }
 };
 
@@ -38,6 +42,9 @@ const mutations = {
   },
   setLocationsSymptoms: (state, payload) => {
     state.locationsSymptoms = payload;
+  },
+  setSymRequestInterval: (state, payload) => {
+    state.symRequestInterval = payload;
   }
 };
 
@@ -114,6 +121,10 @@ const actions = {
       .finally(() => {
         commit("setSymTrackLoaders", { key: "map", value: false });
       });
+  },
+
+  setSymRequestInterval: ({commit}, interval) => {
+    commit("setSymRequestInterval", interval);
   }
 };
 

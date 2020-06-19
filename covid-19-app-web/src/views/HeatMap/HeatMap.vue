@@ -17,12 +17,13 @@
                   $vuetify.breakpoint.smAndDown ? 12 / 18 : 18 / 12
                 "
               >
+                <sym-track class="mt-5 mx-1" style="height: 95%"/>
                 <v-card
-                  shaped
-                  outlined
-                  v-if="!loggedInUser"
-                  style="height: 95%"
-                  class="mt-5 mx-1 shadow-sm d-flex align-center justify-center"
+                        shaped
+                        outlined
+                        v-if="!loggedInUser"
+                        style="height: 95%"
+                        class="mt-5 mx-1 shadow-sm d-flex align-center justify-center overlay"
                 >
                   <div class="text-center">
                     <h3
@@ -38,7 +39,7 @@
                     />
                   </div>
                 </v-card>
-                <sym-track v-else class="mt-5 mx-1" style="height: 95%" />
+                <sym-track class="mt-5 mx-1" style="height: 95%"/>
               </v-responsive>
             </v-tab-item>
             <v-tab-item>
@@ -64,11 +65,22 @@
   </section>
 </template>
 <script>
-import SymTrack from "./Maps/SymTrack";
+  import SymTrack from "./Maps/SymTrack";
 
-export default {
+  export default {
   components: {
     SymTrack
   }
 };
 </script>
+
+<style>
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(158, 158, 158, 0.5) !important;
+  }
+</style>
