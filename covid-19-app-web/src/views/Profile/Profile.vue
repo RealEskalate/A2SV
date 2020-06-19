@@ -1,8 +1,14 @@
 <template>
-  <v-container>
+  <v-container class="mb-12">
     <v-snackbar top :color="alert.type" v-model="alert.show" :timeout="5000">
-      <h4 class="ma-2" v-text="alert.message" />
-      <v-btn icon x-small color="white" @click="alert.show = false">
+      <span class="ma-2" v-text="alert.message" />
+      <v-btn
+        icon
+        x-small
+        class="float-right"
+        color="white"
+        @click="alert.show = false"
+      >
         <v-icon v-text="mdiCloseCircleOutline" />
       </v-btn>
     </v-snackbar>
@@ -166,6 +172,13 @@
                       v-text="loggedInUser.age_group"
                     />
                   </h4>
+                  <h4 class="font-weight-thin mb-4">
+                    Sickness Probability:
+                    <span
+                      class="grey--text font-italic"
+                      v-text="retrievedSymptoms.probability.toFixed(2) + '%'"
+                    />
+                  </h4>
                   <v-list-item-subtitle
                     v-text="$t('auth.' + loggedInUser.gender.toLowerCase())"
                   />
@@ -201,9 +214,10 @@
         </v-form>
       </v-col>
       <v-col cols="12" md="9">
-        <h1 class="text-center font-weight-regular primary--text">
-          {{ $t("auth.symptoms") }}
-        </h1>
+        <h1
+          class="text-center font-weight-regular primary--text"
+          v-text="$t('auth.symptoms')"
+        />
         <v-fade-transition hide-on-leave>
           <v-container class="text-center" v-if="!editing.symptoms">
             <div class="shadow-in v-card--shaped grey lighten-4 px-6 py-2">
@@ -393,6 +407,12 @@
         </v-fade-transition>
       </v-col>
     </v-row>
+
+    <v-row>
+      <v-col>
+        <symptom-history :relevanceColor="relevanceColor" />
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
@@ -406,12 +426,14 @@ import {
   mdiKey,
   mdiWindowClose
 } from "@mdi/js";
+import SymptomHistory from "./SymptomHistory";
 import store from "@/store";
 import ajax from "@/auth/ajax";
 import bcrypt from "bcryptjs";
 
 export default {
   name: "Profile",
+  components: { SymptomHistory },
   data() {
     return {
       mdiAccountEdit,
@@ -619,6 +641,7 @@ export default {
     }
   },
   computed: {
+    retrievedSymptoms: () => store.getters.getSymptomUser,
     userSymptoms: () => {
       let res = [];
       let retrieved = store.getters.getSymptomUser;

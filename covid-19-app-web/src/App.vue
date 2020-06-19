@@ -1,12 +1,12 @@
 <template>
   <v-app>
     <app-bar />
-    <v-content class="px-md-0 px-3">
+    <v-main class="px-md-0 px-3">
       <v-fade-transition>
         <router-view />
       </v-fade-transition>
       <vue-progress-bar />
-    </v-content>
+    </v-main>
     <app-footer />
     <tour />
   </v-app>
@@ -108,6 +108,7 @@ html {
   box-shadow: 0 0 5px #dededede inset !important;
 }
 
+.v-event,
 .v-image__image,
 .v-card--shaped,
 .v-snack__wrapper,
