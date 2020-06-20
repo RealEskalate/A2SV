@@ -127,7 +127,6 @@ exports.post_multiple_symptoms = async (req, res) => {
     });
   }
   await SymptomUser.deleteMany({ user_id: req.body.loggedInUser });
-  console.log(history);
   await history.markModified("events");
   await history.save();
 

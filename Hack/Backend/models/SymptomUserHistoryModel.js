@@ -24,6 +24,7 @@ const symptom_user_history_schema = new mongoose.Schema({
         type: String,
         required: true,
         enum: ["HIGH", "MEDIUM", "LOW"],
+        default: "LOW",
       },
     },
   ],
