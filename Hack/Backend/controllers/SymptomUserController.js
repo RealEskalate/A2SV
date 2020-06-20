@@ -1,9 +1,7 @@
 const SymptomUserModel = require("./../models/SymptomUser");
-const SymptomUser = SymptomUserModel.SymptomUser;
-const DemoSymptomUser = SymptomUserModel.DemoSymptomUser;
-const { Symptom, validateSymptom } = require("../models/Symptom");
 const UserModels = require("./../models/UserModel");
-const User = UserModels.User;
+const SymptomUserHistoryModel = require("./../models/SymptomUserHistoryModel");
+const { Symptom, validateSymptom } = require("../models/Symptom");
 const jwt = require("jsonwebtoken");
 const ProbabilityCalculator = require("../services/ProbabilityCalculator");
 const { StatisticsResource } = require("../models/StatisticsResourceModel.js");
@@ -28,8 +26,27 @@ exports.get_all_symptomusers = async (req, res) => {
 
 // Post a symptomuser
 exports.post_symptomuser = async (req, res) => {
-  if(req.body.user_id !== req.body.loggedInUser){
-    return res.status(403).send("User not authorized to access this endpoint with id: " + req.body.loggedInUser);
+  if (req.query.demo && req.query.demo == "true") {
+    var SymptomUser = SymptomUserModel.DemoSymptomUser;
+    var User = UserModels.DemoUser;
+    var SymptomUserHistory = SymptomUserHistoryModel.DemoSymptomUserHistory;
+  } else if (req.query.stress && req.query.stress == "true") {
+    var SymptomUser = SymptomUserModel.StressSymptomUser;
+    var User = UserModels.StressUser;
+    var SymptomUserHistory = SymptomUserHistoryModel.StressSymptomUserHistory;
+  } else {
+    var SymptomUser = SymptomUserModel.SymptomUser;
+    var User = UserModels.User;
+    var SymptomUserHistory = SymptomUserHistoryModel.SymptomUserHistory;
+  }
+
+  if (req.body.user_id !== req.body.loggedInUser) {
+    return res
+      .status(403)
+      .send(
+        "User not authorized to access this endpoint with id: " +
+          req.body.loggedInUser
+      );
   }
   let symptomuser = new SymptomUser({
     symptom_id: req.body.symptom_id,
@@ -66,12 +83,53 @@ exports.post_symptomuser = async (req, res) => {
 
 // Post multiple symptoms given userId  and list of symptomsIds
 exports.post_multiple_symptoms = async (req, res) => {
+  if (req.query.demo && req.query.demo == "true") {
+    var SymptomUser = SymptomUserModel.DemoSymptomUser;
+    var User = UserModels.DemoUser;
+    var SymptomUserHistory = SymptomUserHistoryModel.DemoSymptomUserHistory;
+  } else if (req.query.stress && req.query.stress == "true") {
+    var SymptomUser = SymptomUserModel.StressSymptomUser;
+    var User = UserModels.StressUser;
+    var SymptomUserHistory = SymptomUserHistoryModel.StressSymptomUserHistory;
+  } else {
+    var SymptomUser = SymptomUserModel.SymptomUser;
+    var User = UserModels.User;
+    var SymptomUserHistory = SymptomUserHistoryModel.SymptomUserHistory;
+  }
   const user = await User.findById(req.body.loggedInUser);
   const symptoms = req.body.symptoms;
   if (!user || !symptoms) {
     return res.status(400).send("Invalid request");
   }
+  const existingSymptoms = await SymptomUser.find({
+    user_id: req.body.loggedInUser,
+  }).populate("symptom_id");
+  const difference = existingSymptoms.filter(
+    (x) =>
+      x.symptom_id != null && !symptoms.includes(x.symptom_id._id.toString())
+  );
+  let history = await SymptomUserHistory.findOne({
+    user_id: req.body.loggedInUser,
+  });
+  if (!history) {
+    history = new SymptomUserHistory({
+      user_id: req.body.loggedInUser,
+      events: [],
+    });
+  }
+  const currentDate = new Date(Date.now());
+  for (let ix in difference) {
+    history.events.push({
+      name: difference[ix].symptom_id.name,
+      start: difference[ix].timestamp,
+      end: currentDate,
+      color: difference[ix].symptom_id.relevance,
+      type: "TERMINATED",
+    });
+  }
   await SymptomUser.deleteMany({ user_id: req.body.loggedInUser });
+  await history.markModified("events");
+  await history.save();
 
   for (let index in symptoms) {
     let id = symptoms[index];
@@ -98,11 +156,17 @@ exports.post_multiple_symptoms = async (req, res) => {
 //Get a symptomuser by symptom_id
 exports.get_symptomuser_by_symptom_id = async (req, res) => {
   if (req.query.demo && req.query.demo == "true") {
-    var SymptomUser = DemoSymptomUser;
+    var SymptomUser = SymptomUserModel.DemoSymptomUser;
+    var User = UserModels.DemoUser;
+    var SymptomUserHistory = SymptomUserHistoryModel.DemoSymptomUserHistory;
   } else if (req.query.stress && req.query.stress == "true") {
     var SymptomUser = SymptomUserModel.StressSymptomUser;
+    var User = UserModels.StressUser;
+    var SymptomUserHistory = SymptomUserHistoryModel.StressSymptomUserHistory;
   } else {
     var SymptomUser = SymptomUserModel.SymptomUser;
+    var User = UserModels.User;
+    var SymptomUserHistory = SymptomUserHistoryModel.SymptomUserHistory;
   }
   try {
     const symptomuser = await SymptomUser.find({
@@ -132,11 +196,17 @@ exports.get_symptomuser_by_symptom_id = async (req, res) => {
 //Get a symptomuser by user_id
 exports.get_symptomuser_by_user_id = async (req, res) => {
   if (req.query.demo && req.query.demo == "true") {
-    var SymptomUser = DemoSymptomUser;
+    var SymptomUser = SymptomUserModel.DemoSymptomUser;
+    var User = UserModels.DemoUser;
+    var SymptomUserHistory = SymptomUserHistoryModel.DemoSymptomUserHistory;
   } else if (req.query.stress && req.query.stress == "true") {
     var SymptomUser = SymptomUserModel.StressSymptomUser;
+    var User = UserModels.StressUser;
+    var SymptomUserHistory = SymptomUserHistoryModel.StressSymptomUserHistory;
   } else {
     var SymptomUser = SymptomUserModel.SymptomUser;
+    var User = UserModels.User;
+    var SymptomUserHistory = SymptomUserHistoryModel.SymptomUserHistory;
   }
   try {
     const symptomuser = await SymptomUser.find({
@@ -200,10 +270,28 @@ exports.get_symptomuser_by_user_id = async (req, res) => {
 
 //Update a symptomuser by id
 exports.update_symptomuser = async (req, res) => {
+  if (req.query.demo && req.query.demo == "true") {
+    var SymptomUser = SymptomUserModel.DemoSymptomUser;
+    var User = UserModels.DemoUser;
+    var SymptomUserHistory = SymptomUserHistoryModel.DemoSymptomUserHistory;
+  } else if (req.query.stress && req.query.stress == "true") {
+    var SymptomUser = SymptomUserModel.StressSymptomUser;
+    var User = UserModels.StressUser;
+    var SymptomUserHistory = SymptomUserHistoryModel.StressSymptomUserHistory;
+  } else {
+    var SymptomUser = SymptomUserModel.SymptomUser;
+    var User = UserModels.User;
+    var SymptomUserHistory = SymptomUserHistoryModel.SymptomUserHistory;
+  }
   try {
     const symptomuserCheck = await SymptomUser.findById(req.body._id);
-    if(symptomuserCheck.user_id.toString() !== req.body.loggedInUser){
-      return res.status(403).send("User not authorized to access this endpoint with id: " + req.body.loggedInUser);
+    if (symptomuserCheck.user_id.toString() !== req.body.loggedInUser) {
+      return res
+        .status(403)
+        .send(
+          "User not authorized to access this endpoint with id: " +
+            req.body.loggedInUser
+        );
     }
     const symptomuser = await SymptomUser.findByIdAndUpdate(
       req.body._id,
@@ -229,10 +317,28 @@ exports.update_symptomuser = async (req, res) => {
 
 // Deleting a symptomuser
 exports.delete_symptomuser = async (req, res) => {
+  if (req.query.demo && req.query.demo == "true") {
+    var SymptomUser = SymptomUserModel.DemoSymptomUser;
+    var User = UserModels.DemoUser;
+    var SymptomUserHistory = SymptomUserHistoryModel.DemoSymptomUserHistory;
+  } else if (req.query.stress && req.query.stress == "true") {
+    var SymptomUser = SymptomUserModel.StressSymptomUser;
+    var User = UserModels.StressUser;
+    var SymptomUserHistory = SymptomUserHistoryModel.StressSymptomUserHistory;
+  } else {
+    var SymptomUser = SymptomUserModel.SymptomUser;
+    var User = UserModels.User;
+    var SymptomUserHistory = SymptomUserHistoryModel.SymptomUserHistory;
+  }
   try {
     const symptomuserCheck = await SymptomUser.findById(req.body._id);
-    if(symptomuserCheck.user_id.toString() !== req.body.loggedInUser){
-      return res.status(403).send("User not authorized to access this endpoint with id: " + req.body.loggedInUser);
+    if (symptomuserCheck.user_id.toString() !== req.body.loggedInUser) {
+      return res
+        .status(403)
+        .send(
+          "User not authorized to access this endpoint with id: " +
+            req.body.loggedInUser
+        );
     }
     const symptomuser = await SymptomUser.findByIdAndDelete(req.body._id);
     if (!symptomuser) {
