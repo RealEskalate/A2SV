@@ -124,6 +124,7 @@ exports.post_multiple_symptoms = async (req, res) => {
       start: difference[ix].timestamp,
       end: currentDate,
       color: difference[ix].symptom_id.relevance,
+      type: "TERMINATED",
     });
   }
   await SymptomUser.deleteMany({ user_id: req.body.loggedInUser });

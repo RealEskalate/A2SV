@@ -26,6 +26,12 @@ const symptom_user_history_schema = new mongoose.Schema({
         enum: ["HIGH", "MEDIUM", "LOW"],
         default: "LOW",
       },
+      type: {
+        type: String,
+        required: true,
+        enum: ["TERMINATED", "ONGOING"],
+        default: "ONGOING",
+      },
     },
   ],
 });

@@ -40,6 +40,7 @@ exports.get_symptomuser_history_by_user_id = async (req, res) => {
         start: item.timestamp,
         end: date,
         color: item.symptom_id.relevance,
+        type: "ONGOING",
       });
     });
     return res.status(200).send(history);
