@@ -1,0 +1,569 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta content="IE=edge" http-equiv="X-UA-Compatible"><meta content="width=device-width,initial-scale=1" name="viewport"><meta property="og:title" content="TrackSym"><meta property="og:description" content="TrackSym - A non-commercial COVID-19 Symptom Tracker app that uses crowd-sourcing to collect and visualize the density of the relevant symptoms. Registration only asks about age and gender to be used for data science purposes. Users can anonymously report symptoms and choose a location to see the density of symptoms in a map view. The data is aggregated by places, therefore, the app can help people avoid visiting a grocery store or a gas station that is heavily used by symptomatic people."><meta property="og:image" content="/logo.png"><meta property="og:image:width" content="100px"><meta property="og:image:height" content="100px"><meta property="og:url" content="http://a2sv-covid.herokuapp.com"><meta property="og:type" content="article"><link href="/favicon.ico" rel="icon"><title>TrackSym - Covid-19 Symptom Tracker</title><script>const link = document.createElement('link');
+    link.href = "https://fonts.googleapis.com/css?family=Nunito:display=swap";
+    link.rel = 'stylesheet';
+    link.crossOrigin = 'crossorigin';
+    performance.mark('add-stylesheet');
+    document.head.appendChild(link);
+    link.onload = () => {
+      performance.measure('stylesheet-onload', 'add-stylesheet');
+    }</script><link href="https://fonts.googleapis.com/css?family=Nunito:display=swap" rel="stylesheet" crossorigin="crossorigin"><link href="/css/app.6fb1009f.css" rel="preload" as="style"><link href="/css/chunk-vendors.4e60656d.css" rel="preload" as="style"><link href="/js/app.da3a0e82.js" rel="preload" as="script"><link href="/js/chunk-vendors.7097c02e.js" rel="preload" as="script"><link href="/css/chunk-vendors.4e60656d.css" rel="stylesheet"><link href="/css/app.6fb1009f.css" rel="stylesheet"><style type="text/css"> .__cov-progress { opacity: 1; z-index: 999999; } </style><style type="text/css">.resize-observer[data-v-b329ee4c]{position:absolute;top:0;left:0;z-index:-1;width:100%;height:100%;border:none;background-color:transparent;pointer-events:none;display:block;overflow:hidden;opacity:0}.resize-observer[data-v-b329ee4c] object{display:block;position:absolute;top:0;left:0;height:100%;width:100%;overflow:hidden;pointer-events:none;z-index:-1}</style><link rel="stylesheet" type="text/css" href="/css/chunk-1c138c5e.0c0d4edb.css"><script charset="utf-8" src="/js/chunk-1c138c5e.d8e8ff5a.js"></script><style type="text/css" id="vuetify-theme-stylesheet">.v-application a { color: #039be5; }
+.v-application .primary {
+  background-color: #039be5 !important;
+  border-color: #039be5 !important;
+}
+.v-application .primary--text {
+  color: #039be5 !important;
+  caret-color: #039be5 !important;
+}
+.v-application .primary.lighten-5 {
+  background-color: #caffff !important;
+  border-color: #caffff !important;
+}
+.v-application .primary--text.text--lighten-5 {
+  color: #caffff !important;
+  caret-color: #caffff !important;
+}
+.v-application .primary.lighten-4 {
+  background-color: #abffff !important;
+  border-color: #abffff !important;
+}
+.v-application .primary--text.text--lighten-4 {
+  color: #abffff !important;
+  caret-color: #abffff !important;
+}
+.v-application .primary.lighten-3 {
+  background-color: #8bedff !important;
+  border-color: #8bedff !important;
+}
+.v-application .primary--text.text--lighten-3 {
+  color: #8bedff !important;
+  caret-color: #8bedff !important;
+}
+.v-application .primary.lighten-2 {
+  background-color: #6ad1ff !important;
+  border-color: #6ad1ff !important;
+}
+.v-application .primary--text.text--lighten-2 {
+  color: #6ad1ff !important;
+  caret-color: #6ad1ff !important;
+}
+.v-application .primary.lighten-1 {
+  background-color: #45b6ff !important;
+  border-color: #45b6ff !important;
+}
+.v-application .primary--text.text--lighten-1 {
+  color: #45b6ff !important;
+  caret-color: #45b6ff !important;
+}
+.v-application .primary.darken-1 {
+  background-color: #0081c9 !important;
+  border-color: #0081c9 !important;
+}
+.v-application .primary--text.text--darken-1 {
+  color: #0081c9 !important;
+  caret-color: #0081c9 !important;
+}
+.v-application .primary.darken-2 {
+  background-color: #0068ad !important;
+  border-color: #0068ad !important;
+}
+.v-application .primary--text.text--darken-2 {
+  color: #0068ad !important;
+  caret-color: #0068ad !important;
+}
+.v-application .primary.darken-3 {
+  background-color: #005092 !important;
+  border-color: #005092 !important;
+}
+.v-application .primary--text.text--darken-3 {
+  color: #005092 !important;
+  caret-color: #005092 !important;
+}
+.v-application .primary.darken-4 {
+  background-color: #003a78 !important;
+  border-color: #003a78 !important;
+}
+.v-application .primary--text.text--darken-4 {
+  color: #003a78 !important;
+  caret-color: #003a78 !important;
+}
+.v-application .secondary {
+  background-color: #9e9e9e !important;
+  border-color: #9e9e9e !important;
+}
+.v-application .secondary--text {
+  color: #9e9e9e !important;
+  caret-color: #9e9e9e !important;
+}
+.v-application .secondary.lighten-5 {
+  background-color: #ffffff !important;
+  border-color: #ffffff !important;
+}
+.v-application .secondary--text.text--lighten-5 {
+  color: #ffffff !important;
+  caret-color: #ffffff !important;
+}
+.v-application .secondary.lighten-4 {
+  background-color: #ffffff !important;
+  border-color: #ffffff !important;
+}
+.v-application .secondary--text.text--lighten-4 {
+  color: #ffffff !important;
+  caret-color: #ffffff !important;
+}
+.v-application .secondary.lighten-3 {
+  background-color: #f1f1f1 !important;
+  border-color: #f1f1f1 !important;
+}
+.v-application .secondary--text.text--lighten-3 {
+  color: #f1f1f1 !important;
+  caret-color: #f1f1f1 !important;
+}
+.v-application .secondary.lighten-2 {
+  background-color: #d5d5d5 !important;
+  border-color: #d5d5d5 !important;
+}
+.v-application .secondary--text.text--lighten-2 {
+  color: #d5d5d5 !important;
+  caret-color: #d5d5d5 !important;
+}
+.v-application .secondary.lighten-1 {
+  background-color: #b9b9b9 !important;
+  border-color: #b9b9b9 !important;
+}
+.v-application .secondary--text.text--lighten-1 {
+  color: #b9b9b9 !important;
+  caret-color: #b9b9b9 !important;
+}
+.v-application .secondary.darken-1 {
+  background-color: #848484 !important;
+  border-color: #848484 !important;
+}
+.v-application .secondary--text.text--darken-1 {
+  color: #848484 !important;
+  caret-color: #848484 !important;
+}
+.v-application .secondary.darken-2 {
+  background-color: #6b6b6b !important;
+  border-color: #6b6b6b !important;
+}
+.v-application .secondary--text.text--darken-2 {
+  color: #6b6b6b !important;
+  caret-color: #6b6b6b !important;
+}
+.v-application .secondary.darken-3 {
+  background-color: #535353 !important;
+  border-color: #535353 !important;
+}
+.v-application .secondary--text.text--darken-3 {
+  color: #535353 !important;
+  caret-color: #535353 !important;
+}
+.v-application .secondary.darken-4 {
+  background-color: #3c3c3c !important;
+  border-color: #3c3c3c !important;
+}
+.v-application .secondary--text.text--darken-4 {
+  color: #3c3c3c !important;
+  caret-color: #3c3c3c !important;
+}
+.v-application .accent {
+  background-color: #90a4ae !important;
+  border-color: #90a4ae !important;
+}
+.v-application .accent--text {
+  color: #90a4ae !important;
+  caret-color: #90a4ae !important;
+}
+.v-application .accent.lighten-5 {
+  background-color: #ffffff !important;
+  border-color: #ffffff !important;
+}
+.v-application .accent--text.text--lighten-5 {
+  color: #ffffff !important;
+  caret-color: #ffffff !important;
+}
+.v-application .accent.lighten-4 {
+  background-color: #ffffff !important;
+  border-color: #ffffff !important;
+}
+.v-application .accent--text.text--lighten-4 {
+  color: #ffffff !important;
+  caret-color: #ffffff !important;
+}
+.v-application .accent.lighten-3 {
+  background-color: #e2f7ff !important;
+  border-color: #e2f7ff !important;
+}
+.v-application .accent--text.text--lighten-3 {
+  color: #e2f7ff !important;
+  caret-color: #e2f7ff !important;
+}
+.v-application .accent.lighten-2 {
+  background-color: #c6dbe5 !important;
+  border-color: #c6dbe5 !important;
+}
+.v-application .accent--text.text--lighten-2 {
+  color: #c6dbe5 !important;
+  caret-color: #c6dbe5 !important;
+}
+.v-application .accent.lighten-1 {
+  background-color: #abbfc9 !important;
+  border-color: #abbfc9 !important;
+}
+.v-application .accent--text.text--lighten-1 {
+  color: #abbfc9 !important;
+  caret-color: #abbfc9 !important;
+}
+.v-application .accent.darken-1 {
+  background-color: #768a93 !important;
+  border-color: #768a93 !important;
+}
+.v-application .accent--text.text--darken-1 {
+  color: #768a93 !important;
+  caret-color: #768a93 !important;
+}
+.v-application .accent.darken-2 {
+  background-color: #5d707a !important;
+  border-color: #5d707a !important;
+}
+.v-application .accent--text.text--darken-2 {
+  color: #5d707a !important;
+  caret-color: #5d707a !important;
+}
+.v-application .accent.darken-3 {
+  background-color: #455861 !important;
+  border-color: #455861 !important;
+}
+.v-application .accent--text.text--darken-3 {
+  color: #455861 !important;
+  caret-color: #455861 !important;
+}
+.v-application .accent.darken-4 {
+  background-color: #2e4149 !important;
+  border-color: #2e4149 !important;
+}
+.v-application .accent--text.text--darken-4 {
+  color: #2e4149 !important;
+  caret-color: #2e4149 !important;
+}
+.v-application .error {
+  background-color: #e57373 !important;
+  border-color: #e57373 !important;
+}
+.v-application .error--text {
+  color: #e57373 !important;
+  caret-color: #e57373 !important;
+}
+.v-application .error.lighten-5 {
+  background-color: #fffffb !important;
+  border-color: #fffffb !important;
+}
+.v-application .error--text.text--lighten-5 {
+  color: #fffffb !important;
+  caret-color: #fffffb !important;
+}
+.v-application .error.lighten-4 {
+  background-color: #ffe2de !important;
+  border-color: #ffe2de !important;
+}
+.v-application .error--text.text--lighten-4 {
+  color: #ffe2de !important;
+  caret-color: #ffe2de !important;
+}
+.v-application .error.lighten-3 {
+  background-color: #ffc5c2 !important;
+  border-color: #ffc5c2 !important;
+}
+.v-application .error--text.text--lighten-3 {
+  color: #ffc5c2 !important;
+  caret-color: #ffc5c2 !important;
+}
+.v-application .error.lighten-2 {
+  background-color: #ffa9a7 !important;
+  border-color: #ffa9a7 !important;
+}
+.v-application .error--text.text--lighten-2 {
+  color: #ffa9a7 !important;
+  caret-color: #ffa9a7 !important;
+}
+.v-application .error.lighten-1 {
+  background-color: #ff8e8d !important;
+  border-color: #ff8e8d !important;
+}
+.v-application .error--text.text--lighten-1 {
+  color: #ff8e8d !important;
+  caret-color: #ff8e8d !important;
+}
+.v-application .error.darken-1 {
+  background-color: #c7595a !important;
+  border-color: #c7595a !important;
+}
+.v-application .error--text.text--darken-1 {
+  color: #c7595a !important;
+  caret-color: #c7595a !important;
+}
+.v-application .error.darken-2 {
+  background-color: #a93f43 !important;
+  border-color: #a93f43 !important;
+}
+.v-application .error--text.text--darken-2 {
+  color: #a93f43 !important;
+  caret-color: #a93f43 !important;
+}
+.v-application .error.darken-3 {
+  background-color: #8c232d !important;
+  border-color: #8c232d !important;
+}
+.v-application .error--text.text--darken-3 {
+  color: #8c232d !important;
+  caret-color: #8c232d !important;
+}
+.v-application .error.darken-4 {
+  background-color: #6f0018 !important;
+  border-color: #6f0018 !important;
+}
+.v-application .error--text.text--darken-4 {
+  color: #6f0018 !important;
+  caret-color: #6f0018 !important;
+}
+.v-application .info {
+  background-color: #2196f3 !important;
+  border-color: #2196f3 !important;
+}
+.v-application .info--text {
+  color: #2196f3 !important;
+  caret-color: #2196f3 !important;
+}
+.v-application .info.lighten-5 {
+  background-color: #d4ffff !important;
+  border-color: #d4ffff !important;
+}
+.v-application .info--text.text--lighten-5 {
+  color: #d4ffff !important;
+  caret-color: #d4ffff !important;
+}
+.v-application .info.lighten-4 {
+  background-color: #b5ffff !important;
+  border-color: #b5ffff !important;
+}
+.v-application .info--text.text--lighten-4 {
+  color: #b5ffff !important;
+  caret-color: #b5ffff !important;
+}
+.v-application .info.lighten-3 {
+  background-color: #95e8ff !important;
+  border-color: #95e8ff !important;
+}
+.v-application .info--text.text--lighten-3 {
+  color: #95e8ff !important;
+  caret-color: #95e8ff !important;
+}
+.v-application .info.lighten-2 {
+  background-color: #75ccff !important;
+  border-color: #75ccff !important;
+}
+.v-application .info--text.text--lighten-2 {
+  color: #75ccff !important;
+  caret-color: #75ccff !important;
+}
+.v-application .info.lighten-1 {
+  background-color: #51b0ff !important;
+  border-color: #51b0ff !important;
+}
+.v-application .info--text.text--lighten-1 {
+  color: #51b0ff !important;
+  caret-color: #51b0ff !important;
+}
+.v-application .info.darken-1 {
+  background-color: #007cd6 !important;
+  border-color: #007cd6 !important;
+}
+.v-application .info--text.text--darken-1 {
+  color: #007cd6 !important;
+  caret-color: #007cd6 !important;
+}
+.v-application .info.darken-2 {
+  background-color: #0064ba !important;
+  border-color: #0064ba !important;
+}
+.v-application .info--text.text--darken-2 {
+  color: #0064ba !important;
+  caret-color: #0064ba !important;
+}
+.v-application .info.darken-3 {
+  background-color: #004d9f !important;
+  border-color: #004d9f !important;
+}
+.v-application .info--text.text--darken-3 {
+  color: #004d9f !important;
+  caret-color: #004d9f !important;
+}
+.v-application .info.darken-4 {
+  background-color: #003784 !important;
+  border-color: #003784 !important;
+}
+.v-application .info--text.text--darken-4 {
+  color: #003784 !important;
+  caret-color: #003784 !important;
+}
+.v-application .success {
+  background-color: #66bb6a !important;
+  border-color: #66bb6a !important;
+}
+.v-application .success--text {
+  color: #66bb6a !important;
+  caret-color: #66bb6a !important;
+}
+.v-application .success.lighten-5 {
+  background-color: #f4fff2 !important;
+  border-color: #f4fff2 !important;
+}
+.v-application .success--text.text--lighten-5 {
+  color: #f4fff2 !important;
+  caret-color: #f4fff2 !important;
+}
+.v-application .success.lighten-4 {
+  background-color: #d6ffd6 !important;
+  border-color: #d6ffd6 !important;
+}
+.v-application .success--text.text--lighten-4 {
+  color: #d6ffd6 !important;
+  caret-color: #d6ffd6 !important;
+}
+.v-application .success.lighten-3 {
+  background-color: #baffba !important;
+  border-color: #baffba !important;
+}
+.v-application .success--text.text--lighten-3 {
+  color: #baffba !important;
+  caret-color: #baffba !important;
+}
+.v-application .success.lighten-2 {
+  background-color: #9df49e !important;
+  border-color: #9df49e !important;
+}
+.v-application .success--text.text--lighten-2 {
+  color: #9df49e !important;
+  caret-color: #9df49e !important;
+}
+.v-application .success.lighten-1 {
+  background-color: #82d784 !important;
+  border-color: #82d784 !important;
+}
+.v-application .success--text.text--lighten-1 {
+  color: #82d784 !important;
+  caret-color: #82d784 !important;
+}
+.v-application .success.darken-1 {
+  background-color: #4aa051 !important;
+  border-color: #4aa051 !important;
+}
+.v-application .success--text.text--darken-1 {
+  color: #4aa051 !important;
+  caret-color: #4aa051 !important;
+}
+.v-application .success.darken-2 {
+  background-color: #2d8539 !important;
+  border-color: #2d8539 !important;
+}
+.v-application .success--text.text--darken-2 {
+  color: #2d8539 !important;
+  caret-color: #2d8539 !important;
+}
+.v-application .success.darken-3 {
+  background-color: #056b21 !important;
+  border-color: #056b21 !important;
+}
+.v-application .success--text.text--darken-3 {
+  color: #056b21 !important;
+  caret-color: #056b21 !important;
+}
+.v-application .success.darken-4 {
+  background-color: #005207 !important;
+  border-color: #005207 !important;
+}
+.v-application .success--text.text--darken-4 {
+  color: #005207 !important;
+  caret-color: #005207 !important;
+}
+.v-application .warning {
+  background-color: #fb8c00 !important;
+  border-color: #fb8c00 !important;
+}
+.v-application .warning--text {
+  color: #fb8c00 !important;
+  caret-color: #fb8c00 !important;
+}
+.v-application .warning.lighten-5 {
+  background-color: #ffff9e !important;
+  border-color: #ffff9e !important;
+}
+.v-application .warning--text.text--lighten-5 {
+  color: #ffff9e !important;
+  caret-color: #ffff9e !important;
+}
+.v-application .warning.lighten-4 {
+  background-color: #fffb82 !important;
+  border-color: #fffb82 !important;
+}
+.v-application .warning--text.text--lighten-4 {
+  color: #fffb82 !important;
+  caret-color: #fffb82 !important;
+}
+.v-application .warning.lighten-3 {
+  background-color: #ffdf67 !important;
+  border-color: #ffdf67 !important;
+}
+.v-application .warning--text.text--lighten-3 {
+  color: #ffdf67 !important;
+  caret-color: #ffdf67 !important;
+}
+.v-application .warning.lighten-2 {
+  background-color: #ffc24b !important;
+  border-color: #ffc24b !important;
+}
+.v-application .warning--text.text--lighten-2 {
+  color: #ffc24b !important;
+  caret-color: #ffc24b !important;
+}
+.v-application .warning.lighten-1 {
+  background-color: #ffa72d !important;
+  border-color: #ffa72d !important;
+}
+.v-application .warning--text.text--lighten-1 {
+  color: #ffa72d !important;
+  caret-color: #ffa72d !important;
+}
+.v-application .warning.darken-1 {
+  background-color: #db7200 !important;
+  border-color: #db7200 !important;
+}
+.v-application .warning--text.text--darken-1 {
+  color: #db7200 !important;
+  caret-color: #db7200 !important;
+}
+.v-application .warning.darken-2 {
+  background-color: #bb5900 !important;
+  border-color: #bb5900 !important;
+}
+.v-application .warning--text.text--darken-2 {
+  color: #bb5900 !important;
+  caret-color: #bb5900 !important;
+}
+.v-application .warning.darken-3 {
+  background-color: #9d4000 !important;
+  border-color: #9d4000 !important;
+}
+.v-application .warning--text.text--darken-3 {
+  color: #9d4000 !important;
+  caret-color: #9d4000 !important;
+}
+.v-application .warning.darken-4 {
+  background-color: #802700 !important;
+  border-color: #802700 !important;
+}
+.v-application .warning--text.text--darken-4 {
+  color: #802700 !important;
+  caret-color: #802700 !important;
+}</style><script>window.__INITIAL_STATE__ = {"allCountries":[],"navigationType":"1","languagePreference":"am","firstVisit":true,"graphs":{"displayCounts":{"Test Count":[],"Confirmed Cases":[],"Active Cases":[],"Death Count":[],"Recovery Count":[]},"dailyCounts":{"Daily Confirmed":[],"Daily Deaths":[],"Daily Recovery":[]},"displayRates":{"Positive Rate":[],"Recovery Rate":[],"Active Rate":[],"Death Rate":[]},"countryCompare":{"one":[],"two":[],"start_one":"2019-10-01","start_two":"2019-10-01"},"countryResources":{"World":null,"United States":null,"Afghanistan":null,"Albania":null,"Algeria":null,"Andorra":null,"Angola":null,"Antigua and Barbuda":null,"Argentina":null,"Armenia":null,"Australia":null,"Austria":null,"Azerbaijan":null,"Bahamas":null,"Bahrain":null,"Bangladesh":null,"Barbados":null,"Belarus":null,"Belgium":null,"Belize":null,"Benin":null,"Bhutan":null,"Bolivia":null,"Bosnia and Herzegovina":null,"Botswana":null,"Brazil":null,"Brunei":null,"Bulgaria":null,"Burkina Faso":null,"Burma":null,"Burundi":null,"Cabo Verde":null,"Cambodia":null,"Cameroon":null,"Canada":null,"Central African Republic":null,"Chad":null,"Chile":null,"China":null,"Colombia":null,"Comoros":null,"Congo (Brazzaville)":null,"Congo (Kinshasa)":null,"Costa Rica":null,"Cote d'Ivoire":null,"Croatia":null,"Cuba":null,"Cyprus":null,"Czechia":null,"Denmark":null,"Djibouti":null,"Dominica":null,"Dominican Republic":null,"Ecuador":null,"Egypt":null,"El Salvador":null,"Equatorial Guinea":null,"Eritrea":null,"Estonia":null,"Eswatini":null,"Ethiopia":null,"Fiji":null,"Finland":null,"France":null,"Gabon":null,"Gambia":null,"Georgia":null,"Germany":null,"Ghana":null,"Greece":null,"Grenada":null,"Guatemala":null,"Guinea":null,"Guinea-Bissau":null,"Guyana":null,"Haiti":null,"Holy See":null,"Honduras":null,"Hungary":null,"Iceland":null,"India":null,"Indonesia":null,"Iran":null,"Iraq":null,"Ireland":null,"Israel":null,"Italy":null,"Jamaica":null,"Japan":null,"Jordan":null,"Kazakhstan":null,"Kenya":null,"Korea, South":null,"Kosovo":null,"Kuwait":null,"Kyrgyzstan":null,"Laos":null,"Latvia":null,"Lebanon":null,"Liberia":null,"Libya":null,"Liechtenstein":null,"Lithuania":null,"Luxembourg":null,"Madagascar":null,"Malawi":null,"Malaysia":null,"Maldives":null,"Mali":null,"Malta":null,"Mauritania":null,"Mauritius":null,"Mexico":null,"Moldova":null,"Monaco":null,"Mongolia":null,"Montenegro":null,"Morocco":null,"Mozambique":null,"Namibia":null,"Nepal":null,"Netherlands":null,"New Zealand":null,"Nicaragua":null,"Niger":null,"Nigeria":null,"North Macedonia":null,"Norway":null,"Oman":null,"Pakistan":null,"Panama":null,"Papua New Guinea":null,"Paraguay":null,"Peru":null,"Philippines":null,"Poland":null,"Portugal":null,"Qatar":null,"Romania":null,"Russia":null,"Rwanda":null,"Saint Kitts and Nevis":null,"Saint Lucia":null,"Saint Vincent and the Grenadines":null,"San Marino":null,"Sao Tome and Principe":null,"Saudi Arabia":null,"Senegal":null,"Serbia":null,"Seychelles":null,"Sierra Leone":null,"Singapore":null,"Slovakia":null,"Slovenia":null,"Somalia":null,"South Africa":null,"South Sudan":null,"Spain":null,"Sri Lanka":null,"Sudan":null,"Suriname":null,"Sweden":null,"Switzerland":null,"Syria":null,"Taiwan*":null,"Tajikistan":null,"Tanzania":null,"Thailand":null,"Timor-Leste":null,"Togo":null,"Trinidad and Tobago":null,"Tunisia":null,"Turkey":null,"Uganda":null,"Ukraine":null,"United Arab Emirates":null,"United Kingdom":null,"Uruguay":null,"US":null,"Uzbekistan":null,"Venezuela":null,"Vietnam":null,"West Bank and Gaza":null,"Western Sahara":null,"Yemen":null,"Zambia":null,"Zimbabwe":null},"diseaseCompare":null,"graphDescriptions":null},"learn":{"information":null,"actions":null,"states":null,"learningPaths":{"Kids":null,"Teens":null,"Adults":null,"Seniors":null}},"about":{"aboutDescriptions":null,"aboutActions":[]},"news":{"news":null,"newsMeta":"","totalCount":0,"sources":[],"currentCountry":{"name":"World","code":"World"}},"user":{"user":null,"token":null},"loaders":{"newsLoaders":{"list":false,"sources":false},"learnLoaders":{"information":true,"actions":true,"states":true,"learningPaths":true},"aboutLoaders":{"descriptions":true,"actions":true},"symTrackLoaders":{"map":false,"userSymptoms":false,"allSymptoms":false,"cities":false},"graphLoaders":{"counts":0,"rates":0,"daily":0,"countryCompare":0,"diseaseCompare":0,"descriptions":true,"countryResources":false}},"messages":{"stateMessage":""},"ethiopia":{"regionalIndexed":null,"ethiopia":null,"regional":[]},"symptomTracking":{"allSymptoms":[],"symptomUser":{"probability":0,"symptom_info":[]},"cities":[],"locationsSymptoms":null},"privacyPolicy":{"privacyPolicy":null}}</script></head><body class="v-tour--active"><noscript><strong>We're sorry but covid-19-app-web doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div data-app="true" class="v-application v-application--is-ltr theme--light" id="app"><div class="v-application--wrap"><div data-v-10eb2b9d="" class="container white"><header data-v-10eb2b9d="" class="white v-sheet theme--light v-toolbar v-toolbar--flat v-app-bar v-app-bar--fixed" style="height: 56px; margin-top: 0px; transform: translateY(0px); left: 0px; right: 0px; border-radius: 0px 0px 25px;" data-booted="true"><div class="v-toolbar__content" style="height: 56px;"><!----><button data-v-10eb2b9d="" type="button" class="d-flex align-center ml-3 v-btn v-btn--flat v-btn--text theme--light v-size--default v-tour__target--highlighted v-tour__target--relative" data-v-step="0" style="transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1) 0s, transform 0.28s cubic-bezier(0.4, 0, 0.2, 1) 0s, opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1) 0s, box-shadow 0s ease-in-out 0s;"><span class="v-btn__content"><div data-v-10eb2b9d="" aria-label="Company Logo" role="img" class="v-image v-responsive shrink theme--light" style="width: 135px; transition: width 0.2s ease 0s;"><div class="v-responsive__sizer" style="padding-bottom: 25.0909%;"></div><div class="v-image__image v-image__image--contain" style="background-image: url(&quot;http://localhost:8000/img/brand/blue.png&quot;); background-position: center center;"></div><div class="v-responsive__content" style="width: 275px;"></div></div></span></button><div data-v-10eb2b9d="" class="spacer"></div><a data-v-10eb2b9d="" href="/am/" class="hidden-sm-and-down v-card--shaped nav-btn v-btn v-btn--flat v-btn--router v-btn--text theme--light v-size--default"><span class="v-btn__content"><span data-v-10eb2b9d="" class="text-capitalize"> መግቢያ</span></span></a><a data-v-10eb2b9d="" href="/am/information" class="hidden-sm-and-down v-card--shaped nav-btn v-btn v-btn--flat v-btn--router v-btn--text theme--light v-size--default"><span class="v-btn__content"><span data-v-10eb2b9d="" class="text-capitalize"> ይማሩ</span></span></a><a data-v-10eb2b9d="" href="/am/about" aria-current="page" class="hidden-sm-and-down v-card--shaped nav-btn border-bottom v-btn--active v-btn v-btn--flat v-btn--router v-btn--text theme--light v-size--default"><span class="v-btn__content"><span data-v-10eb2b9d="" class="text-capitalize"> ስለኛ</span></span></a><a data-v-10eb2b9d="" href="/am/news" class="hidden-sm-and-down v-card--shaped nav-btn v-btn v-btn--flat v-btn--router v-btn--text theme--light v-size--default"><span class="v-btn__content"><span data-v-10eb2b9d="" class="text-capitalize"> ዜና</span></span></a><a data-v-10eb2b9d="" href="/am/map" class="hidden-sm-and-down v-card--shaped nav-btn v-btn v-btn--flat v-btn--router v-btn--text theme--light v-size--default"><span class="v-btn__content"><span data-v-10eb2b9d="" class="text-capitalize"> ካርታ</span></span></a><hr data-v-10eb2b9d="" role="separator" aria-orientation="vertical" class="mx-2 v-divider v-divider--vertical theme--light"><div data-v-10eb2b9d="" data-v-step="4" class="justify-end pt-7" style="width: 50px;"><div data-v-10eb2b9d="" class="v-input v-input--is-label-active v-input--is-dirty v-input--dense theme--light v-text-field v-text-field--single-line v-text-field--solo v-text-field--solo-flat v-text-field--is-booted v-text-field--enclosed v-select"><div class="v-input__control"><div role="button" aria-haspopup="listbox" aria-expanded="false" aria-owns="list-24" class="v-input__slot"><div class="v-select__slot"><div class="v-select__selections"><small data-v-10eb2b9d="" class="primary--text">አማ</small><input id="input-24" readonly="readonly" type="text" aria-readonly="false" autocomplete="off"></div><div class="v-input__append-inner"><small data-v-10eb2b9d=""></small></div><input type="hidden" value="am"></div><div class="v-menu"><!----></div></div><div class="v-text-field__details"><div class="v-messages theme--light"><div class="v-messages__wrapper"></div></div></div></div></div></div><hr data-v-10eb2b9d="" role="separator" aria-orientation="vertical" class="mr-2 v-divider v-divider--vertical theme--light"><a data-v-10eb2b9d="" href="/am/login" class="v-card--shaped mx-1 v-btn v-btn--depressed v-btn--router theme--dark v-size--small primary">ግባ</a></div></header><div data-v-10eb2b9d="" class="v-bottom-navigation px-3 overflow-hidden v-item-group theme--light v-bottom-navigation--grow v-bottom-navigation--fixed primary--text" style="height: 56px; transform: none; border-radius: 20px 0px 0px;"><a data-v-10eb2b9d="" href="/am/" class="v-btn v-btn--contained v-btn--router theme--light v-size--default"><span class="v-btn__content"><span data-v-10eb2b9d="">መግቢያ</span><span data-v-10eb2b9d="" aria-hidden="true" class="v-icon notranslate v-icon--svg theme--light"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="24" width="24" role="img" aria-hidden="true"><path d="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z"></path></svg></span></span></a><a data-v-10eb2b9d="" href="/am/information" class="v-btn v-btn--contained v-btn--router theme--light v-size--default"><span class="v-btn__content"><span data-v-10eb2b9d="">ይማሩ</span><span data-v-10eb2b9d="" aria-hidden="true" class="v-icon notranslate v-icon--svg theme--light"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="24" width="24" role="img" aria-hidden="true"><path d="M21,5C19.89,4.65 18.67,4.5 17.5,4.5C15.55,4.5 13.45,4.9 12,6C10.55,4.9 8.45,4.5 6.5,4.5C4.55,4.5 2.45,4.9 1,6V20.65C1,20.9 1.25,21.15 1.5,21.15C1.6,21.15 1.65,21.1 1.75,21.1C3.1,20.45 5.05,20 6.5,20C8.45,20 10.55,20.4 12,21.5C13.35,20.65 15.8,20 17.5,20C19.15,20 20.85,20.3 22.25,21.05C22.35,21.1 22.4,21.1 22.5,21.1C22.75,21.1 23,20.85 23,20.6V6C22.4,5.55 21.75,5.25 21,5M21,18.5C19.9,18.15 18.7,18 17.5,18C15.8,18 13.35,18.65 12,19.5V8C13.35,7.15 15.8,6.5 17.5,6.5C18.7,6.5 19.9,6.65 21,7V18.5Z"></path></svg></span></span></a><a data-v-10eb2b9d="" href="/am/about" aria-current="page" class="v-btn--active v-btn--active v-btn v-btn--contained v-btn--router theme--light v-btn--active v-size--default"><span class="v-btn__content"><span data-v-10eb2b9d="">ስለኛ</span><span data-v-10eb2b9d="" aria-hidden="true" class="v-icon notranslate v-icon--svg theme--light"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="24" width="24" role="img" aria-hidden="true"><path d="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"></path></svg></span></span></a><a data-v-10eb2b9d="" href="/am/news" class="v-btn v-btn--contained v-btn--router theme--light v-size--default"><span class="v-btn__content"><span data-v-10eb2b9d="">ዜና</span><span data-v-10eb2b9d="" aria-hidden="true" class="v-icon notranslate v-icon--svg theme--light"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="24" width="24" role="img" aria-hidden="true"><path d="M20,11H4V8H20M20,15H13V13H20M20,19H13V17H20M11,19H4V13H11M20.33,4.67L18.67,3L17,4.67L15.33,3L13.67,4.67L12,3L10.33,4.67L8.67,3L7,4.67L5.33,3L3.67,4.67L2,3V19A2,2 0 0,0 4,21H20A2,2 0 0,0 22,19V3L20.33,4.67Z"></path></svg></span></span></a><a data-v-10eb2b9d="" href="/am/map" class="v-btn v-btn--contained v-btn--router theme--light v-size--default"><span class="v-btn__content"><span data-v-10eb2b9d="">ካርታ</span><span data-v-10eb2b9d="" aria-hidden="true" class="v-icon notranslate v-icon--svg theme--light"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="24" width="24" role="img" aria-hidden="true"><path d="M15,19L9,16.89V5L15,7.11M20.5,3C20.44,3 20.39,3 20.34,3L15,5.1L9,3L3.36,4.9C3.15,4.97 3,5.15 3,5.38V20.5A0.5,0.5 0 0,0 3.5,21C3.55,21 3.61,21 3.66,20.97L9,18.9L15,21L20.64,19.1C20.85,19 21,18.85 21,18.62V3.5A0.5,0.5 0 0,0 20.5,3Z"></path></svg></span></span></a></div></div><main class="v-main px-md-0 px-3" style="padding: 56px 0px;" data-booted="true"><div class="v-main__wrap"><main class="v-main about" data-booted="true" style="padding: 56px 0px; transform-origin: center top 0px;"><div class="v-main__wrap"><section class="mb-12 text-justify"><div class="container"><div class="row"><div class="px-md-10 col-md-7 col-12"><div><h3 class="display-1 font-weight-thin">TrackSym</h3><div class="my-5 grey--text text--darken-2"><p> <strong> TrackSym </strong> መተግበሪያ/አፕሊኬሽን/ ተዛማጅ የሆነውን የኮ.ቪ.ድ. 19 ምልክቶችን ለመሰብሰብ እና የምልክቶቹ በተለያዪ ቦታዎች ያለውን መቀራራብ በካርታ ለሕዝብ ለማቅረብ የሚጠቅም የንግድ ያልሆነ መተግበሪያ ነው። ተጠቃሚዎች ስማቸውን ሳያስገቡ ሪፖርት ማድረግ እና በካርታ እይታ ውስጥ የሕመም ምልክቶችን ለመመልከት የሚፈልጉትን ቦታ መምረጥ ይችላሉ። ከዚህ በተጨማሪም ከ Covid-19 ጋር ለተዛመዱ መረጃዎች እና ዜናዎች በመረጡት ሀገር መሰረት ያቀርባል ፡፡ </p> <p> ተጠቃሚዎች ምልክቶችን ስም ሳይጠቅሱ ሪፖርት ማድረግ እና በካርታ እይታ ውስጥ በአንድ አካባቢ የሚገኙ ምልክት ያሳዩ ሰዎችን ብዛት ለመመልከት ይችላሉ። መረጃው በቦታዎች የተጠቃለለ ነው ፣ ስለሆነም መተግበሪያው ተጠቃሚዎቹን ምልክት ባሳዩ (Symptomatic) ሰዎች በከፍተኛ ሁኔታ ጥቅም ላይ የዋለን የችርቻሮ መደብር ወይም የጋዝ ጣቢያ እንዳይጎበኙ ሊረዳቸው ይችላል ፡፡ በየቀኑ ስለ ጤናዎ እና ስለ ምልክቶቹ ቀለል ያሉ መጠይቆችን በመሙላት የቫይረሱ ስርጭትን ለመግታት እና ወረርሽኙ እንዲቆም ሊያግዙ ይችላሉ። በተጨማሪም ፣ መሄድ የሚፈልጓቸውን ቦታዎች መተግበሪያው ላይ ባለው ካርታ ላይ በመፈለግ አካባቢው ላይ ያለውን የበሽታውን ሁኔታ በማየት ምን አይነት ጥንቃቄ መውሰድ እንዳለቦት ለማወቅ እሚረዳ መገግበሪያ ነው፡፡ </p></div></div><div><h3 class="display-1 font-weight-thin">አላማችን</h3><div class="my-5 grey--text text--darken-2"><p> በኮሮና ሲያዙ ስለ መሞት ብቻ ሳይሆን ወደ ሚወዷቸውን ሰዎች ስላለማስተላለፍም ያስባሉ። ወደ ገበያ ሲወጡ ወይም ደሞ ከቦታ ቦታ ሲንቀሳቀሱ፤ በቫይረሱ እያዝ ይሆን ብለው ይፈሩ ይሆናል። TrackSym መተግበሪያ የትኛዎቹ ቦታዎች ብዙ ምልክት ያለባቸው ሰዎች በብዛት እንዳሉባቸው ለማወቅና እራስን ለመጠበቅ ይረዳዎታል።  </p> <p> በተጨማሪም ስለ ቫይረሱ በቂ የሆነ መረጃ ከትክክለኛው ምንጭ ያገኙ ዘንድ ተግተን እየሰራን እንገኛለን። </p></div></div><div><h3 class="display-1 font-weight-thin">ስለ እናንተ መረጃ</h3><div class="my-5 grey--text text--darken-2"><p> መረጃችሁን ስም—አልባ በሆነ መንገድ ለመረጃ ሳይብስና ለስታቲስቲክስ አገልግሎት የሚል ይሆናል። የናንተን መረጃ በመጠቀም የሚመነጭ ማንኛውም አይነት መረጃ የብዙ መረጃወች ጥርቅም ስለሚሆን ተለይቶ ወደ አንድ ሰው አያመለክትም ይህም የእረሶን ማንነትና ደህንነት በአግባቡ የጠበቀ ይሆናል። </p></div></div></div><div class="px-md-10 col-md-5 col-12"><div><h3 class="display-1 font-weight-thin">ስለ እኛ ማንነት</h3><div class="my-5 grey--text text--darken-2"><p><p> <strong> A2SV - Africa to Silicon Valley </strong> በቀድሞ የ Google እና Palantir ሰራተኛ በነበረ ሶፍትዌር ኢንጂነር የሚመራ እጅግ ከፍተኛ ተሰጥኦና ተነሳሽነት ያላቸው ኢትዮጵያውያን ተማሪዎች ስብስብ ነው። ቡድኑ ለ 3 ወራት በተለያዩ የ Silicon Valley ድርጅቶች የልምምድ ስራ እሚያስገኝ ስልጠና ሲወስድ ከቆየ በኋላ አሁን ላይ ሙሉ ጊዜውን ወረርሺኙን ለመዋጋት እያዋለ ይገኛል። </p></p></div></div><div class="mx-auto mt-10 py-5"><h3 class="display-1 font-weight-thin mb-5">መልእክቶን ይላኩ</h3><div class="v-snack v-snack--has-background v-snack--top" style="padding-bottom: 56px; padding-top: 56px;"><div class="v-snack__wrapper v-sheet theme--dark success" style="display: none;"><div role="status" aria-live="polite" class="v-snack__content"><span class="ma-2"></span><button type="button" class="float-right v-btn v-btn--flat v-btn--icon v-btn--round theme--dark v-size--x-small white--text"><span class="v-btn__content"><span aria-hidden="true" class="v-icon notranslate v-icon--svg theme--dark"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="24" width="24" role="img" aria-hidden="true"><path d="M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2C6.47,2 2,6.47 2,12C2,17.53 6.47,22 12,22C17.53,22 22,17.53 22,12C22,6.47 17.53,2 12,2M14.59,8L12,10.59L9.41,8L8,9.41L10.59,12L8,14.59L9.41,16L12,13.41L14.59,16L16,14.59L13.41,12L16,9.41L14.59,8Z"></path></svg></span></span></button></div><div class="v-snack__action "></div></div></div><form novalidate="novalidate" class="v-form mt-7"><div class="v-input v-card--shaped v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined"><div class="v-input__control"><div class="v-input__slot"><fieldset aria-hidden="true"><legend style="width: 0px;"><span>​</span></legend></fieldset><div class="v-text-field__slot"><label for="input-94" class="v-label theme--light" style="left: 0px; right: auto; position: absolute;">ስም</label><input id="input-94" type="text"></div></div><div class="v-text-field__details"><div class="v-messages theme--light"><div class="v-messages__wrapper"></div></div><div class="v-counter theme--light">0 / 30</div></div></div></div><div class="v-input v-card--shaped v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined"><div class="v-input__control"><div class="v-input__slot"><fieldset aria-hidden="true"><legend style="width: 0px;"><span>​</span></legend></fieldset><div class="v-text-field__slot"><label for="input-97" class="v-label theme--light" style="left: 0px; right: auto; position: absolute;">ኢ-ሜል</label><input id="input-97" type="text"></div></div><div class="v-text-field__details"><div class="v-messages theme--light"><div class="v-messages__wrapper"></div></div></div></div></div><div class="v-input v-card--shaped v-textarea v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined"><div class="v-input__control"><div class="v-input__slot"><fieldset aria-hidden="true"><legend style="width: 0px;"><span>​</span></legend></fieldset><div class="v-text-field__slot"><label for="input-100" class="v-label theme--light" style="left: 0px; right: auto; position: absolute;">መልዕክት</label><textarea id="input-100" rows="5"></textarea></div></div><div class="v-text-field__details"><div class="v-messages theme--light"><div class="v-messages__wrapper"></div></div></div></div></div><div class="text-center py-3"><button type="button" class="primary mx-auto v-card--shaped v-btn v-btn--contained theme--light v-size--default" style="width: 100px;"><span class="v-btn__content"> ላክ <span aria-hidden="true" class="v-icon notranslate ml-2 v-icon--svg theme--light" style="font-size: 16px; height: 16px; width: 16px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="16px" width="16px" role="img" aria-hidden="true"><path d="M2,21L23,12L2,3V10L17,12L2,14V21Z"></path></svg></span></span></button></div></form></div></div></div></div></section><br><br><section class="my-12"><div class="v-parallax v-card--shaped shadow" style="height: 900px;"><div class="v-parallax__image-container"><img src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg" alt="" class="v-parallax__image" style="display: block; opacity: 1; transform: translate(-50%, 0px);"></div><div class="v-parallax__content"><div class="row text-center white--text d-flex align-center"><div class="px-12 my-3 my-md-0 col-md-4 col-12"><span aria-hidden="true" class="v-icon notranslate white--text mb-5 v-icon--svg theme--light" style="font-size: 40px; height: 40px; width: 40px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="40px" width="40px" role="img" aria-hidden="true"><path d="M15.5,14L20.5,19L19,20.5L14,15.5V14.71L13.73,14.43C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.43,13.73L14.71,14H15.5M9.5,4.5L8.95,4.53C8.71,5.05 8.34,5.93 8.07,7H10.93C10.66,5.93 10.29,5.05 10.05,4.53C9.87,4.5 9.69,4.5 9.5,4.5M13.83,7C13.24,5.97 12.29,5.17 11.15,4.78C11.39,5.31 11.7,6.08 11.93,7H13.83M5.17,7H7.07C7.3,6.08 7.61,5.31 7.85,4.78C6.71,5.17 5.76,5.97 5.17,7M4.5,9.5C4.5,10 4.58,10.53 4.73,11H6.87L6.75,9.5L6.87,8H4.73C4.58,8.47 4.5,9 4.5,9.5M14.27,11C14.42,10.53 14.5,10 14.5,9.5C14.5,9 14.42,8.47 14.27,8H12.13C12.21,8.5 12.25,9 12.25,9.5C12.25,10 12.21,10.5 12.13,11H14.27M7.87,8L7.75,9.5L7.87,11H11.13C11.21,10.5 11.25,10 11.25,9.5C11.25,9 11.21,8.5 11.13,8H7.87M9.5,14.5C9.68,14.5 9.86,14.5 10.03,14.47C10.28,13.95 10.66,13.07 10.93,12H8.07C8.34,13.07 8.72,13.95 8.97,14.47L9.5,14.5M13.83,12H11.93C11.7,12.92 11.39,13.69 11.15,14.22C12.29,13.83 13.24,13.03 13.83,12M5.17,12C5.76,13.03 6.71,13.83 7.85,14.22C7.61,13.69 7.3,12.92 7.07,12H5.17Z"></path></svg></span><h1>A2SV ድረገፅ</h1><p class="font-weight-thin my-2">ስለ ቡድናችን እና ስለ አባላቶቹ እንዲሁም እንዴት ጉዟችን እንደተጀመረ የበለጠ ለማወቅ ድህረ ገፃችንን ይጎብኙ።</p><a href="http://a2sv.org/" target="_blank" class="mx-2 grey--text text--lighten-5">Visit Website</a></div><div class="px-12 my-3 my-md-0 col-md-4 col-12"><span aria-hidden="true" class="v-icon notranslate white--text mb-5 v-icon--svg theme--light" style="font-size: 40px; height: 40px; width: 40px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="40px" width="40px" role="img" aria-hidden="true"><path d="M8,13H10.55V10H13.45V13H16L12,17L8,13M19.35,10.04C21.95,10.22 24,12.36 24,15A5,5 0 0,1 19,20H6A6,6 0 0,1 0,14C0,10.91 2.34,8.36 5.35,8.04C6.6,5.64 9.11,4 12,4C15.64,4 18.67,6.59 19.35,10.04M19,18A3,3 0 0,0 22,15C22,13.45 20.78,12.14 19.22,12.04L17.69,11.93L17.39,10.43C16.88,7.86 14.62,6 12,6C9.94,6 8.08,7.14 7.13,8.97L6.63,9.92L5.56,10.03C3.53,10.24 2,11.95 2,14A4,4 0 0,0 6,18H19Z"></path></svg></span><h1>መተግበሪያውን ያውርዱ</h1><p class="font-weight-thin my-2">የሞባይል መተግበሪያችንን በማውረድ የበሽታው ምልክት በብዛት የታየባቸውን አካባቢዎች በቀላሉ በማወቅ እርስ በእርስ ከበሽታው እንጠበቅ።</p><a href="#" target="_blank" class="mx-2 grey--text text--lighten-5">Get on Play Store</a><a href="#" target="_blank" class="mx-2 grey--text text--lighten-5">Get on App Store</a></div><div class="px-12 my-3 my-md-0 col-md-4 col-12"><span aria-hidden="true" class="v-icon notranslate white--text mb-5 v-icon--svg theme--light" style="font-size: 40px; height: 40px; width: 40px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="40px" width="40px" role="img" aria-hidden="true"><path d="M10,15L15.19,12L10,9V15M21.56,7.17C21.69,7.64 21.78,8.27 21.84,9.07C21.91,9.87 21.94,10.56 21.94,11.16L22,12C22,14.19 21.84,15.8 21.56,16.83C21.31,17.73 20.73,18.31 19.83,18.56C19.36,18.69 18.5,18.78 17.18,18.84C15.88,18.91 14.69,18.94 13.59,18.94L12,19C7.81,19 5.2,18.84 4.17,18.56C3.27,18.31 2.69,17.73 2.44,16.83C2.31,16.36 2.22,15.73 2.16,14.93C2.09,14.13 2.06,13.44 2.06,12.84L2,12C2,9.81 2.16,8.2 2.44,7.17C2.69,6.27 3.27,5.69 4.17,5.44C4.64,5.31 5.5,5.22 6.82,5.16C8.12,5.09 9.31,5.06 10.41,5.06L12,5C16.19,5 18.8,5.16 19.83,5.44C20.73,5.69 21.31,6.27 21.56,7.17Z"></path></svg></span><h1>ቪዲዮ ይመልከቱ</h1><p class="font-weight-thin my-2">የሞባይል መተግበሪያች፤ በተለይም የመመርመር አቅማቸው ዝቅተኛ በሆነ ሀገራት ውስጥ ፤ እንዴት የ COVID-19 ስርጭትን ለመቀነስ እንደሚረዳ ይወቁ።</p><a href="#" target="_blank" class="mx-2 grey--text text--lighten-5">Go to Youtube</a></div></div></div></div></section><br><br><br><br></div></main><div class="__cov-progress" style="background-color: rgb(1, 157, 229); opacity: 0; position: fixed; top: 0px; left: 0px; width: 0%; height: 3px; transition: opacity 0.6s ease 0s;"></div></div></main><footer data-v-73121398="" class="v-footer white pb-md-0 pb-5 v-sheet theme--light v-footer--padless" data-booted="true"><div data-v-73121398="" class="lighten-1 text-center v-card v-card--flat v-sheet v-sheet--outlined v-sheet--shaped theme--light rounded-0" style="width: 100%;"><div data-v-73121398="" class="v-card__text"><a data-v-73121398="" href="http://a2sv.org/" target="_blank" class="mx-2 v-btn v-btn--depressed v-btn--fab v-btn--round theme--light v-size--small"><span class="v-btn__content"><span data-v-73121398="" aria-hidden="true" class="v-icon notranslate v-icon--svg theme--light" style="font-size: 23px; height: 23px; width: 23px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="23px" width="23px" role="img" aria-hidden="true"><path d="M16.36,14C16.44,13.34 16.5,12.68 16.5,12C16.5,11.32 16.44,10.66 16.36,10H19.74C19.9,10.64 20,11.31 20,12C20,12.69 19.9,13.36 19.74,14M14.59,19.56C15.19,18.45 15.65,17.25 15.97,16H18.92C17.96,17.65 16.43,18.93 14.59,19.56M14.34,14H9.66C9.56,13.34 9.5,12.68 9.5,12C9.5,11.32 9.56,10.65 9.66,10H14.34C14.43,10.65 14.5,11.32 14.5,12C14.5,12.68 14.43,13.34 14.34,14M12,19.96C11.17,18.76 10.5,17.43 10.09,16H13.91C13.5,17.43 12.83,18.76 12,19.96M8,8H5.08C6.03,6.34 7.57,5.06 9.4,4.44C8.8,5.55 8.35,6.75 8,8M5.08,16H8C8.35,17.25 8.8,18.45 9.4,19.56C7.57,18.93 6.03,17.65 5.08,16M4.26,14C4.1,13.36 4,12.69 4,12C4,11.31 4.1,10.64 4.26,10H7.64C7.56,10.66 7.5,11.32 7.5,12C7.5,12.68 7.56,13.34 7.64,14M12,4.03C12.83,5.23 13.5,6.57 13.91,8H10.09C10.5,6.57 11.17,5.23 12,4.03M18.92,8H15.97C15.65,6.75 15.19,5.55 14.59,4.44C16.43,5.07 17.96,6.34 18.92,8M12,2C6.47,2 2,6.5 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"></path></svg></span></span></a></div><div data-v-73121398="" class="v-card__text pt-0 px-12 shrink"> ይህ የእኛ መተግበሪያ/አፕሊኬሽን/ ተዛማጅ የሆነውን የኮ.ቪ.ድ. 19 ምልክቶችን ለመሰብሰብ እና የምልክቶቹ በተለያዪ ቦታዎች ያለውን መቀራራብ በካርታ ለሕዝብ ለማቅረብ የሚጠቅም የንግድ ያልሆነ መተግበሪያ ነው። ከዚህ በተጨማሪም ከ Covid-19 ጋር ለተዛመዱ መረጃዎች እና ዜናዎች በመረጡት ሀገር መሰረት ያቀርባል ፡፡ </div><div data-v-73121398="" class="v-card__text"><a data-v-73121398="" href="/am/references" class="v-btn v-btn--flat v-btn--router v-btn--text theme--light v-size--small">ዋቢዎች</a> | <a data-v-73121398="" href="/am/privacy-policy" class="v-btn v-btn--flat v-btn--router v-btn--text theme--light v-size--small">ግላዊነት</a> | <span data-v-73121398="" class="pa-3"> 2020 — <strong data-v-73121398="">TrackSym</strong></span> | <div data-v-73121398="" class="d-inline-block justify-end" style="width: 50px;"><div data-v-73121398="" class="v-input v-input--is-label-active v-input--is-dirty v-input--dense theme--light v-text-field v-text-field--single-line v-text-field--solo v-text-field--solo-flat v-text-field--is-booted v-text-field--enclosed v-select"><div class="v-input__control"><div role="button" aria-haspopup="listbox" aria-expanded="false" aria-owns="list-60" class="v-input__slot"><div class="v-select__slot"><div class="v-select__selections"><small data-v-73121398="" class="primary--text">አማ</small><input id="input-60" readonly="readonly" type="text" aria-readonly="false" autocomplete="off"></div><div class="v-input__append-inner"><small data-v-73121398=""></small></div><input type="hidden" value="am"></div><div class="v-menu"><!----></div></div><div class="v-text-field__details"><div class="v-messages theme--light"><div class="v-messages__wrapper"></div></div></div></div></div></div></div></div></footer><div><div class="v-tour"><div data-v-7c9c03f0="" id="v-step-276842a5" class="v-step px-3 py-2 white black--text shadow-sm" x-placement="bottom" style="border-radius: 20px 3px; transform-origin: center top 0px; position: absolute; transform: translate3d(5px, 46px, 0px); top: 0px; left: 0px; will-change: transform;"><h3 data-v-7c9c03f0="" class="ma-2 font-weight-regular primary--text">TrackSym</h3><hr role="separator" aria-orientation="horizontal" class="v-divider theme--light" data-v-7c9c03f0=""><p data-v-7c9c03f0="" class="pa-3 pb-1 font-weight-light grey--text text--darken-2" style="font-size: 0.9em;">ድህረ ገጹን እንዴት እንደሚጠቀሙ ለመረዳት ፈጣን ጉብኝት ያድርጉ</p><div data-v-7c9c03f0="" class="ma-3"><button type="button" class="mr-1 v-btn v-btn--flat v-btn--text theme--light v-size--small primary--text" data-v-7c9c03f0="">ይቅር</button><button type="button" class="mr-1 v-card--shaped v-btn v-btn--depressed theme--light v-size--small primary" data-v-7c9c03f0="">ጉብኝት ጀምር</button><!----><!----><!----></div><div data-v-7c9c03f0="" class="v-step__arrow" style="left: 93px;"></div></div><!----><!----><!----><!----></div><div class="v-snack v-snack--has-background v-snack--top" style="padding-bottom: 56px; padding-top: 56px;"><div class="v-snack__wrapper v-sheet theme--dark primary" style="display: none;"><div role="status" aria-live="polite" class="v-snack__content"><span class="ma-2">You have completed the tour</span><button type="button" class="float-right v-btn v-btn--flat v-btn--icon v-btn--round v-btn--text theme--dark v-size--x-small white--text"><span class="v-btn__content"><span aria-hidden="true" class="v-icon notranslate v-icon--svg theme--dark"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="24" width="24" role="img" aria-hidden="true"><path d="M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2C6.47,2 2,6.47 2,12C2,17.53 6.47,22 12,22C17.53,22 22,17.53 22,12C22,6.47 17.53,2 12,2M14.59,8L12,10.59L9.41,8L8,9.41L10.59,12L8,14.59L9.41,16L12,13.41L14.59,16L16,14.59L13.41,12L16,9.41L14.59,8Z"></path></svg></span></span></button></div><div class="v-snack__action "></div></div></div></div></div></div><script src="/js/chunk-vendors.7097c02e.js"></script><script src="/js/app.da3a0e82.js"></script></body></html>
