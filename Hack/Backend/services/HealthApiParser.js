@@ -966,7 +966,6 @@ exports.getWorldStatistics = async (req, rates) => {
   let startDate = new Date(Date.parse(setStartDate(req)));
   let endDate = new Date(Date.parse(setEndDate(req)));
   let criteria = req.query.criteria;
-
   if (req.query.daily) {
     startDate.setDate(startDate.getDate() - 1);
   }
@@ -1044,7 +1043,7 @@ let update_world_db = async function () {
       try {
         await WorldDataModel.collection.drop();
       } catch (err) {}
-      await WorldDataModel.insertMany(caseData);
+      await WorldDataModel.insertMany(caseData, { ordered: false });
     }
   }
 

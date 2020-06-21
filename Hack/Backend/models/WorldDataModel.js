@@ -3,24 +3,23 @@ const mongoose = require("mongoose");
 const worldDataSchema = new mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
   Confirmed: {
-    type: Number
+    type: Number,
   },
   Recovered: {
-    type: Number
+    type: Number,
   },
   Deaths: {
-    type: Number
+    type: Number,
   },
   Test: {
-    type: Number
+    type: Number,
   },
   date: {
     type: Date,
+    index: true,
     required: true,
-  }, 
-
+  },
 });
 
 var WorldDataModel = mongoose.model("WorldData", worldDataSchema);
 module.exports = WorldDataModel;
-
