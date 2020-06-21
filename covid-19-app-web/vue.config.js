@@ -23,7 +23,12 @@ const productionPlugins = [
       "/ao/about",
       "/ao/news",
       "/ao/map",
-      "/ao/information"
+      "/ao/information",
+      "/tr",
+      "/tr/about",
+      "/tr/news",
+      "/tr/map",
+      "/tr/information"
     ],
     renderer: new PrerenderSpaPlugin.PuppeteerRenderer({
       // We need to inject a value so we're able to
