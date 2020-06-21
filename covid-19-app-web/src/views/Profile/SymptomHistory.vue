@@ -30,11 +30,6 @@
       </v-sheet>
       <v-calendar
         ref="calendar"
-        :event-timed="
-          () => {
-            return true;
-          }
-        "
         v-model="current"
         :events="symptomHistory"
         :event-color="
