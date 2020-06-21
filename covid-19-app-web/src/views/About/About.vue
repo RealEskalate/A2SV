@@ -1,5 +1,5 @@
 <template>
-  <v-content class="about">
+  <div class="about">
     <section class="mb-12 text-justify">
       <v-container>
         <v-row>
@@ -174,7 +174,7 @@
     <!--    </section>-->
     <br />
     <br />
-  </v-content>
+  </div>
 </template>
 
 <script>

@@ -7,6 +7,7 @@ const state = {
     probability: 0,
     symptom_info: []
   },
+  symptomHistory: [],
   cities: [],
   locationsSymptoms: null
 };
@@ -17,6 +18,9 @@ const getters = {
   },
   getSymptomUser: state => {
     return state.symptomUser;
+  },
+  getSymptomHistory: state => {
+    return state.symptomHistory;
   },
   getCities: state => {
     return state.cities;
@@ -32,6 +36,9 @@ const mutations = {
   },
   setSymptomUser: (state, payload) => {
     state.symptomUser = payload;
+  },
+  setSymptomHistory: (state, payload) => {
+    state.symptomHistory = payload;
   },
   setCities: (state, payload) => {
     state.cities = payload;
@@ -79,6 +86,24 @@ const actions = {
       })
       .finally(function() {
         commit("setSymTrackLoaders", { key: "userSymptoms", value: false });
+      });
+  },
+  setSymptomHistory: ({ commit }, { userId, lang }) => {
+    commit("setSymTrackLoaders", { key: "symptomHistory", value: true });
+    ajax
+      .get(`symptomuserhistory/user/${userId}`, {
+        params: {
+          language: langConverter[lang]
+        }
+      })
+      .then(res => {
+        commit("setSymptomHistory", res.data.events);
+      })
+      .catch(err => {
+        console.log(err.response.data);
+      })
+      .finally(function() {
+        commit("setSymTrackLoaders", { key: "symptomHistory", value: false });
       });
   },
   setCities: ({ commit }, { keyword, limit }) => {

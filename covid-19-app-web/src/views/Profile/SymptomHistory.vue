@@ -5,6 +5,13 @@
       v-text="'Symptoms History'"
     />
     <v-sheet shaped outlined class="overflow-hidden">
+      <v-progress-linear
+        v-if="loaders.symptomHistory"
+        style="margin-bottom: -2px"
+        height="2"
+        indeterminate
+        color="primary"
+      />
       <v-sheet
         tile
         height="54"
@@ -23,8 +30,13 @@
       </v-sheet>
       <v-calendar
         ref="calendar"
+        :event-timed="
+          () => {
+            return true;
+          }
+        "
         v-model="current"
-        :events="events"
+        :events="symptomHistory"
         :event-color="
           event => {
             return `${event.color} darken-2`;
@@ -39,6 +51,7 @@
 <script>
 import { mdiChevronLeft, mdiChevronRight } from "@mdi/js";
 import moment from "moment";
+import store from "@/store";
 
 export default {
   props: ["relevanceColor"],
@@ -46,29 +59,31 @@ export default {
     return {
       mdiChevronLeft,
       mdiChevronRight,
-      current: new Date(),
-      events: [
-        {
-          name: "Fatigue",
-          start: "2020-06-07 09:00",
-          end: "2020-06-08 10:00",
-          color: this.relevanceColor("low")
-        },
-        {
-          name: "Repeated Shaking",
-          start: "2020-06-10",
-          color: this.relevanceColor("medium")
-        },
-        {
-          name: "High-grade Fever",
-          start: "2020-06-08 12:30",
-          end: "2020-06-09 15:30",
-          color: this.relevanceColor("high")
-        }
-      ]
+      current: new Date()
     };
   },
+  created() {
+    store.dispatch("setSymptomHistory", {
+      userId: this.loggedInUser._id,
+      lang: this.$i18n.locale
+    });
+  },
   computed: {
+    loaders: () => store.getters.getSymTrackLoaders,
+    symptomHistory() {
+      let events = store.getters.getSymptomHistory;
+      let result = [];
+      let self = this;
+      events.forEach(function(event) {
+        result.push({
+          name: event.name,
+          start: moment(event.start).format("YYYY-MM-DD hh:mm"),
+          end: moment(event.end).format("YYYY-MM-DD hh:mm"),
+          color: self.relevanceColor(event.color)
+        });
+      });
+      return result;
+    },
     currentMonth() {
       return moment(this.current).format("MMMM YYYY");
     }

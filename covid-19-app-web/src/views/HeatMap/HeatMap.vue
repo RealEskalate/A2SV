@@ -4,7 +4,7 @@
       <v-row>
         <v-col>
           <h3 class="display-1 font-weight-thin mb-5" v-text="'Heat Map'" />
-          <v-tabs show-arrows fixed-tabs centered>
+          <v-tabs show-arrows="mobile" fixed-tabs centered>
             <v-tab>
               Symptom Tracker
             </v-tab>
