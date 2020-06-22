@@ -60,6 +60,7 @@ exports.get_symptomuser_history_by_user_id = async (req, res) => {
         type: "ONGOING",
       });
     });
+    history = history.toJSON();
     history.events.forEach(event => {
       event.name = localizedSymptoms[event.symptom_id].name
     })
