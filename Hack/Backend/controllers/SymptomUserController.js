@@ -118,7 +118,9 @@ exports.post_multiple_symptoms = async (req, res) => {
     });
   }
   const currentDate = new Date(Date.now());
+  const toBeRemoved = [];
   for (let ix in difference) {
+    toBeRemoved.push(difference[ix]._id);
     history.events.push({
       name: difference[ix].symptom_id.name,
       start: difference[ix].timestamp,
@@ -127,7 +129,7 @@ exports.post_multiple_symptoms = async (req, res) => {
       type: "TERMINATED",
     });
   }
-  await SymptomUser.deleteMany({ user_id: req.body.loggedInUser });
+  await SymptomUser.deleteMany({ _id: {$in: toBeRemoved} });
   await history.markModified("events");
   await history.save();
 
