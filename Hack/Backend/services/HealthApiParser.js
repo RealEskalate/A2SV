@@ -952,7 +952,9 @@ let update_db = async function () {
       try {
         await Tests.collection.drop();
       } catch (err) {}
-      await Tests.insertMany(tests);
+      try {
+        await Tests.insertMany(tests, { ordered: false });
+      } catch (err) {}
     }
   }
   console.log("Finished Saving Data");
