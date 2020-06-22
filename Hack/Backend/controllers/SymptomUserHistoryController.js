@@ -29,7 +29,7 @@ exports.get_symptomuser_history_by_user_id = async (req, res) => {
       localizedSymptoms = {}
       let allSymptoms = await Symptom.find();
       allSymptoms.forEach(symptom => {
-        localizedSymptoms[symptom._id] = symptom  
+        localizedSymptoms[symptom._id] = symptom
       })
     }else {
       localizedSymptoms = await StatisticsResource.findOne({ language: language, title: 'sypmtom-list'});
@@ -60,6 +60,7 @@ exports.get_symptomuser_history_by_user_id = async (req, res) => {
         type: "ONGOING",
       });
     });
+    history = history.toJSON();
     history.events.forEach(event => {
       event.name = localizedSymptoms[event.symptom_id].name
     })
