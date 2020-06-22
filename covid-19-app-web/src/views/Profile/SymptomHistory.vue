@@ -74,7 +74,7 @@ export default {
           name: event.name,
           start: moment(event.start).format("YYYY-MM-DD hh:mm"),
           end: moment(event.end).format("YYYY-MM-DD hh:mm"),
-          color: self.relevanceColor(event.color)
+          color: self.relevanceColor(event.relevance)
         });
       });
       return result;
