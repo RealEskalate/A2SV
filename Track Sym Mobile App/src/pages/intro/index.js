@@ -62,20 +62,25 @@ export default class Introduction extends React.Component {
           },
         ]}>
         <Image source={item.image} style={styles.image} resizeMode='contain' />
-        <AnimatbleText style={styles.title}>{item.title}</AnimatbleText>
+        <AnimatbleText useNativeDriver style={styles.title}>
+          {item.title}
+        </AnimatbleText>
         <AnimatbleText
+          useNativeDriver
           animation='fadeInRight'
           duration={1000}
           style={styles.text}>
           {item.text}
         </AnimatbleText>
         <AnimatbleText
+          useNativeDriver
           animation='fadeInLeft'
           duration={1000}
           style={styles.text}>
           {item.subText}
         </AnimatbleText>
         <AnimatableView
+          useNativeDriver
           animation='pulse'
           iterationCount='infinite'
           easing='ease-in'
@@ -90,6 +95,7 @@ export default class Introduction extends React.Component {
           }}
         />
         <AnimatableView
+          useNativeDriver
           animation='pulse'
           iterationCount='infinite'
           easing='ease-in'
@@ -104,6 +110,7 @@ export default class Introduction extends React.Component {
           }}
         />
         <AnimatableView
+          useNativeDriver
           animation='pulse'
           iterationCount='infinite'
           easing='ease-in'
@@ -118,6 +125,7 @@ export default class Introduction extends React.Component {
           }}
         />
         <AnimatableView
+          useNativeDriver
           animation='pulse'
           iterationCount='infinite'
           easing='ease-in'
@@ -132,6 +140,7 @@ export default class Introduction extends React.Component {
           }}
         />
         <AnimatableView
+          useNativeDriver
           animation='pulse'
           iterationCount='infinite'
           easing='ease-in'
@@ -186,6 +195,7 @@ export default class Introduction extends React.Component {
   _renderDoneButton = () => {
     return (
       <AnimatableView
+        useNativeDriver
         style={styles.buttonCircle}
         animation='rubberBand'
         easing='ease-out'
