@@ -8,9 +8,10 @@ const symptom_user_history_schema = new mongoose.Schema({
   },
   events: [
     {
-      name: {
-        type: String,
+      symptom_id: {
+        type: mongoose.Schema.Types.ObjectId,
         required: true,
+        ref: "Symptom",
       },
       start: {
         type: Date,
@@ -20,7 +21,7 @@ const symptom_user_history_schema = new mongoose.Schema({
         type: Date,
         required: true,
       },
-      color: {
+      relevance: {
         type: String,
         required: true,
         enum: ["HIGH", "MEDIUM", "LOW"],
@@ -43,9 +44,10 @@ const demo_symptom_user_history_schema = new mongoose.Schema({
   },
   events: [
     {
-      name: {
-        type: String,
+      symptom_id: {
+        type: mongoose.Schema.Types.ObjectId,
         required: true,
+        ref: "Demo Symptom",
       },
       start: {
         type: Date,
@@ -55,7 +57,7 @@ const demo_symptom_user_history_schema = new mongoose.Schema({
         type: Date,
         required: true,
       },
-      color: {
+      relevance: {
         type: String,
         required: true,
         enum: ["HIGH", "MEDIUM", "LOW"],
@@ -71,9 +73,10 @@ const stress_symptom_user_history_schema = new mongoose.Schema({
   },
   events: [
     {
-      name: {
-        type: String,
+      symptom_id: {
+        type: mongoose.Schema.Types.ObjectId,
         required: true,
+        ref: "Stress Symptom",
       },
       start: {
         type: Date,
@@ -83,7 +86,7 @@ const stress_symptom_user_history_schema = new mongoose.Schema({
         type: Date,
         required: true,
       },
-      color: {
+      relevance: {
         type: String,
         required: true,
         enum: ["HIGH", "MEDIUM", "LOW"],

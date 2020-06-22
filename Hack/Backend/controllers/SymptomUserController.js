@@ -1,7 +1,7 @@
 const SymptomUserModel = require("./../models/SymptomUser");
 const UserModels = require("./../models/UserModel");
 const SymptomUserHistoryModel = require("./../models/SymptomUserHistoryModel");
-const { Symptom, validateSymptom } = require("../models/Symptom");
+const { Symptom } = require("../models/Symptom");
 const jwt = require("jsonwebtoken");
 const ProbabilityCalculator = require("../services/ProbabilityCalculator");
 const { StatisticsResource } = require("../models/StatisticsResourceModel.js");
@@ -122,10 +122,10 @@ exports.post_multiple_symptoms = async (req, res) => {
   for (let ix in difference) {
     toBeRemoved.push(difference[ix]._id);
     history.events.push({
-      name: difference[ix].symptom_id.name,
+      symptom_id: difference[ix].symptom_id._id,
       start: difference[ix].timestamp,
       end: currentDate,
-      color: difference[ix].symptom_id.relevance,
+      relevance: difference[ix].symptom_id.relevance,
       type: "TERMINATED",
     });
   }
@@ -133,6 +133,9 @@ exports.post_multiple_symptoms = async (req, res) => {
   await history.markModified("events");
   await history.save();
 
+  const existingEntries = existingSymptoms.map(
+    (symptomuser) => symptomuser.symptom_id._id.toString()
+  );
   for (let index in symptoms) {
     let id = symptoms[index];
     let symptomuser = new SymptomUser({
@@ -142,9 +145,9 @@ exports.post_multiple_symptoms = async (req, res) => {
 
     // Check if user and symptom exists
     const symptomExists = await Symptom.findById(id);
-    if (!symptomExists) {
+    if (!symptomExists || existingEntries.includes(id)) {
       continue;
-    }
+    } 
     try {
       await symptomuser.save();
     } catch (error) {

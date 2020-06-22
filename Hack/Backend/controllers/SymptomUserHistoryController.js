@@ -1,5 +1,7 @@
 const SymptomUserHistoryModel = require("../models/SymptomUserHistoryModel");
 const SymptomUserModel = require("../models/SymptomUser");
+const { StatisticsResource } = require("../models/StatisticsResourceModel.js");
+const { Symptom } = require("../models/Symptom");
 
 exports.get_symptomuser_history_by_user_id = async (req, res) => {
   if (req.query.demo && req.query.demo == "true") {
@@ -21,6 +23,21 @@ exports.get_symptomuser_history_by_user_id = async (req, res) => {
       );
   }
   try {
+    let language = req.query.language;
+    let localizedSymptoms;
+    if (language == null || language === "English"){
+      localizedSymptoms = {}
+      let allSymptoms = await Symptom.find();
+      allSymptoms.forEach(symptom => {
+        localizedSymptoms[symptom._id] = symptom  
+      })
+    }else {
+      localizedSymptoms = await StatisticsResource.findOne({ language: language, title: 'sypmtom-list'});
+      if (localizedSymptoms == null){
+        return res.status(404).send("The language you requested is not yet supported.")
+      }
+      localizedSymptoms = localizedSymptoms.fields[0] 
+    }
     let history = await SymptomUserHistory.findOne({
       user_id: req.params.user_id,
     });
@@ -36,13 +53,16 @@ exports.get_symptomuser_history_by_user_id = async (req, res) => {
     const date = new Date(Date.now());
     current_symptoms.forEach((item) => {
       history.events.push({
-        name: item.symptom_id.name,
+        symptom_id: item.symptom_id._id,
         start: item.timestamp,
         end: date,
-        color: item.symptom_id.relevance,
+        relevance: item.symptom_id.relevance,
         type: "ONGOING",
       });
     });
+    history.events.forEach(event => {
+      event.name = localizedSymptoms[event.symptom_id].name
+    })
     return res.status(200).send(history);
   } catch (err) {
     console.log(err.toString());
