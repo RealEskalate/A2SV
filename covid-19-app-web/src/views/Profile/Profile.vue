@@ -225,7 +225,6 @@
                 <v-progress-linear
                   style="margin-top: -7px; margin-bottom: 10px;"
                   height="2"
-                  striped
                   indeterminate
                   color="primary"
                 />
@@ -599,6 +598,10 @@ export default {
           });
           this.setMode();
           this.setAlert("Successfully Updated Symptoms", "success");
+          store.dispatch("setSymptomHistory", {
+            userId: this.loggedInUser._id,
+            lang: this.$i18n.locale
+          });
         })
         .catch(err => {
           this.setAlert(err.response.data, "red");

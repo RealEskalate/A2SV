@@ -17,6 +17,7 @@ export default {
     symTrackLoaders: {
       map: false,
       userSymptoms: false,
+      symptomHistory: false,
       allSymptoms: false,
       cities: false
     },

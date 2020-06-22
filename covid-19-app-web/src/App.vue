@@ -64,6 +64,7 @@ export default {
       store.dispatch("setInformation", { lang: newValue });
       store.dispatch("setActions", { lang: newValue });
       store.dispatch("setStates", { lang: newValue });
+      store.dispatch("setAllSymptoms", { lang: newValue });
       store.dispatch("setLearningPaths", {
         age_group: "Adults",
         lang: newValue
@@ -73,7 +74,10 @@ export default {
         demo: false,
         lang: newValue
       });
-      store.dispatch("setAllSymptoms", { lang: newValue });
+      store.dispatch("setSymptomHistory", {
+        userId: this.loggedInUser._id,
+        lang: this.$i18n.locale
+      });
     }
   }
 };
