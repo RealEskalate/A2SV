@@ -381,6 +381,11 @@ export default class SymptomHistory extends Component {
           <Divider />
 
           <Layout style={{ flex: 1 }}>
+            <MapboxGL.UserLocation
+              visible={true}
+              showsUserHeadingIndicator={true}
+              onUpdate={this.onUserLocationUpdate}
+            />
             {this.state.loading ? (
               <Layout
                 style={{
