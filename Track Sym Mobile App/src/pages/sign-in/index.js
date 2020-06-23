@@ -120,7 +120,7 @@ export default ({ navigation }) => {
   //Log in authentication
   const login = async () => {
     const response = await fetch(
-      "https://sym-track.herokuapp.com/api/auth/login",
+      "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/auth/login",
       {
         method: "POST",
         headers: {
