@@ -1104,7 +1104,7 @@ export let strings = new LocalizedStrings({
     Sat: "ቅዳሜ",
     SuccessfullySave: "ተሳክቷል!",
     Current: "የአሁኑ",
-    Registered: "Registered",
+    Registered: "የተመዘገበበት",
   },
   tr: {
     Information: "Bilgi",
@@ -1441,7 +1441,7 @@ export let strings = new LocalizedStrings({
     Sat: "Sat",
     SuccessfullySave: "Kayıt Başarılı!",
     Current: "şimdiki",
-    Registered: "Registered",
+    Registered: "Kayıtlı",
   },
   orm: {
     Information: "Odeeffannoo",
