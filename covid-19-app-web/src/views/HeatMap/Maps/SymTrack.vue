@@ -150,8 +150,8 @@
         position: 'bottom-right'
       }"
       @map-load="loaded"
-      @map-zoomend="zoomEnd"
-      @map-moveend="moved"
+      @map-zoomend="changed"
+      @map-moveend="changed"
     />
   </v-card>
 </template>
@@ -193,13 +193,28 @@ export default {
       pointInfos: {},
       gridInfos: {},
 
+      mode: "points",
+
       small_cluster: null,
       medium_cluster: null,
       high_cluster: null,
 
-      small_superclusters: null,
-      medium_superclusters: null,
-      high_superclusters: null,
+      layers: {
+        grid: ["grid-points", "grid-point-counts"],
+        non_grid: [
+          "small-points",
+          "small-clusters",
+          "small-cluster-count",
+
+          "medium-points",
+          "medium-clusters",
+          "medium-cluster-count",
+
+          "high-points",
+          "high-clusters",
+          "high-cluster-count"
+        ]
+      },
 
       symptomCollections: {
         smallSymptomCollection: {
@@ -270,7 +285,7 @@ export default {
       this.small_cluster = small_cluster;
       this.medium_cluster = medium_cluster;
       this.high_cluster = high_cluster;
-      this.fillMapData();
+      this.updateMap();
     },
     userSymptoms(newValue) {
       this.selectedInfo.gender = newValue[0];
@@ -495,6 +510,7 @@ export default {
             .forEach(feature => {
               let point_count = feature.properties.point_count;
               if (point_count) {
+                this.mode = "cluster";
                 feature.properties.color = this.rateToColor(
                   point_count / 15,
                   55,
@@ -504,6 +520,7 @@ export default {
                   15 + Math.min(point_count / 15, 1) * 5;
                 feature.properties.point_opacity = 0;
               } else {
+                this.mode = "points";
                 feature.properties.point_opacity = 0.5;
               }
               SymptomCollection.smallSymptomCollection.features.push(feature);
@@ -516,6 +533,7 @@ export default {
             .forEach(feature => {
               let point_count = feature.properties.point_count;
               if (point_count) {
+                this.mode = "cluster";
                 feature.properties.color = this.rateToColor(
                   point_count / 30,
                   40,
@@ -525,6 +543,7 @@ export default {
                   15 + Math.min(point_count / 30, 1) * 10;
                 feature.properties.point_opacity = 0;
               } else {
+                this.mode = "points";
                 feature.properties.point_opacity = 0.5;
               }
               SymptomCollection.mediumSymptomCollection.features.push(feature);
@@ -536,6 +555,7 @@ export default {
             .forEach(feature => {
               let point_count = feature.properties.point_count;
               if (point_count) {
+                this.mode = "cluster";
                 feature.properties.color = this.rateToColor(
                   point_count / 300,
                   35,
@@ -545,6 +565,7 @@ export default {
                   20 + Math.min(point_count / 300, 1) * 15;
                 feature.properties.point_opacity = 0;
               } else {
+                this.mode = "points";
                 feature.properties.point_opacity = 0.5;
               }
               SymptomCollection.highSymptomCollection.features.push(feature);
@@ -555,21 +576,61 @@ export default {
     },
 
     loaded(map) {
-      if (!this.map) {
-        this.map = map; // save the map for use by other components
-      }
-      const bounds = this.map.getBounds();
-      const west_lng = bounds._sw.lng,
-        south_lat = bounds._sw.lat;
-      const east_lng = bounds._ne.lng,
-        north_lat = bounds._ne.lat;
+      this.map = map;
+      let res = this.symptomCollections;
 
-      this.top_left_bound = [west_lng, north_lat];
-      this.top_right_bound = [east_lng, north_lat];
-      this.bottom_left_bound = [west_lng, south_lat];
-      this.bottom_right_bound = [east_lng, south_lat];
+      map.addSource("small", {
+        type: "geojson",
+        data: res.smallSymptomCollection
+      });
+      map.addLayer(this.makeDataPoint("small"));
+      map.addLayer(this.makeDataClusters("small"));
+      map.addLayer(this.makeDataCounts("small", "#757575"));
+      map.on("click", "small-points", this.fetchSelectedItem);
 
-      this.fetchLocationsSymptoms();
+      map.addSource("medium", {
+        type: "geojson",
+        data: res.mediumSymptomCollection
+      });
+      map.addLayer(this.makeDataPoint("medium"));
+      map.addLayer(this.makeDataClusters("medium"));
+      map.addLayer(this.makeDataCounts("medium", "#757575"));
+      map.on("click", "medium-points", this.fetchSelectedItem);
+
+      map.addSource("high", {
+        type: "geojson",
+        data: res.highSymptomCollection
+      });
+      map.addLayer(this.makeDataPoint("high"));
+      map.addLayer(this.makeDataClusters("high"));
+      map.addLayer(this.makeDataCounts("high", "#757575"));
+      map.on("click", "high-points", this.fetchSelectedItem);
+
+      map.addSource("grid", {
+        type: "geojson",
+        data: res.highSymptomCollection
+      });
+      map.addLayer(this.makeDataPoint("grid", false, ["get", "size"], 0.3));
+      map.addLayer({
+        id: "grid-point-counts",
+        type: "symbol",
+        source: "grid",
+        layout: {
+          "icon-allow-overlap": true,
+          "text-allow-overlap": true,
+          "text-field": ["get", "total"],
+          "text-font": ["Ubuntu Medium", "Arial Unicode MS Regular"],
+          "text-size": 20,
+          "text-pitch-alignment": "map",
+          visibility: "visible"
+        },
+        paint: {
+          "text-color": "#757575"
+        }
+      });
+      map.on("click", "grid-points", this.fetchSelectedItem);
+
+      this.changed(map);
     },
 
     makeDataPoint(
@@ -630,189 +691,43 @@ export default {
       };
     },
 
-    fillMapData() {
-      let res = this.symptomCollections;
-      let map = this.map;
-
-      if (this.grid_rendering === false) {
-        if (
-          map.getSource("small") === undefined &&
-          res.smallSymptomCollection.features.length !== 0
-        ) {
-          map.addSource("small", {
-            type: "geojson",
-            data: res.smallSymptomCollection
-          });
-
-          map.addLayer(this.makeDataPoint("small"));
-          map.addLayer(this.makeDataClusters("small"));
-          map.addLayer(this.makeDataCounts("small", "#757575"));
-          map.on("click", "small-points", this.fetchSelectedItem);
-        }
-
-        if (
-          map.getSource("medium") === undefined &&
-          res.mediumSymptomCollection.features.length !== 0
-        ) {
-          map.addSource("medium", {
-            type: "geojson",
-            data: res.mediumSymptomCollection
-          });
-
-          map.addLayer(this.makeDataPoint("medium"));
-          map.addLayer(this.makeDataClusters("medium"));
-          map.addLayer(this.makeDataCounts("medium", "#757575"));
-          map.on("click", "medium-points", this.fetchSelectedItem);
-        }
-
-        if (
-          map.getSource("high") === undefined &&
-          res.highSymptomCollection.features.length !== 0
-        ) {
-          map.addSource("high", {
-            type: "geojson",
-            data: res.highSymptomCollection
-          });
-
-          map.addLayer(this.makeDataPoint("high"));
-          map.addLayer(this.makeDataClusters("high"));
-          map.addLayer(this.makeDataCounts("high", "#757575"));
-          map.on("click", "high-points", this.fetchSelectedItem);
-        }
-      } else {
-        if (
-          map.getSource("grid") === undefined &&
-          res.highSymptomCollection.features.length !== 0
-        ) {
-          map.addSource("grid", {
-            type: "geojson",
-            data: res.highSymptomCollection
-          });
-          map.addLayer(this.makeDataPoint("grid", false, ["get", "size"], 0.3));
-          map.addLayer({
-            id: "grid-point-counts",
-            type: "symbol",
-            source: "grid",
-            layout: {
-              "icon-allow-overlap": true,
-              "text-allow-overlap": true,
-              "text-field": ["get", "total"],
-              "text-font": ["Ubuntu Medium", "Arial Unicode MS Regular"],
-              "text-size": 20,
-              "text-pitch-alignment": "map",
-              visibility: "visible"
-            },
-            paint: {
-              "text-color": "#757575"
-            }
-          });
-          map.on("click", "grid-points", this.fetchSelectedItem);
-        }
-      }
+    setVisibility(items, value = true) {
+      items.forEach(item => {
+        this.map.setLayoutProperty(item, "visibility", value);
+      });
     },
 
-    zoomEnd(map) {
-      // update clusters
-      const grid_rendering = this.grid_rendering;
-      this.symptomCollections = this.updateClusters();
-      if (grid_rendering === true) {
-        map
+    updateMap() {
+      if (this.grid_rendering) {
+        this.map
           .getSource("grid")
           .setData(this.symptomCollections.highSymptomCollection);
+        this.setVisibility(this.layers.non_grid, "none");
+        this.setVisibility(this.layers.grid, "visible");
       } else {
-        map
-          .getSource("small")
-          .setData(this.symptomCollections.smallSymptomCollection);
-        map
-          .getSource("medium")
-          .setData(this.symptomCollections.mediumSymptomCollection);
-        map
-          .getSource("high")
-          .setData(this.symptomCollections.highSymptomCollection);
+        ["small", "medium", "high"].forEach(item => {
+          this.map
+            .getSource(item)
+            .setData(this.symptomCollections[item + "SymptomCollection"]);
+        });
+        this.setVisibility(this.layers.grid, "none");
+        this.setVisibility(this.layers.non_grid, "visible");
       }
 
-      // update map bounds
-      const bounds = this.map.getBounds();
-      const west_lng = bounds._sw.lng,
-        south_lat = bounds._sw.lat;
-      const east_lng = bounds._ne.lng,
-        north_lat = bounds._ne.lat;
-
-      this.top_left_bound = [west_lng, north_lat];
-      this.top_right_bound = [east_lng, north_lat];
-      this.bottom_left_bound = [west_lng, south_lat];
-      this.bottom_right_bound = [east_lng, south_lat];
-
-      // Make fetch call
-      this.fetchLocationsSymptoms();
-      const res = this.symptomCollections;
-
-      if (res.length !== 0 && this.grid_rendering === true) {
-        // hide non-grid layers
-        if (map.getSource("small") !== undefined) {
-          map.setLayoutProperty("small-points", "visibility", "none");
-          map.setLayoutProperty("small-clusters", "visibility", "none");
-          map.setLayoutProperty("small-cluster-count", "visibility", "none");
-
-          map.setLayoutProperty("medium-points", "visibility", "none");
-          map.setLayoutProperty("medium-clusters", "visibility", "none");
-          map.setLayoutProperty("medium-cluster-count", "visibility", "none");
-
-          map.setLayoutProperty("high-points", "visibility", "none");
-          map.setLayoutProperty("high-clusters", "visibility", "none");
-          map.setLayoutProperty("high-cluster-count", "visibility", "none");
-        }
-
-        // if otherwise the grid was invisible, unhide it
-        if (map.getLayoutProperty("grid-points", "visibility") !== "visible") {
-          map.setLayoutProperty("grid-points", "visibility", "visible");
-          map.setLayoutProperty("grid-point-counts", "visibility", "visible");
-        }
-      } else if (res.length !== 0 && this.grid_rendering === false) {
-        // hide grid layer
-        if (
-          map.getSource("grid") !== undefined &&
-          map.getLayoutProperty("grid-points", "visibility") === "visible"
-        ) {
-          map.setLayoutProperty("grid-points", "visibility", "none");
-          map.setLayoutProperty("grid-point-counts", "visibility", "none");
-        } else if (
-          map.getLayoutProperty("small-points", "visibility") !== "visible"
-        ) {
-          map.setLayoutProperty("small-points", "visibility", "visible");
-          map.setLayoutProperty("small-clusters", "visibility", "visible");
-          map.setLayoutProperty("small-cluster-count", "visibility", "visible");
-        } else if (
-          map.getLayoutProperty("medium-clusters", "visibility") !== "visible"
-        ) {
-          map.setLayoutProperty("medium-points", "visibility", "visible");
-          map.setLayoutProperty("medium-clusters", "visibility", "visible");
-          map.setLayoutProperty(
-            "medium-cluster-count",
-            "visibility",
-            "visible"
-          );
-        } else if (
-          map.getLayoutProperty("high-clusters", "visibility") !== "visible"
-        ) {
-          map.setLayoutProperty("high-points", "visibility", "visible");
-          map.setLayoutProperty("high-clusters", "visibility", "visible");
-          map.setLayoutProperty("high-cluster-count", "visibility", "visible");
-        }
+      if (this.mode === "cluster") {
+        this.setVisibility(
+          ["small-points", "medium-points", "high-points"],
+          "none"
+        );
       }
     },
 
-    moved(map) {
+    changed(map) {
       const bounds = map.getBounds();
-      const west_lng = bounds._sw.lng,
-        south_lat = bounds._sw.lat;
-      const east_lng = bounds._ne.lng,
-        north_lat = bounds._ne.lat;
-
-      this.top_left_bound = [west_lng, north_lat];
-      this.top_right_bound = [east_lng, north_lat];
-      this.bottom_left_bound = [west_lng, south_lat];
-      this.bottom_right_bound = [east_lng, south_lat];
+      this.top_left_bound = [bounds._sw.lng, bounds._ne.lat];
+      this.top_right_bound = [bounds._ne.lng, bounds._ne.lat];
+      this.bottom_left_bound = [bounds._sw.lng, bounds._sw.lat];
+      this.bottom_right_bound = [bounds._ne.lng, bounds._sw.lat];
 
       this.fetchLocationsSymptoms();
     }
