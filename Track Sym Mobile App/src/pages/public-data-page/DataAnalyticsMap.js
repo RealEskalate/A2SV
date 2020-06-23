@@ -106,14 +106,17 @@ export default class DataAnalyticsMap extends React.Component {
 
   async getCovid() {
     const covid = {};
-    let res = await fetch("https://sym-track.herokuapp.com/api/mapData", {
-      method: "GET",
-      headers: {
-        Authorization: "Bearer " + userIDStore.getState().userToken,
-        Accept: "application/json",
-        "Content-type": "application/json",
-      },
-    });
+    let res = await fetch(
+      "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/mapData",
+      {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + userIDStore.getState().userToken,
+          Accept: "application/json",
+          "Content-type": "application/json",
+        },
+      }
+    );
     let data = await res.json();
     // do preprocessing
     for (let i = 0; i < data.length; i++) {
