@@ -31,10 +31,12 @@ export default class UserSymptomPage extends Component {
       currLanguage: "English",
       currLangCode: languageStore.getState(),
     };
+
     symptomStore.subscribe(() => {
       this.fetchUserSymptoms(userIDStore.getState().userId);
       this.fetchData();
     });
+
     languageStore.subscribe(() => {
       strings.setLanguage(languageStore.getState());
       this.setState({ currLangCode: languageStore.getState() });
