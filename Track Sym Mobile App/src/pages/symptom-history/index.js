@@ -82,6 +82,30 @@ export default class SymptomHistory extends Component {
     this.setState({ user_latitude: location.coords.latitude });
     this.setState({ user_longitude: location.coords.longitude });
   }
+  //sends user location
+  sendLocation = () => {
+    fetch("https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/user_locations", {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + userIDStore.getState().userToken,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        longitude: this.state.user_longitude,
+        latitude: this.state.user_latitude,
+        user_id: userIDStore.getState().userId,
+        TTL: 10000,
+      }),
+    })
+      .then((response) => response.json())
+      .then(() => {
+        //console.log(json);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   componentDidMount = async () => {
     await this.setState({ currLangCode: languageStore.getState() });
     switch (this.state.currLangCode) {
@@ -102,39 +126,14 @@ export default class SymptomHistory extends Component {
     this.fetchData();
     this.populateCalander();
     this.fetchSymptom();
-
     this.timer = setInterval(() => {
-      if (this.state.currUserSymptoms.length != 0) {
-        fetch("https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/user_locations", {
-          method: "POST",
-          headers: {
-            Authorization: "Bearer " + userIDStore.getState().userToken,
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            longitude: this.state.user_longitude,
-            latitude: this.state.user_latitude,
-            user_id: userIDStore.getState().userId,
-            TTL: 10000,
-          }),
-        })
-          .then((response) => response.json())
-          .then(() => {
-            //console.log(json);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      } else {
-        console.log("No symptoms to report");
-        console.log(
-          this.state.user_latitude + " , " + this.state.user_longitude
-        );
+      if (this.state.currUserSymptoms.length !== 0) {
+        console.log("Normal check");
+        this.sendLocation();
       }
     }, 10000);
   };
-
+  //populates top calendar list
   populateCalander = () => {
     caladerData = [];
 
@@ -152,7 +151,7 @@ export default class SymptomHistory extends Component {
 
     this.setState({ calendar: caladerData });
   };
-
+  //compare dates
   compareDate = (date1, date2) => {
     return (
       date1.getDate() >= date2.getDate() &&
@@ -166,11 +165,11 @@ export default class SymptomHistory extends Component {
     MEDIUM: "#fbc02d",
     HIGH: "#d32f2f",
   };
-
+  //loads users symptom from the redux local store
   fetchData() {
     this.setState({ currUserSymptoms: symptomStore.getState() });
   }
-
+  //fetches historical data
   fetchSymptom = async () => {
     let newThis = this; // create variable for referencing 'this'
     fetch(
@@ -196,14 +195,14 @@ export default class SymptomHistory extends Component {
         console.log(error);
       });
   };
-
+  //parses date
   getParsedDate = (unparsedDate) => {
     date = new Date(unparsedDate);
     return `${
       this.state.months[date.getMonth()]
     } ${date.getDate()} - ${date.getFullYear()}`;
   };
-
+  //update Ui with the filtered date
   updateSymptomHistory = (dateIndex) => {
     this.setState({
       loading: true,
@@ -299,6 +298,7 @@ export default class SymptomHistory extends Component {
     />
   );
   render() {
+    console.log(this.state.calendar.length);
     return (
       <Layout style={styles.contanier} level="2">
         <Layout style={{ flex: 1 }}>
