@@ -112,7 +112,7 @@ class DataAnalytics extends React.Component {
         await this.setState({ currLanguage: "English" });
         break;
       case "tr":
-        await this.setState({ currLanguage: "English" });
+        await this.setState({ currLanguage: "Turkish" });
         break;
     }
     await this.getTotalData()
@@ -342,7 +342,7 @@ class DataAnalytics extends React.Component {
 
     //generating interval
     var interval = Math.floor(objList.length / 6);
-    var setRemainder = objList.length % 6;
+    var remainder = objList.length % 6;
     if (interval === 0) {
       interval = 1;
       remainder = 0;
@@ -354,17 +354,12 @@ class DataAnalytics extends React.Component {
         objList[dataSet_counter].y;
 
       indexCounterSet += 1;
-      if (
-        setRemainder > 0 &&
-        dataSet_counter + setRemainder - 1 === objList.length
-      ) {
-        dataSet_counter += setRemainder - 1;
+      if (remainder > 0 && dataSet_counter + remainder - 1 === objList.length) {
+        dataSet_counter += remainder - 1;
         continue;
       }
       dataSet_counter += interval;
     }
-
-    var remainder = objList.length % 5;
     let graphLebel_counter = 0;
     let indexCounter = 0;
     while (graphLebel_counter < objList.length) {
@@ -390,7 +385,7 @@ class DataAnalytics extends React.Component {
 
     //generating interval
     var interval = Math.floor(objList.length / 6);
-    var setRemainder = objList.length % 6;
+    var remainder = objList.length % 6;
     if (interval === 0) {
       interval = 1;
       remainder = 0;
@@ -401,17 +396,13 @@ class DataAnalytics extends React.Component {
       this.state.data_set[indexCounterSet] = objList[dataSet_counter].y;
 
       indexCounterSet += 1;
-      if (
-        setRemainder > 0 &&
-        dataSet_counter + setRemainder - 1 === objList.length
-      ) {
-        dataSet_counter += setRemainder - 1;
+      if (remainder > 0 && dataSet_counter + remainder - 1 === objList.length) {
+        dataSet_counter += remainder - 1;
         continue;
       }
       dataSet_counter += interval;
     }
 
-    var remainder = objList.length % 5;
     let graphLebel_counter = 0;
     let indexCounter = 0;
     while (graphLebel_counter < objList.length) {
@@ -437,7 +428,7 @@ class DataAnalytics extends React.Component {
 
     //generating interval
     var interval = Math.floor(objList.length / 6);
-    var setRemainder = objList.length % 6;
+    var remainder = objList.length % 6;
     if (interval === 0) {
       interval = 1;
       remainder = 0;
@@ -448,11 +439,8 @@ class DataAnalytics extends React.Component {
       this.state.rate_data_set[indexCounterSet] = objList[dataSet_counter].y;
 
       indexCounterSet += 1;
-      if (
-        setRemainder > 0 &&
-        dataSet_counter + setRemainder - 1 === objList.length
-      ) {
-        dataSet_counter += setRemainder - 1;
+      if (remainder > 0 && dataSet_counter + remainder - 1 === objList.length) {
+        dataSet_counter += remainder - 1;
         continue;
       }
       dataSet_counter += interval;
