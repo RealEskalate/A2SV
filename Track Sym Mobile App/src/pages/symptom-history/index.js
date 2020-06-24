@@ -175,7 +175,7 @@ export default class SymptomHistory extends Component {
     fetch(
       `https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/symptomuserhistory/user/${
         userIDStore.getState().userId
-      }`,
+      }?language=${this.state.currLanguage}`,
       {
         method: "GET",
         headers: {
