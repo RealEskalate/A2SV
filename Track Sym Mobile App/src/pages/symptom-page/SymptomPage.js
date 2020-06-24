@@ -155,7 +155,7 @@ export default class SymptomPage extends Component {
 
     let newThis = this; // create variable for referencing 'this'
     await fetch(
-      "https://sym-track.herokuapp.com/api/symptoms?language=" +
+      "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/symptoms?language=" +
         this.state.currLanguage,
       {
         method: "GET",
@@ -185,7 +185,7 @@ export default class SymptomPage extends Component {
   fetchUserSymptoms = async (userId) => {
     let newThis = this; // create variable for referencing 'this'
     await fetch(
-      "https://sym-track.herokuapp.com/api/symptomuser/user/" +
+      "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/symptomuser/user/" +
         userId +
         "?language=" +
         this.state.currLanguage,
@@ -220,7 +220,7 @@ export default class SymptomPage extends Component {
       registerLoading: true,
       loadingStatusText: "Registering",
     });
-    fetch("https://sym-track.herokuapp.com/api/symptomuser", {
+    fetch("https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/symptomuser", {
       method: "POST",
       headers: {
         Authorization: "Bearer " + userIDStore.getState().userToken,
@@ -253,7 +253,7 @@ export default class SymptomPage extends Component {
       registerLoading: true,
     });
     const response = await fetch(
-      "https://sym-track.herokuapp.com/api/symptomuser/multiple",
+      "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/symptomuser/multiple",
       {
         method: "POST",
         headers: {
@@ -290,7 +290,7 @@ export default class SymptomPage extends Component {
       registerLoading: true,
       loadingStatusText: "Unregistering",
     });
-    fetch("https://sym-track.herokuapp.com/api/symptomuser", {
+    fetch("https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/symptomuser", {
       method: "DELETE",
       headers: {
         Authorization: "Bearer " + userIDStore.getState().userToken,

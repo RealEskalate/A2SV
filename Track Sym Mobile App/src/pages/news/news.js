@@ -43,7 +43,7 @@ const NewsScreen = (props) => {
 
   const fetchNews = () => {
     if (state.searchTag === "") {
-      fetch("https://sym-track.herokuapp.com/api/news/", {
+      fetch("https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/news/", {
         method: "GET",
         headers: {
           Authorization: "Bearer " + userIDStore.getState().userToken,
@@ -65,7 +65,8 @@ const NewsScreen = (props) => {
         });
     } else {
       fetch(
-        "https://sym-track.herokuapp.com/api/news?country=" + state.searchTag,
+        "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/news?country=" +
+          state.searchTag,
         {
           method: "GET",
           headers: {

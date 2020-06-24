@@ -369,6 +369,8 @@ export let strings = new LocalizedStrings({
     Fri: "Fri",
     Sat: "Sat",
     SuccessfullySave: "Successfully Saved!",
+    Current: "Current",
+    Registered: "Registered",
   },
   en: {
     Information: "Information",
@@ -735,6 +737,8 @@ export let strings = new LocalizedStrings({
     Fri: "Fri",
     Sat: "Sat",
     SuccessfullySave: "Successfully Saved!",
+    Current: "Current",
+    Registered: "Registered",
   },
   am: {
     Information: "መረጃ",
@@ -1099,6 +1103,8 @@ export let strings = new LocalizedStrings({
     Fri: "አርብ",
     Sat: "ቅዳሜ",
     SuccessfullySave: "ተሳክቷል!",
+    Current: "የአሁኑ",
+    Registered: "የተመዘገበበት",
   },
   tr: {
     Information: "Bilgi",
@@ -1434,6 +1440,8 @@ export let strings = new LocalizedStrings({
     Fri: "Fri",
     Sat: "Sat",
     SuccessfullySave: "Kayıt Başarılı!",
+    Current: "şimdiki",
+    Registered: "Kayıtlı",
   },
   orm: {
     Information: "Odeeffannoo",
@@ -1859,5 +1867,7 @@ export let strings = new LocalizedStrings({
     Fri: "Jim",
     Sat: "San",
     SuccessfullySave: "Milkaa'eera!",
+    Current: "Amma",
+    Registered: "Registered",
   },
 });

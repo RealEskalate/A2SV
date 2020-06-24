@@ -132,7 +132,7 @@ class DataAnalytics extends React.Component {
     var query =
       this.state.selected_total_start_date.length > 1 &&
       this.state.selected_total_end_date.length > 1
-        ? "https://sym-track.herokuapp.com/api/statistics?criteria=" +
+        ? "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/statistics?criteria=" +
           this.state.selected_filter +
           "&country=" +
           this.state.searchedCountry +
@@ -140,7 +140,7 @@ class DataAnalytics extends React.Component {
           this.state.selected_total_start_date +
           "&end_date=" +
           this.state.selected_total_end_date
-        : "https://sym-track.herokuapp.com/api/statistics?criteria=" +
+        : "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/statistics?criteria=" +
           this.state.selected_filter +
           "&country=" +
           this.state.searchedCountry;
@@ -178,7 +178,7 @@ class DataAnalytics extends React.Component {
     var query =
       this.state.selected_rate_start_date.length > 1 &&
       this.state.selected_rate_end_date.length > 1
-        ? "https://sym-track.herokuapp.com/api/statistics?criteria=" +
+        ? "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/statistics?criteria=" +
           this.state.selected_filter_rate +
           "&country=" +
           this.state.searchedCountry +
@@ -186,7 +186,7 @@ class DataAnalytics extends React.Component {
           this.state.selected_rate_start_date +
           "&end_date=" +
           this.state.selected_rate_end_date
-        : "https://sym-track.herokuapp.com/api/statistics?criteria=" +
+        : "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/statistics?criteria=" +
           this.state.selected_filter_rate +
           "&country=" +
           this.state.searchedCountry;
@@ -228,7 +228,7 @@ class DataAnalytics extends React.Component {
     });
     let newThis = this;
     await fetch(
-      "https://sym-track.herokuapp.com/api/statistics?criteria=All&country=" +
+      "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/statistics?criteria=All&country=" +
         this.state.searchedCountry,
       {
         method: "GET",
@@ -259,14 +259,17 @@ class DataAnalytics extends React.Component {
   //fetch list of countries available
   getCountryList = async () => {
     let newThis = this;
-    await fetch("https://sym-track.herokuapp.com/api/statistics/countries", {
-      method: "GET",
-      headers: {
-        Authorization: "Bearer " + userIDStore.getState().userToken,
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    })
+    await fetch(
+      "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/statistics/countries",
+      {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + userIDStore.getState().userToken,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }
+    )
       .then((response) => response.json())
       .then(async (json) => {
         if (json !== undefined && json.length !== 0) {
@@ -289,7 +292,7 @@ class DataAnalytics extends React.Component {
     var query =
       this.state.selected_daily_start_date.length > 1 &&
       this.state.selected_daily_end_date.length > 1
-        ? "https://sym-track.herokuapp.com/api/statistics?criteria=" +
+        ? "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/statistics?criteria=" +
           this.state.selected_filter_daily_status +
           "&country=" +
           this.state.searchedCountry +
@@ -298,7 +301,7 @@ class DataAnalytics extends React.Component {
           "&end_date=" +
           this.state.selected_daily_end_date +
           "&daily=true"
-        : "https://sym-track.herokuapp.com/api/statistics?criteria=" +
+        : "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/statistics?criteria=" +
           this.state.selected_filter_daily_status +
           "&country=" +
           this.state.searchedCountry +
@@ -509,7 +512,7 @@ class DataAnalytics extends React.Component {
     var query =
       this.state.selected_daily_start_date.length > 1 &&
       this.state.selected_daily_end_date.length > 1
-        ? "https://sym-track.herokuapp.com/api/statistics?criteria=" +
+        ? "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/statistics?criteria=" +
           filterCriteria +
           "&country=" +
           this.state.searchedCountry +
@@ -518,7 +521,7 @@ class DataAnalytics extends React.Component {
           "&end_date=" +
           this.state.selected_daily_end_date +
           "&daily=true"
-        : "https://sym-track.herokuapp.com/api/statistics?criteria=" +
+        : "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/statistics?criteria=" +
           filterCriteria +
           "&country=" +
           this.state.searchedCountry +
@@ -563,7 +566,7 @@ class DataAnalytics extends React.Component {
   getDescriptions = async () => {
     let newThis = this;
     await fetch(
-      "https://sym-track.herokuapp.com/api/resources/mobile/statistics?language=" +
+      "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/resources/mobile/statistics?language=" +
         this.state.currLanguage +
         "&filter=adults",
       {

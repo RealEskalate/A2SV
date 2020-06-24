@@ -23,30 +23,6 @@ MapboxGL.setAccessToken(
   "pk.eyJ1IjoiZmVyb3g5OCIsImEiOiJjazg0czE2ZWIwNHhrM2VtY3Y0a2JkNjI3In0.zrm7UtCEPg2mX8JCiixE4g"
 );
 
-const days = [
-  strings.Sun,
-  strings.Mon,
-  strings.Tue,
-  strings.Wed,
-  strings.Thu,
-  strings.Fri,
-  strings.Sat,
-];
-const months = [
-  strings.Jan,
-  strings.Feb,
-  strings.Mar,
-  strings.Apr,
-  strings.May,
-  strings.Jun,
-  strings.Jul,
-  strings.Aug,
-  strings.Sep,
-  strings.Oct,
-  strings.Nov,
-  strings.Dec,
-];
-
 export default class SymptomHistory extends Component {
   constructor(props) {
     super(props);
@@ -62,16 +38,38 @@ export default class SymptomHistory extends Component {
       currUserSymptoms: [],
       currSelected: true,
       calendar: [],
+      months: [
+        strings.Jan,
+        strings.Feb,
+        strings.Mar,
+        strings.Apr,
+        strings.May,
+        strings.Jun,
+        strings.Jul,
+        strings.Aug,
+        strings.Sep,
+        strings.Oct,
+        strings.Nov,
+        strings.Dec,
+      ],
+      days: [
+        strings.Sun,
+        strings.Mon,
+        strings.Tue,
+        strings.Wed,
+        strings.Thu,
+        strings.Fri,
+        strings.Sat,
+      ],
     };
 
     symptomStore.subscribe(() => {
-      this.fetchUserSymptoms(userIDStore.getState().userId);
+      //this.fetchUserSymptoms(userIDStore.getState().userId);
       this.fetchData();
     });
 
     languageStore.subscribe(() => {
       strings.setLanguage(languageStore.getState());
-      this.setState({ currLangCode: languageStore.getState() });
       this.componentDidMount();
     });
 
@@ -107,7 +105,7 @@ export default class SymptomHistory extends Component {
 
     this.timer = setInterval(() => {
       if (this.state.currUserSymptoms.length != 0) {
-        fetch("https://sym-track.herokuapp.com/api/user_locations", {
+        fetch("https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/user_locations", {
           method: "POST",
           headers: {
             Authorization: "Bearer " + userIDStore.getState().userToken,
@@ -157,9 +155,9 @@ export default class SymptomHistory extends Component {
 
   compareDate = (date1, date2) => {
     return (
-      date1.getDate() <= date2.getDate() &&
-      date1.getMonth() <= date2.getMonth() &&
-      date1.getFullYear() <= date2.getFullYear()
+      date1.getDate() >= date2.getDate() &&
+      date1.getMonth() >= date2.getMonth() &&
+      date1.getFullYear() >= date2.getFullYear()
     );
   };
 
@@ -176,7 +174,7 @@ export default class SymptomHistory extends Component {
   fetchSymptom = async () => {
     let newThis = this; // create variable for referencing 'this'
     fetch(
-      `https://sym-track.herokuapp.com/api/symptomuserhistory/user/${
+      `https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/symptomuserhistory/user/${
         userIDStore.getState().userId
       }`,
       {
@@ -202,7 +200,7 @@ export default class SymptomHistory extends Component {
   getParsedDate = (unparsedDate) => {
     date = new Date(unparsedDate);
     return `${
-      months[date.getMonth()]
+      this.state.months[date.getMonth()]
     } ${date.getDate()} - ${date.getFullYear()}`;
   };
 
@@ -259,7 +257,7 @@ export default class SymptomHistory extends Component {
     });
     let newThis = this; // create variable for referencing 'this'
     fetch(
-      "https://sym-track.herokuapp.com/api/symptomuser/user/" +
+      "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/symptomuser/user/" +
         userId +
         "?language=" +
         this.state.currLanguage,
@@ -333,9 +331,11 @@ export default class SymptomHistory extends Component {
                       {item.day}
                     </Text>
                     <Text category="h6" style={{ fontWeight: "bold" }}>
-                      {days[item.dayIdx]}
+                      {this.state.days[item.dayIdx]}
                     </Text>
-                    <Text appearance="hint">{months[item.monthIdx]}</Text>
+                    <Text appearance="hint">
+                      {this.state.months[item.monthIdx]}
+                    </Text>
                   </Layout>
                 </TouchableOpacity>
               )}
@@ -366,7 +366,7 @@ export default class SymptomHistory extends Component {
                   fill="#8F9BB3"
                   name="calendar-outline"
                 />
-                <Text appearance="hint">Current</Text>
+                <Text appearance="hint">{strings.Current}</Text>
               </Layout>
             </TouchableOpacity>
           </Layout>

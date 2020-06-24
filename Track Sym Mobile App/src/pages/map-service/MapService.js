@@ -207,9 +207,9 @@ export default class MapService extends React.Component {
         for (let i = 0; i < leaves.length; i++) {
           let leaf = leaves[i];
           fetch(
-            "https://sym-track.herokuapp.com/api/symptomuser/user/" +
+            "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/symptomuser/user/" +
               leaf.id +
-              "?demo=true",
+              "",
             {
               method: "GET",
               headers: {
@@ -260,9 +260,9 @@ export default class MapService extends React.Component {
         for (let i = 0; i < leaves.length; i++) {
           let leaf = leaves[i];
           fetch(
-            "https://sym-track.herokuapp.com/api/symptomuser/user/" +
+            "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/symptomuser/user/" +
               leaf.id +
-              "?demo=true",
+              "",
             {
               method: "GET",
               headers: {
@@ -310,9 +310,9 @@ export default class MapService extends React.Component {
           .getLeaves(feature.properties.cluster_id, Infinity)
           .forEach((leaf) => {
             fetch(
-              "https://sym-track.herokuapp.com/api/symptomuser/user/" +
+              "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/symptomuser/user/" +
                 leaf.id +
-                "?demo=true",
+                "",
               {
                 method: "GET",
                 headers: {
@@ -401,9 +401,9 @@ export default class MapService extends React.Component {
       };
       const user_id = feature.id;
       const details = fetch(
-        "https://sym-track.herokuapp.com/api/symptomuser/user/" +
+        "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/symptomuser/user/" +
           user_id +
-          "?demo=true",
+          "",
         {
           method: "GET",
           headers: {
@@ -517,7 +517,7 @@ export default class MapService extends React.Component {
   };
 
   fetchCities() {
-    fetch("https://sym-track.herokuapp.com/api/cities", {
+    fetch("https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/cities", {
       method: "GET",
       headers: {
         Authorization: "Bearer " + userIDStore.getState().userToken,
@@ -551,7 +551,7 @@ export default class MapService extends React.Component {
     if (!this.state.isClusterModalVisible) {
       animating = true;
     }
-    fetch("https://sym-track.herokuapp.com/api/locations_symptoms?demo=true", {
+    fetch("https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/locations_symptoms", {
       method: "POST",
       headers: {
         Authorization: "Bearer " + userIDStore.getState().userToken,

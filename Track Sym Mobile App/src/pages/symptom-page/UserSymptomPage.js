@@ -74,7 +74,7 @@ export default class UserSymptomPage extends Component {
 
     this.timer = setInterval(() => {
       if (this.state.userSymptoms.length != 0) {
-        fetch("https://sym-track.herokuapp.com/api/user_locations", {
+        fetch("https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/user_locations", {
           method: "POST",
           headers: {
             Authorization: "Bearer " + userIDStore.getState().userToken,
@@ -112,7 +112,7 @@ export default class UserSymptomPage extends Component {
   fetchUserSymptoms(userId) {
     let newThis = this; // create variable for referencing 'this'
     fetch(
-      "https://sym-track.herokuapp.com/api/symptomuser/user/" +
+      "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/symptomuser/user/" +
         userId +
         "?language=" +
         this.state.currLanguage,
