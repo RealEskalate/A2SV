@@ -56,6 +56,7 @@ import Geocoder from "react-native-geocoder";
 import userIDStore from "../../data-management/user-id-data/userIDStore";
 import languageStore from "../../data-management/language_data/languageStore";
 import { strings } from "../../localization/localization";
+import { useIsFocused } from "@react-navigation/native";
 
 import SearchableDropdown from "react-native-searchable-dropdown";
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -83,6 +84,7 @@ export default class MapService extends React.Component {
     this.state = {
       isModalVisible: false,
       isClusterModalVisible: false,
+      runInBackground: true,
 
       symptoms: [],
 
@@ -547,27 +549,30 @@ export default class MapService extends React.Component {
       });
   }
 
-  fetchSymptoms() {
+  fetchSymptoms = async () => {
     if (!this.state.isClusterModalVisible) {
       animating = true;
     }
-    fetch("https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/locations_symptoms", {
-      method: "POST",
-      headers: {
-        Authorization: "Bearer " + userIDStore.getState().userToken,
-        Accept: "application/json",
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify({
-        longitude: this.state.user_longitude,
-        latitude: this.state.user_latitude,
+    await fetch(
+      "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/locations_symptoms",
+      {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + userIDStore.getState().userToken,
+          Accept: "application/json",
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify({
+          longitude: this.state.user_longitude,
+          latitude: this.state.user_latitude,
 
-        top_left_bound: this.state.top_left_bound,
-        top_right_bound: this.state.top_right_bound,
-        bottom_left_bound: this.state.bottom_left_bound,
-        bottom_right_bound: this.state.bottom_right_bound,
-      }),
-    })
+          top_left_bound: this.state.top_left_bound,
+          top_right_bound: this.state.top_right_bound,
+          bottom_left_bound: this.state.bottom_left_bound,
+          bottom_right_bound: this.state.bottom_right_bound,
+        }),
+      }
+    )
       .then((res) => {
         console.log("res = ");
         console.log(res.status);
@@ -651,7 +656,7 @@ export default class MapService extends React.Component {
       .catch((error) => {
         console.log(error);
       });
-  }
+  };
   componentDidMount() {
     PermissionsAndroid.requestMultiple(
       [
@@ -674,7 +679,13 @@ export default class MapService extends React.Component {
     MapboxGL.setTelemetryEnabled(false);
     console.log("-----------inside fetch symptoms--------");
     this.fetchCities();
-    this.timer = setInterval(() => this.fetchSymptoms(), 15000);
+
+    this.props.navigation.addListener("focus", async () => {
+      this.timer = setInterval(() => this.fetchSymptoms(), 15000);
+    });
+    this.props.navigation.addListener("blur", () => {
+      clearInterval(this.timer);
+    });
   }
 
   updateClusters = async () => {
