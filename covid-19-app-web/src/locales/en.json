@@ -67,8 +67,8 @@
     "totalRecovered": "Total Recovered",
     "totalActive": "Total Active",
     "totalDeaths": "Total Deaths",
-    "dailyConfirmed": "Total Confirmed",
-    "dailyRecovered": "Total Recovered",
+    "dailyConfirmed": "Daily Confirmed",
+    "dailyRecovered": "Daily Recovered",
     "dailyDeaths": "Daily Deaths"
   },
   "learningPathHeaders": {
