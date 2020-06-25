@@ -63,7 +63,7 @@ export default class UserSymptomPage extends Component {
         await this.setState({ currLanguage: "English" });
         break;
       case "orm":
-        await this.setState({ currLanguage: "English" });
+        await this.setState({ currLanguage: "Oromo" });
         break;
       case "tr":
         await this.setState({ currLanguage: "Turkish" });
