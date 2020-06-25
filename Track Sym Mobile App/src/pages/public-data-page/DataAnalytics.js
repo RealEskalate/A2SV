@@ -8,6 +8,7 @@ import {
   ScrollView,
   ActivityIndicator,
   Image,
+  View,
 } from "react-native";
 import { LineChart, BarChart } from "react-native-chart-kit";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -108,10 +109,10 @@ class DataAnalytics extends React.Component {
         await this.setState({ currLanguage: "English" });
         break;
       case "orm":
-        await this.setState({ currLanguage: "Oromo" });
+        await this.setState({ currLanguage: "English" });
         break;
       case "tr":
-        await this.setState({ currLanguage: "English" });
+        await this.setState({ currLanguage: "Turkish" });
         break;
     }
     await this.getTotalData()
@@ -341,7 +342,7 @@ class DataAnalytics extends React.Component {
 
     //generating interval
     var interval = Math.floor(objList.length / 6);
-    var setRemainder = objList.length % 6;
+    var remainder = objList.length % 6;
     if (interval === 0) {
       interval = 1;
       remainder = 0;
@@ -353,17 +354,12 @@ class DataAnalytics extends React.Component {
         objList[dataSet_counter].y;
 
       indexCounterSet += 1;
-      if (
-        setRemainder > 0 &&
-        dataSet_counter + setRemainder - 1 === objList.length
-      ) {
-        dataSet_counter += setRemainder - 1;
+      if (remainder > 0 && dataSet_counter + remainder - 1 === objList.length) {
+        dataSet_counter += remainder - 1;
         continue;
       }
       dataSet_counter += interval;
     }
-
-    var remainder = objList.length % 5;
     let graphLebel_counter = 0;
     let indexCounter = 0;
     while (graphLebel_counter < objList.length) {
@@ -389,7 +385,7 @@ class DataAnalytics extends React.Component {
 
     //generating interval
     var interval = Math.floor(objList.length / 6);
-    var setRemainder = objList.length % 6;
+    var remainder = objList.length % 6;
     if (interval === 0) {
       interval = 1;
       remainder = 0;
@@ -400,17 +396,13 @@ class DataAnalytics extends React.Component {
       this.state.data_set[indexCounterSet] = objList[dataSet_counter].y;
 
       indexCounterSet += 1;
-      if (
-        setRemainder > 0 &&
-        dataSet_counter + setRemainder - 1 === objList.length
-      ) {
-        dataSet_counter += setRemainder - 1;
+      if (remainder > 0 && dataSet_counter + remainder - 1 === objList.length) {
+        dataSet_counter += remainder - 1;
         continue;
       }
       dataSet_counter += interval;
     }
 
-    var remainder = objList.length % 5;
     let graphLebel_counter = 0;
     let indexCounter = 0;
     while (graphLebel_counter < objList.length) {
@@ -436,7 +428,7 @@ class DataAnalytics extends React.Component {
 
     //generating interval
     var interval = Math.floor(objList.length / 6);
-    var setRemainder = objList.length % 6;
+    var remainder = objList.length % 6;
     if (interval === 0) {
       interval = 1;
       remainder = 0;
@@ -447,11 +439,8 @@ class DataAnalytics extends React.Component {
       this.state.rate_data_set[indexCounterSet] = objList[dataSet_counter].y;
 
       indexCounterSet += 1;
-      if (
-        setRemainder > 0 &&
-        dataSet_counter + setRemainder - 1 === objList.length
-      ) {
-        dataSet_counter += setRemainder - 1;
+      if (remainder > 0 && dataSet_counter + remainder - 1 === objList.length) {
+        dataSet_counter += remainder - 1;
         continue;
       }
       dataSet_counter += interval;
@@ -753,6 +742,7 @@ class DataAnalytics extends React.Component {
                     )}
                   </Text>
                 )}
+
                 <Text>{strings.NewConfirmed}</Text>
               </TouchableOpacity>
 
@@ -850,14 +840,12 @@ class DataAnalytics extends React.Component {
                 justifyContent: "space-evenly",
                 marginBottom: 10,
                 // backgroundColor: 'white',
+
                 borderRadius: 10,
                 paddingVertical: 10,
               }}
             >
-              <TouchableOpacity
-                disabled={true}
-                style={{ alignItems: "center" }}
-              >
+              <View style={{ alignItems: "center", flexWrap: "wrap" }}>
                 <Image
                   source={require("../../../assets/images/sick.png")}
                   style={{ height: 30, width: 30 }}
@@ -880,12 +868,12 @@ class DataAnalytics extends React.Component {
                     )}
                   </Text>
                 )}
-                <Text>{strings.TotalConfirmed}</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                disabled={true}
-                style={{ alignItems: "center" }}
-              >
+
+                <Text style={{ maxWidth: 95, textAlign: "center" }}>
+                  {strings.TotalConfirmed}
+                </Text>
+              </View>
+              <View style={{ alignItems: "center", flexWrap: "wrap" }}>
                 <Image
                   source={require("../../../assets/images/recovered.png")}
                   style={{ height: 30, width: 30 }}
@@ -908,12 +896,17 @@ class DataAnalytics extends React.Component {
                     )}
                   </Text>
                 )}
-                <Text>{strings.TotalRecovered}</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                disabled={true}
-                style={{ alignItems: "center" }}
-              >
+
+                <Text
+                  style={{
+                    maxWidth: 95,
+                    textAlign: "center",
+                  }}
+                >
+                  {strings.TotalRecovered}
+                </Text>
+              </View>
+              <View style={{ alignItems: "center", flexWrap: "wrap" }}>
                 <Image
                   source={require("../../../assets/images/angel.png")}
                   style={{ height: 30, width: 30 }}
@@ -936,8 +929,11 @@ class DataAnalytics extends React.Component {
                     )}
                   </Text>
                 )}
-                <Text>{strings.TotalDeath}</Text>
-              </TouchableOpacity>
+
+                <Text style={{ maxWidth: 95, textAlign: "center" }}>
+                  {strings.TotalDeath}
+                </Text>
+              </View>
             </Layout>
 
             <Layout style={styles.backdrop_container}>

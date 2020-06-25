@@ -68,10 +68,10 @@ export default class SymptomPage extends Component {
         await this.setState({ currLanguage: "English" });
         break;
       case "orm":
-        await this.setState({ currLanguage: "Oromo" });
+        await this.setState({ currLanguage: "English" });
         break;
       case "tr":
-        await this.setState({ currLanguage: "English" });
+        await this.setState({ currLanguage: "Turkish" });
         break;
     }
     this.fetchSymptoms();

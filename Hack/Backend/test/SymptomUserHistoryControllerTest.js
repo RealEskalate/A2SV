@@ -82,6 +82,49 @@ describe("Symptom User History API", () => {
     expect(response.body).to.have.property("user_id");
     expect(response.body.events).to.have.lengthOf(2);
   });
+  it("It should not save multiple symptom history", async () => {
+    let save_symptoms = await chai
+      .request(server)
+      .post("/api/symptomuser/multiple/")
+      .set("Authorization", "Bearer " + tokens)
+      .send({
+        _id: mongoose.Types.ObjectId(),
+        symptoms: [symptom2._id],
+      });
+    save_symptoms = await chai
+      .request(server)
+      .post("/api/symptomuser/multiple/")
+      .set("Authorization", "Bearer " + tokens)
+      .send({
+        _id: mongoose.Types.ObjectId(),
+        symptoms: [symptom._id],
+      });
+    save_symptoms = await chai
+      .request(server)
+      .post("/api/symptomuser/multiple/")
+      .set("Authorization", "Bearer " + tokens)
+      .send({
+        _id: mongoose.Types.ObjectId(),
+        symptoms: [symptom2._id],
+      });
+    save_symptoms = await chai
+      .request(server)
+      .post("/api/symptomuser/multiple/")
+      .set("Authorization", "Bearer " + tokens)
+      .send({
+        _id: mongoose.Types.ObjectId(),
+        symptoms: [symptom._id],
+      });
+    let response = await chai
+      .request(server)
+      .get("/api/symptomuserhistory/user/" + user._id)
+      .set("Authorization", "Bearer " + tokens);
+
+    expect(response).to.have.status(200);
+    expect(response.body).to.be.a("object");
+    expect(response.body).to.have.property("user_id");
+    expect(response.body.events).to.have.lengthOf(2);
+  });
   it("It should not save any new symptom history", async () => {
     let save_symptoms = await chai
       .request(server)

@@ -118,6 +118,36 @@ exports.post_multiple_symptoms = async (req, res) => {
     });
   }
   const currentDate = new Date(Date.now());
+  const existingEntries = existingSymptoms.map(
+    (symptomuser) => symptomuser.symptom_id._id.toString()
+  );
+  let todaySymptoms = [];
+  history.events.map(
+    (symptom) =>{
+      let hi = symptom.symptom_id.toString()
+      if (symptom.end.getDate() == currentDate.getDate() &&
+      symptom.end.getMonth() == currentDate.getMonth() &&
+      symptom.end.getFullYear() == currentDate.getFullYear() &&
+      symptoms.includes(symptom.symptom_id.toString())){
+        todaySymptoms.push(symptom);
+      }
+    });
+  todaySymptoms.forEach( // Save symptom with start set to the previous start and remove entry from history
+    async (symptom) => {
+      await SymptomUserHistory.updateOne({_id: history._id}, 
+        {"$pull": {"events": {"symptom_id": symptom.symptom_id, start: symptom.start}}})
+      let symptomuser = new SymptomUser({
+        symptom_id: symptom.symptom_id,
+        user_id: req.body.loggedInUser,
+        timestamp: symptom.start
+      });
+      try {
+        await symptomuser.save();
+      } catch (error) {
+        console.log(error.toString());
+      }
+      existingEntries.push(symptom.symptom_id.toString());
+  });
   const toBeRemoved = [];
   for (let ix in difference) {
     toBeRemoved.push(difference[ix]._id);
@@ -133,9 +163,6 @@ exports.post_multiple_symptoms = async (req, res) => {
   await history.markModified("events");
   await history.save();
 
-  const existingEntries = existingSymptoms.map(
-    (symptomuser) => symptomuser.symptom_id._id.toString()
-  );
   for (let index in symptoms) {
     let id = symptoms[index];
     let symptomuser = new SymptomUser({
