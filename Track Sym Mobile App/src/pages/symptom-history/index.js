@@ -116,10 +116,10 @@ export default class SymptomHistory extends Component {
         await this.setState({ currLanguage: "English" });
         break;
       case "orm":
-        await this.setState({ currLanguage: "Oromo" });
+        await this.setState({ currLanguage: "English" });
         break;
       case "tr":
-        await this.setState({ currLanguage: "English" });
+        await this.setState({ currLanguage: "Turkish" });
         break;
     }
     this.fetchUserSymptoms(userIDStore.getState().userId);
@@ -175,7 +175,7 @@ export default class SymptomHistory extends Component {
     fetch(
       `https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/symptomuserhistory/user/${
         userIDStore.getState().userId
-      }`,
+      }?language=${this.state.currLanguage}`,
       {
         method: "GET",
         headers: {
@@ -419,11 +419,13 @@ export default class SymptomHistory extends Component {
                     >
                       <Layout style={{ justifyContent: "center" }}>
                         <Text category="h6">{item.name}</Text>
+                      </Layout>
+                      <Layout style={{ justifyContent: "center" }}>
                         <Text appearance="hint">
                           Registered {this.getParsedDate(item.start)}
                         </Text>
                       </Layout>
-                      <Layout
+                      {/* <Layout
                         style={{
                           width: 50,
                           height: 40,
@@ -440,7 +442,7 @@ export default class SymptomHistory extends Component {
                           }}
                         />
                         <Text appearance="hint">{item.relevance}</Text>
-                      </Layout>
+                      </Layout> */}
                     </Layout>
                     <Divider />
                   </>
