@@ -1,7 +1,6 @@
 {
   "sources": "Maddeen",
   "country": "Biyya",
-  "dateRange": "Dheerina Yeroo",
   "world": "Addunyaa",
   "resourcesPer1K": "Dhiyeessii nama kuma tokkoof",
   "totalCases": "Waliigala Kan Qabaman",
@@ -28,7 +27,7 @@
     "statesTransitionTitle": "Adeemsa Jijjiiramaa",
     "statesTransitionSubtitle": "Adeemsa Akkamii Keessa Darba?",
     "incubation": "Of Dhoksuu Vaayirasichaa",
-    "mildOrNoSymptom": "Mallattoo Sasalphaa",
+    "mildOrNoSymptom": "torrentgalaxy Sasalphaa",
     "heavySymptoms": "Mallattoo Ulfaataa",
     "hospitalization": "Hospitaala Ciisanii Yaalamuu",
     "icu": "Kutaa Yaala Addaa",
@@ -57,6 +56,15 @@
     "viewRates": "Sadarkaa Jijjiiramaa",
     "compareCountries": "Biyyoota Wal Madaalchisi",
     "compareDiseases": "Dhukkuboota Wal Fakkaatan Wal Madaalchisi"
+  },
+  "criteria": {
+    "totalConfirmed": "Waliigalaa kan qabaman",
+    "totalRecovered": "Waliigalaa kan bayyanatan",
+    "totalActive": "Wal'aansa irra kan jiran",
+    "totalDeaths": "Kan boqotan",
+    "dailyConfirmed": "Har'a Kan qabaman",
+    "dailyRecovered": "Har'a Kan bayanatan",
+    "dailyDeaths": "Har'a Kan du'an"
   },
   "learningPathHeaders": {
     "taskName": "Hojiirra Oolmaa",
@@ -137,6 +145,11 @@
     "gender": "Koorniyaa",
     "undisclosed": "Ifa kan hin baanee",
     "cancel": "Dhiisi",
-    "saveChanges": "Jijjiirama ol kaa’i"
+    "saveChanges": "Jijjiirama ol kaa’i",
+    "pleaseLoginToViewThisMap": "Kaartaa kana ilaaluuf seenu qabda."
+  },
+  "map": {
+    "symptomTracker": "Mallattowwan Hordofu",
+    "globalStatistics": "Istatistiksii Addunyawa"
   }
 }

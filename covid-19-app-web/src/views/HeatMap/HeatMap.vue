@@ -3,13 +3,15 @@
     <v-container>
       <v-row>
         <v-col>
-          <h3 class="display-1 font-weight-thin mb-5" v-text="'Heat Map'" />
+          <h3 class="display-1 font-weight-thin mb-5">
+            {{ $t("navbar.map") }}
+          </h3>
           <v-tabs show-arrows="mobile" fixed-tabs centered>
             <v-tab>
-              Symptom Tracker
+              {{ $t("map.symptomTracker") }}
             </v-tab>
             <v-tab>
-              Global Statistics
+              {{ $t("map.globalStatistics") }}
             </v-tab>
             <v-tab-item>
               <v-responsive
@@ -25,17 +27,17 @@
                   class="mt-5 mx-1 shadow-sm d-flex align-center justify-center"
                 >
                   <div class="text-center">
-                    <h3
-                      class="font-weight-regular my-3"
-                      v-text="'Please login to view this map.'"
-                    />
+                    <h3 class="font-weight-regular my-3">
+                      {{ $t("auth.pleaseLoginToViewThisMap") }}
+                    </h3>
                     <v-btn
                       dark
                       color="primary"
                       class="v-card--shaped"
                       :to="{ name: 'Login' }"
-                      v-text="'Login'"
-                    />
+                    >
+                      {{ $t("auth.login") }}
+                    </v-btn>
                   </div>
                 </v-card>
                 <sym-track v-else class="mt-5 mx-1" style="height: 95%" />

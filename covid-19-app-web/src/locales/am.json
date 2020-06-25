@@ -1,7 +1,6 @@
 {
   "sources": "ምንጮች",
   "country": "ሀገር",
-  "dateRange": "መጀመሪያ - መጨረሻ",
   "world": "አለም",
   "resourcesPer1K": "ለየ1ሺ ሰዎች ያለው አቅራቦት",
   "totalCases": "ጠቅላላ በበሽታው የተያዘ",
@@ -63,7 +62,15 @@
     "compareCountries": "ሐገራትን ያወዳድሩ",
     "compareDiseases": "ከተመሳሳይ በሽታዎች ጋር ያወዳድሩ"
   },
-
+  "criteria": {
+    "totalConfirmed": "አጠቃላይ የተረጋገጡ ብዛት",
+    "totalRecovered": "አጠቃላይ ያገገሙ ብዛት",
+    "totalActive": "ከቫይረሱ ጋር የሚገኙ ብዛት",
+    "totalDeaths": "አጠቃላይ የሞት ብዛት",
+    "dailyConfirmed": "በእለት የተረጋገጡ",
+    "dailyRecovered": "በእለቱ ያገገሙ",
+    "dailyDeaths": "እለታዊ ሞት"
+  },
   "learningPathHeaders": {
     "taskName": "የተግባር ስም",
     "what": "ምንድን",
@@ -148,7 +155,12 @@
     "gender": "ጾታ",
     "undisclosed": "አልገልጽም",
     "cancel": "ሰርዝ",
-    "saveChanges": "ለውጦችን አስቀምጥ"
+    "saveChanges": "ለውጦችን አስቀምጥ",
+    "pleaseLoginToViewThisMap": "እባክዎ ይህንን ካርታ ለመመልከት ይግቡ"
+  },
+  "map": {
+    "symptomTracker": "የህመም ምልክት መከታተያ",
+    "globalStatistics": "አለም አቀፍ ስታቲስቲክስ"
   }
 }
 
