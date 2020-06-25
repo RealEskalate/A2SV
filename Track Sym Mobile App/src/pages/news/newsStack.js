@@ -4,7 +4,7 @@ import {
   CardStyleInterpolators,
 } from '@react-navigation/stack';
 
-import NewsScreen from './news';
+import { default as NewsScreen } from './newsClass';
 import NewsView from './NewsView';
 
 const { Navigator, Screen } = createStackNavigator();
