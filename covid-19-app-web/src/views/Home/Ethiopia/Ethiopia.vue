@@ -49,6 +49,8 @@
                 class="v-card--shaped"
                 v-model="regional_criteria"
                 :items="allCriteria"
+                :item-text="$t(`text`)"
+                :item-value="value"
                 @input="setChartData"
               />
               <doughnut-chart
@@ -236,14 +238,14 @@ export default {
     return {
       mdiPhone,
       allCriteria: [
-        { text: "Total Confirmed", value: "total_confirmed" },
-        { text: "Total Recovered", value: "total_recovered" },
-        { text: "Total Active", value: "total_active" },
-        { text: "Total Deaths", value: "total_deaths" },
+        { text: this.$t("criteria.totalConfirmed"), value: "total_confirmed" },
+        { text: this.$t("criteria.totalRecovered"), value: "total_recovered" },
+        { text: this.$t("criteria.totalActive"), value: "total_active" },
+        { text: this.$t("criteria.totalDeaths"), value: "total_deaths" },
 
-        { text: "Daily Confirmed", value: "daily_confirmed" },
-        { text: "Daily Recovered", value: "daily_recovered" },
-        { text: "Daily Deaths", value: "daily_deaths" }
+        { text: this.$t("criteria.dailyConfirmed"), value: "daily_confirmed" },
+        { text: this.$t("criteria.dailyRecovered"), value: "daily_recovered" },
+        { text: this.$t("criteria.dailyDeaths"), value: "daily_deaths" }
       ],
       regional_criteria: "total_confirmed",
       regionalStats: {},

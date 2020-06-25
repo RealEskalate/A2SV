@@ -1,0 +1,617 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta content="IE=edge" http-equiv="X-UA-Compatible"><meta content="width=device-width,initial-scale=1" name="viewport"><meta property="og:title" content="TrackSym"><meta property="og:description" content="TrackSym - A non-commercial COVID-19 Symptom Tracker app that uses crowd-sourcing to collect and visualize the density of the relevant symptoms. Registration only asks about age and gender to be used for data science purposes. Users can anonymously report symptoms and choose a location to see the density of symptoms in a map view. The data is aggregated by places, therefore, the app can help people avoid visiting a grocery store or a gas station that is heavily used by symptomatic people."><meta property="og:image" content="/logo.png"><meta property="og:image:width" content="100px"><meta property="og:image:height" content="100px"><meta property="og:url" content="http://a2sv-covid.herokuapp.com"><meta property="og:type" content="article"><link href="/favicon.ico" rel="icon"><title>TrackSym - Covid-19 Symptom Tracker</title><script>const link = document.createElement('link');
+    link.href = "https://fonts.googleapis.com/css?family=Nunito:display=swap";
+    link.rel = 'stylesheet';
+    link.crossOrigin = 'crossorigin';
+    performance.mark('add-stylesheet');
+    document.head.appendChild(link);
+    link.onload = () => {
+      performance.measure('stylesheet-onload', 'add-stylesheet');
+    }</script><link href="https://fonts.googleapis.com/css?family=Nunito:display=swap" rel="stylesheet" crossorigin="crossorigin"><link href="/css/app.6fb1009f.css" rel="preload" as="style"><link href="/css/chunk-vendors.4e60656d.css" rel="preload" as="style"><link href="/js/app.ea8d0ab7.js" rel="preload" as="script"><link href="/js/chunk-vendors.7097c02e.js" rel="preload" as="script"><link href="/css/chunk-vendors.4e60656d.css" rel="stylesheet"><link href="/css/app.6fb1009f.css" rel="stylesheet"><style type="text/css"> .__cov-progress { opacity: 1; z-index: 999999; } </style><style type="text/css">.resize-observer[data-v-b329ee4c]{position:absolute;top:0;left:0;z-index:-1;width:100%;height:100%;border:none;background-color:transparent;pointer-events:none;display:block;overflow:hidden;opacity:0}.resize-observer[data-v-b329ee4c] object{display:block;position:absolute;top:0;left:0;height:100%;width:100%;overflow:hidden;pointer-events:none;z-index:-1}</style><link rel="stylesheet" type="text/css" href="/css/chunk-283c4a51.44f5121a.css"><script charset="utf-8" src="/js/chunk-283c4a51.aaf8b307.js"></script><link rel="stylesheet" type="text/css" href="/css/chunk-38737b03.ef9692b7.css"><script charset="utf-8" src="/js/chunk-38737b03.33bfeb82.js"></script><link rel="stylesheet" type="text/css" href="/css/chunk-946e7a32.3dc5f5f4.css"><script charset="utf-8" src="/js/chunk-946e7a32.e6340fe5.js"></script><style type="text/css" id="vuetify-theme-stylesheet">.v-application a { color: #039be5; }
+.v-application .primary {
+  background-color: #039be5 !important;
+  border-color: #039be5 !important;
+}
+.v-application .primary--text {
+  color: #039be5 !important;
+  caret-color: #039be5 !important;
+}
+.v-application .primary.lighten-5 {
+  background-color: #caffff !important;
+  border-color: #caffff !important;
+}
+.v-application .primary--text.text--lighten-5 {
+  color: #caffff !important;
+  caret-color: #caffff !important;
+}
+.v-application .primary.lighten-4 {
+  background-color: #abffff !important;
+  border-color: #abffff !important;
+}
+.v-application .primary--text.text--lighten-4 {
+  color: #abffff !important;
+  caret-color: #abffff !important;
+}
+.v-application .primary.lighten-3 {
+  background-color: #8bedff !important;
+  border-color: #8bedff !important;
+}
+.v-application .primary--text.text--lighten-3 {
+  color: #8bedff !important;
+  caret-color: #8bedff !important;
+}
+.v-application .primary.lighten-2 {
+  background-color: #6ad1ff !important;
+  border-color: #6ad1ff !important;
+}
+.v-application .primary--text.text--lighten-2 {
+  color: #6ad1ff !important;
+  caret-color: #6ad1ff !important;
+}
+.v-application .primary.lighten-1 {
+  background-color: #45b6ff !important;
+  border-color: #45b6ff !important;
+}
+.v-application .primary--text.text--lighten-1 {
+  color: #45b6ff !important;
+  caret-color: #45b6ff !important;
+}
+.v-application .primary.darken-1 {
+  background-color: #0081c9 !important;
+  border-color: #0081c9 !important;
+}
+.v-application .primary--text.text--darken-1 {
+  color: #0081c9 !important;
+  caret-color: #0081c9 !important;
+}
+.v-application .primary.darken-2 {
+  background-color: #0068ad !important;
+  border-color: #0068ad !important;
+}
+.v-application .primary--text.text--darken-2 {
+  color: #0068ad !important;
+  caret-color: #0068ad !important;
+}
+.v-application .primary.darken-3 {
+  background-color: #005092 !important;
+  border-color: #005092 !important;
+}
+.v-application .primary--text.text--darken-3 {
+  color: #005092 !important;
+  caret-color: #005092 !important;
+}
+.v-application .primary.darken-4 {
+  background-color: #003a78 !important;
+  border-color: #003a78 !important;
+}
+.v-application .primary--text.text--darken-4 {
+  color: #003a78 !important;
+  caret-color: #003a78 !important;
+}
+.v-application .secondary {
+  background-color: #9e9e9e !important;
+  border-color: #9e9e9e !important;
+}
+.v-application .secondary--text {
+  color: #9e9e9e !important;
+  caret-color: #9e9e9e !important;
+}
+.v-application .secondary.lighten-5 {
+  background-color: #ffffff !important;
+  border-color: #ffffff !important;
+}
+.v-application .secondary--text.text--lighten-5 {
+  color: #ffffff !important;
+  caret-color: #ffffff !important;
+}
+.v-application .secondary.lighten-4 {
+  background-color: #ffffff !important;
+  border-color: #ffffff !important;
+}
+.v-application .secondary--text.text--lighten-4 {
+  color: #ffffff !important;
+  caret-color: #ffffff !important;
+}
+.v-application .secondary.lighten-3 {
+  background-color: #f1f1f1 !important;
+  border-color: #f1f1f1 !important;
+}
+.v-application .secondary--text.text--lighten-3 {
+  color: #f1f1f1 !important;
+  caret-color: #f1f1f1 !important;
+}
+.v-application .secondary.lighten-2 {
+  background-color: #d5d5d5 !important;
+  border-color: #d5d5d5 !important;
+}
+.v-application .secondary--text.text--lighten-2 {
+  color: #d5d5d5 !important;
+  caret-color: #d5d5d5 !important;
+}
+.v-application .secondary.lighten-1 {
+  background-color: #b9b9b9 !important;
+  border-color: #b9b9b9 !important;
+}
+.v-application .secondary--text.text--lighten-1 {
+  color: #b9b9b9 !important;
+  caret-color: #b9b9b9 !important;
+}
+.v-application .secondary.darken-1 {
+  background-color: #848484 !important;
+  border-color: #848484 !important;
+}
+.v-application .secondary--text.text--darken-1 {
+  color: #848484 !important;
+  caret-color: #848484 !important;
+}
+.v-application .secondary.darken-2 {
+  background-color: #6b6b6b !important;
+  border-color: #6b6b6b !important;
+}
+.v-application .secondary--text.text--darken-2 {
+  color: #6b6b6b !important;
+  caret-color: #6b6b6b !important;
+}
+.v-application .secondary.darken-3 {
+  background-color: #535353 !important;
+  border-color: #535353 !important;
+}
+.v-application .secondary--text.text--darken-3 {
+  color: #535353 !important;
+  caret-color: #535353 !important;
+}
+.v-application .secondary.darken-4 {
+  background-color: #3c3c3c !important;
+  border-color: #3c3c3c !important;
+}
+.v-application .secondary--text.text--darken-4 {
+  color: #3c3c3c !important;
+  caret-color: #3c3c3c !important;
+}
+.v-application .accent {
+  background-color: #90a4ae !important;
+  border-color: #90a4ae !important;
+}
+.v-application .accent--text {
+  color: #90a4ae !important;
+  caret-color: #90a4ae !important;
+}
+.v-application .accent.lighten-5 {
+  background-color: #ffffff !important;
+  border-color: #ffffff !important;
+}
+.v-application .accent--text.text--lighten-5 {
+  color: #ffffff !important;
+  caret-color: #ffffff !important;
+}
+.v-application .accent.lighten-4 {
+  background-color: #ffffff !important;
+  border-color: #ffffff !important;
+}
+.v-application .accent--text.text--lighten-4 {
+  color: #ffffff !important;
+  caret-color: #ffffff !important;
+}
+.v-application .accent.lighten-3 {
+  background-color: #e2f7ff !important;
+  border-color: #e2f7ff !important;
+}
+.v-application .accent--text.text--lighten-3 {
+  color: #e2f7ff !important;
+  caret-color: #e2f7ff !important;
+}
+.v-application .accent.lighten-2 {
+  background-color: #c6dbe5 !important;
+  border-color: #c6dbe5 !important;
+}
+.v-application .accent--text.text--lighten-2 {
+  color: #c6dbe5 !important;
+  caret-color: #c6dbe5 !important;
+}
+.v-application .accent.lighten-1 {
+  background-color: #abbfc9 !important;
+  border-color: #abbfc9 !important;
+}
+.v-application .accent--text.text--lighten-1 {
+  color: #abbfc9 !important;
+  caret-color: #abbfc9 !important;
+}
+.v-application .accent.darken-1 {
+  background-color: #768a93 !important;
+  border-color: #768a93 !important;
+}
+.v-application .accent--text.text--darken-1 {
+  color: #768a93 !important;
+  caret-color: #768a93 !important;
+}
+.v-application .accent.darken-2 {
+  background-color: #5d707a !important;
+  border-color: #5d707a !important;
+}
+.v-application .accent--text.text--darken-2 {
+  color: #5d707a !important;
+  caret-color: #5d707a !important;
+}
+.v-application .accent.darken-3 {
+  background-color: #455861 !important;
+  border-color: #455861 !important;
+}
+.v-application .accent--text.text--darken-3 {
+  color: #455861 !important;
+  caret-color: #455861 !important;
+}
+.v-application .accent.darken-4 {
+  background-color: #2e4149 !important;
+  border-color: #2e4149 !important;
+}
+.v-application .accent--text.text--darken-4 {
+  color: #2e4149 !important;
+  caret-color: #2e4149 !important;
+}
+.v-application .error {
+  background-color: #e57373 !important;
+  border-color: #e57373 !important;
+}
+.v-application .error--text {
+  color: #e57373 !important;
+  caret-color: #e57373 !important;
+}
+.v-application .error.lighten-5 {
+  background-color: #fffffb !important;
+  border-color: #fffffb !important;
+}
+.v-application .error--text.text--lighten-5 {
+  color: #fffffb !important;
+  caret-color: #fffffb !important;
+}
+.v-application .error.lighten-4 {
+  background-color: #ffe2de !important;
+  border-color: #ffe2de !important;
+}
+.v-application .error--text.text--lighten-4 {
+  color: #ffe2de !important;
+  caret-color: #ffe2de !important;
+}
+.v-application .error.lighten-3 {
+  background-color: #ffc5c2 !important;
+  border-color: #ffc5c2 !important;
+}
+.v-application .error--text.text--lighten-3 {
+  color: #ffc5c2 !important;
+  caret-color: #ffc5c2 !important;
+}
+.v-application .error.lighten-2 {
+  background-color: #ffa9a7 !important;
+  border-color: #ffa9a7 !important;
+}
+.v-application .error--text.text--lighten-2 {
+  color: #ffa9a7 !important;
+  caret-color: #ffa9a7 !important;
+}
+.v-application .error.lighten-1 {
+  background-color: #ff8e8d !important;
+  border-color: #ff8e8d !important;
+}
+.v-application .error--text.text--lighten-1 {
+  color: #ff8e8d !important;
+  caret-color: #ff8e8d !important;
+}
+.v-application .error.darken-1 {
+  background-color: #c7595a !important;
+  border-color: #c7595a !important;
+}
+.v-application .error--text.text--darken-1 {
+  color: #c7595a !important;
+  caret-color: #c7595a !important;
+}
+.v-application .error.darken-2 {
+  background-color: #a93f43 !important;
+  border-color: #a93f43 !important;
+}
+.v-application .error--text.text--darken-2 {
+  color: #a93f43 !important;
+  caret-color: #a93f43 !important;
+}
+.v-application .error.darken-3 {
+  background-color: #8c232d !important;
+  border-color: #8c232d !important;
+}
+.v-application .error--text.text--darken-3 {
+  color: #8c232d !important;
+  caret-color: #8c232d !important;
+}
+.v-application .error.darken-4 {
+  background-color: #6f0018 !important;
+  border-color: #6f0018 !important;
+}
+.v-application .error--text.text--darken-4 {
+  color: #6f0018 !important;
+  caret-color: #6f0018 !important;
+}
+.v-application .info {
+  background-color: #2196f3 !important;
+  border-color: #2196f3 !important;
+}
+.v-application .info--text {
+  color: #2196f3 !important;
+  caret-color: #2196f3 !important;
+}
+.v-application .info.lighten-5 {
+  background-color: #d4ffff !important;
+  border-color: #d4ffff !important;
+}
+.v-application .info--text.text--lighten-5 {
+  color: #d4ffff !important;
+  caret-color: #d4ffff !important;
+}
+.v-application .info.lighten-4 {
+  background-color: #b5ffff !important;
+  border-color: #b5ffff !important;
+}
+.v-application .info--text.text--lighten-4 {
+  color: #b5ffff !important;
+  caret-color: #b5ffff !important;
+}
+.v-application .info.lighten-3 {
+  background-color: #95e8ff !important;
+  border-color: #95e8ff !important;
+}
+.v-application .info--text.text--lighten-3 {
+  color: #95e8ff !important;
+  caret-color: #95e8ff !important;
+}
+.v-application .info.lighten-2 {
+  background-color: #75ccff !important;
+  border-color: #75ccff !important;
+}
+.v-application .info--text.text--lighten-2 {
+  color: #75ccff !important;
+  caret-color: #75ccff !important;
+}
+.v-application .info.lighten-1 {
+  background-color: #51b0ff !important;
+  border-color: #51b0ff !important;
+}
+.v-application .info--text.text--lighten-1 {
+  color: #51b0ff !important;
+  caret-color: #51b0ff !important;
+}
+.v-application .info.darken-1 {
+  background-color: #007cd6 !important;
+  border-color: #007cd6 !important;
+}
+.v-application .info--text.text--darken-1 {
+  color: #007cd6 !important;
+  caret-color: #007cd6 !important;
+}
+.v-application .info.darken-2 {
+  background-color: #0064ba !important;
+  border-color: #0064ba !important;
+}
+.v-application .info--text.text--darken-2 {
+  color: #0064ba !important;
+  caret-color: #0064ba !important;
+}
+.v-application .info.darken-3 {
+  background-color: #004d9f !important;
+  border-color: #004d9f !important;
+}
+.v-application .info--text.text--darken-3 {
+  color: #004d9f !important;
+  caret-color: #004d9f !important;
+}
+.v-application .info.darken-4 {
+  background-color: #003784 !important;
+  border-color: #003784 !important;
+}
+.v-application .info--text.text--darken-4 {
+  color: #003784 !important;
+  caret-color: #003784 !important;
+}
+.v-application .success {
+  background-color: #66bb6a !important;
+  border-color: #66bb6a !important;
+}
+.v-application .success--text {
+  color: #66bb6a !important;
+  caret-color: #66bb6a !important;
+}
+.v-application .success.lighten-5 {
+  background-color: #f4fff2 !important;
+  border-color: #f4fff2 !important;
+}
+.v-application .success--text.text--lighten-5 {
+  color: #f4fff2 !important;
+  caret-color: #f4fff2 !important;
+}
+.v-application .success.lighten-4 {
+  background-color: #d6ffd6 !important;
+  border-color: #d6ffd6 !important;
+}
+.v-application .success--text.text--lighten-4 {
+  color: #d6ffd6 !important;
+  caret-color: #d6ffd6 !important;
+}
+.v-application .success.lighten-3 {
+  background-color: #baffba !important;
+  border-color: #baffba !important;
+}
+.v-application .success--text.text--lighten-3 {
+  color: #baffba !important;
+  caret-color: #baffba !important;
+}
+.v-application .success.lighten-2 {
+  background-color: #9df49e !important;
+  border-color: #9df49e !important;
+}
+.v-application .success--text.text--lighten-2 {
+  color: #9df49e !important;
+  caret-color: #9df49e !important;
+}
+.v-application .success.lighten-1 {
+  background-color: #82d784 !important;
+  border-color: #82d784 !important;
+}
+.v-application .success--text.text--lighten-1 {
+  color: #82d784 !important;
+  caret-color: #82d784 !important;
+}
+.v-application .success.darken-1 {
+  background-color: #4aa051 !important;
+  border-color: #4aa051 !important;
+}
+.v-application .success--text.text--darken-1 {
+  color: #4aa051 !important;
+  caret-color: #4aa051 !important;
+}
+.v-application .success.darken-2 {
+  background-color: #2d8539 !important;
+  border-color: #2d8539 !important;
+}
+.v-application .success--text.text--darken-2 {
+  color: #2d8539 !important;
+  caret-color: #2d8539 !important;
+}
+.v-application .success.darken-3 {
+  background-color: #056b21 !important;
+  border-color: #056b21 !important;
+}
+.v-application .success--text.text--darken-3 {
+  color: #056b21 !important;
+  caret-color: #056b21 !important;
+}
+.v-application .success.darken-4 {
+  background-color: #005207 !important;
+  border-color: #005207 !important;
+}
+.v-application .success--text.text--darken-4 {
+  color: #005207 !important;
+  caret-color: #005207 !important;
+}
+.v-application .warning {
+  background-color: #fb8c00 !important;
+  border-color: #fb8c00 !important;
+}
+.v-application .warning--text {
+  color: #fb8c00 !important;
+  caret-color: #fb8c00 !important;
+}
+.v-application .warning.lighten-5 {
+  background-color: #ffff9e !important;
+  border-color: #ffff9e !important;
+}
+.v-application .warning--text.text--lighten-5 {
+  color: #ffff9e !important;
+  caret-color: #ffff9e !important;
+}
+.v-application .warning.lighten-4 {
+  background-color: #fffb82 !important;
+  border-color: #fffb82 !important;
+}
+.v-application .warning--text.text--lighten-4 {
+  color: #fffb82 !important;
+  caret-color: #fffb82 !important;
+}
+.v-application .warning.lighten-3 {
+  background-color: #ffdf67 !important;
+  border-color: #ffdf67 !important;
+}
+.v-application .warning--text.text--lighten-3 {
+  color: #ffdf67 !important;
+  caret-color: #ffdf67 !important;
+}
+.v-application .warning.lighten-2 {
+  background-color: #ffc24b !important;
+  border-color: #ffc24b !important;
+}
+.v-application .warning--text.text--lighten-2 {
+  color: #ffc24b !important;
+  caret-color: #ffc24b !important;
+}
+.v-application .warning.lighten-1 {
+  background-color: #ffa72d !important;
+  border-color: #ffa72d !important;
+}
+.v-application .warning--text.text--lighten-1 {
+  color: #ffa72d !important;
+  caret-color: #ffa72d !important;
+}
+.v-application .warning.darken-1 {
+  background-color: #db7200 !important;
+  border-color: #db7200 !important;
+}
+.v-application .warning--text.text--darken-1 {
+  color: #db7200 !important;
+  caret-color: #db7200 !important;
+}
+.v-application .warning.darken-2 {
+  background-color: #bb5900 !important;
+  border-color: #bb5900 !important;
+}
+.v-application .warning--text.text--darken-2 {
+  color: #bb5900 !important;
+  caret-color: #bb5900 !important;
+}
+.v-application .warning.darken-3 {
+  background-color: #9d4000 !important;
+  border-color: #9d4000 !important;
+}
+.v-application .warning--text.text--darken-3 {
+  color: #9d4000 !important;
+  caret-color: #9d4000 !important;
+}
+.v-application .warning.darken-4 {
+  background-color: #802700 !important;
+  border-color: #802700 !important;
+}
+.v-application .warning--text.text--darken-4 {
+  color: #802700 !important;
+  caret-color: #802700 !important;
+}</style><style type="text/css">/* Chart.js */
+/*
+ * DOM element rendering detection
+ * https://davidwalsh.name/detect-node-insertion
+ */
+@keyframes chartjs-render-animation {
+	from { opacity: 0.99; }
+	to { opacity: 1; }
+}
+
+.chartjs-render-monitor {
+	animation: chartjs-render-animation 0.001s;
+}
+
+/*
+ * DOM element resizing detection
+ * https://github.com/marcj/css-element-queries
+ */
+.chartjs-size-monitor,
+.chartjs-size-monitor-expand,
+.chartjs-size-monitor-shrink {
+	position: absolute;
+	direction: ltr;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	overflow: hidden;
+	pointer-events: none;
+	visibility: hidden;
+	z-index: -1;
+}
+
+.chartjs-size-monitor-expand > div {
+	position: absolute;
+	width: 1000000px;
+	height: 1000000px;
+	left: 0;
+	top: 0;
+}
+
+.chartjs-size-monitor-shrink > div {
+	position: absolute;
+	width: 200%;
+	height: 200%;
+	left: 0;
+	top: 0;
+}
+</style></head><body><noscript><strong>We're sorry but covid-19-app-web doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div data-app="true" class="v-application v-application--is-ltr theme--light" id="app"><div class="v-application--wrap"><div data-v-10eb2b9d="" class="container white"><header data-v-10eb2b9d="" class="white v-sheet theme--light v-toolbar v-toolbar--flat v-app-bar v-app-bar--fixed" style="height: 56px; margin-top: 0px; transform: translateY(0px); left: 0px; right: 0px; border-radius: 0px 0px 25px;" data-booted="true"><div class="v-toolbar__content" style="height: 56px;"><!----><button data-v-10eb2b9d="" type="button" class="d-flex align-center ml-3 v-btn v-btn--flat v-btn--text theme--light v-size--default" data-v-step="0"><span class="v-btn__content"><div data-v-10eb2b9d="" aria-label="Company Logo" role="img" class="v-image v-responsive shrink theme--light" style="width: 135px; transition: width 0.2s ease 0s;"><div class="v-responsive__sizer" style="padding-bottom: 25.0909%;"></div><div class="v-image__image v-image__image--contain" style="background-image: url(&quot;http://localhost:8000/img/brand/blue.png&quot;); background-position: center center;"></div><div class="v-responsive__content" style="width: 275px;"></div></div></span></button><div data-v-10eb2b9d="" class="spacer"></div><a data-v-10eb2b9d="" href="/tr/" aria-current="page" class="hidden-sm-and-down v-card--shaped nav-btn border-bottom v-btn--active v-btn v-btn--flat v-btn--router v-btn--text theme--light v-size--default"><span class="v-btn__content"><span data-v-10eb2b9d="" class="text-capitalize"> Ana Sayfa</span></span></a><a data-v-10eb2b9d="" href="/tr/information" class="hidden-sm-and-down v-card--shaped nav-btn v-btn v-btn--flat v-btn--router v-btn--text theme--light v-size--default"><span class="v-btn__content"><span data-v-10eb2b9d="" class="text-capitalize"> Bilgi</span></span></a><a data-v-10eb2b9d="" href="/tr/about" class="hidden-sm-and-down v-card--shaped nav-btn v-btn v-btn--flat v-btn--router v-btn--text theme--light v-size--default"><span class="v-btn__content"><span data-v-10eb2b9d="" class="text-capitalize"> Hakkında</span></span></a><a data-v-10eb2b9d="" href="/tr/news" class="hidden-sm-and-down v-card--shaped nav-btn v-btn v-btn--flat v-btn--router v-btn--text theme--light v-size--default"><span class="v-btn__content"><span data-v-10eb2b9d="" class="text-capitalize"> Haberler</span></span></a><a data-v-10eb2b9d="" href="/tr/map" class="hidden-sm-and-down v-card--shaped nav-btn v-btn v-btn--flat v-btn--router v-btn--text theme--light v-size--default"><span class="v-btn__content"><span data-v-10eb2b9d="" class="text-capitalize"> Harita</span></span></a><hr data-v-10eb2b9d="" role="separator" aria-orientation="vertical" class="mx-2 v-divider v-divider--vertical theme--light"><div data-v-10eb2b9d="" data-v-step="4" class="justify-end pt-7" style="width: 50px;"><div data-v-10eb2b9d="" class="v-input v-input--is-label-active v-input--is-dirty v-input--dense theme--light v-text-field v-text-field--single-line v-text-field--solo v-text-field--solo-flat v-text-field--is-booted v-text-field--enclosed v-select"><div class="v-input__control"><div role="button" aria-haspopup="listbox" aria-expanded="false" aria-owns="list-24" class="v-input__slot"><div class="v-select__slot"><div class="v-select__selections"><small data-v-10eb2b9d="" class="primary--text">TR</small><input id="input-24" readonly="readonly" type="text" aria-readonly="false" autocomplete="off"></div><div class="v-input__append-inner"><small data-v-10eb2b9d=""></small></div><input type="hidden" value="tr"></div><div class="v-menu"><!----></div></div><div class="v-text-field__details"><div class="v-messages theme--light"><div class="v-messages__wrapper"></div></div></div></div></div></div><hr data-v-10eb2b9d="" role="separator" aria-orientation="vertical" class="mr-2 v-divider v-divider--vertical theme--light"><a data-v-10eb2b9d="" href="/tr/login" class="v-card--shaped mx-1 v-btn v-btn--depressed v-btn--router theme--dark v-size--small primary">GİRİŞ</a></div></header><div data-v-10eb2b9d="" class="v-bottom-navigation px-3 overflow-hidden v-item-group theme--light v-bottom-navigation--grow v-bottom-navigation--fixed primary--text" style="height: 56px; transform: none; border-radius: 20px 0px 0px;"><a data-v-10eb2b9d="" href="/tr/" aria-current="page" class="v-btn--active v-btn--active v-btn v-btn--contained v-btn--router theme--light v-btn--active v-size--default"><span class="v-btn__content"><span data-v-10eb2b9d="">Ana Sayfa</span><span data-v-10eb2b9d="" aria-hidden="true" class="v-icon notranslate v-icon--svg theme--light"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="24" width="24" role="img" aria-hidden="true"><path d="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z"></path></svg></span></span></a><a data-v-10eb2b9d="" href="/tr/information" class="v-btn v-btn--contained v-btn--router theme--light v-size--default"><span class="v-btn__content"><span data-v-10eb2b9d="">Bilgi</span><span data-v-10eb2b9d="" aria-hidden="true" class="v-icon notranslate v-icon--svg theme--light"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="24" width="24" role="img" aria-hidden="true"><path d="M21,5C19.89,4.65 18.67,4.5 17.5,4.5C15.55,4.5 13.45,4.9 12,6C10.55,4.9 8.45,4.5 6.5,4.5C4.55,4.5 2.45,4.9 1,6V20.65C1,20.9 1.25,21.15 1.5,21.15C1.6,21.15 1.65,21.1 1.75,21.1C3.1,20.45 5.05,20 6.5,20C8.45,20 10.55,20.4 12,21.5C13.35,20.65 15.8,20 17.5,20C19.15,20 20.85,20.3 22.25,21.05C22.35,21.1 22.4,21.1 22.5,21.1C22.75,21.1 23,20.85 23,20.6V6C22.4,5.55 21.75,5.25 21,5M21,18.5C19.9,18.15 18.7,18 17.5,18C15.8,18 13.35,18.65 12,19.5V8C13.35,7.15 15.8,6.5 17.5,6.5C18.7,6.5 19.9,6.65 21,7V18.5Z"></path></svg></span></span></a><a data-v-10eb2b9d="" href="/tr/about" class="v-btn v-btn--contained v-btn--router theme--light v-size--default"><span class="v-btn__content"><span data-v-10eb2b9d="">Hakkında</span><span data-v-10eb2b9d="" aria-hidden="true" class="v-icon notranslate v-icon--svg theme--light"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="24" width="24" role="img" aria-hidden="true"><path d="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"></path></svg></span></span></a><a data-v-10eb2b9d="" href="/tr/news" class="v-btn v-btn--contained v-btn--router theme--light v-size--default"><span class="v-btn__content"><span data-v-10eb2b9d="">Haberler</span><span data-v-10eb2b9d="" aria-hidden="true" class="v-icon notranslate v-icon--svg theme--light"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="24" width="24" role="img" aria-hidden="true"><path d="M20,11H4V8H20M20,15H13V13H20M20,19H13V17H20M11,19H4V13H11M20.33,4.67L18.67,3L17,4.67L15.33,3L13.67,4.67L12,3L10.33,4.67L8.67,3L7,4.67L5.33,3L3.67,4.67L2,3V19A2,2 0 0,0 4,21H20A2,2 0 0,0 22,19V3L20.33,4.67Z"></path></svg></span></span></a><a data-v-10eb2b9d="" href="/tr/map" class="v-btn v-btn--contained v-btn--router theme--light v-size--default"><span class="v-btn__content"><span data-v-10eb2b9d="">Harita</span><span data-v-10eb2b9d="" aria-hidden="true" class="v-icon notranslate v-icon--svg theme--light"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="24" width="24" role="img" aria-hidden="true"><path d="M15,19L9,16.89V5L15,7.11M20.5,3C20.44,3 20.39,3 20.34,3L15,5.1L9,3L3.36,4.9C3.15,4.97 3,5.15 3,5.38V20.5A0.5,0.5 0 0,0 3.5,21C3.55,21 3.61,21 3.66,20.97L9,18.9L15,21L20.64,19.1C20.85,19 21,18.85 21,18.62V3.5A0.5,0.5 0 0,0 20.5,3Z"></path></svg></span></span></a></div></div><main class="v-main px-md-0 px-3" style="padding: 56px 0px;" data-booted="true"><div class="v-main__wrap"><div class="container home" style="transform-origin: center top 0px;"><section class="statistics pb-10"><div class="container"><div class="row"><div class="col"><h3 class="display-1 font-weight-thin mb-5">KOVİD-19 İstatistikleri</h3></div></div><div class="row"><div class="col"><div class="overflow-hidden v-card v-card--flat v-sheet theme--light"><div class="v-tabs v-tabs--fixed-tabs theme--light"><div role="tablist" class="v-item-group theme--light v-slide-group v-slide-group--has-affixes v-slide-group--is-overflowing v-tabs-bar v-tabs-bar--is-mobile v-tabs-bar--show-arrows primary--text" data-booted="true"><div class="v-slide-group__prev v-slide-group__prev--disabled"><span aria-hidden="true" class="v-icon notranslate v-icon--disabled v-icon--svg theme--light"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="24" width="24" role="img" aria-hidden="true"><path d="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z"></path></svg></span></div><div class="v-slide-group__wrapper"><div class="v-slide-group__content v-tabs-bar__content"><div class="v-tabs-slider-wrapper" style="height: 2px; left: 0px; width: 241px;"><div class="v-tabs-slider"></div></div><div tabindex="0" aria-selected="true" role="tab" class="v-tab v-tab--active" data-v-step="1"><span aria-hidden="true" class="v-icon notranslate v-icon--left v-icon--svg theme--light"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="24" width="24" role="img" aria-hidden="true"><path d="M4,17V9H2V7H6V17H4M22,15C22,16.11 21.1,17 20,17H16V15H20V13H18V11H20V9H16V7H20A2,2 0 0,1 22,9V10.5A1.5,1.5 0 0,1 20.5,12A1.5,1.5 0 0,1 22,13.5V15M14,15V17H8V13C8,11.89 8.9,11 10,11H12V9H8V7H12A2,2 0 0,1 14,9V11C14,12.11 13.1,13 12,13H10V15H14Z"></path></svg></span> Toplam Sayı <div class="spacer"></div><button type="button" class="v-icon notranslate v-icon--link v-icon--svg theme--light primary--text text--darken-1" style="font-size: 16px; height: 16px; width: 16px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="16px" width="16px" role="img" aria-hidden="true"><path d="M11,18H13V16H11V18M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,6A4,4 0 0,0 8,10H10A2,2 0 0,1 12,8A2,2 0 0,1 14,10C14,12 11,11.75 11,15H13C13,12.75 16,12.5 16,10A4,4 0 0,0 12,6Z"></path></svg></button></div><div tabindex="0" aria-selected="false" role="tab" class="v-tab"><span aria-hidden="true" class="v-icon notranslate v-icon--left v-icon--svg theme--light"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="24" width="24" role="img" aria-hidden="true"><path d="M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,2L14.39,5.42C13.65,5.15 12.84,5 12,5C11.16,5 10.35,5.15 9.61,5.42L12,2M3.34,7L7.5,6.65C6.9,7.16 6.36,7.78 5.94,8.5C5.5,9.24 5.25,10 5.11,10.79L3.34,7M3.36,17L5.12,13.23C5.26,14 5.53,14.78 5.95,15.5C6.37,16.24 6.91,16.86 7.5,17.37L3.36,17M20.65,7L18.88,10.79C18.74,10 18.47,9.23 18.05,8.5C17.63,7.78 17.1,7.15 16.5,6.64L20.65,7M20.64,17L16.5,17.36C17.09,16.85 17.62,16.22 18.04,15.5C18.46,14.77 18.73,14 18.87,13.21L20.64,17M12,22L9.59,18.56C10.33,18.83 11.14,19 12,19C12.82,19 13.63,18.83 14.37,18.56L12,22Z"></path></svg></span> Günlük Sayı <div class="spacer"></div><button type="button" class="v-icon notranslate v-icon--link v-icon--svg theme--light primary--text text--darken-1" style="font-size: 16px; height: 16px; width: 16px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="16px" width="16px" role="img" aria-hidden="true"><path d="M11,18H13V16H11V18M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,6A4,4 0 0,0 8,10H10A2,2 0 0,1 12,8A2,2 0 0,1 14,10C14,12 11,11.75 11,15H13C13,12.75 16,12.5 16,10A4,4 0 0,0 12,6Z"></path></svg></button></div><div tabindex="0" aria-selected="false" role="tab" class="v-tab"><span aria-hidden="true" class="v-icon notranslate v-icon--left v-icon--svg theme--light"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="24" width="24" role="img" aria-hidden="true"><path d="M18.5 3.5L20.5 5.5L5.5 20.5L3.5 18.5L18.5 3.5M7 4C8.66 4 10 5.34 10 7C10 8.66 8.66 10 7 10C5.34 10 4 8.66 4 7C4 5.34 5.34 4 7 4M17 14C18.66 14 20 15.34 20 17C20 18.66 18.66 20 17 20C15.34 20 14 18.66 14 17C14 15.34 15.34 14 17 14M7 6C6.45 6 6 6.45 6 7C6 7.55 6.45 8 7 8C7.55 8 8 7.55 8 7C8 6.45 7.55 6 7 6M17 16C16.45 16 16 16.45 16 17C16 17.55 16.45 18 17 18C17.55 18 18 17.55 18 17C18 16.45 17.55 16 17 16Z"></path></svg></span> Oranları Gör <div class="spacer"></div><button type="button" class="v-icon notranslate v-icon--link v-icon--svg theme--light primary--text text--darken-1" style="font-size: 16px; height: 16px; width: 16px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="16px" width="16px" role="img" aria-hidden="true"><path d="M11,18H13V16H11V18M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,6A4,4 0 0,0 8,10H10A2,2 0 0,1 12,8A2,2 0 0,1 14,10C14,12 11,11.75 11,15H13C13,12.75 16,12.5 16,10A4,4 0 0,0 12,6Z"></path></svg></button></div><div tabindex="0" aria-selected="false" role="tab" class="v-tab"><span aria-hidden="true" class="v-icon notranslate v-icon--left v-icon--svg theme--light"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="24" width="24" role="img" aria-hidden="true"><path d="M12,11.5A2.5,2.5 0 0,1 9.5,9A2.5,2.5 0 0,1 12,6.5A2.5,2.5 0 0,1 14.5,9A2.5,2.5 0 0,1 12,11.5M12,2A7,7 0 0,0 5,9C5,14.25 12,22 12,22C12,22 19,14.25 19,9A7,7 0 0,0 12,2Z"></path></svg></span> Ülkeleri Karşılaştır <div class="spacer"></div><button type="button" class="v-icon notranslate v-icon--link v-icon--svg theme--light primary--text text--darken-1" style="font-size: 16px; height: 16px; width: 16px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="16px" width="16px" role="img" aria-hidden="true"><path d="M11,18H13V16H11V18M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,6A4,4 0 0,0 8,10H10A2,2 0 0,1 12,8A2,2 0 0,1 14,10C14,12 11,11.75 11,15H13C13,12.75 16,12.5 16,10A4,4 0 0,0 12,6Z"></path></svg></button></div><div tabindex="0" aria-selected="false" role="tab" class="v-tab"><span aria-hidden="true" class="v-icon notranslate v-icon--left v-icon--svg theme--light"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="24" width="24" role="img" aria-hidden="true"><path d="M12 .5C11.03 .5 10.25 1.28 10.25 2.25C10.25 2.84 10.55 3.37 11 3.68V5.08C10.1 5.21 9.26 5.5 8.5 5.94L7.39 4.35C7.58 3.83 7.53 3.23 7.19 2.75C6.84 2.26 6.3 2 5.75 2C5.4 2 5.05 2.1 4.75 2.32C3.96 2.87 3.76 3.96 4.32 4.75C4.66 5.24 5.2 5.5 5.75 5.5L6.93 7.18C6.5 7.61 6.16 8.09 5.87 8.62C5.67 8.54 5.46 8.5 5.25 8.5C4.8 8.5 4.35 8.67 4 9C3.33 9.7 3.33 10.8 4 11.5C4.29 11.77 4.64 11.92 5 12L5 12C5 12.54 5.07 13.06 5.18 13.56L3.87 13.91C3.56 13.65 3.16 13.5 2.75 13.5C2.6 13.5 2.44 13.5 2.29 13.56C1.36 13.81 .809 14.77 1.06 15.71C1.27 16.5 2 17 2.75 17C2.9 17 3.05 17 3.21 16.94C3.78 16.78 4.21 16.36 4.39 15.84L5.9 15.43C6.35 16.22 6.95 16.92 7.65 17.5L6.55 19.5C6 19.58 5.5 19.89 5.21 20.42C4.75 21.27 5.07 22.33 5.92 22.79C6.18 22.93 6.47 23 6.75 23C7.37 23 7.97 22.67 8.29 22.08C8.57 21.56 8.56 20.96 8.31 20.47L9.38 18.5C10.19 18.82 11.07 19 12 19C12.06 19 12.12 19 12.18 19C12.05 19.26 12 19.56 12 19.88C12.08 20.8 12.84 21.5 13.75 21.5C13.79 21.5 13.84 21.5 13.88 21.5C14.85 21.42 15.57 20.58 15.5 19.62C15.46 19.12 15.21 18.68 14.85 18.39C15.32 18.18 15.77 17.91 16.19 17.6L18.53 19.94C18.43 20.5 18.59 21.07 19 21.5C19.35 21.83 19.8 22 20.25 22S21.15 21.83 21.5 21.5C22.17 20.8 22.17 19.7 21.5 19C21.15 18.67 20.7 18.5 20.25 18.5C20.15 18.5 20.05 18.5 19.94 18.53L17.6 16.19C18.09 15.54 18.47 14.8 18.71 14H19.82C20.13 14.45 20.66 14.75 21.25 14.75C22.22 14.75 23 13.97 23 13S22.22 11.25 21.25 11.25C20.66 11.25 20.13 11.55 19.82 12H19C19 10.43 18.5 9 17.6 7.81L18.94 6.47C19.05 6.5 19.15 6.5 19.25 6.5C19.7 6.5 20.15 6.33 20.5 6C21.17 5.31 21.17 4.2 20.5 3.5C20.15 3.17 19.7 3 19.25 3S18.35 3.17 18 3.5C17.59 3.93 17.43 4.5 17.53 5.06L16.19 6.4C15.27 5.71 14.19 5.25 13 5.08V3.68C13.45 3.37 13.75 2.84 13.75 2.25C13.75 1.28 12.97 .5 12 .5M12 17C9.24 17 7 14.76 7 12S9.24 7 12 7 17 9.24 17 12 14.76 17 12 17M10.5 9C9.67 9 9 9.67 9 10.5S9.67 12 10.5 12 12 11.33 12 10.5 11.33 9 10.5 9M14 13C13.45 13 13 13.45 13 14C13 14.55 13.45 15 14 15C14.55 15 15 14.55 15 14C15 13.45 14.55 13 14 13Z"></path></svg></span> Benzer Hastalıkları Karşılaştır <div class="spacer"></div><button type="button" class="v-icon notranslate v-icon--link v-icon--svg theme--light primary--text" style="font-size: 16px; height: 16px; width: 16px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="16px" width="16px" role="img" aria-hidden="true"><path d="M11,18H13V16H11V18M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,6A4,4 0 0,0 8,10H10A2,2 0 0,1 12,8A2,2 0 0,1 14,10C14,12 11,11.75 11,15H13C13,12.75 16,12.5 16,10A4,4 0 0,0 12,6Z"></path></svg></button></div></div></div><div class="v-slide-group__next"><span aria-hidden="true" class="v-icon notranslate v-icon--svg theme--light"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="24" width="24" role="img" aria-hidden="true"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"></path></svg></span></div></div><div class="v-window v-item-group theme--light v-tabs-items"><div class="v-window__container"><div class="v-window-item v-window-item--active" style="min-height: 700px;"><div class="container py-8"><div class="row mx-md-5 row--dense"><div data-v-step="2" class="px-2 col-md-6 col-12"><div class="v-input v-card--shaped v-input--is-label-active v-input--is-dirty v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-select v-autocomplete"><div class="v-input__control"><div role="combobox" aria-haspopup="listbox" aria-expanded="false" aria-owns="list-105" class="v-input__slot"><fieldset aria-hidden="true"><legend style="width: 30px;"><span>​</span></legend></fieldset><div class="v-select__slot"><label for="input-105" class="v-label v-label--active theme--light" style="left: 0px; right: auto; position: absolute;">Ülke</label><input id="input-105" type="text" autocomplete="off"><div class="v-input__append-inner"><div class="v-input__icon v-input__icon--append"><span aria-hidden="true" class="v-icon notranslate v-icon--svg theme--light"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="24" width="24" role="img" aria-hidden="true"><path d="M7,10L12,15L17,10H7Z"></path></svg></span></div></div><input type="hidden" value="[object Object]"></div><div class="v-menu"><!----></div></div><div class="v-text-field__details"><div class="v-messages theme--light"><div class="v-messages__wrapper"></div></div></div></div></div></div><div class="px-2 col-md-6 col-12"><div class="v-input v-card--shaped v-input--is-label-active v-input--is-dirty v-input--is-readonly v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined"><div class="v-input__control"><div class="v-input__slot"><div class="v-input__prepend-inner"><div class="v-input__icon v-input__icon--prepend-inner"><span aria-hidden="true" class="v-icon notranslate v-icon--svg theme--light"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="24" width="24" role="img" aria-hidden="true"><path d="M19,19H5V8H19M16,1V3H8V1H6V3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3H18V1M17,12H12V17H17V12Z"></path></svg></span></div></div><fieldset aria-hidden="true"><legend style="width: 69px;"><span>​</span></legend></fieldset><div class="v-text-field__slot"><label for="input-111" class="v-label v-label--active theme--light" style="left: -28px; right: auto; position: absolute;">Data Aralığı</label><input id="input-111" readonly="readonly" type="text"></div></div><div class="v-text-field__details"><div class="v-messages theme--light"><div class="v-messages__wrapper"></div></div></div></div></div><div class="v-menu"><!----></div></div></div><div class="row"><div class="overflow-auto pl-md-10 col-md-9 col-12"><!----><div class="v-card--shaped grey lighten-5 shadow-in pb-6 px-1" style="opacity: 1;"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div><canvas id="line-chart" width="696" height="400" style="display: block; width: 696px; height: 400px;" class="chartjs-render-monitor"></canvas></div><small class="d-block grey--text my-3 text--darken-1" style="transform-origin: center top 0px;">No Description</small></div><div class="col-md-3 col-12"><div class="v-card v-card--flat v-sheet theme--light"><div class="v-card__title primary--text text--darken-2">World</div><div class="v-card__subtitle"><div class="row"><div class="my-0 py-0 col col-10">Bin kişi başına düşen çalışan sayısı</div><div class="my-0 py-0 col col-1"><button type="button" class="v-icon notranslate justify-end v-icon--link v-icon--svg theme--light primary--text text--darken-1" style="font-size: 16px; height: 16px; width: 16px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="16px" width="16px" role="img" aria-hidden="true"><path d="M11,18H13V16H11V18M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,6A4,4 0 0,0 8,10H10A2,2 0 0,1 12,8A2,2 0 0,1 14,10C14,12 11,11.75 11,15H13C13,12.75 16,12.5 16,10A4,4 0 0,0 12,6Z"></path></svg></button></div></div></div><hr role="separator" aria-orientation="horizontal" class="mx-4 v-divider theme--light"><div role="list" class="v-list v-sheet theme--light v-list--dense v-list--disabled"><div role="listbox" class="v-item-group theme--light v-list-item-group primary--text" style="transform-origin: center top 0px;"><div tabindex="0" role="listitem" aria-selected="false" class="v-list-item v-list-item--link theme--light"><div class="v-list-item__content"><span><span>Physicians</span> : <span class="grey--text">1.57</span></span></div></div><div tabindex="0" role="listitem" aria-selected="false" class="v-list-item v-list-item--link theme--light"><div class="v-list-item__content"><span><span>Health Workers</span> : <span class="grey--text">U/Y</span></span></div></div><div tabindex="0" role="listitem" aria-selected="false" class="v-list-item v-list-item--link theme--light"><div class="v-list-item__content"><span><span>Hospital Beds</span> : <span class="grey--text">U/Y</span></span></div></div><div tabindex="0" role="listitem" aria-selected="false" class="v-list-item v-list-item--link theme--light"><div class="v-list-item__content"><span><span>UHC service coverage index</span> : <span class="grey--text">65.69</span></span></div></div></div></div><div role="dialog" class="v-dialog__container"><!----></div></div></div></div></div></div><!----><!----><!----><!----></div></div></div></div></div></div><div role="dialog" class="v-dialog__container"><!----></div></div></section><div data-v-c4a76cb6="" class="container"><div data-v-c4a76cb6="" class="row"><div data-v-c4a76cb6="" class="col col-12"><h3 data-v-c4a76cb6="" data-v-step="3" class="display-1 font-weight-thin mb-5"> Etiyopya'da KOVİD-19 </h3></div></div><div data-v-c4a76cb6="" class="row my-5"><div data-v-c4a76cb6="" class="col col-12"><div data-v-c4a76cb6="" class="overflow-hidden v-card v-sheet v-sheet--outlined v-sheet--shaped theme--light"><div data-v-c4a76cb6="" class="row"><div data-v-c4a76cb6="" class="border-right col-sm-3 col-6"><div data-v-c4a76cb6="" class="v-image v-responsive small-icon mx-auto my-3 theme--light"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-position: center center;"></div><div class="v-responsive__content"></div></div><h1 data-v-c4a76cb6="" class="text-center">4532</h1><p data-v-c4a76cb6="" class="text-center">Toplam vaka</p></div><div data-v-c4a76cb6="" class="border-right col-sm-3 col-6"><div data-v-c4a76cb6="" class="v-image v-responsive small-icon mx-auto my-3 theme--light"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-position: center center;"></div><div class="v-responsive__content"></div></div><h1 data-v-c4a76cb6="" class="text-center">1213</h1><p data-v-c4a76cb6="" class="text-center">İyileşen</p></div><div data-v-c4a76cb6="" class="border-right col-sm-3 col-6"><div data-v-c4a76cb6="" class="v-image v-responsive small-icon mx-auto my-3 theme--light"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-position: center center;"></div><div class="v-responsive__content"></div></div><h1 data-v-c4a76cb6="" class="text-center">74</h1><p data-v-c4a76cb6="" class="text-center">Ölüm</p></div><div data-v-c4a76cb6="" class="border-right col-sm-3 col-6"><div data-v-c4a76cb6="" class="v-image v-responsive small-icon mx-auto my-3 theme--light"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-position: center center;"></div><div class="v-responsive__content"></div></div><h1 data-v-c4a76cb6="" class="text-center">3243</h1><p data-v-c4a76cb6="" class="text-center">Aktif Vaka</p></div></div></div></div></div><div data-v-c4a76cb6="" class="row my-5"><div data-v-c4a76cb6="" class="col col-12"><div data-v-c4a76cb6="" class="px-7 py-5 v-card v-sheet v-sheet--outlined v-sheet--shaped theme--light"><div data-v-c4a76cb6="" class="row"><div data-v-c4a76cb6="" class="col-md-6 col-12"><div data-v-c4a76cb6="" class="v-input v-card--shaped v-input--is-label-active v-input--is-dirty v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-select"><div class="v-input__control"><div role="button" aria-haspopup="listbox" aria-expanded="false" aria-owns="list-136" class="v-input__slot"><fieldset aria-hidden="true"><legend style="width: 54px;"><span>​</span></legend></fieldset><div class="v-select__slot"><label for="input-136" class="v-label v-label--active theme--light" style="left: 0px; right: auto; position: absolute;">Ölçümler</label><div class="v-select__selections"><div class="v-select__selection v-select__selection--comma">Total Confirmed</div><input id="input-136" readonly="readonly" type="text" aria-readonly="false" autocomplete="off"></div><div class="v-input__append-inner"><div class="v-input__icon v-input__icon--append"><span aria-hidden="true" class="v-icon notranslate v-icon--svg theme--light"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="24" width="24" role="img" aria-hidden="true"><path d="M7,10L12,15L17,10H7Z"></path></svg></span></div></div><input type="hidden" value="total_confirmed"></div><div class="v-menu"><!----></div></div><div class="v-text-field__details"><div class="v-messages theme--light"><div class="v-messages__wrapper"></div></div></div></div></div><div data-v-c4a76cb6="" class="v-card--shaped grey lighten-5 shadow-in pb-6 px-3 px-xl-12"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div><canvas id="doughnut-chart" width="646" height="646" class="chartjs-render-monitor" style="display: block; width: 646px; height: 646px;"></canvas></div></div><div data-v-c4a76cb6="" class="col-md-6 col-12"><h3 data-v-c4a76cb6="" class="mb-3 px-3 primary--text">Bölgesel İstatistikler</h3><div data-v-c4a76cb6="" class="v-data-table theme--light"><div class="v-data-table__wrapper"><table><thead data-v-c4a76cb6=""><tr data-v-c4a76cb6=""><th data-v-c4a76cb6="" class="text-left">Bölgeler</th><th data-v-c4a76cb6="" class="text-left">Toplam vaka</th><th data-v-c4a76cb6="" class="text-left">İyileşen</th><th data-v-c4a76cb6="" class="text-left">Aktif Vaka</th><th data-v-c4a76cb6="" class="text-left">Ölüm</th></tr></thead><tbody data-v-c4a76cb6=""><tr data-v-c4a76cb6=""><td data-v-c4a76cb6="">Addis Abeba</td><td data-v-c4a76cb6="">3113</td><td data-v-c4a76cb6="">954</td><td data-v-c4a76cb6="">2099</td><td data-v-c4a76cb6="">58</td></tr><tr data-v-c4a76cb6=""><td data-v-c4a76cb6="">Afar</td><td data-v-c4a76cb6="">68</td><td data-v-c4a76cb6="">35</td><td data-v-c4a76cb6="">31</td><td data-v-c4a76cb6="">2</td></tr><tr data-v-c4a76cb6=""><td data-v-c4a76cb6="">Amhara</td><td data-v-c4a76cb6="">263</td><td data-v-c4a76cb6="">62</td><td data-v-c4a76cb6="">199</td><td data-v-c4a76cb6="">2</td></tr><tr data-v-c4a76cb6=""><td data-v-c4a76cb6="">Beneshangul Gumuz</td><td data-v-c4a76cb6="">6</td><td data-v-c4a76cb6="">6</td><td data-v-c4a76cb6="">0</td><td data-v-c4a76cb6="">0</td></tr><tr data-v-c4a76cb6=""><td data-v-c4a76cb6="">Gambela</td><td data-v-c4a76cb6="">9</td><td data-v-c4a76cb6="">1</td><td data-v-c4a76cb6="">8</td><td data-v-c4a76cb6="">0</td></tr><tr data-v-c4a76cb6=""><td data-v-c4a76cb6="">Oromia</td><td data-v-c4a76cb6="">231</td><td data-v-c4a76cb6="">37</td><td data-v-c4a76cb6="">189</td><td data-v-c4a76cb6="">5</td></tr><tr data-v-c4a76cb6=""><td data-v-c4a76cb6="">Somali</td><td data-v-c4a76cb6="">256</td><td data-v-c4a76cb6="">84</td><td data-v-c4a76cb6="">171</td><td data-v-c4a76cb6="">1</td></tr><tr data-v-c4a76cb6=""><td data-v-c4a76cb6="">Dire Dawa</td><td data-v-c4a76cb6="">45</td><td data-v-c4a76cb6="">9</td><td data-v-c4a76cb6="">34</td><td data-v-c4a76cb6="">2</td></tr><tr data-v-c4a76cb6=""><td data-v-c4a76cb6="">Hareri</td><td data-v-c4a76cb6="">34</td><td data-v-c4a76cb6="">3</td><td data-v-c4a76cb6="">30</td><td data-v-c4a76cb6="">1</td></tr><tr data-v-c4a76cb6=""><td data-v-c4a76cb6="">SNNP</td><td data-v-c4a76cb6="">59</td><td data-v-c4a76cb6="">7</td><td data-v-c4a76cb6="">50</td><td data-v-c4a76cb6="">2</td></tr><tr data-v-c4a76cb6=""><td data-v-c4a76cb6="">Tigray</td><td data-v-c4a76cb6="">181</td><td data-v-c4a76cb6="">15</td><td data-v-c4a76cb6="">165</td><td data-v-c4a76cb6="">1</td></tr></tbody></table></div></div></div></div></div></div></div><div data-v-c4a76cb6="" class="row my-5"><div data-v-c4a76cb6="" class="col col-12"><div data-v-c4a76cb6="" class="pa-5 v-card v-sheet v-sheet--outlined v-sheet--shaped theme--light"><div data-v-c4a76cb6="" class="v-card__title"><h4 data-v-c4a76cb6="" class="mb-2 primary--text">Ücretsiz ulaşabileceğiniz KOVİD-19 numaraları </h4></div><div data-v-c4a76cb6="" class="row mx-auto align-center align-content-center"><div data-v-c4a76cb6="" class="pr-3 col-sm-6 col-md-3 col-12"><div data-v-c4a76cb6="" class="row"><div data-v-c4a76cb6="" class="py-0 border-right col-sm-6 col-md-5 col-xl-3 col-5"><a data-v-c4a76cb6="" href="tel:6406" target="_blank" class="py-0 v-btn v-btn--flat v-btn--text theme--light v-size--default primary--text"><span class="v-btn__content"><span data-v-c4a76cb6="" aria-hidden="true" class="v-icon notranslate mx-0 mr-2 v-icon--svg theme--light" style="font-size: 16px; height: 16px; width: 16px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="16px" width="16px" role="img" aria-hidden="true"><path d="M6.62,10.79C8.06,13.62 10.38,15.94 13.21,17.38L15.41,15.18C15.69,14.9 16.08,14.82 16.43,14.93C17.55,15.3 18.75,15.5 20,15.5A1,1 0 0,1 21,16.5V20A1,1 0 0,1 20,21A17,17 0 0,1 3,4A1,1 0 0,1 4,3H7.5A1,1 0 0,1 8.5,4C8.5,5.25 8.7,6.45 9.07,7.57C9.18,7.92 9.1,8.31 8.82,8.59L6.62,10.79Z"></path></svg></span> 6406 </span></a></div><div data-v-c4a76cb6="" class="py-0 col-sm-6 col-md-7 col-xl-9 col-7"><small data-v-c4a76cb6="" class="d-inline-block my-2">Addis Abeba</small></div></div></div><div data-v-c4a76cb6="" class="pr-3 col-sm-6 col-md-3 col-12"><div data-v-c4a76cb6="" class="row"><div data-v-c4a76cb6="" class="py-0 border-right col-sm-6 col-md-5 col-xl-3 col-5"><a data-v-c4a76cb6="" href="tel:6220" target="_blank" class="py-0 v-btn v-btn--flat v-btn--text theme--light v-size--default primary--text"><span class="v-btn__content"><span data-v-c4a76cb6="" aria-hidden="true" class="v-icon notranslate mx-0 mr-2 v-icon--svg theme--light" style="font-size: 16px; height: 16px; width: 16px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="16px" width="16px" role="img" aria-hidden="true"><path d="M6.62,10.79C8.06,13.62 10.38,15.94 13.21,17.38L15.41,15.18C15.69,14.9 16.08,14.82 16.43,14.93C17.55,15.3 18.75,15.5 20,15.5A1,1 0 0,1 21,16.5V20A1,1 0 0,1 20,21A17,17 0 0,1 3,4A1,1 0 0,1 4,3H7.5A1,1 0 0,1 8.5,4C8.5,5.25 8.7,6.45 9.07,7.57C9.18,7.92 9.1,8.31 8.82,8.59L6.62,10.79Z"></path></svg></span> 6220 </span></a></div><div data-v-c4a76cb6="" class="py-0 col-sm-6 col-md-7 col-xl-9 col-7"><small data-v-c4a76cb6="" class="d-inline-block my-2">Afar</small></div></div></div><div data-v-c4a76cb6="" class="pr-3 col-sm-6 col-md-3 col-12"><div data-v-c4a76cb6="" class="row"><div data-v-c4a76cb6="" class="py-0 border-right col-sm-6 col-md-5 col-xl-3 col-5"><a data-v-c4a76cb6="" href="tel:6981" target="_blank" class="py-0 v-btn v-btn--flat v-btn--text theme--light v-size--default primary--text"><span class="v-btn__content"><span data-v-c4a76cb6="" aria-hidden="true" class="v-icon notranslate mx-0 mr-2 v-icon--svg theme--light" style="font-size: 16px; height: 16px; width: 16px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="16px" width="16px" role="img" aria-hidden="true"><path d="M6.62,10.79C8.06,13.62 10.38,15.94 13.21,17.38L15.41,15.18C15.69,14.9 16.08,14.82 16.43,14.93C17.55,15.3 18.75,15.5 20,15.5A1,1 0 0,1 21,16.5V20A1,1 0 0,1 20,21A17,17 0 0,1 3,4A1,1 0 0,1 4,3H7.5A1,1 0 0,1 8.5,4C8.5,5.25 8.7,6.45 9.07,7.57C9.18,7.92 9.1,8.31 8.82,8.59L6.62,10.79Z"></path></svg></span> 6981 </span></a></div><div data-v-c4a76cb6="" class="py-0 col-sm-6 col-md-7 col-xl-9 col-7"><small data-v-c4a76cb6="" class="d-inline-block my-2">Amhara</small></div></div></div><div data-v-c4a76cb6="" class="pr-3 col-sm-6 col-md-3 col-12"><div data-v-c4a76cb6="" class="row"><div data-v-c4a76cb6="" class="py-0 border-right col-sm-6 col-md-5 col-xl-3 col-5"><a data-v-c4a76cb6="" href="tel:6016" target="_blank" class="py-0 v-btn v-btn--flat v-btn--text theme--light v-size--default primary--text"><span class="v-btn__content"><span data-v-c4a76cb6="" aria-hidden="true" class="v-icon notranslate mx-0 mr-2 v-icon--svg theme--light" style="font-size: 16px; height: 16px; width: 16px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="16px" width="16px" role="img" aria-hidden="true"><path d="M6.62,10.79C8.06,13.62 10.38,15.94 13.21,17.38L15.41,15.18C15.69,14.9 16.08,14.82 16.43,14.93C17.55,15.3 18.75,15.5 20,15.5A1,1 0 0,1 21,16.5V20A1,1 0 0,1 20,21A17,17 0 0,1 3,4A1,1 0 0,1 4,3H7.5A1,1 0 0,1 8.5,4C8.5,5.25 8.7,6.45 9.07,7.57C9.18,7.92 9.1,8.31 8.82,8.59L6.62,10.79Z"></path></svg></span> 6016 </span></a></div><div data-v-c4a76cb6="" class="py-0 col-sm-6 col-md-7 col-xl-9 col-7"><small data-v-c4a76cb6="" class="d-inline-block my-2">Beneshangul Gumuz</small></div></div></div><div data-v-c4a76cb6="" class="pr-3 col-sm-6 col-md-3 col-12"><div data-v-c4a76cb6="" class="row"><div data-v-c4a76cb6="" class="py-0 border-right col-sm-6 col-md-5 col-xl-3 col-5"><a data-v-c4a76cb6="" href="tel:6184" target="_blank" class="py-0 v-btn v-btn--flat v-btn--text theme--light v-size--default primary--text"><span class="v-btn__content"><span data-v-c4a76cb6="" aria-hidden="true" class="v-icon notranslate mx-0 mr-2 v-icon--svg theme--light" style="font-size: 16px; height: 16px; width: 16px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="16px" width="16px" role="img" aria-hidden="true"><path d="M6.62,10.79C8.06,13.62 10.38,15.94 13.21,17.38L15.41,15.18C15.69,14.9 16.08,14.82 16.43,14.93C17.55,15.3 18.75,15.5 20,15.5A1,1 0 0,1 21,16.5V20A1,1 0 0,1 20,21A17,17 0 0,1 3,4A1,1 0 0,1 4,3H7.5A1,1 0 0,1 8.5,4C8.5,5.25 8.7,6.45 9.07,7.57C9.18,7.92 9.1,8.31 8.82,8.59L6.62,10.79Z"></path></svg></span> 6184 </span></a></div><div data-v-c4a76cb6="" class="py-0 col-sm-6 col-md-7 col-xl-9 col-7"><small data-v-c4a76cb6="" class="d-inline-block my-2">Gambela</small></div></div></div><div data-v-c4a76cb6="" class="pr-3 col-sm-6 col-md-3 col-12"><div data-v-c4a76cb6="" class="row"><div data-v-c4a76cb6="" class="py-0 border-right col-sm-6 col-md-5 col-xl-3 col-5"><a data-v-c4a76cb6="" href="tel:6955" target="_blank" class="py-0 v-btn v-btn--flat v-btn--text theme--light v-size--default primary--text"><span class="v-btn__content"><span data-v-c4a76cb6="" aria-hidden="true" class="v-icon notranslate mx-0 mr-2 v-icon--svg theme--light" style="font-size: 16px; height: 16px; width: 16px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="16px" width="16px" role="img" aria-hidden="true"><path d="M6.62,10.79C8.06,13.62 10.38,15.94 13.21,17.38L15.41,15.18C15.69,14.9 16.08,14.82 16.43,14.93C17.55,15.3 18.75,15.5 20,15.5A1,1 0 0,1 21,16.5V20A1,1 0 0,1 20,21A17,17 0 0,1 3,4A1,1 0 0,1 4,3H7.5A1,1 0 0,1 8.5,4C8.5,5.25 8.7,6.45 9.07,7.57C9.18,7.92 9.1,8.31 8.82,8.59L6.62,10.79Z"></path></svg></span> 6955 </span></a></div><div data-v-c4a76cb6="" class="py-0 col-sm-6 col-md-7 col-xl-9 col-7"><small data-v-c4a76cb6="" class="d-inline-block my-2">Oromia</small></div></div></div><div data-v-c4a76cb6="" class="pr-3 col-sm-6 col-md-3 col-12"><div data-v-c4a76cb6="" class="row"><div data-v-c4a76cb6="" class="py-0 border-right col-sm-6 col-md-5 col-xl-3 col-5"><a data-v-c4a76cb6="" href="tel:6599" target="_blank" class="py-0 v-btn v-btn--flat v-btn--text theme--light v-size--default primary--text"><span class="v-btn__content"><span data-v-c4a76cb6="" aria-hidden="true" class="v-icon notranslate mx-0 mr-2 v-icon--svg theme--light" style="font-size: 16px; height: 16px; width: 16px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="16px" width="16px" role="img" aria-hidden="true"><path d="M6.62,10.79C8.06,13.62 10.38,15.94 13.21,17.38L15.41,15.18C15.69,14.9 16.08,14.82 16.43,14.93C17.55,15.3 18.75,15.5 20,15.5A1,1 0 0,1 21,16.5V20A1,1 0 0,1 20,21A17,17 0 0,1 3,4A1,1 0 0,1 4,3H7.5A1,1 0 0,1 8.5,4C8.5,5.25 8.7,6.45 9.07,7.57C9.18,7.92 9.1,8.31 8.82,8.59L6.62,10.79Z"></path></svg></span> 6599 </span></a></div><div data-v-c4a76cb6="" class="py-0 col-sm-6 col-md-7 col-xl-9 col-7"><small data-v-c4a76cb6="" class="d-inline-block my-2">Somali</small></div></div></div><div data-v-c4a76cb6="" class="pr-3 col-sm-6 col-md-3 col-12"><div data-v-c4a76cb6="" class="row"><div data-v-c4a76cb6="" class="py-0 border-right col-sm-6 col-md-5 col-xl-3 col-5"><a data-v-c4a76cb6="" href="tel:6407" target="_blank" class="py-0 v-btn v-btn--flat v-btn--text theme--light v-size--default primary--text"><span class="v-btn__content"><span data-v-c4a76cb6="" aria-hidden="true" class="v-icon notranslate mx-0 mr-2 v-icon--svg theme--light" style="font-size: 16px; height: 16px; width: 16px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="16px" width="16px" role="img" aria-hidden="true"><path d="M6.62,10.79C8.06,13.62 10.38,15.94 13.21,17.38L15.41,15.18C15.69,14.9 16.08,14.82 16.43,14.93C17.55,15.3 18.75,15.5 20,15.5A1,1 0 0,1 21,16.5V20A1,1 0 0,1 20,21A17,17 0 0,1 3,4A1,1 0 0,1 4,3H7.5A1,1 0 0,1 8.5,4C8.5,5.25 8.7,6.45 9.07,7.57C9.18,7.92 9.1,8.31 8.82,8.59L6.62,10.79Z"></path></svg></span> 6407 </span></a></div><div data-v-c4a76cb6="" class="py-0 col-sm-6 col-md-7 col-xl-9 col-7"><small data-v-c4a76cb6="" class="d-inline-block my-2">Dire Dawa</small></div></div></div><div data-v-c4a76cb6="" class="pr-3 col-sm-6 col-md-3 col-12"><div data-v-c4a76cb6="" class="row"><div data-v-c4a76cb6="" class="py-0 border-right col-sm-6 col-md-5 col-xl-3 col-5"><a data-v-c4a76cb6="" href="tel:6864" target="_blank" class="py-0 v-btn v-btn--flat v-btn--text theme--light v-size--default primary--text"><span class="v-btn__content"><span data-v-c4a76cb6="" aria-hidden="true" class="v-icon notranslate mx-0 mr-2 v-icon--svg theme--light" style="font-size: 16px; height: 16px; width: 16px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="16px" width="16px" role="img" aria-hidden="true"><path d="M6.62,10.79C8.06,13.62 10.38,15.94 13.21,17.38L15.41,15.18C15.69,14.9 16.08,14.82 16.43,14.93C17.55,15.3 18.75,15.5 20,15.5A1,1 0 0,1 21,16.5V20A1,1 0 0,1 20,21A17,17 0 0,1 3,4A1,1 0 0,1 4,3H7.5A1,1 0 0,1 8.5,4C8.5,5.25 8.7,6.45 9.07,7.57C9.18,7.92 9.1,8.31 8.82,8.59L6.62,10.79Z"></path></svg></span> 6864 </span></a></div><div data-v-c4a76cb6="" class="py-0 col-sm-6 col-md-7 col-xl-9 col-7"><small data-v-c4a76cb6="" class="d-inline-block my-2">Hareri</small></div></div></div><div data-v-c4a76cb6="" class="pr-3 col-sm-6 col-md-3 col-12"><div data-v-c4a76cb6="" class="row"><div data-v-c4a76cb6="" class="py-0 border-right col-sm-6 col-md-5 col-xl-3 col-5"><a data-v-c4a76cb6="" href="tel:6929" target="_blank" class="py-0 v-btn v-btn--flat v-btn--text theme--light v-size--default primary--text"><span class="v-btn__content"><span data-v-c4a76cb6="" aria-hidden="true" class="v-icon notranslate mx-0 mr-2 v-icon--svg theme--light" style="font-size: 16px; height: 16px; width: 16px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="16px" width="16px" role="img" aria-hidden="true"><path d="M6.62,10.79C8.06,13.62 10.38,15.94 13.21,17.38L15.41,15.18C15.69,14.9 16.08,14.82 16.43,14.93C17.55,15.3 18.75,15.5 20,15.5A1,1 0 0,1 21,16.5V20A1,1 0 0,1 20,21A17,17 0 0,1 3,4A1,1 0 0,1 4,3H7.5A1,1 0 0,1 8.5,4C8.5,5.25 8.7,6.45 9.07,7.57C9.18,7.92 9.1,8.31 8.82,8.59L6.62,10.79Z"></path></svg></span> 6929 </span></a></div><div data-v-c4a76cb6="" class="py-0 col-sm-6 col-md-7 col-xl-9 col-7"><small data-v-c4a76cb6="" class="d-inline-block my-2">SNNP</small></div></div></div><div data-v-c4a76cb6="" class="pr-3 col-sm-6 col-md-3 col-12"><div data-v-c4a76cb6="" class="row"><div data-v-c4a76cb6="" class="py-0 border-right col-sm-6 col-md-5 col-xl-3 col-5"><a data-v-c4a76cb6="" href="tel:6244" target="_blank" class="py-0 v-btn v-btn--flat v-btn--text theme--light v-size--default primary--text"><span class="v-btn__content"><span data-v-c4a76cb6="" aria-hidden="true" class="v-icon notranslate mx-0 mr-2 v-icon--svg theme--light" style="font-size: 16px; height: 16px; width: 16px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="16px" width="16px" role="img" aria-hidden="true"><path d="M6.62,10.79C8.06,13.62 10.38,15.94 13.21,17.38L15.41,15.18C15.69,14.9 16.08,14.82 16.43,14.93C17.55,15.3 18.75,15.5 20,15.5A1,1 0 0,1 21,16.5V20A1,1 0 0,1 20,21A17,17 0 0,1 3,4A1,1 0 0,1 4,3H7.5A1,1 0 0,1 8.5,4C8.5,5.25 8.7,6.45 9.07,7.57C9.18,7.92 9.1,8.31 8.82,8.59L6.62,10.79Z"></path></svg></span> 6244 </span></a></div><div data-v-c4a76cb6="" class="py-0 col-sm-6 col-md-7 col-xl-9 col-7"><small data-v-c4a76cb6="" class="d-inline-block my-2">Tigray</small></div></div></div></div></div></div></div></div></div><div class="__cov-progress" style="background-color: rgb(1, 157, 229); opacity: 0; position: fixed; top: 0px; left: 0px; width: 0%; height: 3px; transition: opacity 0.6s ease 0s;"></div></div></main><footer data-v-73121398="" class="v-footer white pb-md-0 pb-5 v-sheet theme--light v-footer--padless" data-booted="true"><div data-v-73121398="" class="lighten-1 text-center v-card v-card--flat v-sheet v-sheet--outlined v-sheet--shaped theme--light rounded-0" style="width: 100%;"><div data-v-73121398="" class="v-card__text"><a data-v-73121398="" href="http://a2sv.org/" target="_blank" class="mx-2 v-btn v-btn--depressed v-btn--fab v-btn--round theme--light v-size--small"><span class="v-btn__content"><span data-v-73121398="" aria-hidden="true" class="v-icon notranslate v-icon--svg theme--light" style="font-size: 23px; height: 23px; width: 23px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="23px" width="23px" role="img" aria-hidden="true"><path d="M16.36,14C16.44,13.34 16.5,12.68 16.5,12C16.5,11.32 16.44,10.66 16.36,10H19.74C19.9,10.64 20,11.31 20,12C20,12.69 19.9,13.36 19.74,14M14.59,19.56C15.19,18.45 15.65,17.25 15.97,16H18.92C17.96,17.65 16.43,18.93 14.59,19.56M14.34,14H9.66C9.56,13.34 9.5,12.68 9.5,12C9.5,11.32 9.56,10.65 9.66,10H14.34C14.43,10.65 14.5,11.32 14.5,12C14.5,12.68 14.43,13.34 14.34,14M12,19.96C11.17,18.76 10.5,17.43 10.09,16H13.91C13.5,17.43 12.83,18.76 12,19.96M8,8H5.08C6.03,6.34 7.57,5.06 9.4,4.44C8.8,5.55 8.35,6.75 8,8M5.08,16H8C8.35,17.25 8.8,18.45 9.4,19.56C7.57,18.93 6.03,17.65 5.08,16M4.26,14C4.1,13.36 4,12.69 4,12C4,11.31 4.1,10.64 4.26,10H7.64C7.56,10.66 7.5,11.32 7.5,12C7.5,12.68 7.56,13.34 7.64,14M12,4.03C12.83,5.23 13.5,6.57 13.91,8H10.09C10.5,6.57 11.17,5.23 12,4.03M18.92,8H15.97C15.65,6.75 15.19,5.55 14.59,4.44C16.43,5.07 17.96,6.34 18.92,8M12,2C6.47,2 2,6.5 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"></path></svg></span></span></a></div><div data-v-73121398="" class="v-card__text pt-0 px-12 shrink"> TrackSym semptom yoğunluğunu bilgisini toplamak ve görselleştirmek için açık kaynak kullanan ticari olmayan bir uygulamadır. Kayıt için sorulan yaş ve cinsiyet hakkında sorular sadece veri bilimi amacıyla kullanılacaktır. Kullanıcılar semptomlarını anonim olarak bildirebilir ve harita görünümünde semptomların yoğunluğunu görmek için bir konum seçebilir. Veriler lokasyon bazlı olarak toplandığından, semptomatik insanlar tarafından yoğun olarak kullanılan market veya benzin istasyonunu gibi kalabalık yerlerden bu uygulama sayesinde kaçınabilirsiniz. Ayrıca ülkelere göre KOVİD-19 haberleri ve verileri de uygulamada yer almaktadır. </div><div data-v-73121398="" class="v-card__text"><a data-v-73121398="" href="/references" class="v-btn v-btn--flat v-btn--router v-btn--text theme--light v-size--small">Referanslar</a> | <a data-v-73121398="" href="/privacy-policy" class="v-btn v-btn--flat v-btn--router v-btn--text theme--light v-size--small">Gizlilik</a> | <span data-v-73121398="" class="pa-3"> 2020 — <strong data-v-73121398="">TrackSym</strong></span> | <div data-v-73121398="" class="d-inline-block justify-end" style="width: 50px;"><div data-v-73121398="" class="v-input v-input--is-label-active v-input--is-dirty v-input--dense theme--light v-text-field v-text-field--single-line v-text-field--solo v-text-field--solo-flat v-text-field--is-booted v-text-field--enclosed v-select"><div class="v-input__control"><div role="button" aria-haspopup="listbox" aria-expanded="false" aria-owns="list-60" class="v-input__slot"><div class="v-select__slot"><div class="v-select__selections"><small data-v-73121398="" class="primary--text">TR</small><input id="input-60" readonly="readonly" type="text" aria-readonly="false" autocomplete="off"></div><div class="v-input__append-inner"><small data-v-73121398=""></small></div><input type="hidden" value="tr"></div><div class="v-menu"><!----></div></div><div class="v-text-field__details"><div class="v-messages theme--light"><div class="v-messages__wrapper"></div></div></div></div></div></div></div></div></footer><div><div class="v-tour"><!----></div><div class="v-snack v-snack--has-background v-snack--top" style="padding-bottom: 56px; padding-top: 56px;"><div class="v-snack__wrapper v-sheet theme--dark primary" style="display: none;"><div role="status" aria-live="polite" class="v-snack__content"><span class="ma-2">You have completed the tour</span><button type="button" class="float-right v-btn v-btn--flat v-btn--icon v-btn--round v-btn--text theme--dark v-size--x-small white--text"><span class="v-btn__content"><span aria-hidden="true" class="v-icon notranslate v-icon--svg theme--dark"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="24" width="24" role="img" aria-hidden="true"><path d="M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2C6.47,2 2,6.47 2,12C2,17.53 6.47,22 12,22C17.53,22 22,17.53 22,12C22,6.47 17.53,2 12,2M14.59,8L12,10.59L9.41,8L8,9.41L10.59,12L8,14.59L9.41,16L12,13.41L14.59,16L16,14.59L13.41,12L16,9.41L14.59,8Z"></path></svg></span></span></button></div><div class="v-snack__action "></div></div></div></div></div></div><script src="/js/chunk-vendors.7097c02e.js"></script><script src="/js/app.ea8d0ab7.js"></script></body></html>
