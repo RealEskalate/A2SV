@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   Linking,
   Platform,
   StyleSheet,
   Image,
   SafeAreaView,
-} from 'react-native';
+} from "react-native";
 import {
   Layout,
   Input,
@@ -17,21 +17,30 @@ import {
   TopNavigation,
   TopNavigationAction,
   Button,
-} from '@ui-kitten/components';
-import userIDStore from '../../data-management/user-id-data/userIDStore';
+} from "@ui-kitten/components";
+import userIDStore from "../../data-management/user-id-data/userIDStore";
+import { strings } from "../../localization/localization";
+import languageStore from "../../data-management/language_data/languageStore";
 
-const ArrowIosBackIcon = (style) => <Icon {...style} name='arrow-ios-back' />;
-const SearchIcon = (props) => <Icon {...props} name='search-outline' />;
+const ArrowIosBackIcon = (style) => <Icon {...style} name="arrow-ios-back" />;
+const SearchIcon = (props) => <Icon {...props} name="search-outline" />;
 
 class News extends Component {
-  state = {
-    data: [],
-    isLoading: true,
-    searchTag: '',
-    searching: false,
-    refreshing: false,
-    page: 1,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: [],
+      isLoading: true,
+      searchTag: "",
+      searching: false,
+      refreshing: false,
+      page: 1,
+    };
+    languageStore.subscribe(() => {
+      strings.setLanguage(languageStore.getState());
+      this.componentDidMount();
+    });
+  }
 
   fetchNews = (isOverride) => {
     let url = `https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/news?page=${this.state.page}`;
@@ -40,11 +49,11 @@ class News extends Component {
     }
 
     fetch(url, {
-      method: 'GET',
+      method: "GET",
       headers: {
-        Authorization: 'Bearer ' + userIDStore.getState().userToken,
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
+        Authorization: "Bearer " + userIDStore.getState().userToken,
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
     })
       .then((response) => response.json())
@@ -63,13 +72,13 @@ class News extends Component {
   };
 
   getMyTitle = (title) => {
-    var array = title.split('-');
-    var _title = '';
+    var array = title.split("-");
+    var _title = "";
 
     for (let index = 0; index < array.length - 1; index++) {
       _title += array[index];
       if (index != array.length - 2) {
-        _title += '-';
+        _title += "-";
       }
     }
 
@@ -85,13 +94,13 @@ class News extends Component {
     var mins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
 
     if (days > 0) {
-      return days + ' days ago';
+      return days + " days ago";
     }
     if (hrs == 0) {
-      return mins + ' min ago';
+      return mins + " min ago";
     }
 
-    return hrs + ' hr : ' + mins + ' min ago';
+    return hrs + " hr : " + mins + " min ago";
   };
 
   onSearchChange = (tag) => {
@@ -99,7 +108,7 @@ class News extends Component {
   };
 
   searchNews = () => {
-    this.setState({ searching: this.state.searchTag !== '' }, () => {
+    this.setState({ searching: this.state.searchTag !== "" }, () => {
       this.fetchNews(true);
     });
   };
@@ -112,7 +121,7 @@ class News extends Component {
 
   goToNews = (reference_link) => {
     if (Platform.Version > 22) {
-      this.props.navigation.navigate('NewsView', { uri: reference_link });
+      this.props.navigation.navigate("NewsView", { uri: reference_link });
     } else {
       Linking.openURL(reference_link);
     }
@@ -135,11 +144,12 @@ class News extends Component {
     <Layout
       style={{
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+        justifyContent: "center",
+        alignItems: "center",
         paddingVertical: 10,
-      }}>
-      <Spinner size='small' />
+      }}
+    >
+      <Spinner size="small" />
     </Layout>
   );
 
@@ -151,29 +161,30 @@ class News extends Component {
     return (
       <SafeAreaView style={styles.container}>
         <TopNavigation
-          alignment='center'
-          title={'News'}
+          alignment="center"
+          title={strings.News}
           accessoryLeft={this.renderBackAction}
         />
         <Divider />
         {this.state.isLoading ? (
           <Layout
-            style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <Spinner {...this.props} size='large' />
+            style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+          >
+            <Spinner {...this.props} size="large" />
           </Layout>
         ) : (
-          <Layout style={{ flex: 1, flexDirection: 'column' }}>
+          <Layout style={{ flex: 1, flexDirection: "column" }}>
             <Input
               style={{ marginHorizontal: 10, marginVertical: 5 }}
-              placeholder={'Search'}
+              placeholder={strings.Search}
               value={this.state.searchTag}
               accessoryLeft={SearchIcon}
-              size='small'
+              size="small"
               onSubmitEditing={() => this.searchNews()}
-              returnKeyType='done'
+              returnKeyType="done"
               accessoryRight={() =>
                 this.state.searching ? (
-                  <Spinner {...this.props} size='small' />
+                  <Spinner {...this.props} size="small" />
                 ) : (
                   <></>
                 )
@@ -194,25 +205,26 @@ class News extends Component {
                   <Layout style={styles.newsRow}>
                     <Image
                       source={{ uri: item.logo }}
-                      resizeMethod='auto'
+                      resizeMethod="auto"
                       style={{
                         width: 50,
                         height: 50,
                         marginRight: 10,
                         borderRadius: 25,
-                        backgroundColor: '#eee',
+                        backgroundColor: "#eee",
                       }}
                     />
                     <Layout style={{ flex: 1 }}>
                       <Layout
                         style={{
-                          flexDirection: 'row',
-                          justifyContent: 'space-between',
-                        }}>
-                        <Text appearance='hint' category='s2'>
+                          flexDirection: "row",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <Text appearance="hint" category="s2">
                           {item.source}
                         </Text>
-                        <Text appearance='hint' category='s2'>
+                        <Text appearance="hint" category="s2">
                           {this.getNewsDate(item.date)}
                         </Text>
                       </Layout>
@@ -221,14 +233,16 @@ class News extends Component {
                       </Layout>
                       <Layout
                         style={{
-                          flexDirection: 'row',
+                          flexDirection: "row",
                           flex: 1,
-                          justifyContent: 'flex-end',
-                        }}>
+                          justifyContent: "flex-end",
+                        }}
+                      >
                         <Button
-                          size='tiny'
-                          onPress={() => this.goToNews(item.reference_link)}>
-                          {'GoToNews'}
+                          size="tiny"
+                          onPress={() => this.goToNews(item.reference_link)}
+                        >
+                          {strings.GoToNews}
                         </Button>
                       </Layout>
                     </Layout>
@@ -249,14 +263,14 @@ export default News;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'space-between',
-    alignItems: 'stretch',
+    justifyContent: "space-between",
+    alignItems: "stretch",
     // marginBottom: 10,
   },
   newsRow: {
     flex: 1,
     padding: 5,
     marginHorizontal: 5,
-    flexDirection: 'row',
+    flexDirection: "row",
   },
 });
