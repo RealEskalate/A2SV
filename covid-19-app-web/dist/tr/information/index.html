@@ -1,0 +1,578 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta content="IE=edge" http-equiv="X-UA-Compatible"><meta content="width=device-width,initial-scale=1" name="viewport"><meta property="og:title" content="TrackSym"><meta property="og:description" content="TrackSym - A non-commercial COVID-19 Symptom Tracker app that uses crowd-sourcing to collect and visualize the density of the relevant symptoms. Registration only asks about age and gender to be used for data science purposes. Users can anonymously report symptoms and choose a location to see the density of symptoms in a map view. The data is aggregated by places, therefore, the app can help people avoid visiting a grocery store or a gas station that is heavily used by symptomatic people."><meta property="og:image" content="/logo.png"><meta property="og:image:width" content="100px"><meta property="og:image:height" content="100px"><meta property="og:url" content="http://a2sv-covid.herokuapp.com"><meta property="og:type" content="article"><link href="/favicon.ico" rel="icon"><title>TrackSym - Covid-19 Symptom Tracker</title><script>const link = document.createElement('link');
+    link.href = "https://fonts.googleapis.com/css?family=Nunito:display=swap";
+    link.rel = 'stylesheet';
+    link.crossOrigin = 'crossorigin';
+    performance.mark('add-stylesheet');
+    document.head.appendChild(link);
+    link.onload = () => {
+      performance.measure('stylesheet-onload', 'add-stylesheet');
+    }</script><link href="https://fonts.googleapis.com/css?family=Nunito:display=swap" rel="stylesheet" crossorigin="crossorigin"><link href="/css/app.6fb1009f.css" rel="preload" as="style"><link href="/css/chunk-vendors.4e60656d.css" rel="preload" as="style"><link href="/js/app.ea8d0ab7.js" rel="preload" as="script"><link href="/js/chunk-vendors.7097c02e.js" rel="preload" as="script"><link href="/css/chunk-vendors.4e60656d.css" rel="stylesheet"><link href="/css/app.6fb1009f.css" rel="stylesheet"><style type="text/css"> .__cov-progress { opacity: 1; z-index: 999999; } </style><style type="text/css">.resize-observer[data-v-b329ee4c]{position:absolute;top:0;left:0;z-index:-1;width:100%;height:100%;border:none;background-color:transparent;pointer-events:none;display:block;overflow:hidden;opacity:0}.resize-observer[data-v-b329ee4c] object{display:block;position:absolute;top:0;left:0;height:100%;width:100%;overflow:hidden;pointer-events:none;z-index:-1}</style><link rel="stylesheet" type="text/css" href="/css/chunk-38737b03.ef9692b7.css"><script charset="utf-8" src="/js/chunk-38737b03.33bfeb82.js"></script><link rel="stylesheet" type="text/css" href="/css/chunk-79c3cb40.edabd4f9.css"><script charset="utf-8" src="/js/chunk-79c3cb40.53474b1b.js"></script><style type="text/css" id="vuetify-theme-stylesheet">.v-application a { color: #039be5; }
+.v-application .primary {
+  background-color: #039be5 !important;
+  border-color: #039be5 !important;
+}
+.v-application .primary--text {
+  color: #039be5 !important;
+  caret-color: #039be5 !important;
+}
+.v-application .primary.lighten-5 {
+  background-color: #caffff !important;
+  border-color: #caffff !important;
+}
+.v-application .primary--text.text--lighten-5 {
+  color: #caffff !important;
+  caret-color: #caffff !important;
+}
+.v-application .primary.lighten-4 {
+  background-color: #abffff !important;
+  border-color: #abffff !important;
+}
+.v-application .primary--text.text--lighten-4 {
+  color: #abffff !important;
+  caret-color: #abffff !important;
+}
+.v-application .primary.lighten-3 {
+  background-color: #8bedff !important;
+  border-color: #8bedff !important;
+}
+.v-application .primary--text.text--lighten-3 {
+  color: #8bedff !important;
+  caret-color: #8bedff !important;
+}
+.v-application .primary.lighten-2 {
+  background-color: #6ad1ff !important;
+  border-color: #6ad1ff !important;
+}
+.v-application .primary--text.text--lighten-2 {
+  color: #6ad1ff !important;
+  caret-color: #6ad1ff !important;
+}
+.v-application .primary.lighten-1 {
+  background-color: #45b6ff !important;
+  border-color: #45b6ff !important;
+}
+.v-application .primary--text.text--lighten-1 {
+  color: #45b6ff !important;
+  caret-color: #45b6ff !important;
+}
+.v-application .primary.darken-1 {
+  background-color: #0081c9 !important;
+  border-color: #0081c9 !important;
+}
+.v-application .primary--text.text--darken-1 {
+  color: #0081c9 !important;
+  caret-color: #0081c9 !important;
+}
+.v-application .primary.darken-2 {
+  background-color: #0068ad !important;
+  border-color: #0068ad !important;
+}
+.v-application .primary--text.text--darken-2 {
+  color: #0068ad !important;
+  caret-color: #0068ad !important;
+}
+.v-application .primary.darken-3 {
+  background-color: #005092 !important;
+  border-color: #005092 !important;
+}
+.v-application .primary--text.text--darken-3 {
+  color: #005092 !important;
+  caret-color: #005092 !important;
+}
+.v-application .primary.darken-4 {
+  background-color: #003a78 !important;
+  border-color: #003a78 !important;
+}
+.v-application .primary--text.text--darken-4 {
+  color: #003a78 !important;
+  caret-color: #003a78 !important;
+}
+.v-application .secondary {
+  background-color: #9e9e9e !important;
+  border-color: #9e9e9e !important;
+}
+.v-application .secondary--text {
+  color: #9e9e9e !important;
+  caret-color: #9e9e9e !important;
+}
+.v-application .secondary.lighten-5 {
+  background-color: #ffffff !important;
+  border-color: #ffffff !important;
+}
+.v-application .secondary--text.text--lighten-5 {
+  color: #ffffff !important;
+  caret-color: #ffffff !important;
+}
+.v-application .secondary.lighten-4 {
+  background-color: #ffffff !important;
+  border-color: #ffffff !important;
+}
+.v-application .secondary--text.text--lighten-4 {
+  color: #ffffff !important;
+  caret-color: #ffffff !important;
+}
+.v-application .secondary.lighten-3 {
+  background-color: #f1f1f1 !important;
+  border-color: #f1f1f1 !important;
+}
+.v-application .secondary--text.text--lighten-3 {
+  color: #f1f1f1 !important;
+  caret-color: #f1f1f1 !important;
+}
+.v-application .secondary.lighten-2 {
+  background-color: #d5d5d5 !important;
+  border-color: #d5d5d5 !important;
+}
+.v-application .secondary--text.text--lighten-2 {
+  color: #d5d5d5 !important;
+  caret-color: #d5d5d5 !important;
+}
+.v-application .secondary.lighten-1 {
+  background-color: #b9b9b9 !important;
+  border-color: #b9b9b9 !important;
+}
+.v-application .secondary--text.text--lighten-1 {
+  color: #b9b9b9 !important;
+  caret-color: #b9b9b9 !important;
+}
+.v-application .secondary.darken-1 {
+  background-color: #848484 !important;
+  border-color: #848484 !important;
+}
+.v-application .secondary--text.text--darken-1 {
+  color: #848484 !important;
+  caret-color: #848484 !important;
+}
+.v-application .secondary.darken-2 {
+  background-color: #6b6b6b !important;
+  border-color: #6b6b6b !important;
+}
+.v-application .secondary--text.text--darken-2 {
+  color: #6b6b6b !important;
+  caret-color: #6b6b6b !important;
+}
+.v-application .secondary.darken-3 {
+  background-color: #535353 !important;
+  border-color: #535353 !important;
+}
+.v-application .secondary--text.text--darken-3 {
+  color: #535353 !important;
+  caret-color: #535353 !important;
+}
+.v-application .secondary.darken-4 {
+  background-color: #3c3c3c !important;
+  border-color: #3c3c3c !important;
+}
+.v-application .secondary--text.text--darken-4 {
+  color: #3c3c3c !important;
+  caret-color: #3c3c3c !important;
+}
+.v-application .accent {
+  background-color: #90a4ae !important;
+  border-color: #90a4ae !important;
+}
+.v-application .accent--text {
+  color: #90a4ae !important;
+  caret-color: #90a4ae !important;
+}
+.v-application .accent.lighten-5 {
+  background-color: #ffffff !important;
+  border-color: #ffffff !important;
+}
+.v-application .accent--text.text--lighten-5 {
+  color: #ffffff !important;
+  caret-color: #ffffff !important;
+}
+.v-application .accent.lighten-4 {
+  background-color: #ffffff !important;
+  border-color: #ffffff !important;
+}
+.v-application .accent--text.text--lighten-4 {
+  color: #ffffff !important;
+  caret-color: #ffffff !important;
+}
+.v-application .accent.lighten-3 {
+  background-color: #e2f7ff !important;
+  border-color: #e2f7ff !important;
+}
+.v-application .accent--text.text--lighten-3 {
+  color: #e2f7ff !important;
+  caret-color: #e2f7ff !important;
+}
+.v-application .accent.lighten-2 {
+  background-color: #c6dbe5 !important;
+  border-color: #c6dbe5 !important;
+}
+.v-application .accent--text.text--lighten-2 {
+  color: #c6dbe5 !important;
+  caret-color: #c6dbe5 !important;
+}
+.v-application .accent.lighten-1 {
+  background-color: #abbfc9 !important;
+  border-color: #abbfc9 !important;
+}
+.v-application .accent--text.text--lighten-1 {
+  color: #abbfc9 !important;
+  caret-color: #abbfc9 !important;
+}
+.v-application .accent.darken-1 {
+  background-color: #768a93 !important;
+  border-color: #768a93 !important;
+}
+.v-application .accent--text.text--darken-1 {
+  color: #768a93 !important;
+  caret-color: #768a93 !important;
+}
+.v-application .accent.darken-2 {
+  background-color: #5d707a !important;
+  border-color: #5d707a !important;
+}
+.v-application .accent--text.text--darken-2 {
+  color: #5d707a !important;
+  caret-color: #5d707a !important;
+}
+.v-application .accent.darken-3 {
+  background-color: #455861 !important;
+  border-color: #455861 !important;
+}
+.v-application .accent--text.text--darken-3 {
+  color: #455861 !important;
+  caret-color: #455861 !important;
+}
+.v-application .accent.darken-4 {
+  background-color: #2e4149 !important;
+  border-color: #2e4149 !important;
+}
+.v-application .accent--text.text--darken-4 {
+  color: #2e4149 !important;
+  caret-color: #2e4149 !important;
+}
+.v-application .error {
+  background-color: #e57373 !important;
+  border-color: #e57373 !important;
+}
+.v-application .error--text {
+  color: #e57373 !important;
+  caret-color: #e57373 !important;
+}
+.v-application .error.lighten-5 {
+  background-color: #fffffb !important;
+  border-color: #fffffb !important;
+}
+.v-application .error--text.text--lighten-5 {
+  color: #fffffb !important;
+  caret-color: #fffffb !important;
+}
+.v-application .error.lighten-4 {
+  background-color: #ffe2de !important;
+  border-color: #ffe2de !important;
+}
+.v-application .error--text.text--lighten-4 {
+  color: #ffe2de !important;
+  caret-color: #ffe2de !important;
+}
+.v-application .error.lighten-3 {
+  background-color: #ffc5c2 !important;
+  border-color: #ffc5c2 !important;
+}
+.v-application .error--text.text--lighten-3 {
+  color: #ffc5c2 !important;
+  caret-color: #ffc5c2 !important;
+}
+.v-application .error.lighten-2 {
+  background-color: #ffa9a7 !important;
+  border-color: #ffa9a7 !important;
+}
+.v-application .error--text.text--lighten-2 {
+  color: #ffa9a7 !important;
+  caret-color: #ffa9a7 !important;
+}
+.v-application .error.lighten-1 {
+  background-color: #ff8e8d !important;
+  border-color: #ff8e8d !important;
+}
+.v-application .error--text.text--lighten-1 {
+  color: #ff8e8d !important;
+  caret-color: #ff8e8d !important;
+}
+.v-application .error.darken-1 {
+  background-color: #c7595a !important;
+  border-color: #c7595a !important;
+}
+.v-application .error--text.text--darken-1 {
+  color: #c7595a !important;
+  caret-color: #c7595a !important;
+}
+.v-application .error.darken-2 {
+  background-color: #a93f43 !important;
+  border-color: #a93f43 !important;
+}
+.v-application .error--text.text--darken-2 {
+  color: #a93f43 !important;
+  caret-color: #a93f43 !important;
+}
+.v-application .error.darken-3 {
+  background-color: #8c232d !important;
+  border-color: #8c232d !important;
+}
+.v-application .error--text.text--darken-3 {
+  color: #8c232d !important;
+  caret-color: #8c232d !important;
+}
+.v-application .error.darken-4 {
+  background-color: #6f0018 !important;
+  border-color: #6f0018 !important;
+}
+.v-application .error--text.text--darken-4 {
+  color: #6f0018 !important;
+  caret-color: #6f0018 !important;
+}
+.v-application .info {
+  background-color: #2196f3 !important;
+  border-color: #2196f3 !important;
+}
+.v-application .info--text {
+  color: #2196f3 !important;
+  caret-color: #2196f3 !important;
+}
+.v-application .info.lighten-5 {
+  background-color: #d4ffff !important;
+  border-color: #d4ffff !important;
+}
+.v-application .info--text.text--lighten-5 {
+  color: #d4ffff !important;
+  caret-color: #d4ffff !important;
+}
+.v-application .info.lighten-4 {
+  background-color: #b5ffff !important;
+  border-color: #b5ffff !important;
+}
+.v-application .info--text.text--lighten-4 {
+  color: #b5ffff !important;
+  caret-color: #b5ffff !important;
+}
+.v-application .info.lighten-3 {
+  background-color: #95e8ff !important;
+  border-color: #95e8ff !important;
+}
+.v-application .info--text.text--lighten-3 {
+  color: #95e8ff !important;
+  caret-color: #95e8ff !important;
+}
+.v-application .info.lighten-2 {
+  background-color: #75ccff !important;
+  border-color: #75ccff !important;
+}
+.v-application .info--text.text--lighten-2 {
+  color: #75ccff !important;
+  caret-color: #75ccff !important;
+}
+.v-application .info.lighten-1 {
+  background-color: #51b0ff !important;
+  border-color: #51b0ff !important;
+}
+.v-application .info--text.text--lighten-1 {
+  color: #51b0ff !important;
+  caret-color: #51b0ff !important;
+}
+.v-application .info.darken-1 {
+  background-color: #007cd6 !important;
+  border-color: #007cd6 !important;
+}
+.v-application .info--text.text--darken-1 {
+  color: #007cd6 !important;
+  caret-color: #007cd6 !important;
+}
+.v-application .info.darken-2 {
+  background-color: #0064ba !important;
+  border-color: #0064ba !important;
+}
+.v-application .info--text.text--darken-2 {
+  color: #0064ba !important;
+  caret-color: #0064ba !important;
+}
+.v-application .info.darken-3 {
+  background-color: #004d9f !important;
+  border-color: #004d9f !important;
+}
+.v-application .info--text.text--darken-3 {
+  color: #004d9f !important;
+  caret-color: #004d9f !important;
+}
+.v-application .info.darken-4 {
+  background-color: #003784 !important;
+  border-color: #003784 !important;
+}
+.v-application .info--text.text--darken-4 {
+  color: #003784 !important;
+  caret-color: #003784 !important;
+}
+.v-application .success {
+  background-color: #66bb6a !important;
+  border-color: #66bb6a !important;
+}
+.v-application .success--text {
+  color: #66bb6a !important;
+  caret-color: #66bb6a !important;
+}
+.v-application .success.lighten-5 {
+  background-color: #f4fff2 !important;
+  border-color: #f4fff2 !important;
+}
+.v-application .success--text.text--lighten-5 {
+  color: #f4fff2 !important;
+  caret-color: #f4fff2 !important;
+}
+.v-application .success.lighten-4 {
+  background-color: #d6ffd6 !important;
+  border-color: #d6ffd6 !important;
+}
+.v-application .success--text.text--lighten-4 {
+  color: #d6ffd6 !important;
+  caret-color: #d6ffd6 !important;
+}
+.v-application .success.lighten-3 {
+  background-color: #baffba !important;
+  border-color: #baffba !important;
+}
+.v-application .success--text.text--lighten-3 {
+  color: #baffba !important;
+  caret-color: #baffba !important;
+}
+.v-application .success.lighten-2 {
+  background-color: #9df49e !important;
+  border-color: #9df49e !important;
+}
+.v-application .success--text.text--lighten-2 {
+  color: #9df49e !important;
+  caret-color: #9df49e !important;
+}
+.v-application .success.lighten-1 {
+  background-color: #82d784 !important;
+  border-color: #82d784 !important;
+}
+.v-application .success--text.text--lighten-1 {
+  color: #82d784 !important;
+  caret-color: #82d784 !important;
+}
+.v-application .success.darken-1 {
+  background-color: #4aa051 !important;
+  border-color: #4aa051 !important;
+}
+.v-application .success--text.text--darken-1 {
+  color: #4aa051 !important;
+  caret-color: #4aa051 !important;
+}
+.v-application .success.darken-2 {
+  background-color: #2d8539 !important;
+  border-color: #2d8539 !important;
+}
+.v-application .success--text.text--darken-2 {
+  color: #2d8539 !important;
+  caret-color: #2d8539 !important;
+}
+.v-application .success.darken-3 {
+  background-color: #056b21 !important;
+  border-color: #056b21 !important;
+}
+.v-application .success--text.text--darken-3 {
+  color: #056b21 !important;
+  caret-color: #056b21 !important;
+}
+.v-application .success.darken-4 {
+  background-color: #005207 !important;
+  border-color: #005207 !important;
+}
+.v-application .success--text.text--darken-4 {
+  color: #005207 !important;
+  caret-color: #005207 !important;
+}
+.v-application .warning {
+  background-color: #fb8c00 !important;
+  border-color: #fb8c00 !important;
+}
+.v-application .warning--text {
+  color: #fb8c00 !important;
+  caret-color: #fb8c00 !important;
+}
+.v-application .warning.lighten-5 {
+  background-color: #ffff9e !important;
+  border-color: #ffff9e !important;
+}
+.v-application .warning--text.text--lighten-5 {
+  color: #ffff9e !important;
+  caret-color: #ffff9e !important;
+}
+.v-application .warning.lighten-4 {
+  background-color: #fffb82 !important;
+  border-color: #fffb82 !important;
+}
+.v-application .warning--text.text--lighten-4 {
+  color: #fffb82 !important;
+  caret-color: #fffb82 !important;
+}
+.v-application .warning.lighten-3 {
+  background-color: #ffdf67 !important;
+  border-color: #ffdf67 !important;
+}
+.v-application .warning--text.text--lighten-3 {
+  color: #ffdf67 !important;
+  caret-color: #ffdf67 !important;
+}
+.v-application .warning.lighten-2 {
+  background-color: #ffc24b !important;
+  border-color: #ffc24b !important;
+}
+.v-application .warning--text.text--lighten-2 {
+  color: #ffc24b !important;
+  caret-color: #ffc24b !important;
+}
+.v-application .warning.lighten-1 {
+  background-color: #ffa72d !important;
+  border-color: #ffa72d !important;
+}
+.v-application .warning--text.text--lighten-1 {
+  color: #ffa72d !important;
+  caret-color: #ffa72d !important;
+}
+.v-application .warning.darken-1 {
+  background-color: #db7200 !important;
+  border-color: #db7200 !important;
+}
+.v-application .warning--text.text--darken-1 {
+  color: #db7200 !important;
+  caret-color: #db7200 !important;
+}
+.v-application .warning.darken-2 {
+  background-color: #bb5900 !important;
+  border-color: #bb5900 !important;
+}
+.v-application .warning--text.text--darken-2 {
+  color: #bb5900 !important;
+  caret-color: #bb5900 !important;
+}
+.v-application .warning.darken-3 {
+  background-color: #9d4000 !important;
+  border-color: #9d4000 !important;
+}
+.v-application .warning--text.text--darken-3 {
+  color: #9d4000 !important;
+  caret-color: #9d4000 !important;
+}
+.v-application .warning.darken-4 {
+  background-color: #802700 !important;
+  border-color: #802700 !important;
+}
+.v-application .warning--text.text--darken-4 {
+  color: #802700 !important;
+  caret-color: #802700 !important;
+}</style><style type="text/css">.carousel-3d-container[data-v-c06c963c]{min-height:1px;width:100%;position:relative;z-index:0;overflow:hidden;margin:20px auto;box-sizing:border-box}.carousel-3d-slider[data-v-c06c963c]{position:relative;margin:0 auto;transform-style:preserve-3d;-webkit-perspective:1000px;-moz-perspective:1000px;perspective:1000px}</style><style type="text/css">.carousel-3d-controls[data-v-43e93932]{position:absolute;top:50%;height:0;margin-top:-30px;left:0;width:100%;z-index:1000}.next[data-v-43e93932],.prev[data-v-43e93932]{width:60px;position:absolute;z-index:1010;font-size:60px;height:60px;line-height:60px;color:#333;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;text-decoration:none;top:0}.next[data-v-43e93932]:hover,.prev[data-v-43e93932]:hover{cursor:pointer;opacity:.7}.prev[data-v-43e93932]{left:10px;text-align:left}.next[data-v-43e93932]{right:10px;text-align:right}.disabled[data-v-43e93932],.disabled[data-v-43e93932]:hover{opacity:.2;cursor:default}</style><style type="text/css">.carousel-3d-slide{position:absolute;opacity:0;visibility:hidden;overflow:hidden;top:0;border-radius:1px;border-color:#000;border-color:rgba(0,0,0,.4);border-style:solid;background-size:cover;background-color:#ccc;display:block;margin:0;box-sizing:border-box;text-align:left}.carousel-3d-slide img{width:100%}.carousel-3d-slide.current{opacity:1!important;visibility:visible!important;transform:none!important;z-index:999}</style></head><body><noscript><strong>We're sorry but covid-19-app-web doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div data-app="true" class="v-application v-application--is-ltr theme--light" id="app"><div class="v-application--wrap"><div data-v-10eb2b9d="" class="container white"><header data-v-10eb2b9d="" class="white v-sheet theme--light v-toolbar v-toolbar--flat v-app-bar v-app-bar--fixed" style="height: 56px; margin-top: 0px; transform: translateY(0px); left: 0px; right: 0px; border-radius: 0px 0px 25px;" data-booted="true"><div class="v-toolbar__content" style="height: 56px;"><!----><button data-v-10eb2b9d="" type="button" class="d-flex align-center ml-3 v-btn v-btn--flat v-btn--text theme--light v-size--default" data-v-step="0"><span class="v-btn__content"><div data-v-10eb2b9d="" aria-label="Company Logo" role="img" class="v-image v-responsive shrink theme--light" style="width: 135px; transition: width 0.2s ease 0s;"><div class="v-responsive__sizer" style="padding-bottom: 25.0909%;"></div><div class="v-image__image v-image__image--contain" style="background-image: url(&quot;http://localhost:8000/img/brand/blue.png&quot;); background-position: center center;"></div><div class="v-responsive__content" style="width: 275px;"></div></div></span></button><div data-v-10eb2b9d="" class="spacer"></div><a data-v-10eb2b9d="" href="/tr/" class="hidden-sm-and-down v-card--shaped nav-btn v-btn v-btn--flat v-btn--router v-btn--text theme--light v-size--default"><span class="v-btn__content"><span data-v-10eb2b9d="" class="text-capitalize"> Ana Sayfa</span></span></a><a data-v-10eb2b9d="" href="/tr/information" aria-current="page" class="hidden-sm-and-down v-card--shaped nav-btn border-bottom v-btn--active v-btn v-btn--flat v-btn--router v-btn--text theme--light v-size--default"><span class="v-btn__content"><span data-v-10eb2b9d="" class="text-capitalize"> Bilgi</span></span></a><a data-v-10eb2b9d="" href="/tr/about" class="hidden-sm-and-down v-card--shaped nav-btn v-btn v-btn--flat v-btn--router v-btn--text theme--light v-size--default"><span class="v-btn__content"><span data-v-10eb2b9d="" class="text-capitalize"> Hakkında</span></span></a><a data-v-10eb2b9d="" href="/tr/news" class="hidden-sm-and-down v-card--shaped nav-btn v-btn v-btn--flat v-btn--router v-btn--text theme--light v-size--default"><span class="v-btn__content"><span data-v-10eb2b9d="" class="text-capitalize"> Haberler</span></span></a><a data-v-10eb2b9d="" href="/tr/map" class="hidden-sm-and-down v-card--shaped nav-btn v-btn v-btn--flat v-btn--router v-btn--text theme--light v-size--default"><span class="v-btn__content"><span data-v-10eb2b9d="" class="text-capitalize"> Harita</span></span></a><hr data-v-10eb2b9d="" role="separator" aria-orientation="vertical" class="mx-2 v-divider v-divider--vertical theme--light"><div data-v-10eb2b9d="" data-v-step="4" class="justify-end pt-7" style="width: 50px;"><div data-v-10eb2b9d="" class="v-input v-input--is-label-active v-input--is-dirty v-input--dense theme--light v-text-field v-text-field--single-line v-text-field--solo v-text-field--solo-flat v-text-field--is-booted v-text-field--enclosed v-select"><div class="v-input__control"><div role="button" aria-haspopup="listbox" aria-expanded="false" aria-owns="list-24" class="v-input__slot"><div class="v-select__slot"><div class="v-select__selections"><small data-v-10eb2b9d="" class="primary--text">TR</small><input id="input-24" readonly="readonly" type="text" aria-readonly="false" autocomplete="off"></div><div class="v-input__append-inner"><small data-v-10eb2b9d=""></small></div><input type="hidden" value="tr"></div><div class="v-menu"><!----></div></div><div class="v-text-field__details"><div class="v-messages theme--light"><div class="v-messages__wrapper"></div></div></div></div></div></div><hr data-v-10eb2b9d="" role="separator" aria-orientation="vertical" class="mr-2 v-divider v-divider--vertical theme--light"><a data-v-10eb2b9d="" href="/tr/login" class="v-card--shaped mx-1 v-btn v-btn--depressed v-btn--router theme--dark v-size--small primary">GİRİŞ</a></div></header><div data-v-10eb2b9d="" class="v-bottom-navigation px-3 overflow-hidden v-item-group theme--light v-bottom-navigation--grow v-bottom-navigation--fixed primary--text" style="height: 56px; transform: none; border-radius: 20px 0px 0px;"><a data-v-10eb2b9d="" href="/tr/" class="v-btn v-btn--contained v-btn--router theme--light v-size--default"><span class="v-btn__content"><span data-v-10eb2b9d="">Ana Sayfa</span><span data-v-10eb2b9d="" aria-hidden="true" class="v-icon notranslate v-icon--svg theme--light"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="24" width="24" role="img" aria-hidden="true"><path d="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z"></path></svg></span></span></a><a data-v-10eb2b9d="" href="/tr/information" aria-current="page" class="v-btn--active v-btn--active v-btn v-btn--contained v-btn--router theme--light v-btn--active v-size--default"><span class="v-btn__content"><span data-v-10eb2b9d="">Bilgi</span><span data-v-10eb2b9d="" aria-hidden="true" class="v-icon notranslate v-icon--svg theme--light"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="24" width="24" role="img" aria-hidden="true"><path d="M21,5C19.89,4.65 18.67,4.5 17.5,4.5C15.55,4.5 13.45,4.9 12,6C10.55,4.9 8.45,4.5 6.5,4.5C4.55,4.5 2.45,4.9 1,6V20.65C1,20.9 1.25,21.15 1.5,21.15C1.6,21.15 1.65,21.1 1.75,21.1C3.1,20.45 5.05,20 6.5,20C8.45,20 10.55,20.4 12,21.5C13.35,20.65 15.8,20 17.5,20C19.15,20 20.85,20.3 22.25,21.05C22.35,21.1 22.4,21.1 22.5,21.1C22.75,21.1 23,20.85 23,20.6V6C22.4,5.55 21.75,5.25 21,5M21,18.5C19.9,18.15 18.7,18 17.5,18C15.8,18 13.35,18.65 12,19.5V8C13.35,7.15 15.8,6.5 17.5,6.5C18.7,6.5 19.9,6.65 21,7V18.5Z"></path></svg></span></span></a><a data-v-10eb2b9d="" href="/tr/about" class="v-btn v-btn--contained v-btn--router theme--light v-size--default"><span class="v-btn__content"><span data-v-10eb2b9d="">Hakkında</span><span data-v-10eb2b9d="" aria-hidden="true" class="v-icon notranslate v-icon--svg theme--light"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="24" width="24" role="img" aria-hidden="true"><path d="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"></path></svg></span></span></a><a data-v-10eb2b9d="" href="/tr/news" class="v-btn v-btn--contained v-btn--router theme--light v-size--default"><span class="v-btn__content"><span data-v-10eb2b9d="">Haberler</span><span data-v-10eb2b9d="" aria-hidden="true" class="v-icon notranslate v-icon--svg theme--light"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="24" width="24" role="img" aria-hidden="true"><path d="M20,11H4V8H20M20,15H13V13H20M20,19H13V17H20M11,19H4V13H11M20.33,4.67L18.67,3L17,4.67L15.33,3L13.67,4.67L12,3L10.33,4.67L8.67,3L7,4.67L5.33,3L3.67,4.67L2,3V19A2,2 0 0,0 4,21H20A2,2 0 0,0 22,19V3L20.33,4.67Z"></path></svg></span></span></a><a data-v-10eb2b9d="" href="/tr/map" class="v-btn v-btn--contained v-btn--router theme--light v-size--default"><span class="v-btn__content"><span data-v-10eb2b9d="">Harita</span><span data-v-10eb2b9d="" aria-hidden="true" class="v-icon notranslate v-icon--svg theme--light"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="24" width="24" role="img" aria-hidden="true"><path d="M15,19L9,16.89V5L15,7.11M20.5,3C20.44,3 20.39,3 20.34,3L15,5.1L9,3L3.36,4.9C3.15,4.97 3,5.15 3,5.38V20.5A0.5,0.5 0 0,0 3.5,21C3.55,21 3.61,21 3.66,20.97L9,18.9L15,21L20.64,19.1C20.85,19 21,18.85 21,18.62V3.5A0.5,0.5 0 0,0 20.5,3Z"></path></svg></span></span></a></div></div><main class="v-main px-md-0 px-3" style="padding: 56px 0px;" data-booted="true"><div class="v-main__wrap"><div class="container information" style="transform-origin: center top 0px;"><section class="mb-12 text-justify"><div class="container"><div class="row"><h3 class="display-1 font-weight-thin mb-10">KOVİD-19 Hakkında</h3><div data-v-c06c963c="" class="carousel-3d-container" style="height: 270px; min-height: 350px;"><div data-v-c06c963c="" class="carousel-3d-slider" style="width: 400px; height: 270px;"><div class="carousel-3d-slide overflow-visible right-2" data-v-c06c963c="" style="border-width: 0px; width: 400px; height: auto; transition: transform 500ms ease 0s, opacity 500ms ease 0s, visibility 500ms ease 0s; background-color: transparent; transform: translateX(700px) translateZ(-250px) rotateY(-20deg); z-index: 997; opacity: 1; visibility: visible;"><div class="shadow v-card v-sheet v-sheet--outlined v-sheet--shaped theme--light"><div class="v-image v-responsive white--text align-end theme--light" style="height: 200px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image: url(&quot;https://a2sv-api-wtupbmwpnq-uc.a.run.app/img/info/prevention.jpg&quot;); background-position: center center;"></div><div class="v-responsive__content"><div class="v-card__title text-truncate mr-3">Önleme metodları</div></div></div><div class="v-card__subtitle pb-0 text-truncate">Ellerinizi sıklıkla yıkayın 
+Sosyal mesafeyi koruyun
+Gözlerinize ellerinize ve ağzınıza dokunmaktan kaçının 
+Solunum hijyenini gözetin 
+Sağlık Bakanlığı tarafından yayınlanan tavsiyelere uyun 
+Eğer ataş, öksürük ve nefes almada zorlanma gibi şikayetleriniz varsa tıbbi yardım arayın</div><div class="v-card__actions"><button type="button" class="v-btn v-btn--flat v-btn--text theme--light v-size--default primary--text"><span class="v-btn__content"> DAHA FAZLA BİLGİ </span></button></div></div></div><div class="carousel-3d-slide overflow-visible left-2" data-v-c06c963c="" style="border-width: 0px; width: 400px; height: auto; transition: transform 500ms ease 0s, opacity 500ms ease 0s, visibility 500ms ease 0s; background-color: transparent; transform: translateX(-700px) translateZ(-250px) rotateY(20deg); z-index: 997; opacity: 1; visibility: visible;"><div class="shadow v-card v-sheet v-sheet--outlined v-sheet--shaped theme--light"><div class="v-image v-responsive white--text align-end theme--light" style="height: 200px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image: url(&quot;https://a2sv-api-wtupbmwpnq-uc.a.run.app/img/info/concern.jpg&quot;); background-position: center center;"></div><div class="v-responsive__content"><div class="v-card__title text-truncate mr-3">En büyük problem</div></div></div><div class="v-card__subtitle pb-0 text-truncate">KOVİD-19 ile ilgili en büyük endişe, influenzadan farklı olarak, aşı ve hastalık için spesifik bir tedavinin olmamasıdır. Ayrıca mevsimsel gripten daha bulaşıcı gibi görünmektedir. Kimsenin daha önce bağışıklığı olmadığı yeni bir virüs olduğundan, tüm insan popülasyonu SARS-CoV-2 enfeksiyonuna potansiyel olarak duyarlıdır. Durumun daha kötüye gelmesinde, diğer şeylerin yanında, hastalığı test etmek için hazırlık yapılmaması büyük rol oynadı.</div><div class="v-card__actions"><button type="button" class="v-btn v-btn--flat v-btn--text theme--light v-size--default primary--text"><span class="v-btn__content"> DAHA FAZLA BİLGİ </span></button></div></div></div><div class="carousel-3d-slide overflow-visible left-1" data-v-c06c963c="" style="border-width: 0px; width: 400px; height: auto; transition: transform 500ms ease 0s, opacity 500ms ease 0s, visibility 500ms ease 0s; background-color: transparent; transform: translateX(-350px) translateZ(-150px) rotateY(20deg); z-index: 998; opacity: 1; visibility: visible;"><div class="shadow v-card v-sheet v-sheet--outlined v-sheet--shaped theme--light"><div class="v-image v-responsive white--text align-end theme--light" style="height: 200px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image: url(&quot;https://a2sv-api-wtupbmwpnq-uc.a.run.app/img/info/spread.jpg&quot;); background-position: center center;"></div><div class="v-responsive__content"><div class="v-card__title text-truncate mr-3">Nasıl yayılır?</div></div></div><div class="v-card__subtitle pb-0 text-truncate">Bulaştığı kişileri hızlı bir şekilde hastanelik eden ve karantina altına alınmalarına yol açan çoğu ölümcül virüsün aksine, koronavirüs bulaşmış hastalar birkaç gün boyunca semptom göstermeyebilir. 
+Çoğu hasta 14 güne kadar semptom göstermez, bu da karantinaya alınmadan ve tedavi edilmeden önce başkalarına bulaşma olasılığını artırır. Coronavirus sadece birbirlerinin ellerine dokunma gibi doğrudan temaslarla başkalarına yaymakla kalmaz, aynı zamanda telefonlar, masalar, sandalyeler, merdivenler ve asansör düğmeleri gibi dijital cihazlarla temas ederek ve sonrasında ellerinizi yüzünüze, gözlerinize, burnunuza veya ağzına götürmenizle yayılır.</div><div class="v-card__actions"><button type="button" class="v-btn v-btn--flat v-btn--text theme--light v-size--default primary--text"><span class="v-btn__content"> DAHA FAZLA BİLGİ </span></button></div></div></div><div class="carousel-3d-slide overflow-visible current" data-v-c06c963c="" style="border-width: 0px; width: 400px; height: auto; transition: transform 500ms ease 0s, opacity 500ms ease 0s, visibility 500ms ease 0s; background-color: transparent;"><div class="shadow v-card v-sheet v-sheet--outlined v-sheet--shaped theme--light"><div class="v-image v-responsive white--text align-end theme--light" style="height: 200px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image: url(&quot;https://a2sv-api-wtupbmwpnq-uc.a.run.app/img/info/origin.jpg&quot;); background-position: center center;"></div><div class="v-responsive__content"><div class="v-card__title text-truncate mr-3">Nereden geldi?</div></div></div><div class="v-card__subtitle pb-0 text-truncate">Yarasalar bu virüslerin doğal konakçıları olarak kabul edilir, ancak diğer bazı hayvan türlerinin de koronavirüsleri taşıdığı bilinmektedir. Örneğin, develerden insanlara yayılan Orta Doğu Solunum Sendromu Coronavirüs (MERS-CoV) ve misk kedilerinden insanlara yayılan Şiddetli Akut Solunum Sendromu Coronavirus-1 (SARS-CoV-1) gibi.</div><div class="v-card__actions"><button type="button" class="v-btn v-btn--flat v-btn--text theme--light v-size--default primary--text"><span class="v-btn__content"> DAHA FAZLA BİLGİ </span></button></div></div></div><div class="carousel-3d-slide overflow-visible right-1" data-v-c06c963c="" style="border-width: 0px; width: 400px; height: auto; transition: transform 500ms ease 0s, opacity 500ms ease 0s, visibility 500ms ease 0s; background-color: transparent; transform: translateX(350px) translateZ(-150px) rotateY(-20deg); z-index: 998; opacity: 1; visibility: visible;"><div class="shadow v-card v-sheet v-sheet--outlined v-sheet--shaped theme--light"><div class="v-image v-responsive white--text align-end theme--light" style="height: 200px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image: url(&quot;https://a2sv-api-wtupbmwpnq-uc.a.run.app/img/info/history.jpg&quot;); background-position: center center;"></div><div class="v-responsive__content"><div class="v-card__title text-truncate mr-3">Hikayenin kökeni</div></div></div><div class="v-card__subtitle pb-0 text-truncate">Çin'de 2019 yılında tespit edilen yeni koronavirüs genetik olarak SARS-CoV-1 virüsü ile yakından ilişkilidir. SARS, 2002 yılı sonunda Çin'de ortaya çıktı ve 33 ülkede sekiz ay boyunca 8.000'den fazla vakaya neden oldu. SARS geliştiren her on kişiden biri öldü.</div><div class="v-card__actions"><button type="button" class="v-btn v-btn--flat v-btn--text theme--light v-size--default primary--text"><span class="v-btn__content"> DAHA FAZLA BİLGİ </span></button></div></div></div><div class="carousel-3d-slide overflow-visible" data-v-c06c963c="" style="border-width: 0px; width: 400px; height: auto; transition: transform 500ms ease 0s, opacity 500ms ease 0s, visibility 500ms ease 0s; background-color: transparent;"><div class="shadow v-card v-sheet v-sheet--outlined v-sheet--shaped theme--light"><div class="v-image v-responsive white--text align-end theme--light" style="height: 200px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image: url(&quot;https://a2sv-api-wtupbmwpnq-uc.a.run.app/img/info/misconception.jpg&quot;); background-position: center center;"></div><div class="v-responsive__content"><div class="v-card__title text-truncate mr-3">Yanlış anlaşılan nokta?</div></div></div><div class="v-card__subtitle pb-0 text-truncate">COVID-19 ile ilgili yaygın bir yanlış anlama, koronavirüslerin sadece yaşlı insanları etkilediğidir. Gerçeklikten uzak bu çıkarımın haricinde koronavirüs çeşitli yaş gruplarından birçok insanı öldürmektedir. 
+ KOVİD-19 nedeniyle ölme riskinin 80+ yaş grupları için (% 14.8'e kadar) önemli ölçüde daha yüksek olduğu, 40 yaşın altındaki yaş grupları için% 1'in altında olduğu doğrudur. Ancak bu, gençlerin virus dolayısıyla ölmeyeceği anlamına gelmez. Virüsün bağışıklık sistemini etkilemesi veya çok sayıda insanın enfekte olması ile hastanelerin kapasitelerinin üzerinde hizmet vermesine sebep olarak hastanaye kabul edilmeyen birçok insanın ölmesine neden olabilir. 
+ Bu yüzden hastalığa yakalanmamaya ve güvende kalmamaya dikkat etmelisiniz. Çok hasta olmasanız bile, etkilenen bölgelere gitmemeniz veya belirtiler ortaya çıkmadan önce kalabalık bölgelere gitmemeniz ile sosyal mesafeyi korumamanız çok önemlidir.</div><div class="v-card__actions"><button type="button" class="v-btn v-btn--flat v-btn--text theme--light v-size--default primary--text"><span class="v-btn__content"> DAHA FAZLA BİLGİ </span></button></div></div></div><div class="carousel-3d-slide overflow-visible" data-v-c06c963c="" style="border-width: 0px; width: 400px; height: auto; transition: transform 500ms ease 0s, opacity 500ms ease 0s, visibility 500ms ease 0s; background-color: transparent;"><div class="shadow v-card v-sheet v-sheet--outlined v-sheet--shaped theme--light"><div class="v-image v-responsive white--text align-end theme--light" style="height: 200px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image: url(&quot;https://a2sv-api-wtupbmwpnq-uc.a.run.app/img/info/symptom.jpg&quot;); background-position: center center;"></div><div class="v-responsive__content"><div class="v-card__title text-truncate mr-3">Belirtiler</div></div></div><div class="v-card__subtitle pb-0 text-truncate">Şimdiye kadar öğrendiklerimize göre, bu hastalığa yakalanmış bir kişi kuru öksürük, hafif ateş, yorgunluk ve ilk başta fark edilmeyebilecek solunum sorunlarından muzdarip olabilir. Virüsün kontrol altına alınmasını bu kadar zorlaştıran şey, soğuk algınlığı veya gripten farklı olarak, insanlardan insanlara çok hızlı bir şekilde yayılmasıdır. Bazı insanlar KOVİD-19’a yakalansa bile herhangi bir belirti göstermez. KOVİD-19 ile enfekte olan kişilerin% 80'i bir tedavi görmeden iyileşir. İnsanlar dünyayı dolaştıkça, KOVİD-19’u dünyanın her yerine yaymışlar ve yaymaya da devam etmektedirler.</div><div class="v-card__actions"><button type="button" class="v-btn v-btn--flat v-btn--text theme--light v-size--default primary--text"><span class="v-btn__content"> DAHA FAZLA BİLGİ </span></button></div></div></div><div class="carousel-3d-slide overflow-visible" data-v-c06c963c="" style="border-width: 0px; width: 400px; height: auto; transition: transform 500ms ease 0s, opacity 500ms ease 0s, visibility 500ms ease 0s; background-color: transparent;"><div class="shadow v-card v-sheet v-sheet--outlined v-sheet--shaped theme--light"><div class="v-image v-responsive white--text align-end theme--light" style="height: 200px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image: url(&quot;https://a2sv-api-wtupbmwpnq-uc.a.run.app/img/info/covid.jpg&quot;); background-position: center center;"></div><div class="v-responsive__content"><div class="v-card__title text-truncate mr-3">KOVİD-19 nedir?</div></div></div><div class="v-card__subtitle pb-0 text-truncate">SARS-COV-2 nedir? KOVİD-19 (Yeni Koronavirüs hastalığı) nedir? Şiddetli Akut Solunum Sendromu Coronavirus-2 (SARS-CoV-2) 2019 yeni koronavirüsüne verilen addır. KOVİD-19, virüsle ilişkili hastalığa verilen addır. SARS-CoV-2, daha önce insanlarda tanımlanmamış yeni bir koronavirüs türüdür. Koronavirüsler, bazıları da insanlara bulaştığı bilinen hayvanlar arasında dolaşan virüslerdir.</div><div class="v-card__actions"><button type="button" class="v-btn v-btn--flat v-btn--text theme--light v-size--default primary--text"><span class="v-btn__content"> DAHA FAZLA BİLGİ </span></button></div></div></div><div class="carousel-3d-slide overflow-visible" data-v-c06c963c="" style="border-width: 0px; width: 400px; height: auto; transition: transform 500ms ease 0s, opacity 500ms ease 0s, visibility 500ms ease 0s; background-color: transparent;"><div class="shadow v-card v-sheet v-sheet--outlined v-sheet--shaped theme--light"><div class="v-image v-responsive white--text align-end theme--light" style="height: 200px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image: url(&quot;https://a2sv-api-wtupbmwpnq-uc.a.run.app/img/info/prevention.jpg&quot;); background-position: center center;"></div><div class="v-responsive__content"><div class="v-card__title text-truncate mr-3">Önleme metdoları</div></div></div><div class="v-card__subtitle pb-0 text-truncate">Ellerinizi sık sık yıkayın   Sosyal mesafeyi koruyun   Gözünüze, burnunuza ve ağzınıza dokunmaktan kaçının   Solunum hijyenini uygulayın   Haberleri takip edin ve doktorunuz tarafından verilen tavsiyelere uyun   Ateşiniz, öksürüğünüz varsa ve nefes almakta zorluk çekiyorsanız, tıbbi yardım alın</div><div class="v-card__actions"><button type="button" class="v-btn v-btn--flat v-btn--text theme--light v-size--default primary--text"><span class="v-btn__content"> DAHA FAZLA BİLGİ </span></button></div></div></div><div class="carousel-3d-slide overflow-visible" data-v-c06c963c="" style="border-width: 0px; width: 400px; height: auto; transition: transform 500ms ease 0s, opacity 500ms ease 0s, visibility 500ms ease 0s; background-color: transparent;"><div class="shadow v-card v-sheet v-sheet--outlined v-sheet--shaped theme--light"><div class="v-image v-responsive white--text align-end theme--light" style="height: 200px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image: url(&quot;https://a2sv-api-wtupbmwpnq-uc.a.run.app/img/info/concern.jpg&quot;); background-position: center center;"></div><div class="v-responsive__content"><div class="v-card__title text-truncate mr-3">En büyük endişe</div></div></div><div class="v-card__subtitle pb-0 text-truncate">KOVİD-19 ile ilgili en büyük endişe, influenzadan farklı olarak, aşı ve hastalık için belirli bir tedavinin olmamasıdır. Ayrıca mevsimsel gripten daha bulaşıcı gibi görünmektedir. Kimsenin daha önce bağışıklığı olmayan yeni bir virüs olduğundan, tüm insan popülasyonu SARS-CoV-2 enfeksiyonuna potansiyel olarak duyarlıdır. Bu süreçte işleri kötü hale getiren olgulardan biri de test etmek için çok fazla hazırlık yapılmamasıdır.</div><div class="v-card__actions"><button type="button" class="v-btn v-btn--flat v-btn--text theme--light v-size--default primary--text"><span class="v-btn__content"> DAHA FAZLA BİLGİ </span></button></div></div></div><div class="carousel-3d-slide overflow-visible" data-v-c06c963c="" style="border-width: 0px; width: 400px; height: auto; transition: transform 500ms ease 0s, opacity 500ms ease 0s, visibility 500ms ease 0s; background-color: transparent;"><div class="shadow v-card v-sheet v-sheet--outlined v-sheet--shaped theme--light"><div class="v-image v-responsive white--text align-end theme--light" style="height: 200px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image: url(&quot;https://a2sv-api-wtupbmwpnq-uc.a.run.app/img/info/spread.jpg&quot;); background-position: center center;"></div><div class="v-responsive__content"><div class="v-card__title text-truncate mr-3">Nasıl yayılır?</div></div></div><div class="v-card__subtitle pb-0 text-truncate">Bulaştığı kişileri hızlı bir şekilde hastanelik eden ve karantina altına alınmalarına yol açan çoğu ölümcül virüsün aksine, koronavirüs bulaşmış hastalar birkaç gün boyunca semptom göstermeyebilir. 
+ Çoğu hasta 14 güne kadar semptom göstermez, bu da karantinaya alınmadan ve tedavi edilmeden önce başkalarına bulaşma olasılığını artırır. Coronavirus sadece birbirlerinin ellerine dokunma gibi doğrudan temaslarla başkalarına yaymakla kalmaz, aynı zamanda telefonlar, masalar, sandalyeler, merdivenler ve asansör düğmeleri gibi dijital cihazlarla temas ederek ve sonrasında ellerinizi yüzünüze, gözlerinize, burnunuza veya ağzına götürmenizle yayılır.</div><div class="v-card__actions"><button type="button" class="v-btn v-btn--flat v-btn--text theme--light v-size--default primary--text"><span class="v-btn__content"> DAHA FAZLA BİLGİ </span></button></div></div></div><div class="carousel-3d-slide overflow-visible" data-v-c06c963c="" style="border-width: 0px; width: 400px; height: auto; transition: transform 500ms ease 0s, opacity 500ms ease 0s, visibility 500ms ease 0s; background-color: transparent;"><div class="shadow v-card v-sheet v-sheet--outlined v-sheet--shaped theme--light"><div class="v-image v-responsive white--text align-end theme--light" style="height: 200px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image: url(&quot;https://a2sv-api-wtupbmwpnq-uc.a.run.app/img/info/origin.jpg&quot;); background-position: center center;"></div><div class="v-responsive__content"><div class="v-card__title text-truncate mr-3">Nereden geldi?</div></div></div><div class="v-card__subtitle pb-0 text-truncate">Yarasalar bu virüslerin doğal konakçıları olarak kabul edilir, ancak diğer bazı hayvan türlerinin de koronavirüsleri taşıdığı bilinmektedir. Örneğin, develerden insanlara yayılan Orta Doğu Solunum Sendromu Coronavirüs (MERS-CoV) ve misk kedilerinden insanlara yayılan Şiddetli Akut Solunum Sendromu Coronavirus-1 (SARS-CoV-1) gibi.</div><div class="v-card__actions"><button type="button" class="v-btn v-btn--flat v-btn--text theme--light v-size--default primary--text"><span class="v-btn__content"> DAHA FAZLA BİLGİ </span></button></div></div></div><div class="carousel-3d-slide overflow-visible" data-v-c06c963c="" style="border-width: 0px; width: 400px; height: auto; transition: transform 500ms ease 0s, opacity 500ms ease 0s, visibility 500ms ease 0s; background-color: transparent;"><div class="shadow v-card v-sheet v-sheet--outlined v-sheet--shaped theme--light"><div class="v-image v-responsive white--text align-end theme--light" style="height: 200px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image: url(&quot;https://a2sv-api-wtupbmwpnq-uc.a.run.app/img/info/history.jpg&quot;); background-position: center center;"></div><div class="v-responsive__content"><div class="v-card__title text-truncate mr-3">Hikayenin kökeni</div></div></div><div class="v-card__subtitle pb-0 text-truncate">Çin'de 2019 yılında tespit edilen yeni koronavirüs genetik olarak SARS-CoV-1 virüsü ile yakından ilişkilidir. SARS, 2002 yılı sonunda Çin'de ortaya çıktı ve 33 ülkede sekiz ay boyunca 8.000'den fazla vakaya neden oldu. SARS geliştiren her on kişiden biri öldü.</div><div class="v-card__actions"><button type="button" class="v-btn v-btn--flat v-btn--text theme--light v-size--default primary--text"><span class="v-btn__content"> DAHA FAZLA BİLGİ </span></button></div></div></div><div class="carousel-3d-slide overflow-visible" data-v-c06c963c="" style="border-width: 0px; width: 400px; height: auto; transition: transform 500ms ease 0s, opacity 500ms ease 0s, visibility 500ms ease 0s; background-color: transparent;"><div class="shadow v-card v-sheet v-sheet--outlined v-sheet--shaped theme--light"><div class="v-image v-responsive white--text align-end theme--light" style="height: 200px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image: url(&quot;https://a2sv-api-wtupbmwpnq-uc.a.run.app/img/info/misconception.jpg&quot;); background-position: center center;"></div><div class="v-responsive__content"><div class="v-card__title text-truncate mr-3">Yanlış anlaşılan nokta?</div></div></div><div class="v-card__subtitle pb-0 text-truncate"> COVID-19 ile ilgili yaygın bir yanlış anlama, koronavirüslerin sadece yaşlı insanları etkilediğidir. Gerçeklikten uzak bu çıkarımın haricinde koronavirüs çeşitli yaş gruplarından birçok insanı öldürmektedir. KOVİD-19 nedeniyle ölme riskinin 80+ yaş grupları için (% 14.8'e kadar) önemli ölçüde daha yüksek olduğu, 40 yaşın altındaki yaş grupları için% 1'in altında olduğu doğrudur. Ancak bu, gençlerin virus dolayısıyla ölmeyeceği anlamına gelmez. Virüsün bağışıklık sistemini etkilemesi veya çok sayıda insanın enfekte olması ile hastanelerin kapasitelerinin üzerinde hizmet vermesine sebep olarak hastanaye kabul edilmeyen birçok insanın ölmesine neden olabilir.  This is why you should be careful not to get the disease and stay safe.  Even if you are not heavily sick, there is a very huge chance that you might be affected and continue to pass it to others before the symptoms arise if you go to crowded areas or don’t keep social distancing.  Read more about the age-sex demographics</div><div class="v-card__actions"><button type="button" class="v-btn v-btn--flat v-btn--text theme--light v-size--default primary--text"><span class="v-btn__content"> DAHA FAZLA BİLGİ </span></button></div></div></div><div class="carousel-3d-slide overflow-visible" data-v-c06c963c="" style="border-width: 0px; width: 400px; height: auto; transition: transform 500ms ease 0s, opacity 500ms ease 0s, visibility 500ms ease 0s; background-color: transparent;"><div class="shadow v-card v-sheet v-sheet--outlined v-sheet--shaped theme--light"><div class="v-image v-responsive white--text align-end theme--light" style="height: 200px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image: url(&quot;https://a2sv-api-wtupbmwpnq-uc.a.run.app/img/info/symptom.jpg&quot;); background-position: center center;"></div><div class="v-responsive__content"><div class="v-card__title text-truncate mr-3">Belirtiler</div></div></div><div class="v-card__subtitle pb-0 text-truncate">Şimdiye kadar öğrendiklerimize göre, bu hastalığa yakalanmış bir kişi kuru öksürük, hafif ateş, yorgunluk ve ilk başta fark edilmeyebilecek solunum sorunlarından muzdarip olabilir. Virüsün kontrol altına alınmasını bu kadar zorlaştıran şey, soğuk algınlığı veya gripten farklı olarak, insanlardan insanlara çok hızlı bir şekilde yayılmasıdır. Bazı insanlar KOVİD-19’a yakalansa bile herhangi bir belirti göstermez. KOVİD-19 ile enfekte olan kişilerin% 80'i bir tedavi görmeden iyileşir. İnsanlar dünyayı dolaştıkça, KOVİD-19’u dünyanın her yerine yaymışlar ve yaymaya da devam etmektedirler.</div><div class="v-card__actions"><button type="button" class="v-btn v-btn--flat v-btn--text theme--light v-size--default primary--text"><span class="v-btn__content"> DAHA FAZLA BİLGİ </span></button></div></div></div><div class="carousel-3d-slide overflow-visible" data-v-c06c963c="" style="border-width: 0px; width: 400px; height: auto; transition: transform 500ms ease 0s, opacity 500ms ease 0s, visibility 500ms ease 0s; background-color: transparent;"><div class="shadow v-card v-sheet v-sheet--outlined v-sheet--shaped theme--light"><div class="v-image v-responsive white--text align-end theme--light" style="height: 200px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image: url(&quot;https://a2sv-api-wtupbmwpnq-uc.a.run.app/img/info/covid.jpg&quot;); background-position: center center;"></div><div class="v-responsive__content"><div class="v-card__title text-truncate mr-3">KOVİD-19 nedir?</div></div></div><div class="v-card__subtitle pb-0 text-truncate">SARS-COV-2 nedir? KOVİD-19 (Yeni Koronavirüs hastalığı) nedir? Şiddetli Akut Solunum Sendromu Coronavirus-2 (SARS-CoV-2) 2019 yeni koronavirüsüne verilen addır. KOVİD-19, virüsle ilişkili hastalığa verilen addır. SARS-CoV-2, daha önce insanlarda tanımlanmamış yeni bir koronavirüs türüdür. Koronavirüsler, bazıları da insanlara bulaştığı bilinen hayvanlar arasında dolaşan virüslerdir.</div><div class="v-card__actions"><button type="button" class="v-btn v-btn--flat v-btn--text theme--light v-size--default primary--text"><span class="v-btn__content"> DAHA FAZLA BİLGİ </span></button></div></div></div></div><!----></div></div></div><div role="dialog" class="v-dialog__container"><!----></div></section><section class="my-12 text-justify"><div class="container my-12"><div class="row"><h3 class="display-1 font-weight-thin mb-10">Ne yapmalı?</h3></div><div class="row"><div class="pr-md-12 col-md-5 col-12"><div class="v-item-group theme--light v-expansion-panels v-expansion-panels--accordion v-expansion-panels--flat" style="min-height: 300px; transform-origin: center top 0px;"><div aria-expanded="true" class="v-expansion-panel v-expansion-panel--active v-item--active"><button type="button" class="v-expansion-panel-header font-weight-bold v-expansion-panel-header--active"><div class="text--primary"><div role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="15" class="v-progress-circular primary--text" style="height: 20px; width: 20px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="30.769230769230766 30.769230769230766 61.53846153846153 61.53846153846153" style="transform: rotate(270deg);"><circle fill="transparent" cx="61.53846153846153" cy="61.53846153846153" r="20" stroke-width="21.538461538461537" stroke-dasharray="125.664" stroke-dashoffset="0" class="v-progress-circular__underlay"></circle><circle fill="transparent" cx="61.53846153846153" cy="61.53846153846153" r="20" stroke-width="21.538461538461537" stroke-dasharray="125.664" stroke-dashoffset="106.81415022205296px" class="v-progress-circular__overlay"></circle></svg><div class="v-progress-circular__info"></div></div><h3 class="text--primary d-inline-block mx-3">Sakin olun</h3></div></button><div class="v-expansion-panel-content" style=""><div class="v-expansion-panel-content__wrap"><div>Pandemi, bir virüsün ölümcüllüğünü değil, bulaşını ve coğrafi yayılmasını ifade eder. Bu yüzden dikkatli olun ve korkmadan yardım alın.</div><div class="v-image v-responsive my-5 mx-auto d-md-none theme--light"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image: url(&quot;/img/actions/mindfulness.svg&quot;); background-position: center center;"></div><div class="v-responsive__content"></div></div></div></div><hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"></div><div aria-expanded="false" class="v-expansion-panel"><button type="button" class="v-expansion-panel-header font-weight-bold"><div class="text--primary"><div role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100" class="v-progress-circular primary--text" style="height: 20px; width: 20px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="30.769230769230766 30.769230769230766 61.53846153846153 61.53846153846153" style="transform: rotate(270deg);"><circle fill="transparent" cx="61.53846153846153" cy="61.53846153846153" r="20" stroke-width="21.538461538461537" stroke-dasharray="125.664" stroke-dashoffset="0" class="v-progress-circular__underlay"></circle><circle fill="transparent" cx="61.53846153846153" cy="61.53846153846153" r="20" stroke-width="21.538461538461537" stroke-dasharray="125.664" stroke-dashoffset="0px" class="v-progress-circular__overlay"></circle></svg><div class="v-progress-circular__info"></div></div><h3 class="text--primary d-inline-block mx-3">Ellerinizi yıkayın</h3></div></button><div class="v-expansion-panel-content" style="display: none;"><div class="v-expansion-panel-content__wrap"><div>Solunum yoluna yerleşen virüsler, mukus veya virüsü içeren damlacıklar vücudunuza gözleriniz, burnunuz veya boğazınız yoluyla girdiğinde yayılır. Çoğu zaman, elleriniz yoluyla bu noktlara aktarılır.</div><div class="v-image v-responsive my-5 mx-auto d-md-none theme--light"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image: url(&quot;/img/actions/wash_hands.svg&quot;); background-position: center center;"></div><div class="v-responsive__content"></div></div></div></div><hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"></div><div aria-expanded="false" class="v-expansion-panel"><button type="button" class="v-expansion-panel-header font-weight-bold"><div class="text--primary"><div role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100" class="v-progress-circular primary--text" style="height: 20px; width: 20px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="30.769230769230766 30.769230769230766 61.53846153846153 61.53846153846153" style="transform: rotate(270deg);"><circle fill="transparent" cx="61.53846153846153" cy="61.53846153846153" r="20" stroke-width="21.538461538461537" stroke-dasharray="125.664" stroke-dashoffset="0" class="v-progress-circular__underlay"></circle><circle fill="transparent" cx="61.53846153846153" cy="61.53846153846153" r="20" stroke-width="21.538461538461537" stroke-dasharray="125.664" stroke-dashoffset="0px" class="v-progress-circular__overlay"></circle></svg><div class="v-progress-circular__info"></div></div><h3 class="text--primary d-inline-block mx-3">Fiziksel mesafe</h3></div></button><div class="v-expansion-panel-content" style="display: none;"><div class="v-expansion-panel-content__wrap"><div>Başkalarıyla yüz yüze teması sınırlamak, hastalığın yayılmasını azaltmanın en iyi yoludur.</div><div class="v-image v-responsive my-5 mx-auto d-md-none theme--light"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image: url(&quot;/img/actions/social_distancing.svg&quot;); background-position: center center;"></div><div class="v-responsive__content"></div></div></div></div><hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"></div><div aria-expanded="false" class="v-expansion-panel"><button type="button" class="v-expansion-panel-header font-weight-bold"><div class="text--primary"><div role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100" class="v-progress-circular primary--text" style="height: 20px; width: 20px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="30.769230769230766 30.769230769230766 61.53846153846153 61.53846153846153" style="transform: rotate(270deg);"><circle fill="transparent" cx="61.53846153846153" cy="61.53846153846153" r="20" stroke-width="21.538461538461537" stroke-dasharray="125.664" stroke-dashoffset="0" class="v-progress-circular__underlay"></circle><circle fill="transparent" cx="61.53846153846153" cy="61.53846153846153" r="20" stroke-width="21.538461538461537" stroke-dasharray="125.664" stroke-dashoffset="0px" class="v-progress-circular__overlay"></circle></svg><div class="v-progress-circular__info"></div></div><h3 class="text--primary d-inline-block mx-3">Evde Kalın</h3></div></button><div class="v-expansion-panel-content" style="display: none;"><div class="v-expansion-panel-content__wrap"><div>Soğuk algınlığı ve grip ile benzer KOVİD-19 belirtileriniz varsa, evde kalın, test yaptırmak için hemen doktorunuzu veya Sağlık Bakanlığı’nı arayın, işe veya okula gitmeyin ve sosyal mesafeyi koruyun.</div><div class="v-image v-responsive my-5 mx-auto d-md-none theme--light"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image: url(&quot;/img/actions/home.svg&quot;); background-position: center center;"></div><div class="v-responsive__content"></div></div></div></div><hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"></div></div></div><div class="px-10 my-auto d-md-block d-none col-md-7 col-12"><div class="v-image v-responsive my-5 mx-auto theme--light" style="max-height: 350px; transform-origin: center top 0px;"><div class="v-responsive__sizer" style="padding-bottom: 70.3553%;"></div><div class="v-image__image v-image__image--contain" style="background-image: url(&quot;https://a2sv-api-wtupbmwpnq-uc.a.run.app/img/actions/mindfulness.svg&quot;); background-position: center center;"></div><div class="v-responsive__content" style="width: 985px;"></div></div></div></div></div></section><section class="my-12 text-justify"><div class="container my-12"><div class="row"><h3 class="display-1 font-weight-thin mb-10">Hastalığın aşamaları</h3></div><div class="v-card v-sheet v-sheet--outlined v-sheet--shaped theme--light" style="overflow: hidden;"><div class="row"><div class="pl-md-12 py-md-9 px-8 py-5 col-md-7 col-12"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="-0.5 -0.5 680 680" content="<mxfile host=&quot;app.diagrams.net&quot; modified=&quot;2020-04-22T12:55:14.223Z&quot; agent=&quot;5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36&quot; etag=&quot;h5HqAMdiCXweSi6_3KWz&quot; version=&quot;13.0.1&quot; type=&quot;device&quot;><diagram id=&quot;_uqlHp8x8zA8Wc-24WS6&quot; name=&quot;Page-1&quot;>7Vrbkps4EP0aP7IlJIHg0eNLJlWZ2lRmk+w8ChA2CUYOyONxvn4lI8D4NjhmwNmKH2zUaomW+qj7uGGARouXdyldzh94wOIBBMHLAI0HEDq2I7+VYJMLsItzwSyNglxkVoLH6CfTQqClqyhgWU1RcB6LaFkX+jxJmC9qMpqmfF1XC3lcv+uSztiB4NGn8aH0axSIuV6WBSr5PYtm8+LOJtA9C1ooa0E2pwFf74jQZIBGKeciv1q8jFis9q7Yl3zc9ERvaVjKEtFkwEPgWs8g+jz8+nH88C0dfn+XDQ0EtXFiU6yYBXIDdJOnYs5nPKHxpJLe+av0malZTdmoVD5wvtTCb0yIjXYmXQkuRXOxiHWvNDjd/Csb4C+raD7t9o0VekDZ2uhWJlL+nY14zNOtqQgA1wWqJ+SJmNJFFCvVEV9EvlzTI00y+fPwWA4tPIikJF+3WuzJ/dSijK9Sn53ZRL2HgqYzJs7puaXb5XFhfMHk6uTAlMVURM91Q6gG7qzUq3wrL7R7L3E1uiFXg0tdPRnad7b927iaXOnp7dBhmtLNjsKSR4nIdmb+qARSQQdbUsQeHWsRAnuoyWesMFSa9uuw0jvyTOOVXtYA2rFQjljSpBpt/1ipSHcXcD8zpNkslTgyVHg3HNv2CSGhQcIwNFzkYcP2KDVcCkMahsQNVGgrJpBXM/27e5sK1oWiQoqRbZE5lAqmucyHgW3HWkdt1UW2QUStgqUiksHfoHE0S/JOj2YsjhKW33LPiIdI5hMIJEohSLgyY7NYCr7ICuvknuYG1o0+EO+fzDiWGU7dcz2PBHtc0i0s1zLH1g9Y7Th8YWlAE6rEURzvnJ4wZLbvH5yrhG+XVWYmszRFbQR7OX9cDuGtByDbquEQuhqX6yqDmkVanO9kTwe8VezDPcS+W41hpGm6wr2mK6vPdFU2nuq5663TFe7H1dcSk1bSFSEdpCvs9gGrl0jskCDZKjmQvK4wpRpnyK5tA3A0OLwKsl9l3H1EnTageIA17OxRo/1Uk9ulR+2FrhZgR1pgSSaCATE1S4IMhJIl2aYRQGhjSgNCTKcllgTBGaIEm3ClAzvuGX3e3Cw/mjpj7E674kc2roMR98+P7Bv6b3hxGeBGkq37e/Aq8sfVnbnaPBEIunE17qO4d7pIdxVvuYyPl4Rrl26V5Os44eojErwJ17H3qI7bjOpcSt/ds+z9NfVOalPu9awLWjB0QOjkrCuAVmC4nkkNScRM5kMXht4Ns67CDjXlQD0kKU5lpYjC7ecIY+PZMhLyNj8lGHmyw8zy2V4hbP3wuOnd1CF91bkI6p3HOb0m956KJi3Xx8ziOeONE7k+KxnFdZPEegIfl6KjrH/0S/0ao6OXmhpyUC0kWV2k2WJLrsmzgBIIfaDzrGlbjoGo7RlOEDiWFWBkqmD7f8yz70efbym3HjtQB1l2OCJWV1nWNG+tWgLxSbx7bSBiPBn+c/86JrwWPL/vWJds6VPDENsxv7oBz5/+R9GK5z9NRn9/mXx66sT5NXcddegePJq/btOC8zGpH3sT9+183Ae5PkKD1OcoB27ollZoEMZNSXIvNAjVwQOt88UJDK1z+m/0KPJ0GmlMmzwvpAFDNKdNBPieQTBGhiVXRJHnAN9qiza1/erM+8Rfefulhe54zoeVHwVUzjTiScbjI+FO7ijs7qUZ2GG8k83qvdMcztXLu2jyHw==</diagram></mxfile>" class="mx-auto col-12 py-md-12 px-md-12 px-5 py-3 grey lighten-4 v-card--shaped shadow-in" style="max-height: 600px;"><defs><filter id="dropShadow"><feGaussianBlur in="SourceAlpha" stdDeviation="1.7" result="blur"></feGaussianBlur><feOffset in="blur" dx="3" dy="3" result="offsetBlur"></feOffset><feFlood flood-color="#000" flood-opacity="0.3" result="offsetColor"></feFlood><feComposite in="offsetColor" in2="offsetBlur" operator="in" result="offsetBlur"></feComposite><feBlend in="SourceGraphic" in2="offsetBlur"></feBlend></filter></defs><g filter="url(#dropShadow)"><path d="M 336 150 Q 336 115 388.5 115 Q 441 115 441 90.1" fill="none" stroke="#009900" stroke-width="3" stroke-miterlimit="10" pointer-events="stroke"></path><path d="M 441 83.35 L 445.5 92.35 L 441 90.1 L 436.5 92.35 Z" fill="#009900" stroke="#009900" stroke-width="3" stroke-miterlimit="10" pointer-events="all"></path><path d="M 396 190 Q 611 190 611 339.9" fill="none" stroke="rgb(240, 98, 146)" stroke-width="3" stroke-miterlimit="10" pointer-events="stroke"></path><path d="M 611 346.65 L 606.5 337.65 L 611 339.9 L 615.5 337.65 Z" fill="rgb(240, 98, 146)" stroke="rgb(240, 98, 146)" stroke-width="3" stroke-miterlimit="10" pointer-events="all"></path><ellipse cx="336" cy="190" rx="60" ry="40" fill="rgb(0, 156, 229)" stroke="none" pointer-events="all"></ellipse><g transform="translate(-0.5 -0.5)"><switch><foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 118px; height: 1px; padding-top: 190px; margin-left: 277px;"><div style="box-sizing: border-box; font-size: 0px; text-align: center;"><div style="display: inline-block; font-size: 12px; font-family: Nunito; color: rgb(255, 255, 255); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;"><span id="docs-internal-guid-866c777f-7fff-93b4-6baa-9a2faff79d20"><span style="font-size: 11pt; font-weight: 700; vertical-align: baseline;">Hafif veya hiç semptom yok </span></span></div></div></div></foreignObject></switch></g><path d="M 551 390 Q 551 390 406.1 390" fill="none" stroke="rgb(240, 98, 146)" stroke-width="3" stroke-miterlimit="10" pointer-events="stroke"></path><path d="M 399.35 390 L 408.35 385.5 L 406.1 390 L 408.35 394.5 Z" fill="rgb(240, 98, 146)" stroke="rgb(240, 98, 146)" stroke-width="3" stroke-miterlimit="10" pointer-events="all"></path><path d="M 611 430 Q 611 630 407.97 630" fill="none" stroke="rgb(240, 98, 146)" stroke-width="3" stroke-miterlimit="10" pointer-events="stroke"></path><path d="M 400.47 630 L 410.47 625 L 407.97 630 L 410.47 635 Z" fill="rgb(240, 98, 146)" stroke="rgb(240, 98, 146)" stroke-width="3" stroke-miterlimit="10" pointer-events="all"></path><path d="M 611 350 Q 611 290 473.5 290 Q 336 290 336 240.1" fill="none" stroke="#009900" stroke-width="3" stroke-miterlimit="10" pointer-events="stroke"></path><path d="M 336 233.35 L 340.5 242.35 L 336 240.1 L 331.5 242.35 Z" fill="#009900" stroke="#009900" stroke-width="3" stroke-miterlimit="10" pointer-events="all"></path><ellipse cx="611" cy="390" rx="60" ry="40" fill="rgb(0, 156, 229)" stroke="none" pointer-events="all"></ellipse><g transform="translate(-0.5 -0.5)"><switch><foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 118px; height: 1px; padding-top: 390px; margin-left: 552px;"><div style="box-sizing: border-box; font-size: 0px; text-align: center;"><div style="display: inline-block; font-size: 12px; font-family: Nunito; color: rgb(255, 255, 255); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;"><span id="docs-internal-guid-8132d71f-7fff-2e0f-6b61-d2264aad7718"><span style="font-size: 11pt; font-weight: 700; vertical-align: baseline;">Ağır semptomlar </span></span></div></div></div></foreignObject><text x="611" y="394" fill="#000000" font-family="Nunito" font-size="12px" text-anchor="middle"> Heavy symptoms </text></switch></g><path d="M 336 590 Q 336 590 336 441.97" fill="none" stroke="rgb(240, 98, 146)" stroke-width="3" stroke-miterlimit="10" pointer-events="stroke"></path><path d="M 336 434.47 L 341 444.47 L 336 441.97 L 331 444.47 Z" fill="rgb(240, 98, 146)" stroke="rgb(240, 98, 146)" stroke-width="3" stroke-miterlimit="10" pointer-events="all"></path><path d="M 276 630 Q 81 630 81 441.97" fill="none" stroke="rgb(240, 98, 146)" stroke-width="3" stroke-miterlimit="10" pointer-events="stroke"></path><path d="M 81 434.47 L 86 444.47 L 81 441.97 L 76 444.47 Z" fill="rgb(240, 98, 146)" stroke="rgb(240, 98, 146)" stroke-width="3" stroke-miterlimit="10" pointer-events="all"></path><path d="M 276 630 Q 1 630 1 410 Q 1 190 265.9 190" fill="none" stroke="#009900" stroke-width="3" stroke-miterlimit="10" pointer-events="stroke"></path><path d="M 272.65 190 L 263.65 194.5 L 265.9 190 L 263.65 185.5 Z" fill="#009900" stroke="#009900" stroke-width="3" stroke-miterlimit="10" pointer-events="all"></path><ellipse cx="336" cy="630" rx="60" ry="40" fill="rgb(0, 156, 229)" stroke="none" pointer-events="all"></ellipse><g transform="translate(-0.5 -0.5)"><switch><foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 118px; height: 1px; padding-top: 630px; margin-left: 277px;"><div style="box-sizing: border-box; font-size: 0px; text-align: center;"><div style="display: inline-block; font-size: 12px; font-family: Nunito; color: rgb(255, 255, 255); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;"><span id="docs-internal-guid-252f80f8-7fff-d25d-9b1a-71f1ec292fb8"><span style="font-size: 10pt; font-weight: 700; vertical-align: baseline;">Hastanaye yatma </span></span></div></div></div></foreignObject><text x="336" y="634" fill="#fff" font-family="Nunito" font-size="12px" text-anchor="middle"> Hospitalization </text></switch></g><path d="M 141 390 Q 141 390 265.9 390" fill="none" stroke="rgb(240, 98, 146)" stroke-width="3" stroke-miterlimit="10" pointer-events="stroke"></path><path d="M 272.65 390 L 263.65 394.5 L 265.9 390 L 263.65 385.5 Z" fill="rgb(240, 98, 146)" stroke="rgb(240, 98, 146)" stroke-width="3" stroke-miterlimit="10" pointer-events="all"></path><path d="M 141 390 Q 293.6 390 293.58 589.74" fill="none" stroke="#009900" stroke-width="3" stroke-miterlimit="10" pointer-events="stroke"></path><path d="M 293.57 597.24 L 288.58 587.24 L 293.58 589.74 L 298.58 587.24 Z" fill="#009900" stroke="#009900" stroke-width="3" stroke-miterlimit="10" pointer-events="all"></path><ellipse cx="81" cy="390" rx="60" ry="40" fill="rgb(0, 156, 229)" stroke="none" pointer-events="all"></ellipse><g transform="translate(-0.5 -0.5)"><switch><foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 118px; height: 1px; padding-top: 390px; margin-left: 22px;"><div style="box-sizing: border-box; font-size: 0px; text-align: center;"><div style="display: inline-block; font-size: 12px; font-family: Nunito; color: rgb(0, 0, 0); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;"><span id="docs-internal-guid-0a722c08-7fff-1658-3a6b-8dd855d43165"><span style="font-size: 12pt; font-weight: 700; vertical-align: baseline;"><font color="#ffffff">Yoğun Bakım Ünitesi </font></span></span></div></div></div></foreignObject><text x="81" y="394" fill="#000000" font-family="Nunito" font-size="12pt" text-anchor="middle"> ICU </text></switch></g><ellipse cx="336" cy="390" rx="60" ry="40" fill="rgb(240, 98, 146)" stroke="none" pointer-events="all"></ellipse><g transform="translate(-0.5 -0.5)"><switch><foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 118px; height: 1px; padding-top: 390px; margin-left: 277px;"><div style="box-sizing: border-box; font-size: 0px; text-align: center;"><div style="display: inline-block; font-size: 12pt; font-family: Nunito, sans-serif; color: rgb(0, 0, 0); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;"><b><font color="#ffffff">Ölüm</font></b></div></div></div></foreignObject><text x="336" y="394" fill="#000000" font-family="Nunito" font-size="12px" text-anchor="middle"> DEATH </text></switch></g><ellipse cx="441" cy="40" rx="60" ry="40" fill="rgb(0, 156, 229)" stroke="none" pointer-events="all"></ellipse><g transform="translate(-0.5 -0.5)"><switch><foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 118px; height: 1px; padding-top: 40px; margin-left: 382px;"><div style="box-sizing: border-box; font-size: 0px; text-align: center;"><div style="display: inline-block; font-size: 12pt; font-family: Nunito, sans-serif; color: rgb(0, 0, 0); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;"><b><font color="#ffffff">İyileşme</font></b></div></div></div></foreignObject><text x="441" y="44" fill="#000000" font-family="Nunito" font-size="12px" text-anchor="middle"> RECOVERY </text></switch></g><path d="M 241 80 Q 241 110 288.5 110 Q 336 110 336 139.9" fill="none" stroke="rgb(240, 98, 146)" stroke-width="3" stroke-miterlimit="10" pointer-events="stroke"></path><path d="M 336 146.65 L 331.5 137.65 L 336 139.9 L 340.5 137.65 Z" fill="rgb(240, 98, 146)" stroke="rgb(240, 98, 146)" stroke-width="3" stroke-miterlimit="10" pointer-events="all"></path><ellipse cx="241" cy="40" rx="60" ry="40" fill="rgb(0, 156, 229)" stroke="none" pointer-events="all"></ellipse><g transform="translate(-0.5 -0.5)"><switch><foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 118px; height: 1px; padding-top: 40px; margin-left: 182px;"><div style="box-sizing: border-box; font-size: 0px; text-align: center;"><div style="display: inline-block; font-size: 12px; font-family: Nunito, sans-serif; color: rgb(255, 255, 255); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;"><span id="docs-internal-guid-bbfade3a-7fff-70cb-7443-5425a3b80c55"><span style="font-size: 11pt; font-weight: 700; vertical-align: baseline; font-family: Nunito, sans-serif;">Kuluçka </span></span></div></div></div></foreignObject><text x="241" y="44" fill="#000000" font-family="Nunito" font-size="12px" text-anchor="middle"> Incubation </text></switch></g></g><switch><g requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"></g><a transform="translate(0,-5)" xlink:href="https://desk.draw.io/support/solutions/articles/16000042487" target="_blank"><text text-anchor="middle" font-size="10px" x="50%" y="100%"> Viewer does not support full SVG 1.1 </text></a></switch></svg></div><div class="pr-md-12 py-md-8 px-8 py-5 col-md-5 col-12"><h2 class="mb-5 primary--text">Hangi aşamalar var?</h2><div role="list" class="v-list v-sheet theme--light v-list--disabled"><div role="listbox" class="v-item-group theme--light v-list-item-group primary--text"><div tabindex="0" role="listitem" aria-selected="false" class="px-0 v-list-item v-list-item--dense v-list-item--link theme--light"><div class="v-list-item__content"><h4 class="mb-2 primary--text">Kuluçka dönemi</h4><p class="grey--text darken-3">Hasta yeni enfekte oldu, virüs miktarı fazla değil, bu yüzden fark edilmiyor.</p></div></div><div tabindex="0" role="listitem" aria-selected="false" class="px-0 v-list-item v-list-item--dense v-list-item--link theme--light"><div class="v-list-item__content"><h4 class="mb-2 primary--text">Hafif veya hiç belirti yok</h4><p class="grey--text darken-3">Virüs boğaz veya akciğerlere ulaştığına göre, bazı hastalar hafif semptomlar göstermeye başlar. Bazıları asemptomatiktir.</p></div></div><div tabindex="0" role="listitem" aria-selected="false" class="px-0 v-list-item v-list-item--dense v-list-item--link theme--light"><div class="v-list-item__content"><h4 class="mb-2 primary--text">Ağır belirtiler</h4><p class="grey--text darken-3">Virüs kendini kopyalamaya devam ettikçe, bazı hastalar ağır belirtiler göstermeye başlar ve bu kişilerin hastaneye yatması gerekir. Bazıları hastaneye yatmadan virüsü yenebilecek kadar güçlü bir bağışıklık sistemine sahiptir.</p></div></div><div tabindex="0" role="listitem" aria-selected="false" class="px-0 v-list-item v-list-item--dense v-list-item--link theme--light"><div class="v-list-item__content"><h4 class="mb-2 primary--text">Hastaneye yatmak</h4><p class="grey--text darken-3">Kandaki oksijen seviyesi belirli bir eşiğin altına düştüğünde, KOVİD-19 hastalarının hastaneye yatırılması gerekir. Yoğun bakım ünitesinde kapasite olmaması durumunda, bazı hastalar cihaz eksikliği nedeniyle ölebilir.</p></div></div><div tabindex="0" role="listitem" aria-selected="false" class="px-0 v-list-item v-list-item--dense v-list-item--link theme--light"><div class="v-list-item__content"><h4 class="mb-2 primary--text">Yoğun bakım ünitesi</h4><p class="grey--text darken-3">Ne yazık ki, bazı hastalar virüsle başa çıkamayan bir bağışıklık sistemine sahiptir ve yoğun bakım ünitelerine alınmaları gerekir..</p></div></div></div></div></div></div></div></div></section><section class="my-12 text-justify"><div class="container my-12"><div class="row"><h3 class="display-1 font-weight-thin mb-10">Daha da fazla bilgi</h3></div><div class="row"><div class="pr-md-12 col-md-9 col-12"><p> KOVİD-19 hakkında daha fazla bilgi edinmek için öğrenme yollarımızı inceleyin. Yaşınız ne olursa olsun, sizin için bir şeyimiz var. </p></div><div class="pl-md-12 col-md-3 col-12"><div class="v-input v-card--shaped v-input--is-label-active v-input--is-dirty v-input--dense theme--light v-text-field v-text-field--is-booted v-text-field--enclosed v-text-field--outlined v-select"><div class="v-input__control"><div role="button" aria-haspopup="listbox" aria-expanded="false" aria-owns="list-106" class="v-input__slot"><fieldset aria-hidden="true"><legend style="width: 98.25px;"><span>​</span></legend></fieldset><div class="v-select__slot"><label for="input-106" class="v-label v-label--active theme--light" style="left: 0px; right: auto; position: absolute;">Learning Path for</label><div class="v-select__selections"><span>Yetişkinler</span><input id="input-106" readonly="readonly" type="text" aria-readonly="false" autocomplete="off"></div><div class="v-input__append-inner"><div class="v-input__icon v-input__icon--append"><span aria-hidden="true" class="v-icon notranslate v-icon--svg theme--light"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="24" width="24" role="img" aria-hidden="true"><path d="M7,10L12,15L17,10H7Z"></path></svg></span></div></div><input type="hidden" value="Adults"></div><div class="v-menu"><!----></div></div><div class="v-text-field__details"><div class="v-messages theme--light"><div class="v-messages__wrapper"></div></div></div></div></div></div></div><div class="row"><div class="overflow-auto col col-12"><div class="v-data-table v-data-table--fixed-header theme--light" style="min-width: 800px; transform-origin: center top 0px;"><div class="v-data-table__wrapper"><table><thead><tr><!----><th class="text-left primary--text text--darken-1"> Görev Adı </th><th class="text-left primary--text text--darken-1"> Ne </th><th class="text-left primary--text text--darken-1"> Niçin </th><th class="text-left primary--text text--darken-1"> Uzunluk </th><th class="text-left primary--text text--darken-1"> Nasıl </th></tr></thead><tbody></tbody></table></div></div></div></div></div></section></div><div class="__cov-progress" style="background-color: rgb(1, 157, 229); opacity: 0; position: fixed; top: 0px; left: 0px; width: 0%; height: 3px; transition: opacity 0.6s ease 0s;"></div></div></main><footer data-v-73121398="" class="v-footer white pb-md-0 pb-5 v-sheet theme--light v-footer--padless" data-booted="true"><div data-v-73121398="" class="lighten-1 text-center v-card v-card--flat v-sheet v-sheet--outlined v-sheet--shaped theme--light rounded-0" style="width: 100%;"><div data-v-73121398="" class="v-card__text"><a data-v-73121398="" href="http://a2sv.org/" target="_blank" class="mx-2 v-btn v-btn--depressed v-btn--fab v-btn--round theme--light v-size--small"><span class="v-btn__content"><span data-v-73121398="" aria-hidden="true" class="v-icon notranslate v-icon--svg theme--light" style="font-size: 23px; height: 23px; width: 23px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="23px" width="23px" role="img" aria-hidden="true"><path d="M16.36,14C16.44,13.34 16.5,12.68 16.5,12C16.5,11.32 16.44,10.66 16.36,10H19.74C19.9,10.64 20,11.31 20,12C20,12.69 19.9,13.36 19.74,14M14.59,19.56C15.19,18.45 15.65,17.25 15.97,16H18.92C17.96,17.65 16.43,18.93 14.59,19.56M14.34,14H9.66C9.56,13.34 9.5,12.68 9.5,12C9.5,11.32 9.56,10.65 9.66,10H14.34C14.43,10.65 14.5,11.32 14.5,12C14.5,12.68 14.43,13.34 14.34,14M12,19.96C11.17,18.76 10.5,17.43 10.09,16H13.91C13.5,17.43 12.83,18.76 12,19.96M8,8H5.08C6.03,6.34 7.57,5.06 9.4,4.44C8.8,5.55 8.35,6.75 8,8M5.08,16H8C8.35,17.25 8.8,18.45 9.4,19.56C7.57,18.93 6.03,17.65 5.08,16M4.26,14C4.1,13.36 4,12.69 4,12C4,11.31 4.1,10.64 4.26,10H7.64C7.56,10.66 7.5,11.32 7.5,12C7.5,12.68 7.56,13.34 7.64,14M12,4.03C12.83,5.23 13.5,6.57 13.91,8H10.09C10.5,6.57 11.17,5.23 12,4.03M18.92,8H15.97C15.65,6.75 15.19,5.55 14.59,4.44C16.43,5.07 17.96,6.34 18.92,8M12,2C6.47,2 2,6.5 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"></path></svg></span></span></a></div><div data-v-73121398="" class="v-card__text pt-0 px-12 shrink"> TrackSym semptom yoğunluğunu bilgisini toplamak ve görselleştirmek için açık kaynak kullanan ticari olmayan bir uygulamadır. Kayıt için sorulan yaş ve cinsiyet hakkında sorular sadece veri bilimi amacıyla kullanılacaktır. Kullanıcılar semptomlarını anonim olarak bildirebilir ve harita görünümünde semptomların yoğunluğunu görmek için bir konum seçebilir. Veriler lokasyon bazlı olarak toplandığından, semptomatik insanlar tarafından yoğun olarak kullanılan market veya benzin istasyonunu gibi kalabalık yerlerden bu uygulama sayesinde kaçınabilirsiniz. Ayrıca ülkelere göre KOVİD-19 haberleri ve verileri de uygulamada yer almaktadır. </div><div data-v-73121398="" class="v-card__text"><a data-v-73121398="" href="/tr/references" class="v-btn v-btn--flat v-btn--router v-btn--text theme--light v-size--small">Referanslar</a> | <a data-v-73121398="" href="/tr/privacy-policy" class="v-btn v-btn--flat v-btn--router v-btn--text theme--light v-size--small">Gizlilik</a> | <span data-v-73121398="" class="pa-3"> 2020 — <strong data-v-73121398="">TrackSym</strong></span> | <div data-v-73121398="" class="d-inline-block justify-end" style="width: 50px;"><div data-v-73121398="" class="v-input v-input--is-label-active v-input--is-dirty v-input--dense theme--light v-text-field v-text-field--single-line v-text-field--solo v-text-field--solo-flat v-text-field--is-booted v-text-field--enclosed v-select"><div class="v-input__control"><div role="button" aria-haspopup="listbox" aria-expanded="false" aria-owns="list-60" class="v-input__slot"><div class="v-select__slot"><div class="v-select__selections"><small data-v-73121398="" class="primary--text">TR</small><input id="input-60" readonly="readonly" type="text" aria-readonly="false" autocomplete="off"></div><div class="v-input__append-inner"><small data-v-73121398=""></small></div><input type="hidden" value="tr"></div><div class="v-menu"><!----></div></div><div class="v-text-field__details"><div class="v-messages theme--light"><div class="v-messages__wrapper"></div></div></div></div></div></div></div></div></footer><div><div class="v-tour"><!----></div><div class="v-snack v-snack--has-background v-snack--top" style="padding-bottom: 56px; padding-top: 56px;"><div class="v-snack__wrapper v-sheet theme--dark primary" style="display: none;"><div role="status" aria-live="polite" class="v-snack__content"><span class="ma-2">You have completed the tour</span><button type="button" class="float-right v-btn v-btn--flat v-btn--icon v-btn--round v-btn--text theme--dark v-size--x-small white--text"><span class="v-btn__content"><span aria-hidden="true" class="v-icon notranslate v-icon--svg theme--dark"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="24" width="24" role="img" aria-hidden="true"><path d="M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2C6.47,2 2,6.47 2,12C2,17.53 6.47,22 12,22C17.53,22 22,17.53 22,12C22,6.47 17.53,2 12,2M14.59,8L12,10.59L9.41,8L8,9.41L10.59,12L8,14.59L9.41,16L12,13.41L14.59,16L16,14.59L13.41,12L16,9.41L14.59,8Z"></path></svg></span></span></button></div><div class="v-snack__action "></div></div></div></div></div></div><script src="/js/chunk-vendors.7097c02e.js"></script><script src="/js/app.ea8d0ab7.js"></script></body></html>

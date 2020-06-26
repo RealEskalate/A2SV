@@ -1,7 +1,6 @@
 {
   "sources": "Sources",
   "country": "Country",
-  "dateRange": "Date Range",
   "world": "World",
   "resourcesPer1K": "Resources per 1K people",
   "totalCases": "Total cases",
@@ -63,7 +62,15 @@
     "compareCountries": "Compare Countries",
     "compareDiseases": "Compare Similar Diseases"
   },
-
+  "criteria": {
+    "totalConfirmed": "Total Confirmed",
+    "totalRecovered": "Total Recovered",
+    "totalActive": "Total Active",
+    "totalDeaths": "Total Deaths",
+    "dailyConfirmed": "Daily Confirmed",
+    "dailyRecovered": "Daily Recovered",
+    "dailyDeaths": "Daily Deaths"
+  },
   "learningPathHeaders": {
     "taskName": "Task Name",
     "what": "What",
@@ -148,6 +155,11 @@
     "gender": "Gender",
     "undisclosed": "Undisclosed",
     "cancel": "Cancel",
-    "saveChanges": "Save Changes"
+    "saveChanges": "Save Changes",
+    "pleaseLoginToViewThisMap": "Please login to view this map"
+  },
+  "map": {
+    "symptomTracker": "Symptom Tracker",
+    "globalStatistics": "Global Statistics"
   }
 }
