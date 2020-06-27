@@ -23,7 +23,7 @@ const WorldDataModel = require("../models/WorldDataModel");
 var root = __dirname;
 
 //Every 4 hours
-const update_ethiopian_statistics = async () => {
+exports.update_ethiopian_statistics = async () => {
   let phone_no = await StatisticsResource.findOne({
     language: "English",
     title: "ethiopia-phone-call",
@@ -93,7 +93,7 @@ const update_ethiopian_statistics = async () => {
 };
 
 //Every 4 hours
-const update_location_grids = async (demo, stress) => {
+exports.update_location_grids = async (demo, stress) => {
   if (demo && demo == "true") {
     var LocationGrid = LocationGridModels.DemoLocationGrid;
     var LocationUser = LocationUserModels.DemoLocationUser;
@@ -209,7 +209,7 @@ const update_location_grids = async (demo, stress) => {
 };
 
 //Every 6:30 GMT+3 time to match with John Hopkins
-const update_map_data = async () => {
+exports.update_map_data = async () => {
   let urls = [
     "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv",
     "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv",
@@ -297,7 +297,7 @@ const update_map_data = async () => {
 };
 
 //Every day
-const update_government_resources = async () => {
+exports.update_government_resources = async () => {
   const file = fs.createWriteStream(
     path.join(root, "assets", "government_measures_data.xlsx")
   );
@@ -334,7 +334,7 @@ const update_government_resources = async () => {
 };
 
 //Every day
-const update_public_resources = async () => {
+exports.update_public_resources = async () => {
   let urls = [
     //Hospital beds (per 1,000 people)
     "https://api.worldbank.org/v2/en/indicator/SH.MED.BEDS.ZS?downloadformat=excel",
@@ -354,7 +354,7 @@ const update_public_resources = async () => {
 };
 
 //Every 4 hours
-const update_world_statistics = async () => {
+exports.update_world_statistics = async () => {
   let request_url =
     "https://datahub.io/core/covid-19/r/worldwide-aggregated.csv";
   let wldData = await axios.get(request_url);
@@ -396,7 +396,7 @@ const update_world_statistics = async () => {
 };
 
 //Every 4 hours
-const update_tests = async () => {
+exports.update_tests = async () => {
   // we will use the iso here
   request_url = "https://covid.ourworldindata.org/data/owid-covid-data.csv";
   let testData = await axios.get(request_url);
