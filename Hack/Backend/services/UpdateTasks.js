@@ -93,7 +93,7 @@ exports.update_ethiopian_statistics = async () => {
 };
 
 //Every 4 hours
-exports.update_location_grids = async (demo, stress) => {
+exports.update_location_grids = async (demo = false, stress = false) => {
   if (demo && demo == "true") {
     var LocationGrid = LocationGridModels.DemoLocationGrid;
     var LocationUser = LocationUserModels.DemoLocationUser;
@@ -298,39 +298,42 @@ exports.update_map_data = async () => {
 
 //Every day
 exports.update_government_resources = async () => {
-  const file = fs.createWriteStream(
-    path.join(root, "assets", "government_measures_data.xlsx")
-  );
+  if (!fs.existsSync(path.join(root, "assets"))) {
+    fs.mkdirSync(path.join(root, "assets"));
+  }
 
-  var request = https.get(
-    "https://data.humdata.org/api/3/action/package_show?id=acaps-covid19-government-measures-dataset",
-    function (response) {
-      var result = "";
-      response.on("data", function (chunk) {
-        result += chunk;
-      });
-
-      response.on("end", function () {
-        var download_url = JSON.parse(result).result.resources[1].download_url;
-
-        request = http.get(download_url, function (response) {
-          var location = response.headers.location;
-
-          request = https.get(location, function (response) {
-            location = response.headers.location;
-
-            request = https.get(location, function (response) {
-              console.log("Started");
-              response.pipe(file).on("finish", function () {
-                console.log("Finished");
-                populateDatabase();
-              });
-            });
-          });
+  try {
+    const request = await axios.get(
+      "https://data.humdata.org/api/3/action/package_show?id=acaps-covid19-government-measures-dataset"
+    );
+    if (request.data) {
+      const download_url = request.data.result.resources[1].url;
+      const result = await axios
+        .get(download_url, {
+          responseType: "arraybuffer",
+          headers: {
+            "Content-Type": "blob",
+            "Keep-Alive": "true",
+          },
+        })
+        .then((result) => {
+          data = result.data;
         });
-      });
+      const outputFilename = path.join(
+        root,
+        "assets",
+        "government_measures_data" + ".xlsx"
+      );
+      // Create folder in current directory
+      if (!fs.existsSync(path.join(root, "assets"))) {
+        fs.mkdirSync(path.join(root, "assets"));
+      }
+      fs.writeFileSync(outputFilename, Buffer.from(data));
+      await populateDatabase();
     }
-  );
+  } catch (err) {
+    console.log(err.toString());
+  }
 };
 
 //Every day
@@ -453,10 +456,8 @@ async function fetchResources(url) {
     url.substring(45, 56) + ".xls"
   );
   // Create folder in current directory
-  try {
-    fs.mkdirSync(path.join(root, "assets"), { recursive: true });
-  } catch (e) {
-    console.log("Cannot create folder ", e);
+  if (!fs.existsSync(path.join(root, "assets"))) {
+    fs.mkdirSync(path.join(root, "assets"));
   }
   fs.writeFileSync(outputFilename, Buffer.from(data));
   await populateResDatabase(url.substring(45, 56) + ".xls");
@@ -473,6 +474,7 @@ async function populateResDatabase(filePath) {
   var currentRow = 0;
   var currentResource;
 
+  var dict = {};
   // Iterate through each cell
   for (z in worksheet) {
     if (z[0] === "!" || worksheet[z].v == undefined) continue;
@@ -495,18 +497,15 @@ async function populateResDatabase(filePath) {
     if (row != currentRow) {
       // Save the previous resource
       if (currentResource) {
-        let check = await PublicResourcesData.findOne({
-          Country: currentResource.Country,
-          Indicator: currentResource.Indicator,
-        });
-        if (!check) {
-          await currentResource.save();
+        if (dict[`${currentResource.Country}`]) {
+          dict[`${currentResource.Country}`].TimeSeries =
+            currentResource.TimeSeries;
         } else {
-          check.set({
+          dict[`${currentResource.Country}`] = {
+            Country: currentResource.Country,
+            Indicator: currentResource.Indicator,
             TimeSeries: currentResource.TimeSeries,
-          });
-          check.markModified("TimeSeries");
-          await check.save();
+          };
         }
       }
       currentResource = new PublicResourcesData({
@@ -535,36 +534,43 @@ async function populateResDatabase(filePath) {
     }
   }
   if (currentResource) {
-    let check = await PublicResourcesData.findOne({
-      Country: currentResource.Country,
-      Indicator: currentResource.Indicator,
-    });
-    if (!check) {
-      await currentResource.save();
+    if (dict[`${currentResource.Country}`]) {
+      dict[`${currentResource.Country}`].TimeSeries =
+        currentResource.TimeSeries;
     } else {
-      check.set({
+      dict[`${currentResource.Country}`] = {
+        Country: currentResource.Country,
+        Indicator: currentResource.Indicator,
         TimeSeries: currentResource.TimeSeries,
-      });
-      check.markModified("TimeSeries");
-      await check.save();
+      };
     }
+  }
+  var values = Object.keys(dict).map(function (key) {
+    return dict[key];
+  });
+  try {
+    await PublicResourcesData.collection.drop();
+  } catch (err) {
+    console.log(err.toString());
+  }
+  try {
+    await PublicResourcesData.insertMany(values);
+  } catch (err) {
+    console.log(err.toString());
   }
   return 0;
 }
 // populate news database
 async function populateDatabase() {
-  let week = new Date().setDate(new Date().getDate() - 7);
-  await News.deleteMany({ date: { $lt: week } });
-
   var workbook = XLSX.readFile(
     path.join(root, "assets", "government_measures_data.xlsx"),
     { sheetStubs: true, cellDates: true }
   );
-
   var worksheet = workbook.Sheets["Database"];
   var headers = {};
   var currentRow = 0;
   var currentPolicy;
+  const news = [];
   for (z in worksheet) {
     if (z[0] === "!" || worksheet[z].v == undefined) continue;
     var col = z[0];
@@ -579,16 +585,14 @@ async function populateDatabase() {
     if (row != currentRow) {
       if (
         currentPolicy &&
-        !(await News.findOne({
-          country: currentPolicy.country,
-          title: currentPolicy.title,
-          description: currentPolicy.description,
-        })) &&
-        currentPolicy.date > week
+        currentPolicy.title !== " " &&
+        currentPolicy.source != " " &&
+        currentPolicy.country != " " &&
+        currentPolicy.reference_link != " " &&
+        currentPolicy.description != " "
       ) {
-        currentPolicy.save();
+        news.push(currentPolicy);
       }
-
       currentPolicy = new News({
         title: " ",
         source: " ",
@@ -624,14 +628,24 @@ async function populateDatabase() {
   }
 
   if (
-    !(await News.findOne({
-      country: currentPolicy.country,
-      title: currentPolicy.title,
-      description: currentPolicy.description,
-    })) &&
-    currentPolicy.date > week
+    currentPolicy &&
+    currentPolicy.title !== " " &&
+    currentPolicy.source != " " &&
+    currentPolicy.country != " " &&
+    currentPolicy.reference_link != " " &&
+    currentPolicy.description != " "
   ) {
-    currentPolicy.save();
+    news.push(currentPolicy);
+  }
+  try {
+    await News.collection.drop();
+  } catch (err) {
+    console.log(err.toString());
+  }
+  try {
+    await News.insertMany(news, { ordered: false });
+  } catch (err) {
+    console.log(err.toString());
   }
 }
 // extract JHU data from csv
