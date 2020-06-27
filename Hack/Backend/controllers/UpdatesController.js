@@ -38,14 +38,12 @@ exports.startUpdates = async (req, res) => {
     } catch (err) {
       console.log(err.toString());
     }
-    return res.status(201).send("Daily hour updates added");
-  } else if (req.query.interval == "JHU") {
     try {
       await updateFunctions.update_map_data();
     } catch (err) {
       console.log(err.toString());
     }
-    return res.status(201).send("JHU updates added");
+    return res.status(201).send("Daily updates added");
   } else {
     return res.status(400).send("Interval parameter not understood");
   }
