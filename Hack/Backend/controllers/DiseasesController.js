@@ -24,7 +24,7 @@ exports.get_diseases = async(req, res) => {
         diseases.push(covid);
     }
     catch(err){
-        console.log(err);
+        console.log(err.toString());
     }
     diseases.push(
         new Disease({

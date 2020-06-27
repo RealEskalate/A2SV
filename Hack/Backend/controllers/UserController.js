@@ -81,7 +81,7 @@ exports.get_user_by_credentials = async (req, res) => {
         });
         await user.save();
       } catch (err) {
-        console.log(err);
+        console.log(err.toString());
       }
       // jwt authentication(signing in) is  done here ...
       jwt.sign({ user }, process.env.APP_SECRET_KEY, (err, token) => {

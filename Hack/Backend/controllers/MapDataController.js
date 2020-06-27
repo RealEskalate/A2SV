@@ -33,7 +33,7 @@ exports.getMapData = async (req, res) => {
     }
     return res.status(200).send(result);
   } catch (err) {
-    console.log(err);
+    console.log(err.toString());
     return res.status(500).send(err);
   }
 };
@@ -115,7 +115,7 @@ updateDb = async () => {
           map_datas[`${data["Country/Region"]}`].Data = current_data;
           console.log("Modified " + current_data.Country);
         } catch (err) {
-          console.log(err);
+          console.log(err.toString());
         }
       }
     }

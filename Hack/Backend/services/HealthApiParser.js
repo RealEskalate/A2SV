@@ -33,7 +33,7 @@ const getRate = (criteria, startDate, endDate, res, respond) => {
       respond(res, filteredStats);
     })
     .catch((err) => {
-      console.log(err);
+      console.log(err.toString());
       respond(res, null, 500);
     });
 };
@@ -559,7 +559,7 @@ const getCountryStat = async (startDate, endDate, req, res, respond, rates) => {
       respond(res, caseData);
     }
   } catch (err) {
-    console.log(err);
+    console.log(err.toString());
     respond(res, null, 500);
   }
 };
@@ -634,7 +634,7 @@ const getWorldStat = (
         respond(res, null, 500);
       });
   } catch (err) {
-    console.log(err);
+    console.log(err.toString());
   }
 };
 
@@ -1053,9 +1053,9 @@ let update_world_db = async function () {
 };
 
 // Schedules fetching every day
-schedule.scheduleJob("0 */4 * * *", async function () {
-  await update_world_db();
-});
+// schedule.scheduleJob("0 */4 * * *", async function () {
+  update_world_db();
+// });
 
 let sort_countries = async () => {
   let date = new Date();

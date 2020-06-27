@@ -56,8 +56,11 @@ let update_db = async function () {
     let date_str = data.tested[0].updatetimestamp.slice(0, 10).split("/");
     let date = new Date(date_str[2], date_str[1] - 1, date_str[0]);
 
-    await EthiopiaData.collection.drop();
-
+    try{
+      await EthiopiaData.collection.drop();
+    }catch(err){
+      console.log(err.toString());
+    }
     let ethioStat = [];
     let test = new EthiopiaData({
       _id: mongoose.Types.ObjectId(),
@@ -100,12 +103,12 @@ let update_db = async function () {
       try {
         await EthiopiaData.collection.drop();
       } catch (err) {
-        console.log(err);
+        console.log(err.toString());
       }
       try {
         await EthiopiaData.insertMany(ethioStat);
       } catch (err) {
-        console.log(err);
+        console.log(err.toString());
       }
     }
   }

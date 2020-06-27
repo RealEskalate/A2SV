@@ -78,7 +78,7 @@ exports.post_location_user = async (req, res) => {
     });
     await user.save();
   } catch (err) {
-    console.log(err);
+    console.log(err.toString());
   }
   try {
     let symptomsList = await SymptomUser.find({ user_id: user_id }).populate(

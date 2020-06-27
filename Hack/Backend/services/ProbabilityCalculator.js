@@ -120,7 +120,7 @@ const getCountryStat = async (input_country_iso) => {
       result = caseData[caseData.length - 1];
     }
   } catch (err) {
-    console.log(err);
+    console.log(err.toString());
   }
   if (result && result.y) {
     return result.y;
