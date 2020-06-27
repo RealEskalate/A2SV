@@ -19,7 +19,10 @@ const testsSchema = new mongoose.Schema({
   },
 });
 
-testsSchema.index({ country_slug: 1, date: 1 }, { unique: true });
+testsSchema.index(
+  { country_slug: 1, date: 1 },
+  { unique: true, background: false }
+);
 
 const Tests = mongoose.model("Tests", testsSchema);
 exports.Tests = Tests;

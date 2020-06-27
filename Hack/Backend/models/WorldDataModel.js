@@ -20,6 +20,6 @@ const worldDataSchema = new mongoose.Schema({
     required: true,
   },
 });
-
+worldDataSchema.index({ date: 1 }, { unique: true, background: false });
 var WorldDataModel = mongoose.model("WorldData", worldDataSchema);
 module.exports = WorldDataModel;

@@ -1,9 +1,3 @@
-const https = require("https");
-const XLSX = require("xlsx");
-const fs = require("fs");
-const path = require("path");
-const schedule = require("node-schedule");
-const Statistics = require("../models/StatisticsModel");
 const healthParser = require("../services/HealthApiParser");
 
 exports.get_statistics = async (req, res) => {
