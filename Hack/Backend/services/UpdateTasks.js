@@ -19,7 +19,7 @@ const SymptomUserModel = require("./../models/SymptomUser");
 const { Tests } = require("../models/TestModel");
 const UserModels = require("./../models/UserModel");
 const WorldDataModel = require("../models/WorldDataModel");
-const EthiopiaData = require('./../models/EthiopiaDataModel')
+const EthiopiaData = require("./../models/EthiopiaDataModel");
 
 var root = __dirname;
 
@@ -349,10 +349,23 @@ exports.update_public_resources = async () => {
     //Physicians (per 1,000 people)
     "https://api.worldbank.org/v2/en/indicator/SH.MED.PHYS.ZS?downloadformat=excel",
   ];
+  let data = [];
   for (let i = 0; i < urls.length; i++) {
     let url = urls[i];
-    await fetchResources(url);
-    console.log("Finished Saving Public Resources for " + url);
+    let url_data = await fetchResources(url);
+    data.push(...url_data);
+  }
+  if (data.length > 0) {
+    try {
+      await PublicResourcesData.collection.drop();
+    } catch (err) {
+      console.log(err.toString());
+    }
+    try {
+      await PublicResourcesData.insertMany(data);
+    } catch (err) {
+      console.log(err.toString());
+    }
   }
   console.log("Finished Saving Data");
 };
@@ -461,7 +474,8 @@ async function fetchResources(url) {
     fs.mkdirSync(path.join(root, "assets"));
   }
   fs.writeFileSync(outputFilename, Buffer.from(data));
-  await populateResDatabase(url.substring(45, 56) + ".xls");
+  let data_url = await populateResDatabase(url.substring(45, 56) + ".xls");
+  return data_url;
 }
 // populate database with data from excel sheet
 async function populateResDatabase(filePath) {
@@ -497,7 +511,11 @@ async function populateResDatabase(filePath) {
     }
     if (row != currentRow) {
       // Save the previous resource
-      if (currentResource) {
+      if (
+        currentResource &&
+        currentResource.Country != " " &&
+        currentResource.Indicator != " "
+      ) {
         if (dict[`${currentResource.Country}`]) {
           dict[`${currentResource.Country}`].TimeSeries =
             currentResource.TimeSeries;
@@ -534,7 +552,11 @@ async function populateResDatabase(filePath) {
       }
     }
   }
-  if (currentResource) {
+  if (
+    currentResource &&
+    currentResource.Country !== " " &&
+    currentResource.Indicator !== " "
+  ) {
     if (dict[`${currentResource.Country}`]) {
       dict[`${currentResource.Country}`].TimeSeries =
         currentResource.TimeSeries;
@@ -549,17 +571,7 @@ async function populateResDatabase(filePath) {
   var values = Object.keys(dict).map(function (key) {
     return dict[key];
   });
-  try {
-    await PublicResourcesData.collection.drop();
-  } catch (err) {
-    console.log(err.toString());
-  }
-  try {
-    await PublicResourcesData.insertMany(values);
-  } catch (err) {
-    console.log(err.toString());
-  }
-  return 0;
+  return values;
 }
 // populate news database
 async function populateDatabase() {
