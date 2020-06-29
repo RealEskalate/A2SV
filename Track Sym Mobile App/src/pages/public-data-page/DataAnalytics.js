@@ -129,6 +129,7 @@ class DataAnalytics extends React.Component {
 
   //gets statistics data based on selected criteria and populate UI
   fetchTotalStats = async () => {
+    //console.log("Bearer " + userIDStore.getState().userToken);
     let newThis = this;
     this.setState({ totalGraphLoading: true });
     var query =
@@ -146,6 +147,7 @@ class DataAnalytics extends React.Component {
           this.state.selected_filter +
           "&country=" +
           this.state.searchedCountry;
+    //console.log(query);
     await fetch(query, {
       method: "GET",
       headers: {
@@ -161,6 +163,8 @@ class DataAnalytics extends React.Component {
           newThis.forceUpdate(); //refresh page
           newThis.setState({
             totalGraphLoading: false,
+            selected_total_start_date: json[0].t.split("T")[0],
+            selected_total_end_date: json[json.length - 1].t.split("T")[0],
             placeholder_total_start_date: json[0].t.split("T")[0],
             placeholder_total_end_date: json[json.length - 1].t.split("T")[0],
           });
@@ -323,6 +327,8 @@ class DataAnalytics extends React.Component {
           newThis.forceUpdate(); //refresh page
           newThis.setState({
             dailyGraphLoading: false,
+            selected_daily_start_date: json[0].t.split("T")[0],
+            selected_daily_end_date: json[json.length - 1].t.split("T")[0],
             placeholder_daily_start_date: json[0].t.split("T")[0],
             placeholder_daily_end_date: json[json.length - 1].t.split("T")[0],
           });
@@ -334,9 +340,9 @@ class DataAnalytics extends React.Component {
         Alert.alert(strings.ConnectionProblem, strings.CouldNotConnectToServer);
       });
   };
-
   //populate daily data
   populateDailyData = (objList) => {
+    console.log("Data length " + objList.length);
     this.state.daily_newCases_label = [""]; //reseting all data point labels
     this.state.daily_newCases_data_set = [0]; //reseting all data point labels
 
@@ -352,10 +358,9 @@ class DataAnalytics extends React.Component {
     while (dataSet_counter < objList.length) {
       this.state.daily_newCases_data_set[indexCounterSet] =
         objList[dataSet_counter].y;
-
       indexCounterSet += 1;
-      if (remainder > 0 && dataSet_counter + remainder - 1 === objList.length) {
-        dataSet_counter += remainder - 1;
+      if (remainder > 0 && dataSet_counter + remainder === objList.length - 1) {
+        dataSet_counter += remainder;
         continue;
       }
       dataSet_counter += interval;
@@ -369,9 +374,9 @@ class DataAnalytics extends React.Component {
       indexCounter += 1;
       if (
         remainder > 0 &&
-        graphLebel_counter + remainder - 1 === objList.length
+        graphLebel_counter + remainder === objList.length - 1
       ) {
-        graphLebel_counter += remainder - 1;
+        graphLebel_counter += remainder;
         continue;
       }
       graphLebel_counter += interval;
@@ -396,8 +401,8 @@ class DataAnalytics extends React.Component {
       this.state.data_set[indexCounterSet] = objList[dataSet_counter].y;
 
       indexCounterSet += 1;
-      if (remainder > 0 && dataSet_counter + remainder - 1 === objList.length) {
-        dataSet_counter += remainder - 1;
+      if (remainder > 0 && dataSet_counter + remainder === objList.length - 1) {
+        dataSet_counter += remainder;
         continue;
       }
       dataSet_counter += interval;
@@ -412,9 +417,9 @@ class DataAnalytics extends React.Component {
       indexCounter += 1;
       if (
         remainder > 0 &&
-        graphLebel_counter + remainder - 1 === objList.length
+        graphLebel_counter + remainder === objList.length - 1
       ) {
-        graphLebel_counter += remainder - 1;
+        graphLebel_counter += remainder;
         continue;
       }
       graphLebel_counter += interval;
@@ -439,8 +444,8 @@ class DataAnalytics extends React.Component {
       this.state.rate_data_set[indexCounterSet] = objList[dataSet_counter].y;
 
       indexCounterSet += 1;
-      if (remainder > 0 && dataSet_counter + remainder - 1 === objList.length) {
-        dataSet_counter += remainder - 1;
+      if (remainder > 0 && dataSet_counter + remainder === objList.length - 1) {
+        dataSet_counter += remainder;
         continue;
       }
       dataSet_counter += interval;
@@ -456,9 +461,9 @@ class DataAnalytics extends React.Component {
       indexCounter += 1;
       if (
         remainder > 0 &&
-        graphLebel_counter + remainder - 1 === objList.length
+        graphLebel_counter + remainder === objList.length - 1
       ) {
-        graphLebel_counter += remainder - 1;
+        graphLebel_counter += remainder;
         continue;
       }
       graphLebel_counter += interval;
