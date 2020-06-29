@@ -19,6 +19,7 @@ const SymptomUserModel = require("./../models/SymptomUser");
 const { Tests } = require("../models/TestModel");
 const UserModels = require("./../models/UserModel");
 const WorldDataModel = require("../models/WorldDataModel");
+const EthiopiaData = require('./../models/EthiopiaDataModel')
 
 var root = __dirname;
 
