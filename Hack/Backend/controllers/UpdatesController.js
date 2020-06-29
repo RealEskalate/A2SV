@@ -2,7 +2,7 @@ require("dotenv").config();
 const updateFunctions = require("./../services/UpdateTasks");
 
 exports.startUpdates = async (req, res) => {
-  if (req.body.key != process.env.UPDATE_PASS) {
+  if (req.query.key != process.env.UPDATE_PASS) {
     return res.status(401).send("You aren't authorized to access this route.");
   }
   if (req.query.interval == "short") {

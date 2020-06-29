@@ -46,6 +46,10 @@ const Sk = {
 
 exports.calculateProbability = async (symptoms, country) => {
   if(symptoms.length==0) return 0;
+  if (symptoms.includes('High-grade Fever') && 
+      symptoms.includes('Medium-grade Fever')){
+        symptoms = symptoms.filter(symptom => symptom != 'Medium-grade Fever');
+      }
   const prevalence = await getCountryStat(country);
   let total_prob = prevalence;
   for (let i = 0; i < symptoms.length; i++) {
