@@ -1,11 +1,8 @@
 const axios = require("axios");
 const csvjson = require("csvjson");
-const { Cases } = require("./../models/CasesModel");
 const { MapData } = require("../models/MapDataModel");
 const { Tests } = require("../models/TestModel");
 const Papa = require("papaparse");
-const mongoose = require("mongoose");
-const schedule = require("node-schedule");
 const WorldDataModel = require("../models/WorldDataModel");
 
 const getRate = (criteria, startDate, endDate, res, respond) => {
@@ -925,44 +922,6 @@ const calculateDaily = (result) => {
 };
 
 // Updates db with the latest csv
-let update_db = async function () {
-  // we will use the iso here
-  console.log("Here");
-  request_url = "https://covid.ourworldindata.org/data/owid-covid-data.csv";
-  let testData = await axios.get(request_url);
-  let data = testData.data;
-  let tests = [];
-  if (data) {
-    let options = { delimiter: ",", quote: '"' };
-    data = csvjson.toObject(data, options);
-    for (var index = 0; index < data.length; index++) {
-      let item = data[index];
-      if (item.total_tests) {
-        let test = new Tests({
-          _id: mongoose.Types.ObjectId(),
-          country: item.location,
-          country_slug: item.iso_code,
-          tests: item.total_tests,
-          date: item.date,
-        });
-        tests.push(test);
-      }
-    }
-    if (tests.length > 0) {
-      try {
-        await Tests.collection.drop();
-      } catch (err) {}
-      try {
-        await Tests.insertMany(tests, { ordered: false });
-      } catch (err) {}
-    }
-  }
-  console.log("Finished Saving Data");
-};
-// Schedules fetching everyday
-schedule.scheduleJob("0 */4 * * *", async function () {
-  await update_db();
-});
 
 exports.getWorldStatistics = async (req, rates) => {
   let startDate = new Date(Date.parse(setStartDate(req)));
@@ -1016,46 +975,6 @@ exports.getWorldStatistics = async (req, rates) => {
   results.sort((a, b) => (a.t > b.t ? 1 : -1));
   return results;
 };
-
-let update_world_db = async function () {
-  let request_url =
-    "https://datahub.io/core/covid-19/r/worldwide-aggregated.csv";
-  let wldData = await axios.get(request_url);
-
-  let data = wldData.data;
-  if (data) {
-    const options = { delimiter: ",", quote: '"' };
-    data = csvjson.toObject(data, options);
-    let caseData = [];
-    console.log(data.length);
-    for (var index = 0; index < data.length; index++) {
-      let item = data[index];
-
-      caseData.push(
-        new WorldDataModel({
-          _id: mongoose.Types.ObjectId(),
-          Confirmed: item["Confirmed"],
-          Recovered: item["Recovered"],
-          Deaths: item["Deaths"],
-          date: new Date(item.Date),
-        })
-      );
-    }
-    if (caseData.length > 0) {
-      try {
-        await WorldDataModel.collection.drop();
-      } catch (err) {}
-      await WorldDataModel.insertMany(caseData, { ordered: false });
-    }
-  }
-
-  console.log("update-completed");
-};
-
-// Schedules fetching every day
-// schedule.scheduleJob("0 */4 * * *", async function () {
-  update_world_db();
-// });
 
 let sort_countries = async () => {
   let date = new Date();

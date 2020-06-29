@@ -1,8 +1,5 @@
 const LocationGridModels = require("./../models/LocationGridModel");
-const SymptomUserModel = require("./../models/SymptomUser");
-const { Symptom } = require("./../models/Symptom");
 const geolib = require("geolib");
-const schedule = require("node-schedule");
 const LocationUserModels = require("./../models/LocationUserModel");
 const UserModels = require("./../models/UserModel");
 const SymptomUserModels = require("../models/SymptomUser");
@@ -387,25 +384,7 @@ const findAllNearbySymptomaticUsers = async (boundaries, demo, stress) => {
       $gt: 0,
     },
   });
-  // var traversed_locations = {}
-  // for(let i = 0; i<users.length; i++){
-  //   let location_user = location_users[i];
-  //   if(!location_user) continue
-  //   if(location_user.probability==0){
-  //     continue;
-  //   }
-  // if(traversed_locations[[location_user.location.coordinates[0], location_user.location.coordinates[1]]]){
-  //   continue
-  // }
-  // traversed_locations[ [location_user.location.coordinates[0], location_user.location.coordinates[1]]] = {
-  // longitude: location_user.location.coordinates[0],
-  // latitude: location_user.location.coordinates[1],
-  // user_id: location_user.user_id._id,
-  // probability: location_user.probability,
-  // age_group:  location_user.user_id.age_group,
-  // gender:  location_user.user_id.gender
-  // }
-  // }
+
   return location_users;
 };
 
@@ -438,120 +417,3 @@ const findGridNearbySymptomaticUsers = async (boundaries, demo, stress) => {
   });
   return result;
 };
-// Schedules grid calculation every 3 hours
-const run_updates = () => {
-  var rule = new schedule.RecurrenceRule();
-  rule.hour = 3;
-  schedule.scheduleJob(rule, async function () {
-    await updateDb(false, false);
-  });
-};
-const updateDb = async (demo, stress) => {
-  if (demo && demo == "true") {
-    var LocationGrid = LocationGridModels.DemoLocationGrid;
-    var LocationUser = LocationUserModels.DemoLocationUser;
-    var SymptomUser = SymptomUserModel.DemoSymptomUser;
-    var User = UserModels.DemoUser;
-  } else if (stress && stress == "true") {
-    var LocationGrid = LocationGridModels.StressLocationGrid;
-    var LocationUser = LocationUserModels.StressLocationUser;
-    var SymptomUser = SymptomUserModel.StressSymptomUser;
-    var User = UserModels.StressUser;
-  } else {
-    var LocationGrid = LocationGridModels.LocationGrid;
-    var LocationUser = LocationUserModels.LocationUser;
-    var SymptomUser = SymptomUserModel.SymptomUser;
-    var User = UserModels.User;
-  }
-
-  zoom = 10;
-  let zoomLevels = { 10: 0.09, 111: 1, 1000: 9 };
-  let equatorDgree = 111;
-  let level = zoomLevels[zoom];
-
-  let squareBoxes = {};
-
-  const symptoms = await Symptom.find({});
-  //Find all users and retrieve their recent locations. Latest location will help us find the specific
-  //coordinates while Latest Location User will help us avoid db check if the user has any symptoms or not
-  let location_users = await LocationUser.find({
-    probability: {
-      $gt: 0,
-    },
-  }).populate("user_id");
-  for (let i = 0; i < location_users.length; i++) {
-    console.log(
-      i +
-        " out of " +
-        location_users.length +
-        " and " +
-        Object.keys(squareBoxes).length
-    );
-    let location_user = location_users[i];
-    if (!location_user || !location_user.location || !location_user.user_id)
-      continue;
-    let loc = location_user.location;
-    let user_id = location_user.user_id;
-    //Calculate the center point of the grid after finding out the grid they place on
-    let lat_index = Math.floor((loc.coordinates[1] + 90) / level);
-    let latDistance = Math.sin(((-90 + lat_index * level) * Math.PI) / 180);
-    let longKm = Math.cos(latDistance) * equatorDgree;
-    let inc = 10 / longKm;
-    let lon_index = Math.floor((loc.coordinates[0] + 180) / inc);
-    let start_point_lat = -90 + lat_index * level;
-    let start_point_lon = -180 + lon_index * inc;
-    let end_point_lat = start_point_lat + level;
-    let end_point_lon = start_point_lon + inc;
-    let center_point_lat = (start_point_lat + end_point_lat) / 2;
-    let center_point_lon = (start_point_lon + end_point_lon) / 2;
-    let center = [center_point_lat, center_point_lon];
-
-    //Fetch all the symptoms that user has
-    const symptomuser = await SymptomUser.find({
-      user_id: user_id._id,
-    }).populate("symptom_id");
-    const ages = User.schema.path("age_group").enumValues;
-    const genders = User.schema.path("gender").enumValues;
-    if (squareBoxes[center]) {
-      symptomuser.forEach((item) => {
-        squareBoxes[center].value[`${item.symptom_id.name}`]++;
-      });
-      squareBoxes[center].ages[`${user_id.age_group}`]++;
-      squareBoxes[center].genders[`${user_id.gender}`]++;
-    } else {
-      squareBoxes[center] = new LocationGrid({
-        _id: mongoose.Types.ObjectId(),
-        location: {
-          type: "Point",
-          coordinates: [center_point_lon, center_point_lat],
-        },
-        value: {},
-        ages: {},
-        genders: {},
-        zoom_level: 10,
-      });
-      symptoms.forEach((item) => {
-        squareBoxes[center].value[`${item.name}`] = 0;
-      });
-      ages.forEach((item) => {
-        squareBoxes[center].ages[`${item}`] = 0;
-      });
-      genders.forEach((item) => {
-        squareBoxes[center].genders[`${item}`] = 0;
-      });
-      symptomuser.forEach((item) => {
-        squareBoxes[center].value[`${item.symptom_id.name}`]++;
-      });
-      squareBoxes[center].ages[`${user_id.age_group}`]++;
-      squareBoxes[center].genders[`${user_id.gender}`]++;
-    }
-  }
-  var values = Object.keys(squareBoxes).map(function (key) {
-    return squareBoxes[key];
-  });
-  await LocationGrid.collection.drop();
-  await LocationGrid.insertMany(values);
-};
-
-exports.run_updates = run_updates;
-run_updates();

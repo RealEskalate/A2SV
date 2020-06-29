@@ -1,6 +1,4 @@
 const EthiopiaData = require("../models/EthiopiaDataModel");
-const axios = require("axios");
-const schedule = require("node-schedule");
 const { StatisticsResource } = require("../models/StatisticsResourceModel.js");
 const mongoose = require("mongoose");
 
@@ -40,81 +38,3 @@ exports.get_ethiopia_data = async (req, res) => {
     res.status(500).send(err.toString());
   }
 };
-
-let update_db = async function () {
-  let phone_no = await StatisticsResource.findOne({
-    language: "English",
-    title: "ethiopia-phone-call",
-  });
-  phone_no = phone_no.fields[0];
-
-  let request_url = "https://covid19-ethiopia.qulph.com/api/data.json";
-  let ethData = await axios.get(request_url);
-
-  let data = ethData.data;
-  if (data) {
-    let date_str = data.tested[0].updatetimestamp.slice(0, 10).split("/");
-    let date = new Date(date_str[2], date_str[1] - 1, date_str[0]);
-
-    try{
-      await EthiopiaData.collection.drop();
-    }catch(err){
-      console.log(err.toString());
-    }
-    let ethioStat = [];
-    let test = new EthiopiaData({
-      _id: mongoose.Types.ObjectId(),
-      region: "Ethiopia",
-      region_code: "ET",
-      phone_number: phone_no["Ethiopia"],
-      test: data.tested[0].totalindividualstested,
-      date: date,
-    });
-    ethioStat.push(test);
-    for (var index = 0; index < data.statewise.length; index++) {
-      let case_data = data.statewise[index];
-      let state = case_data.state == "Total" ? "Ethiopia" : case_data.state;
-      let region_code =
-        case_data.statecode == "TT" ? "ET" : case_data.statecode;
-
-      ethioStat.push(
-        new EthiopiaData({
-          _id: mongoose.Types.ObjectId(),
-          region: state,
-          region_code: region_code,
-          phone_number: phone_no[region_code],
-          total: {
-            confirmed: case_data.confirmed,
-            recovered: case_data.recovered,
-            deaths: case_data.deaths,
-            active: case_data.active,
-          },
-          daily: {
-            confirmed: case_data.deltaconfirmed,
-            recovered: case_data.deltarecovered,
-            deaths: case_data.deltadeaths,
-          },
-          date: date,
-        })
-      );
-    }
-
-    if (ethioStat.length > 1) {
-      try {
-        await EthiopiaData.collection.drop();
-      } catch (err) {
-        console.log(err.toString());
-      }
-      try {
-        await EthiopiaData.insertMany(ethioStat);
-      } catch (err) {
-        console.log(err.toString());
-      }
-    }
-  }
-  console.log("update-completed");
-};
-// Schedules fetching every 4 hours
-schedule.scheduleJob("0 */4 * * *", async function () {
-  await update_db();
-});
