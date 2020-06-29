@@ -934,7 +934,7 @@ exports.getWorldStatistics = async (req, rates) => {
   let caseData = await WorldDataModel.find({
     date: {
       $gte: startDate,
-      $lt: endDate,
+      $lte: endDate,
     },
   });
 
