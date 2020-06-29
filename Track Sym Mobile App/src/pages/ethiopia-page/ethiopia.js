@@ -159,6 +159,8 @@ class DataAnalytics extends React.Component {
           newThis.forceUpdate(); //refresh page
           newThis.setState({
             totalGraphLoading: false,
+            selected_total_start_date: json[0].t.split("T")[0],
+            selected_total_end_date: json[json.length - 1].t.split("T")[0],
             placeholder_total_start_date: json[0].t.split("T")[0],
             placeholder_total_end_date: json[json.length - 1].t.split("T")[0],
           });
@@ -321,6 +323,8 @@ class DataAnalytics extends React.Component {
           newThis.forceUpdate(); //refresh page
           newThis.setState({
             dailyGraphLoading: false,
+            selected_daily_start_date: json[0].t.split("T")[0],
+            selected_daily_end_date: json[json.length - 1].t.split("T")[0],
             placeholder_daily_start_date: json[0].t.split("T")[0],
             placeholder_daily_end_date: json[json.length - 1].t.split("T")[0],
           });
@@ -354,9 +358,9 @@ class DataAnalytics extends React.Component {
       indexCounterSet += 1;
       if (
         setRemainder > 0 &&
-        dataSet_counter + setRemainder - 1 === objList.length
+        dataSet_counter + setRemainder === objList.length - 1
       ) {
-        dataSet_counter += setRemainder - 1;
+        dataSet_counter += setRemainder;
         continue;
       }
       dataSet_counter += interval;
@@ -372,9 +376,9 @@ class DataAnalytics extends React.Component {
       indexCounter += 1;
       if (
         remainder > 0 &&
-        graphLebel_counter + remainder - 1 === objList.length
+        graphLebel_counter + remainder === objList.length - 1
       ) {
-        graphLebel_counter += remainder - 1;
+        graphLebel_counter += remainder;
         continue;
       }
       graphLebel_counter += interval;
@@ -401,9 +405,9 @@ class DataAnalytics extends React.Component {
       indexCounterSet += 1;
       if (
         setRemainder > 0 &&
-        dataSet_counter + setRemainder - 1 === objList.length
+        dataSet_counter + setRemainder === objList.length - 1
       ) {
-        dataSet_counter += setRemainder - 1;
+        dataSet_counter += setRemainder;
         continue;
       }
       dataSet_counter += interval;
@@ -419,9 +423,9 @@ class DataAnalytics extends React.Component {
       indexCounter += 1;
       if (
         remainder > 0 &&
-        graphLebel_counter + remainder - 1 === objList.length
+        graphLebel_counter + remainder === objList.length - 1
       ) {
-        graphLebel_counter += remainder - 1;
+        graphLebel_counter += remainder;
         continue;
       }
       graphLebel_counter += interval;
@@ -448,9 +452,9 @@ class DataAnalytics extends React.Component {
       indexCounterSet += 1;
       if (
         setRemainder > 0 &&
-        dataSet_counter + setRemainder - 1 === objList.length
+        dataSet_counter + setRemainder === objList.length - 1
       ) {
-        dataSet_counter += setRemainder - 1;
+        dataSet_counter += setRemainder;
         continue;
       }
       dataSet_counter += interval;
@@ -466,9 +470,9 @@ class DataAnalytics extends React.Component {
       indexCounter += 1;
       if (
         remainder > 0 &&
-        graphLebel_counter + remainder - 1 === objList.length
+        graphLebel_counter + remainder === objList.length - 1
       ) {
-        graphLebel_counter += remainder - 1;
+        graphLebel_counter += remainder;
         continue;
       }
       graphLebel_counter += interval;
