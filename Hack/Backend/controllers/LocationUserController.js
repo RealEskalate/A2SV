@@ -32,7 +32,7 @@ exports.post_location_user = async (req, res) => {
   let latitude = req.body.latitude;
   let longitude = req.body.longitude;
   let user_id = req.body.user_id;
-  let TTL = req.body.TTL || 1000 * 60 * 60 * 2;
+  let TTL = req.body.TTL || 1000 * 60 * 60 * 24 * 21;
 
   // Check if user exists
   let user = await User.findById(user_id);
