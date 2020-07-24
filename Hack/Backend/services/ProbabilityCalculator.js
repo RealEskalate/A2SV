@@ -67,6 +67,7 @@ exports.calculateProbability = async (symptoms, country) => {
     total_prob *= Ak[symptom] / Sk[symptom];
   }
   console.log("Probabilty = " + total_prob);
+  total_prob = total_prob > 100 ? 99 : total_prob
   return total_prob;
 };
 const setStartDate = () => {
