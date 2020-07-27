@@ -6,8 +6,10 @@ exports.getPublicResources = async (req, res) => {
     title: "countries-name-public-resource",
   });
   
-  isoToCountry= isoToCountry.fields[0]
-  req.params.country= isoToCountry[ req.params.country ]
+  if(isoToCountry){
+    isoToCountry= isoToCountry.fields[0]
+    req.params.country= isoToCountry[ req.params.country ]
+  }
   // end of country translation
 
   let titles = null;

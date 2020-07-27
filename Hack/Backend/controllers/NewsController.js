@@ -29,8 +29,10 @@ exports.get_all_news = async (req, res) => {
     title: "countries-name-dictionary",
   });
   
-  isoToCountry = isoToCountry.fields[0]
-  if( req.query.country in isoToCountry ){
+  if( isoToCountry)
+    isoToCountry = isoToCountry.fields[0]
+    
+  if(isoToCountry && req.query.country in isoToCountry ){
     req.query.country = isoToCountry[ req.query.country ]
   }
   // end of conversion
