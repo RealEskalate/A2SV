@@ -284,7 +284,7 @@ export default {
         labels: [
           "Confirmed Cases",
           "Death Count",
-          "Recovered Count",
+          "Recovery Count",
           "Affected Countries"
         ],
         datasets: payload
@@ -423,7 +423,7 @@ export default {
               data: [
                 { x: "Confirmed Cases", y: load.confirmed },
                 { x: "Death Count", y: load.deaths },
-                { x: "Recovered Count", y: load.recovered },
+                { x: "Recovery Count", y: load.recovered },
                 { x: "Affected Countries", y: load.affected }
               ]
             };

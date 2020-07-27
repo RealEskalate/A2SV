@@ -33,7 +33,6 @@ const mutations = {
 const actions = {
   setSymptomUser: ({ commit }, { userId }) => {
     ajax.get(`symptomuser/user/${userId}/`).then(res => {
-      console.log(res.data);
       commit("setSymptomUser", res.data);
     });
   },

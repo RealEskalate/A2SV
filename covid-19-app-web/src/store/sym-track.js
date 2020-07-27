@@ -125,11 +125,7 @@ const actions = {
   setLocationsSymptoms: ({ commit }, input) => {
     commit("setSymTrackLoaders", { key: "map", value: true });
     ajax
-      .post("locations_symptoms", input, {
-        params: {
-          demo: true
-        }
-      })
+      .post("locations_symptoms", input)
       .then(res => {
         commit("setLocationsSymptoms", res.data);
       })

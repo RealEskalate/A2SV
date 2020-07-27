@@ -103,7 +103,8 @@ export const ChartMixin = {
                 zeroLineBorderDash: [0]
               },
               ticks: {
-                maxTicksLimit: null
+                maxTicksLimit: null,
+                callback: self.xTicks
               }
             }
           ],
@@ -161,6 +162,10 @@ export const ChartMixin = {
       });
       return rates.includes(this.criterion);
     },
+    xTicks(value) {
+      if (this.tab_index === 4) return this.translateCriteria(value);
+      return value;
+    },
     yTicks(value) {
       if (this.y_label === "Percent" || this.isRate()) {
         return `${value} %`;
@@ -208,6 +213,12 @@ export const ChartMixin = {
       let hue = (percentage / 100) * (hue1 - hue0) + hue0;
       return "hsl(" + hue + ", 100%, 45%)";
     },
+    translateLegends(word) {
+      if ([0, 1, 2].includes(this.tab_index))
+        return this.translateCriteria(word);
+      else if (this.tab_index === 4) return this.$t("diseases." + word);
+      return word;
+    },
     makeDataSet(payload, chartType = "line") {
       let opacity = 0.07;
       if (chartType === "bar" || chartType === "pie") {
@@ -218,7 +229,7 @@ export const ChartMixin = {
       const bgColor = `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${opacity})`;
 
       return {
-        label: payload.label,
+        label: this.translateLegends(payload.label),
         data: payload.data,
         lineTension: 0.4,
         backgroundColor: bgColor,

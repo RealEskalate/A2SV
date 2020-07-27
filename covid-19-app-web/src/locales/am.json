@@ -67,17 +67,26 @@
     "Test Count": "የተመረመሩ ብዛት",
     "Confirmed Cases": "የተረጋገጡ ብዛት",
     "Recovery Count": "ያገገሙ ብዛት",
-    "Active Cases": "ያላገገሙ ብዛት",
+    "Active Cases": "የተያዙ / ብዛት",
     "Death Count": "የሞት ብዛት",
+    "Affected Countries": "የተጠቁ ሐገራት",
 
     "Positive Rate": "የመያዝ መጠን",
     "Recovery Rate": "የማገገም መጠን",
-    "Active Rate": "ያላገገሙ መጠን",
+    "Active Rate": "የተያዙ / መጠን",
     "Death Rate": "የሞት መጠን",
 
     "Daily Confirmed": "ዕለታዊ የተረጋገጡ",
     "Daily Recovery": "ዕለታዊ ያገገሙ",
     "Daily Deaths": "ዕለታዊ የሞቱ"
+  },
+
+  "diseases": {
+    "COVID-19": "ኮቪድ-19",
+    "EBOLA": "ኢቦላ",
+    "SARS": "ሳርስ",
+    "MERS": "መርስ",
+    "SEASONAL FLU": "ወቅታዊ ጉንፋን"
   },
 
   "learningPathHeaders": {
@@ -143,6 +152,7 @@
     "profile": "ፕሮፋይል",
     "logOut": "ውጣ",
     "ageGroup": "እድሜ ክልል",
+    "sicknessProbability": "የመታመም ዕድል",
     "male": "ወንድ",
     "female": "ሴት",
     "editProfile": "ፕሮፋይል ለውጥ",

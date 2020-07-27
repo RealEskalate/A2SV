@@ -23,6 +23,7 @@
   "close": "Kapalı",
   "dateRange": "Data Aralığı",
   "metrics": "Ölçümler",
+
   "states": {
     "statesTransitionTitle": "geçiş Durumları",
     "statesTransitionSubtitle": "Hangi aşamalar var?",
@@ -62,20 +63,29 @@
   },
 
   "criteria": {
-    "Test Count": "Test Count",
-    "Confirmed Cases": "Toplam Onaylanmış Vaka",
-    "Recovery Count": "Toplam İyileşen Hasta",
-    "Active Cases": "Toplam Aktif Vaka",
-    "Death Count": "Toplam Vefat",
+    "Test Count": "Test Sayısı",
+    "Confirmed Cases": "Onaylanmış Vakalar",
+    "Recovery Count": "İyileşen Hastalar",
+    "Active Cases": "Aktif Vakalar",
+    "Death Count": "Vefat Sayısı",
+    "Affected Countries": "Affected Countries",
 
-    "Positive Rate": "Positive Rate",
-    "Recovery Rate": "Recovery Rate",
-    "Active Rate": "Active Rate",
-    "Death Rate": "Death Rate",
+    "Positive Rate": "Pozitif Vaka Oranı",
+    "Recovery Rate": "İyileşme Oranı",
+    "Active Rate": "Aktif Vaka Oranı",
+    "Death Rate": "Vefat Oranı",
 
-    "Daily Confirmed": "Günlük Onaylanmış Vaka",
-    "Daily Recovery": "Günlük İyileşen Hasta",
-    "Daily Deaths": "Günlük Vefat"
+    "Daily Confirmed": "Günlük Onaylanmış Vakalar",
+    "Daily Recovery": "Günlük İyileşen Hastalar",
+    "Daily Deaths": "Günlük Vefat Sayısı"
+  },
+
+  "diseases": {
+    "COVID-19": "KOVİD-19",
+    "EBOLA": "EBOLA",
+    "SARS": "SARS",
+    "MERS": "MERS",
+    "SEASONAL FLU": "Mevsimsel Grip"
   },
 
   "learningPathHeaders": {
@@ -141,6 +151,7 @@
     "profile": "Profil",
     "logOut": "Çıkış Yap",
     "ageGroup": "Yaş Grubu",
+    "sicknessProbability": "Sickness Probability",
     "male": "ERKEK",
     "female": "KADIN",
     "editProfile": "PROFİLİ DÜZENLE",

@@ -23,6 +23,7 @@
   "close": "Cufi",
   "dateRange": "Dheerina Yeroo",
   "metrics": "Safartuu",
+
   "states": {
     "statesTransitionTitle": "Adeemsa Jijjiiramaa",
     "statesTransitionSubtitle": "Adeemsa Akkamii Keessa Darba?",
@@ -62,20 +63,30 @@
   },
 
   "criteria": {
-    "Test Count": "Test Count",
-    "Confirmed Cases": "Waliigalaa kan qabaman",
-    "Recovery Count": "Waliigalaa kan bayyanatan",
-    "Active Cases": "Wal'aansa irra kan jiran",
-    "Death Count": "Kan boqotan",
+    "Test Count": "Baay’ina Waliigalaa",
+    "Confirmed Cases": "Kan Qabaman",
+    "Recovery Count":"Kan Dandamatan",
+    "Active Cases": "Yaalarra Kan Jiran",
+    "Death Count": "Baay’ina Du’aa",
+    "Affected Countries": "Biyyoota Miidhaman",
 
-    "Positive Rate": "Positive Rate",
-    "Recovery Rate": "Recovery Rate",
-    "Active Rate": "Active Rate",
-    "Death Rate": "Death Rate",
+    "Positive Rate": "Hammamtaa Namoota Qabamanii",
+    "Recovery Rate": "Hammamtaa Dandamannaa",
+    "Active Rate": "Hammamtaa Namoota Yaalarra Jiranii",
+    "Death Rate": "Hammamtaa Du’aa",
 
-    "Daily Confirmed": "Guyaan Kan qabaman",
-    "Daily Recovery": "Guyaan Kan bayyanatan",
-    "Daily Deaths": "Guyaan Kan du'an"
+    "Daily Confirmed": "Namoota Vaayirasichaan Guyyaatti Qabaman",
+    "Daily Recovery": "Guyyaa Guyyaan Namoota Dandamatan",
+    "Daily Deaths": "Du'aatii Guyyaa Guyyaa"
+  },
+
+
+  "diseases": {
+    "COVID-19": "COVID-19",
+    "EBOLA": "EBOLA",
+    "SARS": "SARS",
+    "MERS": "MERS",
+    "SEASONAL FLU": "SEASONAL FLU"
   },
 
   "learningPathHeaders": {
@@ -141,6 +152,7 @@
     "profile": "Eenyummeessaa",
     "logOut": "Cufii Ba’i",
     "ageGroup": "Gita Umurii",
+    "sicknessProbability": "Carraa Dhukkubsachu",
     "male": "Dhiira",
     "female": "Dhalaa",
     "editProfile": "Eenyummeessaa Gulaali",

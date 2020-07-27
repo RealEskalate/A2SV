@@ -69,6 +69,7 @@
     "Recovery Count": "Recovery Count",
     "Active Cases": "Active Cases",
     "Death Count": "Death Count",
+    "Affected Countries": "Affected Countries",
 
     "Positive Rate": "Positive Rate",
     "Recovery Rate": "Recovery Rate",
@@ -78,6 +79,14 @@
     "Daily Confirmed": "Daily Confirmed",
     "Daily Recovery": "Daily Recovered",
     "Daily Deaths": "Daily Deaths"
+  },
+
+  "diseases": {
+    "COVID-19": "COVID-19",
+    "EBOLA": "EBOLA",
+    "SARS": "SARS",
+    "MERS": "MERS",
+    "SEASONAL FLU": "SEASONAL FLU"
   },
 
   "learningPathHeaders": {
@@ -143,6 +152,7 @@
     "profile": "Profile",
     "logOut": "Logout",
     "ageGroup": "Age Group",
+    "sicknessProbability": "Sickness Probability",
     "male": "Male",
     "female": "Female",
     "editProfile": "Edit Profile",

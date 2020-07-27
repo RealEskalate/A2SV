@@ -173,7 +173,7 @@
                     />
                   </h4>
                   <h4 class="font-weight-thin mb-4">
-                    Sickness Probability:
+                    {{ $t("auth.sicknessProbability") }}:
                     <span
                       class="grey--text font-italic"
                       v-text="retrievedSymptoms.probability.toFixed(2) + '%'"
