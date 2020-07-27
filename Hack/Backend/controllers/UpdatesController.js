@@ -43,6 +43,11 @@ exports.startUpdates = async (req, res) => {
     } catch (err) {
       console.log(err.toString());
     }
+    try {
+      await updateFunctions.update_populations();
+    } catch (err) {
+      console.log(err.toString());
+    }
     return res.status(201).send("Daily updates added");
   } else {
     return res.status(400).send("Interval parameter not understood");

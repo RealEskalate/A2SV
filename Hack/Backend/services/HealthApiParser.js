@@ -1,9 +1,8 @@
 const axios = require("axios");
-const csvjson = require("csvjson");
 const { MapData } = require("../models/MapDataModel");
 const { Tests } = require("../models/TestModel");
-const Papa = require("papaparse");
 const WorldDataModel = require("../models/WorldDataModel");
+const Population = require("../models/PopulationModel");
 
 const getRate = (criteria, startDate, endDate, res, respond) => {
   axios
@@ -47,14 +46,7 @@ exports.getHealthStatistics = (req, res, respond, rates = false) => {
   if (req.query.daily) {
     startDate.setDate(startDate.getDate() - 1);
   }
-
-  if (req.query.country == "World") {
-    let request_url =
-      "https://datahub.io/core/covid-19/r/worldwide-aggregated.csv";
-    getWorldStat(request_url, startDate, endDate, req, res, respond, rates);
-  } else {
-    getCountryStat(startDate, endDate, req, res, respond, rates);
-  }
+  getCountryStat(startDate, endDate, req, res, respond, rates);
 };
 
 function setStartDate(req) {
@@ -552,6 +544,16 @@ const getCountryStat = async (startDate, endDate, req, res, respond, rates) => {
           caseData = calculateRate(caseData, dailyConfirmed, criteria);
         }
       }
+      if (req.query.perMillion && req.query.perMillion === "true") {
+        const pop = await Population.find({ iso3: req.query.country }).sort(
+          "-Year"
+        );
+        if (pop && pop[0].population > 0) {
+          caseData = calculatePopulation(caseData, pop[0].population, criteria);
+        } else {
+          caseData = [];
+        }
+      }
       caseData.sort((a, b) => (a.t > b.t ? 1 : -1));
       respond(res, caseData);
     }
@@ -559,322 +561,6 @@ const getCountryStat = async (startDate, endDate, req, res, respond, rates) => {
     console.log(err.toString());
     respond(res, null, 500);
   }
-};
-
-const getWorldStat = (
-  request_url,
-  startDate,
-  endDate,
-  req,
-  res,
-  respond,
-  rates
-) => {
-  const criteria = req.query.criteria;
-  try {
-    axios
-      .get(request_url)
-      .then((response) => {
-        let data = response.data;
-        if (!data) {
-          respond(res, []);
-        }
-
-        let results = [];
-        let dailyConfirmed = {};
-
-        const options = { delimiter: ",", quote: '"' };
-        data = csvjson.toObject(data, options);
-
-        data.forEach((item) => {
-          const date = new Date(item.Date);
-          if (date >= startDate && date <= endDate) {
-            if (rates) {
-              dailyConfirmed[new Date(item.Date)] = item["Confirmed"];
-            }
-            if (criteria === "All") {
-              results.push({
-                t: new Date(item.Date),
-                Confirmed: item["Confirmed"],
-                Recovered: item["Recovered"],
-                Deaths: item["Deaths"],
-              });
-            } else if (criteria === "Active") {
-              results.push({
-                t: new Date(item.Date),
-                y: item["Confirmed"] - item["Recovered"] - item["Deaths"],
-              });
-            } else {
-              if (item[criteria] != undefined && item[criteria] != null) {
-                results.push({
-                  t: new Date(item.Date),
-                  y: item[criteria],
-                });
-              }
-            }
-          }
-        });
-        results.sort((a, b) => (a.t > b.t ? 1 : -1));
-        if (criteria !== "All") {
-          if (req.query.daily && req.query.daily === "true") {
-            results = calculateDaily(results);
-          }
-          if (rates) {
-            results = calculateRate(results, dailyConfirmed, criteria);
-          }
-        }
-        results.sort((a, b) => (a.t > b.t ? 1 : -1));
-        respond(res, results);
-      })
-      .catch((error) => {
-        console.log(error);
-        respond(res, null, 500);
-      });
-  } catch (err) {
-    console.log(err.toString());
-  }
-};
-
-// exports.countrySlugList = (res, respond) => {
-//     let dayQuery = new Date()
-//     dayQuery.setDate(dayQuery.getDate() - 1)
-//     dayQuery = new Date(dayQuery.toISOString().slice(0, 10))
-
-//     Cases.find({ date: dayQuery })
-//         .then((countryData) => {
-//             let countries = [{ 'name': "World", 'slug': "World" }]
-//             if (countryData) {
-//                 countryData.sort((a, b) => (a.confirmed > b.confirmed) ? -1 : 1)
-//                 for (var index in countryData) {
-//                     let countryValue = countryData[index]
-//                     countries.push({ "name": countryValue.country, "slug": countryValue.country })
-//                 }
-//             }
-//             respond(res, countries)
-//         })
-//         .catch(e => {
-//             respond(res, [])
-//         });
-// };
-
-const getISO = (country_name) => {
-  let countries = [
-    { country: "Afghanistan", iso: "AFG" },
-    { country: "Albania", iso: "ALB" },
-    { country: "Algeria", iso: "DZA" },
-    { country: "Andorra", iso: "AND" },
-    { country: "Angola", iso: "AGO" },
-    { country: "Antigua and Barbuda", iso: "ATG" },
-    { country: "Argentina", iso: "ARG" },
-    { country: "Armenia", iso: "ARM" },
-    { country: "Australia", iso: "AUS" },
-    { country: "Austria", iso: "AUT" },
-    { country: "Azerbaijan", iso: "AZE" },
-    { country: "Bahamas", iso: "BHS" },
-    { country: "Bahrain", iso: "BHR" },
-    { country: "Bangladesh", iso: "BGD" },
-    { country: "Barbados", iso: "BRB" },
-    { country: "Belarus", iso: "BLR" },
-    { country: "Belgium", iso: "BEL" },
-    { country: "Belize", iso: "BLZ" },
-    { country: "Benin", iso: "BEN" },
-    { country: "Bhutan", iso: "BTN" },
-    { country: "Bolivia", iso: "BOL" },
-    { country: "Bosnia and Herzegovina", iso: "BIH" },
-    { country: "Botswana", iso: "BWA" },
-    { country: "Brazil", iso: "BRA" },
-    { country: "Brunei", iso: "BRN" },
-    { country: "Bulgaria", iso: "BGR" },
-    { country: "Burkina Faso", iso: "BFA" },
-    { country: "Burma", iso: "MMR" },
-    { country: "Burundi", iso: "BDI" },
-    { country: "Cabo Verde", iso: "CPV" },
-    { country: "Cambodia", iso: "KHM" },
-    { country: "Cameroon", iso: "CMR" },
-    { country: "Canada", iso: "CAN" },
-    { country: "Central African Republic", iso: "CAF" },
-    { country: "Chad", iso: "TCD" },
-    { country: "Chile", iso: "CHL" },
-    { country: "China", iso: "CHN" },
-    { country: "Colombia", iso: "COL" },
-    { country: "Comoros", iso: "COM" },
-    { country: "Congo (Brazzaville)", iso: "COD" },
-    { country: "Congo (Kinshasa)", iso: "COG" },
-    { country: "Costa Rica", iso: "CRI" },
-    { country: "Cote d'Ivoire", iso: "CIV" },
-    { country: "Croatia", iso: "HRV" },
-    { country: "Cuba", iso: "CUB" },
-    { country: "Cyprus", iso: "CYP" },
-    { country: "Czechia", iso: "CZE" },
-    { country: "Denmark", iso: "DNK" },
-    { country: "Diamond Princess", iso: "JPN" },
-    { country: "Djibouti", iso: "DJI" },
-    { country: "Dominica", iso: "DMA" },
-    { country: "Dominican Republic", iso: "DOM" },
-    { country: "Ecuador", iso: "ECU" },
-    { country: "Egypt", iso: "EGY" },
-    { country: "El Salvador", iso: "SLV" },
-    { country: "Equatorial Guinea", iso: "GNQ" },
-    { country: "Eritrea", iso: "ERI" },
-    { country: "Estonia", iso: "EST" },
-    { country: "Eswatini", iso: "SWZ" },
-    { country: "Ethiopia", iso: "ETH" },
-    { country: "Fiji", iso: "FJI" },
-    { country: "Finland", iso: "FIN" },
-    { country: "France", iso: "FRA" },
-    { country: "Gabon", iso: "GAB" },
-    { country: "Gambia", iso: "GMB" },
-    { country: "Georgia", iso: "GEO" },
-    { country: "Germany", iso: "DEU" },
-    { country: "Ghana", iso: "GHA" },
-    { country: "Greece", iso: "GRC" },
-    { country: "Grenada", iso: "GRD" },
-    { country: "Guatemala", iso: "GTM" },
-    { country: "Guinea", iso: "GIN" },
-    { country: "Guinea-Bissau", iso: "GNB" },
-    { country: "Guyana", iso: "GUY" },
-    { country: "Haiti", iso: "HTI" },
-    { country: "Holy See", iso: "VAT" },
-    { country: "Honduras", iso: "HND" },
-    { country: "Hungary", iso: "HUN" },
-    { country: "Iceland", iso: "ISL" },
-    { country: "India", iso: "IND" },
-    { country: "Indonesia", iso: "IDN" },
-    { country: "Iran", iso: "IRN" },
-    { country: "Iraq", iso: "IRQ" },
-    { country: "Ireland", iso: "IRL" },
-    { country: "Israel", iso: "ISR" },
-    { country: "Italy", iso: "ITA" },
-    { country: "Jamaica", iso: "JAM" },
-    { country: "Japan", iso: "JPN" },
-    { country: "Jordan", iso: "JOR" },
-    { country: "Kazakhstan", iso: "KAZ" },
-    { country: "Kenya", iso: "KEN" },
-    { country: "Korea, South", iso: "PRK" },
-    { country: "Kosovo", iso: "RKS" },
-    { country: "Kuwait", iso: "KWT" },
-    { country: "Kyrgyzstan", iso: "KGZ" },
-    { country: "Laos", iso: "LAO" },
-    { country: "Latvia", iso: "LVA" },
-    { country: "Lebanon", iso: "LBN" },
-    { country: "Liberia", iso: "LBR" },
-    { country: "Libya", iso: "LBY" },
-    { country: "Liechtenstein", iso: "LIE" },
-    { country: "Lithuania", iso: "LTU" },
-    { country: "Luxembourg", iso: "LUX" },
-    { country: "Madagascar", iso: "MDG" },
-    { country: "Malawi", iso: "MWI" },
-    { country: "Malaysia", iso: "MYS" },
-    { country: "Maldives", iso: "MDV" },
-    { country: "Mali", iso: "MLI" },
-    { country: "Malta", iso: "MLT" },
-    { country: "Mauritania", iso: "MRT" },
-    { country: "Mauritius", iso: "MUS" },
-    { country: "Mexico", iso: "MEX" },
-    { country: "Moldova", iso: "MDA" },
-    { country: "Monaco", iso: "MCO" },
-    { country: "Mongolia", iso: "MNG" },
-    { country: "Montenegro", iso: "MNE" },
-    { country: "Morocco", iso: "MAR" },
-    { country: "Mozambique", iso: "MOZ" },
-    { country: "MS Zaandam", iso: "USA" },
-    { country: "Namibia", iso: "NAM" },
-    { country: "Nepal", iso: "NPL" },
-    { country: "Netherlands", iso: "NLD" },
-    { country: "New Zealand", iso: "NZL" },
-    { country: "Nicaragua", iso: "NIC" },
-    { country: "Niger", iso: "NER" },
-    { country: "Nigeria", iso: "NGA" },
-    { country: "North Macedonia", iso: "MKD" },
-    { country: "Norway", iso: "NOR" },
-    { country: "Oman", iso: "OMN" },
-    { country: "Pakistan", iso: "PAK" },
-    { country: "Panama", iso: "PAN" },
-    { country: "Papua New Guinea", iso: "PNG" },
-    { country: "Paraguay", iso: "PRY" },
-    { country: "Peru", iso: "PER" },
-    { country: "Philippines", iso: "PHL" },
-    { country: "Poland", iso: "POL" },
-    { country: "Portugal", iso: "PRT" },
-    { country: "Qatar", iso: "QAT" },
-    { country: "Romania", iso: "ROU" },
-    { country: "Russia", iso: "RUS" },
-    { country: "Rwanda", iso: "RWA" },
-    { country: "Saint Kitts and Nevis", iso: "KNA" },
-    { country: "Saint Lucia", iso: "LCA" },
-    { country: "Saint Vincent and the Grenadines", iso: "VCT" },
-    { country: "San Marino", iso: "SMR" },
-    { country: "Sao Tome and Principe", iso: "STP" },
-    { country: "Saudi Arabia", iso: "SAU" },
-    { country: "Senegal", iso: "SEN" },
-    { country: "Serbia", iso: "SRB" },
-    { country: "Seychelles", iso: "SYC" },
-    { country: "Sierra Leone", iso: "SLE" },
-    { country: "Singapore", iso: "SGP" },
-    { country: "Slovakia", iso: "SVK" },
-    { country: "Slovenia", iso: "SVN" },
-    { country: "Somalia", iso: "SOM" },
-    { country: "South Africa", iso: "ZAF" },
-    { country: "South Sudan", iso: "SSD" },
-    { country: "Spain", iso: "ESP" },
-    { country: "Sri Lanka", iso: "LKA" },
-    { country: "Sudan", iso: "SDN" },
-    { country: "Suriname", iso: "SUR" },
-    { country: "Sweden", iso: "SWE" },
-    { country: "Switzerland", iso: "CHE" },
-    { country: "Syria", iso: "SYR" },
-    { country: "Taiwan*", iso: "TWN" },
-    { country: "Tajikistan", iso: "TJK" },
-    { country: "Tanzania", iso: "TZA" },
-    { country: "Thailand", iso: "THA" },
-    { country: "Timor-Leste", iso: "TLS" },
-    { country: "Togo", iso: "TGO" },
-    { country: "Trinidad and Tobago", iso: "TTO" },
-    { country: "Tunisia", iso: "TUN" },
-    { country: "Turkey", iso: "TUR" },
-    { country: "Uganda", iso: "UGA" },
-    { country: "Ukraine", iso: "UKR" },
-    { country: "United Arab Emirates", iso: "ARE" },
-    { country: "United Kingdom", iso: "GBR" },
-    { country: "Uruguay", iso: "URY" },
-    { country: "US", iso: "USA" },
-    { country: "Uzbekistan", iso: "UZB" },
-    { country: "Venezuela", iso: "VEN" },
-    { country: "Vietnam", iso: "VNM" },
-    { country: "West Bank and Gaza", iso: "PSE" },
-    { country: "Western Sahara", iso: "ESH" },
-    { country: "Yemen", iso: "YEM" },
-    { country: "Zambia", iso: "ZMB" },
-    { country: "Zimbabwe", iso: "ZWE" },
-  ];
-  for (let il = 0; il < countries.length; il++) {
-    if (countries[il].country == country_name) {
-      return countries[il].iso;
-    }
-  }
-  return "";
-};
-const extractResult = async (url) => {
-  let stringCsv;
-  const result = await axios
-    .get(url)
-    .then((response) => {
-      if (response.data) {
-        stringCsv = response.data;
-      }
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-  if (!stringCsv) {
-    return res.status(500).send("Couldn't fetch data");
-  }
-  let r = Papa.parse(stringCsv, {
-    header: true,
-    delimiter: ",",
-    dynamicTyping: true,
-  });
-  return r;
 };
 
 const calculateRate = (caseData, dailyConifrmed, criteria = null) => {
@@ -921,6 +607,20 @@ const calculateDaily = (result) => {
   return dailyCaseArray;
 };
 
+const calculatePopulation = (result, pop, criteria) => {
+  if (criteria !== "All") {
+    for (let index = 0; index < result.length; index++) {
+      result[index].y = (result[index].y / pop) * 1000000;
+    }
+  } else {
+    for (let index = 0; index < result.length; index++) {
+      result[index].Confirmed = (result[index].Confirmed / pop) * 1000000;
+      result[index].Recovered = (result[index].Recovered / pop) * 1000000;
+      result[index].Deaths = (result[index].Deaths / pop) * 1000000;
+    }
+  }
+  return result;
+};
 // Updates db with the latest csv
 
 exports.getWorldStatistics = async (req, rates) => {
@@ -970,6 +670,14 @@ exports.getWorldStatistics = async (req, rates) => {
     }
     if (rates) {
       results = calculateRate(results, dailyConfirmed, criteria);
+    }
+  }
+  if (req.query.perMillion && req.query.perMillion === "true") {
+    const pop = await Population.find({ iso3: "WLD" }).sort("-Year");
+    if (pop && pop[0].population > 0) {
+      results = calculatePopulation(results, pop[0].population, criteria);
+    } else {
+      results = [];
     }
   }
   results.sort((a, b) => (a.t > b.t ? 1 : -1));
