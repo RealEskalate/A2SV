@@ -144,7 +144,14 @@
                   fetchData2();
                 }
               "
-            />
+            >
+              <template v-slot:item="{ item }">
+                <small v-text="translateCriteria(item)" />
+              </template>
+              <template v-slot:selection="{ item }">
+                <span v-text="translateCriteria(item)" />
+              </template>
+            </v-select>
           </v-col>
         </v-row>
         <v-row>

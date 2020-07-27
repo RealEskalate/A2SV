@@ -63,7 +63,14 @@
           outlined
           dense
           @input="fetchData"
-        />
+        >
+          <template v-slot:item="{ item }">
+            <small v-text="translateCriteria(item.label)" />
+          </template>
+          <template v-slot:selection="{ item }">
+            <span v-text="translateCriteria(item.label)" />
+          </template>
+        </v-select>
       </v-col>
     </v-row>
     <v-row>

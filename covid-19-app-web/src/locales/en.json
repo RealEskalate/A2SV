@@ -62,15 +62,24 @@
     "compareCountries": "Compare Countries",
     "compareDiseases": "Compare Similar Diseases"
   },
+
   "criteria": {
-    "totalConfirmed": "Total Confirmed",
-    "totalRecovered": "Total Recovered",
-    "totalActive": "Total Active",
-    "totalDeaths": "Total Deaths",
-    "dailyConfirmed": "Daily Confirmed",
-    "dailyRecovered": "Daily Recovered",
-    "dailyDeaths": "Daily Deaths"
+    "Test Count": "Test Count",
+    "Confirmed Cases": "Confirmed Cases",
+    "Recovery Count": "Recovery Count",
+    "Active Cases": "Active Cases",
+    "Death Count": "Death Count",
+
+    "Positive Rate": "Positive Rate",
+    "Recovery Rate": "Recovery Rate",
+    "Active Rate": "Active Rate",
+    "Death Rate": "Death Rate",
+
+    "Daily Confirmed": "Daily Confirmed",
+    "Daily Recovery": "Daily Recovered",
+    "Daily Deaths": "Daily Deaths"
   },
+
   "learningPathHeaders": {
     "taskName": "Task Name",
     "what": "What",
@@ -129,6 +138,7 @@
     "message": "Message",
     "send": "Send"
   },
+
   "auth": {
     "profile": "Profile",
     "logOut": "Logout",
@@ -158,6 +168,7 @@
     "saveChanges": "Save Changes",
     "pleaseLoginToViewThisMap": "Please login to view this map"
   },
+
   "map": {
     "symptomTracker": "Symptom Tracker",
     "globalStatistics": "Global Statistics"

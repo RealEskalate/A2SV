@@ -33,6 +33,7 @@
     "icu": "Kutaa Yaala Addaa",
     "recovery": "Dandamachuu"
   },
+
   "navbar": {
     "home": "Seensa",
     "learn": "Baradhaa",
@@ -41,6 +42,7 @@
     "map": "Kaartaa",
     "profile": "Eenyummeessaa"
   },
+
   "titles": {
     "globalStatisticsTitle": "Istaatistiksii COVID-19 Akka Addunyaatti",
     "ethiopiaStatisticsTitle": "COVID-19 Itiyoophiyaa Keessatti",
@@ -50,6 +52,7 @@
     "learningPath": "Dabalataan Barachuuf",
     "news": "Oduu"
   },
+
   "graphNames": {
     "totalCounts": "Baay'ina Waliigalaa",
     "dailyCounts": "Lakkoofsa Guyyaa-guyyaan",
@@ -57,15 +60,24 @@
     "compareCountries": "Biyyoota Wal Madaalchisi",
     "compareDiseases": "Dhukkuboota Wal Fakkaatan Wal Madaalchisi"
   },
+
   "criteria": {
-    "totalConfirmed": "Waliigalaa kan qabaman",
-    "totalRecovered": "Waliigalaa kan bayyanatan",
-    "totalActive": "Wal'aansa irra kan jiran",
-    "totalDeaths": "Kan boqotan",
-    "dailyConfirmed": "Har'a Kan qabaman",
-    "dailyRecovered": "Har'a Kan bayanatan",
-    "dailyDeaths": "Har'a Kan du'an"
+    "Test Count": "Test Count",
+    "Confirmed Cases": "Waliigalaa kan qabaman",
+    "Recovery Count": "Waliigalaa kan bayyanatan",
+    "Active Cases": "Wal'aansa irra kan jiran",
+    "Death Count": "Kan boqotan",
+
+    "Positive Rate": "Positive Rate",
+    "Recovery Rate": "Recovery Rate",
+    "Active Rate": "Active Rate",
+    "Death Rate": "Death Rate",
+
+    "Daily Confirmed": "Guyaan Kan qabaman",
+    "Daily Recovery": "Guyaan Kan bayyanatan",
+    "Daily Deaths": "Guyaan Kan du'an"
   },
+
   "learningPathHeaders": {
     "taskName": "Hojiirra Oolmaa",
     "what": "Maal",
@@ -80,6 +92,7 @@
     "seniors": "Buleeyyiif",
     "learningPathFor": "Daandii Beekumsaa"
   },
+
   "ethiopiaRegions": {
     "addisAbaba": "Finfinnee",
     "oromia": "Oromiyaa",
@@ -93,6 +106,7 @@
     "somali": "Somaalii",
     "direDawa": "Dirree Dhaawaa"
   },
+
   "aboutTitles": {
     "aboutTrackSym": "TrackSym",
     "theMission": "Ergama",
@@ -100,12 +114,14 @@
     "we": "Nuti eenyudha?",
     "contact": "Nu quunnamuuf"
   },
+
   "ageGroups": {
     "kids": "Daa'imman",
     "teens": "Dargaggoota",
     "adults": "Ga'eessota",
     "seniors": "Buleeyyii"
   },
+
   "tourLabels": {
     "start": "Daawii Eegali",
     "skip": "Irra Darbi",
@@ -113,12 +129,14 @@
     "next": "Kan Itti Aanu",
     "finish": "Xumuri"
   },
+
   "contactUs": {
     "name": "Maqaa",
     "email": "Email",
     "message": "Yaada",
     "send": "Ergi"
   },
+
   "auth": {
     "profile": "Eenyummeessaa",
     "logOut": "Cufii Ba’i",
@@ -148,6 +166,7 @@
     "saveChanges": "Jijjiirama ol kaa’i",
     "pleaseLoginToViewThisMap": "Kaartaa kana ilaaluuf seenu qabda."
   },
+
   "map": {
     "symptomTracker": "Mallattowwan Hordofu",
     "globalStatistics": "Istatistiksii Addunyawa"
