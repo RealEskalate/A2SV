@@ -13,6 +13,7 @@ const population_schema = new mongoose.Schema({
   },
   iso3: {
     type: String,
+    index: true,
     required: true,
   },
   Year: {
