@@ -1,4 +1,5 @@
 const { News } = require("./../models/NewsModel");
+const { StatisticsResource } = require("../models/StatisticsResourceModel.js");
 
 let Parser = require("rss-parser");
 const parser = new Parser({
@@ -22,6 +23,20 @@ let default_sources = [
 
 // Get all news
 exports.get_all_news = async (req, res) => {
+  // convert from iso 3 to country name our use the req.query.country as it is if it is not iso 3 code.
+  let isoToCountry = await StatisticsResource.findOne({
+    language: "English",
+    title: "countries-name-dictionary",
+  });
+  
+  if( isoToCountry)
+    isoToCountry = isoToCountry.fields[0]
+    
+  if(isoToCountry && req.query.country in isoToCountry ){
+    req.query.country = isoToCountry[ req.query.country ]
+  }
+  // end of conversion
+
   let news = [];
 
   news = news.concat(await fetchGoogleNews(req));

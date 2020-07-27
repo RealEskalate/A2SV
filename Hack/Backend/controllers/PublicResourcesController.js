@@ -1,6 +1,17 @@
 const { PublicResourcesData } = require("../models/PublicResourcesModel");
 const { StatisticsResource } = require("../models/StatisticsResourceModel.js");
 exports.getPublicResources = async (req, res) => {
+  let isoToCountry= await StatisticsResource.findOne({
+    language: "English",
+    title: "countries-name-public-resource",
+  });
+  
+  if(isoToCountry){
+    isoToCountry= isoToCountry.fields[0]
+    req.params.country= isoToCountry[ req.params.country ]
+  }
+  // end of country translation
+
   let titles = null;
   if (req.query.language) {
     titles = await StatisticsResource.findOne({
