@@ -20,6 +20,7 @@ const { Tests } = require("../models/TestModel");
 const UserModels = require("./../models/UserModel");
 const WorldDataModel = require("../models/WorldDataModel");
 const EthiopiaData = require("./../models/EthiopiaDataModel");
+const Population = require("../models/PopulationModel");
 
 var root = __dirname;
 
@@ -450,6 +451,44 @@ exports.update_tests = async () => {
   }
   console.log("Finished Saving Data");
 };
+
+exports.update_populations = async () => {
+  let request_url = "https://datahub.io/core/population/r/population.json";
+  let population_data = await axios.get(request_url);
+  let data = population_data.data;
+  if (data) {
+    let populations = [];
+    data.forEach((item) => {
+      if (Number(item.Value) < 5) {
+        console.log(item);
+      } else {
+        populations.push(
+          new Population({
+            _id: mongoose.Types.ObjectId(),
+            country_name: item["Country Name"],
+            population: item["Value"],
+            iso3: item["Country Code"],
+            Year: item["Year"],
+          })
+        );
+      }
+    });
+    if (populations.length > 0) {
+      try {
+        await Population.collection.drop();
+      } catch (err) {
+        console.log(err.toString());
+      }
+      try {
+        await Population.insertMany(populations);
+      } catch (err) {
+        console.log(err.toString());
+      }
+    }
+  }
+};
+
+// Helper Fuctions
 
 // download public resources dataset
 async function fetchResources(url) {
