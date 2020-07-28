@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   Layout,
   Text,
@@ -7,21 +7,19 @@ import {
   Icon,
   Spinner,
   ListItem,
-} from "@ui-kitten/components";
-import { View, StyleSheet, Image } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
-
-import userIDStore from "../../data-management/user-id-data/userIDStore";
-import symptomStore from "../../data-management/user-symptom-data/symptomStore";
-import * as symptomActions from "../../data-management/user-symptom-data/symptomActions";
-import languageStore from "../../data-management/language_data/languageStore";
-import { strings } from "../../localization/localization";
-import { LangContext } from "../../../assets/lang/language-context";
-import MapboxGL from "@react-native-mapbox-gl/maps";
-import { ThemeContext } from "../../../assets/themes/theme-context";
+} from '@ui-kitten/components';
+import { View, StyleSheet, Image } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import MapboxGL from '@react-native-mapbox-gl/maps';
 MapboxGL.setAccessToken(
-  "pk.eyJ1IjoiZmVyb3g5OCIsImEiOiJjazg0czE2ZWIwNHhrM2VtY3Y0a2JkNjI3In0.zrm7UtCEPg2mX8JCiixE4g"
+  'pk.eyJ1IjoiZmVyb3g5OCIsImEiOiJjazg0czE2ZWIwNHhrM2VtY3Y0a2JkNjI3In0.zrm7UtCEPg2mX8JCiixE4g'
 );
+
+import userIDStore from '../../data-management/user-id-data/userIDStore';
+import symptomStore from '../../data-management/user-symptom-data/symptomStore';
+import * as symptomActions from '../../data-management/user-symptom-data/symptomActions';
+import languageStore from '../../data-management/language_data/languageStore';
+import { strings } from '../../localization/localization';
 
 export default class SymptomHistory extends Component {
   constructor(props) {
@@ -31,7 +29,7 @@ export default class SymptomHistory extends Component {
       loading: true,
       selectedIndex: -1,
       filteredData: [],
-      currLanguage: "English",
+      currLanguage: 'English',
       user_longitude: 0.0,
       user_latitude: 0.0,
       currLangCode: languageStore.getState(),
@@ -76,20 +74,19 @@ export default class SymptomHistory extends Component {
     this.onUserLocationUpdate = this.onUserLocationUpdate.bind(this);
   }
 
-  //static contextType = ThemeContext;
-
   onUserLocationUpdate(location) {
     this.setState({ user_latitude: location.coords.latitude });
     this.setState({ user_longitude: location.coords.longitude });
   }
+
   //sends user location
   sendLocation = () => {
-    fetch("https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/user_locations", {
-      method: "POST",
+    fetch('https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/user_locations', {
+      method: 'POST',
       headers: {
-        Authorization: "Bearer " + userIDStore.getState().userToken,
-        Accept: "application/json",
-        "Content-Type": "application/json",
+        Authorization: 'Bearer ' + userIDStore.getState().userToken,
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         longitude: this.state.user_longitude,
@@ -106,33 +103,36 @@ export default class SymptomHistory extends Component {
         console.log(err);
       });
   };
+
   componentDidMount = async () => {
     await this.setState({ currLangCode: languageStore.getState() });
     switch (this.state.currLangCode) {
-      case "am":
-        await this.setState({ currLanguage: "Amharic" });
+      case 'am':
+        await this.setState({ currLanguage: 'Amharic' });
         break;
-      case "en":
-        await this.setState({ currLanguage: "English" });
+      case 'en':
+        await this.setState({ currLanguage: 'English' });
         break;
-      case "orm":
-        await this.setState({ currLanguage: "Oromo" });
+      case 'orm':
+        await this.setState({ currLanguage: 'Oromo' });
         break;
-      case "tr":
-        await this.setState({ currLanguage: "Turkish" });
+      case 'tr':
+        await this.setState({ currLanguage: 'Turkish' });
         break;
     }
     this.fetchUserSymptoms(userIDStore.getState().userId);
     this.fetchData();
     this.populateCalander();
     this.fetchSymptom();
+
     this.timer = setInterval(() => {
       if (this.state.currUserSymptoms.length !== 0) {
-        console.log("Normal check");
+        console.log('Normal check');
         this.sendLocation();
       }
     }, 10000);
   };
+
   //populates top calendar list
   populateCalander = () => {
     caladerData = [];
@@ -151,6 +151,7 @@ export default class SymptomHistory extends Component {
 
     this.setState({ calendar: caladerData });
   };
+
   //compare dates
   compareDate = (date1, date2) => {
     return (
@@ -160,15 +161,11 @@ export default class SymptomHistory extends Component {
     );
   };
 
-  colors = {
-    LOW: "#558b2f",
-    MEDIUM: "#fbc02d",
-    HIGH: "#d32f2f",
-  };
   //loads users symptom from the redux local store
   fetchData() {
     this.setState({ currUserSymptoms: symptomStore.getState() });
   }
+
   //fetches historical data
   fetchSymptom = async () => {
     let newThis = this; // create variable for referencing 'this'
@@ -177,24 +174,61 @@ export default class SymptomHistory extends Component {
         userIDStore.getState().userId
       }?language=${this.state.currLanguage}`,
       {
-        method: "GET",
+        method: 'GET',
         headers: {
-          Authorization: "Bearer " + userIDStore.getState().userToken,
-          Accept: "application/json",
-          "Content-Type": "application/json",
+          Authorization: 'Bearer ' + userIDStore.getState().userToken,
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
         },
       }
     )
       .then((response) => response.json())
       .then((json) => {
-        newThis.setState({
-          data: json.events,
-        });
+        newThis.setState(
+          {
+            data: json.events,
+          },
+          () => {
+            this.populateBadge();
+          }
+        );
       })
       .catch((error) => {
         console.log(error);
       });
   };
+
+  populateBadge = () => {
+    let newData = [];
+
+    for (
+      let calender_idx = 0;
+      calender_idx < this.state.calendar.length;
+      calender_idx++
+    ) {
+      const calender_cell = this.state.calendar[calender_idx];
+      const selectedDate = new Date(calender_cell.compareDate);
+      let showBadge = false;
+
+      for (let data_idx = 0; data_idx < this.state.data.length; data_idx++) {
+        const data_cell = this.state.data[data_idx];
+
+        const bool =
+          this.compareDate(selectedDate, new Date(data_cell.start)) &&
+          this.compareDate(new Date(data_cell.end), selectedDate);
+
+        if (bool) {
+          showBadge = true;
+          break;
+        }
+      }
+
+      newData.push({ ...calender_cell, showBadge });
+    }
+
+    this.setState({ calendar: newData });
+  };
+
   //parses date
   getParsedDate = (unparsedDate) => {
     date = new Date(unparsedDate);
@@ -202,6 +236,7 @@ export default class SymptomHistory extends Component {
       this.state.months[date.getMonth()]
     } ${date.getDate()} - ${date.getFullYear()}`;
   };
+
   //update Ui with the filtered date
   updateSymptomHistory = (dateIndex) => {
     this.setState({
@@ -228,12 +263,12 @@ export default class SymptomHistory extends Component {
       loading: false,
     });
   };
+
   //If user hasn't registered any symptom
   emptySymptomList = () => {
     return (
       <Layout
-        style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
-      >
+        style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         {/* <MaterialCommunityIcons
           name="grease-pencil"
           size={60}
@@ -241,13 +276,14 @@ export default class SymptomHistory extends Component {
         /> */}
         <Image
           style={{ width: 200, height: 250 }}
-          resizeMode="contain"
-          source={require("../../../assets/images/empty.png")}
+          resizeMode='contain'
+          source={require('../../../assets/images/empty.png')}
         />
         <Text>{strings.YouHaveNotRegisteredAnySymptom}</Text>
       </Layout>
     );
   };
+
   //gets the list of symptoms from database
   fetchUserSymptoms = (userId) => {
     //console.log(currLanguage);
@@ -256,16 +292,16 @@ export default class SymptomHistory extends Component {
     });
     let newThis = this; // create variable for referencing 'this'
     fetch(
-      "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/symptomuser/user/" +
+      'https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/symptomuser/user/' +
         userId +
-        "?language=" +
+        '?language=' +
         this.state.currLanguage,
       {
-        method: "GET",
+        method: 'GET',
         headers: {
-          Authorization: "Bearer " + userIDStore.getState().userToken,
-          Accept: "application/json",
-          "Content-Type": "application/json",
+          Authorization: 'Bearer ' + userIDStore.getState().userToken,
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
         },
       }
     )
@@ -297,12 +333,13 @@ export default class SymptomHistory extends Component {
       )}
     />
   );
+
   render() {
     console.log(this.state.calendar.length);
     return (
-      <Layout style={styles.contanier} level="2">
+      <Layout style={styles.contanier} level='2'>
         <Layout style={{ flex: 1 }}>
-          <Layout style={{ flexDirection: "row" }}>
+          <Layout style={{ flexDirection: 'row' }}>
             <List
               horizontal
               data={this.state.calendar}
@@ -311,29 +348,39 @@ export default class SymptomHistory extends Component {
               renderItem={({ item, index }) => (
                 <TouchableOpacity
                   style={{
-                    alignItems: "center",
-                    justifyContent: "center",
+                    alignItems: 'center',
+                    justifyContent: 'center',
                   }}
                   onPress={() => {
                     this.updateSymptomHistory(index);
-                  }}
-                >
+                  }}>
                   <Layout
-                    level={this.state.selectedIndex === index ? "3" : "1"}
+                    level={this.state.selectedIndex === index ? '3' : '1'}
                     style={{
                       width: 60,
                       height: 70,
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <Text appearance="hint" category="h6">
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}>
+                    {item.showBadge ? (
+                      <View
+                        style={{
+                          height: 4,
+                          width: 10,
+                          borderRadius: 2,
+                          backgroundColor: '#f57c00',
+                        }}
+                      />
+                    ) : (
+                      <View style={{ height: 4 }} />
+                    )}
+                    <Text appearance='hint' category='h6'>
                       {item.day}
                     </Text>
-                    <Text category="h6" style={{ fontWeight: "bold" }}>
+                    <Text category='h6' style={{ fontWeight: 'bold' }}>
                       {this.state.days[item.dayIdx]}
                     </Text>
-                    <Text appearance="hint">
+                    <Text appearance='hint'>
                       {this.state.months[item.monthIdx]}
                     </Text>
                   </Layout>
@@ -342,39 +389,37 @@ export default class SymptomHistory extends Component {
             />
             <TouchableOpacity
               style={{
-                alignItems: "center",
-                justifyContent: "center",
+                alignItems: 'center',
+                justifyContent: 'center',
               }}
               onPress={() => {
                 this.setState({
                   selectedIndex: -1,
                   currSelected: true,
                 });
-              }}
-            >
+              }}>
               <Layout
-                level={this.state.selectedIndex === -1 ? "3" : "1"}
+                level={this.state.selectedIndex === -1 ? '3' : '1'}
                 style={{
                   width: 60,
                   height: 70,
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
                 <Icon
                   style={{ width: 24, height: 24 }}
-                  fill="#8F9BB3"
-                  name="calendar-outline"
+                  fill='#8F9BB3'
+                  name='calendar-outline'
                 />
-                <Text appearance="hint">{strings.Current}</Text>
+                <Text appearance='hint'>{strings.Current}</Text>
               </Layout>
             </TouchableOpacity>
           </Layout>
 
           <Divider />
 
-          <Layout level="2" style={{ padding: 10 }}>
-            <Text category="h6" appearance="hint">
+          <Layout level='2' style={{ padding: 10 }}>
+            <Text category='h6' appearance='hint'>
               {strings.MySymptoms}
             </Text>
           </Layout>
@@ -390,10 +435,9 @@ export default class SymptomHistory extends Component {
               <Layout
                 style={{
                   flex: 1,
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
                 <Spinner />
               </Layout>
             ) : this.state.currSelected ? (
@@ -411,38 +455,19 @@ export default class SymptomHistory extends Component {
                   <>
                     <Layout
                       style={{
-                        flexDirection: "row",
-                        justifyContent: "space-between",
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
                         paddingHorizontal: 20,
                         paddingVertical: 7,
-                      }}
-                    >
-                      <Layout style={{ justifyContent: "center" }}>
-                        <Text category="h6">{item.name}</Text>
+                      }}>
+                      <Layout style={{ justifyContent: 'center' }}>
+                        <Text category='h6'>{item.name}</Text>
                       </Layout>
-                      <Layout style={{ justifyContent: "center" }}>
-                        <Text appearance="hint">
+                      <Layout style={{ justifyContent: 'center' }}>
+                        <Text appearance='hint'>
                           Registered {this.getParsedDate(item.start)}
                         </Text>
                       </Layout>
-                      {/* <Layout
-                        style={{
-                          width: 50,
-                          height: 40,
-                          alignItems: "center",
-                          justifyContent: "center",
-                        }}
-                      >
-                        <View
-                          style={{
-                            backgroundColor: this.colors[item.relevance],
-                            width: 30,
-                            height: 30,
-                            borderRadius: 5,
-                          }}
-                        />
-                        <Text appearance="hint">{item.relevance}</Text>
-                      </Layout> */}
                     </Layout>
                     <Divider />
                   </>
