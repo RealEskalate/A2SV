@@ -371,6 +371,25 @@ export let strings = new LocalizedStrings({
     SuccessfullySave: "Successfully Saved!",
     Current: "Current",
     Registered: "Registered",
+    PercentagePerMillion: "Per Million Case",
+    References: "References",
+    MinistryOfHealthEth: "Ministry of Health, Ethiopia",
+    CoronaAtGlance: "Coronavirus at a Glance, Hopkins medicine",
+    WHO: "World Health Organization",
+    ECDC: "ECDC",
+    MedicalXpress: "MedicalXpress",
+    BriefHistory: "A brief history of coronaviruses",
+    CDC: "CDC",
+    AboutParag1:
+      "It is a non-commercial COVID-19 symptom tracking app that uses crowd-sourcing to collect and visualize the density of the relevant symptoms. Users can anonymously report their symptoms and choose a location to see the density of symptoms in a map view. It represents publicly available data with a short description on how to see the trend going on . The data includes the number of confirmed cases, deaths, recovered, and tests conducted of any selected country or globally. It is also a great place to look for global and local news about Covid-19.",
+    AboutParag2:
+      "Africa to Silicon Valley is a team of highly motivated and talented students from Ethiopia, led by an ex-Google and Palantir Software/ML engineer.",
+    AboutParag3:
+      "The team went through an intense 3-month preparation program in the pursuit of summer internships at top Silicon Valley companies. NowA2SV is dedicating all the time and energy to the fight againstCOVID-19. COVID-19 is taking the world by storm. Even though some countries are scaling up their testing capacities, it has been a challenge for developed countries and is much harder for many developing countries.",
+    AboutParag4:
+      "A2SV puts humanity first and is giving a non-commercial symptom tracker app.",
+    AboutParag5:
+      "Your data will be used anonymously for the purpose of data science and statistics, meaning any info generated isn’t traced back to a single user. This is a non-commercial project with no intention of profit.",
   },
   en: {
     Information: "Information",
@@ -739,6 +758,25 @@ export let strings = new LocalizedStrings({
     SuccessfullySave: "Successfully Saved!",
     Current: "Current",
     Registered: "Registered",
+    PercentagePerMillion: "Per Million Case",
+    References: "References",
+    MinistryOfHealthEth: "Ministry of Health, Ethiopia",
+    CoronaAtGlance: "Coronavirus at a Glance, Hopkins medicine",
+    WHO: "World Health Organization",
+    ECDC: "ECDC",
+    MedicalXpress: "MedicalXpress",
+    BriefHistory: "A brief history of coronaviruses",
+    CDC: "CDC",
+    AboutParag1:
+      "It is a non-commercial COVID-19 symptom tracking app that uses crowd-sourcing to collect and visualize the density of the relevant symptoms. Users can anonymously report their symptoms and choose a location to see the density of symptoms in a map view. It represents publicly available data with a short description on how to see the trend going on . The data includes the number of confirmed cases, deaths, recovered, and tests conducted of any selected country or globally. It is also a great place to look for global and local news about Covid-19.",
+    AboutParag2:
+      "Africa to Silicon Valley is a team of highly motivated and talented students from Ethiopia, led by an ex-Google and Palantir Software/ML engineer.",
+    AboutParag3:
+      "The team went through an intense 3-month preparation program in the pursuit of summer internships at top Silicon Valley companies. NowA2SV is dedicating all the time and energy to the fight againstCOVID-19. COVID-19 is taking the world by storm. Even though some countries are scaling up their testing capacities, it has been a challenge for developed countries and is much harder for many developing countries.",
+    AboutParag4:
+      "A2SV puts humanity first and is giving a non-commercial symptom tracker app.",
+    AboutParag5:
+      "Your data will be used anonymously for the purpose of data science and statistics, meaning any info generated isn’t traced back to a single user. This is a non-commercial project with no intention of profit.",
   },
   am: {
     Information: "መረጃ",
@@ -1105,6 +1143,25 @@ export let strings = new LocalizedStrings({
     SuccessfullySave: "ተሳክቷል!",
     Current: "የአሁኑ",
     Registered: "የተመዘገበበት",
+    PercentagePerMillion: "Per Million Case",
+    References: "References",
+    MinistryOfHealthEth: "Ministry of Health, Ethiopia",
+    CoronaAtGlance: "Coronavirus at a Glance, Hopkins medicine",
+    WHO: "World Health Organization",
+    ECDC: "ECDC",
+    MedicalXpress: "MedicalXpress",
+    BriefHistory: "A brief history of coronaviruses",
+    CDC: "CDC",
+    AboutParag1:
+      "It is a non-commercial COVID-19 symptom tracking app that uses crowd-sourcing to collect and visualize the density of the relevant symptoms. Users can anonymously report their symptoms and choose a location to see the density of symptoms in a map view. It represents publicly available data with a short description on how to see the trend going on . The data includes the number of confirmed cases, deaths, recovered, and tests conducted of any selected country or globally. It is also a great place to look for global and local news about Covid-19.",
+    AboutParag2:
+      "Africa to Silicon Valley is a team of highly motivated and talented students from Ethiopia, led by an ex-Google and Palantir Software/ML engineer.",
+    AboutParag3:
+      "The team went through an intense 3-month preparation program in the pursuit of summer internships at top Silicon Valley companies. NowA2SV is dedicating all the time and energy to the fight againstCOVID-19. COVID-19 is taking the world by storm. Even though some countries are scaling up their testing capacities, it has been a challenge for developed countries and is much harder for many developing countries.",
+    AboutParag4:
+      "A2SV puts humanity first and is giving a non-commercial symptom tracker app.",
+    AboutParag5:
+      "Your data will be used anonymously for the purpose of data science and statistics, meaning any info generated isn’t traced back to a single user. This is a non-commercial project with no intention of profit.",
   },
   tr: {
     Information: "Bilgi",
@@ -1442,6 +1499,25 @@ export let strings = new LocalizedStrings({
     SuccessfullySave: "Kayıt Başarılı!",
     Current: "şimdiki",
     Registered: "Kayıtlı",
+    PercentagePerMillion: "Per Million Case",
+    References: "Referanslar",
+    MinistryOfHealthEth: "Sağlık Bakanlığı, Etiyopya",
+    CoronaAtGlance: "Bir Bakışta Koronavirüs, Hopkins medicine",
+    WHO: "Dünya Sağlık Örgütü",
+    ECDC: "Avrupa Hastalık Önleme ve Kontrol Merkezi",
+    MedicalXpress: "MedicalXpress",
+    BriefHistory: "Koronavirüslerin kısa bir tarihi",
+    CDC: "Hastalık Kontrol ve Önleme Merkezi",
+    AboutParag1:
+      "Bu, ilgili semptomların yoğunluğunu toplamak ve görselleştirmek için kitle kaynak kullanan ticari olmayan bir KOVİD-19 semptom izleme uygulamasıdır. Kullanıcılar belirtilerini anonim olarak bildirebilir ve harita görünümünde belirtilerin yoğunluğunu görmek için bir konum seçebilir. Halka açık verileri, trendin nasıl görüldüğüne ilişkin kısa bir açıklama ile temsil eder. Veriler, seçilen herhangi bir ülkede veya dünya genelinde teyit edilen vaka sayısını, ölümleri, iyiyleşenleri ve yapılan testleri içerir. Ayrıca KOVİD-19 hakkında küresel ve yerel haberler aramak için harika bir yerdir.",
+    AboutParag2:
+      "Afrika'dan Silikon Vadisi’ne, eski bir Google ve Palantir’de yazılım ve makina öğrenmesi mühendisi tarafından yönetilen, Etiyopya'dan yüksek motivasyonlu ve yetenekli öğrencilerin oluşturduğu bir ekiptir.",
+    AboutParag3:
+      "Ekip, Silikon Vadisi şirketlerinde yaz stajı için 3 aylık yoğun bir hazırlık programından geçti. Şimdi ise A2SV, bütün zamanını ve enerjisini KOVİD-19 ile mücadeleye ayırıyor. KOVİD-19 dünyayı sarsmaya devam ediyor. Bazı ülkeler test kapasitelerini artırabilseler de, bu durum gelişmiş ülkeler için bir zorluk teşkil etmekte olup birçok gelişmekte olan ülke için ise daha büyük bir zorluk anlamına gelmektedir.",
+    AboutParag4:
+      "A2SV her zaman insanlığı ilk sıraya koyduğundan ötürü ticari olmayan bir semptom izleme uygulaması sunuyor.",
+    AboutParag5:
+      "Verileriniz veri bilimi ve istatistik amacıyla anonim olarak kullanılacaktır, bu da üretilen hiçbir bilginin tek bir kullanıcı ile bağdaştırılamayacağı anlamına gelir. Bu ticari olmayan bir projedir ve kar amacı gütmemektedir.",
   },
   orm: {
     Information: "Odeeffannoo",
@@ -1869,5 +1945,24 @@ export let strings = new LocalizedStrings({
     SuccessfullySave: "Milkaa'eera!",
     Current: "Amma",
     Registered: "Kan Galmaa'e",
+    PercentagePerMillion: "Per Million Case",
+    References: "References",
+    MinistryOfHealthEth: "Ministry of Health, Ethiopia",
+    CoronaAtGlance: "Coronavirus at a Glance, Hopkins medicine",
+    WHO: "World Health Organization",
+    ECDC: "ECDC",
+    MedicalXpress: "MedicalXpress",
+    BriefHistory: "A brief history of coronaviruses",
+    CDC: "CDC",
+    AboutParag1:
+      "It is a non-commercial COVID-19 symptom tracking app that uses crowd-sourcing to collect and visualize the density of the relevant symptoms. Users can anonymously report their symptoms and choose a location to see the density of symptoms in a map view. It represents publicly available data with a short description on how to see the trend going on . The data includes the number of confirmed cases, deaths, recovered, and tests conducted of any selected country or globally. It is also a great place to look for global and local news about Covid-19.",
+    AboutParag2:
+      "Africa to Silicon Valley is a team of highly motivated and talented students from Ethiopia, led by an ex-Google and Palantir Software/ML engineer.",
+    AboutParag3:
+      "The team went through an intense 3-month preparation program in the pursuit of summer internships at top Silicon Valley companies. NowA2SV is dedicating all the time and energy to the fight againstCOVID-19. COVID-19 is taking the world by storm. Even though some countries are scaling up their testing capacities, it has been a challenge for developed countries and is much harder for many developing countries.",
+    AboutParag4:
+      "A2SV puts humanity first and is giving a non-commercial symptom tracker app.",
+    AboutParag5:
+      "Your data will be used anonymously for the purpose of data science and statistics, meaning any info generated isn’t traced back to a single user. This is a non-commercial project with no intention of profit.",
   },
 });
