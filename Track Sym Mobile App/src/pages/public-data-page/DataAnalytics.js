@@ -48,16 +48,22 @@ class DataAnalytics extends React.Component {
       selected_total_end_date: "",
       selected_rate_start_date: "",
       selected_rate_end_date: "",
+      selected_percentage_start_date: "",
+      selected_percentage_end_date: "",
       placeholder_daily_start_date: "",
       placeholder_daily_end_date: "",
       placeholder_total_start_date: "",
       placeholder_total_end_date: "",
+      placeholder_percentage_start_date: "",
+      placeholder_percentage_end_date: "",
       graph_label: [""],
       data_set: [0],
       daily_newCases_label: [""],
       daily_newCases_data_set: [0],
       rate_label: [""],
       rate_data_set: [0],
+      percentage_label: [""],
+      percentage_data_set: [0],
       searchedCountry: "World",
       TotalStatisticsData: [],
       StatisticsData: {},
@@ -120,6 +126,7 @@ class DataAnalytics extends React.Component {
       .then(this.fetchDailyNewsCases())
       .then(this.fetchRateStatistics())
       .then(this.getCountryList())
+      .then(this.fetchPercentageStats())
       .then(this.checkIfDataExist(criterias.numberOfTests)) //check if number of test case data exist
       .then(this.getDescriptions)
       .catch((error) => {
@@ -170,6 +177,60 @@ class DataAnalytics extends React.Component {
           });
         } else {
           newThis.fetchTotalStats();
+        }
+      })
+      .catch((error) => {
+        Alert.alert(strings.ConnectionProblem, strings.CouldNotConnectToServer);
+      });
+  };
+
+  //gets statistics data based on selected criteria and populate UI
+  fetchPercentageStats = async () => {
+    //console.log("Bearer " + userIDStore.getState().userToken);
+    let newThis = this;
+    this.setState({ totalGraphLoading: true });
+    var query =
+      this.state.selected_percentage_start_date.length > 1 &&
+      this.state.selected_percentage_end_date.length > 1
+        ? "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/statistics?criteria=" +
+          this.state.selected_filter +
+          "&country=" +
+          this.state.searchedCountry +
+          "&start_date=" +
+          this.state.selected_percentage_start_date +
+          "&end_date=" +
+          this.state.selected_percentage_end_date +
+          "&perMillion=true"
+        : "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/statistics?criteria=" +
+          this.state.selected_filter +
+          "&country=" +
+          this.state.searchedCountry +
+          "&perMillion=true";
+    //console.log(query);
+    await fetch(query, {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + userIDStore.getState().userToken,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then(async (json) => {
+        if (json !== undefined && json.length !== 0) {
+          await newThis.populatePercentageData(json);
+          newThis.forceUpdate(); //refresh page
+          newThis.setState({
+            totalGraphLoading: false,
+            selected_percentage_start_date: json[0].t.split("T")[0],
+            selected_percentage_end_date: json[json.length - 1].t.split("T")[0],
+            placeholder_percentage_start_date: json[0].t.split("T")[0],
+            placeholder_percentage_end_date: json[json.length - 1].t.split(
+              "T"
+            )[0],
+          });
+        } else {
+          newThis.fetchPercentageStats();
         }
       })
       .catch((error) => {
@@ -456,6 +517,51 @@ class DataAnalytics extends React.Component {
     let indexCounter = 0;
     while (graphLebel_counter < objList.length) {
       this.state.rate_label[indexCounter] = this.dateConverter(
+        objList[graphLebel_counter].t.split("T")[0]
+      );
+      indexCounter += 1;
+      if (
+        remainder > 0 &&
+        graphLebel_counter + remainder === objList.length - 1
+      ) {
+        graphLebel_counter += remainder;
+        continue;
+      }
+      graphLebel_counter += interval;
+    }
+  };
+
+  //populate daily data
+  populatePercentageData = (objList) => {
+    this.state.percentage_label = [""]; //reseting all data point labels
+    this.state.percentage_data_set = [0]; //reseting all data point labels
+
+    //generating interval
+    var interval = Math.floor(objList.length / 6);
+    var remainder = objList.length % 6;
+    if (interval === 0) {
+      interval = 1;
+      remainder = 0;
+    }
+    let dataSet_counter = 0;
+    let indexCounterSet = 0;
+    while (dataSet_counter < objList.length) {
+      this.state.percentage_data_set[indexCounterSet] =
+        objList[dataSet_counter].y;
+
+      indexCounterSet += 1;
+      if (remainder > 0 && dataSet_counter + remainder === objList.length - 1) {
+        dataSet_counter += remainder;
+        continue;
+      }
+      dataSet_counter += interval;
+    }
+
+    var remainder = objList.length % 5;
+    let graphLebel_counter = 0;
+    let indexCounter = 0;
+    while (graphLebel_counter < objList.length) {
+      this.state.percentage_label[indexCounter] = this.dateConverter(
         objList[graphLebel_counter].t.split("T")[0]
       );
       indexCounter += 1;
@@ -1628,6 +1734,312 @@ class DataAnalytics extends React.Component {
                   </Text>
                 )}
               </Layout>
+            </Layout>
+
+            <Layout style={styles.container_graph}>
+              <Divider />
+              <Layout
+                level="2"
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  padding: 5,
+                }}
+              >
+                <Text
+                  category="h6"
+                  style={{
+                    fontWeight: "bold",
+                  }}
+                >
+                  {strings.PercentagePerMillion}
+                </Text>
+              </Layout>
+              <Divider />
+
+              {/* {this.state.staticsDescriptionLoading ? (
+                <Layout
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    margin: 5,
+                  }}
+                >
+                  <ActivityIndicator
+                    size="small"
+                    color="gray"
+                    style={{ marginHorizontal: 10 }}
+                  />
+                  <Text appearance="hint" style={{ fontSize: 16 }}>
+                    {strings.LoadingGraphDescription}
+                  </Text>
+                </Layout>
+              ) : (
+                <>
+                  <Text
+                    appearance="hint"
+                    style={{ fontSize: 16, margin: 5, padding: 5 }}
+                  >
+                    {
+                      this.state.staticsDescription[0].descriptions[0]
+                        .description
+                    }
+                  </Text>
+                  <Divider />
+                </>
+              )} */}
+
+              <Layout
+                style={{
+                  flexDirection: "row",
+                  marginHorizontal: 10,
+                  marginTop: 5,
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Layout style={{ flexDirection: "row", marginRight: 20 }}>
+                  <DatePicker
+                    date={this.state.selected_percentage_start_date}
+                    mode="date" //The enum of date, datetime and
+                    placeholder={this.state.placeholder_percentage_start_date}
+                    maxDate={
+                      this.state.selected_percentage_end_date === ""
+                        ? this.getCurrentDate()
+                        : this.state.selected_percentage_end_date
+                    }
+                    format="YYYY-MM-DD"
+                    customStyles={{
+                      dateIcon: {
+                        position: "absolute",
+                        left: 0,
+                        top: 4,
+                        marginLeft: 0,
+                      },
+                      dateInput: {
+                        marginLeft: 36,
+                        borderRadius: 10,
+                        height: 30,
+                        borderColor: "#000000",
+                      },
+                      placeholderText: {
+                        color:
+                          customTheme.theme === "light" ? "black" : "white",
+                      },
+                    }}
+                    onDateChange={async (date) => {
+                      await this.setState({
+                        selected_percentage_start_date: date,
+                      });
+                      this.fetchPercentageStats();
+                    }}
+                  />
+                </Layout>
+                <Layout style={{ flexDirection: "row" }}>
+                  <DatePicker
+                    date={this.state.selected_percentage_end_date}
+                    mode="date" //The enum of date, datetime and time
+                    placeholder={this.state.placeholder_percentage_end_date}
+                    format="YYYY-MM-DD"
+                    minDate={
+                      this.state.selected_percentage_start_date === ""
+                        ? this.getMinimumDate()
+                        : this.state.selected_percentage_start_date
+                    }
+                    maxDate={this.getCurrentDate()}
+                    confirmBtnText="Confirm"
+                    cancelBtnText="Cancel"
+                    customStyles={{
+                      dateIcon: {
+                        position: "absolute",
+                        left: 0,
+                        top: 4,
+                        marginLeft: 0,
+                      },
+                      dateInput: {
+                        marginLeft: 36,
+                        borderRadius: 10,
+                        height: 30,
+                        borderColor: "#000000",
+                      },
+                      placeholderText: {
+                        color:
+                          customTheme.theme === "light" ? "black" : "white",
+                      },
+                    }}
+                    onDateChange={async (date) => {
+                      await this.setState({
+                        selected_percentage_end_date: date,
+                      });
+                      this.fetchPercentageStats();
+                    }}
+                  />
+                </Layout>
+              </Layout>
+
+              <LineChart
+                data={{
+                  labels: this.state.percentage_label,
+                  datasets: [{ data: this.state.percentage_data_set }],
+                }}
+                verticalLabelRotation={60}
+                width={Dimensions.get("window").width} // from react-native
+                height={HIEGHT / 2}
+                fromZero={true}
+                formatYLabel={(Y) => this.intToString(Number(Y))}
+                chartConfig={{
+                  backgroundColor: "#0080ff",
+                  backgroundGradientFrom: "#0080ff",
+                  backgroundGradientTo: "#0080ff",
+                  scrollableDotFill: "#ffffff",
+                  barPercentage: 0.1,
+                  decimalPlaces: 0, // optional, defaults to 2dp
+                  color: (opacity = 0) => `rgba(255, 266, 255, ${opacity})`,
+                  style: {
+                    borderRadius: 10,
+                  },
+                }}
+                bezier
+                style={{
+                  margin: 5,
+                  borderRadius: 10,
+                }}
+              />
+              {this.state.totalGraphLoading ? (
+                <Layout
+                  style={{
+                    width: Dimensions.get("window").width,
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
+                  <DotsLoader size={15} />
+                </Layout>
+              ) : (
+                <></>
+              )}
+
+              <Layout
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-evenly",
+                  marginBottom: 20,
+                }}
+              >
+                <Button
+                  size="tiny"
+                  appearance={
+                    this.state.selected_filter === criterias.confirmed
+                      ? "filled"
+                      : "outline"
+                  }
+                  onPress={async () => {
+                    await this.setState({
+                      selected_filter: criterias.confirmed,
+                    });
+
+                    this.fetchPercentageStats();
+                  }}
+                >
+                  {strings.Confirmed}
+                </Button>
+                <Button
+                  size="tiny"
+                  appearance={
+                    this.state.selected_filter === criterias.recoveries
+                      ? "filled"
+                      : "outline"
+                  }
+                  onPress={async () => {
+                    await this.setState({
+                      selected_filter: criterias.recoveries,
+                    });
+
+                    this.fetchPercentageStats();
+                  }}
+                >
+                  {strings.Recovered}
+                </Button>
+                <Button
+                  size="tiny"
+                  appearance={
+                    this.state.selected_filter === criterias.deaths
+                      ? "filled"
+                      : "outline"
+                  }
+                  onPress={async () => {
+                    await this.setState({
+                      selected_filter: criterias.deaths,
+                    });
+                    this.fetchPercentageStats();
+                  }}
+                >
+                  {strings.Deaths}
+                </Button>
+                {this.state.testCountDataExist ? (
+                  <Button
+                    size="tiny"
+                    appearance={
+                      this.state.selected_filter === criterias.numberOfTests
+                        ? "filled"
+                        : "outline"
+                    }
+                    onPress={async () => {
+                      await this.setState({
+                        selected_filter: criterias.numberOfTests,
+                      });
+                      this.fetchPercentageStats();
+                    }}
+                  >
+                    {strings.TestCounts}
+                  </Button>
+                ) : null}
+              </Layout>
+              {/* <Layout padding={10} style={{ marginBottom: 20 }}>
+                {this.state.staticsDescriptionLoading ? (
+                  <Layout flexDirection="row" alignSelf="center">
+                    <ActivityIndicator size="small" color="gray" />
+                    <Text style={{ fontSize: 16, color: "gray" }}>
+                      {strings.LoadingCriteriaDescription}
+                    </Text>
+                  </Layout>
+                ) : this.state.selected_filter === criterias.confirmed ? (
+                  <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
+                    {this.state.staticsDescription[0].descriptions[0]
+                      .criteria[1].name +
+                      ": " +
+                      this.state.staticsDescription[0].descriptions[0]
+                        .criteria[1].explanation}
+                  </Text>
+                ) : this.state.selected_filter === criterias.recoveries ? (
+                  <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
+                    {this.state.staticsDescription[0].descriptions[0]
+                      .criteria[3].name +
+                      ": " +
+                      this.state.staticsDescription[0].descriptions[0]
+                        .criteria[3].explanation}
+                  </Text>
+                ) : this.state.selected_filter === criterias.deaths ? (
+                  <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
+                    {this.state.staticsDescription[0].descriptions[0]
+                      .criteria[2].name +
+                      ": " +
+                      this.state.staticsDescription[0].descriptions[0]
+                        .criteria[2].explanation}
+                  </Text>
+                ) : (
+                  <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
+                    {this.state.staticsDescription[0].descriptions[0]
+                      .criteria[0].name +
+                      ": " +
+                      this.state.staticsDescription[0].descriptions[0]
+                        .criteria[0].explanation}
+                  </Text>
+                )}
+              </Layout> */}
             </Layout>
           </Layout>
         </ScrollView>
