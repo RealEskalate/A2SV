@@ -13,7 +13,7 @@ import {
   TopNavigation,
   TopNavigationAction,
 } from '@ui-kitten/components';
-import { SafeAreaView } from 'react-native';
+import { SafeAreaView, Platform } from 'react-native';
 import { HomeStackNavigator } from './homeNavigation';
 import { SettingNavigator } from '../pages/settings/settingStack';
 import userIDStore from '../data-management/user-id-data/userIDStore';
@@ -22,7 +22,7 @@ import AboutPage from '../pages/about-page/About';
 import { strings } from '../localization/localization';
 import { LangContext } from '../../assets/lang/language-context';
 import Ethiopia from '../pages/ethiopia-page/ethiopia';
-import {ReferenceScreen} from '../pages/references';
+import { ReferenceScreen } from '../pages/references';
 const { Navigator, Screen } = createDrawerNavigator();
 
 const HomeIcon = (props) => <Icon {...props} name='home-outline' />;
@@ -85,6 +85,26 @@ export const AppNavigator = (props) => {
     }
   };
 
+  const parseCurrDate = () => {
+    const now = new Date();
+    const months = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ];
+
+    return `${months[now.getMonth()]} ${now.getFullYear()}`;
+  };
+
   const AvatarSizeShowcase = () => {
     const src = avatars[getMyAvavtarIdx()];
     return (
@@ -107,9 +127,10 @@ export const AppNavigator = (props) => {
   const Footer = () => (
     <React.Fragment>
       <Divider />
-      <Layout level='2' style={{ padding: 10 }}>
-        <Text appearance='hint'>
-          ©Track Sym - V 0.1 {new Date().getFullYear()}
+      <Layout level='2' style={{ padding: 10, flexDirection: 'row' }}>
+        <Text appearance='hint'>{`Track Sym for ${Platform.OS} v0.10.1`}</Text>
+        <Text status='warning' style={{ paddingLeft: 5 }}>
+          #beta
         </Text>
       </Layout>
     </React.Fragment>
