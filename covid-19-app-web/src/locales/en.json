@@ -11,6 +11,7 @@
   "regions": "Regions",
   "totalDeath": "Total Death",
 
+  "World": "World",
   "clearbitMessage": "Logos provided by Clearbit",
   "freeReportingPhoneNumbers": "Free COVID-19 Report Hotlines",
   "aboutSectionDescription": "TrackSym is a non-commercial app that uses crowd-sourcing to collect and visualize the density of the relevant symptoms. Registration only asks about age and gender to be used for data science purposes. Users can anonymously report symptoms and choose a location to see the density of symptoms in a map view. The data is aggregated by places, therefore, the app can help people avoid visiting a grocery store or a gas station that is heavily used by symptomatic people. In addition it provide Play-ground for the Data and News related to Covid-19 by country.",
@@ -62,15 +63,33 @@
     "compareCountries": "Compare Countries",
     "compareDiseases": "Compare Similar Diseases"
   },
+
   "criteria": {
-    "totalConfirmed": "Total Confirmed",
-    "totalRecovered": "Total Recovered",
-    "totalActive": "Total Active",
-    "totalDeaths": "Total Deaths",
-    "dailyConfirmed": "Daily Confirmed",
-    "dailyRecovered": "Daily Recovered",
-    "dailyDeaths": "Daily Deaths"
+    "Test Count": "Test Count",
+    "Confirmed Cases": "Confirmed Cases",
+    "Recovery Count": "Recovery Count",
+    "Active Cases": "Active Cases",
+    "Death Count": "Death Count",
+    "Affected Countries": "Affected Countries",
+
+    "Positive Rate": "Positive Rate",
+    "Recovery Rate": "Recovery Rate",
+    "Active Rate": "Active Rate",
+    "Death Rate": "Death Rate",
+
+    "Daily Confirmed": "Daily Confirmed",
+    "Daily Recovery": "Daily Recovered",
+    "Daily Deaths": "Daily Deaths"
   },
+
+  "diseases": {
+    "COVID-19": "COVID-19",
+    "EBOLA": "EBOLA",
+    "SARS": "SARS",
+    "MERS": "MERS",
+    "SEASONAL FLU": "SEASONAL FLU"
+  },
+
   "learningPathHeaders": {
     "taskName": "Task Name",
     "what": "What",
@@ -129,10 +148,12 @@
     "message": "Message",
     "send": "Send"
   },
+
   "auth": {
     "profile": "Profile",
     "logOut": "Logout",
     "ageGroup": "Age Group",
+    "sicknessProbability": "Sickness Probability",
     "male": "Male",
     "female": "Female",
     "editProfile": "Edit Profile",
@@ -158,6 +179,7 @@
     "saveChanges": "Save Changes",
     "pleaseLoginToViewThisMap": "Please login to view this map"
   },
+
   "map": {
     "symptomTracker": "Symptom Tracker",
     "globalStatistics": "Global Statistics"

@@ -10,6 +10,8 @@
   "activeCases": "Aktif Vaka",
   "regions": "Bölgeler",
   "totalDeath": "Toplam Ölüm",
+
+  "World": "Dünya çapında",
   "clearbitMessage": "Logolar Clearbit tarafından sağlanmıştır",
   "freeReportingPhoneNumbers": "Ücretsiz ulaşabileceğiniz KOVİD-19 numaraları ",
   "aboutSectionDescription": "TrackSym semptom yoğunluğunu bilgisini toplamak ve görselleştirmek için açık kaynak kullanan ticari olmayan bir uygulamadır. Kayıt için sorulan yaş ve cinsiyet hakkında sorular sadece veri bilimi amacıyla kullanılacaktır. Kullanıcılar semptomlarını anonim olarak bildirebilir ve harita görünümünde semptomların yoğunluğunu görmek için bir konum seçebilir. Veriler lokasyon bazlı olarak toplandığından, semptomatik insanlar tarafından yoğun olarak kullanılan market veya benzin istasyonunu gibi kalabalık yerlerden bu uygulama sayesinde kaçınabilirsiniz. Ayrıca ülkelere göre KOVİD-19 haberleri ve verileri de uygulamada yer almaktadır.",
@@ -23,6 +25,7 @@
   "close": "Kapalı",
   "dateRange": "Data Aralığı",
   "metrics": "Ölçümler",
+
   "states": {
     "statesTransitionTitle": "geçiş Durumları",
     "statesTransitionSubtitle": "Hangi aşamalar var?",
@@ -33,6 +36,7 @@
     "icu": "Yoğun Bakım Ünitesi",
     "recovery": "İyileşme"
   },
+
   "navbar": {
     "home": "Ana Sayfa",
     "learn": "Bilgi",
@@ -41,6 +45,7 @@
     "map": "Harita",
     "profile": "Profil"
   },
+
   "titles": {
     "globalStatisticsTitle": "KOVİD-19 İstatistikleri",
     "ethiopiaStatisticsTitle": "Etiyopya'da KOVİD-19",
@@ -50,6 +55,7 @@
     "learningPath": "Daha da fazla bilgi",
     "news": "Haberler"
   },
+
   "graphNames": {
     "totalCounts": "Toplam Sayı",
     "dailyCounts": "Günlük Sayı",
@@ -57,15 +63,33 @@
     "compareCountries": "Ülkeleri Karşılaştır",
     "compareDiseases": "Benzer Hastalıkları Karşılaştır"
   },
+
   "criteria": {
-    "totalConfirmed": "Toplam Onaylanmış Vaka",
-    "totalRecovered": "Toplam İyileşen Hasta",
-    "totalActive": "Toplam Aktif Vaka",
-    "totalDeaths": "Toplam Vefat",
-    "dailyConfirmed": "Günlük Onaylanmış Vaka",
-    "dailyRecovered": "Günlük İyileşen Hasta",
-    "dailyDeaths": "Günlük Vefat"
+    "Test Count": "Test Sayısı",
+    "Confirmed Cases": "Onaylanmış Vakalar",
+    "Recovery Count": "İyileşen Hastalar",
+    "Active Cases": "Aktif Vakalar",
+    "Death Count": "Vefat Sayısı",
+    "Affected Countries": "Affected Countries",
+
+    "Positive Rate": "Pozitif Vaka Oranı",
+    "Recovery Rate": "İyileşme Oranı",
+    "Active Rate": "Aktif Vaka Oranı",
+    "Death Rate": "Vefat Oranı",
+
+    "Daily Confirmed": "Günlük Onaylanmış Vakalar",
+    "Daily Recovery": "Günlük İyileşen Hastalar",
+    "Daily Deaths": "Günlük Vefat Sayısı"
   },
+
+  "diseases": {
+    "COVID-19": "KOVİD-19",
+    "EBOLA": "EBOLA",
+    "SARS": "SARS",
+    "MERS": "MERS",
+    "SEASONAL FLU": "Mevsimsel Grip"
+  },
+
   "learningPathHeaders": {
     "taskName": "Görev Adı",
     "what": "Ne",
@@ -80,6 +104,7 @@
     "seniors": "Yaşlılar",
     "learningPathFor": "Öğrenme yolu"
   },
+
   "ethiopiaRegions": {
     "addisAbaba": "Addis Ababa",
     "oromia": "Oromia",
@@ -93,6 +118,7 @@
     "somali": "Somali",
     "direDawa": "Dire Dawa"
   },
+
   "aboutTitles": {
     "aboutTrackSym": "TrackSym",
     "theMission": "Görev",
@@ -100,12 +126,14 @@
     "we": "Biz kimiz",
     "contact": "Bizimle iletişime geçin"
   },
+
   "ageGroups": {
     "kids": "Çocuklar",
     "teens": "Gençler",
     "adults": "Yetişkinler",
     "seniors": "Yaşlılar"
   },
+
   "tourLabels": {
     "start": "Tura Başla",
     "skip": "Geç",
@@ -113,16 +141,19 @@
     "next": "Sonraki",
     "finish": "Son"
   },
+
   "contactUs": {
     "name": "İsim",
     "email": "Eposta",
     "message": "Mesaj",
     "send": "Gönder"
   },
+
   "auth": {
     "profile": "Profil",
     "logOut": "Çıkış Yap",
     "ageGroup": "Yaş Grubu",
+    "sicknessProbability": "Sickness Probability",
     "male": "ERKEK",
     "female": "KADIN",
     "editProfile": "PROFİLİ DÜZENLE",
@@ -145,6 +176,7 @@
     "saveChanges": "Değişiklikleri Kaydet",
     "pleaseLoginToViewThisMap": "Haritayı görmek için lütfen oturum açın"
   },
+
   "map": {
     "symptomTracker": "semptom izleyici",
     "globalStatistics": "Global İstatistikler"

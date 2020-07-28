@@ -7,7 +7,6 @@
           v-model="country"
           :items="countries"
           :label="$t('country')"
-          hint="Search Country"
           item-text="name"
           outlined
           dense
@@ -30,7 +29,6 @@
               dense
               v-model="dateRangeText"
               :label="$t('dateRange')"
-              hint="Date Range"
               :prepend-inner-icon="mdiCalendar"
               readonly
               v-on="on"
@@ -115,7 +113,7 @@ export default {
       mdiCalendar,
       data: null,
       date_range: [this.defaultDate(), this.defaultDate("end")],
-      country: { name: "World", slug: "World" },
+      country: { name: this.$t("World"), slug: "World" },
       age_range: "All",
       social_distancing: 50
     };

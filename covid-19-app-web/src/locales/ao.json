@@ -10,6 +10,8 @@
   "activeCases": "Yaalarra Kan Jiran",
   "regions": "Naannoolee",
   "totalDeath": "Waliigala Kan Du'an",
+
+  "World": "Addunyaa",
   "clearbitMessage": "Loogoo 'Clearbit'dhaan dhiyaate",
   "freeReportingPhoneNumbers": "Lakkoofsa tajaajila bilbila tolaa COVID-19",
   "aboutSectionDescription": "TrackSym appilikeeshinii miti-daldalaa kan mallattoolee COVID-19 funaanuudhaafi mallattoolee wal fakkaatan kan iddoo adda addaa irraa walitti funaanuun Ummataaf dhiyeessuudha. Umrii fi saala qofaan galmaa'uun namoonni appilikeeshinii kana fayyaddamuun osoo enyuummaan isaanii hin beekamin mallattoolee COVID-19 gabaasuu fi iddoo filachuun  kaartaa irratti rukkina namoota mallattoolee COVID-19'n qabamanii ilaaluu ni danda'u. Daataan kan walitti qabamu iddoodhaan waan ta'eef appilikeeshinichi namoota iddoo gara namoonni mallattoo COVID-19 agarsiisan itti baay'atan deemuu irraa hanbisuuf ni gargaara. Dabalataanis odeeffannoo haarawaa fi oduu COVID-19 wajjin walqabatu kan biyyoota hundumaa kan isiniif dhiyeessuudha.",
@@ -23,6 +25,7 @@
   "close": "Cufi",
   "dateRange": "Dheerina Yeroo",
   "metrics": "Safartuu",
+
   "states": {
     "statesTransitionTitle": "Adeemsa Jijjiiramaa",
     "statesTransitionSubtitle": "Adeemsa Akkamii Keessa Darba?",
@@ -33,6 +36,7 @@
     "icu": "Kutaa Yaala Addaa",
     "recovery": "Dandamachuu"
   },
+
   "navbar": {
     "home": "Seensa",
     "learn": "Baradhaa",
@@ -41,6 +45,7 @@
     "map": "Kaartaa",
     "profile": "Eenyummeessaa"
   },
+
   "titles": {
     "globalStatisticsTitle": "Istaatistiksii COVID-19 Akka Addunyaatti",
     "ethiopiaStatisticsTitle": "COVID-19 Itiyoophiyaa Keessatti",
@@ -50,6 +55,7 @@
     "learningPath": "Dabalataan Barachuuf",
     "news": "Oduu"
   },
+
   "graphNames": {
     "totalCounts": "Baay'ina Waliigalaa",
     "dailyCounts": "Lakkoofsa Guyyaa-guyyaan",
@@ -57,15 +63,34 @@
     "compareCountries": "Biyyoota Wal Madaalchisi",
     "compareDiseases": "Dhukkuboota Wal Fakkaatan Wal Madaalchisi"
   },
+
   "criteria": {
-    "totalConfirmed": "Waliigalaa kan qabaman",
-    "totalRecovered": "Waliigalaa kan bayyanatan",
-    "totalActive": "Wal'aansa irra kan jiran",
-    "totalDeaths": "Kan boqotan",
-    "dailyConfirmed": "Har'a Kan qabaman",
-    "dailyRecovered": "Har'a Kan bayanatan",
-    "dailyDeaths": "Har'a Kan du'an"
+    "Test Count": "Baay’ina Waliigalaa",
+    "Confirmed Cases": "Kan Qabaman",
+    "Recovery Count":"Kan Dandamatan",
+    "Active Cases": "Yaalarra Kan Jiran",
+    "Death Count": "Baay’ina Du’aa",
+    "Affected Countries": "Biyyoota Miidhaman",
+
+    "Positive Rate": "Hammamtaa Namoota Qabamanii",
+    "Recovery Rate": "Hammamtaa Dandamannaa",
+    "Active Rate": "Hammamtaa Namoota Yaalarra Jiranii",
+    "Death Rate": "Hammamtaa Du’aa",
+
+    "Daily Confirmed": "Namoota Vaayirasichaan Guyyaatti Qabaman",
+    "Daily Recovery": "Guyyaa Guyyaan Namoota Dandamatan",
+    "Daily Deaths": "Du'aatii Guyyaa Guyyaa"
   },
+
+
+  "diseases": {
+    "COVID-19": "COVID-19",
+    "EBOLA": "EBOLA",
+    "SARS": "SARS",
+    "MERS": "MERS",
+    "SEASONAL FLU": "SEASONAL FLU"
+  },
+
   "learningPathHeaders": {
     "taskName": "Hojiirra Oolmaa",
     "what": "Maal",
@@ -80,6 +105,7 @@
     "seniors": "Buleeyyiif",
     "learningPathFor": "Daandii Beekumsaa"
   },
+
   "ethiopiaRegions": {
     "addisAbaba": "Finfinnee",
     "oromia": "Oromiyaa",
@@ -93,6 +119,7 @@
     "somali": "Somaalii",
     "direDawa": "Dirree Dhaawaa"
   },
+
   "aboutTitles": {
     "aboutTrackSym": "TrackSym",
     "theMission": "Ergama",
@@ -100,12 +127,14 @@
     "we": "Nuti eenyudha?",
     "contact": "Nu quunnamuuf"
   },
+
   "ageGroups": {
     "kids": "Daa'imman",
     "teens": "Dargaggoota",
     "adults": "Ga'eessota",
     "seniors": "Buleeyyii"
   },
+
   "tourLabels": {
     "start": "Daawii Eegali",
     "skip": "Irra Darbi",
@@ -113,16 +142,19 @@
     "next": "Kan Itti Aanu",
     "finish": "Xumuri"
   },
+
   "contactUs": {
     "name": "Maqaa",
     "email": "Email",
     "message": "Yaada",
     "send": "Ergi"
   },
+
   "auth": {
     "profile": "Eenyummeessaa",
     "logOut": "Cufii Ba’i",
     "ageGroup": "Gita Umurii",
+    "sicknessProbability": "Carraa Dhukkubsachu",
     "male": "Dhiira",
     "female": "Dhalaa",
     "editProfile": "Eenyummeessaa Gulaali",
@@ -148,6 +180,7 @@
     "saveChanges": "Jijjiirama ol kaa’i",
     "pleaseLoginToViewThisMap": "Kaartaa kana ilaaluuf seenu qabda."
   },
+
   "map": {
     "symptomTracker": "Mallattowwan Hordofu",
     "globalStatistics": "Istatistiksii Addunyawa"

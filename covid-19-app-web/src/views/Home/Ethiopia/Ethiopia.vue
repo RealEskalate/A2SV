@@ -49,10 +49,16 @@
                 class="v-card--shaped"
                 v-model="regional_criteria"
                 :items="allCriteria"
-                :item-text="$t(`text`)"
-                :item-value="value"
+                item-value="value"
                 @input="setChartData"
-              />
+              >
+                <template v-slot:item="{ item }">
+                  <small v-text="translateCriteria(item.text)" />
+                </template>
+                <template v-slot:selection="{ item }">
+                  <span v-text="translateCriteria(item.text)" />
+                </template>
+              </v-select>
               <doughnut-chart
                 class="v-card--shaped grey lighten-5 shadow-in pb-6 px-3 px-xl-12"
                 :chartData="chartData"
@@ -177,6 +183,9 @@ export default {
     }
   },
   methods: {
+    translateFilter(item) {
+      return this.translateCriteria(item.text);
+    },
     parseRegionalData(data) {
       let allRegions = [];
       let addresses = [];
@@ -238,14 +247,14 @@ export default {
     return {
       mdiPhone,
       allCriteria: [
-        { text: this.$t("criteria.totalConfirmed"), value: "total_confirmed" },
-        { text: this.$t("criteria.totalRecovered"), value: "total_recovered" },
-        { text: this.$t("criteria.totalActive"), value: "total_active" },
-        { text: this.$t("criteria.totalDeaths"), value: "total_deaths" },
+        { text: "Confirmed Cases", value: "total_confirmed" },
+        { text: "Recovery Count", value: "total_recovered" },
+        { text: "Active Cases", value: "total_active" },
+        { text: "Death Count", value: "total_deaths" },
 
-        { text: this.$t("criteria.dailyConfirmed"), value: "daily_confirmed" },
-        { text: this.$t("criteria.dailyRecovered"), value: "daily_recovered" },
-        { text: this.$t("criteria.dailyDeaths"), value: "daily_deaths" }
+        { text: "Daily Confirmed", value: "daily_confirmed" },
+        { text: "Daily Recovery", value: "daily_recovered" },
+        { text: "Daily Deaths", value: "daily_deaths" }
       ],
       regional_criteria: "total_confirmed",
       regionalStats: {},

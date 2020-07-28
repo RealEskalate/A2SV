@@ -11,6 +11,7 @@
   "regions": "ከልል",
   "totalDeath": "አጠቃላይ ሞት",
 
+  "World": "ዓለም",
   "clearbitMessage": "አርማዎች የቀረቡት ከClearBit ነው",
   "freeReportingPhoneNumbers": "ነፃ የኮቪድ-19 ሪፖርት ማድረጊያ መስመሮች",
   "aboutSectionDescription": "ይህ የእኛ መተግበሪያ/አፕሊኬሽን/ ተዛማጅ የሆነውን የኮ.ቪ.ድ. 19 ምልክቶችን ለመሰብሰብ እና የምልክቶቹ በተለያዪ ቦታዎች ያለውን መቀራራብ በካርታ ለሕዝብ ለማቅረብ የሚጠቅም የንግድ ያልሆነ መተግበሪያ ነው። ከዚህ በተጨማሪም ከ Covid-19 ጋር ለተዛመዱ መረጃዎች እና ዜናዎች በመረጡት ሀገር መሰረት ያቀርባል ፡፡",
@@ -62,15 +63,33 @@
     "compareCountries": "ሐገራትን ያወዳድሩ",
     "compareDiseases": "ከተመሳሳይ በሽታዎች ጋር ያወዳድሩ"
   },
+
   "criteria": {
-    "totalConfirmed": "አጠቃላይ የተረጋገጡ ብዛት",
-    "totalRecovered": "አጠቃላይ ያገገሙ ብዛት",
-    "totalActive": "ከቫይረሱ ጋር የሚገኙ ብዛት",
-    "totalDeaths": "አጠቃላይ የሞት ብዛት",
-    "dailyConfirmed": "በእለት የተረጋገጡ",
-    "dailyRecovered": "በእለቱ ያገገሙ",
-    "dailyDeaths": "እለታዊ ሞት"
+    "Test Count": "የተመረመሩ ብዛት",
+    "Confirmed Cases": "የተረጋገጡ ብዛት",
+    "Recovery Count": "ያገገሙ ብዛት",
+    "Active Cases": "የተያዙ / ብዛት",
+    "Death Count": "የሞት ብዛት",
+    "Affected Countries": "የተጠቁ ሐገራት",
+
+    "Positive Rate": "የመያዝ መጠን",
+    "Recovery Rate": "የማገገም መጠን",
+    "Active Rate": "የተያዙ / መጠን",
+    "Death Rate": "የሞት መጠን",
+
+    "Daily Confirmed": "ዕለታዊ የተረጋገጡ",
+    "Daily Recovery": "ዕለታዊ ያገገሙ",
+    "Daily Deaths": "ዕለታዊ የሞቱ"
   },
+
+  "diseases": {
+    "COVID-19": "ኮቪድ-19",
+    "EBOLA": "ኢቦላ",
+    "SARS": "ሳርስ",
+    "MERS": "መርስ",
+    "SEASONAL FLU": "ወቅታዊ ጉንፋን"
+  },
+
   "learningPathHeaders": {
     "taskName": "የተግባር ስም",
     "what": "ምንድን",
@@ -129,10 +148,12 @@
     "message": "መልዕክት",
     "send": "ላክ"
   },
+
   "auth": {
     "profile": "ፕሮፋይል",
     "logOut": "ውጣ",
     "ageGroup": "እድሜ ክልል",
+    "sicknessProbability": "የመታመም ዕድል",
     "male": "ወንድ",
     "female": "ሴት",
     "editProfile": "ፕሮፋይል ለውጥ",
@@ -158,6 +179,7 @@
     "saveChanges": "ለውጦችን አስቀምጥ",
     "pleaseLoginToViewThisMap": "እባክዎ ይህንን ካርታ ለመመልከት ይግቡ"
   },
+
   "map": {
     "symptomTracker": "የህመም ምልክት መከታተያ",
     "globalStatistics": "አለም አቀፍ ስታቲስቲክስ"

@@ -25,12 +25,12 @@
           class="mx-auto"
         />
         <v-card-subtitle
-          v-else-if="!countryResources[country.name]"
+          v-else-if="!countryResources[country.slug]"
           v-text="'Found Nothing'"
         />
         <v-list-item-group v-else color="primary">
           <v-list-item
-            v-for="(resource, i) in countryResources[country.name]"
+            v-for="(resource, i) in countryResources[country.slug]"
             :key="i"
           >
             <v-list-item-content>
@@ -108,16 +108,16 @@ export default {
     },
     "$i18n.locale"(newValue) {
       store.dispatch("setCountryResources", {
-        country: this.country.name,
+        country: this.country.slug,
         lang: newValue
       });
     }
   },
   methods: {
     fetchCountryResources() {
-      if (!this.countryResources[this.country.name])
+      if (!this.countryResources[this.country.slug])
         store.dispatch("setCountryResources", {
-          country: this.country.name,
+          country: this.country.slug,
           lang: this.$i18n.locale
         });
     }

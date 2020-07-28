@@ -9,7 +9,6 @@
               v-model="country_1"
               :items="countries"
               :label="$t('country') + ' 1'"
-              hint="Search Country 1"
               item-text="name"
               return-object
               outlined
@@ -36,7 +35,6 @@
                   dense
                   v-model="dateRangeText1"
                   :label="$t('dateRange') + ' 1'"
-                  hint="Country 1: From - To"
                   :prepend-inner-icon="mdiCalendar"
                   readonly
                   v-on="on"
@@ -72,7 +70,6 @@
               v-model="country_2"
               :items="countries"
               :label="$t('country') + ' 2'"
-              hint="Search Country 2"
               item-text="name"
               return-object
               outlined
@@ -99,7 +96,6 @@
                   dense
                   v-model="dateRangeText2"
                   :label="$t('dateRange') + ' 2'"
-                  hint="Country 2: From - To"
                   :prepend-inner-icon="mdiCalendar"
                   readonly
                   v-on="on"
@@ -135,7 +131,6 @@
               v-model="criterion"
               :items="criteriaList"
               :label="$t('metrics')"
-              hint="Common Criteria"
               outlined
               dense
               @input="
@@ -144,7 +139,14 @@
                   fetchData2();
                 }
               "
-            />
+            >
+              <template v-slot:item="{ item }">
+                <small v-text="translateCriteria(item)" />
+              </template>
+              <template v-slot:selection="{ item }">
+                <span v-text="translateCriteria(item)" />
+              </template>
+            </v-select>
           </v-col>
         </v-row>
         <v-row>
@@ -213,8 +215,8 @@ export default {
       ],
       date_range_1: ["2019-10-01", this.defaultDate("end")],
       date_range_2: ["2019-10-01", this.defaultDate("end")],
-      country_1: { name: "World", slug: "World" },
-      country_2: { name: "World", slug: "World" },
+      country_1: { name: this.$t("World"), slug: "World" },
+      country_2: { name: this.$t("World"), slug: "World" },
       age_range: "All",
       social_distancing_1: 50,
       social_distancing_2: 50

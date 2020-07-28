@@ -7,8 +7,6 @@
           v-model="country"
           :items="countries"
           :label="$t('country')"
-          hint="Search Country"
-          persistent-hint
           item-text="name"
           return-object
           outlined
@@ -30,7 +28,6 @@
               dense
               v-model="dateRangeText"
               :label="$t('dateRange')"
-              hint="Date Range"
               :prepend-inner-icon="mdiCalendar"
               readonly
               v-on="on"
@@ -59,11 +56,17 @@
           v-model="criterion"
           :items="criteria.daily"
           :label="$t('metrics')"
-          hint="Criteria"
           outlined
           dense
           @input="fetchData"
-        />
+        >
+          <template v-slot:item="{ item }">
+            <small v-text="translateCriteria(item.label)" />
+          </template>
+          <template v-slot:selection="{ item }">
+            <span v-text="translateCriteria(item.label)" />
+          </template>
+        </v-select>
       </v-col>
     </v-row>
     <v-row>
@@ -136,7 +139,7 @@ export default {
       },
       criterion: "Daily Confirmed",
       date_range: [this.defaultDate(), this.defaultDate("end")],
-      country: { name: "World", slug: "World" },
+      country: { name: this.$t("World"), slug: "World" },
       age_range: "All",
       social_distancing: 50,
       rendered: false

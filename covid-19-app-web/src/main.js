@@ -26,6 +26,9 @@ Vue.mixin({
     };
   },
   methods: {
+    translateCriteria(criteria) {
+      return this.$t("criteria." + criteria);
+    },
     rateToColor(rate, hue0 = 0, hue1 = 100, reverse = false) {
       let hue = Math.min(rate, 1) * (hue1 - hue0) + hue0;
       if (reverse) hue = hue1 - hue;

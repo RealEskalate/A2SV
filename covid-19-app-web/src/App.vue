@@ -34,7 +34,7 @@ export default {
     }
   },
   created() {
-    store.dispatch("fillCountriesList");
+    store.dispatch("fillCountriesList", { lang: this.$i18n.locale });
     store.dispatch("setCurrentCountry");
     this.$Progress.start();
     this.$router.beforeEach((to, from, next) => {
@@ -55,6 +55,7 @@ export default {
   },
   watch: {
     "$i18n.locale"(newValue) {
+      store.dispatch("fillCountriesList", { lang: newValue });
       store.dispatch("setEthiopia", { lang: newValue });
       store.dispatch("setLanguagePreference", { lang: newValue });
       store.dispatch("setGraphDescriptions", { lang: newValue });
