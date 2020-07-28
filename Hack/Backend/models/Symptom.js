@@ -17,6 +17,11 @@ const symptom_schema = new mongoose.Schema({
         type: String,
         minlength: 10,
         maxlength: 100
+    },
+    position: {
+        type: Number,
+        required: true,
+        default: 0
     }
 });
 
@@ -30,7 +35,8 @@ function validateSymptom(symptom) {
             .valid('HIGH', 'MEDIUM', 'LOW'),
         description: Joi.string()
             .min(10)
-            .max(100)
+            .max(100),
+        position: Joi.number().required()
     }
     return Joi.validate(symptom, schema);
 }

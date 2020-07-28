@@ -2,9 +2,43 @@ const { Symptom, validateSymptom } = require("../models/Symptom");
 const jwt = require("jsonwebtoken");
 const { StatisticsResource } = require("../models/StatisticsResourceModel.js");
 
+/*
+Current Order of Symptoms
+    0 - Pneumonia
+    1 - Medium-grade Fever
+    2 - High-grade fever
+    3 - Persistent Dry Cough
+    4 - Fatigue
+    5 - Anosmia                                             
+    6 - Difficulty Breathing
+    7 - Chills
+    8 - Repeated Shaking with Chills
+    9 - Myalgia                                                
+    10 - Sneezing
+    11 - Headaches
+    12 - Sore throat
+    13 - Diarrhea
+    14 - Runny Nose
+    15 - Conjunctivitis
+Source - https://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0234765&type=printable
+    Fever - 78%
+    Dry Cough - 58%
+    Fatigue - 31%
+    Hyposmia (Anosmia) - 25%
+    Dyspnoea (Shortness of Breath) - 23%
+    Rigors (Chills) - 18%
+    Myalgia - 17%
+    Wheeze(Sneeze) - 17%
+    Headache - 13%
+    Sore throat - 12%
+    Diarrhoea - 10%
+    Rhinorrhoea(Runny Nose) - 8%
+    Conjunctivitis - 2%
+*/
+
 // Display list of all locations.
 exports.get_all_symptoms = async (req, res) => {
-    const symptoms = await Symptom.find({});
+    const symptoms = await Symptom.find({}).sort('position');
     let language=null;
 
     if (req.query.language){
@@ -34,12 +68,14 @@ exports.post_symptom = async (req, res) => {
         name: req.body.name,
         relevance: req.body.relevance,
         description: req.body.description,
+        position: req.body.position
     });
 
     var { error } = validateSymptom({
         name: req.body.name,
         relevance: req.body.relevance,
         description: req.body.description,
+        position: req.body.position
     });
     if (error) {
         console.log('validation error ' + error)
