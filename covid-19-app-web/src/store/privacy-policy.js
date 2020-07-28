@@ -27,7 +27,6 @@ export default {
         .then(
           res => {
             commit("setPrivacyPolicy", res.data);
-            console.log(res.data);
           },
           error => {
             console.log(error);

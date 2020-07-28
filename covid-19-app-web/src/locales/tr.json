@@ -10,6 +10,8 @@
   "activeCases": "Aktif Vaka",
   "regions": "Bölgeler",
   "totalDeath": "Toplam Ölüm",
+
+  "World": "Dünya çapında",
   "clearbitMessage": "Logolar Clearbit tarafından sağlanmıştır",
   "freeReportingPhoneNumbers": "Ücretsiz ulaşabileceğiniz KOVİD-19 numaraları ",
   "aboutSectionDescription": "TrackSym semptom yoğunluğunu bilgisini toplamak ve görselleştirmek için açık kaynak kullanan ticari olmayan bir uygulamadır. Kayıt için sorulan yaş ve cinsiyet hakkında sorular sadece veri bilimi amacıyla kullanılacaktır. Kullanıcılar semptomlarını anonim olarak bildirebilir ve harita görünümünde semptomların yoğunluğunu görmek için bir konum seçebilir. Veriler lokasyon bazlı olarak toplandığından, semptomatik insanlar tarafından yoğun olarak kullanılan market veya benzin istasyonunu gibi kalabalık yerlerden bu uygulama sayesinde kaçınabilirsiniz. Ayrıca ülkelere göre KOVİD-19 haberleri ve verileri de uygulamada yer almaktadır.",

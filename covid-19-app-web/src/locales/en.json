@@ -11,6 +11,7 @@
   "regions": "Regions",
   "totalDeath": "Total Death",
 
+  "World": "World",
   "clearbitMessage": "Logos provided by Clearbit",
   "freeReportingPhoneNumbers": "Free COVID-19 Report Hotlines",
   "aboutSectionDescription": "TrackSym is a non-commercial app that uses crowd-sourcing to collect and visualize the density of the relevant symptoms. Registration only asks about age and gender to be used for data science purposes. Users can anonymously report symptoms and choose a location to see the density of symptoms in a map view. The data is aggregated by places, therefore, the app can help people avoid visiting a grocery store or a gas station that is heavily used by symptomatic people. In addition it provide Play-ground for the Data and News related to Covid-19 by country.",

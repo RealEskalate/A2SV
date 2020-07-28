@@ -16,7 +16,7 @@
               :items="countries"
               :label="$t('country')"
               item-text="name"
-              item-value="name"
+              item-value="slug"
               outlined
               dense
               @input="resetPage"
@@ -200,14 +200,14 @@ export default {
     }
   },
   watch: {
-    localCountry(newValue) {
-      this.country = newValue.name;
+    localCountry() {
+      // this.country = newValue.code;
       this.resetPage();
     }
   },
   mounted() {
     store.dispatch("setSources");
-    this.country = this.localCountry.name;
+    // this.country = this.localCountry.code;
     this.resetPage();
   },
   computed: {
