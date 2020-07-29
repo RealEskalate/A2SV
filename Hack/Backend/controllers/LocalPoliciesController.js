@@ -58,7 +58,7 @@ exports.get_local_policy_for_user = async (req, res) => {
         filter.city = req.query.city
     }
     if (req.query.last_seen) {
-        filter.date_created = { $gt: req.query.last_seen }
+        filter.date_updated = { $gt: req.query.last_seen }
     }
     let page = parseInt(req.query.page) || 1;
     let size = parseInt(req.query.size) || 15;
