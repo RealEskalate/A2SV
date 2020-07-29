@@ -34,7 +34,7 @@ exports.get_local_policies = async (req, res) => {
 exports.get_one_local_policy = async (req, res) => {
     let local_policy = await LocalPolicy.findById(req.params.id);
     if (!local_policy) {
-        res.status(500).send("Local Policy Not Found");
+        res.status(404).send("Local Policy Not Found");
     } else {
         try {
             res.send(local_policy);
@@ -46,12 +46,10 @@ exports.get_one_local_policy = async (req, res) => {
 
 exports.get_local_policy_for_user = async (req, res) => {
     let filter = {}
-    // Assuming country must be provided always
     let current_country
     if (req.query.country) {
         current_country = req.query.country
     } else {
-        console.log('in else ' + req.body.loggedInUser)
         let user = await User.findById(req.body.loggedInUser, "current_country")
         current_country = user.current_country
     }
@@ -76,7 +74,7 @@ exports.get_local_policy_for_user = async (req, res) => {
     };
 
     if (!policies) {
-        res.status(500).send("Local Policy Not Found");
+        res.status(404).send("Local Policy Not Found");
     } else {
         try {
             res.send(result);
