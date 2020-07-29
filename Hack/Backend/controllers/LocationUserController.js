@@ -457,6 +457,5 @@ const translateGridValues = (diseaseNames,genderNames, grid)=>{
   let translatedGendersNames = {}
   Object.entries(genderNames).forEach( item => translatedGendersNames[ item[1] ] = grid.genders[item[0]] ) 
   grid.genders = translatedGendersNames;
-
-  return grid
+  
 }
