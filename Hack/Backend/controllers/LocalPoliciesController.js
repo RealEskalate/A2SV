@@ -45,23 +45,41 @@ exports.get_one_local_policy = async (req, res) => {
 }
 
 exports.get_local_policy_for_user = async (req, res) => {
-    let { last_seen } = req.query
     let filter = {}
     // Assuming country must be provided always
-    filter.country = req.query.country
+    let current_country
+    if (req.query.country) {
+        current_country = req.query.country
+    } else {
+        console.log('in else ' + req.body.loggedInUser)
+        let user = await User.findById(req.body.loggedInUser, "current_country")
+        current_country = user.current_country
+    }
+    filter.country = current_country
     if (req.query.city) {
         filter.city = req.query.city
     }
     if (req.query.last_seen) {
-        filter.date_created = { $lt: last_seen }
+        filter.date_created = { $gt: req.query.last_seen }
     }
+    let page = parseInt(req.query.page) || 1;
+    let size = parseInt(req.query.size) || 15;
 
-    let local_policy = await LocalPolicy.find(filter);
-    if (!local_policy) {
+    let policies = await LocalPolicy.find(filter,
+        {},
+        { skip: (page - 1) * size, limit: size * 1 }
+    );
+    let result = {
+        page_size: size,
+        current_page: page,
+        data: policies,
+    };
+
+    if (!policies) {
         res.status(500).send("Local Policy Not Found");
     } else {
         try {
-            res.send(local_policy);
+            res.send(result);
         } catch (err) {
             res.status(500).send(err.toString());
         }
