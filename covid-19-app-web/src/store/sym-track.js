@@ -7,6 +7,10 @@ const state = {
     probability: 0,
     symptom_info: []
   },
+  selfSymptomUser: {
+    probability: 0,
+    symptom_info: []
+  },
   symptomHistory: [],
   cities: [],
   locationsSymptoms: null
@@ -18,6 +22,9 @@ const getters = {
   },
   getSymptomUser: state => {
     return state.symptomUser;
+  },
+  getSelfSymptomUser: state => {
+    return state.selfSymptomUser;
   },
   getSymptomHistory: state => {
     return state.symptomHistory;
@@ -36,6 +43,9 @@ const mutations = {
   },
   setSymptomUser: (state, payload) => {
     state.symptomUser = payload;
+  },
+  setSelfSymptomUser: (state, payload) => {
+    state.selfSymptomUser = payload;
   },
   setSymptomHistory: (state, payload) => {
     state.symptomHistory = payload;
@@ -88,6 +98,27 @@ const actions = {
         commit("setSymTrackLoaders", { key: "userSymptoms", value: false });
       });
   },
+  setSelfSymptomUser: ({ commit, getters }, { userId, lang, demo }) => {
+    commit("setSymTrackLoaders", { key: "selfSymptoms", value: true });
+    ajax
+      .get(`symptomuser/user/${userId}`, {
+        params: {
+          language: langConverter[lang],
+          probability: true,
+          iso: getters.getCurrentCountry.code,
+          demo: demo
+        }
+      })
+      .then(res => {
+        commit("setSelfSymptomUser", res.data);
+      })
+      .catch(err => {
+        console.log(err.response.data);
+      })
+      .finally(function() {
+        commit("setSymTrackLoaders", { key: "selfSymptoms", value: false });
+      });
+  },
   setSymptomHistory: ({ commit }, { userId, lang }) => {
     commit("setSymTrackLoaders", { key: "symptomHistory", value: true });
     ajax
@@ -123,6 +154,7 @@ const actions = {
       });
   },
   setLocationsSymptoms: ({ commit }, input) => {
+    input.language = langConverter[input.language];
     commit("setSymTrackLoaders", { key: "map", value: true });
     ajax
       .post("locations_symptoms", input)

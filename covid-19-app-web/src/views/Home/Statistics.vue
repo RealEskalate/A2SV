@@ -1,5 +1,5 @@
 <template>
-  <section class="statistics pb-10">
+  <section class="statistics">
     <v-container>
       <v-row>
         <v-col>

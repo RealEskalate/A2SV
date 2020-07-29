@@ -1,5 +1,5 @@
 <template>
-  <v-card flat>
+  <v-card flat color="transparent">
     <v-card-title class="primary--text text--darken-2" v-text="country.name" />
     <v-card-subtitle>
       <v-row>
@@ -16,7 +16,7 @@
       </v-row>
     </v-card-subtitle>
     <v-divider class="mx-4" />
-    <v-list disabled dense>
+    <v-list disabled dense color="transparent">
       <v-fade-transition hide-on-leave>
         <v-skeleton-loader
           v-if="graphLoaders.countryResources"

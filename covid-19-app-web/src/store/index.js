@@ -6,7 +6,7 @@ import about from "./about";
 import news from "./news";
 import loaders from "./loaders";
 import messages from "./messages";
-import symptomTracking from "./sym-track";
+import symTrack from "./sym-track";
 import user from "./user";
 import ethiopia from "./ethiopia";
 import privacyPolicy from "./privacy-policy";
@@ -105,7 +105,7 @@ export default new Vuex.Store({
     loaders,
     messages,
     ethiopia,
-    symptomTracking,
+    symTrack,
     privacyPolicy
   }
 });

@@ -38,6 +38,9 @@ Vue.mixin({
       let p = document.createElement("div");
       p.innerHTML = htmlString.trim();
       return p.innerText;
+    },
+    numberWithCommas(x) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
   },
   computed: {

@@ -221,7 +221,7 @@
         <v-fade-transition hide-on-leave>
           <v-container class="text-center" v-if="!editing.symptoms">
             <div class="shadow-in v-card--shaped grey lighten-4 px-6 py-2">
-              <div v-if="symTrackLoaders.userSymptoms">
+              <div v-if="symTrackLoaders.selfSymptoms">
                 <v-progress-linear
                   style="margin-top: -7px; margin-bottom: 10px;"
                   height="2"
@@ -591,7 +591,7 @@ export default {
           symptoms: this.symptomIDs()
         })
         .then(() => {
-          store.dispatch("setSymptomUser", {
+          store.dispatch("setSelfSymptomUser", {
             userId: this.loggedInUser._id,
             lang: this.$i18n.locale,
             demo: false
@@ -631,7 +631,7 @@ export default {
     }
   },
   created() {
-    store.dispatch("setSymptomUser", {
+    store.dispatch("setSelfSymptomUser", {
       userId: this.loggedInUser._id,
       demo: false,
       lang: this.$i18n.locale
@@ -644,10 +644,10 @@ export default {
     }
   },
   computed: {
-    retrievedSymptoms: () => store.getters.getSymptomUser,
+    retrievedSymptoms: () => store.getters.getSelfSymptomUser,
     userSymptoms: () => {
       let res = [];
-      let retrieved = store.getters.getSymptomUser;
+      let retrieved = store.getters.getSelfSymptomUser;
       retrieved.symptom_info.forEach(function(sym) {
         res.push(sym.Symptom);
       });

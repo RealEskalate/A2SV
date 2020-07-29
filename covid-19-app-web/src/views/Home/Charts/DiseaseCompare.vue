@@ -1,5 +1,5 @@
 <template>
-  <v-container class="py-8">
+  <v-container class="my-5 pt-8 v-card--shaped grey lighten-5 shadow-in">
     <v-row class="mx-md-5" dense>
       <v-col cols="12" class="overflow-auto">
         <loader
@@ -8,7 +8,7 @@
         />
         <bar-chart
           :style="`opacity: ${graphLoaders.diseaseCompare > 0 ? 0.5 : 1}`"
-          class="v-card--shaped grey lighten-5 shadow-in pb-6 px-1"
+          class="pb-6 px-1"
           :height="600"
           ref="graph"
           :chart-data="diseaseData"

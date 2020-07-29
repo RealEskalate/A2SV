@@ -1,5 +1,5 @@
 <template>
-  <v-container class="py-8">
+  <v-container class="my-5 pt-8 v-card--shaped grey lighten-5 shadow-in">
     <v-row class="mx-md-5" dense>
       <v-col class="px-2" cols="12" md="6" data-v-step="2">
         <v-autocomplete
@@ -59,7 +59,7 @@
         />
         <line-chart
           :style="`opacity: ${graphLoaders[mode] > 0 ? 0.5 : 1}`"
-          class="v-card--shaped grey lighten-5 shadow-in pb-6 px-1"
+          class="pb-6 px-1"
           ref="graph"
           :chart-data="data"
           :options="chartOptions"

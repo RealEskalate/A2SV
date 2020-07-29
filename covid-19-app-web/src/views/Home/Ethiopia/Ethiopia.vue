@@ -29,9 +29,12 @@
               :key="item.key"
               v-for="item in totalData"
             >
-              <v-img :src="item.icon" class="small-icon mx-auto my-3" />
-              <h1 class="text-center" v-text="ethiopianData.total[item.key]" />
+              <!--              <v-img :src="item.icon" class="small-icon mx-auto my-3" />-->
               <p class="text-center" v-text="$t(item.label)" />
+              <h1
+                class="display-1 text-center mb-2 primary--text"
+                v-text="numberWithCommas(ethiopianData.total[item.key])"
+              />
             </v-col>
           </v-row>
         </v-card>

@@ -1,5 +1,5 @@
 <template>
-  <v-card outlined shaped class="shadow-sm overflow-hidden">
+  <v-card outlined shaped class="overflow-hidden">
     <v-btn
       fab
       color="white"
@@ -456,7 +456,9 @@ export default {
         top_left_bound: this.top_left_bound,
         top_right_bound: this.top_right_bound,
         bottom_left_bound: this.bottom_left_bound,
-        bottom_right_bound: this.bottom_right_bound
+        bottom_right_bound: this.bottom_right_bound,
+
+        language: this.$i18n.locale
       });
     },
 
@@ -469,7 +471,7 @@ export default {
         store.dispatch("setSymptomUser", {
           userId: id,
           lang: this.$i18n.locale,
-          demo: true
+          demo: false
         });
         this.selectedInfo = this.pointInfos[id];
       }
