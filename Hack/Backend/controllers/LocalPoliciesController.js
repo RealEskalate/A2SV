@@ -29,14 +29,20 @@ exports.get_local_policies = async (req, res) => {
         res.status(500).send(err.toString());
     }
 }
+
 exports.get_one_local_policy = async (req, res) => {
-    let policy = await LocalPolicy.findById(req.params.id);
-    try {
-        res.send(policy);
-    } catch (err) {
-        res.status(500).send(err.toString());
-    }
+    let local_policy = await LocalPolicy.findById(req.params.id);
+    if(!local_policy){
+        res.status(500).send("Local Policy Not Found");
+    }else{
+        try {
+            res.send(local_policy);
+        } catch (err) {
+            res.status(500).send(err.toString());
+        }
+    }    
 }
+
 exports.post_local_policy = async (req, res) => {
     const local_policy = new LocalPolicy({
         title: req.body.title,
@@ -52,19 +58,31 @@ exports.post_local_policy = async (req, res) => {
         res.status(500).send(err.toString());
       }
 }
+
 exports.update_local_policy = async (req, res) => { //TODO: Handle not found
-    try {
-        let local_policy = await LocalPolicy.findByIdAndUpdate({_id: req.body.id}, req.body);
-        res.status(201).send(local_policy);
-    } catch (err) {
-        res.status(500).send(err.toString());
-    }
+    let check = await LocalPolicy.findById(req.body.id);
+    if(!check){
+        res.status(404).send("Local Policy Not Found");
+    }else{
+        try {
+            let local_policy = await LocalPolicy.findByIdAndUpdate({_id: req.body.id}, req.body, {new: true});
+            res.status(201).send(local_policy);
+        } catch (err) {
+            res.status(500).send(err.toString());
+        }
+    }    
 }
+
 exports.delete_local_policy = async (req, res) => {
-    try {
-        let local_policy = await LocalPolicy.findByIdAndDelete({_id : req.body.id});
-        res.status(201).send(local_policy);
-      } catch (err) {
-        res.status(500).send(err.toString());
-      }  
+    let check = await LocalPolicy.findById(req.body.id);
+    if(!check){
+        res.status(404).send("Local Policy Not Found");
+    }else{
+        try {
+            let local_policy = await LocalPolicy.findByIdAndDelete({_id : req.body.id},);
+            res.status(201).send(local_policy);
+        } catch (err) {
+            res.status(500).send(err.toString());
+        } 
+    } 
 }
