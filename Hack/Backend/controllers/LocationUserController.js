@@ -6,6 +6,7 @@ const SymptomUserModels = require("../models/SymptomUser");
 const ProbabilityCalculator = require("../services/ProbabilityCalculator");
 const axios = require("axios");
 const mongoose = require("mongoose");
+const { StatisticsResource } = require("../models/StatisticsResourceModel.js");
 
 //Post a user location
 exports.post_location_user = async (req, res) => {
@@ -325,7 +326,8 @@ exports.get_all_locations_with_symptoms = async (req, res) => {
       result = await findGridNearbySymptomaticUsers(
         boundaries,
         req.query.demo,
-        req.query.stress
+        req.query.stress,
+        req.query.language
       );
       console.log(`Fetched ${result.length} Grids according to filter`);
     } else {
@@ -388,7 +390,7 @@ const findAllNearbySymptomaticUsers = async (boundaries, demo, stress) => {
   return location_users;
 };
 
-const findGridNearbySymptomaticUsers = async (boundaries, demo, stress) => {
+const findGridNearbySymptomaticUsers = async (boundaries, demo, stress, language=null) => {
   // await updateDb(demo, stress);
   if (demo && demo == "true") {
     var LocationGrid = LocationGridModels.DemoLocationGrid;
@@ -397,6 +399,25 @@ const findGridNearbySymptomaticUsers = async (boundaries, demo, stress) => {
   } else {
     var LocationGrid = LocationGridModels.LocationGrid;
   }
+
+  //... translation data .....
+  let diseaseNames = null;
+  let genderNames = null;
+
+  if (language) {
+    let gridNames = await StatisticsResource.findOne({
+      language: language,
+      title: "symptoms-name-list",
+    });
+
+    if (gridNames) {
+      diseaseNames = gridNames.fields[0];
+      genderNames = gridNames.criteria[0];
+    }
+
+  }
+  //... end translation data .....
+
   let result = await LocationGrid.find({
     location: {
       $geoWithin: {
@@ -415,5 +436,26 @@ const findGridNearbySymptomaticUsers = async (boundaries, demo, stress) => {
       },
     },
   });
+
+  //... translate if data exists...
+  if(diseaseNames!=null && genderNames!=null){
+    for( var key in result){
+      translateGridValues(diseaseNames,genderNames,result[key])      
+    }
+  }
+  //... end of translation...
+
   return result;
 };
+
+
+const translateGridValues = (diseaseNames,genderNames, grid)=>{
+  let translatedDiseaseNames = {}
+  Object.entries(diseaseNames).forEach( item => translatedDiseaseNames[ item[1] ] = grid.value[item[0]] ) 
+  grid.value = translatedDiseaseNames;
+
+  let translatedGendersNames = {}
+  Object.entries(genderNames).forEach( item => translatedGendersNames[ item[1] ] = grid.genders[item[0]] ) 
+  grid.genders = translatedGendersNames;
+  
+}

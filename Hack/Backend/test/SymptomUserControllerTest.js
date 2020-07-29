@@ -68,10 +68,8 @@ describe("Symptom Users API", () => {
         symptom_id: symptom._id,
         user_id: user._id,
       });
-    expect(response).to.have.status(200);
+    expect(response).to.have.status(201);
     expect(response.body).to.be.a("object");
-    expect(response.body).to.have.property("symptom_id");
-    expect(response.body).to.have.property("user_id");
   });
 
   it("It should get a new symptom user pair", async () => {
