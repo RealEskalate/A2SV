@@ -1946,23 +1946,23 @@ export let strings = new LocalizedStrings({
     Current: "Amma",
     Registered: "Kan Galmaa'e",
     PercentagePerMillion: "Per Million Case",
-    References: "References",
-    MinistryOfHealthEth: "Ministry of Health, Ethiopia",
+    References: "Wabii",
+    MinistryOfHealthEth: "Ministeera Fayyaa Itoophiyaa",
     CoronaAtGlance: "Coronavirus at a Glance, Hopkins medicine",
-    WHO: "World Health Organization",
+    WHO: "Dhaabbata Fayyaa Addunyaa",
     ECDC: "ECDC",
     MedicalXpress: "MedicalXpress",
-    BriefHistory: "A brief history of coronaviruses",
+    BriefHistory: "Seenaa gabaabaa Vaayirasii Koronaa",
     CDC: "CDC",
     AboutParag1:
-      "It is a non-commercial COVID-19 symptom tracking app that uses crowd-sourcing to collect and visualize the density of the relevant symptoms. Users can anonymously report their symptoms and choose a location to see the density of symptoms in a map view. It represents publicly available data with a short description on how to see the trend going on . The data includes the number of confirmed cases, deaths, recovered, and tests conducted of any selected country or globally. It is also a great place to look for global and local news about Covid-19.",
+      "TrackSym appilikeeshinii miti-daldalaa odeeffannoo ummata hundee godhate funaanu fi haala mallattoolee dhibichaa akka argamuu danda’aamutti kan muli’su dha. Fayyadamtonni osoo eenyummaan isaanii hin beekamiin mallattoolee Koronaa Vaayirasii (COVID-19) yoo ofiratti argan akka gabaasaniIfi hamma rukkina hedduummina mallattoo Vaayirasii Koronaa (COVID-19) kan bakka garaa garaa danaa/kaartaa irratti kan agarsisudha. Mosaajiin kunis daataa kennataa  bifa salphaafi ifaa ta'een hawaasaaf agarsiisudha. Daataaleen kunneenis  baay'ina namoota qorataman, qabaman,  du'aniifi, dandamatanii kan biyya filatame keessatti yookaan akka addunyaaleessaatti agarsiisu. Akkasumas odeeffannoo biyyaalessaa fi addunyaalessaa  argachuuf mosaajii mijataadha.",
     AboutParag2:
-      "Africa to Silicon Valley is a team of highly motivated and talented students from Ethiopia, led by an ex-Google and Palantir Software/ML engineer.",
+      "A2SV - Africa to Silicon Valley garee barattoota kaka’umsaa fi dandeettii addaa qaban yoo ta’u Injineera software/Machine Learning Google fi Palantir kessatti hojjetaa tureen kan dursamuudha",
     AboutParag3:
-      "The team went through an intense 3-month preparation program in the pursuit of summer internships at top Silicon Valley companies. NowA2SV is dedicating all the time and energy to the fight againstCOVID-19. COVID-19 is taking the world by storm. Even though some countries are scaling up their testing capacities, it has been a challenge for developed countries and is much harder for many developing countries.",
+      "Ji’oota sadiif gareen kun sagantaa leenjii dhaabbattoota guguddoo Silicon Valley kessatti “Internship” boonaa argachuu kan dandeessisu fudhataa ture. Yeroo ammaa 'A2SV'n yeroo fi humna guutuudhaan hojii weerara Covid-19 mo’uuf godhamu irratti hojjechaa jira.Vaayirasiin Koronaa addunyaa kanaaf yaaddoo ta'uu akkuma itti fufetti jira. Biyyootni muraasni dandeettiin qorannaa isaanii dabalaa haa jiraataniyyuu malee biyyoota guddatan baay'eef illee yaaddoo ta'uu akkuma itti fufetti jira; biyyoota guddataa jiraniif immoo caalaatti yaaddoo ta'uu danda'eera.",
     AboutParag4:
-      "A2SV puts humanity first and is giving a non-commercial symptom tracker app.",
+      "A2SV'n namummaaf dursa kennuudhaan Mosaajii miti-daldalaa TrackSym jedhamu hawaasaaf arjoomeera.",
     AboutParag5:
-      "Your data will be used anonymously for the purpose of data science and statistics, meaning any info generated isn’t traced back to a single user. This is a non-commercial project with no intention of profit.",
+      "Odeeffannoo/daataa  keessan sababa data science fi Statistics kan oolu yoo ta’u nama kamiifuu ifa kan hin baanedha.Appilikeeshiniin kun guutuumaan guututti tolaa fi bu’aa dinagdeef kan hin hojjatamnedha.",
   },
 });
