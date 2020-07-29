@@ -46,14 +46,14 @@ exports.get_one_local_policy = async (req, res) => {
 
 exports.get_local_policy_for_user = async (req, res) => {
     let filter = {}
-    let current_country
-    if (req.query.country) {
-        current_country = req.query.country
-    } else {
-        let user = await User.findById(req.body.loggedInUser, "current_country")
-        current_country = user.current_country
+
+    let user = await User.findById(req.body.loggedInUser, "current_country")
+    if(user.current_country) {
+        filter.country = user.current_country
+    }else{
+        res.status(404).send("User's country not found");
     }
-    filter.country = current_country
+    
     if (req.query.city) {
         filter.city = req.query.city
     }
@@ -73,14 +73,10 @@ exports.get_local_policy_for_user = async (req, res) => {
         data: policies,
     };
 
-    if (!policies) {
-        res.status(404).send("Local Policy Not Found");
-    } else {
-        try {
-            res.send(result);
-        } catch (err) {
-            res.status(500).send(err.toString());
-        }
+    try {
+        res.send(result);
+    } catch (err) {
+        res.status(500).send(err.toString());
     }
 }
 
@@ -100,7 +96,7 @@ exports.post_local_policy = async (req, res) => {
     }
 }
 
-exports.update_local_policy = async (req, res) => { //TODO: Handle not found
+exports.update_local_policy = async (req, res) => { 
     let check = await LocalPolicy.findById(req.body.id);
     if (!check) {
         res.status(404).send("Local Policy Not Found");
