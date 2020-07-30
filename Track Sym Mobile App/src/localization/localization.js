@@ -371,7 +371,7 @@ export let strings = new LocalizedStrings({
     SuccessfullySave: "Successfully Saved!",
     Current: "Current",
     Registered: "Registered",
-    PercentagePerMillion: "Per Million Case",
+    PercentagePerMillion: "People Per Million Stats",
     References: "References",
     MinistryOfHealthEth: "Ministry of Health, Ethiopia",
     CoronaAtGlance: "Coronavirus at a Glance, Hopkins medicine",
@@ -390,6 +390,8 @@ export let strings = new LocalizedStrings({
       "A2SV puts humanity first and is giving a non-commercial symptom tracker app.",
     AboutParag5:
       "Your data will be used anonymously for the purpose of data science and statistics, meaning any info generated isn’t traced back to a single user. This is a non-commercial project with no intention of profit.",
+    userReminderToCheck:
+      "Heyy there😻 Could you check your symptom page, its been a while since you been there!",
   },
   en: {
     Information: "Information",
@@ -758,7 +760,7 @@ export let strings = new LocalizedStrings({
     SuccessfullySave: "Successfully Saved!",
     Current: "Current",
     Registered: "Registered",
-    PercentagePerMillion: "Per Million Case",
+    PercentagePerMillion: "People Per Million Stats",
     References: "References",
     MinistryOfHealthEth: "Ministry of Health, Ethiopia",
     CoronaAtGlance: "Coronavirus at a Glance, Hopkins medicine",
@@ -777,6 +779,8 @@ export let strings = new LocalizedStrings({
       "A2SV puts humanity first and is giving a non-commercial symptom tracker app.",
     AboutParag5:
       "Your data will be used anonymously for the purpose of data science and statistics, meaning any info generated isn’t traced back to a single user. This is a non-commercial project with no intention of profit.",
+    userReminderToCheck:
+      "Heyy there😻 Could you check your symptom page, its been a while since you been there!",
   },
   am: {
     Information: "መረጃ",
@@ -1143,25 +1147,27 @@ export let strings = new LocalizedStrings({
     SuccessfullySave: "ተሳክቷል!",
     Current: "የአሁኑ",
     Registered: "የተመዘገበበት",
-    PercentagePerMillion: "Per Million Case",
-    References: "References",
-    MinistryOfHealthEth: "Ministry of Health, Ethiopia",
-    CoronaAtGlance: "Coronavirus at a Glance, Hopkins medicine",
-    WHO: "World Health Organization",
+    PercentagePerMillion: "People Per Million Stats",
+    References: "ማጣቀሻዎች",
+    MinistryOfHealthEth: "የኢትዮጵያ ጤና ሚኒስቴር",
+    CoronaAtGlance: "ኮሮና ቫይረስ በጨረፍታ, ሆፕኪንስ ሜድስን",
+    WHO: "የአለም ጤና ድርጅት",
     ECDC: "ECDC",
     MedicalXpress: "MedicalXpress",
-    BriefHistory: "A brief history of coronaviruses",
+    BriefHistory: "አጭር የኮሮና ቫይረሶች ታሪክ",
     CDC: "CDC",
     AboutParag1:
-      "It is a non-commercial COVID-19 symptom tracking app that uses crowd-sourcing to collect and visualize the density of the relevant symptoms. Users can anonymously report their symptoms and choose a location to see the density of symptoms in a map view. It represents publicly available data with a short description on how to see the trend going on . The data includes the number of confirmed cases, deaths, recovered, and tests conducted of any selected country or globally. It is also a great place to look for global and local news about Covid-19.",
+      "TrackSym መተግበሪያ/አፕሊኬሽን/ ተዛማጅ የሆነውን የኮ.ቪ.ድ. 19 ምልክቶችን ለመሰብሰብ እና የምልክቶቹ በተለያዪ ቦታዎች ያለውን መቀራራብ በካርታ ለሕዝብ ለማቅረብ የሚጠቅም የንግድ ያልሆነ መተግበሪያ ነው። ተጠቃሚዎች ስማቸውን ሳያስገቡ ሪፖርት ማድረግ እና በካርታ እይታ ውስጥ የሕመም ምልክቶችን ለመመልከት የሚፈልጉትን ቦታ መምረጥ ይችላሉ። አጠቃላይ የተሰበሰቡ መረጃዎችን ከአጭር ማብራሪያ ጋር የስርጭቱን ሁኔታ ለማየት በሚመች መልኩ ቀርቧል።ይህ መረጃ በማንኛውም የተመረጡ አገራት ወይም በዓለም አቀፍ ደረጃ በቫይረሱ መያዛቸውን የተረጋገጡ ሰዎች ቁጥር ፣ ሞት ፣ ያገገሙ ፣ እና ለቫይረሱ ለመያዛቸው ምርመራ የተደረገላቸውን ቁጥሮች ያጠቃልላል ፡፡ ከዚህ በተጨማሪም ከ ጋር የተዛመዱ ዓለም አቀፍ እንዲሁመ አካባቢያዊ መረጃዎች እና ዜናዎችን ለማኘት ጥሩ ቦታ ነው፡፡",
     AboutParag2:
-      "Africa to Silicon Valley is a team of highly motivated and talented students from Ethiopia, led by an ex-Google and Palantir Software/ML engineer.",
+      "A2SV - Africa to Silicon Valley በቀድሞ የ Google እና Palantir ሰራተኛ በነበረ ሶፍትዌር ኢንጂነር የሚመራ እጅግ ከፍተኛ ተሰጥኦና ተነሳሽነት ያላቸው ኢትዮጵያውያን ተማሪዎች ስብስብ ነው።",
     AboutParag3:
-      "The team went through an intense 3-month preparation program in the pursuit of summer internships at top Silicon Valley companies. NowA2SV is dedicating all the time and energy to the fight againstCOVID-19. COVID-19 is taking the world by storm. Even though some countries are scaling up their testing capacities, it has been a challenge for developed countries and is much harder for many developing countries.",
+      "ቡድኑ ለ 3 ወራት በተለያዩ የ Silicon Valley ድርጅቶች የልምምድ ስራ እሚያስገኝ ስልጠና ሲወስድ ከቆየ በኋላ አሁን ላይ ሙሉ ጊዜውን ወረርሺኙን ለመዋጋት እያዋለ ይገኛል።  ኮ.ቪ.ድ. 19 አለምን በሙሉ እያጠቃ ይገኛል። ምንም እንኳን አንዳንድ አገራት የሙከራ አቅማቸውን እያሳደጉ ቢሆኑም ላደጉ ሃገራት በተለይም ለብዙ ታዳጊ አገራት በጣም ከባድ ሆኗል ፡፡",
     AboutParag4:
-      "A2SV puts humanity first and is giving a non-commercial symptom tracker app.",
+      "A2SV ሰብአዊነትን ያስቀድማል፤ ይህንም የንግድ ያልሆነ TrackSym መተግበሪያ/አፕሊኬሽን/ አቅርበናል።",
     AboutParag5:
-      "Your data will be used anonymously for the purpose of data science and statistics, meaning any info generated isn’t traced back to a single user. This is a non-commercial project with no intention of profit.",
+      "መረጃችሁን ስም—አልባ በሆነ መንገድ ለመረጃ ሳይብስና ለስታቲስቲክስ አገልግሎት የሚል ይሆናል። የናንተን መረጃ በመጠቀም የሚመነጭ ማንኛውም አይነት መረጃ የብዙ መረጃወች ጥርቅም ስለሚሆን ተለይቶ ወደ አንድ ሰው አያመለክትም ይህም የእረሶን ማንነትና ደህንነት በአግባቡ የጠበቀ ይሆናል።",
+    userReminderToCheck:
+      "Heyy there😻 Could you check your symptom page, its been a while since you been there!",
   },
   tr: {
     Information: "Bilgi",
@@ -1489,17 +1495,17 @@ export let strings = new LocalizedStrings({
     Oct: "Eki",
     Nov: "Kas",
     Dec: "Ara",
-    Sun: "Sun",
-    Mon: "Mon",
-    Tue: "Tue",
-    Wed: "Wed",
-    Thu: "Thu",
-    Fri: "Fri",
-    Sat: "Sat",
+    Mon: "Pzt",
+    Tue: "Sal",
+    Wed: "Çrş",
+    Thu: "Prş",
+    Fri: "Cum",
+    Sat: "Cmt",
+    Sun: "Pzr",
     SuccessfullySave: "Kayıt Başarılı!",
     Current: "şimdiki",
     Registered: "Kayıtlı",
-    PercentagePerMillion: "Per Million Case",
+    PercentagePerMillion: "People Per Million Stats",
     References: "Referanslar",
     MinistryOfHealthEth: "Sağlık Bakanlığı, Etiyopya",
     CoronaAtGlance: "Bir Bakışta Koronavirüs, Hopkins medicine",
@@ -1518,6 +1524,8 @@ export let strings = new LocalizedStrings({
       "A2SV her zaman insanlığı ilk sıraya koyduğundan ötürü ticari olmayan bir semptom izleme uygulaması sunuyor.",
     AboutParag5:
       "Verileriniz veri bilimi ve istatistik amacıyla anonim olarak kullanılacaktır, bu da üretilen hiçbir bilginin tek bir kullanıcı ile bağdaştırılamayacağı anlamına gelir. Bu ticari olmayan bir projedir ve kar amacı gütmemektedir.",
+    userReminderToCheck:
+      "Heyy there😻 Could you check your symptom page, its been a while since you been there!",
   },
   orm: {
     Information: "Odeeffannoo",
@@ -1945,7 +1953,7 @@ export let strings = new LocalizedStrings({
     SuccessfullySave: "Milkaa'eera!",
     Current: "Amma",
     Registered: "Kan Galmaa'e",
-    PercentagePerMillion: "Per Million Case",
+    PercentagePerMillion: "People Per Million Stats",
     References: "Wabii",
     MinistryOfHealthEth: "Ministeera Fayyaa Itoophiyaa",
     CoronaAtGlance: "Coronavirus at a Glance, Hopkins medicine",
@@ -1964,5 +1972,7 @@ export let strings = new LocalizedStrings({
       "A2SV'n namummaaf dursa kennuudhaan Mosaajii miti-daldalaa TrackSym jedhamu hawaasaaf arjoomeera.",
     AboutParag5:
       "Odeeffannoo/daataa  keessan sababa data science fi Statistics kan oolu yoo ta’u nama kamiifuu ifa kan hin baanedha.Appilikeeshiniin kun guutuumaan guututti tolaa fi bu’aa dinagdeef kan hin hojjatamnedha.",
+    userReminderToCheck:
+      "Heyy there😻 Could you check your symptom page, its been a while since you been there!",
   },
 });
