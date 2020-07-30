@@ -49,7 +49,8 @@ const userSchema = new mongoose.Schema({
     type: Date,
   },
   last_symptom_update: {
-    type: Date
+    type: Date,
+    default: new Date(new Date() - 60 * 60 * 24 * 7 * 1000)
   }
 });
 
