@@ -104,7 +104,14 @@ export default ({ navigation }) => {
     login();
   };
 
-  const saveUser = async (userID, userName, token, age_group, gender) => {
+  const saveUser = async (
+    userID,
+    userName,
+    token,
+    age_group,
+    gender,
+    lastSymptmomUpdate
+  ) => {
     try {
       await AsyncStorage.setItem("userID", userID); //save user id on async storage
       await AsyncStorage.setItem("userName", userName); //save user name on async storage
@@ -112,6 +119,7 @@ export default ({ navigation }) => {
       await AsyncStorage.setItem("age_group", age_group); //save age group on async storage
       await AsyncStorage.setItem("gender", gender); //save gender on async storage
       await AsyncStorage.setItem("theme", "light");
+      await AsyncStorage.setItem("last_symptom_update", lastSymptmomUpdate);
     } catch (error) {
       // console.log(error);
     }
@@ -165,7 +173,8 @@ export default ({ navigation }) => {
       json.user.username,
       json.token,
       json.user.age_group,
-      json.user.gender
+      json.user.gender,
+      json.user.last_symptom_update
     ); //storing the user id in async storage
     setIsLoading(false);
   };
