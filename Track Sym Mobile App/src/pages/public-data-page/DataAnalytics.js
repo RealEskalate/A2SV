@@ -23,6 +23,8 @@ import {
   Layout,
   Divider,
   Datepicker as KittenDatepicker,
+  Popover,
+  Avatar,
   Icon,
 } from "@ui-kitten/components";
 import * as eva from "@eva-design/eva";
@@ -32,7 +34,7 @@ import { DotsLoader } from "react-native-indicator";
 import { strings } from "../../localization/localization";
 import languageStore from "../../data-management/language_data/languageStore";
 import { ThemeContext } from "../../../assets/themes/theme-context";
-
+import AsyncStorage from "@react-native-community/async-storage";
 const CalendarIcon = (props) => <Icon {...props} name="calendar" />;
 
 class DataAnalytics extends React.Component {
@@ -70,6 +72,7 @@ class DataAnalytics extends React.Component {
       search: "World",
       currLanguage: "English",
       currLangCode: languageStore.getState(),
+      popUpVisible: false,
 
       Months: [
         strings.Jan,
@@ -127,6 +130,7 @@ class DataAnalytics extends React.Component {
       .then(this.fetchRateStatistics())
       .then(this.getCountryList())
       .then(this.fetchPercentageStats())
+      .then(this.fetchLastSymptomUpdate())
       .then(this.checkIfDataExist(criterias.numberOfTests)) //check if number of test case data exist
       .then(this.getDescriptions)
       .catch((error) => {
@@ -238,6 +242,56 @@ class DataAnalytics extends React.Component {
       });
   };
 
+  //check user last symptom update date
+  fetchLastSymptomUpdate = async () => {
+    console.log("Just got in");
+    let userID = await AsyncStorage.getItem("userID");
+    console.log(userID);
+    let newThis = this;
+    await fetch(
+      "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/users/" + userID,
+      {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + userIDStore.getState().userToken,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .then((response) => response.json())
+      .then(async (json) => {
+        console.log(json);
+        if (json !== undefined && json.length !== 0) {
+          let lastSymptomUpdateDate = new Date(
+            json.last_symptom_update.split("T")[0]
+          );
+          let todayDate = new Date();
+          let differenceInDays =
+            (todayDate.getTime() - lastSymptomUpdateDate.getTime()) /
+            (1000 * 3600 * 24);
+          console.log(
+            "Difference in days " +
+              Number.parseInt(Math.floor(differenceInDays)).toString()
+          );
+          if (Number.parseInt(Math.floor(differenceInDays)) >= 7) {
+            console.log("Check");
+            newThis.setState({
+              popUpVisible: true,
+            });
+          } else {
+            newThis.setState({
+              popUpVisible: false,
+            });
+          }
+        } else {
+          newThis.fetchLastSymptomUpdate();
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   //gets rate statistics data based on selected criteria and populate UI
   fetchRateStatistics = async () => {
     let newThis = this;
@@ -743,6 +797,36 @@ class DataAnalytics extends React.Component {
     const customTheme = this.context;
     return (
       <Layout style={{ flex: 1 }}>
+        {this.state.popUpVisible ? (
+          <Modal
+            visible={this.state.popUpVisible}
+            backdropStyle={styles.backdrop}
+            onBackdropPress={() => this.setState({ popUpVisible: false })}
+          >
+            <Card disabled={true} style={{ margin: 10 }}>
+              <Text style={{ fontSize: 20, marginBottom: 10 }}>
+                {strings.userReminderToCheck}
+              </Text>
+              <TouchableOpacity
+                style={{
+                  alignSelf: "center",
+                  fontSize: 10,
+                  height: 13,
+                  backgroundColor: " #ffffff00",
+                  color: "#4da6ff",
+                  borderColor: " #ffffff00",
+                }}
+                onPress={() => this.setState({ popUpVisible: false })}
+              >
+                <Text
+                  style={{ fontSize: 20, marginBottom: 10, color: "#4da6ff" }}
+                >
+                  {strings.Dismiss}
+                </Text>
+              </TouchableOpacity>
+            </Card>
+          </Modal>
+        ) : null}
         {/* search area and referesh button */}
         <Layout style={{ flexDirection: "row" }}>
           <SearchableDropdown
@@ -2129,6 +2213,18 @@ const styles = StyleSheet.create({
     color: "#1976d2",
     fontSize: 15,
     fontWeight: "bold",
+  },
+  content: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 4,
+    paddingVertical: 8,
+  },
+  avatar: {
+    marginHorizontal: 4,
+  },
+  backdrop: {
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
 });
 
