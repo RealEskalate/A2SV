@@ -47,6 +47,9 @@ const userSchema = new mongoose.Schema({
   },
   expiresAt: {
     type: Date,
+  },
+  last_symptom_update: {
+    type: Date
   }
 });
 

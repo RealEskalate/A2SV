@@ -39,43 +39,112 @@ exports.post_symptomuser = async (req, res) => {
     var User = UserModels.User;
     var SymptomUserHistory = SymptomUserHistoryModel.SymptomUserHistory;
   }
-
-  if (req.body.user_id !== req.body.loggedInUser) {
-    return res
-      .status(403)
-      .send(
-        "User not authorized to access this endpoint with id: " +
-          req.body.loggedInUser
-      );
-  }
-  let symptomuser = new SymptomUser({
-    symptom_id: req.body.symptom_id,
-    user_id: req.body.user_id,
-  });
-
   // Check if user and symptom exists
-  Symptom.findById(symptomuser.symptom_id, (err) => {
-    if (err) {
-      return res.status(400).json({ message: "Symptom ID not found" });
-    }
-  });
-  User.findById(symptomuser.user_id, (err) => {
-    if (err) {
-      return res.status(400).json({ message: "User ID not found" });
-    }
-  });
+  const symptoms = [req.body.symptom_id]
+  const user = await User.findById(req.body.loggedInUser);
+  if (!user || !symptoms) {
+    return res.status(400).send("Invalid request");
+  }
+  user.last_symptom_update = new Date(Date.now());
+  await user.save();
   try {
-    await symptomuser.save();
-    let symptom = await Symptom.findById(symptomuser.symptom_id);
-    let result = {
-      _id: symptomuser._id,
-      symptom_id: symptomuser.symptom_id,
-      user_id: symptomuser.user_id,
-      timestamp: symptomuser.timestamp,
-      _v: symptomuser.__v,
-      Symptom: symptom,
-    };
-    res.send(result);
+    const existingSymptoms = await SymptomUser.find({
+        user_id: req.body.loggedInUser,
+    }).populate("symptom_id");
+    const difference = existingSymptoms.filter(
+      (x) =>
+        x.symptom_id != null && !symptoms.includes(x.symptom_id._id.toString())
+    );
+    let history = await SymptomUserHistory.findOne({
+      user_id: req.body.loggedInUser,
+    });
+    if (!history) {
+      history = new SymptomUserHistory({
+        user_id: req.body.loggedInUser,
+        events: [],
+      });
+    }
+    const currentDate = new Date(Date.now());
+    const toBeRemoved = [];
+    for (let ix in difference) {
+      toBeRemoved.push(difference[ix]._id);
+      history.events.push({
+        symptom_id: difference[ix].symptom_id._id,
+        start: difference[ix].timestamp,
+        end: currentDate,
+        relevance: difference[ix].symptom_id.relevance,
+        type: "TERMINATED",
+      });
+    }
+    await SymptomUser.deleteMany({ _id: {$in: toBeRemoved} });
+    await history.markModified("events");
+    await history.save();
+    const existingEntries = existingSymptoms.map(
+      (symptomuser) => symptomuser.symptom_id._id.toString()
+    );
+    let todaySymptoms = [];
+    history.events.map(
+      (symptom) =>{
+        if (symptom.end.getDate() == currentDate.getDate() &&
+        symptom.end.getMonth() == currentDate.getMonth() &&
+        symptom.end.getFullYear() == currentDate.getFullYear() &&
+        symptoms.includes(symptom.symptom_id.toString())){
+          todaySymptoms.push(symptom);
+        }
+      });
+    let inserted = []
+    todaySymptoms.forEach( // Save symptom with start set to the previous start and remove entry from history
+      async (symptom) => {
+        await SymptomUserHistory.findByIdAndUpdate(history._id, 
+          {"$pull": {"events": {_id: symptom._id}}},
+          { safe: true, upsert: true })
+        let symptomuser = new SymptomUser({
+          symptom_id: symptom.symptom_id,
+          user_id: req.body.loggedInUser,
+          timestamp: symptom.start
+        });
+        try {
+          if (!inserted.includes(symptom.symptom_id.toString())){
+            inserted.push(symptom.symptom_id.toString());
+            existingEntries.push(symptom.symptom_id.toString());
+            await symptomuser.save();
+          }
+        } catch (error) {
+          console.log(error.toString());
+        }
+    });
+
+  for (let index in symptoms) {
+    let id = symptoms[index];
+    let symptomuser = new SymptomUser({
+      symptom_id: id,
+      user_id: req.body.loggedInUser,
+    });
+
+    // Check if user and symptom exists
+    const symptomExists = await Symptom.findById(id);
+    if (!symptomExists || existingEntries.includes(id)) {
+      continue;
+    } 
+    try {
+      inserted.push(symptomuser.symptom_id.toString())
+      await symptomuser.save();
+    } catch (error) {
+      console.log(error.toString());
+    }
+  }   
+    // await symptomuser.save();
+    // let symptom = await Symptom.findById(symptomuser.symptom_id);
+    // let result = {
+    //   _id: symptomuser._id,
+    //   symptom_id: symptomuser.symptom_id,
+    //   user_id: symptomuser.user_id,
+    //   timestamp: symptomuser.timestamp,
+    //   _v: symptomuser.__v,
+    //   Symptom: symptom,
+    // };
+    // res.send(result);
+    return res.status(201).send("Symptoms registered successfully");
   } catch (err) {
     res.status(500).send(err.toString());
   }
@@ -101,6 +170,10 @@ exports.post_multiple_symptoms = async (req, res) => {
   if (!user || !symptoms) {
     return res.status(400).send("Invalid request");
   }
+  
+  user.last_symptom_update = new Date(Date.now());
+  await user.save();
+
   const existingSymptoms = await SymptomUser.find({
     user_id: req.body.loggedInUser,
   }).populate("symptom_id");
