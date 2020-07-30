@@ -89,7 +89,7 @@
           class="v-card--shaped my-5 mx-1"
           :to="{ name: 'Profile' }"
         >
-          More
+          {{ $t("moreInfo") }}
           <v-icon class="ml-1" small v-text="mdiArrowRight" />
         </v-btn>
       </div>

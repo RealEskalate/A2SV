@@ -70,7 +70,7 @@ export default {
         age_group: "Adults",
         lang: newValue
       });
-      store.dispatch("setSymptomUser", {
+      store.dispatch("setSelfSymptomUser", {
         userId: this.loggedInUser._id,
         demo: false,
         lang: newValue

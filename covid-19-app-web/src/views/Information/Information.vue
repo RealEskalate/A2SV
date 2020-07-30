@@ -39,7 +39,7 @@
             <p
               v-else-if="information && information.length === 0"
               class="text-center grey--text text--darken-1"
-              v-text="'Found Nothing'"
+              v-text="$t('auth.foundNothing')"
             />
             <carousel-3d
               v-else

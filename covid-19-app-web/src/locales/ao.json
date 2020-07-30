@@ -183,6 +183,12 @@
 
   "map": {
     "symptomTracker": "Mallattowwan Hordofu",
-    "globalStatistics": "Istatistiksii Addunyawa"
+    "globalStatistics": "Istatistiksii Addunyawa",
+    "details": "Details",
+    "searchCity": "Search City",
+    "startTyping": "Start Typing",
+    "location": "Location",
+    "symptoms": "Symptoms",
+    "nothingSelected": "Nothing Selected on the Map"
   }
 }

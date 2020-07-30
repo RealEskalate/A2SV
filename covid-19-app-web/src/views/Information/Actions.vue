@@ -18,7 +18,7 @@
           <p
             v-else-if="actions && actions.length === 0"
             class="text-center grey--text text--darken-1"
-            v-text="'Found Nothing'"
+            v-text="$t('auth.foundNothing')"
           />
           <v-expansion-panels
             v-else

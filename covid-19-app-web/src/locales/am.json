@@ -182,7 +182,13 @@
 
   "map": {
     "symptomTracker": "የህመም ምልክት መከታተያ",
-    "globalStatistics": "አለም አቀፍ ስታቲስቲክስ"
+    "globalStatistics": "አለም አቀፍ ስታቲስቲክስ",
+    "details": "Details",
+    "searchCity": "Search City",
+    "startTyping": "Start Typing",
+    "location": "Location",
+    "symptoms": "Symptoms",
+    "nothingSelected": "Nothing Selected on the Map"
   }
 }
 

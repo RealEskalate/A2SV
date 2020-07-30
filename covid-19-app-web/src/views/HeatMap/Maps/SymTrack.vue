@@ -28,14 +28,14 @@
             :items="loadedCities"
             :loading="symTrackLoaders.cities"
             :search-input.sync="keyword"
-            no-data-text="Found Nothing"
+            :no-data-text="$t('auth.foundNothing')"
             hide-no-data
             hide-selected
             hide-details
             :item-text="autoCompleteValue"
             :item-value="autoCompleteValue"
-            label="Search City"
-            placeholder="Start Typing"
+            :label="$t('map.searchCity')"
+            :placeholder="$t('map.startTyping')"
             return-object
           />
         </v-list-item-content>
@@ -55,10 +55,10 @@
       <v-subheader
         class="my-5 justify-center"
         v-else-if="!selectedInfo"
-        v-text="'Nothing Selected on the Map'"
+        v-text="$t('map.nothingSelected')"
       />
       <v-list v-else>
-        <v-subheader v-text="'Details'" />
+        <v-subheader v-text="$t('map.details')" />
         <v-list-item
           :key="index"
           v-for="(feature, index) in detailSingleFeatures"
@@ -69,7 +69,7 @@
 
           <v-list-item-content>
             <span>
-              {{ feature.name }}:
+              {{ $t(feature.name) }}:
               <span
                 v-if="feature.key === 'location'"
                 class="grey--text"
@@ -101,7 +101,7 @@
             <v-list-item-avatar size="20">
               <v-icon v-text="feature.icon" />
             </v-list-item-avatar>
-            <v-list-item-content v-text="feature.name" />
+            <v-list-item-content v-text="$t(feature.name)" />
           </v-list-item>
           <div
             :key="feature.name + index"
@@ -113,7 +113,7 @@
                 !selectedInfo[feature.key] ||
                   selectedInfo[feature.key].length === 0
               "
-              v-text="'Found Nothing'"
+              v-text="$t('auth.foundNothing')"
             />
             <v-chip
               v-else
@@ -319,13 +319,21 @@ export default {
     detailSingleFeatures() {
       if (!this.selectedInfo) return [];
       let gridDetailFeatures = [
-        { name: "Location", key: "location", icon: mdiCrosshairsGps }
+        { name: "map.location", key: "location", icon: mdiCrosshairsGps }
       ];
       let userDetailFeatures = [
-        { name: "Location", key: "location", icon: mdiCrosshairsGps },
-        { name: "Gender", key: "gender", icon: mdiGenderMaleFemaleVariant },
-        { name: "Age Group", key: "age_group", icon: mdiBabyCarriage },
-        { name: "Sickness Probability", key: "probability", icon: mdiPercent }
+        { name: "map.location", key: "location", icon: mdiCrosshairsGps },
+        {
+          name: "auth.gender",
+          key: "gender",
+          icon: mdiGenderMaleFemaleVariant
+        },
+        { name: "auth.ageGroup", key: "age_group", icon: mdiBabyCarriage },
+        {
+          name: "auth.sicknessProbability",
+          key: "probability",
+          icon: mdiPercent
+        }
       ];
 
       return this.selectedInfo.user_id
@@ -335,12 +343,16 @@ export default {
     detailListFeatures() {
       if (!this.selectedInfo) return [];
       let gridDetailFeatures = [
-        { name: "Genders", key: "genders", icon: mdiGenderMaleFemaleVariant },
-        { name: "Age Groups", key: "ages", icon: mdiBabyCarriage },
-        { name: "Symptoms", key: "value", icon: mdiBandage }
+        {
+          name: "auth.gender",
+          key: "genders",
+          icon: mdiGenderMaleFemaleVariant
+        },
+        { name: "auth.ageGroup", key: "ages", icon: mdiBabyCarriage },
+        { name: "map.symptoms", key: "value", icon: mdiBandage }
       ];
       let userDetailFeatures = [
-        { name: "Symptoms", key: "value", icon: mdiBandage }
+        { name: "map.symptoms", key: "value", icon: mdiBandage }
       ];
 
       return this.selectedInfo.user_id

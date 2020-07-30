@@ -179,6 +179,12 @@
 
   "map": {
     "symptomTracker": "semptom izleyici",
-    "globalStatistics": "Global İstatistikler"
+    "globalStatistics": "Global İstatistikler",
+    "details": "Details",
+    "searchCity": "Search City",
+    "startTyping": "Start Typing",
+    "location": "Location",
+    "symptoms": "Symptoms",
+    "nothingSelected": "Nothing Selected on the Map"
   }
 }

@@ -35,7 +35,7 @@
               <p
                 v-else-if="news && news.length === 0"
                 class="text-center grey--text text--darken-1"
-                v-text="'Found Nothing'"
+                v-text="$t('auth.foundNothing')"
               />
               <v-list v-else three-line>
                 <template v-for="item in news">
@@ -115,7 +115,7 @@
               <p
                 class="text-muted text-center mt-3"
                 v-else-if="sourceList.length === 0"
-                v-text="'Found Nothing'"
+                v-text="$t('auth.foundNothing')"
               />
               <v-list-item-group
                 @change="resetPage"

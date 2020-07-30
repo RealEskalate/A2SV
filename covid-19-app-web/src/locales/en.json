@@ -182,6 +182,12 @@
 
   "map": {
     "symptomTracker": "Symptom Tracker",
-    "globalStatistics": "Global Statistics"
+    "globalStatistics": "Global Statistics",
+    "details": "Details",
+    "searchCity": "Search City",
+    "startTyping": "Start Typing",
+    "location": "Location",
+    "symptoms": "Symptoms",
+    "nothingSelected": "Nothing Selected on the Map"
   }
 }

@@ -154,10 +154,13 @@ const actions = {
       });
   },
   setLocationsSymptoms: ({ commit }, input) => {
-    input.language = langConverter[input.language];
     commit("setSymTrackLoaders", { key: "map", value: true });
     ajax
-      .post("locations_symptoms", input)
+      .post("locations_symptoms", input, {
+        params: {
+          language: langConverter[input.language]
+        }
+      })
       .then(res => {
         commit("setLocationsSymptoms", res.data);
       })

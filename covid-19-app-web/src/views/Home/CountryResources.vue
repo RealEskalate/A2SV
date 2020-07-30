@@ -26,7 +26,7 @@
         />
         <v-card-subtitle
           v-else-if="!countryResources[country.slug]"
-          v-text="'Found Nothing'"
+          v-text="$t('auth.foundNothing')"
         />
         <v-list-item-group v-else color="primary">
           <v-list-item
@@ -58,7 +58,7 @@
           <p
             class="text-muted text-center my-8"
             v-else-if="!description"
-            v-text="'Found Nothing'"
+            v-text="$t('auth.foundNothing')"
           />
           <div v-else>
             <v-card-title class="headline mt-2" v-text="description.title" />
