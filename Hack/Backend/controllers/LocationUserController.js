@@ -327,7 +327,7 @@ exports.get_all_locations_with_symptoms = async (req, res) => {
         boundaries,
         req.query.demo,
         req.query.stress,
-        req
+        req.query.language
       );
       console.log(`Fetched ${result.length} Grids according to filter`);
     } else {
@@ -390,7 +390,7 @@ const findAllNearbySymptomaticUsers = async (boundaries, demo, stress) => {
   return location_users;
 };
 
-const findGridNearbySymptomaticUsers = async (boundaries, demo, stress,req) => {
+const findGridNearbySymptomaticUsers = async (boundaries, demo, stress, language=null) => {
   // await updateDb(demo, stress);
   if (demo && demo == "true") {
     var LocationGrid = LocationGridModels.DemoLocationGrid;
@@ -404,9 +404,9 @@ const findGridNearbySymptomaticUsers = async (boundaries, demo, stress,req) => {
   let diseaseNames = null;
   let genderNames = null;
 
-  if (req.query.language) {
+  if (language) {
     let gridNames = await StatisticsResource.findOne({
-      language: req.query.language,
+      language: language,
       title: "symptoms-name-list",
     });
 
