@@ -50,7 +50,8 @@ const userSchema = new mongoose.Schema({
   },
   last_symptom_update: {
     type: Date,
-    default: new Date(new Date() - 60 * 60 * 24 * 7 * 1000)
+    default: new Date(new Date() - 60 * 60 * 24 * 7 * 1000),
+    required: true,
   }
 });
 
@@ -100,6 +101,11 @@ const demoUserSchema = new mongoose.Schema({
   },
   expiresAt: {
     type: Date,
+  },
+  last_symptom_update: {
+    type: Date,
+    default: new Date(new Date() - 60 * 60 * 24 * 7 * 1000),
+    required: true,
   }
 });
 
@@ -149,6 +155,11 @@ const stressUserSchema = new mongoose.Schema({
   },
   expiresAt: {
     type: Date,
+  },
+  last_symptom_update: {
+    type: Date,
+    default: new Date(new Date() - 60 * 60 * 24 * 7 * 1000),
+    required: true,
   }
 });
 function validateUser(user) {
