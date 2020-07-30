@@ -155,7 +155,7 @@ function App() {
           >
             <NavigationContainer theme={navigatorTheme}>
               {userId !== "" && userId !== null ? (
-                <AppNavigator age={age} gen={gen}/> // if user has already signed in go to main page
+                <AppNavigator age={age} gen={gen} /> // if user has already signed in go to main page
               ) : (
                 <AuthNavigator init={init} /> //else go to sign in
               )}
