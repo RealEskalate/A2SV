@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 var { User } = require("../models/UserModel.js");
+const roles = require('../roles.js');
 // Bearer access_token key.
 exports.verifyToken = async (req, res, next) => {
   const authHeader = req.headers["authorization"];
@@ -30,3 +31,18 @@ exports.verifyToken = async (req, res, next) => {
     res.status(403).send("Please send the api authentication key");
   }
 };
+
+exports.grant_access = function(action, resource) {
+  return async (req, res, next) => {
+   try {
+    let user = await User.findById(req.body.loggedInUser);
+    const permission = roles.can(user.role)[action](resource);
+    if (!permission.granted) {
+     return res.status(401).send("You don't have enough permission to perform this action");
+    }
+    next()
+   } catch (error) {
+    next(error)
+   }
+  }
+}

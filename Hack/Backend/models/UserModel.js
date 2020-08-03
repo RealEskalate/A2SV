@@ -52,6 +52,12 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: new Date(new Date() - 60 * 60 * 24 * 7 * 1000),
     required: true,
+  },
+  role: {
+    type: String,
+    enum: ["basic", "ephi_user", "sysadmin"],
+    required: true,
+    default: "basic"
   }
 });
 
