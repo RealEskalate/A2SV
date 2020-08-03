@@ -1,5 +1,5 @@
 <template>
-  <section class="statistics pb-10">
+  <section class="statistics">
     <v-container>
       <v-row>
         <v-col>
@@ -116,7 +116,7 @@
             <p
               class="text-muted text-center my-8"
               v-else-if="!selectedDescription"
-              v-text="'Found Nothing'"
+              v-text="$t('auth.foundNothing')"
             />
             <div v-else>
               <v-card-title

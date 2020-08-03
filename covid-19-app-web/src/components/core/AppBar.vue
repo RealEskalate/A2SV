@@ -8,17 +8,17 @@
       :class="{ shadow: raise }"
     >
       <v-app-bar-nav-icon
-        v-if="$vuetify.breakpoint.smAndDown && navOption === '2'"
+        v-if="$vuetify.breakpoint.mdAndUp"
         @click.stop="drawer = !drawer"
       />
       <v-btn
         text
         data-v-step="0"
-        class="d-flex align-center ml-3"
+        class="d-flex align-center px-2"
         @click="$router.push({ name: 'Home' })"
       >
         <v-img
-          alt="Company Logo"
+          alt="TrackSym"
           class="shrink"
           contain
           src="/img/brand/blue.png"
@@ -28,41 +28,41 @@
       </v-btn>
 
       <v-spacer />
-      <v-btn
-        :key="link.to"
-        :to="{ name: link.to }"
-        text
-        v-for="link in links"
-        active-class="border-bottom"
-        class="hidden-sm-and-down v-card--shaped nav-btn"
-        exact
-      >
-        <span class="text-capitalize"> {{ $t(link.text) }}</span>
-      </v-btn>
-      <v-divider class="mx-2" vertical light />
-      <div class="justify-end pt-7" style="width: 50px" data-v-step="4">
-        <v-select
-          solo
-          flat
-          dense
-          v-model="$i18n.locale"
-          :items="languages"
-          @change="changeLang"
-        >
-          <template v-slot:append>
-            <small />
-          </template>
-          <template v-slot:append>
-            <small />
-          </template>
-          <template v-slot:selection="{ item }">
-            <small class="primary--text" v-text="langText[item]" />
-          </template>
-          <template v-slot:item="{ item }">
-            <small v-text="langText[item]" />
-          </template>
-        </v-select>
-      </div>
+      <!--      <v-btn-->
+      <!--        :key="link.to"-->
+      <!--        :to="{ name: link.to }"-->
+      <!--        text-->
+      <!--        v-for="link in links"-->
+      <!--        active-class="border-bottom"-->
+      <!--        class="hidden-sm-and-down v-card&#45;&#45;shaped nav-btn"-->
+      <!--        exact-->
+      <!--      >-->
+      <!--        <span class="text-capitalize"> {{ $t(link.text) }}</span>-->
+      <!--      </v-btn>-->
+      <!--      <v-divider class="mx-2" vertical light />-->
+      <!--      <div class="justify-end pt-7" style="width: 50px" data-v-step="4">-->
+      <!--        <v-select-->
+      <!--          solo-->
+      <!--          flat-->
+      <!--          dense-->
+      <!--          v-model="$i18n.locale"-->
+      <!--          :items="languages"-->
+      <!--          @change="changeLang"-->
+      <!--        >-->
+      <!--          <template v-slot:append>-->
+      <!--            <small />-->
+      <!--          </template>-->
+      <!--          <template v-slot:append>-->
+      <!--            <small />-->
+      <!--          </template>-->
+      <!--          <template v-slot:selection="{ item }">-->
+      <!--            <small class="primary&#45;&#45;text" v-text="langText[item]" />-->
+      <!--          </template>-->
+      <!--          <template v-slot:item="{ item }">-->
+      <!--            <small v-text="langText[item]" />-->
+      <!--          </template>-->
+      <!--        </v-select>-->
+      <!--      </div>-->
       <v-divider class="mr-2" vertical light />
       <v-btn
         small
@@ -105,6 +105,78 @@
         </v-list>
       </v-menu>
     </v-app-bar>
+
+    <v-navigation-drawer
+      v-if="$vuetify.breakpoint.mdAndUp"
+      v-model="drawer"
+      color="primary"
+      dark
+      fixed
+      temporary
+    >
+      <v-img
+        alt="TrackSym"
+        class="shrink my-5 mx-auto"
+        contain
+        :width="135"
+        src="/img/brand/white.png"
+      />
+
+      <v-list shaped>
+        <v-list-item-group>
+          <v-list-item
+            exact
+            v-for="(link, i) in links"
+            :key="i"
+            :to="{ name: link.to }"
+          >
+            <v-list-item-icon>
+              <v-icon v-text="link.icon" />
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title v-text="$t(link.text)" />
+            </v-list-item-content>
+          </v-list-item>
+          <v-divider />
+          <v-list-item inactive>
+            <v-list-item-icon>
+              <v-icon v-text="mdiTranslate" />
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title v-text="'Language'" />
+            </v-list-item-content>
+            <v-list-item-action>
+              <div class="justify-end" style="width: 50px" data-v-step="4">
+                <v-select
+                  solo
+                  flat
+                  dense
+                  hide-details
+                  background-color="primary"
+                  v-model="$i18n.locale"
+                  :items="languages"
+                  @change="changeLang"
+                >
+                  <template v-slot:append>
+                    <small />
+                  </template>
+                  <template v-slot:append>
+                    <small />
+                  </template>
+                  <template v-slot:selection="{ item }">
+                    <small class="white--text" v-text="langText[item]" />
+                  </template>
+                  <template v-slot:item="{ item }">
+                    <small v-text="langText[item]" />
+                  </template>
+                </v-select>
+              </div>
+            </v-list-item-action>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
+    </v-navigation-drawer>
+
     <v-bottom-navigation
       v-if="$vuetify.breakpoint.smAndDown"
       app
@@ -131,14 +203,15 @@ import {
   mdiHome,
   mdiInformation,
   mdiLogoutVariant,
-  mdiMap,
-  mdiNewspaper
+  mdiNewspaper,
+  mdiTranslate
 } from "@mdi/js";
 import { languages } from "../../plugins/i18n";
 
 export default {
   data: () => {
     return {
+      mdiTranslate,
       mdiAccountCog,
       mdiLogoutVariant,
       drawer: false,
@@ -161,8 +234,8 @@ export default {
           to: "Learn"
         },
         { text: "navbar.about", icon: mdiInformation, to: "About" },
-        { text: "navbar.news", icon: mdiNewspaper, to: "News" },
-        { text: "navbar.map", icon: mdiMap, to: "Map" }
+        { text: "navbar.news", icon: mdiNewspaper, to: "News" }
+        // { text: "navbar.map", icon: mdiMap, to: "Map" }
       ],
       more_links: [
         { text: "navbar.profile", icon: mdiAccountEdit, to: "Profile" }

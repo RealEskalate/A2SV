@@ -25,6 +25,7 @@
   "close": "Close",
   "dateRange": "Date Range",
   "metrics": "Metrics",
+  "Available Resources": "Available Resources",
 
   "states": {
     "statesTransitionTitle": "States of Transition",
@@ -161,9 +162,13 @@
     "oldPassword": "Old Password",
     "newPassword": "New Password",
     "confirmPassword": "Confirm Password",
-    "symptoms": "Symptoms",
+    "symptoms": "Your Symptoms",
     "noSymptoms": "No Symptoms",
     "editSymptoms": "Edit Symptoms",
+    "relevance": "Relevance",
+    "high": "High",
+    "low": "Low",
+    "medium": "Medium",
     "login": "Login",
     "username": "Username",
     "password": "Password",
@@ -182,6 +187,12 @@
 
   "map": {
     "symptomTracker": "Symptom Tracker",
-    "globalStatistics": "Global Statistics"
+    "globalStatistics": "Global Statistics",
+    "details": "Details",
+    "searchCity": "Search City",
+    "startTyping": "Start Typing",
+    "location": "Location",
+    "symptoms": "Symptoms",
+    "nothingSelected": "Nothing Selected on the Map"
   }
 }

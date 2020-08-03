@@ -25,6 +25,7 @@
   "close": "Cufi",
   "dateRange": "Dheerina Yeroo",
   "metrics": "Safartuu",
+  "Available Resources": "Qabenyoota Jiran",
 
   "states": {
     "statesTransitionTitle": "Adeemsa Jijjiiramaa",
@@ -165,6 +166,10 @@
     "symptoms": "Mallattoolee Kiyya",
     "noSymptoms": "Mallattoolee hin galmeessifne",
     "editSymptoms": "Mallattoolee Gulaali",
+    "relevance": "Barbaachisummaa",
+    "high": "Olaanaa",
+    "low": "Gadi aanaa",
+    "medium": "Giddu-Gallessa",
     "login": "Seeni",
     "username": "Maqaa",
     "password": "Jecha Darbii",
@@ -182,7 +187,13 @@
   },
 
   "map": {
-    "symptomTracker": "Mallattowwan Hordofu",
-    "globalStatistics": "Istatistiksii Addunyawa"
+    "symptomTracker": "Faana Mallattoo",
+    "globalStatistics": "Istaatistiksii Addunyaawaa",
+    "details": "Ibsa bal'inaan",
+    "searchCity": "Magaalaa Barbaadi",
+    "startTyping": "Barreessuu Eegali",
+    "location": "Bakka",
+    "symptoms": "Mallattoole",
+    "nothingSelected": "Kaartaa Irratti Hoomtuu Hin Filatamne"
   }
 }

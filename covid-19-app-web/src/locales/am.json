@@ -25,6 +25,7 @@
   "close": "ዝጋ",
   "dateRange": "የቀን ገድብ",
   "metrics": "መለኪያዎች",
+  "Available Resources": "የሚገኙ ግብዓቶች",
 
   "states": {
     "statesTransitionTitle": "የቫይረሱ የሽግግር ሂደት",
@@ -68,13 +69,13 @@
     "Test Count": "የተመረመሩ ብዛት",
     "Confirmed Cases": "የተረጋገጡ ብዛት",
     "Recovery Count": "ያገገሙ ብዛት",
-    "Active Cases": "የተያዙ / ብዛት",
+    "Active Cases": "የተያዙ/ያላገገሙ ብዛት",
     "Death Count": "የሞት ብዛት",
     "Affected Countries": "የተጠቁ ሐገራት",
 
     "Positive Rate": "የመያዝ መጠን",
     "Recovery Rate": "የማገገም መጠን",
-    "Active Rate": "የተያዙ / መጠን",
+    "Active Rate": "የተያዙ/ያላገገሙ መጠን",
     "Death Rate": "የሞት መጠን",
 
     "Daily Confirmed": "ዕለታዊ የተረጋገጡ",
@@ -164,6 +165,10 @@
     "symptoms": "የህመም ምልክቶች",
     "noSymptoms": "ምንም የህመም ምልክቶች የሉም",
     "editSymptoms": "የህመም ምልክትዎን ያርትዑ",
+    "relevance": "አስፈላጊነት",
+    "high": "ከፍተኛ",
+    "low": "ዝቅተኛ",
+    "medium": "መካከለኛ",
     "login": "ግባ",
     "username": "የተጠቃሚ ስም",
     "password": "የይለፍ ቃል",
@@ -182,7 +187,13 @@
 
   "map": {
     "symptomTracker": "የህመም ምልክት መከታተያ",
-    "globalStatistics": "አለም አቀፍ ስታቲስቲክስ"
+    "globalStatistics": "አለም አቀፍ ስታቲስቲክስ",
+    "details": "ዝርዝር",
+    "searchCity": "ከተማ ይፈልጉ",
+    "startTyping": "መፃፍ ጀምሩ",
+    "location": "አድራሻ",
+    "symptoms": "የህመም ምልክቶች",
+    "nothingSelected": "ካረታው ላይ ምንም አልተመረጠም"
   }
 }
 

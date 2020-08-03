@@ -6,7 +6,7 @@ import about from "./about";
 import news from "./news";
 import loaders from "./loaders";
 import messages from "./messages";
-import symptomTracking from "./sym-track";
+import symTrack from "./sym-track";
 import user from "./user";
 import ethiopia from "./ethiopia";
 import privacyPolicy from "./privacy-policy";
@@ -39,7 +39,8 @@ export default new Vuex.Store({
     allCountries: [],
     navigationType: "1",
     languagePreference: null,
-    firstVisit: true
+    firstVisit: true,
+    tour: []
   },
   getters: {
     getAllCountries(state) {
@@ -53,6 +54,9 @@ export default new Vuex.Store({
     },
     getFirstVisit(state) {
       return state.firstVisit;
+    },
+    getTour(state) {
+      return state.tour;
     }
   },
   mutations: {
@@ -67,6 +71,9 @@ export default new Vuex.Store({
     },
     setFirstVisit(state, payload) {
       state.firstVisit = payload;
+    },
+    setTour(state, payload) {
+      state.tour = payload;
     }
   },
   actions: {
@@ -80,6 +87,23 @@ export default new Vuex.Store({
         .then(
           response => {
             commit("setCountriesList", response.data);
+          },
+          error => {
+            console.log(error);
+          }
+        );
+    },
+    setTour({ commit }, { lang }) {
+      ajax
+        .get(`resources/information`, {
+          params: {
+            title: "welcome",
+            language: langConverter[lang]
+          }
+        })
+        .then(
+          response => {
+            commit("setTour", response.data[0].description);
           },
           error => {
             console.log(error);
@@ -105,7 +129,7 @@ export default new Vuex.Store({
     loaders,
     messages,
     ethiopia,
-    symptomTracking,
+    symTrack,
     privacyPolicy
   }
 });

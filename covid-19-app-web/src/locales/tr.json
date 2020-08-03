@@ -25,6 +25,7 @@
   "close": "Kapalı",
   "dateRange": "Data Aralığı",
   "metrics": "Ölçümler",
+  "Available Resources": "Mevcut Kaynaklar",
 
   "states": {
     "statesTransitionTitle": "geçiş Durumları",
@@ -161,6 +162,10 @@
     "symptoms": "Semptomlar",
     "noSymptoms": "Semptom Yok",
     "editSymptoms": "SEMPTOMLARI DÜZENLE",
+    "relevance" : "Alaka",
+    "high": "Yüksek",
+    "low": "Düşük",
+    "medium": "Orta",
     "login": "GİRİŞ",
     "username": "Kullanıcı Adı",
     "password": "Parola",
@@ -178,7 +183,13 @@
   },
 
   "map": {
-    "symptomTracker": "semptom izleyici",
-    "globalStatistics": "Global İstatistikler"
+    "symptomTracker": "Semptom İzleyici",
+    "globalStatistics": "Global İstatistikler",
+    "details": "Detaylar",
+    "searchCity": "Şehir Ara",
+    "startTyping": "Yazmaya Başla",
+    "location": "Lokasyon",
+    "symptoms": "Semptomlar",
+    "nothingSelected": "Haritada Hiçbir Yer Seçilmedi"
   }
 }

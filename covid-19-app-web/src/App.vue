@@ -30,6 +30,7 @@ export default {
         ? "en"
         : store.getters.getLanguagePreference;
     if (this.firstVisit) {
+      store.dispatch("setTour", { lang: this.$i18n.locale });
       this.$tours["appTour"].start();
     }
   },
@@ -70,7 +71,7 @@ export default {
         age_group: "Adults",
         lang: newValue
       });
-      store.dispatch("setSymptomUser", {
+      store.dispatch("setSelfSymptomUser", {
         userId: this.loggedInUser._id,
         demo: false,
         lang: newValue

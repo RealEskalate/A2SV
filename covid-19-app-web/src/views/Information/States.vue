@@ -29,7 +29,7 @@
             <p
               v-else-if="states && states.length === 0"
               class="text-center grey--text text--darken-1"
-              v-text="'Found Nothing'"
+              v-text="$t('auth.foundNothing')"
             />
             <v-list-item-group v-else color="primary">
               <v-list-item
