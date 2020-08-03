@@ -55,7 +55,7 @@
                   <span class="mb-0" v-text="symptom.name" />
                   <br />
                   <small class="font-weight-thin grey--text text--darken-1">
-                    Relevance:
+                    {{ $t("auth.relevance") }}:
                     <span
                       :class="
                         `text--darken-1 ${relevanceColor(
@@ -158,7 +158,7 @@
                         <small
                           class="font-weight-thin grey--text text--darken-1"
                         >
-                          Relevance:
+                          {{ $t("auth.relevance") }}:
                           <span
                             :class="
                               `text--darken-1 ${relevanceColor(
@@ -256,11 +256,11 @@ export default {
     },
     relevanceColor(relevance) {
       switch (relevance.toLowerCase()) {
-        case "high":
+        case this.$t("auth.high").toLowerCase():
           return "red";
-        case "medium":
+        case this.$t("auth.medium").toLowerCase():
           return "orange";
-        case "low":
+        case this.$t("auth.low").toLowerCase():
           return "yellow";
         default:
           return "grey";

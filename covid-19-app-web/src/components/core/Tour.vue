@@ -124,6 +124,9 @@ export default {
       this.snackbar = true;
     }
   },
+  computed: {
+    tour_steps_2: () => store.getters.getTour
+  },
   data() {
     return {
       mdiCloseCircleOutline,

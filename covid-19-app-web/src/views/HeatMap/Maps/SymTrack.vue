@@ -288,7 +288,7 @@ export default {
       this.updateMap();
     },
     userSymptoms(newValue) {
-      this.selectedInfo.gender = newValue[0];
+      this.selectedInfo.gender = this.$t("auth." + newValue[0].toLowerCase());
       this.selectedInfo.age_group = newValue[1];
       this.selectedInfo.value = newValue[2];
     },

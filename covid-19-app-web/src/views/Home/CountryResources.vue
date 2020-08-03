@@ -61,7 +61,10 @@
             v-text="$t('auth.foundNothing')"
           />
           <div v-else>
-            <v-card-title class="headline mt-2" v-text="description.title" />
+            <v-card-title
+              class="headline mt-2"
+              v-text="$t(description.title)"
+            />
             <v-card-text v-text="description.description" />
             <v-card-text>
               <v-list dense>

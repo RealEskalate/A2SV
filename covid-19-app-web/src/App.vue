@@ -30,6 +30,7 @@ export default {
         ? "en"
         : store.getters.getLanguagePreference;
     if (this.firstVisit) {
+      store.dispatch("setTour", { lang: this.$i18n.locale });
       this.$tours["appTour"].start();
     }
   },
