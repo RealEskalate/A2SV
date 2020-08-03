@@ -4,7 +4,10 @@ const ac = new AccessControl();
 
 module.exports = (function() {
 
-    ac.grant('ephi_user')      
+    ac.grant('basic')
+        .readOwn('profile')
+        .updateOwn('profile')
+      .grant('ephi_user')      
         .create('local_policy')
         .updateAny('local_policy')
         .deleteAny('local_policy')
