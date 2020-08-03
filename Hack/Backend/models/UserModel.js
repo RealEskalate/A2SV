@@ -28,7 +28,7 @@ const userSchema = new mongoose.Schema({
   },
   age_group: {
     type: String,
-    enum: ["0-10", "11-20", "21-30", "31-40", "41-50", "51-60", "61-70", "71-80", "81-90", ">90"],
+    enum: ["0-10", "11-20", "21-30", "31-40", "41-50", "51-60", "61-70", "71-80", "81-90", ">90", "UNDISCLOSED"],
     default: "21-30",
     required: true,
   },
@@ -52,6 +52,12 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: new Date(new Date() - 60 * 60 * 24 * 7 * 1000),
     required: true,
+  },
+  role: {
+    type: String,
+    enum: ["basic", "ephi_user", "sysadmin"],
+    required: true,
+    default: "basic"
   }
 });
 
