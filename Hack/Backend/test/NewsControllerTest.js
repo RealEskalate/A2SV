@@ -183,7 +183,7 @@ describe("News API", () => {
     beforeEach(async () => {
       user = new User({
         _id: mongoose.Types.ObjectId(),
-        username: `${Date.now().toString()}`,
+        username: `${Date.now().toString()} ${Math.random()}`,
         password:
           "$2a$10$efmxm5o1v.inI.eStGGxgO1zHk.L6UoA9LEyYrRPhWkmTQPX8.NKO",
         gender: "FEMALE",
