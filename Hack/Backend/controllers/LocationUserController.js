@@ -7,6 +7,7 @@ const ProbabilityCalculator = require("../services/ProbabilityCalculator");
 const axios = require("axios");
 const mongoose = require("mongoose");
 const { StatisticsResource } = require("../models/StatisticsResourceModel.js");
+const { DistrictModel } = require("../models/DistrictModel");
 
 //Post a user location
 exports.post_location_user = async (req, res) => {
@@ -91,6 +92,20 @@ exports.post_location_user = async (req, res) => {
 
     check.TTL = Number(TTL);
     check.probability = probability;
+    // Identify district and save info
+    const district = await DistrictModel.findOne({
+      boundaries: {
+        $geoIntersects:{
+          $geometry: {
+            type: "Point",
+            coordinates: [longitude, latitude]
+          }
+        }
+      }
+    });
+    if (district){
+      check.location.district = district._id;
+    }
     await check.markModified("location");
     await check.save();
     user.latest_location_user = check._id;

@@ -17,6 +17,11 @@ const location_user = new schema({
       type: [Number],
       required: true,
     },
+    district: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "District",
+      required: false
+    }
   },
   TTL: {
     type: Date,
@@ -45,6 +50,11 @@ const demo_location_user = new schema({
       type: [Number],
       required: true,
     },
+    district: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "District",
+      required: false
+    }
   },
   TTL: {
     type: Date,
@@ -73,6 +83,11 @@ const stress_location_user = new schema({
       type: [Number],
       required: true,
     },
+    district: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "District",
+      required: false
+    }
   },
   TTL: {
     type: Date,
