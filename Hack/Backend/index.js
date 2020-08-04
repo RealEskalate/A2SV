@@ -27,6 +27,7 @@ const ethiopiaDataRouter = require("./routes/EthiopiaDataRoutes");
 const SymptomUserHistoryRouter = require("./routes/SymptomUserHistoryRoutes");
 const UpdatesRouter = require("./routes/UpdateRoutes");
 const LocalPolicyRouter = require("./routes/LocalPolicyRoutes");
+const DistrictRouter = require("./routes/DistrictRoutes");
 
 const logger = require("./middlewares/logger");
 const bodyParser = require("body-parser");
@@ -68,6 +69,7 @@ app.use(ethiopiaDataRouter);
 app.use(SymptomUserHistoryRouter);
 app.use(UpdatesRouter);
 app.use(LocalPolicyRouter);
+app.use(DistrictRouter);
 
 app.use(express.static("public"));
 app.use("/img", express.static(__dirname + "/img"));
