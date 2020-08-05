@@ -75,16 +75,20 @@ const setStartDate = () => {
   date.setDate(date.getDate() - 7);
   return "" + date.toISOString().slice(0, 10);
 };
-const getCountryStat = async (input_country_iso) => {
-  if(input_country_iso==null){
-    let probability= await world_probability();
-    return probability
+const getCountryStat = async (input_country) => {
+  if(input_country == null || input_country == "World"){
+    let probability = await world_probability();
+    return probability;
   }
 
   let startDate = setStartDate();
-  
-  let input_country = iso3to2[input_country_iso];
-  const country = isoConverter[input_country];
+  let iso3_country;
+  if (Object.keys(iso3to2).includes(input_country)){
+    iso3_country = iso3to2[input_country];
+    input_country = isoConverter[iso3_country];
+  }else{
+    iso3_country = Object.keys(isoConverter).find(key => isoConverter[key] == input_country)
+  }
   let result;
   let caseData = [];
   let dailyConfirmed = {};
@@ -92,7 +96,7 @@ const getCountryStat = async (input_country_iso) => {
     date: {
       $gte: new Date(Date.parse(startDate)),
     },
-    country_slug: input_country,
+    country_slug: iso3_country,
   });
   testData.forEach((test) => {
     var date =
@@ -107,7 +111,7 @@ const getCountryStat = async (input_country_iso) => {
       y: test.tests,
     });
   });
-  let map_datas = await MapData.findOne({ "Data.Country": country });
+  let map_datas = await MapData.findOne({ "Data.Country": input_country });
   try {
     if (map_datas) {
       Object.keys(map_datas.Data).forEach((item) => {

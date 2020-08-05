@@ -361,11 +361,15 @@ exports.get_symptomuser_by_user_id = async (req, res) => {
     }
 
     // sending probability
-
+    let country;
+    if (req.query.iso == null){
+      const user = await User.findById(req.params.user_id);
+      country = user.current_country;
+    }
     if (req.query.probability != null) {
       let probability = await ProbabilityCalculator.calculateProbability(
         symptoms_name,
-        req.query.iso
+        req.query.iso ? req.query.iso : country
       );
       res.status(200).send({ probability: probability, symptom_info: result });
     } else {
