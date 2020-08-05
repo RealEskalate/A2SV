@@ -74,8 +74,8 @@
                 v-if="feature.key === 'location'"
                 class="grey--text"
                 v-text="
-                  `[ ${selectedInfo.location.coordinates[0].toFixed(3)},
-                  ${selectedInfo.location.coordinates[1].toFixed(3)} ]`
+                  `[ ${selectedInfo.location.coordinates[1].toFixed(3)},
+                  ${selectedInfo.location.coordinates[0].toFixed(3)}]`
                 "
               />
               <span
