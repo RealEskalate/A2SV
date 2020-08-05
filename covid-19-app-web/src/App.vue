@@ -17,10 +17,19 @@ import AppFooter from "./components/core/AppFooter.vue";
 import AppBar from "./components/core/AppBar.vue";
 import Tour from "./components/core/Tour.vue";
 import store from "@/store/";
+import ajax from "./auth/ajax";
 
 export default {
   name: "App",
   components: { AppBar, AppFooter, Tour },
+  data() {
+    return {
+      interval: 0
+    };
+  },
+  beforeDestroy() {
+    clearInterval(this.interval);
+  },
   mounted() {
     //  [App.vue specific] When App.vue is finish loading finish the progress bar
     this.$Progress.finish();
@@ -29,10 +38,27 @@ export default {
       store.getters.getLanguagePreference === null
         ? "en"
         : store.getters.getLanguagePreference;
+
     if (this.firstVisit) {
       store.dispatch("setTour", { lang: this.$i18n.locale });
       this.$tours["appTour"].start();
     }
+
+    this.interval = setInterval(() => {
+      if (this.loggedInUser && navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(position => {
+          ajax
+            .post("user_locations", {
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude,
+              user_id: this.loggedInUser._id
+            })
+            .catch(function(err) {
+              console.log(err);
+            });
+        });
+      }
+    }, 10 * 60 * 1000);
   },
   created() {
     store.dispatch("fillCountriesList", { lang: this.$i18n.locale });
