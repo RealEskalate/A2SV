@@ -1,8 +1,6 @@
 const { Tests } = require("../models/TestModel");
 const { MapData } = require("../models/MapDataModel");
-const axios = require("axios");
-const HealthApiParser = require("./HealthApiParser");
-const Population = require("./../models/PopulationModel")
+const Statistics = require("./../models/StatisticsModel");
 
 const Ak = {
   cough: 0.861,
@@ -85,7 +83,7 @@ const getCountryStat = async (input_country) => {
 
   let startDate = setStartDate();
   let iso3_country;
-  if (Object.keys(iso3to2).includes(input_country)){
+  if (iso3to2[input_country] != null){
     iso3_country = iso3to2[input_country];
     input_country = isoConverter[iso3_country];
   }else{
@@ -142,9 +140,33 @@ const getCountryStat = async (input_country) => {
 };
 
 let world_probability= async ()=>{
-  const latestConfirmed = (await HealthApiParser.getWorldStatistics({query: {criteria: "Confirmed"}})).pop().y;
-  const latestPopuation = (await Population.find({ iso3: "WLD" }).sort("Year")).pop().population;
-  return latestConfirmed/latestPopuation;
+  const latestTest = await Statistics.aggregate([
+    {$match: {criteria:"TEST"}},
+    {$group: {
+      _id:"$country",
+      count: {$max: "$value"}
+    }}
+  ]);
+  let countryList = [];
+  let testCount = 0;
+  latestTest.forEach(testCountry => {
+    countryList.push(testCountry._id);
+    testCount += testCountry.count;
+  });
+  const latestConfirmed = await MapData.find({"Data.Country": {$in: countryList}});
+  let confirmedCount = 0;
+  for (country of latestConfirmed){
+    let tempConfirmedCount = 0;
+    for (date of Object.keys(country.Data)){
+      if (["Country", "Unique_Provinces"].includes(date)) continue
+
+      tempConfirmedCount = Math.max(tempConfirmedCount, country.Data[date][0]);
+    }
+    confirmedCount += tempConfirmedCount;
+  }
+  
+  console.log(confirmedCount/testCount);
+  return confirmedCount/testCount;
 }
 
 const calculateRate = (caseData, dailyConifrmed) => {
