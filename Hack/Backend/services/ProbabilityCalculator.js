@@ -1,6 +1,6 @@
 const { Tests } = require("../models/TestModel");
 const { MapData } = require("../models/MapDataModel");
-const axios = require("axios");
+const Statistics = require("./../models/StatisticsModel");
 
 const Ak = {
   cough: 0.861,
@@ -75,16 +75,20 @@ const setStartDate = () => {
   date.setDate(date.getDate() - 7);
   return "" + date.toISOString().slice(0, 10);
 };
-const getCountryStat = async (input_country_iso) => {
-  if(input_country_iso==null){
-    let probability= await world_probability();
-    return probability
+const getCountryStat = async (input_country) => {
+  if(input_country == null || input_country == "World"){
+    let probability = await world_probability();
+    return probability;
   }
 
   let startDate = setStartDate();
-  
-  let input_country = iso3to2[input_country_iso];
-  const country = isoConverter[input_country];
+  let iso3_country;
+  if (iso3to2[input_country] != null){
+    iso3_country = iso3to2[input_country];
+    input_country = isoConverter[iso3_country];
+  }else{
+    iso3_country = Object.keys(isoConverter).find(key => isoConverter[key] == input_country)
+  }
   let result;
   let caseData = [];
   let dailyConfirmed = {};
@@ -92,7 +96,7 @@ const getCountryStat = async (input_country_iso) => {
     date: {
       $gte: new Date(Date.parse(startDate)),
     },
-    country_slug: input_country,
+    country_slug: iso3_country,
   });
   testData.forEach((test) => {
     var date =
@@ -107,7 +111,7 @@ const getCountryStat = async (input_country_iso) => {
       y: test.tests,
     });
   });
-  let map_datas = await MapData.findOne({ "Data.Country": country });
+  let map_datas = await MapData.findOne({ "Data.Country": input_country });
   try {
     if (map_datas) {
       Object.keys(map_datas.Data).forEach((item) => {
@@ -136,24 +140,32 @@ const getCountryStat = async (input_country_iso) => {
 };
 
 let world_probability= async ()=>{
-  let request_url = "https://covid19api.io/api/v1/AllReports";
-  let confirmed_sum = 0;
-  let tests_sum = 0;
-  await axios.get(request_url).then((response) => {
-    let data = response.data.reports[0];
-    data.table[0].forEach((item) => {
-      if (
-        item.TotalCases &&
-        item.TotalTests &&
-        item.TotalCases != "" &&
-        item.TotalTests != ""
-      ) {
-        confirmed_sum += parseFloat(item.TotalCases.replace(/,/g, ""));
-        tests_sum += parseFloat(item.TotalTests.replace(/,/g, ""));
-      }
-    });
+  const latestTest = await Statistics.aggregate([
+    {$match: {criteria:"TEST"}},
+    {$group: {
+      _id:"$country",
+      count: {$max: "$value"}
+    }}
+  ]);
+  let countryList = [];
+  let testCount = 0;
+  latestTest.forEach(testCountry => {
+    countryList.push(testCountry._id);
+    testCount += testCountry.count;
   });
-  return confirmed_sum / tests_sum;
+  const latestConfirmed = await MapData.find({"Data.Country": {$in: countryList}});
+  let confirmedCount = 0;
+  for (country of latestConfirmed){
+    let tempConfirmedCount = 0;
+    for (date of Object.keys(country.Data)){
+      if (["Country", "Unique_Provinces"].includes(date)) continue
+
+      tempConfirmedCount = Math.max(tempConfirmedCount, country.Data[date][0]);
+    }
+    confirmedCount += tempConfirmedCount;
+  }
+
+  return confirmedCount/testCount;
 }
 
 const calculateRate = (caseData, dailyConifrmed) => {
