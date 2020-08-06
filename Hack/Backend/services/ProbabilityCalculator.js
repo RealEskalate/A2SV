@@ -164,8 +164,7 @@ let world_probability= async ()=>{
     }
     confirmedCount += tempConfirmedCount;
   }
-  
-  console.log(confirmedCount/testCount);
+
   return confirmedCount/testCount;
 }
 
