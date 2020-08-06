@@ -1,6 +1,8 @@
 const { Tests } = require("../models/TestModel");
 const { MapData } = require("../models/MapDataModel");
 const axios = require("axios");
+const HealthApiParser = require("./HealthApiParser");
+const Population = require("./../models/PopulationModel")
 
 const Ak = {
   cough: 0.861,
@@ -75,16 +77,20 @@ const setStartDate = () => {
   date.setDate(date.getDate() - 7);
   return "" + date.toISOString().slice(0, 10);
 };
-const getCountryStat = async (input_country_iso) => {
-  if(input_country_iso==null){
-    let probability= await world_probability();
-    return probability
+const getCountryStat = async (input_country) => {
+  if(input_country == null || input_country == "World"){
+    let probability = await world_probability();
+    return probability;
   }
 
   let startDate = setStartDate();
-  
-  let input_country = iso3to2[input_country_iso];
-  const country = isoConverter[input_country];
+  let iso3_country;
+  if (Object.keys(iso3to2).includes(input_country)){
+    iso3_country = iso3to2[input_country];
+    input_country = isoConverter[iso3_country];
+  }else{
+    iso3_country = Object.keys(isoConverter).find(key => isoConverter[key] == input_country)
+  }
   let result;
   let caseData = [];
   let dailyConfirmed = {};
@@ -92,7 +98,7 @@ const getCountryStat = async (input_country_iso) => {
     date: {
       $gte: new Date(Date.parse(startDate)),
     },
-    country_slug: input_country,
+    country_slug: iso3_country,
   });
   testData.forEach((test) => {
     var date =
@@ -107,7 +113,7 @@ const getCountryStat = async (input_country_iso) => {
       y: test.tests,
     });
   });
-  let map_datas = await MapData.findOne({ "Data.Country": country });
+  let map_datas = await MapData.findOne({ "Data.Country": input_country });
   try {
     if (map_datas) {
       Object.keys(map_datas.Data).forEach((item) => {
@@ -136,24 +142,9 @@ const getCountryStat = async (input_country_iso) => {
 };
 
 let world_probability= async ()=>{
-  let request_url = "https://covid19api.io/api/v1/AllReports";
-  let confirmed_sum = 0;
-  let tests_sum = 0;
-  await axios.get(request_url).then((response) => {
-    let data = response.data.reports[0];
-    data.table[0].forEach((item) => {
-      if (
-        item.TotalCases &&
-        item.TotalTests &&
-        item.TotalCases != "" &&
-        item.TotalTests != ""
-      ) {
-        confirmed_sum += parseFloat(item.TotalCases.replace(/,/g, ""));
-        tests_sum += parseFloat(item.TotalTests.replace(/,/g, ""));
-      }
-    });
-  });
-  return confirmed_sum / tests_sum;
+  const latestConfirmed = (await HealthApiParser.getWorldStatistics({query: {criteria: "Confirmed"}})).pop().y;
+  const latestPopuation = (await Population.find({ iso3: "WLD" }).sort("Year")).pop().population;
+  return latestConfirmed/latestPopuation;
 }
 
 const calculateRate = (caseData, dailyConifrmed) => {
