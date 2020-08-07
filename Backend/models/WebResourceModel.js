@@ -18,5 +18,5 @@ const web_resource_schema = new mongoose.Schema({
     }
 });
 
-const WebResource = mongoose.model("web resource", information_schema);
+const WebResource = mongoose.model("web resource", web_resource_schema);
 exports.WebResource = WebResource;
