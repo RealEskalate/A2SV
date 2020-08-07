@@ -52,12 +52,6 @@ class DataAnalytics extends React.Component {
       selected_rate_end_date: new Date().toISOString().split("T")[0],
       selected_perMillion_start_date: "",
       selected_perMillion_end_date: new Date().toISOString().split("T")[0],
-      placeholder_daily_start_date: "",
-      placeholder_daily_end_date: new Date().toISOString().split("T")[0],
-      placeholder_total_start_date: "",
-      placeholder_total_end_date: new Date().toISOString().split("T")[0],
-      placeholder_percentage_start_date: "",
-      placeholder_percentage_end_date: new Date().toISOString().split("T")[0],
       selectedIndex_daily: 0,
       selectedIndex_total: 0,
       selectedIndex_perMillion: 0,
@@ -76,7 +70,6 @@ class DataAnalytics extends React.Component {
       currLanguage: "English",
       currLangCode: languageStore.getState(),
       popUpVisible: false,
-
       Months: [
         strings.Jan,
         strings.Feb,
@@ -94,7 +87,7 @@ class DataAnalytics extends React.Component {
       countries: [],
       totalGraphLoading: false,
       dailyGraphLoading: false,
-      rateGraphLoading: false,
+      perMillionGraphLoading: false,
       totalLoading: true,
       testCountDataExist: false,
       discriptionVisiblity: false,
@@ -131,12 +124,11 @@ class DataAnalytics extends React.Component {
     await this.getTotalData()
       .then(this.fetchTotalStats())
       .then(this.fetchDailyNewsCases())
-      .then(this.fetchRateStatistics())
       .then(this.getCountryList())
       .then(this.fetchPerMillionStats())
       .then(this.fetchLastSymptomUpdate())
       .then(this.checkIfDataExist(criterias.numberOfTests)) //check if number of test case data exist
-      .then(this.getDescriptions)
+      .then(this.getDescriptions())
       .catch((error) => {
         console.log("Concurrency Issue");
       });
@@ -209,7 +201,6 @@ class DataAnalytics extends React.Component {
           "&country=" +
           this.state.searchedCountry +
           "&daily=true";
-    console.log(query);
     await fetch(query, {
       method: "GET",
       headers: {
@@ -221,7 +212,6 @@ class DataAnalytics extends React.Component {
       .then((response) => response.json())
       .then(async (json) => {
         if (json !== undefined && json.length !== 0) {
-          console.log(json);
           await newThis.populateDailyData(json);
           newThis.forceUpdate(); //refresh page
           newThis.setState({
@@ -240,7 +230,7 @@ class DataAnalytics extends React.Component {
   fetchPerMillionStats = async () => {
     //console.log("Bearer " + userIDStore.getState().userToken);
     let newThis = this;
-    this.setState({ totalGraphLoading: true });
+    this.setState({ perMillionGraphLoading: true });
     var query =
       this.state.selected_perMillion_start_date.length > 1 &&
       this.state.selected_perMillion_end_date.length > 1
@@ -273,7 +263,7 @@ class DataAnalytics extends React.Component {
           await newThis.populatePercentageData(json);
           newThis.forceUpdate(); //refresh page
           newThis.setState({
-            totalGraphLoading: false,
+            perMillionGraphLoading: false,
           });
         } else {
           newThis.fetchPerMillionStats();
@@ -777,6 +767,7 @@ class DataAnalytics extends React.Component {
   };
 
   setTotalStatsSelection = async (index) => {
+    console.log("Indexxxx " + index);
     var minDate = new Date();
     switch (index) {
       case 0:
@@ -806,6 +797,7 @@ class DataAnalytics extends React.Component {
   };
 
   setPerMillionStatsSelection = async (index) => {
+    console.log("Indexxxx " + index);
     var minDate = new Date();
     switch (index) {
       case 0:
@@ -1750,6 +1742,7 @@ class DataAnalytics extends React.Component {
                   <Divider />
                 </>
               )} */}
+
               <TabView
                 style={{ marginHorizontal: 10 }}
                 selectedIndex={this.state.selectedIndex_perMillion}
@@ -1788,7 +1781,7 @@ class DataAnalytics extends React.Component {
                   borderRadius: 10,
                 }}
               />
-              {this.state.totalGraphLoading ? (
+              {this.state.perMillionGraphLoading ? (
                 <Layout
                   style={{
                     width: Dimensions.get("window").width,

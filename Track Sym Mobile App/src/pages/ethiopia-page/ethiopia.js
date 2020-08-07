@@ -37,7 +37,7 @@ import { ThemeContext } from "../../../assets/themes/theme-context";
 import AsyncStorage from "@react-native-community/async-storage";
 const CalendarIcon = (props) => <Icon {...props} name="calendar" />;
 
-class DataAnalytics extends React.Component {
+class Ethiopia extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -131,12 +131,11 @@ class DataAnalytics extends React.Component {
     await this.getTotalData()
       .then(this.fetchTotalStats())
       .then(this.fetchDailyNewsCases())
-      .then(this.fetchRateStatistics())
       .then(this.getCountryList())
       .then(this.fetchPerMillionStats())
       .then(this.fetchLastSymptomUpdate())
       .then(this.checkIfDataExist(criterias.numberOfTests)) //check if number of test case data exist
-      .then(this.getDescriptions)
+      .then(this.getDescriptions())
       .catch((error) => {
         console.log("Concurrency Issue");
       });
@@ -2010,4 +2009,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DataAnalytics;
+export default Ethiopia;
