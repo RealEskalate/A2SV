@@ -1,9 +1,12 @@
 const {WebResource} = require("../models/WebResourceModel");
+const mongoose = require("mongoose");
 
 exports.get_web_resource = async(req, res) => {
     const filter = {}
     if (req.query.language){
         filter.language = req.query.language;
+    }else{
+        filter.language = "English";
     }
     if (req.query.title){
         filter.title = req.query.title;
