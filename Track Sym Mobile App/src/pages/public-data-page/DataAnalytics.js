@@ -23,8 +23,8 @@ import {
   Layout,
   Divider,
   Datepicker as KittenDatepicker,
-  Popover,
-  Avatar,
+  TabView,
+  Tab,
   Icon,
 } from "@ui-kitten/components";
 import * as eva from "@eva-design/eva";
@@ -45,19 +45,22 @@ class DataAnalytics extends React.Component {
       selected_filter_daily_status: criterias.confirmed,
       selected_filter_rate: criterias.recoveryRate,
       selected_daily_start_date: "",
-      selected_daily_end_date: "",
+      selected_daily_end_date: new Date().toISOString().split("T")[0],
       selected_total_start_date: "",
-      selected_total_end_date: "",
+      selected_total_end_date: new Date().toISOString().split("T")[0],
       selected_rate_start_date: "",
-      selected_rate_end_date: "",
-      selected_percentage_start_date: "",
-      selected_percentage_end_date: "",
+      selected_rate_end_date: new Date().toISOString().split("T")[0],
+      selected_perMillion_start_date: "",
+      selected_perMillion_end_date: new Date().toISOString().split("T")[0],
       placeholder_daily_start_date: "",
-      placeholder_daily_end_date: "",
+      placeholder_daily_end_date: new Date().toISOString().split("T")[0],
       placeholder_total_start_date: "",
-      placeholder_total_end_date: "",
+      placeholder_total_end_date: new Date().toISOString().split("T")[0],
       placeholder_percentage_start_date: "",
-      placeholder_percentage_end_date: "",
+      placeholder_percentage_end_date: new Date().toISOString().split("T")[0],
+      selectedIndex_daily: 0,
+      selectedIndex_total: 0,
+      selectedIndex_perMillion: 0,
       graph_label: [""],
       data_set: [0],
       daily_newCases_label: [""],
@@ -109,6 +112,7 @@ class DataAnalytics extends React.Component {
   }
   static contextType = ThemeContext;
   componentDidMount = async () => {
+    console.log(this.state.selected_daily_start_date);
     await this.setState({ currLangCode: languageStore.getState() });
     switch (this.state.currLangCode) {
       case "am":
@@ -129,7 +133,7 @@ class DataAnalytics extends React.Component {
       .then(this.fetchDailyNewsCases())
       .then(this.fetchRateStatistics())
       .then(this.getCountryList())
-      .then(this.fetchPercentageStats())
+      .then(this.fetchPerMillionStats())
       .then(this.fetchLastSymptomUpdate())
       .then(this.checkIfDataExist(criterias.numberOfTests)) //check if number of test case data exist
       .then(this.getDescriptions)
@@ -174,10 +178,6 @@ class DataAnalytics extends React.Component {
           newThis.forceUpdate(); //refresh page
           newThis.setState({
             totalGraphLoading: false,
-            selected_total_start_date: json[0].t.split("T")[0],
-            selected_total_end_date: json[json.length - 1].t.split("T")[0],
-            placeholder_total_start_date: json[0].t.split("T")[0],
-            placeholder_total_end_date: json[json.length - 1].t.split("T")[0],
           });
         } else {
           newThis.fetchTotalStats();
@@ -188,22 +188,70 @@ class DataAnalytics extends React.Component {
       });
   };
 
+  //fetch daily new cases reported
+  fetchDailyNewsCases = async () => {
+    let newThis = this;
+    this.setState({ dailyGraphLoading: true });
+    var query =
+      this.state.selected_daily_start_date.length > 1 &&
+      this.state.selected_daily_end_date.length > 1
+        ? "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/statistics?criteria=" +
+          this.state.selected_filter_daily_status +
+          "&country=" +
+          this.state.searchedCountry +
+          "&start_date=" +
+          this.state.selected_daily_start_date +
+          "&end_date=" +
+          this.state.selected_daily_end_date +
+          "&daily=true"
+        : "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/statistics?criteria=" +
+          this.state.selected_filter_daily_status +
+          "&country=" +
+          this.state.searchedCountry +
+          "&daily=true";
+    console.log(query);
+    await fetch(query, {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + userIDStore.getState().userToken,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then(async (json) => {
+        if (json !== undefined && json.length !== 0) {
+          console.log(json);
+          await newThis.populateDailyData(json);
+          newThis.forceUpdate(); //refresh page
+          newThis.setState({
+            dailyGraphLoading: false,
+          });
+        } else {
+          newThis.fetchDailyNewsCases();
+        }
+      })
+      .catch((error) => {
+        Alert.alert(strings.ConnectionProblem, strings.CouldNotConnectToServer);
+      });
+  };
+
   //gets statistics data based on selected criteria and populate UI
-  fetchPercentageStats = async () => {
+  fetchPerMillionStats = async () => {
     //console.log("Bearer " + userIDStore.getState().userToken);
     let newThis = this;
     this.setState({ totalGraphLoading: true });
     var query =
-      this.state.selected_percentage_start_date.length > 1 &&
-      this.state.selected_percentage_end_date.length > 1
+      this.state.selected_perMillion_start_date.length > 1 &&
+      this.state.selected_perMillion_end_date.length > 1
         ? "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/statistics?criteria=" +
           this.state.selected_filter +
           "&country=" +
           this.state.searchedCountry +
           "&start_date=" +
-          this.state.selected_percentage_start_date +
+          this.state.selected_perMillion_start_date +
           "&end_date=" +
-          this.state.selected_percentage_end_date +
+          this.state.selected_perMillion_end_date +
           "&perMillion=true"
         : "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/statistics?criteria=" +
           this.state.selected_filter +
@@ -226,15 +274,9 @@ class DataAnalytics extends React.Component {
           newThis.forceUpdate(); //refresh page
           newThis.setState({
             totalGraphLoading: false,
-            selected_percentage_start_date: json[0].t.split("T")[0],
-            selected_percentage_end_date: json[json.length - 1].t.split("T")[0],
-            placeholder_percentage_start_date: json[0].t.split("T")[0],
-            placeholder_percentage_end_date: json[json.length - 1].t.split(
-              "T"
-            )[0],
           });
         } else {
-          newThis.fetchPercentageStats();
+          newThis.fetchPerMillionStats();
         }
       })
       .catch((error) => {
@@ -406,55 +448,6 @@ class DataAnalytics extends React.Component {
       });
   };
 
-  //fetch daily new cases reported
-  fetchDailyNewsCases = async () => {
-    let newThis = this;
-    this.setState({ dailyGraphLoading: true });
-    var query =
-      this.state.selected_daily_start_date.length > 1 &&
-      this.state.selected_daily_end_date.length > 1
-        ? "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/statistics?criteria=" +
-          this.state.selected_filter_daily_status +
-          "&country=" +
-          this.state.searchedCountry +
-          "&start_date=" +
-          this.state.selected_daily_start_date +
-          "&end_date=" +
-          this.state.selected_daily_end_date +
-          "&daily=true"
-        : "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/statistics?criteria=" +
-          this.state.selected_filter_daily_status +
-          "&country=" +
-          this.state.searchedCountry +
-          "&daily=true";
-    await fetch(query, {
-      method: "GET",
-      headers: {
-        Authorization: "Bearer " + userIDStore.getState().userToken,
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
-      .then(async (json) => {
-        if (json !== undefined && json.length !== 0) {
-          await newThis.populateDailyData(json);
-          newThis.forceUpdate(); //refresh page
-          newThis.setState({
-            dailyGraphLoading: false,
-            selected_daily_start_date: json[0].t.split("T")[0],
-            selected_daily_end_date: json[json.length - 1].t.split("T")[0],
-            placeholder_daily_start_date: json[0].t.split("T")[0],
-            placeholder_daily_end_date: json[json.length - 1].t.split("T")[0],
-          });
-        } else {
-          newThis.fetchDailyNewsCases();
-        }
-      })
-      .catch((error) => {
-        Alert.alert(strings.ConnectionProblem, strings.CouldNotConnectToServer);
-      });
-  };
   //populate daily data
   populateDailyData = (objList) => {
     console.log("Data length " + objList.length);
@@ -754,6 +747,92 @@ class DataAnalytics extends React.Component {
       });
   };
 
+  setDailyStatsSelection = async (index) => {
+    var minDate = new Date();
+    switch (index) {
+      case 0:
+        await minDate.setDate(minDate.getDate() - 9);
+        await this.setState({
+          selectedIndex_daily: index,
+          selected_daily_start_date: minDate.toISOString().split("T")[0],
+        });
+        break;
+      case 1:
+        await minDate.setMonth(minDate.getMonth() - 1);
+        await this.setState({
+          selectedIndex_daily: index,
+          selected_daily_start_date: minDate.toISOString().split("T")[0],
+        });
+        break;
+      case 2:
+        await minDate.setMonth(minDate.getMonth() - 3);
+        await this.setState({
+          selectedIndex_daily: index,
+          selected_daily_start_date: minDate.toISOString().split("T")[0],
+        });
+        break;
+    }
+
+    this.fetchDailyNewsCases();
+  };
+
+  setTotalStatsSelection = async (index) => {
+    var minDate = new Date();
+    switch (index) {
+      case 0:
+        await minDate.setDate(minDate.getDate() - 9);
+        await this.setState({
+          selectedIndex_total: index,
+          selected_total_start_date: minDate.toISOString().split("T")[0],
+        });
+        break;
+      case 1:
+        await minDate.setMonth(minDate.getMonth() - 1);
+        await this.setState({
+          selectedIndex_total: index,
+          selected_total_start_date: minDate.toISOString().split("T")[0],
+        });
+        break;
+      case 2:
+        await minDate.setMonth(minDate.getMonth() - 3);
+        await this.setState({
+          selectedIndex_total: index,
+          selected_total_start_date: minDate.toISOString().split("T")[0],
+        });
+        break;
+    }
+
+    this.fetchTotalStats();
+  };
+
+  setPerMillionStatsSelection = async (index) => {
+    var minDate = new Date();
+    switch (index) {
+      case 0:
+        await minDate.setDate(minDate.getDate() - 9);
+        await this.setState({
+          selectedIndex_perMillion: index,
+          selected_perMillion_start_date: minDate.toISOString().split("T")[0],
+        });
+        break;
+      case 1:
+        await minDate.setMonth(minDate.getMonth() - 1);
+        await this.setState({
+          selectedIndex_perMillion: index,
+          selected_perMillion_start_date: minDate.toISOString().split("T")[0],
+        });
+        break;
+      case 2:
+        await minDate.setMonth(minDate.getMonth() - 3);
+        await this.setState({
+          selectedIndex_perMillion: index,
+          selected_perMillion_start_date: minDate.toISOString().split("T")[0],
+        });
+        break;
+    }
+
+    this.fetchPerMillionStats();
+  };
   //fetch description of graphs
   getCriteriaDescriptions = async (title, position) => {
     let newThis = this;
@@ -910,11 +989,6 @@ class DataAnalytics extends React.Component {
                 disabled={true}
                 style={{ alignItems: "center" }}
               >
-                <Image
-                  source={require("../../../assets/images/sick.png")}
-                  style={{ height: 30, width: 30 }}
-                />
-
                 {this.state.totalLoading ? (
                   <ActivityIndicator
                     size="small"
@@ -945,11 +1019,6 @@ class DataAnalytics extends React.Component {
                 disabled={true}
                 style={{ alignItems: "center" }}
               >
-                <Image
-                  source={require("../../../assets/images/recovered.png")}
-                  style={{ height: 30, width: 30 }}
-                />
-
                 {this.state.totalLoading ? (
                   <ActivityIndicator
                     size="small"
@@ -979,11 +1048,6 @@ class DataAnalytics extends React.Component {
                 disabled={true}
                 style={{ alignItems: "center" }}
               >
-                <Image
-                  source={require("../../../assets/images/angel.png")}
-                  style={{ height: 30, width: 30 }}
-                />
-
                 {this.state.totalLoading ? (
                   <ActivityIndicator
                     size="small"
@@ -1041,11 +1105,6 @@ class DataAnalytics extends React.Component {
               }}
             >
               <View style={{ alignItems: "center", flexWrap: "wrap" }}>
-                <Image
-                  source={require("../../../assets/images/sick.png")}
-                  style={{ height: 30, width: 30 }}
-                />
-
                 {this.state.totalLoading ? (
                   <ActivityIndicator
                     size="small"
@@ -1069,11 +1128,6 @@ class DataAnalytics extends React.Component {
                 </Text>
               </View>
               <View style={{ alignItems: "center", flexWrap: "wrap" }}>
-                <Image
-                  source={require("../../../assets/images/recovered.png")}
-                  style={{ height: 30, width: 30 }}
-                />
-
                 {this.state.totalLoading ? (
                   <ActivityIndicator
                     size="small"
@@ -1102,11 +1156,6 @@ class DataAnalytics extends React.Component {
                 </Text>
               </View>
               <View style={{ alignItems: "center", flexWrap: "wrap" }}>
-                <Image
-                  source={require("../../../assets/images/angel.png")}
-                  style={{ height: 30, width: 30 }}
-                />
-
                 {this.state.totalLoading ? (
                   <ActivityIndicator
                     size="small"
@@ -1238,113 +1287,15 @@ class DataAnalytics extends React.Component {
                 </>
               )}
 
-              <Layout
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  marginHorizontal: 10,
-                  marginTop: 5,
-                }}
+              <TabView
+                style={{ marginHorizontal: 10 }}
+                selectedIndex={this.state.selectedIndex_daily}
+                onSelect={(index) => this.setDailyStatsSelection(index)}
               >
-                <Layout style={{ flexDirection: "row" }}>
-                  <DatePicker
-                    date={this.state.selected_daily_start_date}
-                    mode="date" //The enum of date, datetime and
-                    placeholder={this.state.placeholder_daily_start_date}
-                    placeholderTextColor={
-                      customTheme.theme === "light" ? "black" : "white"
-                    }
-                    maxDate={
-                      this.state.selected_daily_end_date === ""
-                        ? this.getCurrentDate()
-                        : this.state.selected_daily_end_date
-                    }
-                    format="YYYY-MM-DD"
-                    customStyles={{
-                      dateIcon: {
-                        position: "absolute",
-                        left: 0,
-                        top: 4,
-                        marginLeft: 0,
-                      },
-                      dateInput: {
-                        marginLeft: 36,
-                        borderRadius: 10,
-                        height: 30,
-                        borderColor: "#000",
-                      },
-                      placeholderText: {
-                        color:
-                          customTheme.theme === "light" ? "black" : "white",
-                      },
-                    }}
-                    onDateChange={async (date) => {
-                      await this.setState({ selected_daily_start_date: date });
-                      this.fetchDailyNewsCases();
-                    }}
-                  />
-
-                  {/* <KittenDatepicker
-                    placeholder='Pick Start Date'
-                    
-                    date={this.state.selected_daily_start_date}
-                    onSelect={(nextDate) => {
-                      this.setState({ selected_daily_start_date: nextDate });
-                      this.fetchDailyNewsCases();
-                    }}
-                    accessoryRight={CalendarIcon}
-                  /> */}
-                </Layout>
-                <Layout style={{ flexDirection: "row" }}>
-                  <DatePicker
-                    date={this.state.selected_daily_end_date}
-                    mode="date" //The enum of date, datetime and time
-                    placeholder={this.state.placeholder_daily_end_date}
-                    format="YYYY-MM-DD"
-                    confirmBtnText="Confirm"
-                    minDate={
-                      this.state.selected_daily_start_date === ""
-                        ? this.getMinimumDate
-                        : this.state.selected_daily_start_date
-                    }
-                    maxDate={this.getCurrentDate()}
-                    cancelBtnText="Cancel"
-                    customStyles={{
-                      dateIcon: {
-                        position: "absolute",
-                        left: 0,
-                        top: 4,
-                        marginLeft: 0,
-                      },
-                      dateInput: {
-                        marginLeft: 36,
-                        borderRadius: 10,
-                        height: 30,
-                        borderColor: "#000000",
-                      },
-                      placeholderText: {
-                        color:
-                          customTheme.theme === "light" ? "black" : "white",
-                      },
-                    }}
-                    onDateChange={async (date) => {
-                      await this.setState({ selected_daily_end_date: date });
-                      this.fetchDailyNewsCases();
-                    }}
-                  />
-                  {/* <KittenDatepicker
-                    placeholder='Pick Start Date'
-                    
-                    date={this.state.selected_daily_start_date}
-                    onSelect={(nextDate) => {
-                      this.setState({ selected_daily_start_date: nextDate });
-                      this.fetchDailyNewsCases();
-                    }}
-                    accessoryRight={CalendarIcon}
-                  /> */}
-                </Layout>
-              </Layout>
+                <Tab title="Last Week"></Tab>
+                <Tab title="Last Month"></Tab>
+                <Tab title="Last Three Month"></Tab>
+              </TabView>
 
               <LineChart
                 data={{
@@ -1574,90 +1525,15 @@ class DataAnalytics extends React.Component {
                 </>
               )}
 
-              <Layout
-                style={{
-                  flexDirection: "row",
-                  marginHorizontal: 10,
-                  marginTop: 5,
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                }}
+              <TabView
+                style={{ marginHorizontal: 10 }}
+                selectedIndex={this.state.selectedIndex_total}
+                onSelect={(index) => this.setTotalStatsSelection(index)}
               >
-                <Layout style={{ flexDirection: "row", marginRight: 20 }}>
-                  <DatePicker
-                    date={this.state.selected_total_start_date}
-                    mode="date" //The enum of date, datetime and
-                    placeholder={this.state.placeholder_total_start_date}
-                    maxDate={
-                      this.state.selected_total_end_date === ""
-                        ? this.getCurrentDate()
-                        : this.state.selected_total_end_date
-                    }
-                    format="YYYY-MM-DD"
-                    customStyles={{
-                      dateIcon: {
-                        position: "absolute",
-                        left: 0,
-                        top: 4,
-                        marginLeft: 0,
-                      },
-                      dateInput: {
-                        marginLeft: 36,
-                        borderRadius: 10,
-                        height: 30,
-                        borderColor: "#000000",
-                      },
-                      placeholderText: {
-                        color:
-                          customTheme.theme === "light" ? "black" : "white",
-                      },
-                    }}
-                    onDateChange={async (date) => {
-                      await this.setState({ selected_total_start_date: date });
-                      this.fetchTotalStats();
-                    }}
-                  />
-                </Layout>
-                <Layout style={{ flexDirection: "row" }}>
-                  <DatePicker
-                    date={this.state.selected_total_end_date}
-                    mode="date" //The enum of date, datetime and time
-                    placeholder={this.state.placeholder_total_end_date}
-                    format="YYYY-MM-DD"
-                    minDate={
-                      this.state.selected_total_start_date === ""
-                        ? this.getMinimumDate()
-                        : this.state.selected_total_start_date
-                    }
-                    maxDate={this.getCurrentDate()}
-                    confirmBtnText="Confirm"
-                    cancelBtnText="Cancel"
-                    customStyles={{
-                      dateIcon: {
-                        position: "absolute",
-                        left: 0,
-                        top: 4,
-                        marginLeft: 0,
-                      },
-                      dateInput: {
-                        marginLeft: 36,
-                        borderRadius: 10,
-                        height: 30,
-                        borderColor: "#000000",
-                      },
-                      placeholderText: {
-                        color:
-                          customTheme.theme === "light" ? "black" : "white",
-                      },
-                    }}
-                    onDateChange={async (date) => {
-                      await this.setState({ selected_total_end_date: date });
-                      this.fetchTotalStats();
-                    }}
-                  />
-                </Layout>
-              </Layout>
-
+                <Tab title="Last Week"></Tab>
+                <Tab title="Last Month"></Tab>
+                <Tab title="Last Three Month"></Tab>
+              </TabView>
               <LineChart
                 data={{
                   labels: this.state.graph_label,
@@ -1874,94 +1750,15 @@ class DataAnalytics extends React.Component {
                   <Divider />
                 </>
               )} */}
-
-              <Layout
-                style={{
-                  flexDirection: "row",
-                  marginHorizontal: 10,
-                  marginTop: 5,
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                }}
+              <TabView
+                style={{ marginHorizontal: 10 }}
+                selectedIndex={this.state.selectedIndex_perMillion}
+                onSelect={(index) => this.setPerMillionStatsSelection(index)}
               >
-                <Layout style={{ flexDirection: "row", marginRight: 20 }}>
-                  <DatePicker
-                    date={this.state.selected_percentage_start_date}
-                    mode="date" //The enum of date, datetime and
-                    placeholder={this.state.placeholder_percentage_start_date}
-                    maxDate={
-                      this.state.selected_percentage_end_date === ""
-                        ? this.getCurrentDate()
-                        : this.state.selected_percentage_end_date
-                    }
-                    format="YYYY-MM-DD"
-                    customStyles={{
-                      dateIcon: {
-                        position: "absolute",
-                        left: 0,
-                        top: 4,
-                        marginLeft: 0,
-                      },
-                      dateInput: {
-                        marginLeft: 36,
-                        borderRadius: 10,
-                        height: 30,
-                        borderColor: "#000000",
-                      },
-                      placeholderText: {
-                        color:
-                          customTheme.theme === "light" ? "black" : "white",
-                      },
-                    }}
-                    onDateChange={async (date) => {
-                      await this.setState({
-                        selected_percentage_start_date: date,
-                      });
-                      this.fetchPercentageStats();
-                    }}
-                  />
-                </Layout>
-                <Layout style={{ flexDirection: "row" }}>
-                  <DatePicker
-                    date={this.state.selected_percentage_end_date}
-                    mode="date" //The enum of date, datetime and time
-                    placeholder={this.state.placeholder_percentage_end_date}
-                    format="YYYY-MM-DD"
-                    minDate={
-                      this.state.selected_percentage_start_date === ""
-                        ? this.getMinimumDate()
-                        : this.state.selected_percentage_start_date
-                    }
-                    maxDate={this.getCurrentDate()}
-                    confirmBtnText="Confirm"
-                    cancelBtnText="Cancel"
-                    customStyles={{
-                      dateIcon: {
-                        position: "absolute",
-                        left: 0,
-                        top: 4,
-                        marginLeft: 0,
-                      },
-                      dateInput: {
-                        marginLeft: 36,
-                        borderRadius: 10,
-                        height: 30,
-                        borderColor: "#000000",
-                      },
-                      placeholderText: {
-                        color:
-                          customTheme.theme === "light" ? "black" : "white",
-                      },
-                    }}
-                    onDateChange={async (date) => {
-                      await this.setState({
-                        selected_percentage_end_date: date,
-                      });
-                      this.fetchPercentageStats();
-                    }}
-                  />
-                </Layout>
-              </Layout>
+                <Tab title="Last Week"></Tab>
+                <Tab title="Last Month"></Tab>
+                <Tab title="Last Three Month"></Tab>
+              </TabView>
 
               <LineChart
                 data={{
@@ -2025,7 +1822,7 @@ class DataAnalytics extends React.Component {
                       selected_filter: criterias.confirmed,
                     });
 
-                    this.fetchPercentageStats();
+                    this.fetchPerMillionStats();
                   }}
                 >
                   {strings.Confirmed}
@@ -2042,7 +1839,7 @@ class DataAnalytics extends React.Component {
                       selected_filter: criterias.recoveries,
                     });
 
-                    this.fetchPercentageStats();
+                    this.fetchPerMillionStats();
                   }}
                 >
                   {strings.Recovered}
@@ -2058,7 +1855,7 @@ class DataAnalytics extends React.Component {
                     await this.setState({
                       selected_filter: criterias.deaths,
                     });
-                    this.fetchPercentageStats();
+                    this.fetchPerMillionStats();
                   }}
                 >
                   {strings.Deaths}
@@ -2075,7 +1872,7 @@ class DataAnalytics extends React.Component {
                       await this.setState({
                         selected_filter: criterias.numberOfTests,
                       });
-                      this.fetchPercentageStats();
+                      this.fetchPerMillionStats();
                     }}
                   >
                     {strings.TestCounts}
@@ -2225,6 +2022,11 @@ const styles = StyleSheet.create({
   },
   backdrop: {
     backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  tabContainer: {
+    height: 64,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
 
