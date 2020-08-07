@@ -28,6 +28,7 @@ const SymptomUserHistoryRouter = require("./routes/SymptomUserHistoryRoutes");
 const UpdatesRouter = require("./routes/UpdateRoutes");
 const LocalPolicyRouter = require("./routes/LocalPolicyRoutes");
 const DistrictRouter = require("./routes/DistrictRoutes");
+const WebResourceRouter = require("./routes/WebRoutes");
 
 const logger = require("./middlewares/logger");
 const bodyParser = require("body-parser");
@@ -70,6 +71,7 @@ app.use(SymptomUserHistoryRouter);
 app.use(UpdatesRouter);
 app.use(LocalPolicyRouter);
 app.use(DistrictRouter);
+app.use(WebResourceRouter);
 
 app.use(express.static("public"));
 app.use("/img", express.static(__dirname + "/img"));
