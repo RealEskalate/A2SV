@@ -12,7 +12,8 @@ const slides = [
   {
     key: 1,
     title: "WELCOME TO TRACK SYM",
-    text: "See how many symptomatic individuals are in your area, and make informed decisions",
+    text:
+      "See how many symptomatic individuals are in your area, and make informed decisions",
     image: require("../../../assets/images/slide4.png"),
     backgroundColor: "#29a2f8",
   },
@@ -203,7 +204,7 @@ export default class Introduction extends React.Component {
   saveAndGotoLogin = async () => {
     try {
       await AsyncStorage.setItem("isFirstInterance", "false");
-      this.props.navigation.navigate("LoginScreen");
+      this.props.navigation.navigate("UserOption");
     } catch (er) {
       alert(er);
     }
