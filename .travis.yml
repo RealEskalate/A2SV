@@ -1,4 +1,4 @@
-before_install: cd Hack/Backend
+before_install: cd Backend
 language: node_js
 node_js: 
   - "stable"
