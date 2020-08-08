@@ -100,6 +100,8 @@ class DataAnalytics extends React.Component {
       discriptionVisiblity: false,
       staticsDescription: [],
       staticsDescriptionLoading: true,
+      permillonStaticsDescription: [],
+      permillonStaticsDescriptionLoading: true,
       discriptionTitle: "",
       description: "",
       kittenStartDate: new Date(),
@@ -136,7 +138,8 @@ class DataAnalytics extends React.Component {
       .then(this.fetchPerMillionStats())
       .then(this.fetchLastSymptomUpdate())
       .then(this.checkIfDataExist(criterias.numberOfTests)) //check if number of test case data exist
-      .then(this.getDescriptions)
+      .then(this.getDescriptions())
+      .then(this.getPermillionDescriptions())
       .catch((error) => {
         console.log("Concurrency Issue");
       });
@@ -747,6 +750,37 @@ class DataAnalytics extends React.Component {
       });
   };
 
+  getPermillionDescriptions = async () => {
+    let newThis = this;
+    await fetch(
+      "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/resources/statistics-description?title=per-million&language=" + this.state.currLanguage,
+      {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + userIDStore.getState().userToken,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .then((response) => response.json())
+      .then(async (json) => {
+        if (json !== undefined && json.length !== 0) {
+          await newThis.setState({
+            permillonStaticsDescription: json,
+            permillonStaticsDescriptionLoading: false,
+          });
+        } else {
+          newThis.getPermillionDescriptions();
+        }
+      })
+      .catch((error) => {
+        Alert.alert(strings.ConnectionProblem, strings.CouldNotConnectToServer);
+        // newThis.setState({
+        //   staticsDescriptionLoading: false,
+        // });
+      });
+  };
   setDailyStatsSelection = async (index) => {
     var minDate = new Date();
     switch (index) {
@@ -1718,7 +1752,7 @@ class DataAnalytics extends React.Component {
               </Layout>
               <Divider />
 
-              {/* {this.state.staticsDescriptionLoading ? (
+              {this.state.permillonStaticsDescriptionLoading ? (
                 <Layout
                   style={{
                     flexDirection: "row",
@@ -1743,13 +1777,13 @@ class DataAnalytics extends React.Component {
                     style={{ fontSize: 16, margin: 5, padding: 5 }}
                   >
                     {
-                      this.state.staticsDescription[0].descriptions[0]
+                      this.state.permillonStaticsDescription[0]
                         .description
                     }
                   </Text>
                   <Divider />
                 </>
-              )} */}
+              )}
               <TabView
                 style={{ marginHorizontal: 10 }}
                 selectedIndex={this.state.selectedIndex_perMillion}
@@ -1880,46 +1914,47 @@ class DataAnalytics extends React.Component {
                 ) : null}
               </Layout>
               {/* <Layout padding={10} style={{ marginBottom: 20 }}>
-                {this.state.staticsDescriptionLoading ? (
+                {this.state.permillonStaticsDescriptionLoading ? (
                   <Layout flexDirection="row" alignSelf="center">
                     <ActivityIndicator size="small" color="gray" />
                     <Text style={{ fontSize: 16, color: "gray" }}>
                       {strings.LoadingCriteriaDescription}
                     </Text>
                   </Layout>
-                ) : this.state.selected_filter === criterias.confirmed ? (
+                ) : this.state.permillonStaticsDescription[0].criteria.length!==0 ?
+                (this.state.selected_filter === criterias.confirmed ? (
                   <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
-                    {this.state.staticsDescription[0].descriptions[0]
+                    {this.state.permillonStaticsDescription[0]
                       .criteria[1].name +
                       ": " +
-                      this.state.staticsDescription[0].descriptions[0]
+                      this.state.permillonStaticsDescription[0]
                         .criteria[1].explanation}
                   </Text>
                 ) : this.state.selected_filter === criterias.recoveries ? (
                   <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
-                    {this.state.staticsDescription[0].descriptions[0]
+                    {this.state.permillonStaticsDescription[0]
                       .criteria[3].name +
                       ": " +
-                      this.state.staticsDescription[0].descriptions[0]
+                      this.state.permillonStaticsDescription[0]
                         .criteria[3].explanation}
                   </Text>
                 ) : this.state.selected_filter === criterias.deaths ? (
                   <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
-                    {this.state.staticsDescription[0].descriptions[0]
+                    {this.state.permillonStaticsDescription[0]
                       .criteria[2].name +
                       ": " +
-                      this.state.staticsDescription[0].descriptions[0]
+                      this.state.permillonStaticsDescription[0]
                         .criteria[2].explanation}
                   </Text>
                 ) : (
                   <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
-                    {this.state.staticsDescription[0].descriptions[0]
+                    {this.state.permillonStaticsDescription[0]
                       .criteria[0].name +
                       ": " +
-                      this.state.staticsDescription[0].descriptions[0]
+                      this.state.permillonStaticsDescription[0]
                         .criteria[0].explanation}
                   </Text>
-                )}
+                )):null}
               </Layout> */}
             </Layout>
           </Layout>
