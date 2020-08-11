@@ -23,12 +23,14 @@ import { strings } from "../localization/localization";
 import { LangContext } from "../../assets/lang/language-context";
 import Ethiopia from "../pages/ethiopia-page/ethiopia";
 import { ReferenceScreen } from "../pages/references";
+import { HotlineScreen } from "../pages/hotlines-page";
 const { Navigator, Screen } = createDrawerNavigator();
 
 const HomeIcon = (props) => <Icon {...props} name="home-outline" />;
 const NewsIcon = (props) => <Icon {...props} name="browser-outline" />;
 const InfoIcon = (props) => <Icon {...props} name="info-outline" />;
 const FlagIcon = (props) => <Icon {...props} name="flag-outline" />;
+const PhoneIcon = (props) => <Icon {...props} name="phone-outline" />;
 const SettingIcon = (props) => <Icon {...props} name="settings-2-outline" />;
 const ArrowIosBackIcon = (style) => <Icon {...style} name="arrow-ios-back" />;
 const LinkIcon = (style) => <Icon {...style} name="external-link-outline" />;
@@ -148,7 +150,8 @@ export const AppNavigator = (props) => {
       <DrawerItem title={strings.About} accessoryLeft={InfoIcon} />
       <DrawerItem title={strings.Settings} accessoryLeft={SettingIcon} />
       <DrawerItem title={strings.References} accessoryLeft={LinkIcon} />
-      {/* <DrawerItem title="References" accessoryLeft={LinkIcon} /> */}
+      <DrawerItem title="Hotlines" accessoryLeft={PhoneIcon} />
+
     </Drawer>
   );
 
@@ -205,6 +208,7 @@ export const AppNavigator = (props) => {
       <Screen name="ETHIOPIA" component={GoToEthiopia} />
       <Screen name="ABOUT" component={GoToAboutPage} />
       <Screen name="SETTINGS" component={SettingNavigator} />
+      <Screen name="HOTLINES" component={HotlineScreen} />
       <Screen name="REFERENCES" component={ReferenceScreen} />
     </Navigator>
   );
