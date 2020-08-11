@@ -58,6 +58,9 @@ const userSchema = new mongoose.Schema({
     enum: ["basic", "ephi_user", "sysadmin"],
     required: true,
     default: "basic"
+  },
+  email:{
+    type:String
   }
 });
 

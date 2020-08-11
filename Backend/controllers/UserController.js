@@ -4,6 +4,7 @@ const Bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const axios = require("axios");
 const User = UserModels.User;
+const nodemailer = require('nodemailer');
 
 // Get All Users. - [DEPRECATED: The information is too sensitive to share with API consumers]
 exports.get_all_users = async (req, res) => {
@@ -171,4 +172,113 @@ exports.delete_user = async (req, res) => {
 
     res.status(500).send(err.toString());
   }
+};
+
+// invite users ...
+// preparing email transporter
+
+const sendEmail = (email_address, generated_link, res) =>{
+
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.APP_EMAIL_ADDRESS,
+      pass: process.env.APP_EMAIL_PASSWORD 
+    }
+  });
+
+  const mailOptions = {
+    from: process.env.APP_EMAIL_ADDRESS,
+    to: email_address,
+    subject: 'Create your account!',
+    text: ` you can use this link to create your account.\n ${generated_link}`
+  };
+
+  transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+      res.send(error.toString());
+    } else {
+      res.status(201).send('Invitation link sent successfully.');
+      console.log('Email sent: ' + info.response);
+    }
+  });
+
+}
+
+
+
+// send invitation link to user
+
+exports.send_invitation_link = async (req, res) => {
+  let email = req.body.email;
+  try {
+    const check = await User.findOne({ email: email });
+    if (check) {
+      return res
+        .status(422)
+        .send("The email already exists.");
+    }
+    else if (email==undefined){
+      return res
+        .status(422)
+        .send("The email is required.");
+    }
+
+    let signed_email = jwt.sign({email},process.env.APP_SECRET_KEY,{expiresIn:'30m'})
+    let invitationLink = `https://a2sv-covid.herokuapp.com/user-invite?signature=${signed_email}`;
+
+    return sendEmail(email,invitationLink,res);
+
+  } catch (err) {
+    res.status(500).send(err.toString());
+  }
+};
+
+
+
+// verify and create account.
+
+exports.create_invited_user = async (req, res) => {
+  let signature = req.body.signature
+  let email =null;
+  if (signature){
+
+    jwt.verify(signature, process.env.APP_SECRET_KEY, (err, decodedEmail) => {
+      if (err) {
+        res.status(401).send("Incorrect signature");
+      } else {
+        email = decodedEmail.email
+      }
+    });
+
+  }
+
+  const user = new User({
+    _id: mongoose.Types.ObjectId(),
+    username: req.body.username,
+    password: req.body.password,
+    gender: req.body.gender,
+    age_group: req.body.age_group,
+    role: "ephi_user",
+    email:email
+  });
+  
+  try {
+    const check = await User.findOne({ username: user.username });
+    if (check) {
+      return res
+        .status(422)
+        .send("The username already exists");
+    }
+    if (user.password.length < 5) {
+      res.status(422).send("The password length must be above 5");
+    } else {
+      user.password = Bcrypt.hashSync(user.password, 10);
+      await user.save();
+      res.send(user);
+    }
+  } catch (err) {
+    res.send(err.toString());
+  }
+  
 };

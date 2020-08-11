@@ -13,6 +13,8 @@ module.exports = (function() {
         .deleteAny('local_policy')
       .grant("sysadmin")
         .readAny("comment")
+      .grant("ephi_user")
+        .create("invite_user")
         
     return ac;
 
