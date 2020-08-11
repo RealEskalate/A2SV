@@ -109,8 +109,6 @@
     <v-navigation-drawer
       v-if="$vuetify.breakpoint.mdAndUp"
       v-model="drawer"
-      color="primary"
-      dark
       fixed
       temporary
     >
@@ -119,11 +117,11 @@
         class="shrink my-5 mx-auto"
         contain
         :width="135"
-        src="/img/brand/white.png"
+        src="/img/brand/blue.png"
       />
 
       <v-list shaped>
-        <v-list-item-group>
+        <v-list-item-group color="primary">
           <v-list-item
             exact
             v-for="(link, i) in links"
@@ -152,7 +150,6 @@
                   flat
                   dense
                   hide-details
-                  background-color="primary"
                   v-model="$i18n.locale"
                   :items="languages"
                   @change="changeLang"
@@ -164,7 +161,7 @@
                     <small />
                   </template>
                   <template v-slot:selection="{ item }">
-                    <small class="white--text" v-text="langText[item]" />
+                    <small class="primary--text" v-text="langText[item]" />
                   </template>
                   <template v-slot:item="{ item }">
                     <small v-text="langText[item]" />
