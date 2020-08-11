@@ -30,11 +30,7 @@
       </v-row>
       <v-row>
         <v-col>
-          <v-responsive
-            :aspect-ratio="$vuetify.breakpoint.smAndDown ? 12 / 18 : 18 / 12"
-          >
-            <sym-track class="mt-5 mx-1" style="height: 95%" />
-          </v-responsive>
+          <sym-track class="mt-5 mx-1" style="height: 65vh" />
 
           <!--          <v-tabs show-arrows="mobile" fixed-tabs centered>-->
           <!--            <v-tab>-->
