@@ -6,29 +6,21 @@ const { Symptom } = require("../models/Symptom");
 
 exports.get_symptom_number = async (req, res) => {
 
-    let date = new Date(req.query.date) || Date.now();
+    let date = req.query.date ? new Date(req.query.date) : new Date()
     // set date to 24 hours ago
     date.setHours(date.getHours() - 24);
     let total = 0;
     if(req.query.district){
         let district = await DistrictModel.findOne({name: req.query.district});
-        let locationUsers = await LocationUser.find({'location.district': district._id});
-        for(var i = 0; i < locationUsers.length; i++){
-            total += await SymptomUser.countDocuments({user_id : locationUsers[i].user_id, timestamp : { $gt: date }});        
-        }
+        let locationUsers = await LocationUser.find({'location.district': district._id}).distinct("user_id");
+        total =  await SymptomUser.countDocuments({user_id: {$in : locationUsers}, timestamp : { $gt: date }});
     }else if(req.query.region){
-        let districts = await DistrictModel.find({state : req.query.state});
-        for(var i = 0; i < districts.length; i++){
-            let locationUsers = await LocationUser.find({'location.district' : districts[i]._id});
-            for(var i = 0; i < locationUsers.length; i++){
-                total += await SymptomUser.countDocuments({user_id : locationUsers[i].user_id, timestamp : { $gt: date }});
-            }
-        }
+        let districts = await DistrictModel.find({state : req.query.state}).distinct("_id");
+        let locationUsers = await (await LocationUser.find({'location.district' : {$in : districts}})).distinct("user_id");
+        total = await SymptomUser.countDocuments({user_id: {$in : locationUsers}, timestamp : { $gt: date }});
     }else if(req.query.country){
-        let users = await User.find({current_country : req.query.country});
-        for(var i = 0; i < users.length; i++){
-            total += await SymptomUser.countDocuments({user_id : users[i]._id, timestamp : { $gt: date }});
-        } 
+        let users = await User.find({current_country : req.query.country}).distinct("_id");
+        total = await SymptomUser.countDocuments({user_id: {$in : users}, timestamp : { $gt: date }});
     }else{
         total = await SymptomUser.countDocuments({timestamp : { $gt: date }});
     }
@@ -44,28 +36,20 @@ exports.get_symptom_number = async (req, res) => {
 exports.get_most_common = async (req, res) => {
     let symptomUsers = [];
     let symptomCounts = {};
-    let date = new Date(req.query.date) || Date.now();
+    let date = req.query.date ? new Date(req.query.date) : new Date()
     // set date to 24 hours ago
     date.setHours(date.getHours() - 24);
     if(req.query.district){
         let district = await DistrictModel.findOne({name: req.query.district});
-        let locationUsers = await LocationUser.find({'location.district': district._id});
-        for(var i = 0; i < locationUsers.length; i++){
-            symptomUsers = symptomUsers.concat(await SymptomUser.find({user_id : locationUsers[i].user_id, timestamp : { $gt: date }}));        
-        }
+        let locationUsers = await LocationUser.find({'location.district': district._id}).distinct("user_id");
+        symptomUsers =  await SymptomUser.find({user_id: {$in : locationUsers}, timestamp : { $gt: date }});
     }else if(req.query.region){
-        let districts = await DistrictModel.find({state : req.query.state});
-        for(var i = 0; i < districts.length; i++){
-            let locationUsers = await LocationUser.find({'location.district' : districts[i]._id});
-            for(var i = 0; i < locationUsers.length; i++){
-                symptomUsers = symptomUsers.concat(await SymptomUser.find({user_id : locationUsers[i].user_id, timestamp : { $gt: date }}));
-            }
-        }
+        let districts = await DistrictModel.find({state : req.query.state}).distinct("_id");
+        let locationUsers = await (await LocationUser.find({'location.district' : {$in : districts}})).distinct("user_id");
+        symptomUsers = await SymptomUser.find({user_id: {$in : locationUsers}, timestamp : { $gt: date }});
     }else if(req.query.country){
-        let users = await User.find({current_country : req.query.country});
-        for(var i = 0; i < users.length; i++){
-            symptomUsers = symptomUsers.concat(await SymptomUser.find({user_id : users[i]._id, timestamp : { $gt: date }}));
-        }
+        let users = await User.find({current_country : req.query.country}).distinct("_id");
+        symptomUsers = await SymptomUser.find({user_id : {$in: users}, timestamp : { $gt: date }})
     }else{
         symptomUsers = await SymptomUser.find({timestamp : { $gt: date }});
     }
