@@ -147,7 +147,8 @@ export const AppNavigator = (props) => {
       <DrawerItem title={strings.Ethiopia} accessoryLeft={FlagIcon} />
       <DrawerItem title={strings.About} accessoryLeft={InfoIcon} />
       <DrawerItem title={strings.Settings} accessoryLeft={SettingIcon} />
-      <DrawerItem title="References" accessoryLeft={LinkIcon} />
+      <DrawerItem title={strings.References} accessoryLeft={LinkIcon} />
+      {/* <DrawerItem title="References" accessoryLeft={LinkIcon} /> */}
     </Drawer>
   );
 

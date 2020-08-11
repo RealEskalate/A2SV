@@ -781,7 +781,10 @@ export let strings = new LocalizedStrings({
       "Your data will be used anonymously for the purpose of data science and statistics, meaning any info generated isn’t traced back to a single user. This is a non-commercial project with no intention of profit.",
     userReminderToCheck:
       "Heyy there😻 Could you check your symptom page, its been a while since you been there!",
-  },
+    LastWeek: "Last Week",
+    LastMonth: "Last Month",
+    LastThreeMonths: "Last Three Months",
+    },
   am: {
     Information: "መረጃ",
     Data: "ትንታኔ",
@@ -1168,6 +1171,9 @@ export let strings = new LocalizedStrings({
       "መረጃችሁን ስም—አልባ በሆነ መንገድ ለመረጃ ሳይብስና ለስታቲስቲክስ አገልግሎት የሚል ይሆናል። የናንተን መረጃ በመጠቀም የሚመነጭ ማንኛውም አይነት መረጃ የብዙ መረጃወች ጥርቅም ስለሚሆን ተለይቶ ወደ አንድ ሰው አያመለክትም ይህም የእረሶን ማንነትና ደህንነት በአግባቡ የጠበቀ ይሆናል።",
     userReminderToCheck:
       "Heyy there😻 Could you check your symptom page, its been a while since you been there!",
+    LastWeek: "ባለፈው ሳምንት",
+    LastMonth: "ባለፈው ወር",
+    LastThreeMonths: "ያለፉት ሶስት ወሮች",
   },
   tr: {
     Information: "Bilgi",
@@ -1176,7 +1182,7 @@ export let strings = new LocalizedStrings({
     Symptoms: "Semptomlar",
     Home: "Ana Sayfa",
     News: "Haberler",
-    Ethiopia: "Etitopya",
+    Ethiopia: "Etiyopya",
     About: "Hakkında",
     Settings: "Ayarlar",
     EditProfile: "Profili Düzenle",
@@ -1488,7 +1494,7 @@ export let strings = new LocalizedStrings({
     Mar: "Mar",
     Apr: "Nis",
     May: "May",
-    Jan: "Haz",
+    Jun: "Haz",
     Jul: "Tem",
     Aug: "Ağu",
     Sep: "Eyl",
@@ -1505,7 +1511,7 @@ export let strings = new LocalizedStrings({
     SuccessfullySave: "Kayıt Başarılı!",
     Current: "şimdiki",
     Registered: "Kayıtlı",
-    PercentagePerMillion: "People Per Million Stats",
+    PercentagePerMillion: "Milyon Başına Düşen Kişi İstatistiği",
     References: "Referanslar",
     MinistryOfHealthEth: "Sağlık Bakanlığı, Etiyopya",
     CoronaAtGlance: "Bir Bakışta Koronavirüs, Hopkins medicine",
@@ -1525,8 +1531,35 @@ export let strings = new LocalizedStrings({
     AboutParag5:
       "Verileriniz veri bilimi ve istatistik amacıyla anonim olarak kullanılacaktır, bu da üretilen hiçbir bilginin tek bir kullanıcı ile bağdaştırılamayacağı anlamına gelir. Bu ticari olmayan bir projedir ve kar amacı gütmemektedir.",
     userReminderToCheck:
-      "Heyy there😻 Could you check your symptom page, its been a while since you been there!",
-  },
+      "Merhaba😻 Semptom sayfanızı kontrol edebilir misiniz?, oraya gitmeyeli epey oldu!",
+    LastWeek: "Geçen Hafta",
+    LastMonth: "Geçen Ay",
+    LastThreeMonths: "Son Üç Ay",
+    // FOLLOWING LINES TO BE TRANSLATED TO TURKISH
+    // Privacy&Policy page paragraphs aren't translated to
+    // Turkish, Amharic and Oromo at the moment, we need to translate them
+    PrivacyPolicyParag1:
+      " TO BE TRANSLATED ",
+    PrivacyPolicyParag2:
+      " TO BE TRANSLATED ",
+    PrivacyPolicyParag3:
+      " TO BE TRANSLATED ",
+    PrivacyPolicyParag4:
+      " TO BE TRANSLATED ",
+    PrivacyPolicyParag5:
+      " TO BE TRANSLATED ",
+    PrivacyPolicyParag6:
+      " TO BE TRANSLATED ",
+    PrivacyPolicyParag7:
+      " TO BE TRANSLATED ",
+    PrivacyPolicyParag8:
+      " TO BE TRANSLATED ",
+    PrivacyPolicyParag9:
+      " TO BE TRANSLATED ",
+    PrivacyPolicyParag10:
+      " TO BE TRANSLATED ",
+    // -------------- END --------------
+    },
   orm: {
     Information: "Odeeffannoo",
     Data: "Daataa",
@@ -1974,5 +2007,8 @@ export let strings = new LocalizedStrings({
       "Odeeffannoo/daataa  keessan sababa data science fi Statistics kan oolu yoo ta’u nama kamiifuu ifa kan hin baanedha.Appilikeeshiniin kun guutuumaan guututti tolaa fi bu’aa dinagdeef kan hin hojjatamnedha.",
     userReminderToCheck:
       "Heyy there😻 Could you check your symptom page, its been a while since you been there!",
+    LastWeek: "Last Week",
+    LastMonth: "Last Month",
+    LastThreeMonths: "Last Three Months",
   },
 });

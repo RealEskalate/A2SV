@@ -1391,9 +1391,12 @@ class DataAnalytics extends React.Component {
                 selectedIndex={this.state.selectedIndex_daily}
                 onSelect={(index) => this.setDailyStatsSelection(index)}
               >
-                <Tab title="Last Week"></Tab>
+                <Tab title={strings.LastWeek}></Tab>
+                <Tab title={strings.LastMonth}></Tab>
+                <Tab title={strings.LastThreeMonths}></Tab>
+                {/* <Tab title="Last Week"></Tab>
                 <Tab title="Last Month"></Tab>
-                <Tab title="Last Three Month"></Tab>
+                <Tab title="Last Three Month"></Tab> */}
               </TabView>
 
               {this.state.dailyGraphLoading ? (
@@ -1633,9 +1636,12 @@ class DataAnalytics extends React.Component {
                 selectedIndex={this.state.selectedIndex_total}
                 onSelect={(index) => this.setTotalStatsSelection(index)}
               >
-                <Tab title="Last Week"></Tab>
+                <Tab title={strings.LastWeek}></Tab>
+                <Tab title={strings.LastMonth}></Tab>
+                <Tab title={strings.LastThreeMonths}></Tab>
+                {/* <Tab title="Last Week"></Tab>
                 <Tab title="Last Month"></Tab>
-                <Tab title="Last Three Month"></Tab>
+                <Tab title="Last Three Month"></Tab> */}
               </TabView>
 
               {this.state.totalGraphLoading ? (
@@ -1860,9 +1866,12 @@ class DataAnalytics extends React.Component {
                 selectedIndex={this.state.selectedIndex_perMillion}
                 onSelect={(index) => this.setPerMillionStatsSelection(index)}
               >
-                <Tab title="Last Week"></Tab>
+                <Tab title={strings.LastWeek}></Tab>
+                <Tab title={strings.LastMonth}></Tab>
+                <Tab title={strings.LastThreeMonths}></Tab>
+                {/* <Tab title="Last Week"></Tab>
                 <Tab title="Last Month"></Tab>
-                <Tab title="Last Three Month"></Tab>
+                <Tab title="Last Three Month"></Tab> */}
               </TabView>
 
               {this.state.perMillionGraphLoading ? (
