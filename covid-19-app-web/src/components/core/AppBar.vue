@@ -127,7 +127,10 @@
               exact
               :key="i"
               :to="{ name: link.to }"
-              v-if="link.roles.includes(loggedInUser.role.toLowerCase())"
+              v-if="
+                !loggedInUser ||
+                  link.roles.includes(loggedInUser.role.toLowerCase())
+              "
             >
               <v-list-item-icon>
                 <v-icon v-text="link.icon" />
