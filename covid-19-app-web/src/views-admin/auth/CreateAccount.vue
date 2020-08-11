@@ -3,9 +3,9 @@
 </template>
 
 <script>
-  export default {
-    name: "CreateAccount"
-  };
+export default {
+  name: "CreateAccount"
+};
 </script>
 
 <style scoped></style>

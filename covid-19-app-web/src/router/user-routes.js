@@ -1,4 +1,4 @@
-import {ifAuthenticated, ifNotAuthenticated} from "../auth/login-checker";
+import { ifAuthenticated, ifNotAuthenticated } from "../auth/login-checker";
 
 const NotFound = () => import("@/views/Errors/404.vue");
 const Home = () => import("@/views/Home/Home.vue");
@@ -13,13 +13,13 @@ const Login = () => import("@/views/Auth/Login.vue");
 const Register = () => import("@/views/Auth/Register.vue");
 
 export const userRoutes = [
-  {path: "information", name: "Learn", component: Information},
+  { path: "information", name: "Learn", component: Information },
   {
     path: "privacy-policy",
     name: "PrivacyPolicy",
     component: PrivacyPolicy
   },
-  {path: "references", name: "References", component: References},
+  { path: "references", name: "References", component: References },
   {
     path: "profile",
     name: "Profile",
@@ -38,9 +38,9 @@ export const userRoutes = [
     component: Login,
     beforeEnter: ifNotAuthenticated
   },
-  {path: "about", name: "About", component: About},
-  {path: "news", name: "News", component: News},
-  {path: "map", name: "Map", component: HeatMap},
-  {path: "", name: "Home", component: Home},
-  {path: "*", name: "404", component: NotFound}
+  { path: "about", name: "About", component: About },
+  { path: "news", name: "News", component: News },
+  { path: "map", name: "Map", component: HeatMap },
+  { path: "", name: "Home", component: Home },
+  { path: "*", name: "404", component: NotFound }
 ];

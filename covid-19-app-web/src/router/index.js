@@ -1,9 +1,9 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import store from "@/store/";
-import {languages} from "@/plugins/i18n";
-import {admin} from "./admin";
-import {userRoutes} from "./user-routes";
+import { languages } from "@/plugins/i18n";
+import { admin } from "./admin";
+import { userRoutes } from "./user-routes";
 
 Vue.use(VueRouter);
 
