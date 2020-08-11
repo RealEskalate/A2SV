@@ -51,15 +51,7 @@ const About = (props) => {
         </Layout>
         <Divider />
         <Text style={styles.text}>
-          It is a non-commercial COVID-19 symptom tracking app that uses
-          crowd-sourcing to collect and visualize the density of the relevant
-          symptoms. Users can anonymously report their symptoms and choose a
-          location to see the density of symptoms in a map view. {"\n\n"} It
-          represents publicly avaible data with a short description on how to
-          see the trend going on . The data includes the number of confirmed
-          cases, deaths, recovered, and tests conducted of any selected country
-          or globally. It is also a great place to look for global and local
-          news about Covid-19.{"\n"}
+        {strings.AboutParag1}{"\n"}
         </Text>
       </Layout>
       <Layout level="2" style={{ height: 230 }}>
@@ -75,20 +67,11 @@ const About = (props) => {
         </Layout>
         <Divider />
         <Text style={styles.text}>
-          <Text style={{ fontWeight: "bold" }}>A2SV </Text>- Africa to Silicon
-          Valley is a team of highly motivated and talented students from
-          Ethiopia, led by an ex-Google and Palantir Software/ML engineer.
+          <Text style={{ fontWeight: "bold" }}>A2SV </Text>{strings.AboutParag2}
           {"\n\n"}
-          The team went through an intense 3-month preparation program in the
-          pursuit of summer internships at top Silicon Valley companies. Now
-          A2SV is dedicating all the time and energy to the fight against
-          COVID-19. COVID-19 is taking the world by storm. Even though some
-          countries are scaling up their testing capacities, it has been a
-          challenge for developed countries and is much harder for many
-          developing countries.{" "}
+          {strings.AboutParag3}{" "}
           <Text style={{ fontWeight: "bold" }}>
-            A2SV puts humanity first and is giving a non-commercial symptom
-            tracker app.{"\n"}
+          {strings.AboutParag4}{"\n"}
           </Text>
         </Text>
       </Layout>
@@ -105,9 +88,7 @@ const About = (props) => {
         </Layout>
         <Divider />
         <Text style={styles.text}>
-          Your data will be used anonymously for the purpose of data science and
-          statistics, meaning any info generated isn’t traced back to a single
-          user. This is a non-commercial project with no intention of profit.
+        {strings.AboutParag5}
         </Text>
       </Layout>
       <Layout style={{ flex: 1 }}>

@@ -109,8 +109,6 @@
     <v-navigation-drawer
       v-if="$vuetify.breakpoint.mdAndUp"
       v-model="drawer"
-      color="primary"
-      dark
       fixed
       temporary
     >
@@ -119,24 +117,26 @@
         class="shrink my-5 mx-auto"
         contain
         :width="135"
-        src="/img/brand/white.png"
+        src="/img/brand/blue.png"
       />
 
       <v-list shaped>
-        <v-list-item-group>
-          <v-list-item
-            exact
-            v-for="(link, i) in links"
-            :key="i"
-            :to="{ name: link.to }"
-          >
-            <v-list-item-icon>
-              <v-icon v-text="link.icon" />
-            </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-title v-text="$t(link.text)" />
-            </v-list-item-content>
-          </v-list-item>
+        <v-list-item-group color="primary">
+          <template v-for="(link, i) in links">
+            <v-list-item
+              exact
+              :key="i"
+              :to="{ name: link.to }"
+              v-if="link.roles.includes(loggedInUser.role.toLowerCase())"
+            >
+              <v-list-item-icon>
+                <v-icon v-text="link.icon" />
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title v-text="$t(link.text)" />
+              </v-list-item-content>
+            </v-list-item>
+          </template>
           <v-divider />
           <v-list-item inactive>
             <v-list-item-icon>
@@ -152,7 +152,6 @@
                   flat
                   dense
                   hide-details
-                  background-color="primary"
                   v-model="$i18n.locale"
                   :items="languages"
                   @change="changeLang"
@@ -164,7 +163,7 @@
                     <small />
                   </template>
                   <template v-slot:selection="{ item }">
-                    <small class="white--text" v-text="langText[item]" />
+                    <small class="primary--text" v-text="langText[item]" />
                   </template>
                   <template v-slot:item="{ item }">
                     <small v-text="langText[item]" />
@@ -227,14 +226,30 @@ export default {
         tr: "TR"
       },
       links: [
-        { text: "navbar.home", icon: mdiHome, to: "Home" },
+        {
+          text: "navbar.home",
+          icon: mdiHome,
+          to: "Home",
+          roles: ["basic"]
+        },
         {
           text: "navbar.learn",
           icon: mdiBookOpenVariant,
-          to: "Learn"
+          to: "Learn",
+          roles: ["basic"]
         },
-        { text: "navbar.about", icon: mdiInformation, to: "About" },
-        { text: "navbar.news", icon: mdiNewspaper, to: "News" }
+        {
+          text: "navbar.about",
+          icon: mdiInformation,
+          to: "About",
+          roles: ["basic"]
+        },
+        {
+          text: "navbar.news",
+          icon: mdiNewspaper,
+          to: "News",
+          roles: ["basic"]
+        }
         // { text: "navbar.map", icon: mdiMap, to: "Map" }
       ],
       more_links: [

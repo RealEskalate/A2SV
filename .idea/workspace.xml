@@ -2,30 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="30171c75-2b90-4faa-bb30-1ecec50f5eef" name="Default Changelist" comment="[web] compiled dist files">
+      <change afterPath="$PROJECT_DIR$/covid-19-app-web/src/views-admin/symptoms/Symptoms.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/covid-19-app-web/dist/css/chunk-3a7cdf44.d5abf3c9.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/covid-19-app-web/dist/css/chunk-cae50b78.d5abf3c9.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/covid-19-app-web/dist/css/chunk-cb562996.d5abf3c9.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/covid-19-app-web/dist/css/chunk-cb801c2e.d5abf3c9.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/covid-19-app-web/dist/css/chunk-cbb6832c.d5abf3c9.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/covid-19-app-web/dist/css/chunk-vendors.8e35430f.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/covid-19-app-web/dist/favicon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/covid-19-app-web/dist/favicon.ico" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/covid-19-app-web/dist/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/covid-19-app-web/dist/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/covid-19-app-web/dist/js/app.0d1d0b15.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/covid-19-app-web/dist/js/app.0d1d0b15.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/covid-19-app-web/dist/js/chunk-3a7cdf44.514d2713.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/covid-19-app-web/dist/js/chunk-3a7cdf44.514d2713.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/covid-19-app-web/dist/js/chunk-cae50b78.cdabe1b6.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/covid-19-app-web/dist/js/chunk-cae50b78.cdabe1b6.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/covid-19-app-web/dist/js/chunk-cb562996.69916bb4.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/covid-19-app-web/dist/js/chunk-cb562996.69916bb4.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/covid-19-app-web/dist/js/chunk-cb801c2e.f174841e.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/covid-19-app-web/dist/js/chunk-cb801c2e.f174841e.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/covid-19-app-web/dist/js/chunk-cbb6832c.8e0f8760.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/covid-19-app-web/dist/js/chunk-cbb6832c.8e0f8760.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/covid-19-app-web/dist/js/chunk-vendors.e35a61a4.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/covid-19-app-web/dist/js/chunk-vendors.e35a61a4.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/covid-19-app-web/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/covid-19-app-web/package.json" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -62,6 +40,9 @@
     <property name="prettierjs.PrettierConfiguration.Package" value="$PROJECT_DIR$/covid-19-app-web/node_modules/prettier" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/covid-19-app-web/src" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/covid-19-app-web/src/assets" />
       <recent name="$PROJECT_DIR$/covid-19-app-web/assets" />
@@ -96,6 +77,7 @@
       <workItem from="1587643960384" duration="2403000" />
       <workItem from="1589364134853" duration="813000" />
       <workItem from="1589365098312" duration="1797000" />
+      <workItem from="1597133568827" duration="1185000" />
     </task>
     <task id="LOCAL-00001" summary="[web] mapbox heatmap added">
       <created>1587545660857</created>

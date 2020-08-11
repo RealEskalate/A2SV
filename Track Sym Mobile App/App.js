@@ -90,7 +90,7 @@ function App() {
       setGen(userGender);
 
       if (fisrtSession) {
-        setInit("LoginScreen");
+        setInit("UserOption");
       }
     } catch (e) {
       // alert(e);
@@ -114,18 +114,19 @@ function App() {
         <Layout
           level="3"
           style={{
+            backgroundColor: "white",
             width: 100,
             height: 100,
             borderRadius: 50,
-            shadowColor: "#000",
-            shadowOffset: {
-              width: 0,
-              height: 1,
-            },
-            shadowOpacity: 0.2,
-            shadowRadius: 1.41,
+            // shadowColor: "#000",
+            // shadowOffset: {
+            //   width: 0,
+            //   height: 1,
+            // },
+            // shadowOpacity: 0.2,
+            // shadowRadius: 1.41,
 
-            elevation: 2,
+            // elevation: 2,
             marginBottom: 30,
           }}
         >
