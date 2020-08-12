@@ -1,43 +1,77 @@
 <template>
-  <v-sparkline
-    :value="value"
-    :gradient="gradient"
-    :smooth="radius || false"
-    :padding="padding"
-    :line-width="width"
-    :stroke-linecap="lineCap"
-    :gradient-direction="gradientDirection"
-    :fill="fill"
-    :type="type"
-    :auto-line-width="autoLineWidth"
-    auto-draw
-  ></v-sparkline>
+  <v-container class="align-content-center">
+    <v-row>
+      <v-col md="4" sm="5">
+        <daily-statistics :data="items"/>
+      </v-col>
+      <v-col class="px-2" cols="8">
+        <date-range-picker
+                :date_range="date_range"
+                @onDateChange="onDateChange"
+        />
+        <v-row>
+          <v-col md="12">
+            <total-statistics/>
+          </v-col>
+          <v-col cols="12" class="ml-md-3">
+            <greatest-hit-city/>
+          </v-col>
+        </v-row>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
-const gradients = [
-  ["#222"],
-  ["#42b3f4"],
-  ["red", "orange", "yellow"],
-  ["purple", "violet"],
-  ["#00c6ff", "#F0F", "#FF0"],
-  ["#f72047", "#ffd200", "#1feaea"]
-];
+  import DateRangePicker from "../../components/core/DateRangePicker";
+  import DailyStatistics from "./DailyStatistics";
+  import TotalStatistics from "./TotalStatistics";
+  import GreatestHitCity from "./GreatestHitCity";
 
-export default {
+  export default {
   name: "Dashboard",
+    components: {
+      DateRangePicker,
+      DailyStatistics,
+      TotalStatistics,
+      GreatestHitCity
+    },
   data: () => ({
-    width: 2,
-    radius: 10,
-    padding: 8,
-    lineCap: "round",
-    gradient: gradients[5],
-    value: [0, 2, 5, 9, 5, 10, 3, 5, 0, 0, 1, 8, 2, 9, 0],
-    gradientDirection: "top",
-    gradients,
-    fill: false,
-    type: "trend",
-    autoLineWidth: false
-  })
+    date_range: ["2018-09-15", "2018-09-20"],
+
+    items: [
+      {
+        title: "New confirmed COVID-19 cases",
+        totalNum: "123, 456",
+        increaseRate: -4
+      },
+      {
+        title: "New citizens with symptoms",
+        totalNum: "123, 456",
+        increaseRate: 9
+      },
+      {
+        title: "COVID related deaths",
+        totalNum: "56",
+        increaseRate: -1
+      },
+
+      {
+        title: "Tests administered",
+        totalNum: "1,456",
+        increaseRate: 1
+      }
+    ]
+  }),
+    mounted() {
+      var el = document.getElementsByClassName("mapboxgl-ctrl-attrib-inner");
+      alert(el.getAttribute("style"));
+      el.removeAttribute("style");
+    },
+    methods: {
+      onDateChange(dateRange) {
+        alert(dateRange);
+      }
+    }
 };
 </script>
