@@ -1,6 +1,6 @@
 <template>
   <v-row>
-    <v-col md="6" v-for="(item, index) in items" :key="index">
+    <v-col md="6" cols="12" v-for="(item, index) in items" :key="index">
       <v-card class="shadow">
         <v-card-title class="card-title">{{ item.title }}</v-card-title>
         <v-sheet color="transparent">

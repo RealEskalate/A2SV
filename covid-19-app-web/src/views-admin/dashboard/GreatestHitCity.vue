@@ -1,13 +1,13 @@
 <template>
   <v-card class="row">
-    <v-col cols="5" class="container ">
+    <v-col md="5" cols="12" class="container ">
       <v-card-title class="mx-auto card-title"
         >City with greatest covid-19 case count
       </v-card-title>
       <p class="text-center font-weight-bold">Addis Ababa</p>
       <p class="text-center">123, 345</p>
     </v-col>
-    <v-col cols="7" style="padding: 0!important;">
+    <v-col md="7" cols="12" style="padding: 0!important;">
       <mapbox
         :access-token="api_token"
         :map-options="{

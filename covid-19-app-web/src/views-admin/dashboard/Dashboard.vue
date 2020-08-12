@@ -4,7 +4,7 @@
       <v-col md="4" sm="5">
         <daily-statistics :data="items" />
       </v-col>
-      <v-col class="px-2" cols="8">
+      <v-col class="px-2" md="8" cols="12">
         <date-range-picker
           :date_range="date_range"
           @onDateChange="onDateChange"
