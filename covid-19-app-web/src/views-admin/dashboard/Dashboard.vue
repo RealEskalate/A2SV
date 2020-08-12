@@ -2,19 +2,19 @@
   <v-container class="align-content-center">
     <v-row>
       <v-col md="4" sm="5">
-        <daily-statistics :data="items"/>
+        <daily-statistics :data="items" />
       </v-col>
       <v-col class="px-2" cols="8">
         <date-range-picker
-                :date_range="date_range"
-                @onDateChange="onDateChange"
+          :date_range="date_range"
+          @onDateChange="onDateChange"
         />
         <v-row>
           <v-col md="12">
-            <total-statistics/>
+            <total-statistics />
           </v-col>
           <v-col cols="12" class="ml-md-3">
-            <greatest-hit-city/>
+            <greatest-hit-city />
           </v-col>
         </v-row>
       </v-col>
@@ -23,19 +23,19 @@
 </template>
 
 <script>
-  import DateRangePicker from "../../components/core/DateRangePicker";
-  import DailyStatistics from "./DailyStatistics";
-  import TotalStatistics from "./TotalStatistics";
-  import GreatestHitCity from "./GreatestHitCity";
+import DateRangePicker from "../../components/core/DateRangePicker";
+import DailyStatistics from "./DailyStatistics";
+import TotalStatistics from "./TotalStatistics";
+import GreatestHitCity from "./GreatestHitCity";
 
-  export default {
+export default {
   name: "Dashboard",
-    components: {
-      DateRangePicker,
-      DailyStatistics,
-      TotalStatistics,
-      GreatestHitCity
-    },
+  components: {
+    DateRangePicker,
+    DailyStatistics,
+    TotalStatistics,
+    GreatestHitCity
+  },
   data: () => ({
     date_range: ["2018-09-15", "2018-09-20"],
 
@@ -63,15 +63,15 @@
       }
     ]
   }),
-    mounted() {
-      var el = document.getElementsByClassName("mapboxgl-ctrl-attrib-inner");
-      alert(el.getAttribute("style"));
-      el.removeAttribute("style");
-    },
-    methods: {
-      onDateChange(dateRange) {
-        alert(dateRange);
-      }
+  mounted() {
+    var el = document.getElementsByClassName("mapboxgl-ctrl-attrib-inner");
+    alert(el.getAttribute("style"));
+    el.removeAttribute("style");
+  },
+  methods: {
+    onDateChange(dateRange) {
+      alert(dateRange);
     }
+  }
 };
 </script>

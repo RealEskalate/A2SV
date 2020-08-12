@@ -12,21 +12,19 @@
 
               <v-list-item-action>
                 <v-list-item-action-text
-                        class="font-weight-bold"
-                        v-text="item.totalNum"
+                  class="font-weight-bold"
+                  v-text="item.totalNum"
                 ></v-list-item-action-text>
                 <!--                      <p>{{ item.totalNum }}</p>-->
                 <v-list-item-subtitle
-                        :class="item.increaseRate > 0 ? 'red--text' : 'green--text'"
+                  :class="item.increaseRate > 0 ? 'red--text' : 'green--text'"
                 >
                   <v-icon v-if="item.increaseRate > 0" class="red--text">
                     {{ mdiArrowUpThick }}
-                  </v-icon
-                  >
+                  </v-icon>
                   <v-icon v-else class="green--text font-weight-bold">
                     {{ mdiArrowDownThick }}
-                  </v-icon
-                  >
+                  </v-icon>
                   {{ item.increaseRate + "%" }}
                 </v-list-item-subtitle>
               </v-list-item-action>
@@ -41,48 +39,48 @@
 </template>
 
 <script>
-  import {mdiArrowDownThick, mdiArrowUpThick} from "@mdi/js";
+import { mdiArrowDownThick, mdiArrowUpThick } from "@mdi/js";
 
-  export default {
-    name: "TodayStatistics",
-    data() {
-      return {
-        mdiArrowUpThick,
-        mdiArrowDownThick,
-        items: [
-          {
-            title: "New confirmed COVID-19 cases",
-            totalNum: "123, 456",
-            increaseRate: -4
-          },
-          {
-            title: "New citizens with symptoms",
-            totalNum: "123, 456",
-            increaseRate: 9
-          },
-          {
-            title: "COVID related deaths",
-            totalNum: "56",
-            increaseRate: -1
-          },
+export default {
+  name: "TodayStatistics",
+  data() {
+    return {
+      mdiArrowUpThick,
+      mdiArrowDownThick,
+      items: [
+        {
+          title: "New confirmed COVID-19 cases",
+          totalNum: "123, 456",
+          increaseRate: -4
+        },
+        {
+          title: "New citizens with symptoms",
+          totalNum: "123, 456",
+          increaseRate: 9
+        },
+        {
+          title: "COVID related deaths",
+          totalNum: "56",
+          increaseRate: -1
+        },
 
-          {
-            title: "Tests administered",
-            totalNum: "1,456",
-            increaseRate: 1
-          }
-        ]
-      };
-    }
-  };
+        {
+          title: "Tests administered",
+          totalNum: "1,456",
+          increaseRate: 1
+        }
+      ]
+    };
+  }
+};
 </script>
 
 <style scoped>
-  .v-list-item__action-text {
-    font-size: 1em;
-  }
+.v-list-item__action-text {
+  font-size: 1em;
+}
 
-  .card-title {
-    font-size: small;
-  }
+.card-title {
+  font-size: small;
+}
 </style>
