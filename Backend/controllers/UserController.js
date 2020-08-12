@@ -177,7 +177,7 @@ exports.delete_user = async (req, res) => {
 // invite users ...
 // preparing email transporter
 
-const sendEmail = (email_address, generated_link, res) =>{
+const sendEmail = (mailOptions, res) =>{
 
   const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -187,18 +187,12 @@ const sendEmail = (email_address, generated_link, res) =>{
     }
   });
 
-  const mailOptions = {
-    from: process.env.APP_EMAIL_ADDRESS,
-    to: email_address,
-    subject: 'Create your account!',
-    text: ` you can use this link to create your account.\n ${generated_link}`
-  };
 
   transporter.sendMail(mailOptions, function(error, info){
     if (error) {
       res.send(error.toString());
     } else {
-      res.status(201).send('Invitation link sent successfully.');
+      res.status(201).send('link sent successfully.');
       console.log('Email sent: ' + info.response);
     }
   });
@@ -224,10 +218,17 @@ exports.send_invitation_link = async (req, res) => {
         .send("The email is required.");
     }
 
-    let signed_email = jwt.sign({email},process.env.APP_SECRET_KEY,{expiresIn:'30m'})
-    let invitationLink = `https://a2sv-covid.herokuapp.com/user-invite?signature=${signed_email}`;
+    let signed_email = jwt.sign({email},process.env.APP_SECRET_KEY,{expiresIn:'6h'})
+    let invitationLink = `${process.env.APP_WEB_CREATE_ACC_LINK}${signed_email}`;
 
-    return sendEmail(email,invitationLink,res);
+    const mailOptions = {
+      from: process.env.APP_EMAIL_ADDRESS,
+      to: email,
+      subject: 'Create your account!',
+      text: ` you can use this link to create your account.\n ${invitationLink}`
+    };
+
+    return sendEmail(mailOptions,res);
 
   } catch (err) {
     res.status(500).send(err.toString());
@@ -277,6 +278,87 @@ exports.create_invited_user = async (req, res) => {
       await user.save();
       res.send(user);
     }
+  } catch (err) {
+    res.status(500).send(err.toString());
+  }
+  
+};
+
+
+
+// reset password.
+
+exports.send_reset_link = async (req, res) => {
+  let email = req.body.email;
+  try {
+    const check = await User.findOne({ email: email });
+    if (!check) {
+      return res
+        .status(401)
+        .send("The email address doesn't exist.");
+    }
+    else if (email==undefined){
+      return res
+        .status(422)
+        .send("The email is required.");
+    }
+
+    let signed_email = jwt.sign({email},process.env.APP_SECRET_KEY,{expiresIn:'6h'})
+    let invitationLink = `${process.env.APP_WEB_RESET_ACC_LINK}${signed_email}`;
+
+    const mailOptions = {
+      from: process.env.APP_EMAIL_ADDRESS,
+      to: email,
+      subject: 'Reset your password!',
+      text: ` you can use this link to reset your password.\n ${invitationLink}`
+    };
+
+    return sendEmail(mailOptions,res);
+
+  } catch (err) {
+    res.status(500).send(err.toString());
+  }
+};
+
+
+
+// verify and reset password.
+
+exports.save_new_password= async (req, res) => {
+  let signature = req.body.signature
+  let email =null;
+  if (signature){
+
+    jwt.verify(signature, process.env.APP_SECRET_KEY, (err, decodedEmail) => {
+      if (err) {
+        res.status(401).send("Incorrect signature");
+      } else {
+        email = decodedEmail.email
+      }
+    });
+
+  }
+
+  const check = await User.findOne({ email: email });
+  if (!check) {
+    return res
+      .status(401)
+      .send("The email address doesn't exist.");
+  }
+
+  try {
+    let user =check;
+
+    if (!req.body.password || req.body.password.length < 5) {
+        return res.status(422).send("Invalid password.");
+    }
+    
+    let password = Bcrypt.hashSync(req.body.password, 10);
+
+    user.password=password
+    user.save()
+    
+    res.send(user)
   } catch (err) {
     res.send(err.toString());
   }
