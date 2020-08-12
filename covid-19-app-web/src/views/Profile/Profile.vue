@@ -252,25 +252,36 @@
                     style="height: 100%"
                     class="shadow-sm pa-2 overflow-hidden align-center justify-center d-flex"
                   >
-                    <div>
-                      <v-avatar class="my-2" width="70" height="70">
-                        <v-img contain :src="server_url + symptom.image" />
-                      </v-avatar>
-                      <br />
-                      <span class="mb-0" v-text="symptom.name" />
-                      <br />
-                      <small class="font-weight-thin grey--text text--darken-1">
-                        Relevance:
-                        <span
-                          :class="
-                            `text--darken-1 ${relevanceColor(
-                              symptom.relevance
-                            )}--text`
-                          "
-                          v-text="symptom.relevance"
-                        />
-                      </small>
-                    </div>
+                    <v-tooltip
+                      bottom
+                      open-delay="1000"
+                      transition="fade-transition"
+                    >
+                      <template v-slot:activator="{ on, attrs }">
+                        <div v-on="on" v-bind="attrs">
+                          <v-avatar class="my-2" width="70" height="70">
+                            <v-img contain :src="server_url + symptom.image" />
+                          </v-avatar>
+                          <br />
+                          <span class="mb-0" v-text="symptom.name" />
+                          <br />
+                          <small
+                            class="font-weight-thin grey--text text--darken-1"
+                          >
+                            Relevance:
+                            <span
+                              :class="
+                                `text--darken-1 ${relevanceColor(
+                                  symptom.relevance
+                                )}--text`
+                              "
+                              v-text="symptom.relevance"
+                            />
+                          </small>
+                        </div>
+                      </template>
+                      <span v-text="symptom.description" />
+                    </v-tooltip>
                   </v-card>
                 </v-col>
               </v-row>
@@ -331,48 +342,57 @@
                             } pa-2 overflow-hidden align-center justify-center d-flex`
                           "
                         >
-                          <div>
-                            <v-icon
-                              style="position: absolute; right: 0; top: 0; z-index: 2; opacity: 0.7"
-                              class="mt-1 mr-1"
-                              color="primary"
-                              @click="dialog = false"
-                              v-text="
-                                active
-                                  ? mdiCheckboxMarkedCircle
-                                  : mdiCheckboxBlankCircleOutline
-                              "
-                            />
-                            <v-avatar class="my-2" width="70" height="70">
-                              <v-img
-                                contain
-                                :src="server_url + symptom.image"
-                              />
-                            </v-avatar>
-                            <br />
-                            <span class="mb-0" v-text="symptom.name" />
-                            <br />
-                            <small
-                              class="font-weight-thin grey--text text--darken-1"
-                            >
-                              Relevance:
-                              <span
-                                :class="
-                                  `text--darken-1 ${relevanceColor(
-                                    symptom.relevance
-                                  )}--text`
-                                "
-                                v-text="symptom.relevance"
-                              />
-                            </small>
-                            <v-overlay
-                              color="primary"
-                              absolute
-                              z-index="2"
-                              :opacity="0.3"
-                              :value="active"
-                            />
-                          </div>
+                          <v-tooltip
+                            bottom
+                            open-delay="1000"
+                            transition="fade-transition"
+                          >
+                            <template v-slot:activator="{ on, attrs }">
+                              <div v-on="on" v-bind="attrs">
+                                <v-icon
+                                  style="position: absolute; right: 0; top: 0; z-index: 2; opacity: 0.7"
+                                  class="mt-1 mr-1"
+                                  color="primary"
+                                  @click="dialog = false"
+                                  v-text="
+                                    active
+                                      ? mdiCheckboxMarkedCircle
+                                      : mdiCheckboxBlankCircleOutline
+                                  "
+                                />
+                                <v-avatar class="my-2" width="70" height="70">
+                                  <v-img
+                                    contain
+                                    :src="server_url + symptom.image"
+                                  />
+                                </v-avatar>
+                                <br />
+                                <span class="mb-0" v-text="symptom.name" />
+                                <br />
+                                <small
+                                  class="font-weight-thin grey--text text--darken-1"
+                                >
+                                  Relevance:
+                                  <span
+                                    :class="
+                                      `text--darken-1 ${relevanceColor(
+                                        symptom.relevance
+                                      )}--text`
+                                    "
+                                    v-text="symptom.relevance"
+                                  />
+                                </small>
+                                <v-overlay
+                                  color="primary"
+                                  absolute
+                                  z-index="2"
+                                  :opacity="0.3"
+                                  :value="active"
+                                />
+                              </div>
+                            </template>
+                            <span v-text="symptom.description" />
+                          </v-tooltip>
                         </v-card>
                       </v-hover>
                     </v-item>
