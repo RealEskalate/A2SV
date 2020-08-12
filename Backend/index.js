@@ -28,6 +28,7 @@ const SymptomUserHistoryRouter = require("./routes/SymptomUserHistoryRoutes");
 const UpdatesRouter = require("./routes/UpdateRoutes");
 const LocalPolicyRouter = require("./routes/LocalPolicyRoutes");
 const DistrictRouter = require("./routes/DistrictRoutes");
+const SymptomStatisticsRouter = require("./routes/SymptomStatisticsRoutes");
 const WebResourceRouter = require("./routes/WebRoutes");
 
 const logger = require("./middlewares/logger");
@@ -71,6 +72,7 @@ app.use(SymptomUserHistoryRouter);
 app.use(UpdatesRouter);
 app.use(LocalPolicyRouter);
 app.use(DistrictRouter);
+app.use(SymptomStatisticsRouter);
 app.use(WebResourceRouter);
 
 app.use(express.static("public"));

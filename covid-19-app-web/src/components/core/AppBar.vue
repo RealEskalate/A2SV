@@ -127,7 +127,10 @@
               exact
               :key="i"
               :to="{ name: link.to }"
-              v-if="link.roles.includes(loggedInUser.role.toLowerCase())"
+              v-if="
+                (!loggedInUser && link.roles.includes('none')) ||
+                  link.roles.includes(loggedInUser.role.toLowerCase())
+              "
             >
               <v-list-item-icon>
                 <v-icon v-text="link.icon" />
@@ -230,25 +233,25 @@ export default {
           text: "navbar.home",
           icon: mdiHome,
           to: "Home",
-          roles: ["basic"]
+          roles: ["basic", "none"]
         },
         {
           text: "navbar.learn",
           icon: mdiBookOpenVariant,
           to: "Learn",
-          roles: ["basic"]
+          roles: ["basic", "none"]
         },
         {
           text: "navbar.about",
           icon: mdiInformation,
           to: "About",
-          roles: ["basic"]
+          roles: ["basic", "none"]
         },
         {
           text: "navbar.news",
           icon: mdiNewspaper,
           to: "News",
-          roles: ["basic"]
+          roles: ["basic", "none"]
         }
         // { text: "navbar.map", icon: mdiMap, to: "Map" }
       ],
