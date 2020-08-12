@@ -145,13 +145,13 @@ export const AppNavigator = (props) => {
       selectedIndex={new IndexPath(state.index)}
       onSelect={(index) => navigation.navigate(state.routeNames[index.row])}
     >
+      <DrawerItem title={strings.Home} accessoryLeft={HomeIcon} />
       <DrawerItem title={strings.News} accessoryLeft={NewsIcon} />
       <DrawerItem title={strings.Ethiopia} accessoryLeft={FlagIcon} />
       <DrawerItem title={strings.About} accessoryLeft={InfoIcon} />
       <DrawerItem title={strings.Settings} accessoryLeft={SettingIcon} />
-      <DrawerItem title={strings.References} accessoryLeft={LinkIcon} />
       <DrawerItem title="Hotlines" accessoryLeft={PhoneIcon} />
-
+      <DrawerItem title={strings.References} accessoryLeft={LinkIcon} />
     </Drawer>
   );
 
