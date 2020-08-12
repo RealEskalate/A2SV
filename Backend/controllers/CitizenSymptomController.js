@@ -46,8 +46,6 @@ function getDates(startDate, endDate) {
     return dates;
 }
 exports.get_citizens_with_symptoms = async (req, res) => {
-    await prepop();
-    await this.get_citizen_symptoms_updates();
     let startDate = new Date(Date.parse(setStartDate(req) + "T21:00:00.000Z"));
     let endDate = new Date(Date.parse(setEndDate(req) + "T21:00:00.000Z"));
 
@@ -56,7 +54,7 @@ exports.get_citizens_with_symptoms = async (req, res) => {
             $gte: startDate,
             $lte: endDate,
         },
-    });
+    }).sort("date");
     try {
         res.send(citizens);
     } catch (err) {
@@ -64,28 +62,7 @@ exports.get_citizens_with_symptoms = async (req, res) => {
     }
 };
 
-exports.get_citizen_symptoms_updates = async () => {
-    const today_db = parse_date(new Date());
-
-    //Find users who are symptomatic
-    const count = await SymptomUser.distinct("user_id", {});
-    //If existing, modify and save. If not add a new entry to the db
-    const check = await CitizenSymptom.findOne({
-        date: today_db,
-    });
-    if (check) {
-        check.total = count.length;
-        await check.save();
-        return check;
-    } else {
-        const newDayEntry = new CitizenSymptom({
-            date: today_db,
-            total: count.length,
-        });
-        await newDayEntry.save();
-        return newDayEntry;
-    }
-};
+//[Repopulation Function]
 const prepop = async () => {
     //Fetch all users
     const users = await User.distinct("_id");
