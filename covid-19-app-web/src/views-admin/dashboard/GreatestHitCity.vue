@@ -4,8 +4,8 @@
       <v-card-title class="mx-auto card-title"
         >City with greatest covid-19 case count
       </v-card-title>
-      <p>Addis Ababa</p>
-      <p>123, 345</p>
+      <p class="text-center font-weight-bold">Addis Ababa</p>
+      <p class="text-center">123, 345</p>
     </v-col>
     <v-col cols="7" style="padding: 0!important;">
       <mapbox
