@@ -5,6 +5,8 @@ const { Symptom } = require("../models/Symptom");
 const jwt = require("jsonwebtoken");
 const ProbabilityCalculator = require("../services/ProbabilityCalculator");
 const { StatisticsResource } = require("../models/StatisticsResourceModel.js");
+const SymptomLogRegistration = require("../services/SymptomLogRegistration.js");
+
 
 // Display list of all symptoms. - [DEPRECATED: The information is too sensitive to share with API consumers]
 exports.get_all_symptomusers = async (req, res) => {
@@ -144,6 +146,9 @@ exports.post_symptomuser = async (req, res) => {
     //   Symptom: symptom,
     // };
     // res.send(result);
+
+    await SymptomLogRegistration.registerLog(user._id, symptoms, currentDate, req.body.source);
+
     return res.status(201).send("Symptoms registered successfully");
   } catch (err) {
     res.status(500).send(err.toString());
@@ -260,6 +265,9 @@ exports.post_multiple_symptoms = async (req, res) => {
       console.log(error.toString());
     }
   }
+
+  await SymptomLogRegistration.registerLog(user._id, symptoms, currentDate, req.body.source);
+
   return res.status(201).send("Symptoms registered successfully");
 };
 
