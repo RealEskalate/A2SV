@@ -44,7 +44,7 @@ exports.get_new_citizens_with_symptoms = async (req, res) => {
 };
 
 //[Repopulation Function]
-const prepop = async () => {
+exports.prepop = async () => {
     //Fetch all symptom histories
     const symptom_histories = await SymptomUserHistory.find({});
     const dict = {};

@@ -25,6 +25,8 @@ const CitizenSymptom = require("../models/CitizenSymptomsModel");
 const { SymptomUser } = require("../models/SymptomUser");
 const NewCitizenSymptoms = require("../models/NewCitizenSymptomsModel");
 const { User } = require("../models/UserModel");
+const CitizenSymptomController = require("../controllers/CitizenSymptomController");
+const NewCitizenSymptomController = require("../controllers/NewCitizenSymptomController");
 
 var root = __dirname;
 
@@ -35,23 +37,27 @@ function parse_date(date) {
 }
 
 exports.get_citizen_symptoms_updates = async () => {
+    const pre_check = await CitizenSymptom.countDocuments({});
+    if (!pre_check || pre_check == 0) {
+        await CitizenSymptomController.prepop();
+    }
     const today_db = parse_date(new Date());
 
     //Find users who are symptomatic
-    const count = await SymptomUser.distinct("user_id", {});
+    const count = await SymptomUser.countDocuments({});
     //If existing, modify and save. If not add a new entry to the db
     const check = await CitizenSymptom.findOne({
         date: today_db,
     });
     if (check) {
         console.log(check.total);
-        check.total = count.length;
+        check.total = count;
         await check.save();
         return check;
     } else {
         const newDayEntry = new CitizenSymptom({
             date: today_db,
-            total: count.length,
+            total: count,
         });
         await newDayEntry.save();
         return newDayEntry;
@@ -59,6 +65,10 @@ exports.get_citizen_symptoms_updates = async () => {
 };
 
 exports.get_new_citizen_symptoms_updates = async () => {
+    const pre_check = await NewCitizenSymptoms.countDocuments({});
+    if (!pre_check || pre_check == 0) {
+        await NewCitizenSymptomController.prepop();
+    }
     //Get current date starting from 00:00:000 hours
     const today = new Date(
         Date.parse(new Date().toISOString().slice(0, 10) + "T00:00:00.000Z")
@@ -69,7 +79,7 @@ exports.get_new_citizen_symptoms_updates = async () => {
     //Find users who updated their symptoms recently
     const users = await User.countDocuments({
         last_symptom_update: {
-            $gt: today,
+            $gte: today,
         },
     });
     //If existing, modify and save. If not add a new entry to the db

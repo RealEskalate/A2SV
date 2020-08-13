@@ -63,7 +63,7 @@ exports.get_citizens_with_symptoms = async (req, res) => {
 };
 
 //[Repopulation Function]
-const prepop = async () => {
+exports.prepop = async () => {
     //Fetch all users
     const users = await User.distinct("_id");
 
