@@ -8,6 +8,11 @@
 
       <v-row class="my-5">
         <v-col cols="12">
+          <h3
+            class="display-1 font-weight-thin mb-5"
+            v-text="$t('titles.symptomStatisticsTitle')"
+          />
+
           <v-card class="overflow-hidden" outlined shaped>
             <v-row>
               <v-col
@@ -84,7 +89,7 @@ export default {
       aggregates: [
         { key: "Total Symptom Reports", value: 3506 },
         { key: "Symptom Reports Yesterday", value: 0 },
-        { key: "Symptom Reports to COVID Cases", value: 0.8 },
+        { key: "Symptom Reports to COVID Cases", value: "80%" },
         { key: "Most Reported Symptom", value: "Dry Cough" }
       ]
     };

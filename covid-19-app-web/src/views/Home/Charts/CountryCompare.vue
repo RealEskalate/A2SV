@@ -216,7 +216,7 @@ export default {
       date_range_1: ["2019-10-01", this.defaultDate("end")],
       date_range_2: ["2019-10-01", this.defaultDate("end")],
       country_1: { name: this.$t("World"), slug: "World" },
-      country_2: { name: this.$t("World"), slug: "World" },
+      country_2: { name: this.$t("Ethiopia"), slug: "ETH" },
       age_range: "All",
       social_distancing_1: 50,
       social_distancing_2: 50
