@@ -47,6 +47,7 @@ class DataAnalytics extends React.Component {
       selected_filter: criterias.confirmed, // sets the current filtering parameter on the graph
       selected_filter_daily_status: criterias.confirmed,
       selected_filter_rate: criterias.recoveryRate,
+      selected_filter_perMillion_status: criterias.confirmed,
       selected_daily_start_date: "",
       selected_daily_end_date: new Date().toISOString().split("T")[0],
       selected_total_start_date: "",
@@ -260,7 +261,7 @@ class DataAnalytics extends React.Component {
       this.state.selected_perMillion_start_date.length > 1 &&
       this.state.selected_perMillion_end_date.length > 1
         ? "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/statistics?criteria=" +
-          this.state.selected_filter +
+          this.state.selected_filter_perMillion_status +
           "&country=" +
           this.state.searchedCountry +
           "&start_date=" +
@@ -269,7 +270,7 @@ class DataAnalytics extends React.Component {
           this.state.selected_perMillion_end_date +
           "&perMillion=true"
         : "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/statistics?criteria=" +
-          this.state.selected_filter +
+          this.state.selected_filter_perMillion_status +
           "&country=" +
           this.state.searchedCountry +
           "&perMillion=true";
@@ -1931,13 +1932,14 @@ class DataAnalytics extends React.Component {
                 <Button
                   size="tiny"
                   appearance={
-                    this.state.selected_filter === criterias.confirmed
+                    this.state.selected_filter_perMillion_status ===
+                    criterias.confirmed
                       ? "filled"
                       : "outline"
                   }
                   onPress={async () => {
                     await this.setState({
-                      selected_filter: criterias.confirmed,
+                      selected_filter_perMillion_status: criterias.confirmed,
                     });
 
                     this.fetchPerMillionStats();
@@ -1948,13 +1950,14 @@ class DataAnalytics extends React.Component {
                 <Button
                   size="tiny"
                   appearance={
-                    this.state.selected_filter === criterias.recoveries
+                    this.state.selected_filter_perMillion_status ===
+                    criterias.recoveries
                       ? "filled"
                       : "outline"
                   }
                   onPress={async () => {
                     await this.setState({
-                      selected_filter: criterias.recoveries,
+                      selected_filter_perMillion_status: criterias.recoveries,
                     });
 
                     this.fetchPerMillionStats();
@@ -1965,13 +1968,14 @@ class DataAnalytics extends React.Component {
                 <Button
                   size="tiny"
                   appearance={
-                    this.state.selected_filter === criterias.deaths
+                    this.state.selected_filter_perMillion_status ===
+                    criterias.deaths
                       ? "filled"
                       : "outline"
                   }
                   onPress={async () => {
                     await this.setState({
-                      selected_filter: criterias.deaths,
+                      selected_filter_perMillion_status: criterias.deaths,
                     });
                     this.fetchPerMillionStats();
                   }}
@@ -1982,13 +1986,15 @@ class DataAnalytics extends React.Component {
                   <Button
                     size="tiny"
                     appearance={
-                      this.state.selected_filter === criterias.numberOfTests
+                      this.state.selected_filter_perMillion_status ===
+                      criterias.numberOfTests
                         ? "filled"
                         : "outline"
                     }
                     onPress={async () => {
                       await this.setState({
-                        selected_filter: criterias.numberOfTests,
+                        selected_filter_perMillion_status:
+                          criterias.numberOfTests,
                       });
                       this.fetchPerMillionStats();
                     }}

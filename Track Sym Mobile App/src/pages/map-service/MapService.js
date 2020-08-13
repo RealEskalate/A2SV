@@ -146,6 +146,7 @@ export default class MapService extends React.Component {
     this.onFinishedLoadingMap = this.onFinishedLoadingMap.bind(this);
     this.onRegionDidChange = this.onRegionDidChange.bind(this);
     this.renderClusterInfo = this.renderClusterInfo.bind(this);
+    this.rateToColor = this.rateToColor.bind(this);
 
     this.metersToPixelsAtMaxZoom = this.metersToPixelsAtMaxZoom.bind(this);
     languageStore.subscribe(() => {
@@ -165,6 +166,12 @@ export default class MapService extends React.Component {
     const user_id = feature.id;
     current_grid_info = grid_infos[user_id];
     this.setState({ isClusterModalVisible: true });
+  }
+
+  rateToColor(rate, hue0 = 0, hue1 = 100, reverse = false) {
+    let hue = Math.min(rate, 1) * (hue1 - hue0) + hue0;
+    if (reverse) hue = hue1 - hue;
+    return `hsl(${hue}, 100%, 45%)`;
   }
 
   onSourceLayerPress(e) {
@@ -723,6 +730,20 @@ export default class MapService extends React.Component {
         small_cluster
           .getClusters([west_lng, south_lat, east_lng, north_lat], zoom)
           .forEach((feature) => {
+            let point_count = feature.properties.point_count;
+            if (point_count) {
+              this.mode = "cluster";
+              feature.properties.color = this.rateToColor(
+                point_count / 15,
+                55,
+                10
+              );
+              feature.properties.size = 15 + Math.min(point_count / 15, 1) * 5;
+              feature.properties.point_opacity = 0;
+            } else {
+              this.mode = "points";
+              feature.properties.point_opacity = 0.5;
+            }
             SymptomCollection.smallSymptomCollection.features.push(feature);
           });
         this.setState({
@@ -737,6 +758,20 @@ export default class MapService extends React.Component {
         medium_cluster
           .getClusters([west_lng, south_lat, east_lng, north_lat], zoom)
           .forEach((feature) => {
+            let point_count = feature.properties.point_count;
+            if (point_count) {
+              this.mode = "cluster";
+              feature.properties.color = this.rateToColor(
+                point_count / 30,
+                40,
+                5
+              );
+              feature.properties.size = 15 + Math.min(point_count / 30, 1) * 10;
+              feature.properties.point_opacity = 0;
+            } else {
+              this.mode = "points";
+              feature.properties.point_opacity = 0.5;
+            }
             SymptomCollection.mediumSymptomCollection.features.push(feature);
           });
         this.setState({
@@ -750,6 +785,21 @@ export default class MapService extends React.Component {
         high_cluster
           .getClusters([west_lng, south_lat, east_lng, north_lat], zoom)
           .forEach((feature) => {
+            let point_count = feature.properties.point_count;
+            if (point_count) {
+              this.mode = "cluster";
+              feature.properties.color = this.rateToColor(
+                point_count / 300,
+                35,
+                0
+              );
+              feature.properties.size =
+                20 + Math.min(point_count / 300, 1) * 15;
+              feature.properties.point_opacity = 0;
+            } else {
+              this.mode = "points";
+              feature.properties.point_opacity = 0.5;
+            }
             SymptomCollection.highSymptomCollection.features.push(feature);
           });
         this.setState({
@@ -837,6 +887,7 @@ export default class MapService extends React.Component {
         properties: {
           icon: "pin3",
           total: total,
+          color: this.rateToColor(element.probability, 60, 0),
         },
         geometry: {
           type: "Point",
@@ -877,6 +928,7 @@ export default class MapService extends React.Component {
         id: element.user_id,
         properties: {
           icon: "pin3",
+          color: this.rateToColor(element.probability, 60, 0),
         },
         geometry: {
           type: "Point",
@@ -1740,7 +1792,7 @@ const styles = StyleSheet.create({
 
 const smallStyles = {
   singlePoint: {
-    circleColor: "#FFC107",
+    circleColor: ["get", "color"],
     circleStrokeWidth: 1,
     circleStrokeColor: "white",
     circleRadius: 5,
@@ -1779,7 +1831,7 @@ const smallStyles = {
 
 const mediumStyles = {
   singlePoint: {
-    circleColor: "#EF6C00",
+    circleColor: ["get", "color"],
     circleStrokeWidth: 1,
     circleStrokeColor: "white",
     circleRadius: 6,
@@ -1817,7 +1869,7 @@ const mediumStyles = {
 
 const highStyles = {
   singlePoint: {
-    circleColor: "#B71C1C",
+    circleColor: ["get", "color"],
     circleStrokeWidth: 1,
     circleStrokeColor: "white",
     circleRadius: 8,
