@@ -240,9 +240,6 @@ exports.send_multiple_invitation_link = async (req, res) => {
   let emails = req.body.emails;
   try {
     User.find({ email: { $in: emails }}, (err, results) => {
-        if (err) {
-            // TODO: process error
-        }
         const existingEmails = results.map(user => user.email);
         if (existingEmails.length > 0) {
           return res
