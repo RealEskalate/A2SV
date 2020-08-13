@@ -8,6 +8,7 @@ const axios = require("axios");
 const mongoose = require("mongoose");
 const { StatisticsResource } = require("../models/StatisticsResourceModel.js");
 const { DistrictModel } = require("../models/DistrictModel");
+const SymptomLogRegistration = require("../services/SymptomLogRegistration.js");
 
 //Post a user location
 exports.post_location_user = async (req, res) => {
@@ -110,6 +111,9 @@ exports.post_location_user = async (req, res) => {
     await check.save();
     user.latest_location_user = check._id;
     await user.save();
+
+    await SymptomLogRegistration.setLogLocation(check);
+
     return res.send(check);
   } catch (err) {
     return res.status(404).send("Location User could not be posted");
