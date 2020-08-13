@@ -44,20 +44,20 @@ exports.get_citizen_symptoms_updates = async () => {
     const today_db = parse_date(new Date());
 
     //Find users who are symptomatic
-    const count = await SymptomUser.countDocuments({});
+    const count = await SymptomUser.distinct("user_id", {});
     //If existing, modify and save. If not add a new entry to the db
     const check = await CitizenSymptom.findOne({
         date: today_db,
     });
     if (check) {
         console.log(check.total);
-        check.total = count;
+        check.total = count.length;
         await check.save();
         return check;
     } else {
         const newDayEntry = new CitizenSymptom({
             date: today_db,
-            total: count,
+            total: count.length,
         });
         await newDayEntry.save();
         return newDayEntry;
