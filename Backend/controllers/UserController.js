@@ -177,7 +177,7 @@ exports.delete_user = async (req, res) => {
 // invite users ...
 // preparing email transporter
 
-const sendEmail = (mailOptions, res) =>{
+const sendEmail = async (mailOptions) =>{
 
   const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -187,15 +187,7 @@ const sendEmail = (mailOptions, res) =>{
     }
   });
 
-
-  transporter.sendMail(mailOptions, function(error, info){
-    if (error) {
-      res.send(error.toString());
-    } else {
-      res.status(201).send('link sent successfully.');
-      console.log('Email sent: ' + info.response);
-    }
-  });
+  return transporter.sendMail(mailOptions);
 
 }
 
@@ -228,13 +220,72 @@ exports.send_invitation_link = async (req, res) => {
       text: ` you can use this link to create your account.\n ${invitationLink}`
     };
 
-    return sendEmail(mailOptions,res);
+    try {
+      await sendEmail(mailOptions);
+      return res.status(200).send('Invitation message sent successfully.');
+    } catch (error) {
+      return res.status(500).send('Unable to sent invitation link.');
+    }
+    
 
   } catch (err) {
     res.status(500).send(err.toString());
   }
 };
 
+
+// send  invitation links for multiple users
+
+exports.send_multiple_invitation_link = async (req, res) => {
+  let emails = req.body.emails;
+  try {
+    User.find({ email: { $in: emails }}, (err, results) => {
+        if (err) {
+            // TODO: process error
+        }
+        const existingEmails = results.map(user => user.email);
+        if (existingEmails.length > 0) {
+          return res
+            .status(422)
+            .send( { "error": "This emails already exist.", "emails" :existingEmails });
+        }
+    });
+    
+    if (emails==undefined){
+      return res
+        .status(422)
+        .send("The email list is required.");
+    }
+
+    let result = {};
+
+    for(var index in emails){
+      let email = emails[index]
+
+      let signed_email = jwt.sign({email},process.env.APP_SECRET_KEY,{expiresIn:'6h'})
+      let invitationLink = `${process.env.APP_WEB_CREATE_ACC_LINK}${signed_email}`;
+
+      const mailOptions = {
+        from: process.env.APP_EMAIL_ADDRESS,
+        to: email,
+        subject: 'Create your account!',
+        text: ` you can use this link to create your account.\n ${invitationLink}`
+      };
+
+      try {
+        await sendEmail(mailOptions);
+        result[email] = { success: true, message:'Invitation message sent successfully.'}
+      } catch (error) {
+        result[email] = { success: false, message:'Unable to sent invitation link.'}
+      }
+    
+    }
+    
+    res.status(200).send(result)
+  } catch (err) {
+    res.status(500).send(err.toString());
+  }
+};
 
 
 // verify and create account.
@@ -313,7 +364,12 @@ exports.send_reset_link = async (req, res) => {
       text: ` you can use this link to reset your password.\n ${invitationLink}`
     };
 
-    return sendEmail(mailOptions,res);
+    try {
+      await sendEmail(mailOptions);
+      return res.status(200).send('Password reset link sent successfully.');
+    } catch (error) {
+      return res.status(500).send('Unable to password reset link.');
+    }
 
   } catch (err) {
     res.status(500).send(err.toString());
