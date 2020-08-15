@@ -18,6 +18,7 @@ import { HomeStackNavigator } from "./homeNavigation";
 import { SettingNavigator } from "../pages/settings/settingStack";
 import userIDStore from "../data-management/user-id-data/userIDStore";
 import { NewsNavigator } from "../pages/news/newsStack";
+import { NotificationNavigator } from "../pages/notification/notificationStack";
 import AboutPage from "../pages/about-page/About";
 import { strings } from "../localization/localization";
 import { LangContext } from "../../assets/lang/language-context";
@@ -28,6 +29,7 @@ const { Navigator, Screen } = createDrawerNavigator();
 
 const HomeIcon = (props) => <Icon {...props} name="home-outline" />;
 const NewsIcon = (props) => <Icon {...props} name="browser-outline" />;
+const NotificatonIcon = (props) => <Icon {...props} name="bell-outline" />;
 const InfoIcon = (props) => <Icon {...props} name="info-outline" />;
 const FlagIcon = (props) => <Icon {...props} name="flag-outline" />;
 const PhoneIcon = (props) => <Icon {...props} name="phone-outline" />;
@@ -147,6 +149,7 @@ export const AppNavigator = (props) => {
     >
       <DrawerItem title={strings.Home} accessoryLeft={HomeIcon} />
       <DrawerItem title={strings.News} accessoryLeft={NewsIcon} />
+      <DrawerItem title="Notification" accessoryLeft={NotificatonIcon} />
       <DrawerItem title={strings.Ethiopia} accessoryLeft={FlagIcon} />
       <DrawerItem title={strings.About} accessoryLeft={InfoIcon} />
       <DrawerItem title={strings.Settings} accessoryLeft={SettingIcon} />
@@ -205,6 +208,7 @@ export const AppNavigator = (props) => {
     >
       <Screen name="HOME" component={HomeStackNavigator} />
       <Screen name="NEWS" component={NewsNavigator} />
+      <Screen name="NOTIFICATION" component={NotificationNavigator} />
       <Screen name="ETHIOPIA" component={GoToEthiopia} />
       <Screen name="ABOUT" component={GoToAboutPage} />
       <Screen name="SETTINGS" component={SettingNavigator} />
