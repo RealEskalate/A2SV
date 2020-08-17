@@ -53,18 +53,16 @@
                   {{ mdiHelpCircleOutline }}
                 </v-icon>
               </v-tab>
-
               <v-tab-item style="min-height: 700px">
-                <display
-                  mode="counts"
+                <daily-display
                   y_label="People"
                   :tab_index="selectedGraph"
                   :short_description="selectedDescription.description"
                 />
               </v-tab-item>
               <v-tab-item style="min-height: 700px">
-                <daily-display
-                  y_label="People"
+                <country-compare
+                  x_axis_type="category"
                   :tab_index="selectedGraph"
                   :short_description="selectedDescription.description"
                 />
@@ -78,12 +76,14 @@
                 />
               </v-tab-item>
               <v-tab-item style="min-height: 700px">
-                <country-compare
-                  x_axis_type="category"
+                <display
+                  mode="counts"
+                  y_label="People"
                   :tab_index="selectedGraph"
                   :short_description="selectedDescription.description"
                 />
               </v-tab-item>
+
               <v-tab-item style="min-height: 700px">
                 <disease-compare
                   :tab_index="selectedGraph"
@@ -211,10 +211,10 @@ export default {
       dialog: false,
       selectedGraph: 0,
       graphNames: [
-        "graphNames.totalCounts",
         "graphNames.dailyCounts",
-        "graphNames.viewRates",
         "graphNames.compareCountries",
+        "graphNames.viewRates",
+        "graphNames.totalCounts",
         "graphNames.compareDiseases"
       ]
     };

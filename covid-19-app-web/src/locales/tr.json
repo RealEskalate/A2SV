@@ -49,6 +49,7 @@
 
   "titles": {
     "globalStatisticsTitle": "KOVİD-19 İstatistikleri",
+    "symptomStatisticsTitle": "Symptom Statistics",
     "ethiopiaStatisticsTitle": "Etiyopya'da KOVİD-19",
     "aboutCovid": "KOVİD-19 Hakkında",
     "actions": "Ne yapmalı?",
