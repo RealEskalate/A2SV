@@ -124,12 +124,12 @@
 </template>
 
 <script>
-  import store from "@/store/";
-  import ajax from "../../auth/ajax";
-  import {Rules, User} from "../../views/Auth/user";
-  import {mdiCloseCircleOutline, mdiEye, mdiEyeOff} from "@mdi/js";
+import store from "@/store/";
+import ajax from "../../auth/ajax";
+import { Rules, User } from "../../views/Auth/user";
+import { mdiCloseCircleOutline, mdiEye, mdiEyeOff } from "@mdi/js";
 
-  export default {
+export default {
   mounted() {
     this.user["signature"] = this.$route.query.signature;
     console.log(this.user);
@@ -167,7 +167,7 @@
     submit() {
       this.loading = true;
       ajax
-          .post("user/create-invited-user", this.user)
+        .post("user/create-invited-user", this.user)
         .then(
           () => {
             store.dispatch("setStateMessage", "User successfully created");
