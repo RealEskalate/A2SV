@@ -167,7 +167,7 @@ export default {
     submit() {
       this.loading = true;
       ajax
-        .post("/api/user/create-invited-user", this.user)
+        .post("user/create-invited-user", this.user)
         .then(
           () => {
             store.dispatch("setStateMessage", "User successfully created");
