@@ -38,10 +38,10 @@
 </template>
 
 <script>
-  import {mdiDeleteCircle, mdiEmailSend, mdiPlusCircle} from "@mdi/js";
-  import ajax from "../../auth/ajax";
+import { mdiDeleteCircle, mdiEmailSend, mdiPlusCircle } from "@mdi/js";
+import ajax from "../../auth/ajax";
 
-  export default {
+export default {
   name: "InviteAdmin",
   created() {
     this.add();
