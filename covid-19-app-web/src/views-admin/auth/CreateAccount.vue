@@ -7,25 +7,25 @@
     <v-row
       class="align-center justify-center align-center align-content-center mx-auto form"
     >
-      <v-col md="6">
+      <v-col md="6" cols="12">
         <v-text-field outlined label="Enter your email"></v-text-field>
       </v-col>
-      <v-col md="6">
+      <v-col md="6" cols="12">
         <v-text-field outlined label="Confirm your email"></v-text-field>
       </v-col>
-      <v-col md="6">
+      <v-col md="6" cols="12">
         <v-text-field outlined label="Enter your First Name"></v-text-field>
       </v-col>
-      <v-col md="6">
+      <v-col md="6" cols="12">
         <v-text-field outlined label="Enter your Last Name"></v-text-field>
       </v-col>
-      <v-col md="6">
+      <v-col md="6" cols="12">
         <v-text-field outlined label="Create password"></v-text-field>
       </v-col>
-      <v-col md="6">
+      <v-col md="6" cols="12">
         <v-text-field outlined label="Confirm Password"></v-text-field>
       </v-col>
-      <v-col md="6">
+      <v-col md="6" cols="12">
         <v-checkbox class="d-inline" id="c">
           <template v-slot:label>
             <div>

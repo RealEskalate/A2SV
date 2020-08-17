@@ -7,7 +7,10 @@
           <v-list-item :key="item.title">
             <template>
               <v-list-item-content>
-                <v-list-item-title v-text="item.title"></v-list-item-title>
+                <v-list-item-title
+                  v-text="item.title"
+                  class="text-wrap"
+                ></v-list-item-title>
               </v-list-item-content>
 
               <v-list-item-action>
