@@ -38,10 +38,10 @@
 </template>
 
 <script>
-import { mdiDeleteCircle, mdiPlusCircle, mdiEmailSend } from "@mdi/js";
-import ajax from "../../auth/ajax";
+  import {mdiDeleteCircle, mdiEmailSend, mdiPlusCircle} from "@mdi/js";
+  import ajax from "../../auth/ajax";
 
-export default {
+  export default {
   name: "InviteAdmin",
   created() {
     this.add();
@@ -72,7 +72,7 @@ export default {
         emails: []
       };
       for (let i = 0; i < len; i++) {
-        body.push(this.textFields[i]["value"]);
+        body.emails.push(this.textFields[i]["value"]);
       }
       ajax
         .post(`${process.env.VUE_APP_BASE_URL}/api/user/invite-multiple`, body)
