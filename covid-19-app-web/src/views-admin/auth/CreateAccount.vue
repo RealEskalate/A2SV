@@ -74,7 +74,29 @@
               required
               @click:append="show_password = !show_password"
             />
-
+            <v-col md="12" cols="12">
+              <v-checkbox class="d-inline" id="c">
+                <template v-slot:label>
+                  <div>
+                    I agree to
+                    <v-tooltip bottom>
+                      <template v-slot:activator="{ on }">
+                        <a
+                          target="_blank"
+                          href="https://tracksym.app/en/privacy-policy"
+                          @click.stop
+                          v-on="on"
+                        >
+                          Tracksym's terms, privacy policy
+                        </a>
+                      </template>
+                      Opens in new window
+                    </v-tooltip>
+                    and E-sign consent.
+                  </div>
+                </template>
+              </v-checkbox>
+            </v-col>
             <div class="my-2 mx-auto align-center align-content-center">
               <v-btn
                 :disabled="!valid"
