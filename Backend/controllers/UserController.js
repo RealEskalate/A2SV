@@ -4,7 +4,7 @@ const Bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const axios = require("axios");
 const User = UserModels.User;
-const nodemailer = require('nodemailer');
+const emailSender = require("../services/EmailSender");
 
 // Get All Users. - [DEPRECATED: The information is too sensitive to share with API consumers]
 exports.get_all_users = async (req, res) => {
@@ -175,23 +175,6 @@ exports.delete_user = async (req, res) => {
 };
 
 // invite users ...
-// preparing email transporter
-
-const sendEmail = async (mailOptions) =>{
-
-  const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: process.env.APP_EMAIL_ADDRESS,
-      pass: process.env.APP_EMAIL_PASSWORD 
-    }
-  });
-
-  return transporter.sendMail(mailOptions);
-
-}
-
-
 
 // send invitation link to user
 
@@ -213,21 +196,14 @@ exports.send_invitation_link = async (req, res) => {
     let signed_email = jwt.sign({email},process.env.APP_SECRET_KEY,{expiresIn:'6h'})
     let invitationLink = `${process.env.APP_WEB_CREATE_ACC_LINK}${signed_email}`;
 
-    const mailOptions = {
-      from: process.env.APP_EMAIL_ADDRESS,
-      to: email,
-      subject: 'Create your account!',
-      text: ` you can use this link to create your account.\n ${invitationLink}`
-    };
-
+    const usersData=[{ email : email, activationLink: invitationLink }]
     try {
-      await sendEmail(mailOptions);
+      await emailSender.sendActivationLink(req, usersData);
       return res.status(200).send('Invitation message sent successfully.');
     } catch (error) {
       return res.status(500).send('Unable to sent invitation link.');
     }
     
-
   } catch (err) {
     res.status(500).send(err.toString());
   }
@@ -254,7 +230,7 @@ exports.send_multiple_invitation_link = async (req, res) => {
         .send("The email list is required.");
     }
 
-    let result = {};
+    let usersData = [];
 
     for(var index in emails){
       let email = emails[index]
@@ -262,23 +238,21 @@ exports.send_multiple_invitation_link = async (req, res) => {
       let signed_email = jwt.sign({email},process.env.APP_SECRET_KEY,{expiresIn:'6h'})
       let invitationLink = `${process.env.APP_WEB_CREATE_ACC_LINK}${signed_email}`;
 
-      const mailOptions = {
-        from: process.env.APP_EMAIL_ADDRESS,
-        to: email,
-        subject: 'Create your account!',
-        text: ` you can use this link to create your account.\n ${invitationLink}`
-      };
+      usersData.push({
+         email : email,
+         activationLink: invitationLink
+      })
 
-      try {
-        await sendEmail(mailOptions);
-        result[email] = { success: true, message:'Invitation message sent successfully.'}
-      } catch (error) {
-        result[email] = { success: false, message:'Unable to sent invitation link.'}
-      }
     
     }
     
-    res.status(200).send(result)
+    try {
+      await emailSender.sendActivationLink(req, usersData);
+      return res.status(200).send('Invitation message sent to all users successfully.');
+    } catch (error) {
+      return res.status(500).send('Unable to sent invitation link to all users.');
+    }
+    
   } catch (err) {
     res.status(500).send(err.toString());
   }
@@ -354,15 +328,13 @@ exports.send_reset_link = async (req, res) => {
     let signed_email = jwt.sign({email},process.env.APP_SECRET_KEY,{expiresIn:'6h'})
     let invitationLink = `${process.env.APP_WEB_RESET_ACC_LINK}${signed_email}`;
 
-    const mailOptions = {
-      from: process.env.APP_EMAIL_ADDRESS,
-      to: email,
-      subject: 'Reset your password!',
-      text: ` you can use this link to reset your password.\n ${invitationLink}`
+    const usersData = {
+      activationLink: invitationLink,
+      email:email,
     };
 
     try {
-      await sendEmail(mailOptions);
+      await emailSender.sendResetPassword(req, usersData);
       return res.status(200).send('Password reset link sent successfully.');
     } catch (error) {
       return res.status(500).send('Unable to password reset link.');
