@@ -10,7 +10,6 @@ exports.get_symptom_number = async (req, res) => {
     let filter = {};
     if(req.query.date){
         let date = new Date(req.query.date);
-        date.setHours(date.getHours() - 24);
         filter.timestamp = { $gt: date };
     }
 
@@ -42,7 +41,6 @@ exports.get_most_common = async (req, res) => {
     let filter = {};
     if(req.query.date){
         let date = new Date(req.query.date);
-        date.setHours(date.getHours() - 24);
         filter.timestamp = { $gt: date };
     }
 
@@ -84,7 +82,6 @@ exports.get_people_with_symptoms = async (req, res) => {
     let filter = {};
     if(req.query.date){
         let date = new Date(req.query.date);
-        date.setHours(date.getHours() - 24);
         filter.timestamp = { $gt: date };
     }
     if(req.query.district){
