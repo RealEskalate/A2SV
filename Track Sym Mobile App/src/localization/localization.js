@@ -784,7 +784,7 @@ export let strings = new LocalizedStrings({
     LastWeek: "Last Week",
     LastMonth: "Last Month",
     LastThreeMonths: "Last Three Months",
-    },
+  },
   am: {
     Information: "መረጃ",
     Data: "ትንታኔ",
@@ -1538,28 +1538,18 @@ export let strings = new LocalizedStrings({
     // FOLLOWING LINES TO BE TRANSLATED TO TURKISH
     // Privacy&Policy page paragraphs aren't translated to
     // Turkish, Amharic and Oromo at the moment, we need to translate them
-    PrivacyPolicyParag1:
-      " TO BE TRANSLATED ",
-    PrivacyPolicyParag2:
-      " TO BE TRANSLATED ",
-    PrivacyPolicyParag3:
-      " TO BE TRANSLATED ",
-    PrivacyPolicyParag4:
-      " TO BE TRANSLATED ",
-    PrivacyPolicyParag5:
-      " TO BE TRANSLATED ",
-    PrivacyPolicyParag6:
-      " TO BE TRANSLATED ",
-    PrivacyPolicyParag7:
-      " TO BE TRANSLATED ",
-    PrivacyPolicyParag8:
-      " TO BE TRANSLATED ",
-    PrivacyPolicyParag9:
-      " TO BE TRANSLATED ",
-    PrivacyPolicyParag10:
-      " TO BE TRANSLATED ",
+    PrivacyPolicyParag1: " TO BE TRANSLATED ",
+    PrivacyPolicyParag2: " TO BE TRANSLATED ",
+    PrivacyPolicyParag3: " TO BE TRANSLATED ",
+    PrivacyPolicyParag4: " TO BE TRANSLATED ",
+    PrivacyPolicyParag5: " TO BE TRANSLATED ",
+    PrivacyPolicyParag6: " TO BE TRANSLATED ",
+    PrivacyPolicyParag7: " TO BE TRANSLATED ",
+    PrivacyPolicyParag8: " TO BE TRANSLATED ",
+    PrivacyPolicyParag9: " TO BE TRANSLATED ",
+    PrivacyPolicyParag10: " TO BE TRANSLATED ",
     // -------------- END --------------
-    },
+  },
   orm: {
     Information: "Odeeffannoo",
     Data: "Daataa",
@@ -1587,6 +1577,7 @@ export let strings = new LocalizedStrings({
     Female: "Dhalaa",
     Gender: "Saala",
     ConfirmPassword: "Confirm Password",
+    WhatIsCOVID19: "COVID-19 MAALI?",
     ReadMore: "Dabalataan Dubbisi",
     COVID19Symptoms: "Mallattoolee COVID-19",
     Prevention: "ITTISA",
@@ -1750,7 +1741,7 @@ export let strings = new LocalizedStrings({
     MessageFromUsShortDescription:
       "Yeroo ammaa odeeffannoowwan baay’een dabarsamaa waan jiranif dhugaa ta'uu isaanii mirkaneeffachuun barbaachisaadha",
 
-    WhatIsCOVID19DetailInfoTitle: "OVID-19 MAALI?",
+    WhatIsCOVID19DetailInfoTitle: "COVID-19 MAALI?",
 
     WhatIsCOVID19DetailInfoDescription: "HUKKUBA VAAYIRASII KORONAA (COVID-19)",
 
