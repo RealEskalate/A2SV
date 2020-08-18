@@ -7,10 +7,19 @@
       style="border-radius: 0 0 25px 0"
       :class="{ shadow: raise }"
     >
-      <v-app-bar-nav-icon
+      <v-btn
+        fab
+        text
+        small
         v-if="$vuetify.breakpoint.mdAndUp"
         @click.stop="drawer = !drawer"
-      />
+      >
+        <v-icon v-text="mdiForwardburger" />
+      </v-btn>
+      <!--      <v-app-bar-nav-icon-->
+      <!--        v-if="$vuetify.breakpoint.mdAndUp"-->
+      <!--        @click.stop="drawer = !drawer"-->
+      <!--      />-->
       <v-btn
         text
         data-v-step="0"
@@ -202,6 +211,7 @@ import {
   mdiAccountCog,
   mdiAccountEdit,
   mdiBookOpenVariant,
+  mdiForwardburger,
   mdiHome,
   mdiInformation,
   mdiLogoutVariant,
@@ -215,6 +225,7 @@ export default {
     return {
       mdiTranslate,
       mdiAccountCog,
+      mdiForwardburger,
       mdiLogoutVariant,
       drawer: false,
       navType: store.getters.getNavigationType,
