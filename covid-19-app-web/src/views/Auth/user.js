@@ -19,5 +19,6 @@ export const Rules = {
   password: [
     value => !!value || "Password is required.",
     v => v.length >= 6 || "Min 6 characters"
-  ]
+  ],
+  required: [v => !!v || "This field is required"]
 };
