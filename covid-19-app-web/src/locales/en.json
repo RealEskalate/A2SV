@@ -162,6 +162,7 @@
     "oldPassword": "Old Password",
     "newPassword": "New Password",
     "confirmPassword": "Confirm Password",
+    "forgotPassword": "Reset Password",
     "symptoms": "Your Symptoms",
     "noSymptoms": "No Symptoms",
     "editSymptoms": "Edit Symptoms",

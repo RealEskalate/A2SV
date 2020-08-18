@@ -75,7 +75,7 @@
               @click:append="show_password = !show_password"
             />
             <v-col md="12" cols="12">
-              <v-checkbox class="d-inline" id="c">
+              <v-checkbox class="d-inline" :rules="rules.required">
                 <template v-slot:label>
                   <div>
                     I agree to
