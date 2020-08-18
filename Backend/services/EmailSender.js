@@ -25,6 +25,7 @@ exports.sendActivationLink= async ( req, usersData ) =>{
         
         let user = new BulkRecipient(userInfo.email);
         user.addMergeData("link", userInfo.activationLink);
+        user.addMergeData("SenderAddress",process.env.APP_EMAIL_ADDRESS);
         bulkMessage.to.push(user);
         
     }
@@ -56,6 +57,7 @@ exports.sendResetPassword= async (req,userInfo) =>{
     
     let user = new BulkRecipient(userInfo.email);
     user.addMergeData("link", userInfo.activationLink);
+    user.addMergeData("SenderAddress",process.env.APP_EMAIL_ADDRESS);
     basicMessage.to.push(user);
 
     return client.send(basicMessage);
