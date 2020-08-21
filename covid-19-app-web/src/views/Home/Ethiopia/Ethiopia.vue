@@ -204,11 +204,13 @@ export default {
       };
 
       data.forEach(d => {
-        allRegions.push(d.region);
-        addresses.push({
-          name: d.region,
-          phone: d.phone_number
-        });
+        if (d.region) {
+          allRegions.push(d.region);
+          addresses.push({
+            name: d.region,
+            phone: d.phone_number
+          });
+        }
 
         ["daily", "total"].forEach(i => {
           for (let key in d[i]) {

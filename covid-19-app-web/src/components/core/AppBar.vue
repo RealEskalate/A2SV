@@ -3,18 +3,26 @@
     <v-app-bar
       app
       flat
-      class="white"
-      style="border-radius: 0 0 25px 0"
+      class="white py-1"
+      style="border-radius: 0 0 25px 0; height: auto"
       :class="{ shadow: raise }"
     >
-      <v-app-bar-nav-icon
+      <v-btn
+        fab
+        text
         v-if="$vuetify.breakpoint.mdAndUp"
         @click.stop="drawer = !drawer"
-      />
+      >
+        <v-icon large v-text="mdiForwardburger" />
+      </v-btn>
+      <!--      <v-app-bar-nav-icon-->
+      <!--        v-if="$vuetify.breakpoint.mdAndUp"-->
+      <!--        @click.stop="drawer = !drawer"-->
+      <!--      />-->
       <v-btn
         text
         data-v-step="0"
-        class="d-flex align-center px-2"
+        class="d-flex align-center pa-3"
         @click="$router.push({ name: 'Home' })"
       >
         <v-img
@@ -65,7 +73,6 @@
       <!--      </div>-->
       <v-divider class="mr-2" vertical light />
       <v-btn
-        small
         dark
         color="primary"
         v-if="!loggedInUser"
@@ -76,8 +83,8 @@
       />
       <v-menu offset-y v-else>
         <template v-slot:activator="{ on }">
-          <v-btn fab text small color="primary" v-on="on">
-            <v-icon small v-text="mdiAccountCog" />
+          <v-btn fab text color="primary" v-on="on">
+            <v-icon v-text="mdiAccountCog" />
           </v-btn>
         </template>
         <v-list class="py-0">
@@ -202,6 +209,7 @@ import {
   mdiAccountCog,
   mdiAccountEdit,
   mdiBookOpenVariant,
+  mdiForwardburger,
   mdiHome,
   mdiInformation,
   mdiLogoutVariant,
@@ -215,6 +223,7 @@ export default {
     return {
       mdiTranslate,
       mdiAccountCog,
+      mdiForwardburger,
       mdiLogoutVariant,
       drawer: false,
       navType: store.getters.getNavigationType,
@@ -285,7 +294,7 @@ export default {
       return this.locationY > 50;
     },
     brandWidth() {
-      return this.locationY > 50 ? 125 : 135;
+      return this.locationY > 50 ? 150 : 160;
     },
     navOption() {
       return this.navType;

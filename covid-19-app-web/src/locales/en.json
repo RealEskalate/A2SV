@@ -49,6 +49,7 @@
 
   "titles": {
     "globalStatisticsTitle": "Covid-19 Statistics",
+    "symptomStatisticsTitle": "Symptom Statistics",
     "ethiopiaStatisticsTitle": "Covid-19 in Ethiopia",
     "aboutCovid": "About Covid-19",
     "actions": "What to do?",

@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, Linking } from 'react-native';
+import { SafeAreaView, Linking, StyleSheet } from 'react-native';
 import {
   Layout,
   TopNavigationAction,
@@ -8,6 +8,9 @@ import {
   Icon,
   List,
   ListItem,
+  Card,
+  Text,
+  Button
 } from '@ui-kitten/components';
 import { LangContext } from '../../../assets/lang/language-context';
 import { strings } from '../../localization/localization';
@@ -39,67 +42,25 @@ export const HotlineScreen = (props) => {
       id: 1,
       name: '6220',
       description: 'Afar',
-      link: 'tel:+123456789',
+      link: 'tel:6220',
     },
     {
       id: 2,
       name: '6981',
       description: 'Amhara',
-      link: 'tel:+123456789',
+      link: 'tel:6981',
     },
     {
       id: 3,
       name: '6016',
       description: 'Benishangul Gumuz',
-      link: 'tel:+123456789',
+      link: 'tel:6016',
     },
     {
       id: 4,
       name: '6407',
       description: 'Dire Dawa',
-      link: 'tel:+123456789',
-    },
-    {
-      id: 5,
-      name: '1212',
-      description: 'Gambela',
-      link: 'tel:+123456789',
-    },
-    {
-      id: 6,
-      name: '1212',
-      description: 'Harari',
-      link: 'tel:+123456789',
-    },
-    {
-      id: 7,
-      name: '1212',
-      description: 'Oromia',
-      link: 'tel:+123456789',
-    },
-    {
-      id: 8,
-      name: '1212',
-      description: 'Tigrai',
-      link: 'tel:+123456789',
-    },
-    {
-      id: 9,
-      name: '1212',
-      description: 'Sidama',
-      link: 'tel:+123456789',
-    },
-    {
-      id: 10,
-      name: '6929',
-      description: 'SNNPR',
-      link: 'tel:+123456789',
-    },
-    {
-      id: 11,
-      name: '1212',
-      description: 'Somali',
-      link: 'tel:+123456789',
+      link: 'tel:6407',
     },
   ];
 
@@ -117,13 +78,32 @@ export const HotlineScreen = (props) => {
             data={data}
             renderItem={({ item }) => (
               <>
-                <ListItem
-                  title={item.name}
-                  description={item.description}
-                  accessoryLeft={CallIcon}
-                  onPress={() => Linking.openURL(item.link)}
-                />
-                <Divider />
+                <Card 
+                style={styles.card}
+                onPress={() => Linking.openURL(item.link)}
+                >
+                  <Layout
+                    style={{
+                      flexDirection: "row"
+                    }}
+                  >
+                    <Button
+                      style={styles.button}
+                      size="giant"
+                      appearance="ghost"
+                      status="primary"
+                      accessoryLeft={CallIcon}
+                      onPress={() => Linking.openURL(item.link)}
+                    >
+                      {item.name}
+                    </Button>
+                    <Layout style={styles.description_container}>
+                      <Text appearance='hint'
+                        style={styles.description}
+                      >{item.description}</Text>
+                    </Layout>
+                  </Layout>
+                </Card>
               </>
             )}
           />
@@ -132,3 +112,21 @@ export const HotlineScreen = (props) => {
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  card: {
+    marginHorizontal: 10,
+    borderWidth: 1,
+  },
+  button: { 
+    marginLeft: -10,
+    paddingHorizontal: 0 
+  },
+  description: { 
+    marginLeft: 10 
+  },
+  description_container : { 
+    alignSelf: "center", 
+    borderLeftWidth: 1 
+  },
+});

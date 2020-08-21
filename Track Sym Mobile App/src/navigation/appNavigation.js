@@ -18,16 +18,20 @@ import { HomeStackNavigator } from "./homeNavigation";
 import { SettingNavigator } from "../pages/settings/settingStack";
 import userIDStore from "../data-management/user-id-data/userIDStore";
 import { NewsNavigator } from "../pages/news/newsStack";
+import { NotificationNavigator } from "../pages/notification/notificationStack";
 import AboutPage from "../pages/about-page/About";
 import { strings } from "../localization/localization";
 import { LangContext } from "../../assets/lang/language-context";
 import Ethiopia from "../pages/ethiopia-page/ethiopia";
 import { ReferenceScreen } from "../pages/references";
 import { HotlineScreen } from "../pages/hotlines-page";
+import SymptomAnaliticsPage from "../pages/symptom-analitics";
 const { Navigator, Screen } = createDrawerNavigator();
 
 const HomeIcon = (props) => <Icon {...props} name="home-outline" />;
+const AnaliticsIcon = (props) => <Icon {...props} name="bar-chart-outline" />;
 const NewsIcon = (props) => <Icon {...props} name="browser-outline" />;
+const NotificatonIcon = (props) => <Icon {...props} name="bell-outline" />;
 const InfoIcon = (props) => <Icon {...props} name="info-outline" />;
 const FlagIcon = (props) => <Icon {...props} name="flag-outline" />;
 const PhoneIcon = (props) => <Icon {...props} name="phone-outline" />;
@@ -146,7 +150,9 @@ export const AppNavigator = (props) => {
       onSelect={(index) => navigation.navigate(state.routeNames[index.row])}
     >
       <DrawerItem title={strings.Home} accessoryLeft={HomeIcon} />
+      <DrawerItem title="Symptom Analytics" accessoryLeft={AnaliticsIcon} />
       <DrawerItem title={strings.News} accessoryLeft={NewsIcon} />
+      <DrawerItem title="Notification" accessoryLeft={NotificatonIcon} />
       <DrawerItem title={strings.Ethiopia} accessoryLeft={FlagIcon} />
       <DrawerItem title={strings.About} accessoryLeft={InfoIcon} />
       <DrawerItem title={strings.Settings} accessoryLeft={SettingIcon} />
@@ -204,7 +210,9 @@ export const AppNavigator = (props) => {
       drawerContent={(props) => <DrawerContent {...props} />}
     >
       <Screen name="HOME" component={HomeStackNavigator} />
+      <Screen name="SYMPTOM_ANALITICS" component={SymptomAnaliticsPage} />
       <Screen name="NEWS" component={NewsNavigator} />
+      <Screen name="NOTIFICATION" component={NotificationNavigator} />
       <Screen name="ETHIOPIA" component={GoToEthiopia} />
       <Screen name="ABOUT" component={GoToAboutPage} />
       <Screen name="SETTINGS" component={SettingNavigator} />

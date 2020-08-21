@@ -4,6 +4,7 @@ const Bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const axios = require("axios");
 const User = UserModels.User;
+const emailSender = require("../services/EmailSender");
 
 // Get All Users. - [DEPRECATED: The information is too sensitive to share with API consumers]
 exports.get_all_users = async (req, res) => {
@@ -143,7 +144,11 @@ exports.update_user = async (req, res) => {
       }
       req.body.password = Bcrypt.hashSync(req.body.password, 10);
     }
-    change.set(req.body);
+    change.username = req.body.username || change.username;
+    change.password = req.body.password || change.password;
+    change.gender = req.body.gender || change.gender;
+    change.age_group = req.body.age_group || change.age_group;
+    change.email = req.body.email || change.email;
     await change.save();
     res.send(change);
   } catch (err) {
@@ -171,4 +176,220 @@ exports.delete_user = async (req, res) => {
 
     res.status(500).send(err.toString());
   }
+};
+
+// invite users ...
+
+// send invitation link to user
+
+exports.send_invitation_link = async (req, res) => {
+  let email = req.body.email;
+  try {
+    const check = await User.findOne({ email: email });
+    if (check) {
+      return res
+        .status(422)
+        .send("The email already exists.");
+    }
+    else if (email==undefined){
+      return res
+        .status(422)
+        .send("The email is required.");
+    }
+
+    let signed_email = jwt.sign({email},process.env.APP_SECRET_KEY,{expiresIn:'6h'})
+    let invitationLink = `${process.env.APP_WEB_CREATE_ACC_LINK}${signed_email}`;
+
+    const usersData=[{ email : email, activationLink: invitationLink }]
+    try {
+      await emailSender.sendActivationLink(req, usersData);
+      return res.status(200).send('Invitation message sent successfully.');
+    } catch (error) {
+      return res.status(500).send('Unable to sent invitation link.');
+    }
+    
+  } catch (err) {
+    res.status(500).send(err.toString());
+  }
+};
+
+
+// send  invitation links for multiple users
+
+exports.send_multiple_invitation_link = async (req, res) => {
+  let emails = req.body.emails;
+  try {
+    User.find({ email: { $in: emails }}, (err, results) => {
+        const existingEmails = results.map(user => user.email);
+        if (existingEmails.length > 0) {
+          return res
+            .status(422)
+            .send( { "error": "This emails already exist.", "emails" :existingEmails });
+        }
+    });
+    
+    if (emails==undefined){
+      return res
+        .status(422)
+        .send("The email list is required.");
+    }
+
+    let usersData = [];
+
+    for(var index in emails){
+      let email = emails[index]
+
+      let signed_email = jwt.sign({email},process.env.APP_SECRET_KEY,{expiresIn:'6h'})
+      let invitationLink = `${process.env.APP_WEB_CREATE_ACC_LINK}${signed_email}`;
+
+      usersData.push({
+         email : email,
+         activationLink: invitationLink
+      })
+
+    
+    }
+    
+    try {
+      await emailSender.sendActivationLink(req, usersData);
+      return res.status(200).send('Invitation message sent to all users successfully.');
+    } catch (error) {
+      return res.status(500).send('Unable to sent invitation link to all users.');
+    }
+    
+  } catch (err) {
+    res.status(500).send(err.toString());
+  }
+};
+
+
+// verify and create account.
+
+exports.create_invited_user = async (req, res) => {
+  let signature = req.body.signature
+  let email =null;
+  if (signature){
+
+    jwt.verify(signature, process.env.APP_SECRET_KEY, (err, decodedEmail) => {
+      if (err) {
+        res.status(401).send("Incorrect signature");
+      } else {
+        email = decodedEmail.email
+      }
+    });
+
+  }
+
+  const user = new User({
+    _id: mongoose.Types.ObjectId(),
+    username: req.body.username,
+    password: req.body.password,
+    gender: req.body.gender,
+    age_group: req.body.age_group,
+    role: "ephi_user",
+    email:email
+  });
+  
+  try {
+    const check = await User.findOne({ username: user.username });
+    if (check) {
+      return res
+        .status(422)
+        .send("The username already exists");
+    }
+    if (user.password.length < 5) {
+      res.status(422).send("The password length must be above 5");
+    } else {
+      user.password = Bcrypt.hashSync(user.password, 10);
+      await user.save();
+      res.send(user);
+    }
+  } catch (err) {
+    res.status(500).send(err.toString());
+  }
+  
+};
+
+
+
+// reset password.
+
+exports.send_reset_link = async (req, res) => {
+  let email = req.body.email;
+  try {
+    const check = await User.findOne({ email: email });
+    if (!check) {
+      return res
+        .status(401)
+        .send("The email address doesn't exist.");
+    }
+    else if (email==undefined){
+      return res
+        .status(422)
+        .send("The email is required.");
+    }
+
+    let signed_email = jwt.sign({email},process.env.APP_SECRET_KEY,{expiresIn:'6h'})
+    let invitationLink = `${process.env.APP_WEB_RESET_ACC_LINK}${signed_email}`;
+
+    const usersData = {
+      activationLink: invitationLink,
+      email:email,
+    };
+
+    try {
+      await emailSender.sendResetPassword(req, usersData);
+      return res.status(200).send('Password reset link sent successfully.');
+    } catch (error) {
+      return res.status(500).send('Unable to password reset link.');
+    }
+
+  } catch (err) {
+    res.status(500).send(err.toString());
+  }
+};
+
+
+
+// verify and reset password.
+
+exports.save_new_password= async (req, res) => {
+  let signature = req.body.signature
+  let email =null;
+  if (signature){
+
+    jwt.verify(signature, process.env.APP_SECRET_KEY, (err, decodedEmail) => {
+      if (err) {
+        res.status(401).send("Incorrect signature");
+      } else {
+        email = decodedEmail.email
+      }
+    });
+
+  }
+
+  const check = await User.findOne({ email: email });
+  if (!check) {
+    return res
+      .status(401)
+      .send("The email address doesn't exist.");
+  }
+
+  try {
+    let user =check;
+
+    if (!req.body.password || req.body.password.length < 5) {
+        return res.status(422).send("Invalid password.");
+    }
+    
+    let password = Bcrypt.hashSync(req.body.password, 10);
+
+    user.password=password
+    user.save()
+    
+    res.send(user)
+  } catch (err) {
+    res.send(err.toString());
+  }
+  
 };
