@@ -7,37 +7,6 @@ const { SymptomLog } = require("../models/SymptomLogModel");
 const { requestWhitelist } = require("express-winston");
 const { StatisticsResource } = require("../models/StatisticsResourceModel.js");
 
-exports.get_symptom_number = async (req, res) => {
-
-    let filter = {};
-    if(req.query.date){
-        let date = new Date(req.query.date);
-        filter.timestamp = { $gt: date };
-    }
-
-    if(req.query.district){
-        let district = await DistrictModel.findOne({name: req.query.district});
-        let locationUsers = await LocationUser.find({'location.district': district._id}).distinct("user_id");
-        filter.user_id = {$in : locationUsers};
-    }else if(req.query.region){
-        let districts = await DistrictModel.find({state : req.query.region}).distinct("_id");
-        let locationUsers = await (await LocationUser.find({'location.district' : {$in : districts}})).distinct("user_id");
-        filter.user_id = {$in : locationUsers};
-    }else if(req.query.country){
-        let users = await User.find({current_country : req.query.country}).distinct("_id");
-        filter.user_id = {$in : users};        
-    }
-
-    let total = await SymptomUser.countDocuments(filter);
-
-    try {
-        res.send({result: total});
-    } catch (err) {
-        res.status(500).send(err.toString());
-    }
-
-}
-
 exports.get_most_common = async (req, res) => {
     let symptomCounts = {};
     let filter = {};
@@ -68,10 +37,14 @@ exports.get_most_common = async (req, res) => {
             symptomCounts[symptomUsers[i].symptom_id] = 1;
         }
     }
-
     let sorted = Object.keys(symptomCounts).sort(function(a,b){return symptomCounts[b]-symptomCounts[a]});
     let commonSymptoms = await Promise.all(sorted.map(async (item) => await Symptom.findById(item) ));
-    commonSymptoms.forEach(function(symptom) { symptom.count=symptomCounts[symptom._id] })
+    commonSymptoms = commonSymptoms.map((symptom) => {
+        return {
+                count: symptomCounts[symptom._id],
+                symptom : symptom
+            };
+        });
 
     // translation start
     let language = null
@@ -91,7 +64,10 @@ exports.get_most_common = async (req, res) => {
     // translation end
 
     try {
-        res.send(commonSymptoms);
+        res.send({
+            total: symptomUsers.length,
+            data: commonSymptoms
+        });
     } catch (err) {
         res.status(500).send(err.toString());
     }
