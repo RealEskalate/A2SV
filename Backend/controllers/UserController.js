@@ -144,7 +144,11 @@ exports.update_user = async (req, res) => {
       }
       req.body.password = Bcrypt.hashSync(req.body.password, 10);
     }
-    change.set(req.body);
+    change.username = req.body.username || change.username;
+    change.password = req.body.password || change.password;
+    change.gender = req.body.gender || change.gender;
+    change.age_group = req.body.age_group || change.age_group;
+    change.email = req.body.email || change.email;
     await change.save();
     res.send(change);
   } catch (err) {
