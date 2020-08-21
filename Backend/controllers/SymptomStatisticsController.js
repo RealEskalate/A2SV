@@ -5,6 +5,7 @@ const {DistrictModel} = require("../models/DistrictModel");
 const { Symptom } = require("../models/Symptom");
 const { SymptomLog } = require("../models/SymptomLogModel");
 const { requestWhitelist } = require("express-winston");
+const { StatisticsResource } = require("../models/StatisticsResourceModel.js");
 
 exports.get_symptom_number = async (req, res) => {
 
@@ -68,11 +69,29 @@ exports.get_most_common = async (req, res) => {
         }
     }
 
-    sorted = Object.keys(symptomCounts).sort(function(a,b){return symptomCounts[b]-symptomCounts[a]});
-    sorted = await Promise.all(sorted.map(async (item) => await Symptom.findById(item)));
+    let sorted = Object.keys(symptomCounts).sort(function(a,b){return symptomCounts[b]-symptomCounts[a]});
+    let commonSymptoms = await Promise.all(sorted.map(async (item) => await Symptom.findById(item) ));
+    commonSymptoms.forEach(function(symptom) { symptom.count=symptomCounts[symptom._id] })
+
+    // translation start
+    let language = null
+    if (req.query.language){
+        language= await StatisticsResource.findOne({ language:req.query.language , title: 'sypmtom-list'});
+        if (language){language=language.fields[0];}
+    } 
+    for (var index=0 in commonSymptoms){
+        let symptom= commonSymptoms[index];
+        let key = symptom._id
+        if (language && language[key]){
+            symptom.name=language[key].name;
+            symptom.description= language[key].description
+            symptom.relevance=language[key].relevance;
+        }
+    }
+    // translation end
 
     try {
-        res.send(sorted);
+        res.send(commonSymptoms);
     } catch (err) {
         res.status(500).send(err.toString());
     }
@@ -157,6 +176,37 @@ exports.get_symptom_logs = async (req, res) => {
         model: "Symptom"
     }).sort({"current_symptoms.date" : -1});
 
+
+    // translation start
+    let language = null
+    let genderNames=null
+    if (req.query.language){
+        language= await StatisticsResource.findOne({ language:req.query.language , title: 'sypmtom-list'});
+        genderNames= await StatisticsResource.findOne({ language:req.query.language , title: 'symptoms-name-list'});
+        if (language){language=language.fields[0];}
+        if (genderNames){genderNames=genderNames.criteria[0];}
+    } 
+
+    if (language){
+        for (var index=0; index<logs.length;index++){
+            let symptoms= logs[index].current_symptoms.symptoms;
+            for(var symptomIndex in symptoms){
+                let symptom=symptoms[symptomIndex]
+                let key = symptom._id
+                if(language[key]){
+                    symptom.name=language[key].name;
+                    symptom.description= language[key].description
+                    symptom.relevance=language[key].relevance;
+                }
+            }
+            if(genderNames){
+                logs[index].user_id.gender= genderNames[logs[index].user_id.gender]
+            }
+            
+        }
+    }
+    // translation end
+
     let result = {
         data_count: await SymptomLog.countDocuments(filter),
         page_size: size,
@@ -173,6 +223,7 @@ exports.get_symptom_logs = async (req, res) => {
 
 exports.get_logs_by_user_id = async (req, res) => {
     let log = await SymptomLog.findOne({user_id : req.params.user_id});
+
     if(!log){
         res.status(404).send("Log Not Found");
     }else{
