@@ -28,7 +28,13 @@
     </v-col>
     <v-divider class="mx-6" vertical></v-divider>
     <v-col cols="12" sm="5">
-      <v-text-field v-model="search" label="Search" @change="$emit('set-search', this.search)" single-line hide-details></v-text-field>
+      <v-text-field
+        v-model="search"
+        label="Search"
+        @change="$emit('set-search', this.search)"
+        single-line
+        hide-details
+      ></v-text-field>
     </v-col>
   </v-row>
 </template>
@@ -37,9 +43,13 @@
 export default {
   name: "SymptomFilter",
   data() {
-      return {
-          search: ""
-      };
+    return {
+      menu: false,
+      date: new Date().toISOString().substr(0, 10),
+      search: "",
+      risk: ["", "Low", "Medium", "High"],
+      status: ["", "Symptom Submitted", "Symptom Updated"]
+    };
   }
 };
 </script>

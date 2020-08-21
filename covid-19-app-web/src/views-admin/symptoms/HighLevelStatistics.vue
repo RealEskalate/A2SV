@@ -1,25 +1,87 @@
 <template>
-    <v-row>
-      <v-col cols="12" sm="6" md="4" v-for="(stat, i) in highLevelStats" :key="i">
-        <v-card class="mx-auto" :flat="true" max-width="344">
-          <v-card-text>
-            <p class="display-1 text--primary">{{stat.statistic}}</p>
-            <div class="text--primary">{{stat.description}}</div>
-          </v-card-text>
-        </v-card>
-      </v-col>
-    </v-row>
+  <v-row>
+    <v-col cols="12" sm="6" md="4">
+      <v-skeleton-loader
+          :loading="getSymptomStatLoaders.total"
+          :transition="scale-transition"
+          height="100"
+          type="list-item-two-line"
+        >
+          <v-card class="mx-auto" :flat="true" max-width="344" >
+        <v-card-text>
+          <p class="display-1 text--primary">{{getTotalSymptoms}}</p>
+          <div class="text--primary">{{title_one}}</div>
+        </v-card-text>
+      </v-card>
+        </v-skeleton-loader>
+    </v-col>
+    <v-col cols="12" sm="6" md="4">
+      <v-skeleton-loader
+          :loading="getSymptomStatLoaders.mostCommon"
+          :transition="scale-transition"
+          height="100"
+          type="list-item-two-line"
+        >
+      <v-card class="mx-auto" :flat="true" max-width="344">
+        <v-card-text>
+          <p class="display-1 text--primary">{{getMostCommonSymptom}}</p>
+          <div class="text--primary">{{title_two}}</div>
+        </v-card-text>
+      </v-card>
+      </v-skeleton-loader>
+    </v-col>
+    <v-col cols="12" sm="6" md="4">
+      <v-skeleton-loader
+          :loading="getSymptomStatLoaders.totalPeople"
+          :transition="scale-transition"
+          height="100"
+          type="list-item-two-line"
+        >
+      <v-card class="mx-auto" :flat="true" max-width="344">
+        <v-card-text>
+          <p class="display-1 text--primary">{{getTotalPeoplesWithSymptoms}}</p>
+          <div class="text--primary">{{title_three}}</div>
+        </v-card-text>
+      </v-card>
+      </v-skeleton-loader>
+    </v-col>
+  </v-row>
 </template>
 
 <script>
-import { highLevelStats } from "./dummy";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
-    name: "HighLevelStatistics",
-    data() {
-        return {
-            highLevelStats: highLevelStats
-        };
-    }
-}
+  name: "HighLevelStatistics",
+  components: {
+    
+  },
+  data() {
+    return {
+      title_one: "TOTAL SYMPTOMS REGISTERED",
+      title_two: "MOST COMMON SYMPTOMS",
+      title_three: "PEOPLE WITH SYMPTOMS"
+    };
+  },
+  methods: {
+    ...mapActions([
+      "fetchTotalSymptoms",
+      "fetchMostCommonSymptom",
+      "fetchTotalPeoplesWithSymptoms"
+    ])
+  },
+  computed: {
+    ...mapGetters([
+      "getTotalSymptoms",
+      "getMostCommonSymptom",
+      "getTotalPeoplesWithSymptoms",
+      "getSymptomStatLoaders"
+    ])
+  },
+  created() {
+    this.fetchTotalSymptoms();
+    this.fetchMostCommonSymptom();
+    this.fetchTotalPeoplesWithSymptoms();
+  }
+};
 </script>
