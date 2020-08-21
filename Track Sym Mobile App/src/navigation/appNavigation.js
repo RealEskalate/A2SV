@@ -29,7 +29,7 @@ import SymptomAnaliticsPage from "../pages/symptom-analitics";
 const { Navigator, Screen } = createDrawerNavigator();
 
 const HomeIcon = (props) => <Icon {...props} name="home-outline" />;
-const AnaliticsIcon = (props) => <Icon {...props} name="bar-chart-outline"/>
+const AnaliticsIcon = (props) => <Icon {...props} name="bar-chart-outline" />;
 const NewsIcon = (props) => <Icon {...props} name="browser-outline" />;
 const NotificatonIcon = (props) => <Icon {...props} name="bell-outline" />;
 const InfoIcon = (props) => <Icon {...props} name="info-outline" />;
@@ -150,7 +150,7 @@ export const AppNavigator = (props) => {
       onSelect={(index) => navigation.navigate(state.routeNames[index.row])}
     >
       <DrawerItem title={strings.Home} accessoryLeft={HomeIcon} />
-      <DrawerItem title="Symptom Analitics" accessoryLeft={AnaliticsIcon} />
+      <DrawerItem title="Symptom Analytics" accessoryLeft={AnaliticsIcon} />
       <DrawerItem title={strings.News} accessoryLeft={NewsIcon} />
       <DrawerItem title="Notification" accessoryLeft={NotificatonIcon} />
       <DrawerItem title={strings.Ethiopia} accessoryLeft={FlagIcon} />
