@@ -53,7 +53,7 @@ exports.get_most_common = async (req, res) => {
         if (language){language=language.fields[0];}
     } 
     for (var index=0 in commonSymptoms){
-        let symptom= commonSymptoms[index];
+        let symptom= commonSymptoms[index].symptom
         let key = symptom._id
         if (language && language[key]){
             symptom.name=language[key].name;
