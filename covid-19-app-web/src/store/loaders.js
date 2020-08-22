@@ -34,7 +34,8 @@ export default {
     symptomStatLoaders: {
       total: false,
       mostCommon: false,
-      totalPeople: false
+      totalPeople: false,
+      peopleList: false
     }
   },
   getters: {

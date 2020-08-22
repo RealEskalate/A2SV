@@ -68,8 +68,11 @@
     <v-data-table
       :search="search"
       :headers="headers"
-      :items="items"
-      :items-per-page="10"
+      :options.sync="options"
+      :items="getPeoplesWithSymptoms"
+      :server-items-length="getPeopleCount"
+      :loading="getSymptomStatLoaders.peopleList"
+      :footer-props="{'items-per-page-options':[5, 10, 25, 50]}"
       class="elevation-1"
     >
       <template v-slot:[`item.actions`]>
@@ -82,10 +85,11 @@
 </template>
 
 <script>
-import { headers, items } from "./dummy";
 import HighLevelStatistics from "./HighLevelStatistics";
 import SymptomFilter from "./SymptomFilter";
 import { mdiClose } from "@mdi/js";
+
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "Symptoms",
@@ -98,15 +102,49 @@ export default {
       mdiClose,
       search: "",
       sidebar: false,
-      headers: headers,
-      items: items
+      headers: [
+        { text: "Date", align: "start", value: "date" },
+        { text: "Status", value: "status", sortable: false },
+        { text: "Person", value: "person" },
+        { text: "Symptoms", value: "symptoms", sortable: false },
+        { text: "Risk Score", value: "riskScore", sortable: false },
+        { text: 'Actions', value: 'actions', sortable: false }
+      ],
+      options: { page: 1, itemsPerPage: 5 }
     };
   },
+  watch: {
+      options: {
+        handler () {
+          this.fetchPeoplesWithSymptoms({
+            page: this.options.page,
+            size: this.options.itemsPerPage
+          });
+        },
+        deep: true,
+      },
+    },
   methods: {
+    ...mapActions([
+        "fetchPeoplesWithSymptoms"
+    ]),
     setSearch(text) {
       this.search = text;
     }
-  }
+  },
+  computed: {
+    ...mapGetters([
+      "getPeoplesWithSymptoms",
+      "getPeopleCount",
+      "getSymptomStatLoaders"
+    ])
+  },
+  mounted() {
+    this.fetchPeoplesWithSymptoms({
+      page: this.options.page,
+      size: this.options.itemsPerPage
+    });
+  },
 };
 </script>
 

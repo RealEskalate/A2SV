@@ -3,19 +3,25 @@ import ajax from "../auth/ajax";
 const state = {
   totalSymptoms: 0,
   mostCommonSymptom: "",
-  totalPeoplesWithSymptoms: 0
+  totalPeoplesWithSymptoms: 0,
+  peoplesWithSymptoms: [],
+  peopleCount: 0
 };
 
 const getters = {
   getTotalSymptoms: state => state.totalSymptoms,
   getMostCommonSymptom: state => state.mostCommonSymptom,
-  getTotalPeoplesWithSymptoms: state => state.totalPeoplesWithSymptoms
+  getTotalPeoplesWithSymptoms: state => state.totalPeoplesWithSymptoms,
+  getPeoplesWithSymptoms: state => state.peoplesWithSymptoms,
+  getPeopleCount: state => state.peopleCount
 };
 
 const mutations = {
   setTotalSymptoms: (state, payload) => state.totalSymptoms = payload,
   setMostCommonSymptom: (state, payload) => state.mostCommonSymptom = payload,
-  setTotalPeoplesWithSymptoms: (state, payload) => state.totalPeoplesWithSymptoms = payload
+  setTotalPeoplesWithSymptoms: (state, payload) => state.totalPeoplesWithSymptoms = payload,
+  setPeoplesWithSymptoms: (state, payload) => state.peoplesWithSymptoms = payload,
+  setPeopleCount: (state, payload) => state.peopleCount = payload
 };
 
 const actions = {
@@ -65,6 +71,41 @@ const actions = {
       )
       .finally(function() {
         commit("setSymptomStatLoaders", { key: "totalPeople", value: false });
+      });
+  },
+  fetchPeoplesWithSymptoms: ({ commit }, { page, size} ) => {
+    commit("setSymptomStatLoaders", { key: "peopleList", value: true });
+    ajax
+      .get(`symptom_statistics/logs`, {
+        params: {
+          page: page,
+          size: size
+        }
+      })
+      .then(
+        response => {
+
+          commit("setPeopleCount", response.data.data_count);
+          let tableData = [];
+          response.data.data.forEach(element => {
+            let row = {
+              date: element.current_symptoms.date,
+              status: element.status,
+              person: element.user_id.username,
+              symptoms: element.current_symptoms.symptoms[0].name,
+              riskScore: element.current_symptoms.symptoms[0].relevance,
+            };
+            tableData.push(row);
+          });
+          commit("setPeoplesWithSymptoms", tableData);
+          console.log(tableData);
+        },
+        error => {
+          console.log(error);
+        }
+      )
+      .finally(function() {
+        commit("setSymptomStatLoaders", { key: "peopleList", value: false });
       });
   }
 };

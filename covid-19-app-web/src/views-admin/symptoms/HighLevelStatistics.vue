@@ -3,7 +3,6 @@
     <v-col cols="12" sm="6" md="4">
       <v-skeleton-loader
           :loading="getSymptomStatLoaders.total"
-          :transition="scale-transition"
           height="100"
           type="list-item-two-line"
         >
@@ -18,7 +17,6 @@
     <v-col cols="12" sm="6" md="4">
       <v-skeleton-loader
           :loading="getSymptomStatLoaders.mostCommon"
-          :transition="scale-transition"
           height="100"
           type="list-item-two-line"
         >
@@ -33,7 +31,6 @@
     <v-col cols="12" sm="6" md="4">
       <v-skeleton-loader
           :loading="getSymptomStatLoaders.totalPeople"
-          :transition="scale-transition"
           height="100"
           type="list-item-two-line"
         >
