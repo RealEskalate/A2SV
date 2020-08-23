@@ -28,7 +28,7 @@ const actions = {
   fetchTotalSymptoms: ({ commit }) => {
     commit("setSymptomStatLoaders", { key: "total", value: true });
     ajax
-      .get(`symptom_statistics`) 
+      .get(`symptom_statistics`)
       .then(
         response => {
           commit("setTotalSymptoms", response.data.result);
@@ -37,7 +37,7 @@ const actions = {
           console.log(error);
         }
       )
-      .finally(function() {
+      .finally(function () {
         commit("setSymptomStatLoaders", { key: "total", value: false });
       });
   },
@@ -53,7 +53,7 @@ const actions = {
           console.log(error);
         }
       )
-      .finally(function() {
+      .finally(function () {
         commit("setSymptomStatLoaders", { key: "mostCommon", value: false });
       });
   },
@@ -69,11 +69,11 @@ const actions = {
           console.log(error);
         }
       )
-      .finally(function() {
+      .finally(function () {
         commit("setSymptomStatLoaders", { key: "totalPeople", value: false });
       });
   },
-  fetchPeoplesWithSymptoms: ({ commit }, { page, size} ) => {
+  fetchPeoplesWithSymptoms: ({ commit }, { page, size }) => {
     commit("setSymptomStatLoaders", { key: "peopleList", value: true });
     ajax
       .get(`symptom_statistics/logs`, {
@@ -84,16 +84,20 @@ const actions = {
       })
       .then(
         response => {
-
           commit("setPeopleCount", response.data.data_count);
           let tableData = [];
           response.data.data.forEach(element => {
             let row = {
-              date: element.current_symptoms.date,
+              id: element.user_id._id,
+              gender: element.user_id.gender,
+              date: element.user_id.last_symptom_update,
               status: element.status,
               person: element.user_id.username,
-              symptoms: element.current_symptoms.symptoms[0].name,
-              riskScore: element.current_symptoms.symptoms[0].relevance,
+              symptoms: Array(element.current_symptoms.symptoms.length)
+                .fill()
+                .map((_, i) => " " + element.current_symptoms.symptoms[i].name),
+              riskScore: element.current_symptoms.symptoms[0].relevance, //until risk_score can be mapped to "High, Medium, Low"
+              location: element.current_symptoms.location.country
             };
             tableData.push(row);
           });
@@ -104,7 +108,7 @@ const actions = {
           console.log(error);
         }
       )
-      .finally(function() {
+      .finally(function () {
         commit("setSymptomStatLoaders", { key: "peopleList", value: false });
       });
   }
