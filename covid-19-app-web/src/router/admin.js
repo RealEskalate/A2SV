@@ -5,18 +5,11 @@ const Verify = () => import("../views-admin/auth/Verify.vue");
 const InviteAdmin = () => import("../views-admin/auth/InviteAdmin.vue");
 
 const Symptoms = () => import("../views-admin/symptoms/Symptoms.vue");
-const SymptomDetails = () =>
-  import("../views-admin/symptoms/SymptomDetails.vue");
 
 export const admin = [
   { name: "CreateAccount", path: "register", component: CreateAccount },
   { name: "Verify", path: "verify", component: Verify },
   { name: "Symptoms", path: "symptoms", component: Symptoms },
   { name: "InviteAdmin", path: "invite-admin", component: InviteAdmin },
-  {
-    name: "SymptomDetails",
-    path: "symptoms/:id/details",
-    component: SymptomDetails
-  },
   { name: "Dashboard", path: "/", component: Dashboard }
 ];
