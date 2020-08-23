@@ -95,7 +95,9 @@ export default {
             store.dispatch("setUser", { user: res.data.user });
             store.dispatch("setToken", { token: res.data.token });
             store.dispatch("setStateMessage", "Successfully logged in");
-            this.$router.push({ name: "Home" });
+            if (res.data.user.role === "ephi_user")
+              this.$router.push({ name: "Dashboard" });
+            else this.$router.push({ name: "Home" });
           },
           error => {
             store.dispatch("setStateMessage", error.response.data);

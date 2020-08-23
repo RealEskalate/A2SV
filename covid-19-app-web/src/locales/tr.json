@@ -44,7 +44,9 @@
     "about": "Hakkında",
     "news": "Haberler",
     "map": "Harita",
-    "profile": "Profil"
+    "profile": "Profil",
+    "inviteAdmins": "Yönetici Davet Et",
+    "dashboard": "Gösterge Paneli"
   },
 
   "titles": {

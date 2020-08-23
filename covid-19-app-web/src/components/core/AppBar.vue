@@ -136,7 +136,8 @@
               :to="{ name: link.to }"
               v-if="
                 (!loggedInUser && link.roles.includes('none')) ||
-                  link.roles.includes(loggedInUser.role.toLowerCase())
+                  (loggedInUser &&
+                    link.roles.includes(loggedInUser.role.toLowerCase()))
               "
             >
               <v-list-item-icon>
@@ -214,7 +215,10 @@ import {
   mdiInformation,
   mdiLogoutVariant,
   mdiNewspaper,
-  mdiTranslate
+  mdiTranslate,
+  mdiEmailSend,
+  mdiViewDashboard,
+  mdiVirus
 } from "@mdi/js";
 import { languages } from "../../plugins/i18n";
 
@@ -261,6 +265,25 @@ export default {
           icon: mdiNewspaper,
           to: "News",
           roles: ["basic", "none"]
+        },
+        // admins
+        {
+          text: "navbar.dashboard",
+          icon: mdiViewDashboard,
+          to: "Dashboard",
+          roles: ["ephi_user"]
+        },
+        {
+          text: "map.symptoms",
+          icon: mdiVirus,
+          to: "Symptoms",
+          roles: ["ephi_user"]
+        },
+        {
+          text: "navbar.inviteAdmins",
+          icon: mdiEmailSend,
+          to: "InviteAdmin",
+          roles: ["ephi_user"]
         }
         // { text: "navbar.map", icon: mdiMap, to: "Map" }
       ],

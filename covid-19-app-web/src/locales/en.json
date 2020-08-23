@@ -44,7 +44,10 @@
     "about": "About",
     "news": "News",
     "map": "Map",
-    "profile": "Profile"
+    "profile": "Profile",
+    "symptom": "Symptoms",
+    "inviteAdmins": "Invite Admins",
+    "dashboard": "Dashboard"
   },
 
   "titles": {

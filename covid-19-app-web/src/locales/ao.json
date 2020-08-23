@@ -44,7 +44,9 @@
     "about": "Waa'ee",
     "news": "Oduu",
     "map": "Kaartaa",
-    "profile": "Eenyummeessaa"
+    "profile": "Eenyummeessaa",
+    "inviteAdmins": "Invite Admins",
+    "dashboard": "Dashbordi"
   },
 
   "titles": {
