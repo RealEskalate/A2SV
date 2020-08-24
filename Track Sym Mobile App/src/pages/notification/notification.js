@@ -74,7 +74,7 @@ const NotificationScreen = (props) => {
   strings.setLanguage(lang);
 
 
-  const goToNews = (reference_link) => {
+  const getDetailInfo = (reference_link) => {
       props.navigation.navigate("NotificationView", { data: reference_link });
   };
 
@@ -88,17 +88,17 @@ const NotificationScreen = (props) => {
   );
   const renderItemAccessory = (link) => (
     <Button 
-    // {...props}
+      
       size='tiny'
-      onPress={()=> goToNews(link)}>
-        VIEW
+      onPress={()=> getDetailInfo(link)}>
+        {strings.VIEW}
     </Button>
   );
   return (
     <SafeAreaView style={styles.container}>
       <TopNavigation
         alignment="center"
-        title="Notifications"
+        title={ strings.Notification}
         accessoryLeft={renderBackAction}
       />
       <Divider />

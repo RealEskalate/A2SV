@@ -14,15 +14,16 @@ import {
 } from '@ui-kitten/components';
 
 import userIDStore from '../../data-management/user-id-data/userIDStore';
+import { strings } from '../../localization/localization';
 
 const ArrowIosBackIcon = (style) => <Icon {...style} name='arrow-ios-back' />;
 
 const SymptomAnaliticsPage = (props) => {
   const [data, setData] = useState([
-    { index: 0, val: 'loading...', label: 'Total Symptom Reports' },
-    { index: 1, val: 'loading...', label: 'Symptom Reports Yesterday' },
-    { index: 2, val: '0.8', label: 'Symptom Reports to COVID Cases' },
-    { index: 3, val: 'loading...', label: 'Most Reported Symptom' },
+    { index: 0, val: strings.Loading, label: strings.TotalSymptomReports},
+    { index: 1, val: strings.Loading, label: strings.SymptomReportsYesterday},
+    { index: 2, val: '0.8', label: strings.SymptomReportsToCOVIDCases },
+    { index: 3, val: strings.Loading, label: strings.MostReportedSymptom },
   ]);
   const [mostCommonFetched, setMostCommonFetched] = useState(false);
   const [last24HourFetched, setLast24HourFetched] = useState(false);
@@ -62,7 +63,7 @@ const SymptomAnaliticsPage = (props) => {
         setData((data) =>
           data.map((d) => {
             if (d.index === 3) {
-              return { ...d, val: json[0] ? json[0].name : 'No Symptom Yet' };
+              return { ...d, val: json[0] ? json[0].name : strings.NoSymptomYet };
             }
             return d;
           })
@@ -183,7 +184,7 @@ const SymptomAnaliticsPage = (props) => {
   return (
     <SafeAreaView style={styles.screen}>
       <TopNavigation
-        title='Symptom Analitics'
+        title={ strings.SymptomAnalytics}
         alignment='center'
         accessoryLeft={renderBackAction}
       />
@@ -191,7 +192,7 @@ const SymptomAnaliticsPage = (props) => {
       <Layout style={styles.container}>
         <Autocomplete
           style={{ paddingTop: 5, marginHorizontal: 10 }}
-          placeholder='Enter Country'
+          placeholder={strings.EnterCountry}
           value={search}
           onChangeText={(text) => {
             setSearch(text);

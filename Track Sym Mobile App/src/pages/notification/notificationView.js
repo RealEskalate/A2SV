@@ -10,6 +10,7 @@ import {
 } from '@ui-kitten/components';
 import { Divider } from 'react-native-paper';
 import { ScrollView } from 'react-native-gesture-handler';
+import { strings } from '../../localization/localization';
 
 const ArrowIosBackIcon = (style) => <Icon {...style} name='arrow-ios-back' />;
 
@@ -24,7 +25,7 @@ const NotificationView = (props) => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <TopNavigation
-        title='Notification Detail'
+        title={strings.NotificationDetail}
         alignment='center'
         accessoryLeft={renderBackAction}
       />
