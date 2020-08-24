@@ -101,6 +101,7 @@ export default {
             });
             this.awaitingSearch = false;
           }, 1000);
+          this.sidebar = false;
         }
         this.awaitingSearch = true;
       }
