@@ -1,4 +1,4 @@
-A2SV - Africa to Silicon Valley
+﻿A2SV - Africa to Silicon Valley
 
 1. Emre VAROL
 2. Tumsa Umeta
@@ -12,3 +12,4 @@ A2SV - Africa to Silicon Valley
 10. Süha Tanrıverdi
 11. Segni Habulu 
 12. Bontu Fufa
+13. Beimnet Zewdu
