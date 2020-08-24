@@ -62,13 +62,16 @@ const actions = {
         commit("setSymptomStatLoaders", { key: "totalPeople", value: false });
       });
   },
-  fetchPeoplesWithSymptoms: ({ commit }, { page, size }) => {
+  fetchPeoplesWithSymptoms: ({ commit }, { page, size, status, username }) => {
     commit("setSymptomStatLoaders", { key: "peopleList", value: true });
     ajax
       .get(`symptom_statistics/logs`, {
         params: {
           page: page,
-          size: size
+          size: size,
+          status: status,
+          username: username,
+          start_date: "2020-8-13"
         }
       })
       .then(

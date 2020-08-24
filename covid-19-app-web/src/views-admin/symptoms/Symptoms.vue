@@ -1,10 +1,24 @@
 <template>
   <v-container>
-    <SymptomFilter v-on:set-search="setSearch" />
-    <HighLevelStatistics />
+    <v-expansion-panels popout focusable>
+      <v-expansion-panel>
+        <v-expansion-panel-header>
+          <v-row>
+            <v-icon large class="ma-1 mr-3">{{mdiFilterVariant}}</v-icon>
+            <p class="display-1 d-inline-flex text--primary left">Filter</p>
+          </v-row>
+        </v-expansion-panel-header>
+        <v-expansion-panel-content class="mt-5">
+          <SymptomFilter v-on:set-search="searchPerson" v-on:status-change="onStatusChange" />
+        </v-expansion-panel-content>
+      </v-expansion-panel>
+    </v-expansion-panels>
+    <!-- <v-icon large class="mb-4 mr-4">{{mdiFilterVariant}}</v-icon>
+    <p class="display-1 d-inline-flex text--primary">Filter</p>-->
+    <!-- <SymptomFilter v-on:set-search="setSearch" /> -->
+    <HighLevelStatistics class="my-8" />
     <DetailSidebar :detail="detail" :sidebar="sidebar" />
     <v-data-table
-      :search="search"
       :headers="headers"
       :options.sync="options"
       :items="getPeoplesWithSymptoms"
@@ -24,6 +38,7 @@
 import HighLevelStatistics from "./HighLevelStatistics";
 import SymptomFilter from "./SymptomFilter";
 import DetailSidebar from "./DetailSidebar";
+import { mdiFilterVariant } from "@mdi/js";
 
 import { mapGetters, mapActions } from "vuex";
 
@@ -36,17 +51,19 @@ export default {
   },
   data() {
     return {
-      search: "",
+      mdiFilterVariant,
       sidebar: false,
       headers: [
-        { text: "Date", align: "start", value: "date" },
+        { text: "Date", align: "start", value: "date", sortable: false },
         { text: "Status", value: "status", sortable: false },
-        { text: "Person", value: "person" },
+        { text: "Person", value: "person", sortable: false },
         { text: "Symptoms", value: "symptoms", sortable: false },
         { text: "Risk Score", value: "riskScore", sortable: false },
-        { text: 'Actions', value: 'actions', sortable: false }
+        { text: "Actions", value: "actions", sortable: false }
       ],
       options: { page: 1, itemsPerPage: 10 },
+      filters: { status: "", username: "" },
+      awaitingSearch: false,
       detail: {
         id: "",
         name: "",
@@ -60,22 +77,48 @@ export default {
     };
   },
   watch: {
-      options: {
-        handler () {
-          this.fetchPeoplesWithSymptoms({
-            page: this.options.page,
-            size: this.options.itemsPerPage
-          });
-        },
-        deep: true,
+    options: {
+      handler() {
+        this.fetchPeoplesWithSymptoms({
+          page: this.options.page,
+          size: this.options.itemsPerPage,
+          status: this.filters.status,
+          username: this.filters.username
+        });
+        this.sidebar = false;
       },
+      deep: true
     },
+    "filters.username": {
+      handler() {
+        if (!this.awaitingSearch) {
+          setTimeout(() => {
+            this.fetchPeoplesWithSymptoms({
+              page: this.options.page,
+              size: this.options.itemsPerPage,
+              status: this.filters.status,
+              username: this.filters.username
+            });
+            this.awaitingSearch = false;
+          }, 1000);
+        }
+        this.awaitingSearch = true;
+      }
+    }
+  },
   methods: {
-    ...mapActions([
-        "fetchPeoplesWithSymptoms"
-    ]),
-    setSearch(text) {
-      this.search = text;
+    ...mapActions(["fetchPeoplesWithSymptoms"]),
+    searchPerson(name) {
+      this.filters.username = name;
+    },
+    onStatusChange(current_status) {
+      this.filters.status = current_status.toUpperCase().replace(" ", "_");
+      this.fetchPeoplesWithSymptoms({
+        page: this.options.page,
+        size: this.options.itemsPerPage,
+        status: this.filters.status,
+        username: this.filters.username
+      });
     },
     showDetail(item) {
       this.sidebar = true;
@@ -88,7 +131,7 @@ export default {
         status: item.status,
         location: item.location,
         allSymptoms: item.symptoms
-      }
+      };
     }
   },
   computed: {
@@ -101,9 +144,12 @@ export default {
   mounted() {
     this.fetchPeoplesWithSymptoms({
       page: this.options.page,
-      size: this.options.itemsPerPage
+      size: this.options.itemsPerPage,
+      status: this.filters.status,
+      username: this.filters.username
     });
-  },
+    this.sidebar = false;
+  }
 };
 </script>
 

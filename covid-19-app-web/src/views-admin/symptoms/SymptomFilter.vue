@@ -1,37 +1,38 @@
 <template>
   <v-row>
-    <v-col cols="12" sm="2">
-      <v-menu
-        ref="menu"
-        v-model="menu"
-        :close-on-content-click="false"
-        :return-value.sync="date"
-        transition="scale-transition"
-        offset-y
-        min-width="290px"
-      >
-        <template v-slot:activator="{ on, attrs }">
-          <v-text-field v-model="date" label="Date" readonly v-bind="attrs" v-on="on"></v-text-field>
-        </template>
-        <v-date-picker v-model="date" no-title scrollable>
-          <v-spacer></v-spacer>
-          <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
-          <v-btn text color="primary" @click="$refs.menu.save(date)">OK</v-btn>
-        </v-date-picker>
-      </v-menu>
+    <v-col cols="12" sm="4">
+      <DateRangePicker :date_range="date_range" @onDateChange="onDateChange" />
     </v-col>
-    <v-col cols="12" sm="2">
-      <v-select class="d-flex" :items="status" label="Status" outlined></v-select>
+    <v-col cols="12" sm="3">
+      <v-select
+        style="width: 120px"
+        class="d-inline-flex v-card--shaped"
+        :items="status"
+        v-model="current_status"
+        @input="$emit('status-change', current_status)"
+        label="Status"
+        outlined
+        dense
+      ></v-select>
+      <v-select
+        style="width: 120px"
+        class="d-inline-flex v-card--shaped ml-5"
+        :items="risk"
+        label="Risk"
+        outlined
+        dense
+        disabled
+      ></v-select>
     </v-col>
-    <v-col cols="12" sm="2">
-      <v-select class="d-flex" :items="risk" label="Risk" outlined></v-select>
-    </v-col>
+
     <v-divider class="mx-6" vertical></v-divider>
-    <v-col cols="12" sm="5">
+    <v-col cols="12" sm="4">
       <v-text-field
         v-model="search"
-        label="Search"
-        @change="$emit('set-search', this.search)"
+        dense
+        label="Search Person"
+        @input="$emit('set-search', search)"
+        :append-icon="mdiSearch"
         single-line
         hide-details
       ></v-text-field>
@@ -40,16 +41,28 @@
 </template>
 
 <script>
+import DateRangePicker from "@/components/core/DateRangePicker.vue";
+import mdiSearch from "@mdi/js";
+
 export default {
   name: "SymptomFilter",
+  components: {
+    DateRangePicker
+  },
   data() {
     return {
-      menu: false,
-      date: new Date().toISOString().substr(0, 10),
+      mdiSearch,
+      current_status: "",
+      date_range: ["2018-09-15", "2018-09-20"],
       search: "",
       risk: ["", "Low", "Medium", "High"],
       status: ["", "Symptom Submitted", "Symptom Updated"]
     };
+  },
+  methods: {
+    onDateChange(dateRange) {
+      console.log(dateRange);
+    }
   }
 };
 </script>

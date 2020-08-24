@@ -20,7 +20,7 @@
         <v-card class="mx-auto mt-5">
           <v-card-text>
             <h1 class="d-inline-flex text--primary"> {{detail.name}} </h1>
-            <v-chip class="float-right" color="red" text-color="white"> {{detail.risk}} Risk</v-chip>
+            <v-chip class="float-right" color="red" text-color="white"> {{detail.risk}} RISK</v-chip>
           </v-card-text>
           <v-list-item>
             <v-list-item-content>Gender</v-list-item-content>
