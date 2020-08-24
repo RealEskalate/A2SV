@@ -195,10 +195,21 @@
       style="border-radius: 20px 0 0 0"
       class="px-3 overflow-hidden"
     >
-      <v-btn v-for="(item, i) in links" :to="{ name: item.to }" :key="i" exact>
-        <span>{{ $t(item.text) }}</span>
-        <v-icon> {{ item.icon }}</v-icon>
-      </v-btn>
+      <template v-for="(link, i) in links">
+        <v-btn
+          :to="{ name: link.to }"
+          :key="i"
+          exact
+          v-if="
+            (!loggedInUser && link.roles.includes('none')) ||
+              (loggedInUser &&
+                link.roles.includes(loggedInUser.role.toLowerCase()))
+          "
+        >
+          <span>{{ $t(link.text) }}</span>
+          <v-icon> {{ link.icon }}</v-icon>
+        </v-btn>
+      </template>
     </v-bottom-navigation>
   </v-container>
 </template>

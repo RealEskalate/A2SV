@@ -57,14 +57,6 @@
               >
                 {{ $t("auth.login") }}
               </v-btn>
-              <v-btn
-                text
-                small
-                class="d-block mx-auto my-2"
-                @click="$router.push('register')"
-              >
-                {{ $t("auth.goToSignUp") }}
-              </v-btn>
             </div>
           </v-form>
         </v-card-text>
@@ -105,9 +97,13 @@ export default {
             store.dispatch("setUser", { user: res.data.user });
             store.dispatch("setToken", { token: res.data.token });
             store.dispatch("setStateMessage", "Successfully logged in");
-            if (res.data.user.role === "ephi_user")
+            if (this.$route.query.nextUrl !== null) {
+              this.$router.push(this.$route.query.nextUrl);
+            } else if (res.data.user.role === "ephi_user") {
               this.$router.push({ name: "Dashboard" });
-            else this.$router.push({ name: "Home" });
+            } else {
+              this.$router.push({ name: "Home" });
+            }
           },
           error => {
             store.dispatch("setStateMessage", error.response.data);

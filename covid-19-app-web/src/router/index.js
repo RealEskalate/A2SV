@@ -4,6 +4,7 @@ import store from "@/store/";
 import { languages } from "@/plugins/i18n";
 import { admin } from "./admin";
 import { userRoutes } from "./user-routes";
+import { checkRole } from "../auth/login-checker";
 
 Vue.use(VueRouter);
 
@@ -50,5 +51,7 @@ const router = new VueRouter({
   mode: "history",
   routes
 });
-console.log(router);
+
+router.beforeEach(checkRole);
+
 export default router;

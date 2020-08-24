@@ -85,9 +85,14 @@ export default {
       rules: Rules
     };
   },
+  created() {
+    console.log(this.$route.query.nextUrl);
+  },
   methods: {
     submit() {
       this.loading = true;
+      let query = this.$route.query;
+      console.log(query);
       ajax
         .post("auth/login", this.user)
         .then(
@@ -95,9 +100,13 @@ export default {
             store.dispatch("setUser", { user: res.data.user });
             store.dispatch("setToken", { token: res.data.token });
             store.dispatch("setStateMessage", "Successfully logged in");
-            if (res.data.user.role === "ephi_user")
+            if (query.nextUrl) {
+              this.$router.push(query.nextUrl);
+            } else if (res.data.user.role === "ephi_user") {
               this.$router.push({ name: "Dashboard" });
-            else this.$router.push({ name: "Home" });
+            } else {
+              this.$router.push({ name: "Home" });
+            }
           },
           error => {
             store.dispatch("setStateMessage", error.response.data);

@@ -11,24 +11,70 @@ const SymptomDetails = () =>
   import("../views-admin/symptoms/SymptomDetails.vue");
 
 export const admin = [
-  { name: "AdminLogin", path: "login", component: Login },
-  { name: "CreateAccount", path: "register", component: CreateAccount },
+  {
+    name: "AdminLogin",
+    path: "login",
+    component: Login,
+    meta: {
+      guest: true
+    }
+  },
+  {
+    name: "CreateAccount",
+    path: "register",
+    component: CreateAccount,
+    meta: {
+      guest: true
+    }
+  },
   {
     name: "ChangePassword",
     path: "change-password",
-    component: ChangePassword
+    component: ChangePassword,
+    meta: {
+      requiresAuth: true,
+      roles: ["ephi_user"]
+    }
   },
   {
     name: "ResetPassword",
     path: "reset-password",
-    component: ForgotPassword
+    component: ForgotPassword,
+    meta: {
+      requiresAuth: true,
+      roles: ["ephi_user"]
+    }
   },
-  { name: "Symptoms", path: "symptoms", component: Symptoms },
-  { name: "InviteAdmin", path: "invite-admin", component: InviteAdmin },
+  {
+    name: "Symptoms",
+    path: "symptoms",
+    component: Symptoms,
+    meta: {
+      requiresAuth: true,
+      roles: ["ephi_user"]
+    }
+  },
+  {
+    name: "InviteAdmin",
+    path: "invite-admin",
+    component: InviteAdmin,
+    meta: {
+      requiresAuth: true,
+      roles: ["ephi_user"]
+    }
+  },
   {
     name: "SymptomDetails",
     path: "symptoms/:id/details",
     component: SymptomDetails
   },
-  { name: "Dashboard", path: "/", component: Dashboard }
+  {
+    name: "Dashboard",
+    path: "/",
+    component: Dashboard,
+    meta: {
+      requiresAuth: true,
+      roles: ["ephi_user"]
+    }
+  }
 ];
