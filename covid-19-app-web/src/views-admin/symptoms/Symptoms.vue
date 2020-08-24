@@ -46,7 +46,7 @@ export default {
         { text: "Risk Score", value: "riskScore", sortable: false },
         { text: 'Actions', value: 'actions', sortable: false }
       ],
-      options: { page: 1, itemsPerPage: 5 },
+      options: { page: 1, itemsPerPage: 10 },
       detail: {
         id: "",
         name: "",

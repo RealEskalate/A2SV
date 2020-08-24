@@ -3,6 +3,7 @@ import ajax from "../auth/ajax";
 const state = {
   totalSymptoms: 0,
   mostCommonSymptom: "",
+  mostCommonSymptomCount: 0,
   totalPeoplesWithSymptoms: 0,
   peoplesWithSymptoms: [],
   peopleCount: 0
@@ -11,6 +12,7 @@ const state = {
 const getters = {
   getTotalSymptoms: state => state.totalSymptoms,
   getMostCommonSymptom: state => state.mostCommonSymptom,
+  getMostCommonSymptomCount: state => state.mostCommonSymptomCount,
   getTotalPeoplesWithSymptoms: state => state.totalPeoplesWithSymptoms,
   getPeoplesWithSymptoms: state => state.peoplesWithSymptoms,
   getPeopleCount: state => state.peopleCount
@@ -19,6 +21,7 @@ const getters = {
 const mutations = {
   setTotalSymptoms: (state, payload) => state.totalSymptoms = payload,
   setMostCommonSymptom: (state, payload) => state.mostCommonSymptom = payload,
+  setMostCommonSymptomCount: (state, payload) => state.mostCommonSymptomCount = payload,
   setTotalPeoplesWithSymptoms: (state, payload) => state.totalPeoplesWithSymptoms = payload,
   setPeoplesWithSymptoms: (state, payload) => state.peoplesWithSymptoms = payload,
   setPeopleCount: (state, payload) => state.peopleCount = payload
@@ -31,7 +34,9 @@ const actions = {
       .get(`symptom_statistics`)
       .then(
         response => {
-          commit("setTotalSymptoms", response.data.result);
+          commit("setTotalSymptoms", response.data.total);
+          commit("setMostCommonSymptom", response.data.data[0].symptom.name);
+          commit("setMostCommonSymptomCount", response.data.data[0].count);
         },
         error => {
           console.log(error);
@@ -39,22 +44,6 @@ const actions = {
       )
       .finally(function () {
         commit("setSymptomStatLoaders", { key: "total", value: false });
-      });
-  },
-  fetchMostCommonSymptom: ({ commit }) => {
-    commit("setSymptomStatLoaders", { key: "mostCommon", value: true });
-    ajax
-      .get(`symptom_statistics/most_common`)
-      .then(
-        response => {
-          commit("setMostCommonSymptom", response.data[0].name);
-        },
-        error => {
-          console.log(error);
-        }
-      )
-      .finally(function () {
-        commit("setSymptomStatLoaders", { key: "mostCommon", value: false });
       });
   },
   fetchTotalPeoplesWithSymptoms: ({ commit }) => {
@@ -90,7 +79,7 @@ const actions = {
             let row = {
               id: element.user_id._id,
               gender: element.user_id.gender,
-              date: element.user_id.last_symptom_update,
+              date: new Date(element.user_id.last_symptom_update),
               status: element.status,
               person: element.user_id.username,
               symptoms: Array(element.current_symptoms.symptoms.length)

@@ -16,13 +16,13 @@
     </v-col>
     <v-col cols="12" sm="6" md="4">
       <v-skeleton-loader
-          :loading="getSymptomStatLoaders.mostCommon"
+          :loading="getSymptomStatLoaders.total"
           height="100"
           type="list-item-two-line"
         >
       <v-card class="mx-auto" :flat="true" max-width="344">
         <v-card-text>
-          <p class="display-1 text--primary">{{getMostCommonSymptom}}</p>
+          <p class="display-1 text--primary">{{getMostCommonSymptom}} | {{Math.round((getMostCommonSymptomCount*100/getTotalSymptoms)*100)/100}}%</p>
           <div class="text--primary">{{title_two}}</div>
         </v-card-text>
       </v-card>
@@ -63,7 +63,6 @@ export default {
   methods: {
     ...mapActions([
       "fetchTotalSymptoms",
-      "fetchMostCommonSymptom",
       "fetchTotalPeoplesWithSymptoms"
     ])
   },
@@ -71,13 +70,13 @@ export default {
     ...mapGetters([
       "getTotalSymptoms",
       "getMostCommonSymptom",
+      "getMostCommonSymptomCount",
       "getTotalPeoplesWithSymptoms",
       "getSymptomStatLoaders"
     ])
   },
   created() {
     this.fetchTotalSymptoms();
-    this.fetchMostCommonSymptom();
     this.fetchTotalPeoplesWithSymptoms();
   }
 };
