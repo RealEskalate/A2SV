@@ -56,7 +56,7 @@ export default {
   data() {
     return {
       title_one: "TOTAL SYMPTOMS REGISTERED",
-      title_two: "MOST COMMON SYMPTOMS",
+      title_two: "MOST COMMON SYMPTOM",
       title_three: "PEOPLE WITH SYMPTOMS"
     };
   },

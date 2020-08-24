@@ -79,7 +79,7 @@ const actions = {
             let row = {
               id: element.user_id._id,
               gender: element.user_id.gender,
-              date: new Date(element.user_id.last_symptom_update),
+              date: new Date(element.user_id.last_symptom_update).toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric", hour: "numeric", minute: "numeric", second: "numeric", timeZoneName: "short" }),
               status: element.status,
               person: element.user_id.username,
               symptoms: Array(element.current_symptoms.symptoms.length)
