@@ -472,40 +472,29 @@ class DataAnalytics extends React.Component {
     this.state.daily_newCases_data_set = [0]; //reseting all data point labels
 
     //generating interval
-    var interval = Math.floor(objList.length / 6);
-    var remainder = objList.length % 6;
-    if (interval === 0) {
-      interval = 1;
-      remainder = 0;
+    let customLength=objList.length-1;
+    if (objList.length === 7){
+      var interval=1;
+    }else{
+    var interval= Math.ceil(customLength / 5);
     }
     let dataSet_counter = 0;
     let indexCounterSet = 0;
-    while (dataSet_counter < objList.length) {
+    
+    while (dataSet_counter < customLength) {
       this.state.daily_newCases_data_set[indexCounterSet] =
-        objList[dataSet_counter].y;
-      indexCounterSet += 1;
-      if (remainder > 0 && dataSet_counter + remainder === objList.length - 1) {
-        dataSet_counter += remainder;
-        continue;
-      }
-      dataSet_counter += interval;
-    }
-    let graphLebel_counter = 0;
-    let indexCounter = 0;
-    while (graphLebel_counter < objList.length) {
-      this.state.daily_newCases_label[indexCounter] = this.dateConverter(
-        objList[graphLebel_counter].t.split("T")[0]
+      objList[dataSet_counter].y;
+      this.state.daily_newCases_label[indexCounterSet] = this.dateConverter(
+        objList[dataSet_counter].t.split("T")[0]
       );
-      indexCounter += 1;
-      if (
-        remainder > 0 &&
-        graphLebel_counter + remainder === objList.length - 1
-      ) {
-        graphLebel_counter += remainder;
-        continue;
-      }
-      graphLebel_counter += interval;
+    indexCounterSet += 1;
+    dataSet_counter += interval;
     }
+    this.state.daily_newCases_data_set[indexCounterSet] =
+      objList[customLength].y;
+      this.state.daily_newCases_label[indexCounterSet] = this.dateConverter(
+        objList[customLength].t.split("T")[0]
+      );
   };
 
   //Populates statistics data in to our state
@@ -514,41 +503,29 @@ class DataAnalytics extends React.Component {
     this.state.data_set = [0]; // reseting data set
 
     //generating interval
-    var interval = Math.floor(objList.length / 6);
-    var remainder = objList.length % 6;
-    if (interval === 0) {
-      interval = 1;
-      remainder = 0;
+    let customLength=objList.length-1;
+    if (objList.length === 7){
+      var interval=1;
+    }else{
+    var interval= Math.ceil(customLength / 5);
     }
     let dataSet_counter = 0;
     let indexCounterSet = 0;
-    while (dataSet_counter < objList.length) {
-      this.state.data_set[indexCounterSet] = objList[dataSet_counter].y;
-
-      indexCounterSet += 1;
-      if (remainder > 0 && dataSet_counter + remainder === objList.length - 1) {
-        dataSet_counter += remainder;
-        continue;
-      }
-      dataSet_counter += interval;
-    }
-
-    let graphLebel_counter = 0;
-    let indexCounter = 0;
-    while (graphLebel_counter < objList.length) {
-      this.state.graph_label[indexCounter] = this.dateConverter(
-        objList[graphLebel_counter].t.split("T")[0]
+    
+    while (dataSet_counter < customLength) {
+      this.state.data_set[indexCounterSet] =
+      objList[dataSet_counter].y;
+      this.state.graph_label[indexCounterSet] = this.dateConverter(
+        objList[dataSet_counter].t.split("T")[0]
       );
-      indexCounter += 1;
-      if (
-        remainder > 0 &&
-        graphLebel_counter + remainder === objList.length - 1
-      ) {
-        graphLebel_counter += remainder;
-        continue;
-      }
-      graphLebel_counter += interval;
+    indexCounterSet += 1;
+    dataSet_counter += interval;
     }
+    this.state.data_set[indexCounterSet] =
+      objList[customLength].y;
+      this.state.graph_label[indexCounterSet] = this.dateConverter(
+        objList[customLength].t.split("T")[0]
+      );
   };
 
   //populate daily data
@@ -601,43 +578,29 @@ class DataAnalytics extends React.Component {
     this.state.percentage_data_set = [0]; //reseting all data point labels
 
     //generating interval
-    var interval = Math.floor(objList.length / 6);
-    var remainder = objList.length % 6;
-    if (interval === 0) {
-      interval = 1;
-      remainder = 0;
+    let customLength=objList.length-1;
+    if (objList.length === 7){
+      var interval=1;
+    }else{
+    var interval= Math.ceil(customLength / 5);
     }
     let dataSet_counter = 0;
     let indexCounterSet = 0;
-    while (dataSet_counter < objList.length) {
+    
+    while (dataSet_counter < customLength) {
       this.state.percentage_data_set[indexCounterSet] =
-        objList[dataSet_counter].y;
-
-      indexCounterSet += 1;
-      if (remainder > 0 && dataSet_counter + remainder === objList.length - 1) {
-        dataSet_counter += remainder;
-        continue;
-      }
-      dataSet_counter += interval;
-    }
-
-    var remainder = objList.length % 5;
-    let graphLebel_counter = 0;
-    let indexCounter = 0;
-    while (graphLebel_counter < objList.length) {
-      this.state.percentage_label[indexCounter] = this.dateConverter(
-        objList[graphLebel_counter].t.split("T")[0]
+      objList[dataSet_counter].y;
+      this.state.percentage_label[indexCounterSet] = this.dateConverter(
+        objList[dataSet_counter].t.split("T")[0]
       );
-      indexCounter += 1;
-      if (
-        remainder > 0 &&
-        graphLebel_counter + remainder === objList.length - 1
-      ) {
-        graphLebel_counter += remainder;
-        continue;
-      }
-      graphLebel_counter += interval;
+    indexCounterSet += 1;
+    dataSet_counter += interval;
     }
+    this.state.percentage_data_set[indexCounterSet] =
+      objList[customLength].y;
+      this.state.percentage_label[indexCounterSet] = this.dateConverter(
+        objList[customLength].t.split("T")[0]
+      );
   };
 
   //Reformat number
