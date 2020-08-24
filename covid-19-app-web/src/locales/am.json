@@ -44,7 +44,9 @@
     "about": "ስለኛ",
     "news": "ዜና",
     "map": "ካርታ",
-    "profile": "መገለጫ"
+    "profile": "መገለጫ",
+    "inviteAdmins": "አስተዳዳሪን ይጋብዙ",
+    "dashboard": "ዳሽቦርድ"
   },
 
   "titles": {
@@ -163,6 +165,7 @@
     "oldPassword": "የቀድሞ የይለፍ ቃል",
     "newPassword": "አዲስ የይለፍ ቃል",
     "confirmPassword": "ማረጋገጫ የይለፍ ቃል",
+    "forgotPassword": "የይለፍ ቃል ረሱ",
     "symptoms": "የህመም ምልክቶች",
     "noSymptoms": "ምንም የህመም ምልክቶች የሉም",
     "editSymptoms": "የህመም ምልክትዎን ያርትዑ",

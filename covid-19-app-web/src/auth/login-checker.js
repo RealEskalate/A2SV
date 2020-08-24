@@ -1,24 +1,32 @@
 import store from "@/store/";
-import router from "../router";
 
 /*
  * this file handles an authentication that we need to check before a route executes
  * */
-export const ifNotAuthenticated = (to, from, next) => {
-  store.dispatch("resetMessage").then();
-  if (store.getters.getToken === null) {
-    next();
-    return; // return if not authenticated
-  }
-  router.push({ name: "Login" });
-};
 
-export const ifAuthenticated = (to, from, next) => {
-  store.dispatch("resetMessage").then();
-  if (store.getters.getToken !== null) {
+export function checkRole(to, from, next) {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (store.getters.getToken === null) {
+      next({
+        path: `${store.getters.getLanguagePreference}/login`,
+        query: { nextUrl: to.fullPath }
+      });
+    } else {
+      if (
+        to.matched.some(
+          record =>
+            record.meta.roles &&
+            record.meta.roles.includes(store.getters.getUser.role)
+        )
+      ) {
+        next();
+      } else {
+        next({
+          path: `${store.getters.getLanguagePreference}/404`
+        });
+      }
+    }
+  } else {
     next();
-    return;
   }
-  console.log(true);
-  router.push(`${store.getters.getLanguagePreference}/login`);
-};
+}

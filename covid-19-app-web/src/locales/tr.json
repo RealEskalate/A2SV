@@ -44,7 +44,9 @@
     "about": "Hakkında",
     "news": "Haberler",
     "map": "Harita",
-    "profile": "Profil"
+    "profile": "Profil",
+    "inviteAdmins": "Yönetici Davet Et",
+    "dashboard": "Gösterge Paneli"
   },
 
   "titles": {
@@ -160,6 +162,7 @@
     "female": "KADIN",
     "editProfile": "PROFİLİ DÜZENLE",
     "changePassword": "ŞİFRE DEĞİŞTİR",
+    "forgotPassword": "Parolayı Sıfırla",
     "symptoms": "Semptomlar",
     "noSymptoms": "Semptom Yok",
     "editSymptoms": "SEMPTOMLARI DÜZENLE",

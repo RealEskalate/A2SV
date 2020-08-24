@@ -136,7 +136,8 @@
               :to="{ name: link.to }"
               v-if="
                 (!loggedInUser && link.roles.includes('none')) ||
-                  link.roles.includes(loggedInUser.role.toLowerCase())
+                  (loggedInUser &&
+                    link.roles.includes(loggedInUser.role.toLowerCase()))
               "
             >
               <v-list-item-icon>
@@ -194,10 +195,21 @@
       style="border-radius: 20px 0 0 0"
       class="px-3 overflow-hidden"
     >
-      <v-btn v-for="(item, i) in links" :to="{ name: item.to }" :key="i" exact>
-        <span>{{ $t(item.text) }}</span>
-        <v-icon> {{ item.icon }}</v-icon>
-      </v-btn>
+      <template v-for="(link, i) in links">
+        <v-btn
+          :to="{ name: link.to }"
+          :key="i"
+          exact
+          v-if="
+            (!loggedInUser && link.roles.includes('none')) ||
+              (loggedInUser &&
+                link.roles.includes(loggedInUser.role.toLowerCase()))
+          "
+        >
+          <span>{{ $t(link.text) }}</span>
+          <v-icon> {{ link.icon }}</v-icon>
+        </v-btn>
+      </template>
     </v-bottom-navigation>
   </v-container>
 </template>
@@ -214,7 +226,10 @@ import {
   mdiInformation,
   mdiLogoutVariant,
   mdiNewspaper,
-  mdiTranslate
+  mdiTranslate,
+  mdiEmailSend,
+  mdiViewDashboard,
+  mdiVirus
 } from "@mdi/js";
 import { languages } from "../../plugins/i18n";
 
@@ -261,6 +276,25 @@ export default {
           icon: mdiNewspaper,
           to: "News",
           roles: ["basic", "none"]
+        },
+        // admins
+        {
+          text: "navbar.dashboard",
+          icon: mdiViewDashboard,
+          to: "Dashboard",
+          roles: ["ephi_user"]
+        },
+        {
+          text: "map.symptoms",
+          icon: mdiVirus,
+          to: "Symptoms",
+          roles: ["ephi_user"]
+        },
+        {
+          text: "navbar.inviteAdmins",
+          icon: mdiEmailSend,
+          to: "InviteAdmin",
+          roles: ["ephi_user"]
         }
         // { text: "navbar.map", icon: mdiMap, to: "Map" }
       ],

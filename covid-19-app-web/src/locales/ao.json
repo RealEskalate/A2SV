@@ -44,7 +44,9 @@
     "about": "Waa'ee",
     "news": "Oduu",
     "map": "Kaartaa",
-    "profile": "Eenyummeessaa"
+    "profile": "Eenyummeessaa",
+    "inviteAdmins": "Invite Admins",
+    "dashboard": "Dashbordi"
   },
 
   "titles": {
@@ -164,6 +166,7 @@
     "oldPassword": "Jecha Darbii Duraa",
     "newPassword": "Jecha Darbii Haaraa",
     "confirmPassword": "Jecha Darbii Irra Deebii",
+    "forgotPassword": "Jecha Darbii dagattanii",
     "symptoms": "Mallattoolee Kiyya",
     "noSymptoms": "Mallattoolee hin galmeessifne",
     "editSymptoms": "Mallattoolee Gulaali",
