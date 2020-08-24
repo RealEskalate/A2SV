@@ -219,14 +219,14 @@ exports.send_invitation_link = async (req, res) => {
 exports.send_multiple_invitation_link = async (req, res) => {
   let emails = req.body.emails;
   try {
-    User.find({ email: { $in: emails }}, (err, results) => {
-        const existingEmails = results.map(user => user.email);
-        if (existingEmails.length > 0) {
-          return res
-            .status(422)
-            .send( { "error": "This emails already exist.", "emails" :existingEmails });
-        }
-    });
+    let existingEmails= await User.find({ email: { $in: emails }});
+    
+    existingEmails = existingEmails.map(user => user.email);
+    if (existingEmails.length > 0) {
+      return res
+        .status(422)
+        .send( { "error": "This emails already exist.", "emails" :existingEmails });
+    }
     
     if (emails==undefined){
       return res
