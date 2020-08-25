@@ -1,5 +1,12 @@
+import 'package:ephi_healthcare_worker_app/components/alreadyHaveAnAccountCheck.dart';
+import 'package:ephi_healthcare_worker_app/components/roundedButton.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+// Components
+import '../components/roundedPasswordField.dart';
+import '../components/roundedInputField.dart';
+import 'login.dart';
 //import 'package:email_validator/email_validator.dart';
 
 class CreateAccountPage extends StatelessWidget {
@@ -37,99 +44,67 @@ class CreateAccountPage extends StatelessWidget {
                   )),
               SizedBox(height: size.height * 0.05),
               RoundedInputField(
+                signIn: false,
                 hintText: "Healthcare Worker Full Name",
                 onChanged: (value) {},
               ),
               SizedBox(height: size.height * 0.02),
               RoundedInputField(
+                signIn: false,
                 hintText: "Email",
                 onChanged: (value) {},
                 icon: Icons.email,
               ),
               SizedBox(height: size.height * 0.02),
-              RoundedInputField(
-                hintText: "Password",
-                onChanged: (value) {},
-                icon: Icons.lock,
-              ),
+              RoundedPasswordField(onChanged: (value) {}, signIn: false),
+              SizedBox(height: size.height * 0.02),
+              AlreadyHaveAnAccountCheck(
+                  color: Colors.grey[600],
+                  login: false,
+                  press: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) {
+                        return LoginPage();
+                      }),
+                    );
+                  }),
               SizedBox(height: size.height * 0.05),
-              ButtonTheme(
-                minWidth: size.width * 0.8,
-                height: size.width * 0.15,
-                child: RaisedButton(
+              RoundedButton(
                   color: Colors.lightGreenAccent[700],
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(40)
-                  ),
-                  onPressed: () {
-//                    Navigator.push(
-//                      context,
-//                      MaterialPageRoute(
-//                        builder: (context) {
-//                          return CreateAccountScreen();
-//                        },
-//                      ),
-//                    );
-                  },
-                  child: Text('CREATE ACCOUNT',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16.0,
-                      )),
-                ),
-              ),
+                  text: "CREATE ACCOUNT",
+                  press: () {}),
+//              ButtonTheme(
+//                minWidth: size.width * 0.8,
+//                height: size.width * 0.15,
+//                child: RaisedButton(
+//                  color: Colors.lightGreenAccent[700],
+//                  shape: RoundedRectangleBorder(
+//                      borderRadius: BorderRadius.circular(40)
+//                  ),
+//                  onPressed: () {
+////                    Navigator.push(
+////                      context,
+////                      MaterialPageRoute(
+////                        builder: (context) {
+////                          return CreateAccountScreen();
+////                        },
+////                      ),
+////                    );
+//                  },
+//                  child: Text('CREATE ACCOUNT',
+//                      textAlign: TextAlign.center,
+//                      style: TextStyle(
+//                        color: Colors.white,
+//                        fontSize: 16.0,
+//                      )),
+//                ),
+//              ),
               SizedBox(height: size.height * 0.025),
             ],
           ),
         ),
       ),
-    );
-  }
-}
-
-class RoundedInputField extends StatelessWidget {
-  final String hintText;
-  final IconData icon;
-  final ValueChanged<String> onChanged;
-  const RoundedInputField({
-    Key key,
-    this.hintText,
-    this.icon = Icons.person,
-    this.onChanged,
-  }) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return TextFieldContainer(
-      child: TextField(
-        onChanged: onChanged,
-        decoration: InputDecoration(
-            icon: Icon(
-              icon,
-              color: Colors.lightGreenAccent[700],
-            ),
-            hintText: hintText,
-            border: InputBorder.none),
-      ),
-    );
-  }
-}
-
-class TextFieldContainer extends StatelessWidget {
-  final Widget child;
-
-  const TextFieldContainer({Key key, this.child}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 333,
-      height: 60,
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-      decoration: BoxDecoration(
-          color: Colors.lightGreenAccent[100],
-          borderRadius: BorderRadius.circular(30)),
-      child: child,
     );
   }
 }

@@ -1,5 +1,10 @@
+import '../components/alreadyHaveAnAccountCheck.dart';
+import '../components/roundedInputField.dart';
+import '../components/roundedPasswordField.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'createAccount.dart';
 
 class LoginPage extends StatelessWidget {
   @override
@@ -20,8 +25,7 @@ class LoginPage extends StatelessWidget {
           child: Column(
             children: <Widget>[
               SizedBox(height: size.height * 0.03),
-              Text(
-                  'Sign In to Your Account',
+              Text('Sign In To Your Account',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     shadows: <Shadow>[
@@ -36,9 +40,26 @@ class LoginPage extends StatelessWidget {
                     fontSize: 20.0,
                   )),
               SizedBox(height: size.height * 0.05),
-
-
-
+              RoundedInputField(
+                hintText: "Email",
+                onChanged: (value) {},
+                icon: Icons.email,
+              ),
+              SizedBox(height: size.height * 0.02),
+              RoundedPasswordField(onChanged: (value) {}),
+              SizedBox(height: size.height * 0.02),
+              AlreadyHaveAnAccountCheck(
+                  color: Colors.grey[600],
+                  login: true,
+                  press: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) {
+                      return CreateAccountPage();
+                      }),
+                    );
+                  }),
+              SizedBox(height: size.height * 0.05),
               SizedBox(height: size.height * 0.05),
               ButtonTheme(
                 minWidth: size.width * 0.8,
