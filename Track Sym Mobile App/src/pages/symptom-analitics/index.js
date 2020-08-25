@@ -15,10 +15,17 @@ import {
 
 import userIDStore from '../../data-management/user-id-data/userIDStore';
 import { strings } from '../../localization/localization';
+import languageStore from "../../data-management/language_data/languageStore";
 
 const ArrowIosBackIcon = (style) => <Icon {...style} name='arrow-ios-back' />;
 
 const SymptomAnaliticsPage = (props) => {
+
+  languageStore.subscribe(() => {
+    strings.setLanguage(languageStore.getState());
+    changeLabels();
+  });
+  
   const [data, setData] = useState([
     { index: 0, val: strings.Loading, label: strings.TotalSymptomReports},
     { index: 1, val: strings.Loading, label: strings.SymptomReportsYesterday},
@@ -40,6 +47,22 @@ const SymptomAnaliticsPage = (props) => {
     />
   );
 
+  const changeLabels = async () =>{
+    await setData((data) =>
+          data.map((d) => {
+            switch (d.index) {
+              case 0:
+                return { ...d, val: strings.Loading, label: strings.TotalSymptomReports };
+              case 1:
+                return { ...d, val: strings.Loading, label: strings.SymptomReportsYesterday };
+              case 2:
+                return { ...d, label: strings.SymptomReportsToCOVIDCases };
+              case 3:
+                return { ...d, val: strings.Loading, label: strings.MostReportedSymptom };
+            }
+          })
+        );
+  }
   const fetchMostCommon = async (filter) => {
     setMostCommonFetched(false);
     let url =
