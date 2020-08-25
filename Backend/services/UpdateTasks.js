@@ -453,43 +453,41 @@ exports.update_public_resources = async () => {
 
 //Every 4 hours
 exports.update_world_statistics = async () => {
-    let request_url =
-        "https://datahub.io/core/covid-19/r/worldwide-aggregated.csv";
-    let wldData = await axios.get(request_url);
-
-    let data = wldData.data;
-    if (data) {
-        const options = { delimiter: ",", quote: '"' };
-        data = csvjson.toObject(data, options);
-        let caseData = [];
-        console.log(data.length);
-        for (var index = 0; index < data.length; index++) {
-            let item = data[index];
-
-            caseData.push(
-                new WorldDataModel({
-                    _id: mongoose.Types.ObjectId(),
-                    Confirmed: item["Confirmed"],
-                    Recovered: item["Recovered"],
-                    Deaths: item["Deaths"],
-                    date: new Date(item.Date),
-                })
-            );
+    const cases = await MapData.find({});
+    let casesData = {};
+    cases.forEach((country) => {
+        Object.keys(country.Data).forEach((key) => {
+            if (key !== "Country" && key != "Unique_Provinces") {
+                if (!casesData[`${key}`]) {
+                    casesData[`${key}`] = new WorldDataModel({
+                        _id: mongoose.Types.ObjectId(),
+                        Confirmed: 0,
+                        Recovered: 0,
+                        Deaths: 0,
+                        date: new Date(key),
+                    });
+                }
+                casesData[`${key}`].Confirmed += country.Data[`${key}`][0];
+                casesData[`${key}`].Recovered += country.Data[`${key}`][2];
+                casesData[`${key}`].Deaths += country.Data[`${key}`][1];
+            }
+        });
+    });
+    const data = Object.keys(casesData).map(function (key) {
+        return casesData[key];
+    });
+    if (data && data.length > 0) {
+        try {
+            await WorldDataModel.collection.drop();
+        } catch (err) {
+            console.log(err.toString());
         }
-        if (caseData.length > 0) {
-            try {
-                await WorldDataModel.collection.drop();
-            } catch (err) {
-                console.log(err.toString());
-            }
-            try {
-                await WorldDataModel.insertMany(caseData, { ordered: false });
-            } catch (err) {
-                console.log(err.toString());
-            }
+        try {
+            await WorldDataModel.insertMany(data, { ordered: false });
+        } catch (err) {
+            console.log(err.toString());
         }
     }
-
     console.log("update-completed");
 };
 
