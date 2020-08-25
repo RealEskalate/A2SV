@@ -74,7 +74,7 @@ export const ReferenceScreen = (props) => {
       <SafeAreaView style={{ flex: 1 }}>
         <TopNavigation
           alignment='center'
-          title='References'
+          title={strings.References}
           accessoryLeft={renderBackAction}
         />
         <Divider />
