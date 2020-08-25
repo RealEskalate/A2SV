@@ -19,15 +19,15 @@
     </template>
     <v-date-picker
       color="primary"
-      :min="date_range.length === 1 ? date_range[0] : null"
+      :min="newDateRange.length === 1 ? newDateRange[0] : null"
       :max="maxDate"
       range
       no-title
-      v-model="date_range"
+      v-model="newDateRange"
       @input="
         () => {
-          if (date_range.length === 2 && date_range[0] && date_range[1])
-            this.$emit('onDateChange', date_range);
+          if (newDateRange.length === 2 && newDateRange[0] && newDateRange[1])
+            this.$emit('onDateChange', newDateRange);
         }
       "
     />
@@ -44,12 +44,13 @@ export default {
   computed: {
     maxDate: () => moment(new Date()).format("YYYY-MM-DD"),
     dateRangeText() {
-      return this.rangeToText(this.date_range[0], this.date_range[1]);
+      return this.rangeToText(this.newDateRange[0], this.newDateRange[1]);
     }
   },
   data() {
     return {
-      mdiCalendar
+      mdiCalendar,
+      newDateRange: this.date_range //not to modify "date_range" prop
     };
   },
   methods: {
