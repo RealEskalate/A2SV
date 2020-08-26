@@ -30,6 +30,11 @@ export default {
       diseaseCompare: 0,
       descriptions: false,
       countryResources: false
+    },
+    symptomStatLoaders: {
+      total: false,
+      totalPeople: false,
+      peopleList: false
     }
   },
   getters: {
@@ -47,6 +52,9 @@ export default {
     },
     getGraphLoaders(state) {
       return state.graphLoaders;
+    },
+    getSymptomStatLoaders(state) {
+      return state.symptomStatLoaders;
     }
   },
   mutations: {
@@ -73,6 +81,9 @@ export default {
     },
     resetGraphLoaders(state, key) {
       state.graphLoaders[key] = 0;
+    },
+    setSymptomStatLoaders(state, { key, value }) {
+      state.symptomStatLoaders[key] = value;
     }
   }
 };

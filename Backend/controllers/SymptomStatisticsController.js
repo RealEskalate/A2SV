@@ -132,8 +132,18 @@ exports.get_symptom_logs = async (req, res) => {
         filter["current_symptoms.location.district"] = {$in : districts};
     }
 
-    if(req.query.date){
-        filter["current_symptoms.date"] = {$lte : new Date(req.query.date)}
+    if(req.query.start_date){
+        filter["current_symptoms.date"] = {$gte : new Date(req.query.start_date)}
+    }else{
+        let date = new Date()
+        date.setHours(date.getHours()-24)
+        filter["current_symptoms.date"] = {$gte : date}
+    }
+
+    if(req.query.end_date){
+        let date = new Date(req.query.end_date)
+        date.setHours(23)
+        Object.assign(filter["current_symptoms.date"], {$lte : date});
     }
 
     let page = parseInt(req.query.page) || 1;

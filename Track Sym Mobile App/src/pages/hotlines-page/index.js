@@ -69,7 +69,7 @@ export const HotlineScreen = (props) => {
       <SafeAreaView style={{ flex: 1 }}>
         <TopNavigation
           alignment='center'
-          title='Hotlines'
+          title={strings.Hotlines}
           accessoryLeft={renderBackAction}
         />
         <Divider />

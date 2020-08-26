@@ -7,8 +7,6 @@ const InviteAdmin = () => import("../views-admin/auth/InviteAdmin.vue");
 const Login = () => import("../views-admin/auth/Login.vue");
 
 const Symptoms = () => import("../views-admin/symptoms/Symptoms.vue");
-const SymptomDetails = () =>
-  import("../views-admin/symptoms/SymptomDetails.vue");
 
 export const admin = [
   {
@@ -62,11 +60,6 @@ export const admin = [
       requiresAuth: true,
       roles: ["ephi_user"]
     }
-  },
-  {
-    name: "SymptomDetails",
-    path: "symptoms/:id/details",
-    component: SymptomDetails
   },
   {
     name: "Dashboard",
