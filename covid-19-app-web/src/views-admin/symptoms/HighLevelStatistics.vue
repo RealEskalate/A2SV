@@ -9,8 +9,8 @@
       >
         <v-card class="mx-auto" :flat="true" max-width="344">
           <v-card-text>
-            <p class="display-1 text--primary">{{ getTotalSymptoms }}</p>
-            <div class="text--primary">{{ title_one }}</div>
+            <p class="display-1 text-center">{{ getTotalSymptoms }}</p>
+            <h4 class="text-center">{{ title_one }}</h4>
           </v-card-text>
         </v-card>
       </v-skeleton-loader>
@@ -24,7 +24,7 @@
       >
         <v-card class="mx-auto" :flat="true" max-width="344">
           <v-card-text>
-            <p class="display-1 text--primary">
+            <p class="display-1 text-center">
               {{ getMostCommonSymptom }} |
               {{
                 Math.round(
@@ -32,7 +32,7 @@
                 ) / 100
               }}%
             </p>
-            <div class="text--primary">{{ title_two }}</div>
+            <h4 class="text-center">{{ title_two }}</h4>
           </v-card-text>
         </v-card>
       </v-skeleton-loader>
@@ -46,10 +46,10 @@
       >
         <v-card class="mx-auto" :flat="true" max-width="344">
           <v-card-text>
-            <p class="display-1 text--primary">
+            <p class="display-1 text-center">
               {{ getTotalPeoplesWithSymptoms }}
             </p>
-            <div class="text--primary">{{ title_three }}</div>
+            <h4 class="text-center">{{ title_three }}</h4>
           </v-card-text>
         </v-card>
       </v-skeleton-loader>
@@ -88,3 +88,10 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.display-1 {
+  font-size: 2em !important;
+  color: #303030 !important;
+}
+</style>
