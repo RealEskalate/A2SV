@@ -4,7 +4,7 @@
     class="align-content-center align-center mx-auto container py-5"
   >
     <v-snackbar top color="primary" v-model="snackbar" :timeout="5000">
-      <h4 class="ma-2" v-text="getMessage" />
+      <span class="ma-2" v-text="getMessage" />
       <v-btn text icon x-small color="white" @click="snackbar = false">
         <v-icon v-text="mdiCloseCircleOutline" />
       </v-btn>
@@ -18,7 +18,7 @@
         v-model="user.password"
         class="col-md-8 mx-auto"
         :rules="rules.password"
-      ></v-text-field>
+      />
       <v-btn class="primary col-md-4 mx-auto d-flex" @click="submit">
         {{ $t("auth.saveChanges") }}</v-btn
       >

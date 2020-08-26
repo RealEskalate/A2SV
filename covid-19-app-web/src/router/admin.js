@@ -10,7 +10,7 @@ const Symptoms = () => import("../views-admin/symptoms/Symptoms.vue");
 
 export const admin = [
   {
-    name: "AdminLogin",
+    name: "Admin Login",
     path: "login",
     component: Login,
     meta: {
@@ -18,7 +18,7 @@ export const admin = [
     }
   },
   {
-    name: "CreateAccount",
+    name: "Create Account",
     path: "register",
     component: CreateAccount,
     meta: {
@@ -26,7 +26,7 @@ export const admin = [
     }
   },
   {
-    name: "ChangePassword",
+    name: "Change Password",
     path: "change-password",
     component: ChangePassword,
     meta: {
@@ -35,7 +35,7 @@ export const admin = [
     }
   },
   {
-    name: "ResetPassword",
+    name: "Reset Password",
     path: "reset-password",
     component: ForgotPassword,
     meta: {
@@ -53,7 +53,7 @@ export const admin = [
     }
   },
   {
-    name: "InviteAdmin",
+    name: "Invite Admin",
     path: "invite-admin",
     component: InviteAdmin,
     meta: {
