@@ -5,8 +5,9 @@ const jwt = require("jsonwebtoken");
 const axios = require("axios");
 const User = UserModels.User;
 const emailSender = require("../services/EmailSender");
+const { LocationUser } = require("../models/LocationUserModel.js");
+const { DistrictModel } = require("../models/DistrictModel.js");
 
-// Get All Users. - [DEPRECATED: The information is too sensitive to share with API consumers]
 exports.get_all_users = async (req, res) => {
   if (req.query.demo && req.query.demo == "true") {
     var User = UserModels.DemoUser;
@@ -15,9 +16,47 @@ exports.get_all_users = async (req, res) => {
   } else {
     var User = UserModels.User;
   }
-  const users = await User.find();
+
+  let filter = {};
+
+  if(req.query.username){
+      filter.username = {$regex: req.query.username, $options: 'i'};
+  }
+
+  if(req.query.country){
+      filter.current_country = req.query.country;
+  }
+
+  if(req.query.district){
+    let district = await DistrictModel.findOne({name: req.query.district});
+    let locationUsers = await LocationUser.find({'location.district': district._id}).distinct("user_id");
+    filter._id = {$in : locationUsers};
+  }
+
+  if(req.query.region){
+    let districts = await DistrictModel.find({state : req.query.region}).distinct("_id");
+    let locationUsers = await LocationUser.find({'location.district' : {$in : districts}}).distinct("user_id");
+    filter._id = {$in : locationUsers};
+  }
+
+  let page = parseInt(req.query.page) || 1;
+  let size = parseInt(req.query.size) || 15;
+
+  const users = await User.find(
+    filter,
+    {},
+    { skip: (page - 1) * size, limit: size * 1 }
+  );
+
+  let result = {
+    data_count: await User.countDocuments(filter),
+    page_size: size,
+    current_page: page,
+    data: users,
+  };
+
   try {
-    res.send(users);
+    res.send(result);
   } catch (err) {
     res.status(500).send(err.toString());
   }
