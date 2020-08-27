@@ -1,8 +1,5 @@
 import React from "react";
-import {
-  StyleSheet,
-  SafeAreaView,
-} from "react-native";
+import { StyleSheet, SafeAreaView } from "react-native";
 import {
   Layout,
   Spinner,
@@ -27,16 +24,16 @@ const NotificationScreen = (props) => {
         _id: 1,
         name: "Covid test result",
         description: "View your test result",
-        reference_link:{
-          result:{
+        reference_link: {
+          result: {
             _id: "34567887654",
             title: "Test Result",
             name: "Emily Clark",
             test_date: "10/10/2020",
             test_result: "Positive",
-            message: strings.PreventionsShortDescription
+            message: strings.PreventionsShortDescription,
           },
-          methods:[
+          methods: [
             {
               _id: 1,
               name: strings.HandWashing,
@@ -61,10 +58,9 @@ const NotificationScreen = (props) => {
               inside:
                 strings.PreventionDetailInfoDescriptionMethodTwoInsideContetnTwo,
             },
-          ]
-        }
-
-      }
+          ],
+        },
+      },
     ],
     isLoading: false,
   });
@@ -73,9 +69,8 @@ const NotificationScreen = (props) => {
   const lang = langContext.lang;
   strings.setLanguage(lang);
 
-
   const getDetailInfo = (reference_link) => {
-      props.navigation.navigate("NotificationView", { data: reference_link });
+    props.navigation.navigate("NotificationView", { data: reference_link });
   };
 
   const ArrowIosBackIcon = (style) => <Icon {...style} name="arrow-ios-back" />;
@@ -87,18 +82,15 @@ const NotificationScreen = (props) => {
     />
   );
   const renderItemAccessory = (link) => (
-    <Button 
-      
-      size='tiny'
-      onPress={()=> getDetailInfo(link)}>
-        {strings.VIEW}
+    <Button size="tiny" onPress={() => getDetailInfo(link)}>
+      {strings.VIEW}
     </Button>
   );
   return (
     <SafeAreaView style={styles.container}>
       <TopNavigation
         alignment="center"
-        title={ strings.Notification}
+        title={strings.Notification}
         accessoryLeft={renderBackAction}
       />
       <Divider />
@@ -115,9 +107,11 @@ const NotificationScreen = (props) => {
             keyExtractor={(item) => item._id}
             renderItem={({ item }) => (
               <>
-              <ListItem
+                <ListItem
                   title={item.name}
-                  accessoryRight={() =>renderItemAccessory(item.reference_link)}
+                  accessoryRight={() =>
+                    renderItemAccessory(item.reference_link)
+                  }
                 />
               </>
             )}
