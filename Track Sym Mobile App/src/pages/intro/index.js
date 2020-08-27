@@ -28,7 +28,7 @@ const slides = [
   {
     key: 3,
     title: "POWERFUL DATA",
-    text: "Graphical Representation of Covid-19 Data",
+    text: "Graphical representation of Covid-19 data",
     subText: "Active, Recovered, Dealth Stats",
     image: require("../../../assets/images/slide2.png"),
     backgroundColor: "#B72125",
