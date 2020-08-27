@@ -35,7 +35,6 @@
         dense
         label="Search Person"
         @input="$emit('set-search', search)"
-        :append-icon="mdiSearch"
         single-line
         hide-details
       ></v-text-field>
@@ -45,7 +44,6 @@
 
 <script>
 import DateRangePicker from "@/components/core/DateRangePicker.vue";
-import mdiSearch from "@mdi/js";
 
 export default {
   name: "SymptomFilter",
@@ -55,7 +53,6 @@ export default {
   props: ["date_range"],
   data() {
     return {
-      mdiSearch,
       current_status: null,
       search: "",
       risk: ["", "Low", "Medium", "High"],
