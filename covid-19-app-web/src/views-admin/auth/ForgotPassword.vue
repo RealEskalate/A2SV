@@ -19,7 +19,7 @@
         v-model="user.email"
         class="col-md-8 mx-auto"
         :rules="rules.email"
-      ></v-text-field>
+      />
       <v-btn
         class="primary col-md-4 mx-auto d-flex"
         :disabled="!valid"

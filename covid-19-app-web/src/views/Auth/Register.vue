@@ -3,7 +3,7 @@
     <v-col cols="12" sm="8" md="4">
       <v-card class="overflow-hidden" shaped outlined>
         <v-snackbar top color="primary" v-model="snackbar" :timeout="5000">
-          <h4 class="ma-2" v-text="getMessage" />
+          <span class="ma-2" v-text="getMessage" />
           <v-btn text icon x-small color="white" @click="snackbar = false">
             <v-icon v-text="mdiCloseCircleOutline" />
           </v-btn>
