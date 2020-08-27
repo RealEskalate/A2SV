@@ -26,11 +26,18 @@ import {
   TabView,
   Tab,
   Icon,
+  Autocomplete,
+  AutocompleteItem,
+  Spinner,
+  IndexPath,
+  Select,
+  SelectGroup,
+  SelectItem,
 } from "@ui-kitten/components";
 import * as eva from "@eva-design/eva";
 import SearchableDropdown from "react-native-searchable-dropdown";
 import userIDStore from "../../data-management/user-id-data/userIDStore";
-import { DotsLoader } from "react-native-indicator";
+import { TextLoader } from "react-native-indicator";
 import { strings } from "../../localization/localization";
 import languageStore from "../../data-management/language_data/languageStore";
 import { ThemeContext } from "../../../assets/themes/theme-context";
@@ -41,42 +48,11 @@ class Ethiopia extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selected_filter: criterias.confirmed, // sets the current filtering parameter on the graph
-      selected_filter_daily_status: criterias.confirmed,
-      selected_filter_rate: criterias.recoveryRate,
-      selected_daily_start_date: "",
-      selected_daily_end_date: new Date().toISOString().split("T")[0],
-      selected_total_start_date: "",
-      selected_total_end_date: new Date().toISOString().split("T")[0],
-      selected_rate_start_date: "",
-      selected_rate_end_date: new Date().toISOString().split("T")[0],
-      selected_perMillion_start_date: "",
-      selected_perMillion_end_date: new Date().toISOString().split("T")[0],
-      placeholder_daily_start_date: "",
-      placeholder_daily_end_date: new Date().toISOString().split("T")[0],
-      placeholder_total_start_date: "",
-      placeholder_total_end_date: new Date().toISOString().split("T")[0],
-      placeholder_percentage_start_date: "",
-      placeholder_percentage_end_date: new Date().toISOString().split("T")[0],
-      selectedIndex_daily: 0,
-      selectedIndex_total: 0,
-      selectedIndex_perMillion: 0,
-      graph_label: [""],
-      data_set: [0],
-      daily_newCases_label: [""],
-      daily_newCases_data_set: [0],
-      rate_label: [""],
-      rate_data_set: [0],
-      percentage_label: [""],
-      percentage_data_set: [0],
-      searchedCountry: "World",
-      TotalStatisticsData: [],
-      StatisticsData: {},
-      search: "World",
+      searchedCountry: "ETH",
+      search: "Ethiopia",
       currLanguage: "English",
       currLangCode: languageStore.getState(),
       popUpVisible: false,
-
       Months: [
         strings.Jan,
         strings.Feb,
@@ -92,17 +68,34 @@ class Ethiopia extends React.Component {
         strings.Dec,
       ],
       countries: [],
+      controlCountries: [],
+      searching: false,
       totalGraphLoading: false,
       dailyGraphLoading: false,
-      rateGraphLoading: false,
+      perMillionGraphLoading: false,
       totalLoading: true,
       testCountDataExist: false,
       discriptionVisiblity: false,
       staticsDescription: [],
       staticsDescriptionLoading: true,
+      permillonStaticsDescription: [],
+      permillonStaticsDescriptionLoading: true,
       discriptionTitle: "",
       description: "",
       kittenStartDate: new Date(),
+      selected_graph_type: "",
+      selected_graph_filter: criterias.confirmed,
+      selected_graph_start_date: "",
+      selected_graph_end_date: new Date().toISOString().split("T")[0],
+      graphTypes: ["Daily Cases", "All Time Cases", "People Per Million"],
+      dateRanges: ["Week", "Month", "3 Months"],
+      filterParameters: ["Confirmed", "Recovered", "Deaths"],
+      selected_graph_type_index: new IndexPath(0),
+      selected_date_range_index: new IndexPath(0),
+      selected_filter_parameters: new IndexPath(0),
+      selected_graph_data_set: [0],
+      selected_graph_labels: [""],
+      main_graph_loading: false,
     };
     languageStore.subscribe(() => {
       strings.setLanguage(languageStore.getState());
@@ -110,7 +103,25 @@ class Ethiopia extends React.Component {
       this.componentDidMount();
     });
   }
+
   static contextType = ThemeContext;
+
+  filterCountryNames = async () => {
+    this.setState({ searching: true });
+    await this.getTotalData()
+      .then(this.fetchTotalStats())
+      .then(this.fetchDailyNewsCases())
+      .then(this.getCountryList())
+      .then(this.fetchPerMillionStats())
+      // .then(this.fetchLastSymptomUpdate())
+      .then(this.checkIfDataExist(criterias.numberOfTests)) //check if number of test case data exist
+      .then(this.getDescriptions())
+      .then(this.getPermillionDescriptions())
+      .catch((error) => {
+        console.log("Concurrency Issue");
+      });
+  };
+
   componentDidMount = async () => {
     console.log(this.state.selected_daily_start_date);
     await this.setState({ currLangCode: languageStore.getState() });
@@ -129,13 +140,14 @@ class Ethiopia extends React.Component {
         break;
     }
     await this.getTotalData()
-      .then(this.fetchTotalStats())
       .then(this.fetchDailyNewsCases())
-      .then(this.getCountryList())
-      .then(this.fetchPerMillionStats())
-      .then(this.fetchLastSymptomUpdate())
-      .then(this.checkIfDataExist(criterias.numberOfTests)) //check if number of test case data exist
-      .then(this.getDescriptions())
+      // .then(this.fetchDailyNewsCases())
+      // .then(this.getCountryList())
+      // .then(this.fetchPerMillionStats())
+      // // .then(this.fetchLastSymptomUpdate())
+      // .then(this.checkIfDataExist(criterias.numberOfTests)) //check if number of test case data exist
+      // .then(this.getDescriptions())
+      // .then(this.getPermillionDescriptions())
       .catch((error) => {
         console.log("Concurrency Issue");
       });
@@ -145,20 +157,20 @@ class Ethiopia extends React.Component {
   fetchTotalStats = async () => {
     //console.log("Bearer " + userIDStore.getState().userToken);
     let newThis = this;
-    this.setState({ totalGraphLoading: true });
+    this.setState({ main_graph_loading: true });
     var query =
-      this.state.selected_total_start_date.length > 1 &&
-      this.state.selected_total_end_date.length > 1
+      this.state.selected_graph_start_date.length > 1 &&
+      this.state.selected_graph_end_date.length > 1
         ? "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/statistics?criteria=" +
-          this.state.selected_filter +
+          this.state.selected_graph_filter +
           "&country=" +
           this.state.searchedCountry +
           "&start_date=" +
-          this.state.selected_total_start_date +
+          this.state.selected_graph_start_date +
           "&end_date=" +
-          this.state.selected_total_end_date
+          this.state.selected_graph_end_date
         : "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/statistics?criteria=" +
-          this.state.selected_filter +
+          this.state.selected_graph_filter +
           "&country=" +
           this.state.searchedCountry;
     //console.log(query);
@@ -173,10 +185,10 @@ class Ethiopia extends React.Component {
       .then((response) => response.json())
       .then(async (json) => {
         if (json !== undefined && json.length !== 0) {
-          await newThis.populate(json);
+          await newThis.populateDataPoints(json);
           newThis.forceUpdate(); //refresh page
           newThis.setState({
-            totalGraphLoading: false,
+            main_graph_loading: false,
           });
         } else {
           newThis.fetchTotalStats();
@@ -190,25 +202,24 @@ class Ethiopia extends React.Component {
   //fetch daily new cases reported
   fetchDailyNewsCases = async () => {
     let newThis = this;
-    this.setState({ dailyGraphLoading: true });
+    this.setState({ main_graph_loading: true });
     var query =
-      this.state.selected_daily_start_date.length > 1 &&
-      this.state.selected_daily_end_date.length > 1
+      this.state.selected_graph_start_date.length > 1 &&
+      this.state.selected_graph_end_date.length > 1
         ? "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/statistics?criteria=" +
-          this.state.selected_filter_daily_status +
+          this.state.selected_graph_filter +
           "&country=" +
           this.state.searchedCountry +
           "&start_date=" +
-          this.state.selected_daily_start_date +
+          this.state.selected_graph_start_date +
           "&end_date=" +
-          this.state.selected_daily_end_date +
+          this.state.selected_graph_end_date +
           "&daily=true"
         : "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/statistics?criteria=" +
-          this.state.selected_filter_daily_status +
+          this.state.selected_graph_filter +
           "&country=" +
           this.state.searchedCountry +
           "&daily=true";
-    console.log(query);
     await fetch(query, {
       method: "GET",
       headers: {
@@ -220,11 +231,10 @@ class Ethiopia extends React.Component {
       .then((response) => response.json())
       .then(async (json) => {
         if (json !== undefined && json.length !== 0) {
-          console.log(json);
-          await newThis.populateDailyData(json);
+          await newThis.populateDataPoints(json);
           newThis.forceUpdate(); //refresh page
           newThis.setState({
-            dailyGraphLoading: false,
+            main_graph_loading: false,
           });
         } else {
           newThis.fetchDailyNewsCases();
@@ -239,21 +249,21 @@ class Ethiopia extends React.Component {
   fetchPerMillionStats = async () => {
     //console.log("Bearer " + userIDStore.getState().userToken);
     let newThis = this;
-    this.setState({ totalGraphLoading: true });
+    this.setState({ main_graph_loading: true });
     var query =
-      this.state.selected_perMillion_start_date.length > 1 &&
-      this.state.selected_perMillion_end_date.length > 1
+      this.state.selected_graph_start_date.length > 1 &&
+      this.state.selected_graph_end_date.length > 1
         ? "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/statistics?criteria=" +
-          this.state.selected_filter +
+          this.state.selected_graph_filter +
           "&country=" +
           this.state.searchedCountry +
           "&start_date=" +
-          this.state.selected_perMillion_start_date +
+          this.state.selected_graph_start_date +
           "&end_date=" +
-          this.state.selected_perMillion_end_date +
+          this.state.selected_graph_end_date +
           "&perMillion=true"
         : "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/statistics?criteria=" +
-          this.state.selected_filter +
+          this.state.selected_graph_filter +
           "&country=" +
           this.state.searchedCountry +
           "&perMillion=true";
@@ -269,10 +279,10 @@ class Ethiopia extends React.Component {
       .then((response) => response.json())
       .then(async (json) => {
         if (json !== undefined && json.length !== 0) {
-          await newThis.populatePercentageData(json);
+          await newThis.populateDataPoints(json);
           newThis.forceUpdate(); //refresh page
           newThis.setState({
-            totalGraphLoading: false,
+            main_graph_loading: false,
           });
         } else {
           newThis.fetchPerMillionStats();
@@ -435,8 +445,9 @@ class Ethiopia extends React.Component {
       .then((response) => response.json())
       .then(async (json) => {
         if (json !== undefined && json.length !== 0) {
-          await newThis.setState({
+          newThis.setState({
             countries: json,
+            controlCountries: json,
           });
         } else {
           newThis.getCountryList();
@@ -448,46 +459,35 @@ class Ethiopia extends React.Component {
   };
 
   //populate daily data
-  populateDailyData = (objList) => {
+  populateDataPoints = (objList) => {
     console.log("Data length " + objList.length);
-    this.state.daily_newCases_label = [""]; //reseting all data point labels
-    this.state.daily_newCases_data_set = [0]; //reseting all data point labels
+    this.state.selected_graph_labels = [""]; //reseting all data point labels
+    this.state.selected_graph_data_set = [0]; //reseting all data point labels
 
     //generating interval
-    var interval = Math.floor(objList.length / 6);
-    var remainder = objList.length % 6;
-    if (interval === 0) {
-      interval = 1;
-      remainder = 0;
+    let customLength = objList.length - 1;
+    if (objList.length === 7) {
+      var interval = 1;
+    } else {
+      var interval = Math.ceil(customLength / 5);
     }
     let dataSet_counter = 0;
     let indexCounterSet = 0;
-    while (dataSet_counter < objList.length) {
-      this.state.daily_newCases_data_set[indexCounterSet] =
+
+    while (dataSet_counter < customLength) {
+      this.state.selected_graph_data_set[indexCounterSet] =
         objList[dataSet_counter].y;
+      this.state.selected_graph_labels[indexCounterSet] = this.dateConverter(
+        objList[dataSet_counter].t.split("T")[0]
+      );
       indexCounterSet += 1;
-      if (remainder > 0 && dataSet_counter + remainder === objList.length - 1) {
-        dataSet_counter += remainder;
-        continue;
-      }
       dataSet_counter += interval;
     }
-    let graphLebel_counter = 0;
-    let indexCounter = 0;
-    while (graphLebel_counter < objList.length) {
-      this.state.daily_newCases_label[indexCounter] = this.dateConverter(
-        objList[graphLebel_counter].t.split("T")[0]
-      );
-      indexCounter += 1;
-      if (
-        remainder > 0 &&
-        graphLebel_counter + remainder === objList.length - 1
-      ) {
-        graphLebel_counter += remainder;
-        continue;
-      }
-      graphLebel_counter += interval;
-    }
+    this.state.selected_graph_data_set[indexCounterSet] =
+      objList[customLength].y;
+    this.state.selected_graph_labels[indexCounterSet] = this.dateConverter(
+      objList[customLength].t.split("T")[0]
+    );
   };
 
   //Populates statistics data in to our state
@@ -496,41 +496,27 @@ class Ethiopia extends React.Component {
     this.state.data_set = [0]; // reseting data set
 
     //generating interval
-    var interval = Math.floor(objList.length / 6);
-    var remainder = objList.length % 6;
-    if (interval === 0) {
-      interval = 1;
-      remainder = 0;
+    let customLength = objList.length - 1;
+    if (objList.length === 7) {
+      var interval = 1;
+    } else {
+      var interval = Math.ceil(customLength / 5);
     }
     let dataSet_counter = 0;
     let indexCounterSet = 0;
-    while (dataSet_counter < objList.length) {
-      this.state.data_set[indexCounterSet] = objList[dataSet_counter].y;
 
+    while (dataSet_counter < customLength) {
+      this.state.data_set[indexCounterSet] = objList[dataSet_counter].y;
+      this.state.graph_label[indexCounterSet] = this.dateConverter(
+        objList[dataSet_counter].t.split("T")[0]
+      );
       indexCounterSet += 1;
-      if (remainder > 0 && dataSet_counter + remainder === objList.length - 1) {
-        dataSet_counter += remainder;
-        continue;
-      }
       dataSet_counter += interval;
     }
-
-    let graphLebel_counter = 0;
-    let indexCounter = 0;
-    while (graphLebel_counter < objList.length) {
-      this.state.graph_label[indexCounter] = this.dateConverter(
-        objList[graphLebel_counter].t.split("T")[0]
-      );
-      indexCounter += 1;
-      if (
-        remainder > 0 &&
-        graphLebel_counter + remainder === objList.length - 1
-      ) {
-        graphLebel_counter += remainder;
-        continue;
-      }
-      graphLebel_counter += interval;
-    }
+    this.state.data_set[indexCounterSet] = objList[customLength].y;
+    this.state.graph_label[indexCounterSet] = this.dateConverter(
+      objList[customLength].t.split("T")[0]
+    );
   };
 
   //populate daily data
@@ -583,43 +569,28 @@ class Ethiopia extends React.Component {
     this.state.percentage_data_set = [0]; //reseting all data point labels
 
     //generating interval
-    var interval = Math.floor(objList.length / 6);
-    var remainder = objList.length % 6;
-    if (interval === 0) {
-      interval = 1;
-      remainder = 0;
+    let customLength = objList.length - 1;
+    if (objList.length === 7) {
+      var interval = 1;
+    } else {
+      var interval = Math.ceil(customLength / 5);
     }
     let dataSet_counter = 0;
     let indexCounterSet = 0;
-    while (dataSet_counter < objList.length) {
+
+    while (dataSet_counter < customLength) {
       this.state.percentage_data_set[indexCounterSet] =
         objList[dataSet_counter].y;
-
+      this.state.percentage_label[indexCounterSet] = this.dateConverter(
+        objList[dataSet_counter].t.split("T")[0]
+      );
       indexCounterSet += 1;
-      if (remainder > 0 && dataSet_counter + remainder === objList.length - 1) {
-        dataSet_counter += remainder;
-        continue;
-      }
       dataSet_counter += interval;
     }
-
-    var remainder = objList.length % 5;
-    let graphLebel_counter = 0;
-    let indexCounter = 0;
-    while (graphLebel_counter < objList.length) {
-      this.state.percentage_label[indexCounter] = this.dateConverter(
-        objList[graphLebel_counter].t.split("T")[0]
-      );
-      indexCounter += 1;
-      if (
-        remainder > 0 &&
-        graphLebel_counter + remainder === objList.length - 1
-      ) {
-        graphLebel_counter += remainder;
-        continue;
-      }
-      graphLebel_counter += interval;
-    }
+    this.state.percentage_data_set[indexCounterSet] = objList[customLength].y;
+    this.state.percentage_label[indexCounterSet] = this.dateConverter(
+      objList[customLength].t.split("T")[0]
+    );
   };
 
   //Reformat number
@@ -746,91 +717,147 @@ class Ethiopia extends React.Component {
       });
   };
 
-  setDailyStatsSelection = async (index) => {
-    var minDate = new Date();
-    switch (index) {
-      case 0:
-        await minDate.setDate(minDate.getDate() - 9);
-        await this.setState({
-          selectedIndex_daily: index,
-          selected_daily_start_date: minDate.toISOString().split("T")[0],
-        });
-        break;
-      case 1:
-        await minDate.setMonth(minDate.getMonth() - 1);
-        await this.setState({
-          selectedIndex_daily: index,
-          selected_daily_start_date: minDate.toISOString().split("T")[0],
-        });
-        break;
-      case 2:
-        await minDate.setMonth(minDate.getMonth() - 3);
-        await this.setState({
-          selectedIndex_daily: index,
-          selected_daily_start_date: minDate.toISOString().split("T")[0],
-        });
-        break;
-    }
-
-    this.fetchDailyNewsCases();
+  getPermillionDescriptions = async () => {
+    let newThis = this;
+    await fetch(
+      "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/resources/statistics-description?title=per-million&language=" +
+        this.state.currLanguage,
+      {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + userIDStore.getState().userToken,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .then((response) => response.json())
+      .then(async (json) => {
+        if (json !== undefined && json.length !== 0) {
+          await newThis.setState({
+            permillonStaticsDescription: json,
+            permillonStaticsDescriptionLoading: false,
+            searching: false,
+          });
+        } else {
+          newThis.getPermillionDescriptions();
+        }
+      })
+      .catch((error) => {
+        Alert.alert(strings.ConnectionProblem, strings.CouldNotConnectToServer);
+        // newThis.setState({
+        //   staticsDescriptionLoading: false,
+        // });
+      });
   };
 
-  setTotalStatsSelection = async (index) => {
-    var minDate = new Date();
-    switch (index) {
+  setGraphTypesData = async (index) => {
+    console.log(index.row);
+    switch (index.row) {
       case 0:
-        await minDate.setDate(minDate.getDate() - 9);
+        console.log("Daily graph type");
         await this.setState({
-          selectedIndex_total: index,
-          selected_total_start_date: minDate.toISOString().split("T")[0],
+          selected_graph_type_index: index,
+          main_graph_loading: true,
         });
+        this.fetchDailyNewsCases();
         break;
       case 1:
-        await minDate.setMonth(minDate.getMonth() - 1);
         await this.setState({
-          selectedIndex_total: index,
-          selected_total_start_date: minDate.toISOString().split("T")[0],
+          selected_graph_type_index: index,
+          main_graph_loading: true,
         });
+        this.fetchTotalStats();
         break;
+
       case 2:
-        await minDate.setMonth(minDate.getMonth() - 3);
         await this.setState({
-          selectedIndex_total: index,
-          selected_total_start_date: minDate.toISOString().split("T")[0],
+          selected_graph_type_index: index,
+          main_graph_loading: true,
         });
+        this.fetchPerMillionStats();
         break;
     }
-
-    this.fetchTotalStats();
   };
 
-  setPerMillionStatsSelection = async (index) => {
+  setGraphDateRange = async (index) => {
     var minDate = new Date();
-    switch (index) {
+    switch (index.row) {
       case 0:
         await minDate.setDate(minDate.getDate() - 9);
         await this.setState({
-          selectedIndex_perMillion: index,
-          selected_perMillion_start_date: minDate.toISOString().split("T")[0],
+          selected_date_range_index: index,
+          main_graph_loading: true,
+          selected_graph_start_date: minDate.toISOString().split("T")[0],
         });
         break;
       case 1:
         await minDate.setMonth(minDate.getMonth() - 1);
         await this.setState({
-          selectedIndex_perMillion: index,
-          selected_perMillion_start_date: minDate.toISOString().split("T")[0],
+          selected_date_range_index: index,
+          main_graph_loading: true,
+          selected_graph_start_date: minDate.toISOString().split("T")[0],
         });
         break;
+
       case 2:
         await minDate.setMonth(minDate.getMonth() - 3);
         await this.setState({
-          selectedIndex_perMillion: index,
-          selected_perMillion_start_date: minDate.toISOString().split("T")[0],
+          selected_date_range_index: index,
+          main_graph_loading: true,
+          selected_graph_start_date: minDate.toISOString().split("T")[0],
         });
         break;
     }
+    switch (this.state.selected_graph_type_index.row) {
+      case 0:
+        this.fetchDailyNewsCases();
+        break;
+      case 1:
+        this.fetchTotalStats();
+        break;
+      case 2:
+        this.fetchPerMillionStats();
+        break;
+    }
+  };
 
-    this.fetchPerMillionStats();
+  setGraphFilterType = async (index) => {
+    switch (index.row) {
+      case 0:
+        await this.setState({
+          selected_filter_parameters: index,
+          main_graph_loading: true,
+          selected_graph_filter: criterias.confirmed,
+        });
+        break;
+      case 1:
+        await this.setState({
+          selected_filter_parameters: index,
+          main_graph_loading: true,
+          selected_graph_filter: criterias.recoveries,
+        });
+        break;
+
+      case 2:
+        await this.setState({
+          selected_filter_parameters: index,
+          main_graph_loading: true,
+          selected_graph_filter: criterias.deaths,
+        });
+        break;
+    }
+    switch (this.state.selected_graph_type_index.row) {
+      case 0:
+        this.fetchDailyNewsCases();
+        break;
+      case 1:
+        this.fetchTotalStats();
+        break;
+      case 2:
+        this.fetchPerMillionStats();
+        break;
+    }
   };
   //fetch description of graphs
   getCriteriaDescriptions = async (title, position) => {
@@ -851,10 +878,11 @@ class Ethiopia extends React.Component {
       .then((response) => response.json())
       .then(async (json) => {
         if (json !== undefined && json.length !== 0) {
-          await newThis.setState({
+          newThis.setState({
             descriptionTitle: json[0].criteria[position].name,
             description: json[0].criteria[position].explanation,
             graphDescriptionLoading: false,
+            searching: false,
           });
           newThis.forceUpdate();
         } else {
@@ -869,6 +897,10 @@ class Ethiopia extends React.Component {
         // Alert.alert(strings.ConnectionProblem, strings.CouldNotConnectToServer);
       });
   };
+
+  handleTextChange = (item, query) =>
+    item.name.toLowerCase().includes(query.toLowerCase());
+  renderOption = (title) => <SelectItem title={title} />;
 
   render() {
     const HIEGHT = Dimensions.get("window").height;
@@ -911,45 +943,17 @@ class Ethiopia extends React.Component {
           <Layout style={styles.container}>
             <Layout
               style={{
-                flexDirection: "row",
                 flex: 1,
-                paddingHorizontal: 10,
-                width: Dimensions.get("window").width,
-                backgroundColor: "#ffffff00",
+                alignContent: "center",
+                justifyContent: "center",
+                margin: 10,
+                // width: Dimensions.get('window').width - 20,
+                // backgroundColor: '#ffffff00',
               }}
             >
-              <Layout
-                style={{
-                  alignContent: "center",
-                  width: Dimensions.get("window").width - 60,
-                  backgroundColor: "#ffffff00",
-                  marginTop: 15,
-                }}
-              >
-                <Text
-                  category="h6"
-                  style={{
-                    fontWeight: "bold",
-                  }}
-                >
-                  {strings.DailyStats}
-                </Text>
-              </Layout>
-              <Layout
-                style={{
-                  marginBottom: 5,
-                  backgroundColor: "#ffffff00",
-                }}
-              >
-                <TouchableOpacity onPress={() => this.componentDidMount()}>
-                  <MaterialCommunityIcons
-                    name="reload"
-                    color="#0080ff"
-                    size={30}
-                  />
-                  <Text style={{ fontSize: 12 }}>{strings.Refresh}</Text>
-                </TouchableOpacity>
-              </Layout>
+              <Text category="h6" style={{ fontWeight: "bold" }}>
+                {strings.DailyStats}
+              </Text>
             </Layout>
             <Layout
               level="3"
@@ -971,11 +975,11 @@ class Ethiopia extends React.Component {
                 {this.state.totalLoading ? (
                   <ActivityIndicator
                     size="small"
-                    color="#ffa500"
+                    color="#4d4d4d"
                     style={{ margin: 5 }}
                   />
                 ) : (
-                  <Text style={{ fontSize: 24, color: "#ffa500" }}>
+                  <Text style={{ fontSize: 24 }}>
                     {this.reformatNumber(
                       String(
                         Math.abs(
@@ -1001,11 +1005,11 @@ class Ethiopia extends React.Component {
                 {this.state.totalLoading ? (
                   <ActivityIndicator
                     size="small"
-                    color="#039be5"
+                    color="#4d4d4d"
                     style={{ margin: 5 }}
                   />
                 ) : (
-                  <Text style={{ fontSize: 24, color: "#039be5" }}>
+                  <Text style={{ fontSize: 24 }}>
                     {this.reformatNumber(
                       String(
                         Math.abs(
@@ -1030,11 +1034,11 @@ class Ethiopia extends React.Component {
                 {this.state.totalLoading ? (
                   <ActivityIndicator
                     size="small"
-                    color="red"
+                    color="#4d4d4d"
                     style={{ margin: 5 }}
                   />
                 ) : (
-                  <Text style={{ fontSize: 24, color: "red" }}>
+                  <Text style={{ fontSize: 24 }}>
                     {this.reformatNumber(
                       String(
                         Math.abs(
@@ -1087,11 +1091,11 @@ class Ethiopia extends React.Component {
                 {this.state.totalLoading ? (
                   <ActivityIndicator
                     size="small"
-                    color="#ffa500"
+                    color="#4d4d4d"
                     style={{ margin: 5 }}
                   />
                 ) : (
-                  <Text style={{ fontSize: 24, color: "#ffa500" }}>
+                  <Text style={{ fontSize: 24 }}>
                     {this.reformatNumber(
                       String(
                         this.state.TotalStatisticsData[
@@ -1110,11 +1114,11 @@ class Ethiopia extends React.Component {
                 {this.state.totalLoading ? (
                   <ActivityIndicator
                     size="small"
-                    color="#039be5"
+                    color="#4d4d4d"
                     style={{ margin: 5 }}
                   />
                 ) : (
-                  <Text style={{ fontSize: 24, color: "#039be5" }}>
+                  <Text style={{ fontSize: 24 }}>
                     {this.reformatNumber(
                       String(
                         this.state.TotalStatisticsData[
@@ -1138,11 +1142,11 @@ class Ethiopia extends React.Component {
                 {this.state.totalLoading ? (
                   <ActivityIndicator
                     size="small"
-                    color="red"
+                    color="#4d4d4d"
                     style={{ margin: 5 }}
                   />
                 ) : (
-                  <Text style={{ fontSize: 24, color: "red" }}>
+                  <Text style={{ fontSize: 24 }}>
                     {this.reformatNumber(
                       String(
                         this.state.TotalStatisticsData[
@@ -1221,67 +1225,148 @@ class Ethiopia extends React.Component {
               </Modal>
             </Layout>
 
-            <Layout style={styles.container_graph}>
-              <Divider />
+            <Layout
+              style={{
+                flex: 1,
+                alignItems: "center",
+                justifyContent: "center",
+                marginBottom: 10,
+
+                // backgroundColor: "#eee",
+              }}
+            >
               <Layout
-                level="2"
                 style={{
                   flex: 1,
+                  alignContent: "center",
                   justifyContent: "center",
-                  alignItems: "center",
-                  padding: 5,
+                  margin: 10,
+                  // width: Dimensions.get('window').width - 20,
+                  // backgroundColor: '#ffffff00',
                 }}
               >
                 <Text category="h6" style={{ fontWeight: "bold" }}>
-                  {strings.DailyStatsGraph}
+                  Graphical Analysis
                 </Text>
               </Layout>
-              <Divider />
-              {this.state.staticsDescriptionLoading ? (
+
+              <Layout
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-evenly",
+                  marginBottom: 10,
+                  marginTop: 10,
+                }}
+              >
+                <Select
+                  style={{
+                    flex: 0.9,
+                    margin: 2,
+                  }}
+                  size="small"
+                  placeholder={
+                    this.state.graphTypes[
+                      this.state.selected_graph_type_index.row
+                    ]
+                  }
+                  value={
+                    this.state.graphTypes[
+                      this.state.selected_graph_type_index.row
+                    ]
+                  }
+                  selectedIndex={this.state.selected_graph_type_index}
+                  onSelect={(index) => this.setGraphTypesData(index)}
+                >
+                  {this.state.graphTypes.map(this.renderOption)}
+                </Select>
+                <Select
+                  style={{
+                    flex: 0.8,
+                    margin: 2,
+                  }}
+                  size="small"
+                  placeholder={
+                    this.state.dateRanges[
+                      this.state.selected_date_range_index.row
+                    ]
+                  }
+                  value={
+                    this.state.dateRanges[
+                      this.state.selected_date_range_index.row
+                    ]
+                  }
+                  selectedIndex={this.state.selected_date_range_index}
+                  onSelect={(index) => this.setGraphDateRange(index)}
+                >
+                  {this.state.dateRanges.map(this.renderOption)}
+                </Select>
+                <Select
+                  style={{
+                    flex: 1,
+                    margin: 2,
+                  }}
+                  size="small"
+                  placeholder={
+                    this.state.filterParameters[
+                      this.state.selected_filter_parameters.row
+                    ]
+                  }
+                  value={
+                    this.state.filterParameters[
+                      this.state.selected_filter_parameters.row
+                    ]
+                  }
+                  selectedIndex={this.state.selected_filter_parameters}
+                  onSelect={(index) => this.setGraphFilterType(index)}
+                >
+                  {this.state.filterParameters.map(this.renderOption)}
+                </Select>
+
+                {/* {this.state.testCountDataExist ? (
+                  <Button
+                    size="tiny"
+                    appearance={
+                      this.state.selected_filter === criterias.numberOfTests
+                        ? "filled"
+                        : "outline"
+                    }
+                    onPress={async () => {
+                      await this.setState({
+                        selected_filter_daily_status: criterias.numberOfTests,
+                      });
+                      this.fetchDailyNewsCases();
+                    }}
+                  >
+                    {strings.TestCounts}
+                  </Button>
+                ) : (
+                  <></>
+                )} */}
+              </Layout>
+
+              {this.state.main_graph_loading ? (
                 <Layout
                   style={{
-                    flexDirection: "row",
-                    justifyContent: "center",
+                    width: Dimensions.get("window").width,
+                    flexDirection: "column",
                     alignItems: "center",
-                    margin: 5,
                   }}
                 >
-                  <ActivityIndicator size="small" color="gray" />
-                  <Text appearance="hint" style={{ fontSize: 16 }}>
-                    {strings.LoadingGraphDescription}
-                  </Text>
+                  <TextLoader
+                    text="Loading graph..."
+                    textStyle={{ color: "#4da6ff" }}
+                  />
                 </Layout>
               ) : (
-                <>
-                  <Text
-                    appearance="hint"
-                    style={{ fontSize: 16, margin: 5, padding: 5 }}
-                  >
-                    {
-                      this.state.staticsDescription[1].descriptions[0]
-                        .description
-                    }
-                  </Text>
-                  <Divider />
-                </>
+                <></>
               )}
-
-              <TabView
-                style={{ marginHorizontal: 10 }}
-                selectedIndex={this.state.selectedIndex_daily}
-                onSelect={(index) => this.setDailyStatsSelection(index)}
-              >
-                <Tab title="Last Week"></Tab>
-                <Tab title="Last Month"></Tab>
-                <Tab title="Last Three Month"></Tab>
-              </TabView>
 
               <LineChart
                 data={{
-                  labels: this.state.daily_newCases_label,
+                  labels: this.state.selected_graph_labels,
                   datasets: [
                     {
-                      data: this.state.daily_newCases_data_set,
+                      data: this.state.selected_graph_data_set,
                     },
                   ],
                 }}
@@ -1308,598 +1393,6 @@ class Ethiopia extends React.Component {
                   borderRadius: 10,
                 }}
               />
-              {this.state.dailyGraphLoading ? (
-                <Layout
-                  style={{
-                    width: Dimensions.get("window").width,
-                    flexDirection: "column",
-                    alignItems: "center",
-                  }}
-                >
-                  <DotsLoader size={15} />
-                </Layout>
-              ) : (
-                <></>
-              )}
-
-              <Layout
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-evenly",
-                  marginBottom: 10,
-                }}
-              >
-                <Button
-                  size="tiny"
-                  appearance={
-                    this.state.selected_filter_daily_status ===
-                    criterias.confirmed
-                      ? "filled"
-                      : "outline"
-                  }
-                  onPress={async () => {
-                    await this.setState({
-                      selected_filter_daily_status: criterias.confirmed,
-                    });
-                    this.fetchDailyNewsCases();
-                  }}
-                >
-                  {strings.Confirmed}
-                </Button>
-                <Button
-                  size="tiny"
-                  appearance={
-                    this.state.selected_filter_daily_status ===
-                    criterias.recoveries
-                      ? "filled"
-                      : "outline"
-                  }
-                  onPress={async () => {
-                    await this.setState({
-                      selected_filter_daily_status: criterias.recoveries,
-                    });
-                    this.fetchDailyNewsCases();
-                  }}
-                >
-                  {strings.Recovered}
-                </Button>
-                <Button
-                  size="tiny"
-                  appearance={
-                    this.state.selected_filter_daily_status === criterias.deaths
-                      ? "filled"
-                      : "outline"
-                  }
-                  onPress={async () => {
-                    await this.setState({
-                      selected_filter_daily_status: criterias.deaths,
-                    });
-                    this.fetchDailyNewsCases();
-                  }}
-                >
-                  {strings.Death}
-                </Button>
-
-                {this.state.testCountDataExist ? (
-                  <Button
-                    size="tiny"
-                    appearance={
-                      this.state.selected_filter === criterias.numberOfTests
-                        ? "filled"
-                        : "outline"
-                    }
-                    onPress={async () => {
-                      await this.setState({
-                        selected_filter_daily_status: criterias.numberOfTests,
-                      });
-                      this.fetchDailyNewsCases();
-                    }}
-                  >
-                    {strings.TestCounts}
-                  </Button>
-                ) : (
-                  <></>
-                )}
-              </Layout>
-              {/* <Divider /> */}
-              <Layout padding={10}>
-                {this.state.staticsDescriptionLoading ? (
-                  <Layout flexDirection="row" alignSelf="center">
-                    <ActivityIndicator size="small" color="gray" />
-                    <Text style={{ fontSize: 16, color: "gray" }}>
-                      {strings.LoadingCriteriaDescription}
-                    </Text>
-                  </Layout>
-                ) : this.state.selected_filter_daily_status ===
-                  criterias.confirmed ? (
-                  <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
-                    {this.state.staticsDescription[1].descriptions[0]
-                      .criteria[1].name +
-                      ": " +
-                      this.state.staticsDescription[1].descriptions[0]
-                        .criteria[1].explanation}
-                  </Text>
-                ) : this.state.selected_filter_daily_status ===
-                  criterias.recoveries ? (
-                  <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
-                    {this.state.staticsDescription[1].descriptions[0]
-                      .criteria[3].name +
-                      ": " +
-                      this.state.staticsDescription[1].descriptions[0]
-                        .criteria[3].explanation}
-                  </Text>
-                ) : this.state.selected_filter_daily_status ===
-                  criterias.deaths ? (
-                  <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
-                    {this.state.staticsDescription[1].descriptions[0]
-                      .criteria[2].name +
-                      ": " +
-                      this.state.staticsDescription[1].descriptions[0]
-                        .criteria[2].explanation}
-                  </Text>
-                ) : (
-                  <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
-                    {this.state.staticsDescription[1].descriptions[0]
-                      .criteria[0].name +
-                      ": " +
-                      this.state.staticsDescription[1].descriptions[0]
-                        .criteria[0].explanation}
-                  </Text>
-                )}
-              </Layout>
-            </Layout>
-
-            <Layout style={styles.container_graph}>
-              <Divider />
-              <Layout
-                level="2"
-                style={{
-                  flex: 1,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  padding: 5,
-                }}
-              >
-                <Text
-                  category="h6"
-                  style={{
-                    fontWeight: "bold",
-                  }}
-                >
-                  {strings.TotalStatsGraph}
-                </Text>
-              </Layout>
-              <Divider />
-
-              {this.state.staticsDescriptionLoading ? (
-                <Layout
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    margin: 5,
-                  }}
-                >
-                  <ActivityIndicator
-                    size="small"
-                    color="gray"
-                    style={{ marginHorizontal: 10 }}
-                  />
-                  <Text appearance="hint" style={{ fontSize: 16 }}>
-                    {strings.LoadingGraphDescription}
-                  </Text>
-                </Layout>
-              ) : (
-                <>
-                  <Text
-                    appearance="hint"
-                    style={{ fontSize: 16, margin: 5, padding: 5 }}
-                  >
-                    {
-                      this.state.staticsDescription[0].descriptions[0]
-                        .description
-                    }
-                  </Text>
-                  <Divider />
-                </>
-              )}
-
-              <TabView
-                style={{ marginHorizontal: 10 }}
-                selectedIndex={this.state.selectedIndex_total}
-                onSelect={(index) => this.setTotalStatsSelection(index)}
-              >
-                <Tab title="Last Week"></Tab>
-                <Tab title="Last Month"></Tab>
-                <Tab title="Last Three Month"></Tab>
-              </TabView>
-              <LineChart
-                data={{
-                  labels: this.state.graph_label,
-                  datasets: [{ data: this.state.data_set }],
-                }}
-                verticalLabelRotation={60}
-                width={Dimensions.get("window").width} // from react-native
-                height={HIEGHT / 2}
-                fromZero={true}
-                formatYLabel={(Y) => this.intToString(Number(Y))}
-                chartConfig={{
-                  backgroundColor: "#0080ff",
-                  backgroundGradientFrom: "#0080ff",
-                  backgroundGradientTo: "#0080ff",
-                  scrollableDotFill: "#ffffff",
-                  barPercentage: 0.1,
-                  decimalPlaces: 0, // optional, defaults to 2dp
-                  color: (opacity = 0) => `rgba(255, 266, 255, ${opacity})`,
-                  style: {
-                    borderRadius: 10,
-                  },
-                }}
-                bezier
-                style={{
-                  margin: 5,
-                  borderRadius: 10,
-                }}
-              />
-              {this.state.totalGraphLoading ? (
-                <Layout
-                  style={{
-                    width: Dimensions.get("window").width,
-                    flexDirection: "column",
-                    alignItems: "center",
-                  }}
-                >
-                  <DotsLoader size={15} />
-                </Layout>
-              ) : (
-                <></>
-              )}
-
-              <Layout
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "space-evenly",
-                }}
-              >
-                <Button
-                  size="tiny"
-                  appearance={
-                    this.state.selected_filter === criterias.confirmed
-                      ? "filled"
-                      : "outline"
-                  }
-                  onPress={async () => {
-                    await this.setState({
-                      selected_filter: criterias.confirmed,
-                    });
-
-                    this.fetchTotalStats();
-                  }}
-                >
-                  {strings.Confirmed}
-                </Button>
-                <Button
-                  size="tiny"
-                  appearance={
-                    this.state.selected_filter === criterias.recoveries
-                      ? "filled"
-                      : "outline"
-                  }
-                  onPress={async () => {
-                    await this.setState({
-                      selected_filter: criterias.recoveries,
-                    });
-
-                    this.fetchTotalStats();
-                  }}
-                >
-                  {strings.Recovered}
-                </Button>
-                <Button
-                  size="tiny"
-                  appearance={
-                    this.state.selected_filter === criterias.deaths
-                      ? "filled"
-                      : "outline"
-                  }
-                  onPress={async () => {
-                    await this.setState({
-                      selected_filter: criterias.deaths,
-                    });
-                    this.fetchTotalStats();
-                  }}
-                >
-                  {strings.Deaths}
-                </Button>
-                {this.state.testCountDataExist ? (
-                  <Button
-                    size="tiny"
-                    appearance={
-                      this.state.selected_filter === criterias.numberOfTests
-                        ? "filled"
-                        : "outline"
-                    }
-                    onPress={async () => {
-                      await this.setState({
-                        selected_filter: criterias.numberOfTests,
-                      });
-                      this.fetchTotalStats();
-                    }}
-                  >
-                    {strings.TestCounts}
-                  </Button>
-                ) : null}
-              </Layout>
-              <Layout padding={10} style={{ marginBottom: 20 }}>
-                {this.state.staticsDescriptionLoading ? (
-                  <Layout flexDirection="row" alignSelf="center">
-                    <ActivityIndicator size="small" color="gray" />
-                    <Text style={{ fontSize: 16, color: "gray" }}>
-                      {strings.LoadingCriteriaDescription}
-                    </Text>
-                  </Layout>
-                ) : this.state.selected_filter === criterias.confirmed ? (
-                  <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
-                    {this.state.staticsDescription[0].descriptions[0]
-                      .criteria[1].name +
-                      ": " +
-                      this.state.staticsDescription[0].descriptions[0]
-                        .criteria[1].explanation}
-                  </Text>
-                ) : this.state.selected_filter === criterias.recoveries ? (
-                  <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
-                    {this.state.staticsDescription[0].descriptions[0]
-                      .criteria[3].name +
-                      ": " +
-                      this.state.staticsDescription[0].descriptions[0]
-                        .criteria[3].explanation}
-                  </Text>
-                ) : this.state.selected_filter === criterias.deaths ? (
-                  <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
-                    {this.state.staticsDescription[0].descriptions[0]
-                      .criteria[2].name +
-                      ": " +
-                      this.state.staticsDescription[0].descriptions[0]
-                        .criteria[2].explanation}
-                  </Text>
-                ) : (
-                  <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
-                    {this.state.staticsDescription[0].descriptions[0]
-                      .criteria[0].name +
-                      ": " +
-                      this.state.staticsDescription[0].descriptions[0]
-                        .criteria[0].explanation}
-                  </Text>
-                )}
-              </Layout>
-            </Layout>
-
-            <Layout style={styles.container_graph}>
-              <Divider />
-              <Layout
-                level="2"
-                style={{
-                  flex: 1,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  padding: 5,
-                }}
-              >
-                <Text
-                  category="h6"
-                  style={{
-                    fontWeight: "bold",
-                  }}
-                >
-                  {strings.PercentagePerMillion}
-                </Text>
-              </Layout>
-              <Divider />
-
-              {/* {this.state.staticsDescriptionLoading ? (
-                <Layout
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    margin: 5,
-                  }}
-                >
-                  <ActivityIndicator
-                    size="small"
-                    color="gray"
-                    style={{ marginHorizontal: 10 }}
-                  />
-                  <Text appearance="hint" style={{ fontSize: 16 }}>
-                    {strings.LoadingGraphDescription}
-                  </Text>
-                </Layout>
-              ) : (
-                <>
-                  <Text
-                    appearance="hint"
-                    style={{ fontSize: 16, margin: 5, padding: 5 }}
-                  >
-                    {
-                      this.state.staticsDescription[0].descriptions[0]
-                        .description
-                    }
-                  </Text>
-                  <Divider />
-                </>
-              )} */}
-              <TabView
-                style={{ marginHorizontal: 10 }}
-                selectedIndex={this.state.selectedIndex_perMillion}
-                onSelect={(index) => this.setPerMillionStatsSelection(index)}
-              >
-                <Tab title="Last Week"></Tab>
-                <Tab title="Last Month"></Tab>
-                <Tab title="Last Three Month"></Tab>
-              </TabView>
-
-              <LineChart
-                data={{
-                  labels: this.state.percentage_label,
-                  datasets: [{ data: this.state.percentage_data_set }],
-                }}
-                verticalLabelRotation={60}
-                width={Dimensions.get("window").width} // from react-native
-                height={HIEGHT / 2}
-                fromZero={true}
-                formatYLabel={(Y) => this.intToString(Number(Y))}
-                chartConfig={{
-                  backgroundColor: "#0080ff",
-                  backgroundGradientFrom: "#0080ff",
-                  backgroundGradientTo: "#0080ff",
-                  scrollableDotFill: "#ffffff",
-                  barPercentage: 0.1,
-                  decimalPlaces: 0, // optional, defaults to 2dp
-                  color: (opacity = 0) => `rgba(255, 266, 255, ${opacity})`,
-                  style: {
-                    borderRadius: 10,
-                  },
-                }}
-                bezier
-                style={{
-                  margin: 5,
-                  borderRadius: 10,
-                }}
-              />
-              {this.state.totalGraphLoading ? (
-                <Layout
-                  style={{
-                    width: Dimensions.get("window").width,
-                    flexDirection: "column",
-                    alignItems: "center",
-                  }}
-                >
-                  <DotsLoader size={15} />
-                </Layout>
-              ) : (
-                <></>
-              )}
-
-              <Layout
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "space-evenly",
-                  marginBottom: 20,
-                }}
-              >
-                <Button
-                  size="tiny"
-                  appearance={
-                    this.state.selected_filter === criterias.confirmed
-                      ? "filled"
-                      : "outline"
-                  }
-                  onPress={async () => {
-                    await this.setState({
-                      selected_filter: criterias.confirmed,
-                    });
-
-                    this.fetchPerMillionStats();
-                  }}
-                >
-                  {strings.Confirmed}
-                </Button>
-                <Button
-                  size="tiny"
-                  appearance={
-                    this.state.selected_filter === criterias.recoveries
-                      ? "filled"
-                      : "outline"
-                  }
-                  onPress={async () => {
-                    await this.setState({
-                      selected_filter: criterias.recoveries,
-                    });
-
-                    this.fetchPerMillionStats();
-                  }}
-                >
-                  {strings.Recovered}
-                </Button>
-                <Button
-                  size="tiny"
-                  appearance={
-                    this.state.selected_filter === criterias.deaths
-                      ? "filled"
-                      : "outline"
-                  }
-                  onPress={async () => {
-                    await this.setState({
-                      selected_filter: criterias.deaths,
-                    });
-                    this.fetchPerMillionStats();
-                  }}
-                >
-                  {strings.Deaths}
-                </Button>
-                {this.state.testCountDataExist ? (
-                  <Button
-                    size="tiny"
-                    appearance={
-                      this.state.selected_filter === criterias.numberOfTests
-                        ? "filled"
-                        : "outline"
-                    }
-                    onPress={async () => {
-                      await this.setState({
-                        selected_filter: criterias.numberOfTests,
-                      });
-                      this.fetchPerMillionStats();
-                    }}
-                  >
-                    {strings.TestCounts}
-                  </Button>
-                ) : null}
-              </Layout>
-              {/* <Layout padding={10} style={{ marginBottom: 20 }}>
-                {this.state.staticsDescriptionLoading ? (
-                  <Layout flexDirection="row" alignSelf="center">
-                    <ActivityIndicator size="small" color="gray" />
-                    <Text style={{ fontSize: 16, color: "gray" }}>
-                      {strings.LoadingCriteriaDescription}
-                    </Text>
-                  </Layout>
-                ) : this.state.selected_filter === criterias.confirmed ? (
-                  <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
-                    {this.state.staticsDescription[0].descriptions[0]
-                      .criteria[1].name +
-                      ": " +
-                      this.state.staticsDescription[0].descriptions[0]
-                        .criteria[1].explanation}
-                  </Text>
-                ) : this.state.selected_filter === criterias.recoveries ? (
-                  <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
-                    {this.state.staticsDescription[0].descriptions[0]
-                      .criteria[3].name +
-                      ": " +
-                      this.state.staticsDescription[0].descriptions[0]
-                        .criteria[3].explanation}
-                  </Text>
-                ) : this.state.selected_filter === criterias.deaths ? (
-                  <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
-                    {this.state.staticsDescription[0].descriptions[0]
-                      .criteria[2].name +
-                      ": " +
-                      this.state.staticsDescription[0].descriptions[0]
-                        .criteria[2].explanation}
-                  </Text>
-                ) : (
-                  <Text style={{ fontSize: 16, color: "gray", marginLeft: 10 }}>
-                    {this.state.staticsDescription[0].descriptions[0]
-                      .criteria[0].name +
-                      ": " +
-                      this.state.staticsDescription[0].descriptions[0]
-                        .criteria[0].explanation}
-                  </Text>
-                )}
-              </Layout> */}
             </Layout>
           </Layout>
         </ScrollView>
@@ -1912,6 +1405,11 @@ const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
 
 const styles = StyleSheet.create({
+  select: {
+    flex: 1,
+    margin: 2,
+    fontSize: 20,
+  },
   container: {
     flex: 1,
     alignItems: "center",
