@@ -15,7 +15,7 @@ const testReportSchema = new mongoose.Schema({
     },
     test_status:{
         type: String,
-        enum: ["Positive", "Negative","Not Tested","Recovered"],
+        enum: ["New","Positive", "Negative","Not Tested","Recovered"],
         required: true,
         default: "New"
     },

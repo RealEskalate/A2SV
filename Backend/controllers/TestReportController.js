@@ -1,4 +1,5 @@
 const { TestReport } = require("../models/TestReportModel.js");
+var mongoose = require("mongoose");
 
 // getting all test reports
 exports.get_all_test_reports = async (req, res) => {
@@ -59,6 +60,7 @@ exports.post_test_report = async (req, res) => {
     let reporter_id=req.body.loggedInUser
 
     const report = new TestReport({
+        _id: mongoose.Types.ObjectId(),
         user_id: req.body.user_id,
         healthcare_worker_id: reporter_id,
         test_status: req.body.test_status
