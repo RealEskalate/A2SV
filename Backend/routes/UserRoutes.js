@@ -8,6 +8,9 @@ var user_controller = require("../controllers/UserController.js");
 
 
 router.get("/api/users", verifyToken.verifyToken, user_controller.get_all_users);
+router.get("/api/users-detail/:id", verifyToken.verifyToken, user_controller.get_detail_info);
+router.get("/api/users-stat", verifyToken.verifyToken, user_controller.get_role_stat);
+
 router.get("/api/users/:id", verifyToken.verifyToken, user_controller.get_user_by_id);
 router.post("/api/auth/login", user_controller.get_user_by_credentials);
 router.post("/api/auth/register", user_controller.post_user);

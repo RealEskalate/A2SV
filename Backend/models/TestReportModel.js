@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const reportSchema = new mongoose.Schema({
+const testReportSchema = new mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
 
     user_id: {
@@ -13,24 +13,18 @@ const reportSchema = new mongoose.Schema({
         required: true,
         ref: 'User'
     },
-    patient_status:{
+    test_status:{
         type: String,
-        enum: ["Positive", "Negative"],
+        enum: ["Positive", "Negative","Not Tested","Recovered"],
         required: true,
-        default: "Negative"
+        default: "New"
     },
-    requested_at:{
-        type: Date
-    },
-    reported_at:{
-        type: Date,
-        required: true
-    }
 
-  
-
+},
+{
+    timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' }
 });
 
 
-const Reports = mongoose.model("TestReport", reportSchema);
-exports.Reports = Reports;
+const TestReport = mongoose.model("TestReport", testReportSchema);
+exports.TestReport = TestReport;

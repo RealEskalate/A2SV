@@ -61,6 +61,10 @@ const userSchema = new mongoose.Schema({
   },
   email:{
     type:String
+  },
+  created_by:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
   }
 },
 {

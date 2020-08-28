@@ -7,7 +7,10 @@ const User = UserModels.User;
 const emailSender = require("../services/EmailSender");
 const { LocationUser } = require("../models/LocationUserModel.js");
 const { DistrictModel } = require("../models/DistrictModel.js");
+const { SymptomLog } = require("../models/SymptomLogModel");
+const { TestReport } = require("../models/TestReportModel.js");
 
+// get all users
 exports.get_all_users = async (req, res) => {
   if (req.query.demo && req.query.demo == "true") {
     var User = UserModels.DemoUser;
@@ -80,6 +83,55 @@ exports.get_all_users = async (req, res) => {
     res.status(500).send(err.toString());
   }
 };
+
+// get user detail info
+exports.get_detail_info= async(req,res)=>{
+  let userDetails ={}
+
+  userDetails.symptomHistory = await SymptomLog.findOne({user_id : req.params.id})
+    .populate("user_id").populate({
+      path: "current_symptoms.symptoms",
+      model: "Symptom"
+    }).populate({
+        path: "history.symptoms",
+        model: "Symptom"
+    });
+  
+  userDetails.testReports = await TestReport.find({user_id: req.params.id})
+    .populate("user_id")
+    .populate("healthcare_worker_id");
+  try {
+    res.send(userDetails);
+  } catch (err) {
+    res.status(500).send(err.toString());
+  }
+
+}
+
+// Get high level stat
+exports.get_role_stat= async (req,res) =>{
+  let result= {}
+
+  result.allUsers= await User.countDocuments({});
+
+  let date = new Date();
+  date.setDate(date.getDate()-7)
+  result.thisWeekNewUsers = await User.countDocuments({ created_at: {$gte : date }});
+
+  result.healthcareWorkers = await User.countDocuments({ role: 'healthcare_worker'});
+  result.ephiUsers = await User.countDocuments({ role: 'ephi_user'});
+
+  result.systemAdmins = await User.countDocuments({ role: 'sysadmin'});
+
+  try {
+    res.send(result);
+  } catch (err) {
+    res.status(500).send(err.toString());
+  }
+
+}
+
+
 // Get User by ID.
 exports.get_user_by_id = async (req, res) => {
   if (req.query.demo && req.query.demo == "true") {
