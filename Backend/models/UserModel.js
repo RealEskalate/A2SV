@@ -62,6 +62,9 @@ const userSchema = new mongoose.Schema({
   email:{
     type:String
   }
+},
+{
+  timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' }
 });
 
 const demoUserSchema = new mongoose.Schema({

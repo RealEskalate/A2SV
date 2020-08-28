@@ -27,6 +27,25 @@ exports.get_all_users = async (req, res) => {
       filter.current_country = req.query.country;
   }
 
+  if(req.query.role_type){
+    filter.role = req.query.role_type;
+  }
+
+  if(req.query.start_date){
+    filter.created_at = {$gte : new Date(req.query.start_date)}
+  }
+
+  if(req.query.end_date){
+    let date = new Date(req.query.end_date)
+    date.setHours(23)
+
+    if(filter.created_at!=undefined){
+      Object.assign(filter.created_at, {$lte : date});
+    }else{
+      filter.created_at =  {$lte : date}
+    }
+  }
+
   if(req.query.district){
     let district = await DistrictModel.findOne({name: req.query.district});
     let locationUsers = await LocationUser.find({'location.district': district._id}).distinct("user_id");
@@ -235,8 +254,9 @@ exports.send_invitation_link = async (req, res) => {
         .status(422)
         .send("The email is required.");
     }
+    let creator_id=req.body.loggedInUser
 
-    let signed_email = jwt.sign({email},process.env.APP_SECRET_KEY,{expiresIn:'6h'})
+    let signed_email = jwt.sign({email,creator_id},process.env.APP_SECRET_KEY,{expiresIn:'6h'})
     let invitationLink = `${process.env.APP_WEB_CREATE_ACC_LINK}${signed_email}`;
 
     const usersData=[{ email : email, activationLink: invitationLink }]
@@ -274,11 +294,12 @@ exports.send_multiple_invitation_link = async (req, res) => {
     }
 
     let usersData = [];
+    let creator_id=req.body.loggedInUser
 
     for(var index in emails){
       let email = emails[index]
 
-      let signed_email = jwt.sign({email},process.env.APP_SECRET_KEY,{expiresIn:'6h'})
+      let signed_email = jwt.sign({email,creator_id},process.env.APP_SECRET_KEY,{expiresIn:'6h'})
       let invitationLink = `${process.env.APP_WEB_CREATE_ACC_LINK}${signed_email}`;
 
       usersData.push({
@@ -307,6 +328,7 @@ exports.send_multiple_invitation_link = async (req, res) => {
 exports.create_invited_user = async (req, res) => {
   let signature = req.body.signature
   let email =null;
+  let creator_id =null;
   if (signature){
 
     jwt.verify(signature, process.env.APP_SECRET_KEY, (err, decodedEmail) => {
@@ -314,6 +336,7 @@ exports.create_invited_user = async (req, res) => {
         res.status(401).send("Incorrect signature");
       } else {
         email = decodedEmail.email
+        creator_id = decodedEmail.creator_id
       }
     });
 
@@ -326,6 +349,7 @@ exports.create_invited_user = async (req, res) => {
     gender: req.body.gender,
     age_group: req.body.age_group,
     role: "ephi_user",
+    created_by:creator_id,
     email:email
   });
   
