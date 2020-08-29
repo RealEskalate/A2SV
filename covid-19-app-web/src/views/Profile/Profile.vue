@@ -38,6 +38,16 @@
                     />
                   </div>
                   <div>
+                    <v-text-field
+                      class="v-card--shaped"
+                      outlined
+                      dense
+                      :label="$t('contactUs.email') + ' (Optional)'"
+                      v-model="form_user.email"
+                      :rules="rules.emailRules"
+                    />
+                  </div>
+                  <div>
                     <v-select
                       dense
                       :rules="rules.ageGroupRules"
@@ -86,7 +96,6 @@
                       small
                       color="success"
                       :loading="loading"
-                      :disabled="!valid"
                       class="v-card--shaped mt-3 mx-1"
                       @click="updateProfile"
                     >
@@ -165,6 +174,15 @@
                     class="mb-2 font-weight-regular"
                     v-text="'@' + loggedInUser.username"
                   />
+                  <h4
+                    v-if="loggedInUser.email"
+                    class="font-weight-thin mb-2 mt-1"
+                  >
+                    <span
+                      class="grey--text font-italic"
+                      v-text="loggedInUser.email"
+                    />
+                  </h4>
                   <h4 class="font-weight-thin mb-4 mt-2">
                     {{ $t("auth.ageGroup") }}:
                     <span
@@ -478,6 +496,7 @@ export default {
       form_user: {
         _id: null,
         username: "",
+        email: null,
         age_group: "",
         gender: ""
       },
@@ -490,6 +509,9 @@ export default {
         nameRules: [
           v => !!v || "Username is required",
           v => (v && v.length <= 30) || "Name must be less than 10 characters"
+        ],
+        emailRules: [
+          v => /.+@.+\..+/.test(v) || "E-mail must be valid"
         ],
         ageGroupRules: [v => !!v || "Age Range is required"],
         genderRules: [v => !!v || "Gender is required"],
@@ -528,6 +550,7 @@ export default {
       this.form_user = {
         _id: this.loggedInUser._id,
         username: this.loggedInUser.username,
+        email: this.loggedInUser.email,
         age_group: this.loggedInUser.age_group,
         gender: this.loggedInUser.gender
       };

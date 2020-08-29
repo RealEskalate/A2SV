@@ -2,7 +2,7 @@
   <v-container>
     <h2 class="mx-auto text-center">Invite as many admins you can</h2>
     <v-snackbar top color="primary" v-model="snackbar" :timeout="5000">
-      <h4 class="ma-2" v-html="getMessage" />
+      <span class="ma-2" v-html="getMessage" />
       <v-btn text icon x-small color="white" @click="snackbar = false">
         <v-icon v-text="mdiCloseCircleOutline" />
       </v-btn>
@@ -17,7 +17,7 @@
         :label="textField.label"
         v-model="textField.value"
         :rules="emailRules"
-      ></v-text-field>
+      />
 
       <v-btn icon @click="remove(i)" class="mx-auto ">
         <v-icon color="red" class="text--darken-2">{{
