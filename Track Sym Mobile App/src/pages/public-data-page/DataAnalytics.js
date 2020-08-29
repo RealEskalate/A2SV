@@ -87,19 +87,23 @@ class DataAnalytics extends React.Component {
       selected_graph_filter: criterias.confirmed,
       selected_graph_start_date: "",
       selected_graph_end_date: new Date().toISOString().split("T")[0],
-      graphTypes: ["Daily Cases", "All Time Cases", "People Per Million"],
-      dateRanges: ["Week", "Month", "3 Months"],
-      filterParameters: ["Confirmed", "Recovered", "Deaths"],
+      graphTypes: [strings.DailyStatsGraph, strings.TotalStatsGraph, strings.PercentagePerMillion],
+      dateRanges: [strings.LastWeek, strings.LastMonth, strings.LastThreeMonths],
+      filterParameters: [strings.Confirmed, strings.Recovered, strings.Death],
       selected_graph_type_index: new IndexPath(0),
       selected_date_range_index: new IndexPath(0),
       selected_filter_parameters: new IndexPath(0),
       selected_graph_data_set: [0],
       selected_graph_labels: [""],
       main_graph_loading: false,
+      descriptionVisiblity: false,
     };
     languageStore.subscribe(() => {
       strings.setLanguage(languageStore.getState());
       this.setState({ currLangCode: languageStore.getState() });
+      this.setState({graphTypes: [strings.DailyStatsGraph, strings.TotalStatsGraph, strings.PercentagePerMillion],
+        dateRanges: [strings.LastWeek, strings.LastMonth, strings.LastThreeMonths],
+        filterParameters: [strings.Confirmed, strings.Recovered, strings.Death]});
       this.componentDidMount();
     });
   }
@@ -115,8 +119,6 @@ class DataAnalytics extends React.Component {
       .then(this.fetchPerMillionStats())
       // .then(this.fetchLastSymptomUpdate())
       .then(this.checkIfDataExist(criterias.numberOfTests)) //check if number of test case data exist
-      .then(this.getDescriptions())
-      .then(this.getPermillionDescriptions())
       .catch((error) => {
         console.log("Concurrency Issue");
       });
@@ -146,8 +148,8 @@ class DataAnalytics extends React.Component {
       // .then(this.fetchPerMillionStats())
       // // .then(this.fetchLastSymptomUpdate())
       // .then(this.checkIfDataExist(criterias.numberOfTests)) //check if number of test case data exist
-      // .then(this.getDescriptions())
-      // .then(this.getPermillionDescriptions())
+      .then(this.getDescriptions())
+      .then(this.getPermillionDescriptions())
       .catch((error) => {
         console.log("Concurrency Issue");
       });
@@ -680,6 +682,13 @@ class DataAnalytics extends React.Component {
     return "2019-12-31";
   }
 
+  
+  displayInfoIcon = (styles) => 
+  <Icon {...styles}
+    name={
+      this.state.descriptionVisiblity?"question-mark-circle":"question-mark-circle-outline"} 
+    onPress={() => this.setState({descriptionVisiblity:!this.state.descriptionVisiblity})}/>
+  ;
   //fetches description for different age group
   getDescriptions = async () => {
     let newThis = this;
@@ -947,7 +956,7 @@ class DataAnalytics extends React.Component {
             accessoryRight={() =>
               this.state.searching ? <Spinner {...this.props} /> : <></>
             }
-            placeholder="Enter Country"
+            placeholder={strings.EnterCountry}
             value={this.state.search}
             onChangeText={(text) => {
               this.setState({ search: text });
@@ -1197,13 +1206,13 @@ class DataAnalytics extends React.Component {
                 </Text>
               </View>
             </Layout>
-            <Layout style={styles.backdrop_container}>
+            {/* <Layout style={styles.backdrop_container}>
               <Modal
-                visible={this.state.descriptionVisiblity}
+                visible={this.state.discriptionVisiblity}
                 backdropStyle={styles.backdrop}
                 onBackdropPress={() => {
-                  this.setState({ descriptionVisiblity: false });
-                  this.setState({ descriptionTitle: "" });
+                  this.setState({ discriptionVisiblity: false });
+                  this.setState({ discriptionTitle: "" });
                   this.setState({ description: "" });
                 }}
               >
@@ -1257,7 +1266,7 @@ class DataAnalytics extends React.Component {
                   )}
                 </Card>
               </Modal>
-            </Layout>
+            </Layout> */}
 
             <Layout
               style={{
@@ -1280,24 +1289,25 @@ class DataAnalytics extends React.Component {
                 }}
               >
                 <Text category="h6" style={{ fontWeight: "bold" }}>
-                  Graphical Analysis
+                  {strings.GraphicalAnalysis}
                 </Text>
               </Layout>
-
+              
               <Layout
                 style={{
                   flexDirection: "row",
                   justifyContent: "space-evenly",
-                  marginBottom: 10,
+                  // marginBottom: 10,
                   marginTop: 10,
                 }}
               >
-                <Select
+              <Select
+              accessoryLeft={this.displayInfoIcon}
                   style={{
-                    flex: 0.9,
+                    flex: 1,
                     margin: 2,
                   }}
-                  size="small"
+                  size="medium"
                   placeholder={
                     this.state.graphTypes[
                       this.state.selected_graph_type_index.row
@@ -1313,6 +1323,70 @@ class DataAnalytics extends React.Component {
                 >
                   {this.state.graphTypes.map(this.renderOption)}
                 </Select>
+               
+              </Layout>
+              {
+                this.state.descriptionVisiblity?
+                this.state.selected_graph_type_index === 2?
+                this.state.permillonStaticsDescriptionLoading?
+                (<Layout
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    margin: 5,
+                  }}
+                >
+                  <ActivityIndicator size="small" color="gray" />
+                  <Text appearance="hint" style={{ fontSize: 16 }}>
+                    {strings.LoadingGraphDescription}
+                  </Text>
+                </Layout>)
+                :(                
+                  <Text
+                    appearance="hint"
+                    style={{ fontSize: 16, margin: 5, padding: 5 }}
+                  >
+                    {
+                      this.state.permillonStaticsDescription[0].description
+                    }
+                  </Text>)
+                :this.state.staticsDescriptionLoading?
+                (<Layout
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    margin: 5,
+                  }}
+                >
+                  <ActivityIndicator size="small" color="gray" />
+                  <Text appearance="hint" style={{ fontSize: 16 }}>
+                    {strings.LoadingGraphDescription}
+                  </Text>
+                </Layout>)
+                :(                
+                  <Text
+                    appearance="hint"
+                    style={{ fontSize: 16, margin: 5, padding: 5 }}
+                  >
+                    {
+                      this.state.selected_graph_type_index === 0?
+                      this.state.staticsDescription[1].descriptions[0]
+                        .description : this.state.staticsDescription[0].descriptions[0]
+                        .description
+                    }
+                  </Text>)
+                :(<></>)
+              }
+              <Layout
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-evenly",
+                  marginBottom: 10,
+                  marginTop: 10,
+                }}
+              >
                 <Select
                   style={{
                     flex: 0.8,
