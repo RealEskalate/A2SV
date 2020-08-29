@@ -87,9 +87,9 @@ class DataAnalytics extends React.Component {
       selected_graph_filter: criterias.confirmed,
       selected_graph_start_date: "",
       selected_graph_end_date: new Date().toISOString().split("T")[0],
-      graphTypes: ["Daily Cases", "All Time Cases", "People Per Million"],
-      dateRanges: ["Week", "Month", "3 Months"],
-      filterParameters: ["Confirmed", "Recovered", "Deaths"],
+      graphTypes: [strings.DailyStatsGraph, strings.TotalStatsGraph, strings.PercentagePerMillion],
+      dateRanges: [strings.LastWeek, strings.LastMonth, strings.LastThreeMonths],
+      filterParameters: [strings.Confirmed, strings.Recovered, strings.Death],
       selected_graph_type_index: new IndexPath(0),
       selected_date_range_index: new IndexPath(0),
       selected_filter_parameters: new IndexPath(0),
@@ -101,6 +101,9 @@ class DataAnalytics extends React.Component {
     languageStore.subscribe(() => {
       strings.setLanguage(languageStore.getState());
       this.setState({ currLangCode: languageStore.getState() });
+      this.setState({graphTypes: [strings.DailyStatsGraph, strings.TotalStatsGraph, strings.PercentagePerMillion],
+        dateRanges: [strings.LastWeek, strings.LastMonth, strings.LastThreeMonths],
+        filterParameters: [strings.Confirmed, strings.Recovered, strings.Death]});
       this.componentDidMount();
     });
   }
@@ -953,7 +956,7 @@ class DataAnalytics extends React.Component {
             accessoryRight={() =>
               this.state.searching ? <Spinner {...this.props} /> : <></>
             }
-            placeholder="Enter Country"
+            placeholder={strings.EnterCountry}
             value={this.state.search}
             onChangeText={(text) => {
               this.setState({ search: text });
@@ -1286,7 +1289,7 @@ class DataAnalytics extends React.Component {
                 }}
               >
                 <Text category="h6" style={{ fontWeight: "bold" }}>
-                  Graphical Analysis
+                  {strings.GraphicalAnalysis}
                 </Text>
               </Layout>
               
