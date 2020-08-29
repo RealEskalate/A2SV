@@ -16,7 +16,7 @@
         label="Status"
         outlined
         dense
-      />
+      ></v-select>
       <v-select
         style="width: 120px"
         class="d-inline-flex v-card--shaped ml-5"
@@ -25,27 +25,25 @@
         outlined
         dense
         disabled
-      />
+      ></v-select>
     </v-col>
 
-    <v-divider class="mx-6" vertical />
+    <v-divider class="mx-6" vertical></v-divider>
     <v-col cols="12" sm="4">
       <v-text-field
         v-model="search"
         dense
         label="Search Person"
         @input="$emit('set-search', search)"
-        :append-icon="mdiGoogleLens"
         single-line
         hide-details
-      />
+      ></v-text-field>
     </v-col>
   </v-row>
 </template>
 
 <script>
 import DateRangePicker from "@/components/core/DateRangePicker.vue";
-import { mdiGoogleLens } from "@mdi/js";
 
 export default {
   name: "SymptomFilter",
@@ -55,7 +53,6 @@ export default {
   props: ["date_range"],
   data() {
     return {
-      mdiGoogleLens,
       current_status: null,
       search: "",
       risk: ["", "Low", "Medium", "High"],
