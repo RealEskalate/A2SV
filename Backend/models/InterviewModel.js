@@ -121,23 +121,8 @@ const interviewSchema = new mongoose.Schema({
     },
     clinical: {
         recent_symptoms: {
-            type: String,
-            enum: [
-                "FEVER",
-                "SHORTNESS_OF_BREATH",
-                "ABDOMINAL_PAIN",
-                "MUSCLE_ACHES",
-                "RUNNY_NOSE",
-                "COUGH",
-                "SORE_THROAT",
-                "DIARRHEA",
-                "VOMITING",
-                "CHILLS",
-                "HEADACHE",
-                "LOSS_OF_SMELL_OR_TASTE",
-                "OTHER",
-                "NONE",
-            ],
+            type: [mongoose.Schema.Types.ObjectId],
+            ref: "Symptom",
         },
         immune_suppression: {
             type: String,
