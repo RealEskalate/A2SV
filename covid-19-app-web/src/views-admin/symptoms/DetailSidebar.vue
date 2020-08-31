@@ -2,7 +2,7 @@
   <v-navigation-drawer
     width="350"
     height="80%"
-    v-model="side_bar"
+    v-model="sidebar"
     right
     absolute
     bottom
@@ -80,16 +80,8 @@ export default {
   props: ["detail", "sidebar"],
   data() {
     return {
-      mdiClose,
-      side_bar: false
+      mdiClose
     };
-  },
-  watch: {
-    sidebar: {
-      handler() {
-        this.side_bar = this.sidebar;
-      }
-    }
   },
   methods: {
     close() {

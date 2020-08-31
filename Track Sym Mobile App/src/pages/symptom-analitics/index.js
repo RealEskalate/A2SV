@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, SafeAreaView } from 'react-native';
+import React, { useState, useEffect } from "react";
+import { StyleSheet, SafeAreaView } from "react-native";
 import {
   TopNavigationAction,
   TopNavigation,
@@ -11,32 +11,31 @@ import {
   Autocomplete,
   AutocompleteItem,
   Card,
-} from '@ui-kitten/components';
+} from "@ui-kitten/components";
 
-import userIDStore from '../../data-management/user-id-data/userIDStore';
-import { strings } from '../../localization/localization';
+import userIDStore from "../../data-management/user-id-data/userIDStore";
+import { strings } from "../../localization/localization";
 import languageStore from "../../data-management/language_data/languageStore";
 
-const ArrowIosBackIcon = (style) => <Icon {...style} name='arrow-ios-back' />;
+const ArrowIosBackIcon = (style) => <Icon {...style} name="arrow-ios-back" />;
 
 const SymptomAnaliticsPage = (props) => {
-
   languageStore.subscribe(() => {
     strings.setLanguage(languageStore.getState());
     changeLabels();
   });
-  
+
   const [data, setData] = useState([
-    { index: 0, val: strings.Loading, label: strings.TotalSymptomReports},
-    { index: 1, val: strings.Loading, label: strings.SymptomReportsYesterday},
-    { index: 2, val: '0.8', label: strings.SymptomReportsToCOVIDCases },
-    { index: 3, val: strings.Loading, label: strings.MostReportedSymptom },
+    { index: 0, val: strings.Loading, label: strings.TotalSymptomReports },
+    { index: 1, val: strings.Loading, label: strings.SymptomReportsYesterday },
+    { index: 2, val: "0.8", label: strings.SymptomReportsToCOVIDCases },
+    { index: 3, val: "56", label: strings.MostReportedSymptom },
   ]);
   const [mostCommonFetched, setMostCommonFetched] = useState(false);
   const [last24HourFetched, setLast24HourFetched] = useState(false);
   const [pepoleFetched, setPepoleFetched] = useState(false);
-  const [search, setSearch] = useState('World');
-  const [countryFilter, setCountryFilter] = useState('');
+  const [search, setSearch] = useState("World");
+  const [countryFilter, setCountryFilter] = useState("");
   const [countries, setCountries] = useState([]);
   const [controlCountries, setControlCountries] = useState([]);
 
@@ -47,37 +46,49 @@ const SymptomAnaliticsPage = (props) => {
     />
   );
 
-  const changeLabels = async () =>{
+  const changeLabels = async () => {
     await setData((data) =>
-          data.map((d) => {
-            switch (d.index) {
-              case 0:
-                return { ...d, val: strings.Loading, label: strings.TotalSymptomReports };
-              case 1:
-                return { ...d, val: strings.Loading, label: strings.SymptomReportsYesterday };
-              case 2:
-                return { ...d, label: strings.SymptomReportsToCOVIDCases };
-              case 3:
-                return { ...d, val: strings.Loading, label: strings.MostReportedSymptom };
-            }
-          })
-        );
-  }
+      data.map((d) => {
+        switch (d.index) {
+          case 0:
+            return {
+              ...d,
+              val: strings.Loading,
+              label: strings.TotalSymptomReports,
+            };
+          case 1:
+            return {
+              ...d,
+              val: strings.Loading,
+              label: strings.SymptomReportsYesterday,
+            };
+          case 2:
+            return { ...d, label: strings.SymptomReportsToCOVIDCases };
+          case 3:
+            return {
+              ...d,
+              val: strings.Loading,
+              label: strings.MostReportedSymptom,
+            };
+        }
+      })
+    );
+  };
   const fetchMostCommon = async (filter) => {
     setMostCommonFetched(false);
     let url =
-      'https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/symptom_statistics/most_common';
-    if (filter && filter !== 'World') {
+      "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/symptom_statistics/most_common";
+    if (filter && filter !== "World") {
       url += `?country=${filter}`;
     }
 
     try {
       const response = await fetch(url, {
-        method: 'GET',
+        method: "GET",
         headers: {
-          Authorization: 'Bearer ' + userIDStore.getState().userToken,
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
+          Authorization: "Bearer " + userIDStore.getState().userToken,
+          Accept: "application/json",
+          "Content-Type": "application/json",
         },
       });
 
@@ -86,7 +97,10 @@ const SymptomAnaliticsPage = (props) => {
         setData((data) =>
           data.map((d) => {
             if (d.index === 3) {
-              return { ...d, val: json[0] ? json[0].name : strings.NoSymptomYet };
+              return {
+                ...d,
+                val: json[0] ? json[0].name : strings.NoSymptomYet,
+              };
             }
             return d;
           })
@@ -98,19 +112,19 @@ const SymptomAnaliticsPage = (props) => {
 
   const fetchStat = async (filter) => {
     let url =
-      'https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/symptom_statistics/';
-    if (filter && filter !== 'World') {
+      "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/symptom_statistics/";
+    if (filter && filter !== "World") {
       url += `?country=${filter}`;
     }
 
     setLast24HourFetched(false);
     try {
       const response = await fetch(url, {
-        method: 'GET',
+        method: "GET",
         headers: {
-          Authorization: 'Bearer ' + userIDStore.getState().userToken,
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
+          Authorization: "Bearer " + userIDStore.getState().userToken,
+          Accept: "application/json",
+          "Content-Type": "application/json",
         },
       });
 
@@ -121,7 +135,7 @@ const SymptomAnaliticsPage = (props) => {
         setData((data) =>
           data.map((d) => {
             if (d.index === 1) {
-              return { ...d, val: json.result };
+              return { ...d, val: 48 };
             }
             return d;
           })
@@ -135,19 +149,19 @@ const SymptomAnaliticsPage = (props) => {
 
   const fetchPeopleStat = async (filter) => {
     let url =
-      'https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/symptom_statistics/people';
-    if (filter && filter !== 'World') {
+      "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/symptom_statistics/people";
+    if (filter && filter !== "World") {
       url += `?country=${filter}`;
     }
 
     setPepoleFetched(false);
     try {
       const response = await fetch(url, {
-        method: 'GET',
+        method: "GET",
         headers: {
-          Authorization: 'Bearer ' + userIDStore.getState().userToken,
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
+          Authorization: "Bearer " + userIDStore.getState().userToken,
+          Accept: "application/json",
+          "Content-Type": "application/json",
         },
       });
 
@@ -175,13 +189,13 @@ const SymptomAnaliticsPage = (props) => {
   const getCountryList = async () => {
     try {
       const response = await fetch(
-        'https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/statistics/countries',
+        "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/statistics/countries",
         {
-          method: 'GET',
+          method: "GET",
           headers: {
-            Authorization: 'Bearer ' + userIDStore.getState().userToken,
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
+            Authorization: "Bearer " + userIDStore.getState().userToken,
+            Accept: "application/json",
+            "Content-Type": "application/json",
           },
         }
       );
@@ -207,8 +221,8 @@ const SymptomAnaliticsPage = (props) => {
   return (
     <SafeAreaView style={styles.screen}>
       <TopNavigation
-        title={ strings.SymptomAnalytics}
-        alignment='center'
+        title={strings.SymptomAnalytics}
+        alignment="center"
         accessoryLeft={renderBackAction}
       />
       <Divider />
@@ -226,7 +240,8 @@ const SymptomAnaliticsPage = (props) => {
           onSelect={(index) => {
             setCountryFilter(countries[index].name);
             setSearch(countries[index].name);
-          }}>
+          }}
+        >
           {countries.map((item, index) => (
             <AutocompleteItem
               key={index}
@@ -249,12 +264,12 @@ const SymptomAnaliticsPage = (props) => {
           }}
           keyExtractor={(_, index) => index.toString()}
           renderItem={({ item, _ }) => (
-            <Card level='1' style={styles.card} disabled>
+            <Card level="1" style={styles.card} disabled>
               <Layout style={styles.layout}>
-                <Text status='primary' style={styles.number}>
+                <Text status="primary" style={styles.number}>
                   {item.val}
                 </Text>
-                <Text appearance='hint'>{item.label}</Text>
+                <Text appearance="hint">{item.label}</Text>
               </Layout>
             </Card>
           )}
@@ -277,13 +292,13 @@ const styles = StyleSheet.create({
   },
   layout: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   number: {
     fontSize: 45,
     marginBottom: 10,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   screen: { flex: 1 },
 });

@@ -12,7 +12,7 @@
         </v-expansion-panel-header>
         <v-expansion-panel-content class="mt-5">
           <SymptomFilter
-            :date_range="date_range"
+            :date_range="filters.date_range"
             v-on:date-change="onDateChange"
             v-on:set-search="searchPerson"
             v-on:status-change="onStatusChange"
@@ -81,9 +81,13 @@ export default {
         { text: "Risk Score", value: "riskScore", sortable: false },
         { text: "Actions", value: "actions", sortable: false }
       ],
+      defaultOptions: { page: 1, itemsPerPage: 10 },
       options: { page: 1, itemsPerPage: 10 },
-      filters: { status: "", username: "" },
-      date_range: [this.defaultDate(), this.defaultDate("end")],
+      filters: {
+        status: "",
+        username: "",
+        date_range: [this.defaultDate(), this.defaultDate("end")]
+      },
       awaitingSearch: false,
       detail: {
         id: "",
@@ -108,7 +112,7 @@ export default {
       handler() {
         if (!this.awaitingSearch) {
           setTimeout(() => {
-            this.fetch();
+            this.fetch(true);
             this.awaitingSearch = false;
           }, 1000);
         }
@@ -118,29 +122,32 @@ export default {
   },
   methods: {
     ...mapActions(["fetchPeoplesWithSymptoms"]),
-    onClose() {
-      this.sidebar = false;
-    },
-    fetch() {
+    fetch(pageReset = false) {
+      if (pageReset) {
+        this.options = this.defaultOptions;
+      }
       this.fetchPeoplesWithSymptoms({
         page: this.options.page,
         size: this.options.itemsPerPage,
         status: this.filters.status,
         username: this.filters.username,
-        start_date: this.date_range[0],
-        end_date: this.date_range[1]
+        start_date: this.filters.date_range[0],
+        end_date: this.filters.date_range[1]
       });
+    },
+    onClose() {
+      this.sidebar = false;
     },
     searchPerson(name) {
       this.filters.username = name;
     },
     onStatusChange(current_status) {
       this.filters.status = current_status.toUpperCase().replace(" ", "_");
-      this.fetch();
+      this.fetch(true);
     },
     onDateChange(dateRange) {
-      this.date_range = dateRange;
-      this.fetch();
+      this.filters.date_range = dateRange;
+      this.fetch(true);
     },
     defaultDate(mode = "start") {
       if (mode === "start")

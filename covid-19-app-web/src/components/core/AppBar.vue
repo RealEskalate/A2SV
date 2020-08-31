@@ -2,10 +2,11 @@
   <v-container class="white">
     <v-app-bar
       app
-      flat
-      class="white py-1"
+      outlined
+      dark
+      color="primary darken-1"
+      class="py-1 shadow"
       style="border-radius: 0 0 25px 0; height: auto"
-      :class="{ shadow: raise }"
     >
       <v-btn
         fab
@@ -15,26 +16,23 @@
       >
         <v-icon large v-text="mdiForwardburger" />
       </v-btn>
+      <h2 class="ma-3 font-weight-regular" v-text="$router.currentRoute.name" />
       <!--      <v-app-bar-nav-icon-->
       <!--        v-if="$vuetify.breakpoint.mdAndUp"-->
       <!--        @click.stop="drawer = !drawer"-->
       <!--      />-->
-      <v-btn
-        text
-        data-v-step="0"
-        class="d-flex align-center pa-3"
-        @click="$router.push({ name: 'Home' })"
-      >
-        <v-img
-          alt="TrackSym"
-          class="shrink"
-          contain
-          src="/img/brand/blue.png"
-          style="transition: width 0.2s ease"
-          :width="brandWidth"
-        />
-      </v-btn>
 
+      <v-spacer />
+      <v-img
+        alt="TrackSym"
+        class="shrink"
+        contain
+        data-v-step="0"
+        src="/img/brand/white.png"
+        style="transition: width 0.2s ease"
+        :width="150"
+      />
+      <v-spacer />
       <v-spacer />
       <!--      <v-btn-->
       <!--        :key="link.to"-->
@@ -73,8 +71,8 @@
       <!--      </div>-->
       <v-divider class="mr-2" vertical light />
       <v-btn
-        dark
-        color="primary"
+        light
+        color="primary--text"
         v-if="!loggedInUser"
         class="v-card--shaped mx-1"
         depressed
@@ -83,7 +81,7 @@
       />
       <v-menu offset-y v-else>
         <template v-slot:activator="{ on }">
-          <v-btn fab text color="primary" v-on="on">
+          <v-btn fab text v-on="on">
             <v-icon v-text="mdiAccountCog" />
           </v-btn>
         </template>
@@ -123,23 +121,14 @@
         alt="TrackSym"
         class="shrink my-5 mx-auto"
         contain
-        :width="135"
+        :width="150"
         src="/img/brand/blue.png"
       />
 
       <v-list shaped>
-        <v-list-item-group color="primary">
-          <template v-for="(link, i) in links">
-            <v-list-item
-              exact
-              :key="i"
-              :to="{ name: link.to }"
-              v-if="
-                (!loggedInUser && link.roles.includes('none')) ||
-                  (loggedInUser &&
-                    link.roles.includes(loggedInUser.role.toLowerCase()))
-              "
-            >
+        <v-list-item-group color="primary" v-model="currentPage">
+          <template v-for="(link, i) in filteredLinks">
+            <v-list-item exact :key="i" :to="{ name: link.to }">
               <v-list-item-icon>
                 <v-icon v-text="link.icon" />
               </v-list-item-icon>
@@ -248,6 +237,7 @@ export default {
       curRoute: 0,
       activeBtn: 0,
       languages,
+      currentPage: 0,
       langText: {
         en: "EN",
         am: "አማ",
@@ -295,7 +285,7 @@ export default {
         {
           text: "navbar.inviteAdmins",
           icon: mdiEmailSend,
-          to: "InviteAdmin",
+          to: "Invite Admin",
           roles: ["ephi_user"]
         },
         {
@@ -340,6 +330,15 @@ export default {
     },
     navOption() {
       return this.navType;
+    },
+    filteredLinks() {
+      let loggedInUser = this.loggedInUser;
+      return this.links.filter(function(link) {
+        return (
+          (!loggedInUser && link.roles.includes("none")) ||
+          (loggedInUser && link.roles.includes(loggedInUser.role.toLowerCase()))
+        );
+      });
     }
   }
 };

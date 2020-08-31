@@ -6,21 +6,13 @@ const CreateAccount = () => import("../views-admin/auth/CreateAccount.vue");
 const ForgotPassword = () => import("../views-admin/auth/ForgotPassword");
 const ChangePassword = () => import("../views-admin/auth/ChangePassword.vue");
 const InviteAdmin = () => import("../views-admin/auth/InviteAdmin.vue");
-const Login = () => import("../views-admin/auth/Login.vue");
+// const Login = () => import("../views-admin/auth/Login.vue");
 
 const Symptoms = () => import("../views-admin/symptoms/Symptoms.vue");
 
 export const admin = [
   {
-    name: "AdminLogin",
-    path: "login",
-    component: Login,
-    meta: {
-      guest: true
-    }
-  },
-  {
-    name: "CreateAccount",
+    name: "Create Account",
     path: "register",
     component: CreateAccount,
     meta: {
@@ -28,7 +20,7 @@ export const admin = [
     }
   },
   {
-    name: "ChangePassword",
+    name: "Change Password",
     path: "change-password",
     component: ChangePassword,
     meta: {
@@ -36,7 +28,7 @@ export const admin = [
     }
   },
   {
-    name: "ResetPassword",
+    name: "Reset Password",
     path: "reset-password",
     component: ForgotPassword,
     meta: {
@@ -53,7 +45,7 @@ export const admin = [
     }
   },
   {
-    name: "InviteAdmin",
+    name: "Invite Admin",
     path: "invite-admin",
     component: InviteAdmin,
     meta: {
