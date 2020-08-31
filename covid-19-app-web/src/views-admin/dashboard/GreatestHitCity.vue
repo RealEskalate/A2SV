@@ -1,7 +1,7 @@
 <template>
   <v-card shaped outlined class="overflow-hidden">
-    <v-row style="height: 50vh">
-      <v-col md="4" cols="12" class="pr-0">
+    <v-row>
+      <v-col md="4" cols="12" class="pr-md-0">
         <v-subheader v-text="'Cities with most Covid-19 Cases'" />
 
         <v-list dense>
@@ -34,10 +34,10 @@
           </v-list-item-group>
         </v-list>
       </v-col>
-      <v-col md="8" cols="12" class="py-0 pl-0">
+      <v-col md="8" cols="12" class="py-0 pl-md-0">
         <mapbox
           class="shadow-sm"
-          style="height: 100%"
+          style="height: 50vh"
           :access-token="api_token"
           :map-options="{
             style: 'mapbox://styles/mapbox/light-v10',

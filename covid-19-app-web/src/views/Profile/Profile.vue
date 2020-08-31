@@ -557,18 +557,6 @@ export default {
       this.alert.type = type;
       this.alert.message = message;
     },
-    relevanceColor(relevance) {
-      switch (relevance.toLowerCase()) {
-        case "high":
-          return "red";
-        case "medium":
-          return "orange";
-        case "low":
-          return "yellow";
-        default:
-          return "grey";
-      }
-    },
     updateProfile() {
       this.loading = true;
       ajax
