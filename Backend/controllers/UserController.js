@@ -500,7 +500,7 @@ exports.save_new_password= async (req, res) => {
     let password = Bcrypt.hashSync(req.body.password, 10);
 
     user.password=password
-    user.save()
+    await user.save()
     
     res.send(user)
   } catch (err) {
