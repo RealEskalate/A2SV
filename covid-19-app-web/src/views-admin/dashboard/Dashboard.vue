@@ -1,22 +1,25 @@
 <template>
   <v-container class="align-content-center">
     <v-row>
-      <v-col md="4" sm="5">
+      <v-col md="4" sm="5" class="pr-7 py-0">
         <daily-statistics :data="items" />
       </v-col>
-      <v-col class="px-2" md="8" cols="12">
+      <v-col
+        class="v-card--shaped pa-6 shadow-in grey lighten-5"
+        md="8"
+        cols="12"
+      >
         <date-range-picker
           :date_range="date_range"
           @onDateChange="onDateChange"
         />
-        <v-row>
-          <v-col md="12">
-            <total-statistics />
-          </v-col>
-          <v-col cols="12" class="ml-md-3">
-            <greatest-hit-city />
-          </v-col>
-        </v-row>
+        <br />
+        <total-statistics />
+      </v-col>
+    </v-row>
+    <v-row class="my-10">
+      <v-col cols="12" class="ml-md-3">
+        <greatest-hit-city />
       </v-col>
     </v-row>
   </v-container>
