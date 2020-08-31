@@ -15,40 +15,35 @@
           mdiClose
         }}</v-icon>
         <p class="display-1 mx-auto my-2" style="color: white!important;">
-          Symptom Details
+          Profile Details
         </p>
       </v-row>
     </v-card>
     <v-container>
       <v-card class="mx-auto mt-5" outlined>
         <v-card-text>
-          <h3 class="d-inline-flex text--primary">{{ detail.name }}</h3>
-          <v-chip
-            class="float-right"
-            small
-            :color="getColor(detail.risk)"
-            text-color="white"
-          >
-            {{ detail.risk }} RISK</v-chip
-          >
+          <h3 class="d-inline-flex text--primary">John Doe</h3>
+          <v-chip class="float-right" small color="primary" text-color="white">
+            Admin
+          </v-chip>
         </v-card-text>
         <v-list dense>
           <v-list-item>
             <v-list-item-content>Gender</v-list-item-content>
             <v-list-item-content class="align-end">
-              {{ detail.gender }}
+              Male
             </v-list-item-content>
           </v-list-item>
           <v-list-item>
             <v-list-item-content>Last Update</v-list-item-content>
             <v-list-item-content class="align-end">
-              {{ detail.lastUpdate }}
+              Aug 25, 2020
             </v-list-item-content>
           </v-list-item>
           <v-list-item>
             <v-list-item-content>Status</v-list-item-content>
             <v-list-item-content class="align-end">
-              {{ detail.status }}
+              fine
             </v-list-item-content>
           </v-list-item>
           <v-card-text>
@@ -57,15 +52,8 @@
           <v-list-item>
             <v-list-item-content>Location</v-list-item-content>
             <v-list-item-content class="align-end">
-              {{ detail.location }}
+              Addis Ababa, Ethiopia
             </v-list-item-content>
-          </v-list-item>
-          <v-list-item v-for="(symptom, i) in detail.allSymptoms" :key="i">
-            <v-list-item-content>Symptom {{ i + 1 }}</v-list-item-content>
-            <v-list-item-content class="align-end">
-              {{ symptom }}
-            </v-list-item-content>
-
           </v-list-item>
         </v-list>
       </v-card>
@@ -78,7 +66,7 @@ import { mdiClose } from "@mdi/js";
 
 export default {
   name: "DetailSidebar",
-  props: ["detail", "sidebar"],
+  props: ["id", "sidebar"],
   data() {
     return {
       mdiClose,

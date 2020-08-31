@@ -27,6 +27,7 @@ export function checkRole(to, from, next) {
       }
     }
   } else {
-    next();
+    if (store.getters.getUser.role === "ephi_user") next({ name: "Dashboard" });
+    else next();
   }
 }

@@ -11,6 +11,7 @@ import user from "./user";
 import ethiopia from "./ethiopia";
 import privacyPolicy from "./privacy-policy";
 import symptoms from "./symptoms";
+import users from "./admin/people";
 
 import createPersistedState from "vuex-persistedstate";
 import ajax from "../auth/ajax";
@@ -132,6 +133,7 @@ export default new Vuex.Store({
     ethiopia,
     symTrack,
     privacyPolicy,
-    symptoms
+    symptoms,
+    users
   }
 });

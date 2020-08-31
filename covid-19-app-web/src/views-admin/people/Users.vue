@@ -1,5 +1,6 @@
 <template>
   <v-container class="align-content-center">
+    <delete-modal :open="deleteDialog" @onConfirmation="deleteUser" />
     <v-expansion-panels popout focusable>
       <v-expansion-panel class="shadow">
         <v-expansion-panel-header>
@@ -11,7 +12,7 @@
           </v-row>
         </v-expansion-panel-header>
         <v-expansion-panel-content class="mt-5">
-          <SymptomFilter
+          <UsersFilter
             :date_range="date_range"
             v-on:date-change="onDateChange"
             v-on:set-search="searchPerson"
@@ -24,13 +25,13 @@
     <DetailSidebar
       v-if="this.$vuetify.breakpoint.mdAndUp"
       class="shadow-lg"
-      :detail="detail"
+      :id="userId"
       :sidebar="sidebar"
       v-on:close-sidebar="sidebar = false"
     />
     <DetailSidebarSmall
       class="shadow-lg"
-      :detail="detail"
+      :id="userId"
       :sidebar="sidebar"
       :sheet="bottomsheet"
       v-else
@@ -38,15 +39,22 @@
     <v-data-table
       :headers="headers"
       :options.sync="options"
-      :items="getPeoplesWithSymptoms"
-      :server-items-length="getPeopleCount"
+      :items="getUsers"
+      :server-items-length="getUsersCount"
       :loading="getSymptomStatLoaders.peopleList"
       :footer-props="{ 'items-per-page-options': [5, 10, 25, 50] }"
       class="elevation-1 shadow"
       item-class="table-row"
     >
       <template v-slot:[`item.actions`]="{ item }">
-        <v-btn @click="showDetail(item)" small color="primary">Detail</v-btn>
+        <v-btn icon small color="primary">
+          <v-icon class="mr-2" @click="showDetail(item._id)">
+            {{ mdiAccountDetails }}
+          </v-icon>
+        </v-btn>
+        <v-icon color="#ff6767" @click="deleteDialog = true">
+          {{ mdiDeleteForever }}
+        </v-icon>
       </template>
     </v-data-table>
   </v-container>
@@ -54,8 +62,8 @@
 
 <script>
 import HighLevelStatistics from "./HighLevelStatistics";
-import SymptomFilter from "./SymptomFilter";
-import { mdiFilterVariant } from "@mdi/js";
+import UsersFilter from "./UsersFilter";
+import { mdiFilterVariant, mdiAccountDetails, mdiDeleteForever } from "@mdi/js";
 import moment from "moment";
 
 import { mapGetters, mapActions } from "vuex";
@@ -64,40 +72,37 @@ export default {
   name: "Symptoms",
   components: {
     HighLevelStatistics,
-    SymptomFilter,
-    DetailSidebar: () => import("./DetailSidebar"),
-    DetailSidebarSmall: () => import("./DetailSidebarSmall")
+    UsersFilter,
+    DetailSidebar: () => import("./ProfileDetails"),
+    DetailSidebarSmall: () => import("./ProfileDetailsSmall"),
+    DeleteModal: () => import("@/components/core/DeleteModal.vue")
   },
   data() {
     return {
       mdiFilterVariant,
+      mdiAccountDetails,
+      mdiDeleteForever,
       sidebar: false,
+      userId: null,
       bottomsheet: false,
+      deleteDialog: false,
       headers: [
-        { text: "User", value: "person", sortable: false },
+        { text: "User", value: "username", sortable: false },
+        { text: "Country", value: "current_country", sortable: false },
         {
           text: "Creation Date",
           align: "start",
           value: "date",
           sortable: false
         },
-        { text: "Account type", value: "status", sortable: false },
-        { text: "Covid Case Status", value: "symptoms", sortable: false },
+        { text: "Account type", value: "role", sortable: false },
+        // { text: "Covid Case Status", value: "symptoms", sortable: false },
         { text: "Actions", value: "actions", sortable: false }
       ],
       options: { page: 1, itemsPerPage: 10 },
       filters: { status: "", username: "" },
       date_range: [this.defaultDate(), this.defaultDate("end")],
-      awaitingSearch: false,
-      detail: {
-        name: "",
-        creation_date: "",
-        gender: "",
-        lastUpdate: "",
-        status: "",
-        location: "",
-        allSymptoms: []
-      }
+      awaitingSearch: false
     };
   },
   watch: {
@@ -120,12 +125,12 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["fetchPeoplesWithSymptoms"]),
-    onClose() {
-      this.sidebar = false;
+    ...mapActions(["fetchAllUsers"]),
+    deleteUser() {
+      this.deleteDialog = false;
     },
     fetch() {
-      this.fetchPeoplesWithSymptoms({
+      this.fetchAllUsers({
         page: this.options.page,
         size: this.options.itemsPerPage,
         status: this.filters.status,
@@ -152,30 +157,17 @@ export default {
           .format("YYYY-MM-DD");
       else return moment(new Date()).format("YYYY-MM-DD");
     },
-    showDetail(item) {
+    showDetail(id) {
+      console.log(id);
       if (this.$vuetify.breakpoint.mdAndUp) {
         this.sidebar = true;
       } else {
         this.bottomsheet = true;
       }
-      this.detail = {
-        id: item.id,
-        name: item.person,
-        risk: item.riskScore,
-        gender: item.gender,
-        lastUpdate: item.date,
-        status: item.status,
-        location: item.location,
-        allSymptoms: item.symptoms
-      };
     }
   },
   computed: {
-    ...mapGetters([
-      "getPeoplesWithSymptoms",
-      "getPeopleCount",
-      "getSymptomStatLoaders"
-    ])
+    ...mapGetters(["getUsers", "getUsersCount", "getSymptomStatLoaders"])
   },
   mounted() {
     this.fetch();

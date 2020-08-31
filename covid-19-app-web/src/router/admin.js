@@ -1,3 +1,5 @@
+const Users = () => import("../views-admin/people/Users");
+
 const Dashboard = () => import("../views-admin/dashboard/Dashboard.vue");
 
 const CreateAccount = () => import("../views-admin/auth/CreateAccount.vue");
@@ -30,8 +32,7 @@ export const admin = [
     path: "change-password",
     component: ChangePassword,
     meta: {
-      requiresAuth: true,
-      roles: ["ephi_user"]
+      guest: true
     }
   },
   {
@@ -39,8 +40,7 @@ export const admin = [
     path: "reset-password",
     component: ForgotPassword,
     meta: {
-      requiresAuth: true,
-      roles: ["ephi_user"]
+      guest: true
     }
   },
   {
@@ -56,6 +56,15 @@ export const admin = [
     name: "InviteAdmin",
     path: "invite-admin",
     component: InviteAdmin,
+    meta: {
+      requiresAuth: true,
+      roles: ["ephi_user"]
+    }
+  },
+  {
+    name: "Users",
+    path: "users",
+    component: Users,
     meta: {
       requiresAuth: true,
       roles: ["ephi_user"]

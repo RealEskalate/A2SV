@@ -229,7 +229,8 @@ import {
   mdiTranslate,
   mdiEmailSend,
   mdiViewDashboard,
-  mdiVirus
+  mdiVirus,
+  mdiAccountMultiplePlus
 } from "@mdi/js";
 import { languages } from "../../plugins/i18n";
 
@@ -240,6 +241,7 @@ export default {
       mdiAccountCog,
       mdiForwardburger,
       mdiLogoutVariant,
+      mdiAccountMultiplePlus,
       drawer: false,
       navType: store.getters.getNavigationType,
       locationY: 0,
@@ -294,6 +296,12 @@ export default {
           text: "navbar.inviteAdmins",
           icon: mdiEmailSend,
           to: "InviteAdmin",
+          roles: ["ephi_user"]
+        },
+        {
+          text: "navbar.users",
+          icon: mdiAccountMultiplePlus,
+          to: "Users",
           roles: ["ephi_user"]
         }
         // { text: "navbar.map", icon: mdiMap, to: "Map" }

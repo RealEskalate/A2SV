@@ -16,13 +16,35 @@ const mutations = {
 };
 
 const actions = {
-  fetchAllUsers: ({ commit }) => {
+  fetchAllUsers: (
+    { commit },
+    { page, size, status, username, start_date, end_date }
+  ) => {
     commit("setSymptomStatLoaders", { key: "total", value: true });
-    setTimeout(
-      commit("setSymptomStatLoaders", { key: "total", value: false }),
-      2000
-    );
-    commit("setUsers", {});
+    ajax
+      .get(`users`, {
+        params: {
+          page: page,
+          size: size,
+          status: status,
+          username: username,
+          start_date: start_date,
+          end_date: end_date
+        }
+      })
+      .then(
+        response => {
+          commit("setUsers", response.data.data);
+          commit("setUsersCount", response.data.data_count);
+          console.log(response.data);
+        },
+        error => {
+          console.log(error);
+        }
+      )
+      .finally(function() {
+        commit("setSymptomStatLoaders", { key: "total", value: false });
+      });
   }
 };
 
