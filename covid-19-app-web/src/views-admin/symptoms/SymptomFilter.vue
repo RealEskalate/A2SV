@@ -1,6 +1,6 @@
 <template>
   <v-row>
-    <v-col cols="12" sm="4">
+    <v-col cols="12" sm="3">
       <DateRangePicker
         :date_range="date_range"
         v-on:onDateChange="onDateChange"
@@ -8,42 +8,47 @@
     </v-col>
     <v-col cols="12" sm="3">
       <v-select
-        style="width: 120px"
-        class="d-inline-flex v-card--shaped"
+        class="v-card--shaped"
         :items="status"
         v-model="current_status"
         @input="$emit('status-change', current_status)"
         label="Status"
         outlined
         dense
-      ></v-select>
+        hide-details
+      />
+    </v-col>
+
+    <v-col cols="12" sm="3">
       <v-select
-        style="width: 120px"
-        class="d-inline-flex v-card--shaped ml-5"
+        class="d-inline-flex v-card--shaped"
         :items="risk"
+        v-model="current_risk"
         label="Risk"
         outlined
         dense
         disabled
-      ></v-select>
+        hide-details
+      />
     </v-col>
-
-    <v-divider class="mx-6" vertical></v-divider>
-    <v-col cols="12" sm="4">
+    <v-col cols="12" sm="3" style="border-left: #dedede solid 1px">
       <v-text-field
+        class="v-card--shaped"
         v-model="search"
+        outlined
+        :prepend-inner-icon="mdiSearchWeb"
         dense
         label="Search Person"
         @input="$emit('set-search', search)"
-        single-line
         hide-details
-      ></v-text-field>
+      />
     </v-col>
   </v-row>
 </template>
 
 <script>
 import DateRangePicker from "@/components/core/DateRangePicker.vue";
+import { mdiSearchWeb } from "@mdi/js";
 
 export default {
   name: "SymptomFilter",
@@ -53,10 +58,16 @@ export default {
   props: ["date_range"],
   data() {
     return {
-      current_status: null,
+      mdiSearchWeb,
+      current_status: "",
+      current_risk: "",
       search: "",
-      risk: ["", "Low", "Medium", "High"],
-      status: ["", "Symptom Submitted", "Symptom Updated"]
+      risk: [{ text: "All", value: "" }, "Low", "Medium", "High"],
+      status: [
+        { text: "All", value: "" },
+        "Symptom Submitted",
+        "Symptom Updated"
+      ]
     };
   },
   methods: {

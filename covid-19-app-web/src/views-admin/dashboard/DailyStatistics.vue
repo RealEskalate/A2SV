@@ -1,55 +1,56 @@
 <template>
-  <v-card class="effect1">
-    <v-card-title><h2 class="mx-auto">Today</h2></v-card-title>
-    <v-list>
-      <v-list-item-group multiple active-class="pink--text">
-        <template v-for="(item, index) in items">
-          <v-list-item :key="item.title">
-            <template>
-              <v-list-item-content>
-                <v-list-item-title
-                  v-text="item.title"
-                  class="text-wrap"
-                ></v-list-item-title>
-              </v-list-item-content>
+  <v-card shaped outlined>
+    <v-subheader v-text="'Today'" />
+    <v-list dense disabled>
+      <template v-for="(item, index) in items">
+        <v-list-item :key="item.title">
+          <template>
+            <v-list-item-content>
+              <v-list-item-title v-text="item.title" class="text-wrap" />
+            </v-list-item-content>
 
-              <v-list-item-action>
-                <v-list-item-action-text
-                  class="font-weight-bold"
-                  v-text="item.totalNum"
-                ></v-list-item-action-text>
-                <!--                      <p>{{ item.totalNum }}</p>-->
-                <v-list-item-subtitle
-                  :class="item.increaseRate > 0 ? 'red--text' : 'green--text'"
-                >
-                  <v-icon v-if="item.increaseRate > 0" class="red--text">
-                    {{ mdiArrowUpThick }}
-                  </v-icon>
-                  <v-icon v-else class="green--text font-weight-bold">
-                    {{ mdiArrowDownThick }}
-                  </v-icon>
-                  {{ item.increaseRate + "%" }}
-                </v-list-item-subtitle>
-              </v-list-item-action>
-            </template>
-          </v-list-item>
+            <v-list-item-action>
+              <v-list-item-action-text
+                class="font-weight-bold"
+                v-text="item.totalNum"
+              />
+              <!--                      <p>{{ item.totalNum }}</p>-->
+              <v-list-item-subtitle
+                :class="item.increaseRate > 0 ? 'red--text' : 'green--text'"
+              >
+                <v-icon
+                  small
+                  v-if="item.increaseRate > 0"
+                  class="red--text"
+                  v-text="mdiArrowUp"
+                />
+                <v-icon
+                  small
+                  v-else
+                  class="green--text font-weight-bold"
+                  v-text="mdiArrowDown"
+                />
+                {{ item.increaseRate + "%" }}
+              </v-list-item-subtitle>
+            </v-list-item-action>
+          </template>
+        </v-list-item>
 
-          <v-divider v-if="index + 1 < items.length" :key="index"></v-divider>
-        </template>
-      </v-list-item-group>
+        <v-divider v-if="index + 1 < items.length" :key="index" />
+      </template>
     </v-list>
   </v-card>
 </template>
 
 <script>
-import { mdiArrowDownThick, mdiArrowUpThick } from "@mdi/js";
+import { mdiArrowDown, mdiArrowUp } from "@mdi/js";
 
 export default {
   name: "TodayStatistics",
   data() {
     return {
-      mdiArrowUpThick,
-      mdiArrowDownThick,
+      mdiArrowUp,
+      mdiArrowDown,
       items: [
         {
           title: "New confirmed COVID-19 cases",

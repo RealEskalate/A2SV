@@ -15,6 +15,7 @@
         :prepend-inner-icon="mdiCalendar"
         readonly
         v-on="on"
+        hide-details
       />
     </template>
     <v-date-picker

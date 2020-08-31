@@ -1,39 +1,44 @@
 <template>
   <v-row>
     <v-col md="6" cols="12" v-for="(item, index) in items" :key="index">
-      <v-card class="shadow">
-        <v-card-title class="card-title">{{ item.title }}</v-card-title>
-        <v-sheet color="transparent">
-          <v-sparkline
-            :value="value"
-            :gradient="gradient"
-            :smooth="radius || false"
-            :padding="padding"
-            :line-width="lineWidth"
-            :stroke-linecap="lineCap"
-            :gradient-direction="gradientDirection"
-            :fill="fill"
-            :type="type"
-            :auto-line-width="autoLineWidth"
-            auto-draw
-            :show-labels="showLabels"
-            :label-size="labelSize"
-          ></v-sparkline>
-        </v-sheet>
+      <v-card class="mx-1" shaped outlined style="background: transparent">
+        <v-subheader class="card-title" v-text="item.title" />
+        <v-sparkline
+          :value="value"
+          :gradient="gradient"
+          :smooth="radius || false"
+          :padding="padding"
+          :line-width="lineWidth"
+          :stroke-linecap="lineCap"
+          :gradient-direction="gradientDirection"
+          :fill="fill"
+          :type="type"
+          :auto-line-width="autoLineWidth"
+          auto-draw
+          :show-labels="showLabels"
+          :label-size="labelSize"
+        />
         <v-card-actions>
-          <h5>
-            {{ item.totalNum }}
-          </h5>
+          <v-subheader v-text="item.totalNum" />
           <v-spacer />
-          <p :class="item.increaseRate > 0 ? 'red--text' : 'green--text'">
-            <v-icon v-if="item.increaseRate > 0" class="red--text">
-              {{ mdiArrowUpThick }}
-            </v-icon>
-            <v-icon v-else class="green--text font-weight-bold">
-              {{ mdiArrowDownThick }}
-            </v-icon>
+          <div
+            class="mx-3"
+            :class="item.increaseRate > 0 ? 'red--text' : 'green--text'"
+          >
+            <v-icon
+              small
+              v-if="item.increaseRate > 0"
+              class="red--text"
+              v-text="mdiArrowUp"
+            />
+            <v-icon
+              small
+              v-else
+              class="green--text font-weight-bold"
+              v-text="mdiArrowDown"
+            />
             {{ item.increaseRate + "%" }}
-          </p>
+          </div>
         </v-card-actions>
       </v-card>
     </v-col>
@@ -49,14 +54,14 @@ const gradients = [
   ["#00c6ff", "#F0F", "#FF0"],
   ["#f72047", "#ffd200", "#1feaea"]
 ];
-import { mdiArrowDownThick, mdiArrowUpThick } from "@mdi/js";
+import { mdiArrowDown, mdiArrowUp } from "@mdi/js";
 
 export default {
   name: "TotalStatistics",
   data() {
     return {
-      mdiArrowUpThick,
-      mdiArrowDownThick,
+      mdiArrowUp,
+      mdiArrowDown,
       items: [
         {
           title: "New confirmed COVID-19 cases",

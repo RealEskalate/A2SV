@@ -275,18 +275,6 @@ export default {
       this.alert.type = type;
       this.alert.message = message;
     },
-    relevanceColor(relevance) {
-      switch (relevance.toLowerCase()) {
-        case this.$t("auth.high").toLowerCase():
-          return "red";
-        case this.$t("auth.medium").toLowerCase():
-          return "orange";
-        case this.$t("auth.low").toLowerCase():
-          return "yellow";
-        default:
-          return "grey";
-      }
-    },
     updateSymptoms() {
       this.loading = true;
       ajax
