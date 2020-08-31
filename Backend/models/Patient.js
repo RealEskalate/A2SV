@@ -23,6 +23,7 @@ const patientSchema = new mongoose.Schema({
     },
     language: {
         type: String,
+        enum: ["English", "Amharic", "Oromo", "Turkish"],
     },
     gender: {
         type: String,

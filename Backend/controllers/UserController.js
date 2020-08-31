@@ -87,7 +87,7 @@ exports.get_all_users = async (req, res) => {
 // get user detail info
 exports.get_detail_info= async(req,res)=>{
   let userDetails ={}
-  userDetails.basicInfo = await (await User.findById(req.params.id))
+  userDetails.basicInfo = await  User.findById(req.params.id)
     .populate("latest_location_user");
 
   userDetails.symptomHistory = await SymptomLog.findOne({user_id : req.params.id})
