@@ -87,6 +87,8 @@ exports.get_all_users = async (req, res) => {
 // get user detail info
 exports.get_detail_info= async(req,res)=>{
   let userDetails ={}
+  userDetails.basicInfo = await (await User.findById(req.params.id))
+    .populate("latest_location_user");
 
   userDetails.symptomHistory = await SymptomLog.findOne({user_id : req.params.id})
     .populate("user_id").populate({
@@ -308,7 +310,7 @@ exports.send_invitation_link = async (req, res) => {
     }
     let creator_id=req.body.loggedInUser
 
-    let signed_email = jwt.sign({email,creator_id},process.env.APP_SECRET_KEY,{expiresIn:'6h'})
+    let signed_email = jwt.sign({email:email,creator_id:creator_id},process.env.APP_SECRET_KEY,{expiresIn:'6h'})
     let invitationLink = `${process.env.APP_WEB_CREATE_ACC_LINK}${signed_email}`;
 
     const usersData=[{ email : email, activationLink: invitationLink }]
@@ -350,8 +352,8 @@ exports.send_multiple_invitation_link = async (req, res) => {
 
     for(var index in emails){
       let email = emails[index]
-
-      let signed_email = jwt.sign({email,creator_id},process.env.APP_SECRET_KEY,{expiresIn:'6h'})
+      
+      let signed_email = jwt.sign({email:email,creator_id:creator_id},process.env.APP_SECRET_KEY,{expiresIn:'6h'})
       let invitationLink = `${process.env.APP_WEB_CREATE_ACC_LINK}${signed_email}`;
 
       usersData.push({
@@ -381,18 +383,16 @@ exports.create_invited_user = async (req, res) => {
   let signature = req.body.signature
   let email =null;
   let creator_id =null;
-  if (signature){
+ 
 
-    jwt.verify(signature, process.env.APP_SECRET_KEY, (err, decodedEmail) => {
+  jwt.verify(signature, process.env.APP_SECRET_KEY, (err, decodedEmail) => {
       if (err) {
         res.status(401).send("Incorrect signature");
       } else {
         email = decodedEmail.email
         creator_id = decodedEmail.creator_id
       }
-    });
-
-  }
+  });
 
   const user = new User({
     _id: mongoose.Types.ObjectId(),
@@ -471,17 +471,15 @@ exports.send_reset_link = async (req, res) => {
 exports.save_new_password= async (req, res) => {
   let signature = req.body.signature
   let email =null;
-  if (signature){
 
-    jwt.verify(signature, process.env.APP_SECRET_KEY, (err, decodedEmail) => {
+
+  jwt.verify(signature, process.env.APP_SECRET_KEY, (err, decodedEmail) => {
       if (err) {
         res.status(401).send("Incorrect signature");
       } else {
         email = decodedEmail.email
       }
-    });
-
-  }
+  });
 
   const check = await User.findOne({ email: email });
   if (!check) {
