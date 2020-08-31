@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import '../components/roundedPasswordField.dart';
 import '../components/roundedInputField.dart';
 import 'login.dart';
+import '../pages/Home.dart';
 //import 'package:email_validator/email_validator.dart';
 
 class CreateAccountPage extends StatelessWidget {
@@ -70,36 +71,36 @@ class CreateAccountPage extends StatelessWidget {
                     );
                   }),
               SizedBox(height: size.height * 0.05),
-              RoundedButton(
-                  color: Colors.lightGreenAccent[700],
-                  text: "CREATE ACCOUNT",
-                  press: () {}),
-//              ButtonTheme(
-//                minWidth: size.width * 0.8,
-//                height: size.width * 0.15,
-//                child: RaisedButton(
-//                  color: Colors.lightGreenAccent[700],
-//                  shape: RoundedRectangleBorder(
-//                      borderRadius: BorderRadius.circular(40)
-//                  ),
-//                  onPressed: () {
-////                    Navigator.push(
-////                      context,
-////                      MaterialPageRoute(
-////                        builder: (context) {
-////                          return CreateAccountScreen();
-////                        },
-////                      ),
-////                    );
-//                  },
-//                  child: Text('CREATE ACCOUNT',
-//                      textAlign: TextAlign.center,
-//                      style: TextStyle(
-//                        color: Colors.white,
-//                        fontSize: 16.0,
-//                      )),
-//                ),
-//              ),
+              // RoundedButton(
+              //     color: Colors.lightGreenAccent[700],
+              //     text: "CREATE ACCOUNT",
+              //     press: () {}),
+             ButtonTheme(
+               minWidth: size.width * 0.8,
+               height: size.width * 0.15,
+               child: RaisedButton(
+                 color: Colors.lightGreenAccent[700],
+                 shape: RoundedRectangleBorder(
+                     borderRadius: BorderRadius.circular(40)
+                 ),
+                 onPressed: () {
+                   Navigator.push(
+                     context,
+                     MaterialPageRoute(
+                       builder: (context) {
+                         return MyApp();
+                       },
+                     ),
+                   );
+                 },
+                 child: Text('CREATE ACCOUNT',
+                     textAlign: TextAlign.center,
+                     style: TextStyle(
+                       color: Colors.white,
+                       fontSize: 16.0,
+                     )),
+               ),
+             ),
               SizedBox(height: size.height * 0.025),
             ],
           ),
