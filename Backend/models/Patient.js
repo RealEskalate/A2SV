@@ -30,7 +30,7 @@ const patientSchema = new mongoose.Schema({
         enum: ["MALE", "FEMALE", "UNDISCLOSED"],
         required: true,
     },
-    Woreda: {
+    woreda: {
         type: String,
     },
     street_address: {
@@ -46,12 +46,24 @@ const patientSchema = new mongoose.Schema({
         type: Boolean,
     },
     emergency_contact:{
-        first_name: [ String ],
-        last_name: [ String ],
-        relationship: [ String ],
-        city: [ String ],
-        state: [ String ],
-        phone_number: [ String ],
+        first_name: {
+            type: String,
+        },
+        last_name: {
+            type: String,
+        },
+        relationship:{
+            type: String,
+        },
+        city:{
+            type: String,
+        },
+        state: {
+            type: String,
+        },
+        phone_number:{
+            type: String,
+        },
     }
 
 },

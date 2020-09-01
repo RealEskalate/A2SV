@@ -90,7 +90,7 @@ exports.update_test_report = async (req, res) => {
 
 
 // Deleting a test report
-exports.delete_symptom = async (req, res) => {
+exports.delete_test_report = async (req, res) => {
 
     try {
         const report = await TestReport.findByIdAndRemove(req.params.id);
