@@ -60,6 +60,9 @@ import { useIsFocused } from "@react-navigation/native";
 
 import SearchableDropdown from "react-native-searchable-dropdown";
 import Ionicons from "react-native-vector-icons/Ionicons";
+
+import { ThemeContext } from "../../../assets/themes/theme-context";
+
 MapboxGL.setAccessToken(
   "pk.eyJ1IjoiZmVyb3g5OCIsImEiOiJjazg0czE2ZWIwNHhrM2VtY3Y0a2JkNjI3In0.zrm7UtCEPg2mX8JCiixE4g"
 );
@@ -79,8 +82,11 @@ let current_grid_info = null;
 let zoom_level = null;
 let animating = true;
 export default class MapService extends React.Component {
+  static contextType = ThemeContext;
+
   constructor(props) {
     super(props);
+
     this.state = {
       isModalVisible: false,
       isClusterModalVisible: false,
@@ -155,29 +161,35 @@ export default class MapService extends React.Component {
     });
   }
 
+  // Sets visibility of symptom (cluster) details modal
   setModalVisible(visible) {
     this.setState({ isModalVisible: visible });
   }
 
-  onGridLayerPress(e) {
+  // Cluster has been clicked. Identifies the cluster that has been clicked and sets modal to visible
+  async onGridLayerPress(e) {
     console.log("Inside grid layer press");
     const feature = e.nativeEvent.payload;
     animating = true;
     const user_id = feature.id;
+
     current_grid_info = grid_infos[user_id];
     this.setState({ isClusterModalVisible: true });
   }
 
+  // Assigns colors based on probability of having the virus
   rateToColor(rate, hue0 = 0, hue1 = 100, reverse = false) {
     let hue = Math.min(rate, 1) * (hue1 - hue0) + hue0;
     if (reverse) hue = hue1 - hue;
     return `hsl(${hue}, 100%, 45%)`;
   }
 
-  onSourceLayerPress(e) {
+  // Data point has been clicked.
+  async onSourceLayerPress(e) {
     const feature = e.nativeEvent.payload;
     animating = true;
     if (feature.properties.cluster) {
+      console.log("cluster clicked");
       const cluster_data = {
         male: 0,
         female: 0,
@@ -206,8 +218,16 @@ export default class MapService extends React.Component {
         "71-80": 0,
         "81-90": 0,
         ">90": 0,
+        address: "",
       };
-
+      const user_location = feature.geometry.coordinates;
+      var loc = { lat: user_location[1], lng: user_location[0] };
+      const res = await Geocoder.geocodePosition(loc);
+      const address = res[1].formattedAddress.toString();
+      cluster_data.address = address;
+      console.log(
+        "-----------CLUSTER ADDRESS-------------" + cluster_data.address
+      );
       try {
         const leaves = this.state.small_cluster.getLeaves(
           feature.properties.cluster_id,
@@ -252,6 +272,7 @@ export default class MapService extends React.Component {
               console.log(err);
             });
         }
+
         this.setState({
           cluster_data: cluster_data,
           isClusterModalVisible: true,
@@ -407,8 +428,15 @@ export default class MapService extends React.Component {
         gender: "",
         age_group: "",
         symptoms: [],
+        address: "",
       };
       const user_id = feature.id;
+      const user_location = feature.geometry.coordinates;
+
+      var loc = { lat: user_location[1], lng: user_location[0] };
+      const res = await Geocoder.geocodePosition(loc);
+      point_info.address = res[1].formattedAddress.toString();
+
       const details = fetch(
         "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/symptomuser/user/" +
           user_id +
@@ -439,6 +467,7 @@ export default class MapService extends React.Component {
     // console.log('You pressed a layer here is your feature', feature); // eslint-disable-lin
   }
 
+  // gets the four corners on the map and calls updateClusters
   async onRegionDidChange() {
     const top_left = await this.map.getCoordinateFromView([0, 0]);
     const top_right = await this.map.getCoordinateFromView([screenWidth, 0]);
@@ -462,6 +491,7 @@ export default class MapService extends React.Component {
     zoom_level = this.map.getZoom();
   }
 
+  // gets user city and calls fetchSymptoms
   async onFinishedLoadingMap() {
     console.log(
       "LOCATION: " +
@@ -504,6 +534,7 @@ export default class MapService extends React.Component {
     this.fetchSymptoms();
   }
 
+  // handles user navigating through the map
   onTrackingChange() {
     console.log("tracking changed!");
     const location_prev = this.state.location;
@@ -525,6 +556,7 @@ export default class MapService extends React.Component {
     this.onTrackingChange();
   };
 
+  // fetches list of cities in the world
   fetchCities() {
     fetch("https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/cities", {
       method: "GET",
@@ -556,6 +588,7 @@ export default class MapService extends React.Component {
       });
   }
 
+  // fetches symptoms from backend
   fetchSymptoms = async () => {
     if (!this.state.isClusterModalVisible) {
       animating = true;
@@ -602,9 +635,7 @@ export default class MapService extends React.Component {
       .then((data) => {
         console.log("Data loaded!!!!!!!!");
         if (data.length > 0 && data[0].probability === undefined) {
-          // we're getting grid results
-          // just log them for now
-          console.log("-----------if---------");
+          console.log("Rendering Grids");
           console.log(data);
           const gridCollections = this.gridsToGeoJson(data);
           const small_cluster = new Supercluster({ radius: 40, maxZoom: 14 });
@@ -693,6 +724,8 @@ export default class MapService extends React.Component {
     this.props.navigation.addListener("blur", () => {
       clearInterval(this.timer);
     });
+
+    //map_string : contextType.theme === "light" ? "mapbox://styles/mapbox/light-v10" : "mapbox://styles/mapbox/dark-v10",
   }
 
   updateClusters = async () => {
@@ -732,7 +765,6 @@ export default class MapService extends React.Component {
           .forEach((feature) => {
             let point_count = feature.properties.point_count;
             if (point_count) {
-              this.mode = "cluster";
               feature.properties.color = this.rateToColor(
                 point_count / 15,
                 55,
@@ -741,7 +773,6 @@ export default class MapService extends React.Component {
               feature.properties.size = 15 + Math.min(point_count / 15, 1) * 5;
               feature.properties.point_opacity = 0;
             } else {
-              this.mode = "points";
               feature.properties.point_opacity = 0.5;
             }
             SymptomCollection.smallSymptomCollection.features.push(feature);
@@ -787,7 +818,7 @@ export default class MapService extends React.Component {
           .forEach((feature) => {
             let point_count = feature.properties.point_count;
             if (point_count) {
-              this.mode = "cluster";
+              // this.mode = "cluster";
               feature.properties.color = this.rateToColor(
                 point_count / 300,
                 35,
@@ -797,7 +828,7 @@ export default class MapService extends React.Component {
                 20 + Math.min(point_count / 300, 1) * 15;
               feature.properties.point_opacity = 0;
             } else {
-              this.mode = "points";
+              //this.mode = "points";
               feature.properties.point_opacity = 0.5;
             }
             SymptomCollection.highSymptomCollection.features.push(feature);
@@ -952,6 +983,7 @@ export default class MapService extends React.Component {
   }
 
   renderClusterInfo(cluster_data, country) {
+    console.log("ADDRESS IS: " + cluster_data.address);
     const chartConfig = {
       backgroundGradientFrom: "#1E2923",
       backgroundGradientFromOpacity: 0,
@@ -1194,7 +1226,7 @@ export default class MapService extends React.Component {
                   <View style={styles.tag}>
                     <Text style={styles.tagContent}>GEO</Text>
                   </View>
-                  <Text style={styles.tagData}>{country}</Text>
+                  <Text style={styles.tagData}>{cluster_data.address}</Text>
                 </View>
               </View>
             </View>
@@ -1404,9 +1436,7 @@ export default class MapService extends React.Component {
                     <View style={styles.tag}>
                       <Text style={styles.tagContent}>GEO</Text>
                     </View>
-                    <Text style={styles.tagData}>
-                      {this.state.user_country}{" "}
-                    </Text>
+                    <Text style={styles.tagData}>{info.address}</Text>
                   </View>
                   <View style={styles.userDegree}>
                     <FontAwesome
@@ -1465,6 +1495,12 @@ export default class MapService extends React.Component {
               textColor: "white",
             }}
             aboveLayerID={id + " singleCluster"}
+          />
+          <MapboxGL.CircleLayer
+            id={id + " gridCluster"}
+            belowLayerID={id + " singleCluster"}
+            filter={["has", "point_count"]}
+            style={style.clusteredPoints}
           />
           <MapboxGL.CircleLayer
             id={id + " singleCluster"}
@@ -1539,11 +1575,7 @@ export default class MapService extends React.Component {
         )}
 
         {this.state.isClusterModalVisible && (
-          <Modal
-            visible={animating === false}
-            animationType="fade"
-            transparent={true}
-          >
+          <Modal visible={true} animationType="fade" transparent={true}>
             {this.renderClusterInfo(
               this.state.cluster_data,
               this.state.user_country
@@ -1565,11 +1597,16 @@ export default class MapService extends React.Component {
                 location: [longitude, latitude],
               });
             }}
-            containerStyle={{ padding: 5, backgroundColor: "#39363E" }}
+            containerStyle={{
+              padding: 5,
+              backgroundColor:
+                this.context.theme === "light" ? "#F5F5F5" : "#39363E",
+            }}
             itemStyle={{
               padding: 10,
               marginTop: 2,
-              backgroundColor: "#39363E",
+              backgroundColor:
+                this.context.theme === "light" ? "#F5F5F5" : "#39363E",
               borderColor: "#3E2723",
               borderWidth: 1,
               borderRadius: 5,
@@ -1580,7 +1617,8 @@ export default class MapService extends React.Component {
             resetValue={false}
             textInputProps={{
               placeholder: "Search City",
-              placeholderTextColor: "white",
+              placeholderTextColor:
+                this.context.theme === "light" ? "black" : "white",
               underlineColorAndroid: "transparent",
               style: {
                 padding: 12,
@@ -1599,7 +1637,11 @@ export default class MapService extends React.Component {
           <MapboxGL.MapView
             ref={(ref) => (this.map = ref)}
             style={smallStyles.matchParent}
-            styleURL={"mapbox://styles/mapbox/dark-v10"}
+            styleURL={
+              this.context.theme === "light"
+                ? "mapbox://styles/mapbox/light-v10"
+                : "mapbox://styles/mapbox/dark-v10"
+            }
             compassEnabled
             compassViewPosition={1}
             onDidFinishLoadingMap={this.onFinishedLoadingMap}
