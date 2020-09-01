@@ -18,7 +18,7 @@ exports.getInterviews = async (req, res) => {
         filter.completion_date = { $gte: new Date(req.query.completion_date) };
     }
     if (req.query.interviewer_id) {
-        filter["interview_report.interviewer_id"] = { $gte: new Date(req.query.completion_date) };
+        filter["interview_report.interviewer_id"] = req.query.interviewer_id;
     }
 
     if (req.query.select) {
