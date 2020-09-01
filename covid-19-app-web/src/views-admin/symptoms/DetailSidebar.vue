@@ -1,93 +1,109 @@
 <template>
   <v-navigation-drawer
     width="350"
-    height="80%"
+    height="100%"
     v-model="sidebar"
     right
     absolute
-    bottom
-    color="#F5F6F7"
-    class="shadow-sm pb-9"
+    class="shadow-sm"
   >
-    <v-card color="primary" dark class="">
-      <v-row class="align-self-center align-center align-content-center">
-        <v-icon color="white" class="ml-5" @click="close">{{
-          mdiClose
-        }}</v-icon>
-        <p class="display-1 mx-auto my-2" style="color: white!important;">
-          Symptom Details
-        </p>
-      </v-row>
-    </v-card>
-    <v-container>
-      <v-card class="mx-auto mt-5" outlined>
-        <v-card-text>
-          <h3 class="d-inline-flex text--primary">{{ detail.name }}</h3>
+    <v-list-item class="my-2 shadow-sm p-sticky">
+      <v-list-item-action>
+        <v-btn
+          class="v-card--shaped"
+          large
+          @click="$emit('close-sidebar')"
+          icon
+        >
+          <v-icon v-text="mdiForwardburger" />
+        </v-btn>
+      </v-list-item-action>
+      <v-list-item-content>
+        <div v-text="detail.name" />
+      </v-list-item-content>
+      <v-list-item-action>
+        <v-chip
+          class="float-right"
+          small
+          :color="relevanceColor(detail.risk) + ' darken-1'"
+          text-color="white"
+          v-text="`${detail.risk} RISK`"
+        />
+      </v-list-item-action>
+    </v-list-item>
+
+    <v-list>
+      <v-subheader v-text="$t('map.details')" />
+      <v-list-item
+        :key="index"
+        v-for="(feature, index) in detailSingleFeatures"
+      >
+        <v-list-item-avatar size="20">
+          <v-icon v-text="feature.icon" />
+        </v-list-item-avatar>
+
+        <v-list-item-content>
+          <span>
+            {{ $t(feature.name) }}:
+            <span class="grey--text" v-text="detail[feature.key]" />
+          </span>
+        </v-list-item-content>
+      </v-list-item>
+
+      <template v-for="(feature, index) in detailListFeatures">
+        <v-divider
+          :class="`mt-${index === 0 ? 0 : 3} mb-2`"
+          :key="'divider_' + index"
+        />
+        <v-list-item :key="'title_' + index">
+          <v-list-item-avatar size="20">
+            <v-icon v-text="feature.icon" />
+          </v-list-item-avatar>
+          <v-list-item-content v-text="$t(feature.name)" />
+        </v-list-item>
+        <div
+          :key="feature.name + index"
+          class="grey lighten-5 shadow-in v-card--shaped text-center pa-3 mx-5"
+        >
+          <v-subheader
+            class="mx-auto my-2 justify-center"
+            v-if="!detail[feature.key] || detail[feature.key].length === 0"
+            v-text="$t('auth.foundNothing')"
+          />
           <v-chip
-            class="float-right"
+            v-else
             small
-            :color="getColor(detail.risk)"
-            text-color="white"
+            class="ma-1 v-card--shaped shadow-sm"
+            :key="key"
+            v-for="(value, key) in detail[feature.key]"
           >
-            {{ detail.risk }} RISK</v-chip
-          >
-        </v-card-text>
-        <v-list dense>
-          <v-list-item>
-            <v-list-item-content>Gender</v-list-item-content>
-            <v-list-item-content class="align-end">
-              {{ detail.gender }}
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item>
-            <v-list-item-content>Last Update</v-list-item-content>
-            <v-list-item-content class="align-end">
-              {{ detail.lastUpdate }}
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item>
-            <v-list-item-content>Status</v-list-item-content>
-            <v-list-item-content class="align-end">
-              {{ detail.status }}
-            </v-list-item-content>
-          </v-list-item>
-          <v-card-text>
-            <h3 class="text--primary">Symptoms</h3>
-          </v-card-text>
-          <v-list-item>
-            <v-list-item-content>Location</v-list-item-content>
-            <v-list-item-content class="align-end">
-              {{ detail.location }}
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item v-for="(symptom, i) in detail.allSymptoms" :key="i">
-            <v-list-item-content>Symptom {{ i + 1 }}</v-list-item-content>
-            <v-list-item-content class="align-end">
-              {{ symptom }}
-            </v-list-item-content>
-          </v-list-item>
-        </v-list>
-      </v-card>
-    </v-container>
+            <span class="grey--text text--darken-2" v-text="value" />
+          </v-chip>
+        </div>
+      </template>
+    </v-list>
   </v-navigation-drawer>
 </template>
 
 <script>
-import { mdiClose } from "@mdi/js";
+import {
+  mdiGenderMaleFemaleVariant,
+  mdiCrosshairsGps,
+  mdiForwardburger,
+  mdiStateMachine,
+  mdiWatch,
+  mdiBandage
+} from "@mdi/js";
 
 export default {
   name: "DetailSidebar",
   props: ["detail", "sidebar"],
   data() {
     return {
-      mdiClose
+      mdiForwardburger
     };
   },
   methods: {
-    close() {
-      this.side_bar = false;
-      this.$emit("close-sidebar");
-    },
     getColor(risk) {
       if (risk.toLowerCase() === "low") {
         return "#009c4d";
@@ -96,6 +112,19 @@ export default {
       } else if (risk.toLowerCase() === "high") {
         return "#ff6767";
       }
+    }
+  },
+  computed: {
+    detailSingleFeatures() {
+      return [
+        { name: "Gender", key: "gender", icon: mdiGenderMaleFemaleVariant },
+        { name: "Status", key: "status", icon: mdiStateMachine },
+        { name: "Location", key: "location", icon: mdiCrosshairsGps },
+        { name: "Last Update", key: "lastUpdate", icon: mdiWatch }
+      ];
+    },
+    detailListFeatures() {
+      return [{ name: "Symptoms", key: "allSymptoms", icon: mdiBandage }];
     }
   }
 };

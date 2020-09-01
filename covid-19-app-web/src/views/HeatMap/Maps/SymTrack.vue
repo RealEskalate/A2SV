@@ -750,12 +750,12 @@ export default {
 </script>
 
 <style>
-@import url("https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.css");
+#map {
+  width: 100%;
+  height: 100% !important;
+}
 </style>
 
 <style>
-#map {
-  width: 100%;
-  height: 100%;
-}
+@import url("https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.css");
 </style>

@@ -41,6 +41,18 @@ Vue.mixin({
     },
     numberWithCommas(x) {
       return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    },
+    relevanceColor(relevance) {
+      switch (relevance.toLowerCase()) {
+        case "high":
+          return "red";
+        case "medium":
+          return "orange";
+        case "low":
+          return "yellow";
+        default:
+          return "grey";
+      }
     }
   },
   computed: {

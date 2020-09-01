@@ -75,13 +75,6 @@ class DataAnalytics extends React.Component {
       perMillionGraphLoading: false,
       totalLoading: true,
       testCountDataExist: false,
-      discriptionVisiblity: false,
-      staticsDescription: [],
-      staticsDescriptionLoading: true,
-      permillonStaticsDescription: [],
-      permillonStaticsDescriptionLoading: true,
-      discriptionTitle: "",
-      description: "",
       kittenStartDate: new Date(),
       selected_graph_type: "",
       selected_graph_filter: criterias.confirmed,
@@ -97,12 +90,14 @@ class DataAnalytics extends React.Component {
       selected_graph_labels: [""],
       main_graph_loading: false,
       descriptionVisiblity: false,
+      graph_descriptions:[strings.LoadingGraphDescription,strings.LoadingGraphDescription,strings.LoadingGraphDescription]
     };
     languageStore.subscribe(() => {
       strings.setLanguage(languageStore.getState());
       this.setState({ currLangCode: languageStore.getState() });
       this.setState({graphTypes: [strings.DailyStatsGraph, strings.TotalStatsGraph, strings.PercentagePerMillion],
         dateRanges: [strings.LastWeek, strings.LastMonth, strings.LastThreeMonths],
+        graph_descriptions:[strings.LoadingGraphDescription,strings.LoadingGraphDescription,strings.LoadingGraphDescription],
         filterParameters: [strings.Confirmed, strings.Recovered, strings.Death]});
       this.componentDidMount();
     });
@@ -709,8 +704,9 @@ class DataAnalytics extends React.Component {
       .then(async (json) => {
         if (json !== undefined && json.length !== 0) {
           await newThis.setState({
-            staticsDescription: json,
-            staticsDescriptionLoading: false,
+            graph_descriptions:[json[1].descriptions[0]
+            .description,json[0].descriptions[0]
+            .description,newThis.state.graph_descriptions[2]]
           });
 
           console.log(this.state.staticsDescription);
@@ -721,7 +717,7 @@ class DataAnalytics extends React.Component {
       .catch((error) => {
         Alert.alert(strings.ConnectionProblem, strings.CouldNotConnectToServer);
         // newThis.setState({
-        //   staticsDescriptionLoading: false,
+        //   graph_descriptions:[strings.UnableLoadingGraphDescription,strings.UnableLoadingGraphDescription,newThis.state.graph_descriptions[2]]
         // });
       });
   };
@@ -744,9 +740,7 @@ class DataAnalytics extends React.Component {
       .then(async (json) => {
         if (json !== undefined && json.length !== 0) {
           await newThis.setState({
-            permillonStaticsDescription: json,
-            permillonStaticsDescriptionLoading: false,
-            searching: false,
+            graph_descriptions:[newThis.state.graph_descriptions[0],newThis.state.graph_descriptions[1],json[0].description]
           });
         } else {
           newThis.getPermillionDescriptions();
@@ -755,8 +749,8 @@ class DataAnalytics extends React.Component {
       .catch((error) => {
         Alert.alert(strings.ConnectionProblem, strings.CouldNotConnectToServer);
         // newThis.setState({
-        //   staticsDescriptionLoading: false,
-        // });
+        //   graph_descriptions:[newThis.state.graph_descriptions[0],newThis.state.graph_descriptions[1],strings.UnableLoadingGraphDescription]
+        //   });
       });
   };
 
@@ -868,44 +862,7 @@ class DataAnalytics extends React.Component {
         break;
     }
   };
-  //fetch description of graphs
-  getCriteriaDescriptions = async (title, position) => {
-    let newThis = this;
-    var query =
-      "http://sym-track.herokuapp.com/api/resources/mobile/statistics?language=" +
-      this.state.currLanguage +
-      "&filter=adults&title=" +
-      title;
-    await fetch(query, {
-      method: "GET",
-      headers: {
-        Authorization: "Bearer " + userIDStore.getState().userToken,
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
-      .then(async (json) => {
-        if (json !== undefined && json.length !== 0) {
-          newThis.setState({
-            descriptionTitle: json[0].criteria[position].name,
-            description: json[0].criteria[position].explanation,
-            graphDescriptionLoading: false,
-            searching: false,
-          });
-          newThis.forceUpdate();
-        } else {
-          newThis.getCriteriaDescriptions();
-        }
-      })
-      .catch((error) => {
-        newThis.setState({
-          descriptionTitle: strings.ConnectionProblem,
-          description: "Unable to connect",
-        });
-        // Alert.alert(strings.ConnectionProblem, strings.CouldNotConnectToServer);
-      });
-  };
+
 
   handleTextChange = (item, query) =>
     item.name.toLowerCase().includes(query.toLowerCase());
@@ -1206,68 +1163,7 @@ class DataAnalytics extends React.Component {
                 </Text>
               </View>
             </Layout>
-            {/* <Layout style={styles.backdrop_container}>
-              <Modal
-                visible={this.state.discriptionVisiblity}
-                backdropStyle={styles.backdrop}
-                onBackdropPress={() => {
-                  this.setState({ discriptionVisiblity: false });
-                  this.setState({ discriptionTitle: "" });
-                  this.setState({ description: "" });
-                }}
-              >
-                <Card
-                  disabled={true}
-                  header={
-                    // style={{padding:10}}
-
-                    this.state.descriptionTitle != ""
-                      ? () => (
-                          <Text
-                            style={{
-                              minHeight: 0,
-                              fontSize: 20,
-                              fontFamily: "Roboto-Black",
-                              margin: 10,
-                            }}
-                          >
-                            {this.state.descriptionTitle}
-                          </Text>
-                        )
-                      : null
-                  }
-                  footer={
-                    this.state.description != ""
-                      ? () => (
-                          <Button
-                            style={styles.footerControl}
-                            appearance="ghost"
-                            onPress={() => {
-                              this.setState({ descriptionVisiblity: false });
-                              this.setState({ descriptionTitle: "" });
-                              this.setState({ description: "" });
-                              this.setState({ graphDescriptionLoading: true });
-                            }}
-                          >
-                            {strings.Dismiss}
-                          </Button>
-                        )
-                      : null
-                  }
-                >
-                  {this.state.description == "" ? (
-                    <ActivityIndicator
-                      size="large"
-                      color="#F57B35"
-                      style={{ margin: 5 }}
-                    />
-                  ) : (
-                    <Text>{this.state.description}</Text>
-                  )}
-                </Card>
-              </Modal>
-            </Layout> */}
-
+            
             <Layout
               style={{
                 flex: 1,
@@ -1327,54 +1223,13 @@ class DataAnalytics extends React.Component {
               </Layout>
               {
                 this.state.descriptionVisiblity?
-                this.state.selected_graph_type_index === 2?
-                this.state.permillonStaticsDescriptionLoading?
-                (<Layout
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    margin: 5,
-                  }}
-                >
-                  <ActivityIndicator size="small" color="gray" />
-                  <Text appearance="hint" style={{ fontSize: 16 }}>
-                    {strings.LoadingGraphDescription}
-                  </Text>
-                </Layout>)
-                :(                
+                (                
                   <Text
                     appearance="hint"
                     style={{ fontSize: 16, margin: 5, padding: 5 }}
                   >
                     {
-                      this.state.permillonStaticsDescription[0].description
-                    }
-                  </Text>)
-                :this.state.staticsDescriptionLoading?
-                (<Layout
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    margin: 5,
-                  }}
-                >
-                  <ActivityIndicator size="small" color="gray" />
-                  <Text appearance="hint" style={{ fontSize: 16 }}>
-                    {strings.LoadingGraphDescription}
-                  </Text>
-                </Layout>)
-                :(                
-                  <Text
-                    appearance="hint"
-                    style={{ fontSize: 16, margin: 5, padding: 5 }}
-                  >
-                    {
-                      this.state.selected_graph_type_index === 0?
-                      this.state.staticsDescription[1].descriptions[0]
-                        .description : this.state.staticsDescription[0].descriptions[0]
-                        .description
+                      this.state.graph_descriptions[this.state.selected_graph_type_index-1]
                     }
                   </Text>)
                 :(<></>)

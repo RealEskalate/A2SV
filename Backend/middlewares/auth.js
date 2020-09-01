@@ -17,10 +17,8 @@ exports.verifyToken = async (req, res, next) => {
         res.status(401).send("Incorrect authorization token");
       } else {
         id = authData.user._id;
-        // console.log("auth is " + id);
       }
     });
-    // console.log("going to check user");
     let user = await User.findById({ _id: id });
     if (!user) {
       return res.status(401).send("User does not exist!");
@@ -32,17 +30,17 @@ exports.verifyToken = async (req, res, next) => {
   }
 };
 
-exports.grant_access = function(action, resource) {
+exports.grant_access = function (action, resource) {
   return async (req, res, next) => {
-   try {
-    let user = await User.findById(req.body.loggedInUser);
-    const permission = roles.can(user.role)[action](resource);
-    if (!permission.granted) {
-     return res.status(401).send("You don't have enough permission to perform this action");
+    try {
+      let user = await User.findById(req.body.loggedInUser);
+      const permission = roles.can(user.role)[action](resource);
+      if (!permission.granted) {
+        return res.status(401).send("You don't have enough permission to perform this action");
+      }
+      next()
+    } catch (error) {
+      next(error)
     }
-    next()
-   } catch (error) {
-    next(error)
-   }
   }
 }

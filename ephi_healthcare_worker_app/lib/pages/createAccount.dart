@@ -1,9 +1,10 @@
-import 'package:ephi_healthcare_worker_app/components/alreadyHaveAnAccountCheck.dart';
-import 'package:ephi_healthcare_worker_app/components/roundedButton.dart';
+import 'package:ephi_healthcare_worker_app/pages/confirmation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Components
+import 'package:ephi_healthcare_worker_app/components/alreadyHaveAnAccountCheck.dart';
+import 'package:ephi_healthcare_worker_app/components/roundedButton.dart';
 import '../components/roundedPasswordField.dart';
 import '../components/roundedInputField.dart';
 import 'login.dart';
@@ -69,11 +70,40 @@ class CreateAccountPage extends StatelessWidget {
                       }),
                     );
                   }),
-              SizedBox(height: size.height * 0.05),
+              SizedBox(height: size.height * 0.25),
+
+              Row(
+                children: <Widget>[
+                  Checkbox(
+                    activeColor: Colors.red,
+                    value: true,
+                    onChanged: null,
+                  ),
+                  GestureDetector(
+                    onTap: () => null,
+                    child: Text(
+                        'I agree to the Terms of Services and Privacy Policy',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.grey[800],
+                          fontSize: 11.0,
+                        )),
+                  ),
+                ],
+              ),
+
               RoundedButton(
                   color: Colors.lightGreenAccent[700],
                   text: "CREATE ACCOUNT",
-                  press: () {}),
+                  press: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) {
+                        return ConfirmationPage();
+                      }),
+                    );
+                  }),
+
 //              ButtonTheme(
 //                minWidth: size.width * 0.8,
 //                height: size.width * 0.15,
@@ -100,7 +130,7 @@ class CreateAccountPage extends StatelessWidget {
 //                      )),
 //                ),
 //              ),
-              SizedBox(height: size.height * 0.025),
+//               SizedBox(height: size.height * 0.025),
             ],
           ),
         ),
