@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const caseInvestigationSchema = new mongoose.Schema({
-  _id: mongoose.Schema.Types.ObjectId,
+    _id: mongoose.Schema.Types.ObjectId,
 
     patient_id: {
         type: mongoose.Schema.Types.ObjectId,
@@ -10,11 +10,7 @@ const caseInvestigationSchema = new mongoose.Schema({
     },
     assigned_to: {
         type: mongoose.Schema.Types.ObjectId,
-        required: true,
         ref: 'User'
-    },
-    reserved: {
-        type: Boolean,
     },
     notes: {
         type: String,
@@ -22,9 +18,9 @@ const caseInvestigationSchema = new mongoose.Schema({
     },
 
 },
-{
-    timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' }
-});
+    {
+        timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' }
+    });
 
 
 const CaseInvestigation = mongoose.model("CaseInvestigation", caseInvestigationSchema);
