@@ -510,9 +510,7 @@ export default {
           v => !!v || "Username is required",
           v => (v && v.length <= 30) || "Name must be less than 10 characters"
         ],
-        emailRules: [
-          v => /.+@.+\..+/.test(v) || "E-mail must be valid"
-        ],
+        emailRules: [v => /.+@.+\..+/.test(v) || "E-mail must be valid"],
         ageGroupRules: [v => !!v || "Age Range is required"],
         genderRules: [v => !!v || "Gender is required"],
         old_password: [

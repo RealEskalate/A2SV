@@ -1,4 +1,4 @@
-const Users = () => import("../views-admin/people/Users");
+const Users = () => import("../views-admin/users/Users");
 
 const Dashboard = () => import("../views-admin/dashboard/Dashboard.vue");
 

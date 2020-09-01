@@ -9,7 +9,9 @@
       >
         <v-card class="mx-auto" :flat="true" max-width="344">
           <v-card-text>
-            <p class="display-1 text-center">{{ getTotalSymptoms }}</p>
+            <p class="display-1 text-center">
+              {{ getHighLevelStats.allUsers }}
+            </p>
             <h4 class="text-center">{{ title_one }}</h4>
           </v-card-text>
         </v-card>
@@ -25,7 +27,7 @@
         <v-card class="mx-auto" :flat="true" max-width="344">
           <v-card-text>
             <p class="display-1 text-center">
-              {{ getMostCommonSymptomCount }}
+              {{ getHighLevelStats.ephiUsers }}
             </p>
             <h4 class="text-center">{{ title_two }}</h4>
           </v-card-text>
@@ -42,7 +44,7 @@
         <v-card class="mx-auto" :flat="true" max-width="344">
           <v-card-text>
             <p class="display-1 text-center">
-              15,333
+              {{ getHighLevelStats.healthcareWorkers }}
             </p>
             <h4 class="text-center">{{ title_three }}</h4>
           </v-card-text>
@@ -59,7 +61,7 @@
         <v-card class="mx-auto" :flat="true" max-width="344">
           <v-card-text>
             <p class="display-1 text-center">
-              15
+              {{ getHighLevelStats.thisWeekNewUsers }}
             </p>
             <h4 class="text-center">{{ title_four }}</h4>
           </v-card-text>
@@ -77,27 +79,20 @@ export default {
   components: {},
   data() {
     return {
-      title_one: "Admin",
-      title_two: "Health care workers",
-      title_three: "Total Users",
+      title_one: "Total Users",
+      title_two: "Admin",
+      title_three: "Health care workers",
       title_four: "New users, last 7 days"
     };
   },
   methods: {
-    ...mapActions(["fetchTotalSymptoms", "fetchTotalPeoplesWithSymptoms"])
+    ...mapActions(["fetchUserStats"])
   },
   computed: {
-    ...mapGetters([
-      "getTotalSymptoms",
-      "getMostCommonSymptom",
-      "getMostCommonSymptomCount",
-      "getTotalPeoplesWithSymptoms",
-      "getSymptomStatLoaders"
-    ])
+    ...mapGetters(["getHighLevelStats", "getSymptomStatLoaders"])
   },
   created() {
-    this.fetchTotalSymptoms();
-    this.fetchTotalPeoplesWithSymptoms();
+    this.fetchUserStats();
   }
 };
 </script>

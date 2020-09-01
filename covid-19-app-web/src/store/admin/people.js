@@ -2,17 +2,20 @@ import ajax from "../../auth/ajax";
 
 const state = {
   users: [],
+  highLevelStats: null,
   usersCount: 0
 };
 
 const getters = {
   getUsers: state => state.users,
-  getUsersCount: state => state.usersCount
+  getUsersCount: state => state.usersCount,
+  getHighLevelStats: state => state.highLevelStats
 };
 
 const mutations = {
   setUsers: (state, payload) => (state.users = payload),
-  setUsersCount: (state, payload) => (state.usersCount = payload)
+  setUsersCount: (state, payload) => (state.usersCount = payload),
+  setHighLevelStats: (state, payload) => (state.highLevelStats = payload)
 };
 
 const actions = {
@@ -20,7 +23,6 @@ const actions = {
     { commit },
     { page, size, status, username, start_date, end_date }
   ) => {
-    commit("setSymptomStatLoaders", { key: "total", value: true });
     ajax
       .get(`users`, {
         params: {
@@ -40,6 +42,20 @@ const actions = {
         },
         error => {
           console.log(error);
+        }
+      );
+  },
+  fetchUserStats: ({ commit }) => {
+    commit("setSymptomStatLoaders", { key: "total", value: true });
+    ajax
+      .get("users-stat")
+      .then(
+        res => {
+          console.log(res.data);
+          commit("setHighLevelStats", res.data);
+        },
+        err => {
+          console.log(err);
         }
       )
       .finally(function() {

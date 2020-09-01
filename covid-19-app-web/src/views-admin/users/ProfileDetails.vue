@@ -1,7 +1,7 @@
 <template>
   <v-navigation-drawer
     width="350"
-    height="80%"
+    height="100%"
     v-model="side_bar"
     right
     absolute
@@ -22,37 +22,37 @@
     <v-container>
       <v-card class="mx-auto mt-5" outlined>
         <v-card-text>
-          <h3 class="d-inline-flex text--primary">John Doe</h3>
+          <h3 class="d-inline-flex text--primary">{{ basicInfo.username }}</h3>
           <v-chip class="float-right" small color="primary" text-color="white">
-            Admin
+            {{ basicInfo.role }}
           </v-chip>
         </v-card-text>
         <v-list dense>
           <v-list-item>
             <v-list-item-content>Gender</v-list-item-content>
             <v-list-item-content class="align-end">
-              Male
+              {{ basicInfo.gender }}
             </v-list-item-content>
           </v-list-item>
           <v-list-item>
-            <v-list-item-content>Last Update</v-list-item-content>
+            <v-list-item-content>Age group</v-list-item-content>
             <v-list-item-content class="align-end">
-              Aug 25, 2020
+              {{ basicInfo.age_group }}
             </v-list-item-content>
           </v-list-item>
           <v-list-item>
-            <v-list-item-content>Status</v-list-item-content>
+            <v-list-item-content>Country</v-list-item-content>
             <v-list-item-content class="align-end">
-              fine
+              {{ basicInfo.current_country }}
             </v-list-item-content>
           </v-list-item>
           <v-card-text>
             <h3 class="text--primary">Symptoms</h3>
           </v-card-text>
           <v-list-item>
-            <v-list-item-content>Location</v-list-item-content>
+            <v-list-item-content>Status</v-list-item-content>
             <v-list-item-content class="align-end">
-              Addis Ababa, Ethiopia
+              {{ status }}
             </v-list-item-content>
           </v-list-item>
         </v-list>
@@ -63,14 +63,19 @@
 
 <script>
 import { mdiClose } from "@mdi/js";
+import ajax from "../../auth/ajax";
 
 export default {
   name: "DetailSidebar",
-  props: ["id", "sidebar"],
+  props: ["userId", "sidebar"],
   data() {
     return {
       mdiClose,
-      side_bar: false
+      side_bar: false,
+      basic: null,
+      status: null,
+      testReports: null,
+      currentSymptoms: null
     };
   },
   watch: {
@@ -78,6 +83,30 @@ export default {
       handler() {
         this.side_bar = this.sidebar;
       }
+    },
+    userId: {
+      handler() {
+        console.log(this.id);
+        ajax.get(`users-detail/${this.userId}`).then(
+          res => {
+            console.log(res.data);
+            if (res.data.symptomHistory !== null) {
+              this.basic = res.data.symptomHistory.user_id;
+              this.currentSymptoms = res.data.symptomHistory.current_symptoms;
+              this.status = res.data.symptomHistory.status;
+              this.testReports = res.data.testReports;
+            }
+          },
+          err => {
+            console.log(err);
+          }
+        );
+      }
+    }
+  },
+  computed: {
+    basicInfo() {
+      return this.basic;
     }
   },
   methods: {
@@ -108,5 +137,8 @@ export default {
   box-shadow: 0 5px 10px rgba(154, 160, 185, 0.05),
     0 15px 40px rgba(166, 173, 201, 0.2) !important;
   border-radius: 15px !important;
+}
+.v-list-item__content {
+  font-size: 0.8em !important;
 }
 </style>

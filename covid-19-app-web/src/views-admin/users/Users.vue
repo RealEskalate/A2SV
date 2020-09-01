@@ -25,7 +25,7 @@
     <DetailSidebar
       v-if="this.$vuetify.breakpoint.mdAndUp"
       class="shadow-lg"
-      :id="userId"
+      :userId="userId"
       :sidebar="sidebar"
       v-on:close-sidebar="sidebar = false"
     />
@@ -46,6 +46,11 @@
       class="elevation-1 shadow"
       item-class="table-row"
     >
+      <template v-slot:[`item.created_at`]="{ item }">
+        <p>
+          {{ formatDate(item) }}
+        </p>
+      </template>
       <template v-slot:[`item.actions`]="{ item }">
         <v-btn icon small color="primary">
           <v-icon class="mr-2" @click="showDetail(item._id)">
@@ -89,14 +94,14 @@ export default {
       headers: [
         { text: "User", value: "username", sortable: false },
         { text: "Country", value: "current_country", sortable: false },
+        { text: "Gender", value: "gender", sortable: false },
         {
           text: "Creation Date",
           align: "start",
-          value: "date",
+          value: "created_at",
           sortable: false
         },
         { text: "Account type", value: "role", sortable: false },
-        // { text: "Covid Case Status", value: "symptoms", sortable: false },
         { text: "Actions", value: "actions", sortable: false }
       ],
       options: { page: 1, itemsPerPage: 10 },
@@ -158,12 +163,15 @@ export default {
       else return moment(new Date()).format("YYYY-MM-DD");
     },
     showDetail(id) {
-      console.log(id);
+      this.userId = id;
       if (this.$vuetify.breakpoint.mdAndUp) {
         this.sidebar = true;
       } else {
         this.bottomsheet = true;
       }
+    },
+    formatDate(item) {
+      return moment(item.created_at).format("ddd, MMMM Do YYYY");
     }
   },
   computed: {
