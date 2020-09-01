@@ -22,12 +22,11 @@ class RoundedButton extends StatelessWidget {
       child: RaisedButton(
         color: color,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
-        onPressed: () {},
+        onPressed: press,
         child: Text(
             text,
             textAlign: TextAlign.center,
             style: TextStyle(
-
               color: Colors.white,
               fontSize: 16.0,
             )

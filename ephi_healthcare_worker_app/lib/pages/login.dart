@@ -1,3 +1,5 @@
+import 'package:ephi_healthcare_worker_app/components/roundedButton.dart';
+
 import '../components/alreadyHaveAnAccountCheck.dart';
 import '../components/roundedInputField.dart';
 import '../components/roundedPasswordField.dart';
@@ -5,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'createAccount.dart';
+import 'homePage.dart';
 
 class LoginPage extends StatelessWidget {
   @override
@@ -13,7 +16,7 @@ class LoginPage extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
 //      backgroundColor: Colors.amber[50],
-      backgroundColor: Colors.white,
+//       backgroundColor: Colors.white,
 //      appBar: AppBar(
 //        title: Text('Gazetem Mobil Uygulaması'),
 //        centerTitle: true,
@@ -55,38 +58,49 @@ class LoginPage extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) {
-                      return CreateAccountPage();
+                        return CreateAccountPage();
                       }),
                     );
                   }),
-              SizedBox(height: size.height * 0.05),
-              SizedBox(height: size.height * 0.05),
-              ButtonTheme(
-                minWidth: size.width * 0.8,
-                height: size.width * 0.15,
-                child: RaisedButton(
-                  color: Colors.lightBlue,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(40)),
-                  onPressed: () {
-//                    Navigator.push(
-//                      context,
-//                      MaterialPageRoute(
-//                        builder: (context) {
-//                          return CreateAccountScreen();
-//                        },
-//                      ),
-//                    );
-                  },
-                  child: Text('SIGN IN',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16.0,
-                      )),
-                ),
+              SizedBox(height: size.height * 0.35),
+              RoundedButton(
+                color: Colors.lightBlue, text: "SIGN IN",
+                press: () {
+                  // No go back
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => Home()),
+                        (Route<dynamic> route) => false,
+                  );
+                }
               ),
-              SizedBox(height: size.height * 0.025),
+
+//               ButtonTheme(
+//                 minWidth: size.width * 0.8,
+//                 height: size.width * 0.15,
+//                 child: RaisedButton(
+//                   color: Colors.lightBlue,
+//                   shape: RoundedRectangleBorder(
+//                       borderRadius: BorderRadius.circular(40)),
+//                   onPressed: () {
+// //                    Navigator.push(
+// //                      context,
+// //                      MaterialPageRoute(
+// //                        builder: (context) {
+// //                          return CreateAccountScreen();
+// //                        },
+// //                      ),
+// //                    );
+//                   },
+//                   child: Text('SIGN IN',
+//                       textAlign: TextAlign.center,
+//                       style: TextStyle(
+//                         color: Colors.white,
+//                         fontSize: 16.0,
+//                       )),
+//                 ),
+//               ),
+              // SizedBox(height: size.height * 0.025),
             ],
           ),
         ),

@@ -9,6 +9,6 @@ var test_report_controller = require("../controllers/TestReportController.js");
 router.get("/api/test-report", verifyToken.verifyToken, test_report_controller.get_all_test_reports);
 router.post("/api/test-report", verifyToken.verifyToken, test_report_controller.post_test_report);
 router.patch("/api/test-report", verifyToken.verifyToken, test_report_controller.update_test_report);
-router.delete("/api/test-report/:id", verifyToken.verifyToken, test_report_controller.delete_symptom);
+router.delete("/api/test-report/:id", verifyToken.verifyToken, test_report_controller.delete_test_report);
 
 module.exports = router;
