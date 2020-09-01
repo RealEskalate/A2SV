@@ -2,10 +2,11 @@ var express = require("express");
 var router = express.Router();
 
 var caseInvestigationController = require('../controllers/CaseInvestigationController');
+const verifyToken = require("../middlewares/auth.js").verifyToken;
 
-router.get('/api/case_investigation', caseInvestigationController.getCaseInvestigations)
-router.get('/api/case_investigation/:id', caseInvestigationController.getCaseInvestigationById)
-router.patch('/api/case_investigation/', caseInvestigationController.addOrUpdateCaseInvestigation)
-router.delete('/api/case_investigation/:id', caseInvestigationController.deleteCaseInvestigation)
+router.get('/api/case_investigations', verifyToken, caseInvestigationController.getCaseInvestigations)
+router.get('/api/case_investigations/:id', verifyToken, caseInvestigationController.getCaseInvestigationById)
+router.patch('/api/case_investigations/', verifyToken, caseInvestigationController.addOrUpdateCaseInvestigation)
+router.delete('/api/case_investigations/:id', verifyToken, caseInvestigationController.deleteCaseInvestigation)
 
 module.exports = router;

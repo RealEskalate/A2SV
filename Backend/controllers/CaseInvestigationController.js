@@ -1,4 +1,4 @@
-const CaseInvestigation = require("../models/CaseInvestigation");
+const { CaseInvestigation } = require("../models/CaseInvestigation.js");
 
 // Fetch all case investigations, with filters if any
 exports.getCaseInvestigations = async (req, res) => {
@@ -16,11 +16,17 @@ exports.getCaseInvestigations = async (req, res) => {
     const page = parseInt(req.query.page) || 1;
     const size = parseInt(req.query.size) || 30;
     try {
-        const investigations = await CaseInvestigation.find(filter, {}, { skip: page - 1, limit: size })
-        const result = await CaseInvestigation.populate(investigations, [
+        const investigations = await CaseInvestigation.find(filter, {}, { skip: page - 1, limit: size * 1 });
+        const populated = await CaseInvestigation.populate(investigations, [
             { model: 'Patient', path: 'patient_id', select: '_id first_name last_name' },
             { model: 'User', path: 'assigned_to', select: '_id username' }
         ]);
+        const result = {
+            data_count: await CaseInvestigation.countDocuments(filter),
+            page_size: size,
+            current_page: page,
+            data: populated
+        };
         return res.send(result);
     } catch (err) {
         return res.status(500).send(err.toString());

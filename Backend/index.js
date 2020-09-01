@@ -33,6 +33,8 @@ const WebResourceRouter = require("./routes/WebRoutes");
 const CitizenSymptomRouter = require("./routes/CitizenSymptomRoutes");
 const NewCitizenSymptomRouter = require("./routes/NewCitizenSymptomRoutes");
 const TestReportRouter = require("./routes/TestReportRoutes");
+const CaseInvestigationRouter = require("./routes/CaseInvestigationRoutes");
+const InterviewRouter = require("./routes/InterviewRoutes");
 
 const logger = require("./middlewares/logger");
 const bodyParser = require("body-parser");
@@ -80,6 +82,8 @@ app.use(WebResourceRouter);
 app.use(CitizenSymptomRouter);
 app.use(NewCitizenSymptomRouter);
 app.use(TestReportRouter);
+app.use(CaseInvestigationRouter);
+app.use(InterviewRouter);
 
 app.use(express.static("public"));
 app.use("/img", express.static(__dirname + "/img"));
