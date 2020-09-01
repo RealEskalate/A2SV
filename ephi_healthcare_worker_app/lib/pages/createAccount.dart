@@ -1,13 +1,13 @@
-import 'package:ephi_healthcare_worker_app/components/alreadyHaveAnAccountCheck.dart';
-import 'package:ephi_healthcare_worker_app/components/roundedButton.dart';
+import 'package:ephi_healthcare_worker_app/pages/confirmation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Components
+import 'package:ephi_healthcare_worker_app/components/alreadyHaveAnAccountCheck.dart';
+import 'package:ephi_healthcare_worker_app/components/roundedButton.dart';
 import '../components/roundedPasswordField.dart';
 import '../components/roundedInputField.dart';
 import 'login.dart';
-import '../pages/Home.dart';
 //import 'package:email_validator/email_validator.dart';
 
 class CreateAccountPage extends StatelessWidget {
@@ -70,38 +70,67 @@ class CreateAccountPage extends StatelessWidget {
                       }),
                     );
                   }),
-              SizedBox(height: size.height * 0.05),
-              // RoundedButton(
-              //     color: Colors.lightGreenAccent[700],
-              //     text: "CREATE ACCOUNT",
-              //     press: () {}),
-             ButtonTheme(
-               minWidth: size.width * 0.8,
-               height: size.width * 0.15,
-               child: RaisedButton(
-                 color: Colors.lightGreenAccent[700],
-                 shape: RoundedRectangleBorder(
-                     borderRadius: BorderRadius.circular(40)
-                 ),
-                 onPressed: () {
-                   Navigator.push(
-                     context,
-                     MaterialPageRoute(
-                       builder: (context) {
-                         return MyApp();
-                       },
-                     ),
-                   );
-                 },
-                 child: Text('CREATE ACCOUNT',
-                     textAlign: TextAlign.center,
-                     style: TextStyle(
-                       color: Colors.white,
-                       fontSize: 16.0,
-                     )),
-               ),
-             ),
-              SizedBox(height: size.height * 0.025),
+              SizedBox(height: size.height * 0.25),
+
+              Row(
+                children: <Widget>[
+                  Checkbox(
+                    activeColor: Colors.red,
+                    value: true,
+                    onChanged: null,
+                  ),
+                  GestureDetector(
+                    onTap: () => null,
+                    child: Text(
+                        'I agree to the Terms of Services and Privacy Policy',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.grey[800],
+                          fontSize: 11.0,
+                        )),
+                  ),
+                ],
+              ),
+
+              RoundedButton(
+                  color: Colors.lightGreenAccent[700],
+                  text: "CREATE ACCOUNT",
+                  press: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) {
+                        return ConfirmationPage();
+                      }),
+                    );
+                  }),
+
+//              ButtonTheme(
+//                minWidth: size.width * 0.8,
+//                height: size.width * 0.15,
+//                child: RaisedButton(
+//                  color: Colors.lightGreenAccent[700],
+//                  shape: RoundedRectangleBorder(
+//                      borderRadius: BorderRadius.circular(40)
+//                  ),
+//                  onPressed: () {
+////                    Navigator.push(
+////                      context,
+////                      MaterialPageRoute(
+////                        builder: (context) {
+////                          return CreateAccountScreen();
+////                        },
+////                      ),
+////                    );
+//                  },
+//                  child: Text('CREATE ACCOUNT',
+//                      textAlign: TextAlign.center,
+//                      style: TextStyle(
+//                        color: Colors.white,
+//                        fontSize: 16.0,
+//                      )),
+//                ),
+//              ),
+//               SizedBox(height: size.height * 0.025),
             ],
           ),
         ),
