@@ -58,9 +58,9 @@ const actions = {
                 }
               ),
               person: element.user_id.username,
-              healthcareOfficial: element.healthcare_worker_id.username,
-              userInfo: element.user_id,
-              healthcareWorkerInfo: element.healthcare_worker_id
+              gender: element.user_id.gender,
+              ageGroup: element.user_id.age_group,
+              healthcareOfficial: element.healthcare_worker_id.username
             };
             tableData.push(row);
           });

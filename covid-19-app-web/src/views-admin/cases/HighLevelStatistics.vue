@@ -1,23 +1,15 @@
 <template>
-  <v-row>
-    <v-col>
-      <v-skeleton-loader
-        :loading="getCaseLoaders.caseList"
-        transition="scale-transition"
-        height="100"
-        width="300"
-        type="list-item-two-line"
-        class="mx-auto"
-      >
-        <v-card class="mx-auto" :flat="true" max-width="344">
-          <v-card-text>
-            <p class="display-1 text-center">{{ getTotalCases }}</p>
-            <h4 class="text-center">{{ title_one }}</h4>
-          </v-card-text>
-        </v-card>
-      </v-skeleton-loader>
-    </v-col>
-  </v-row>
+  <v-card shaped outlined>
+    <v-row>
+      <v-col class="mx-auto">
+        <div
+          class="display-1 font-weight-light text-center pt-3"
+          v-text="getTotalCases"
+        />
+        <v-subheader class="text-center p-0 justify-center" v-text="title" />
+      </v-col>
+    </v-row>
+  </v-card>
 </template>
 
 <script>
@@ -25,14 +17,13 @@ import { mapGetters } from "vuex";
 
 export default {
   name: "HighLevelStatistics",
-  components: {},
   data() {
     return {
-      title_one: "TOTAL NUMBER OF CASES"
+      title: "TOTAL NUMBER OF CASES"
     };
   },
   computed: {
-    ...mapGetters(["getTotalCases", "getCaseLoaders"])
+    ...mapGetters(["getTotalCases"])
   },
   created() {}
 };

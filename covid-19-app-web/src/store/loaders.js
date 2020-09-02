@@ -37,8 +37,7 @@ export default {
       peopleList: false
     },
     caseLoaders: {
-      caseList: false,
-      total: 0
+      caseList: false
     }
   },
   getters: {

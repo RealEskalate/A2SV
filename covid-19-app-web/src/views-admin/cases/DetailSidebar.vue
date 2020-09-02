@@ -1,87 +1,88 @@
 <template>
   <v-navigation-drawer
     width="350"
-    height="80%"
+    height="100%"
     v-model="sidebar"
     right
     absolute
-    bottom
-    color="#F5F6F7"
-    class="shadow-sm pb-9"
+    class="shadow-sm"
   >
-    <v-card color="primary" dark class="">
-      <v-row class="align-self-center align-center align-content-center">
-        <v-icon color="white" class="ml-5" @click="close">{{
-          mdiClose
-        }}</v-icon>
-        <p class="display-1 mx-auto my-2" style="color: white!important;">
-          Case Details
-        </p>
-      </v-row>
-    </v-card>
-    <v-container>
-      <v-card class="mx-auto mt-5" outlined>
-        <v-card-text>
-          <h3 class="d-inline-flex text--primary">
-            {{ detail.userInfo.username }}
-          </h3>
-        </v-card-text>
-        <v-list dense>
-          <v-list-item>
-            <v-list-item-content>Case ID</v-list-item-content>
-            <v-list-item-content class="align-end">
-              {{ detail.caseId }}
-            </v-list-item-content>
-          </v-list-item>
+    <v-list-item class="my-2 shadow-sm p-sticky">
+      <v-list-item-action>
+        <v-btn
+          class="v-card--shaped"
+          large
+          @click="$emit('close-sidebar')"
+          icon
+        >
+          <v-icon v-text="mdiForwardburger" />
+        </v-btn>
+      </v-list-item-action>
+      <v-list-item-content>
+        <div v-text="detail.person" />
+      </v-list-item-content>
+    </v-list-item>
 
-          <v-list-item>
-            <v-list-item-content>Last Update</v-list-item-content>
-            <v-list-item-content class="align-end">
-              {{ detail.caseUpdateDate }}
-            </v-list-item-content>
-          </v-list-item>
-          <v-card-text>
-            <h3 class="text--primary">Case Details</h3>
-          </v-card-text>
-          <v-list-item>
-            <v-list-item-content>Case Submission Date</v-list-item-content>
-            <v-list-item-content class="align-end">
-              {{ detail.caseSubmissionDate }}
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item>
-            <v-list-item-content>Latest Status</v-list-item-content>
-            <v-list-item-content class="align-end">
-              {{ detail.status }}
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item>
-            <v-list-item-content>Healthcare Official</v-list-item-content>
-            <v-list-item-content class="align-end">
-              {{ detail.healthcareInfo.username }}
-            </v-list-item-content>
-          </v-list-item>
-        </v-list>
-      </v-card>
-    </v-container>
+    <v-list>
+      <v-subheader v-text="$t('map.details')" />
+      <v-list-item
+        :key="index"
+        v-for="(feature, index) in detailSingleFeatures"
+      >
+        <v-list-item-avatar size="20">
+          <v-icon v-text="feature.icon" />
+        </v-list-item-avatar>
+
+        <v-list-item-content>
+          <span>
+            {{ $t(feature.name) }}:
+            <span class="grey--text" v-text="detail[feature.key]" />
+          </span>
+        </v-list-item-content>
+      </v-list-item>
+    </v-list>
   </v-navigation-drawer>
 </template>
 
 <script>
-import { mdiClose } from "@mdi/js";
+import {
+  mdiGenderMaleFemaleVariant,
+  mdiForwardburger,
+  mdiStateMachine,
+  mdiWatch,
+  mdiBabyCarriage,
+  mdiDoctor,
+  mdiIdCard
+} from "@mdi/js";
 
 export default {
   name: "DetailSidebar",
   props: ["detail", "sidebar"],
   data() {
     return {
-      mdiClose
+      mdiForwardburger
     };
   },
-  methods: {
-    close() {
-      this.side_bar = false;
-      this.$emit("close-sidebar");
+  methods: {},
+  computed: {
+    detailSingleFeatures() {
+      return [
+        { name: "Gender", key: "gender", icon: mdiGenderMaleFemaleVariant },
+        { name: "Age Group", key: "ageGroup", icon: mdiBabyCarriage },
+        { name: "Case ID", key: "caseId", icon: mdiIdCard },
+        { name: "Status", key: "status", icon: mdiStateMachine },
+        {
+          name: "Healthcare Official",
+          key: "healthcareOfficial",
+          icon: mdiDoctor
+        },
+        {
+          name: "Case Creation Date",
+          key: "caseSubmissionDate",
+          icon: mdiWatch
+        },
+        { name: "Last Case Update", key: "caseUpdateDate", icon: mdiWatch }
+      ];
     }
   }
 };

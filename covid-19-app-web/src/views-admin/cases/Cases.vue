@@ -1,54 +1,53 @@
 <template>
   <v-container class="align-content-center">
-    <v-expansion-panels popout focusable>
-      <v-expansion-panel class="shadow">
-        <v-expansion-panel-header>
-          <v-row>
-            <v-icon md class="ma-1 mr-3">{{ mdiFilterVariant }}</v-icon>
-            <h3 class="align-center font-weight-thin d-inline-flex  left">
-              Filter
-            </h3>
-          </v-row>
-        </v-expansion-panel-header>
-        <v-expansion-panel-content class="mt-5">
-          <CaseFilter
-            :date_range="filters.date_range"
-            v-on:date-change="onDateChange"
-            v-on:set-search="searchPerson"
-            v-on:status-change="onStatusChange"
-          />
-        </v-expansion-panel-content>
-      </v-expansion-panel>
-    </v-expansion-panels>
     <HighLevelStatistics class="my-8" />
-    <DetailSidebar
-      v-if="$vuetify.breakpoint.mdAndUp"
-      class="shadow-lg"
-      :detail="detail"
-      :sidebar="sidebar"
-      v-on:close-sidebar="sidebar = false"
-    />
-    <DetailSidebarSmall
-      class="shadow-lg"
-      :detail="detail"
-      :sidebar="sidebar"
-      :sheet="bottomsheet"
-      v-else
-    />
-    <v-data-table
-      :headers="headers"
-      :options.sync="options"
-      :items="getCases"
-      :server-items-length="getTotalCases"
-      :loading="getCaseLoaders.caseList"
-      :footer-props="{ 'items-per-page-options': [5, 10, 25, 50] }"
-      class="elevation-1 shadow"
-      item-class="table-row"
+    <v-card
+      outlined
+      shaped
+      class="mb-10 pa-4 overflow-hidden"
+      min-height="500px"
     >
-      <template v-slot:[`item.actions`]="{ item }">
-        <v-btn @click="showDetail(item)" small color="primary">Detail</v-btn>
-      </template>
-    </v-data-table>
+      <CaseFilter
+        :date_range="filters.date_range"
+        v-on:date-change="onDateChange"
+        v-on:set-search="searchPerson"
+        v-on:status-change="onStatusChange"
+      />
+      <v-data-table
+        :headers="headers"
+        :options.sync="options"
+        :items="getCases"
+        :server-items-length="getTotalCases"
+        :loading="getCaseLoaders.caseList"
+        :footer-props="{ 'items-per-page-options': [5, 10, 25, 50] }"
+        item-class="table-row"
+      >
+        <template v-slot:[`item.actions`]="{ item }">
+          <v-btn
+            @click="showDetail(item)"
+            class="v-card--shaped"
+            small
+            color="primary"
+            v-text="'Details'"
+          />
+        </template>
+      </v-data-table>
+
+      <DetailSidebar
+        v-on:close-sidebar="onClose"
+        v-if="$vuetify.breakpoint.mdAndUp"
+        class="shadow-lg"
+        :detail="detail"
+        :sidebar="sidebar"
+      />
+      <DetailSidebarSmall
+        class="shadow-lg"
+        :detail="detail"
+        :sidebar="sidebar"
+        :sheet="bottomsheet"
+        v-else
+      />
+    </v-card>
   </v-container>
 </template>
 
@@ -86,7 +85,8 @@ export default {
           text: "Healthcare Official",
           value: "healthcareOfficial",
           sortable: false
-        }
+        },
+        { text: "Actions", value: "actions", sortable: false }
       ],
       defaultOptions: { page: 1, itemsPerPage: 10 },
       options: { page: 1, itemsPerPage: 10 },
@@ -97,12 +97,14 @@ export default {
       },
       awaitingSearch: false,
       detail: {
-        userInfo: {},
-        healthcareWorkerInfo: {},
         caseUpdateDate: "",
         caseSubmissionDate: "",
         status: "",
-        caseId: ""
+        caseId: "",
+        person: "",
+        gender: "",
+        ageGroup: "",
+        healthcareOfficial: ""
       }
     };
   },
@@ -168,12 +170,14 @@ export default {
         this.bottomsheet = true;
       }
       this.detail = {
-        userInfo: item.userInfo,
-        healthcareWorkerInfo: item.healthcareWorkerInfo,
         caseUpdateDate: item.updatedAt,
         caseSubmissionDate: item.date,
         status: item.status,
-        caseId: item.id
+        caseId: item.id,
+        person: item.person,
+        gender: item.gender,
+        ageGroup: item.ageGroup,
+        healthcareOfficial: item.healthcareOfficial
       };
     }
   },
