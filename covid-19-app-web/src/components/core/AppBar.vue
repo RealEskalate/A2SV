@@ -229,7 +229,8 @@ import {
   mdiTranslate,
   mdiEmailSend,
   mdiViewDashboard,
-  mdiVirus
+  mdiVirus,
+  mdiAmbulance
 } from "@mdi/js";
 import { languages } from "../../plugins/i18n";
 
@@ -288,6 +289,12 @@ export default {
           text: "map.symptoms",
           icon: mdiVirus,
           to: "Symptoms",
+          roles: ["ephi_user"]
+        },
+        {
+          text: "Cases",
+          icon: mdiAmbulance,
+          to: "Cases",
           roles: ["ephi_user"]
         },
         {
