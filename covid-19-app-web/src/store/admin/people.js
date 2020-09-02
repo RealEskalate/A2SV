@@ -2,7 +2,12 @@ import ajax from "../../auth/ajax";
 
 const state = {
   users: [],
-  highLevelStats: null,
+  highLevelStats: [
+    { allUsers: 0 },
+    { ephiUsers: 0 },
+    { healthcareWorkers: 0 },
+    { thisWeekNewUsers: 0 }
+  ],
   usersCount: 0
 };
 

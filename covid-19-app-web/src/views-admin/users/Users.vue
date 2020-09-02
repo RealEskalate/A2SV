@@ -1,83 +1,91 @@
 <template>
-  <v-container class="align-content-center">
-    <delete-modal :open="deleteDialog" @onConfirmation="deleteUser" />
-    <v-expansion-panels popout focusable>
-      <v-expansion-panel class="shadow">
-        <v-expansion-panel-header>
-          <v-row>
-            <v-icon md class="ma-1 mr-3">{{ mdiFilterVariant }}</v-icon>
-            <h3 class="align-center font-weight-thin d-inline-flex  left">
-              Filter
-            </h3>
-          </v-row>
-        </v-expansion-panel-header>
-        <v-expansion-panel-content class="mt-5">
-          <UsersFilter
-            :date_range="date_range"
-            v-on:date-change="onDateChange"
-            v-on:set-search="searchPerson"
-            v-on:status-change="onStatusChange"
+  <v-container class="align-content-center mt-md-6 mt-sm-3">
+    <v-card shaped outlined>
+      <v-row>
+        <v-col
+          cols="12"
+          sm="6"
+          md="3"
+          v-for="item in highLevelTitles"
+          :key="item.title"
+        >
+          <p class="display-1 font-weight-light text-center pt-3">
+            {{ getHighLevelStats[item.value] }}
+          </p>
+          <v-subheader
+            class="text-center p-0 justify-center"
+            v-text="item.title.toUpperCase()"
           />
-        </v-expansion-panel-content>
-      </v-expansion-panel>
-    </v-expansion-panels>
-    <HighLevelStatistics class="my-8" />
-    <DetailSidebar
-      v-if="this.$vuetify.breakpoint.mdAndUp"
-      class="shadow-lg"
-      :userId="userId"
-      :sidebar="sidebar"
-      v-on:close-sidebar="sidebar = false"
-    />
-    <DetailSidebarSmall
-      class="shadow-lg"
-      :id="userId"
-      :sidebar="sidebar"
-      :sheet="bottomsheet"
-      v-else
-    />
-    <v-data-table
-      :headers="headers"
-      :options.sync="options"
-      :items="getUsers"
-      :server-items-length="getUsersCount"
-      :loading="getSymptomStatLoaders.peopleList"
-      :footer-props="{ 'items-per-page-options': [5, 10, 25, 50] }"
-      class="elevation-1 shadow"
-      item-class="table-row"
+        </v-col>
+      </v-row>
+    </v-card>
+    <delete-modal :open="deleteDialog" @onConfirmation="deleteUser" />
+    <v-card
+      outlined
+      shaped
+      class="mb-10 pa-4 overflow-hidden mt-8 shadow"
+      min-height="500px"
     >
-      <template v-slot:[`item.created_at`]="{ item }">
-        <p>
-          {{ formatDate(item) }}
-        </p>
-      </template>
-      <template v-slot:[`item.actions`]="{ item }">
-        <v-btn icon small color="primary">
-          <v-icon class="mr-2" @click="showDetail(item._id)">
-            {{ mdiAccountDetails }}
+      <SymptomFilter
+        :date_range="filters.date_range"
+        @date-change="onDateChange"
+        @set-search="searchPerson"
+        @status-change="onStatusChange"
+      />
+      <v-data-table
+        :headers="headers"
+        :options.sync="options"
+        :items="getUsers"
+        :server-items-length="getUsersCount"
+        :loading="getSymptomStatLoaders.peopleList"
+        :footer-props="{ 'items-per-page-options': [5, 10, 25, 50] }"
+        item-class="table-row"
+      >
+        <template v-slot:[`item.created_at`]="{ item }">
+          <p>
+            {{ formatDate(item) }}
+          </p>
+        </template>
+        <template v-slot:[`item.actions`]="{ item }">
+          <v-btn icon small color="primary">
+            <v-icon class="mr-2" @click="showDetail(item._id)">
+              {{ mdiAccountDetails }}
+            </v-icon>
+          </v-btn>
+          <v-icon color="#ff6767" @click="deleteDialog = true">
+            {{ mdiDeleteForever }}
           </v-icon>
-        </v-btn>
-        <v-icon color="#ff6767" @click="deleteDialog = true">
-          {{ mdiDeleteForever }}
-        </v-icon>
-      </template>
-    </v-data-table>
+        </template>
+      </v-data-table>
+      <DetailSidebar
+        v-if="this.$vuetify.breakpoint.mdAndUp"
+        class="shadow-lg"
+        :userId="userId"
+        :sidebar="sidebar"
+        v-on:close-sidebar="sidebar = false"
+      />
+      <DetailSidebarSmall
+        class="shadow-lg"
+        :id="userId"
+        :sidebar="sidebar"
+        :sheet="bottomsheet"
+        v-else
+      />
+    </v-card>
   </v-container>
 </template>
 
 <script>
-import HighLevelStatistics from "./HighLevelStatistics";
-import UsersFilter from "./UsersFilter";
-import { mdiFilterVariant, mdiAccountDetails, mdiDeleteForever } from "@mdi/js";
+import SymptomFilter from "../symptoms/SymptomFilter";
+import { mdiAccountDetails, mdiDeleteForever, mdiFilterVariant } from "@mdi/js";
 import moment from "moment";
 
-import { mapGetters, mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "Symptoms",
   components: {
-    HighLevelStatistics,
-    UsersFilter,
+    SymptomFilter,
     DetailSidebar: () => import("./ProfileDetails"),
     DetailSidebarSmall: () => import("./ProfileDetailsSmall"),
     DeleteModal: () => import("@/components/core/DeleteModal.vue")
@@ -91,6 +99,12 @@ export default {
       userId: null,
       bottomsheet: false,
       deleteDialog: false,
+      highLevelTitles: [
+        { title: "Total Users", value: "allUsers" },
+        { title: "Admin", value: "ephiUsers" },
+        { title: "Healthcare workers", value: "healthcareWorkers" },
+        { title: "New users, last 7 days", value: "thisWeekNewUsers" }
+      ],
       headers: [
         { text: "User", value: "username", sortable: false },
         { text: "Country", value: "current_country", sortable: false },
@@ -105,8 +119,11 @@ export default {
         { text: "Actions", value: "actions", sortable: false }
       ],
       options: { page: 1, itemsPerPage: 10 },
-      filters: { status: "", username: "" },
-      date_range: [this.defaultDate(), this.defaultDate("end")],
+      filters: {
+        status: "",
+        username: "",
+        date_range: [this.defaultDate(), this.defaultDate("end")]
+      },
       awaitingSearch: false
     };
   },
@@ -130,7 +147,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["fetchAllUsers"]),
+    ...mapActions(["fetchAllUsers", "fetchUserStats"]),
     deleteUser() {
       this.deleteDialog = false;
     },
@@ -140,9 +157,10 @@ export default {
         size: this.options.itemsPerPage,
         status: this.filters.status,
         username: this.filters.username,
-        start_date: this.date_range[0],
-        end_date: this.date_range[1]
+        start_date: this.filters.date_range[0],
+        end_date: this.filters.date_range[1]
       });
+      this.fetchUserStats();
     },
     searchPerson(name) {
       this.filters.username = name;
@@ -152,7 +170,7 @@ export default {
       this.fetch();
     },
     onDateChange(dateRange) {
-      this.date_range = dateRange;
+      this.filters.date_range = dateRange;
       this.fetch();
     },
     defaultDate(mode = "start") {
@@ -175,7 +193,12 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["getUsers", "getUsersCount", "getSymptomStatLoaders"])
+    ...mapGetters([
+      "getUsers",
+      "getUsersCount",
+      "getSymptomStatLoaders",
+      "getHighLevelStats"
+    ])
   },
   mounted() {
     this.fetch();
@@ -184,6 +207,10 @@ export default {
 </script>
 
 <style scoped>
+.display-1 {
+  font-size: 2em !important;
+  color: #303030 !important;
+}
 .shadow {
   background: transparent !important;
   box-shadow: 0 5px 10px rgba(154, 160, 185, 0.05),
