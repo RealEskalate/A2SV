@@ -45,7 +45,12 @@
         <v-list-item-content>
           <span>
             {{ $t(feature.name) }}:
-            <span class="grey--text" v-text="detail[feature.key]" />
+            <span
+              v-if="['lastUpdate'].includes(feature.key)"
+              class="grey--text"
+              v-text="formatDate(detail[feature.key])"
+            />
+            <span v-else class="grey--text" v-text="detail[feature.key]" />
           </span>
         </v-list-item-content>
       </v-list-item>
@@ -94,6 +99,7 @@ import {
   mdiWatch,
   mdiBandage
 } from "@mdi/js";
+import moment from "moment";
 
 export default {
   name: "DetailSidebar",
@@ -104,14 +110,8 @@ export default {
     };
   },
   methods: {
-    getColor(risk) {
-      if (risk.toLowerCase() === "low") {
-        return "#009c4d";
-      } else if (risk.toLowerCase() === "medium") {
-        return "#ffa64e";
-      } else if (risk.toLowerCase() === "high") {
-        return "#ff6767";
-      }
+    formatDate(date) {
+      return moment(date).format("MMM DD, YYYY");
     }
   },
   computed: {

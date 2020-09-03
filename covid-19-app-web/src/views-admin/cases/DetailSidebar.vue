@@ -36,7 +36,14 @@
         <v-list-item-content>
           <span>
             {{ $t(feature.name) }}:
-            <span class="grey--text" v-text="detail[feature.key]" />
+            <span
+              v-if="
+                ['caseSubmissionDate', 'caseUpdateDate'].includes(feature.key)
+              "
+              class="grey--text"
+              v-text="formatDate(detail[feature.key])"
+            />
+            <span v-else class="grey--text" v-text="detail[feature.key]" />
           </span>
         </v-list-item-content>
       </v-list-item>
@@ -54,6 +61,7 @@ import {
   mdiDoctor,
   mdiIdCard
 } from "@mdi/js";
+import moment from "moment";
 
 export default {
   name: "DetailSidebar",
@@ -63,7 +71,11 @@ export default {
       mdiForwardburger
     };
   },
-  methods: {},
+  methods: {
+    formatDate(date) {
+      return moment(date).format("MMM DD, YYYY");
+    }
+  },
   computed: {
     detailSingleFeatures() {
       return [
