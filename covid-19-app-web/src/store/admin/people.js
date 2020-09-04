@@ -26,7 +26,7 @@ const mutations = {
 const actions = {
   fetchAllUsers: (
     { commit },
-    { page, size, status, username, start_date, end_date }
+    { page, size, role_type, username, start_date, end_date }
   ) => {
     commit("setPeopleLoaders", { key: "allPeople", value: true });
     ajax
@@ -34,7 +34,7 @@ const actions = {
         params: {
           page: page,
           size: size,
-          status: status,
+          role_type: role_type,
           username: username,
           start_date: start_date,
           end_date: end_date

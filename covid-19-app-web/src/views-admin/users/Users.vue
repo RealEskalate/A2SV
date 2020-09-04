@@ -30,7 +30,7 @@
         :date_range="filters.date_range"
         @date-change="onDateChange"
         @set-search="searchPerson"
-        @status-change="onStatusChange"
+        @role-change="onRoleChange"
       />
       <v-data-table
         :headers="headers"
@@ -118,9 +118,10 @@ export default {
         { text: "Account type", value: "role", sortable: false },
         { text: "Actions", value: "actions", sortable: false }
       ],
+      defaultOptions: { page: 1, itemsPerPage: 10 },
       options: { page: 1, itemsPerPage: 10 },
       filters: {
-        status: "",
+        role_type: "",
         username: "",
         date_range: [this.defaultDate(), this.defaultDate("end")]
       },
@@ -138,7 +139,7 @@ export default {
       handler() {
         if (!this.awaitingSearch) {
           setTimeout(() => {
-            this.fetch();
+            this.fetch(true);
             this.awaitingSearch = false;
           }, 1000);
         }
@@ -151,11 +152,14 @@ export default {
     deleteUser() {
       this.deleteDialog = false;
     },
-    fetch() {
+    fetch(pageReset = false) {
+      if (pageReset) {
+        this.options = this.defaultOptions;
+      }
       this.fetchAllUsers({
         page: this.options.page,
         size: this.options.itemsPerPage,
-        status: this.filters.status,
+        role_type: this.filters.role_type,
         username: this.filters.username,
         start_date: this.filters.date_range[0],
         end_date: this.filters.date_range[1]
@@ -165,13 +169,13 @@ export default {
     searchPerson(name) {
       this.filters.username = name;
     },
-    onStatusChange(current_status) {
-      this.filters.status = current_status.toUpperCase().replace(" ", "_");
-      this.fetch();
+    onRoleChange(current_role_type) {
+      this.filters.role_type = current_role_type;
+      this.fetch(true);
     },
     onDateChange(dateRange) {
       this.filters.date_range = dateRange;
-      this.fetch();
+      this.fetch(true);
     },
     defaultDate(mode = "start") {
       if (mode === "start")

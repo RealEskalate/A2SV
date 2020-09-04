@@ -9,10 +9,10 @@
     <v-col cols="12" sm="4">
       <v-select
         class="v-card--shaped"
-        :items="status"
-        v-model="current_status"
-        @input="$emit('status-change', current_status)"
-        label="Status"
+        :items="role_type"
+        v-model="current_role_type"
+        @input="$emit('role-change', current_role_type)"
+        label="Account Type"
         outlined
         dense
         hide-details
@@ -46,12 +46,13 @@ export default {
   data() {
     return {
       mdiSearchWeb,
-      current_status: "",
+      current_role_type: "",
       search: "",
-      status: [
+      role_type: [
         { text: "All", value: "" },
-        "Symptom Submitted",
-        "Symptom Updated"
+        { text: "Basic", value: "basic" },
+        { text: "Admin", value: "ephi_user" },
+        { text: "Healthcare Worker", value: "healthcare_worker" }
       ]
     };
   },
