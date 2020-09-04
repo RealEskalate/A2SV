@@ -1,12 +1,12 @@
 <template>
   <v-row>
-    <v-col cols="12" sm="3">
+    <v-col cols="12" sm="4">
       <DateRangePicker
         :date_range="date_range"
         v-on:onDateChange="onDateChange"
       />
     </v-col>
-    <v-col cols="12" sm="3">
+    <v-col cols="12" sm="4">
       <v-select
         class="v-card--shaped"
         :items="status"
@@ -18,20 +18,7 @@
         hide-details
       />
     </v-col>
-
-    <v-col cols="12" sm="3">
-      <v-select
-        class="d-inline-flex v-card--shaped"
-        :items="risk"
-        v-model="current_risk"
-        label="Risk"
-        outlined
-        dense
-        disabled
-        hide-details
-      />
-    </v-col>
-    <v-col cols="12" sm="3" style="border-left: #dedede solid 1px">
+    <v-col cols="12" sm="4" style="border-left: #dedede solid 1px">
       <v-text-field
         class="v-card--shaped"
         v-model="search"
@@ -60,9 +47,7 @@ export default {
     return {
       mdiSearchWeb,
       current_status: "",
-      current_risk: "",
       search: "",
-      risk: [{ text: "All", value: "" }, "Low", "Medium", "High"],
       status: [
         { text: "All", value: "" },
         "Symptom Submitted",
