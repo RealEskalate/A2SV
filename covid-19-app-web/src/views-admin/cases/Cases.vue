@@ -31,6 +31,9 @@
             v-text="'Details'"
           />
         </template>
+        <template v-slot:[`item.date`]="{ item }">
+          <span v-text="formatDate(item.date)" />
+        </template>
       </v-data-table>
 
       <DetailSidebar
@@ -129,6 +132,9 @@ export default {
   },
   methods: {
     ...mapActions(["fetchCases"]),
+    formatDate(date) {
+      return moment(date).format("MMMM DD, YYYY");
+    },
     fetch(pageReset = false) {
       if (pageReset) {
         this.options = this.defaultOptions;
