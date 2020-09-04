@@ -26,7 +26,7 @@
       class="mb-10 pa-4 overflow-hidden mt-8 shadow"
       min-height="500px"
     >
-      <SymptomFilter
+      <UsersFilter
         :date_range="filters.date_range"
         @date-change="onDateChange"
         @set-search="searchPerson"
@@ -37,7 +37,7 @@
         :options.sync="options"
         :items="getUsers"
         :server-items-length="getUsersCount"
-        :loading="getSymptomStatLoaders.peopleList"
+        :loading="getPeopleLoaders.allPeople"
         :footer-props="{ 'items-per-page-options': [5, 10, 25, 50] }"
         item-class="table-row"
       >
@@ -76,16 +76,16 @@
 </template>
 
 <script>
-import SymptomFilter from "../symptoms/SymptomFilter";
+import UsersFilter from "./UsersFilter";
 import { mdiAccountDetails, mdiDeleteForever, mdiFilterVariant } from "@mdi/js";
 import moment from "moment";
 
 import { mapActions, mapGetters } from "vuex";
 
 export default {
-  name: "Symptoms",
+  name: "Users",
   components: {
-    SymptomFilter,
+    UsersFilter,
     DetailSidebar: () => import("./ProfileDetails"),
     DetailSidebarSmall: () => import("./ProfileDetailsSmall"),
     DeleteModal: () => import("@/components/core/DeleteModal.vue")
@@ -196,7 +196,7 @@ export default {
     ...mapGetters([
       "getUsers",
       "getUsersCount",
-      "getSymptomStatLoaders",
+      "getPeopleLoaders",
       "getHighLevelStats"
     ])
   },

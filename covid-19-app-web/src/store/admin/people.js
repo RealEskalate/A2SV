@@ -28,6 +28,7 @@ const actions = {
     { commit },
     { page, size, status, username, start_date, end_date }
   ) => {
+    commit("setPeopleLoaders", { key: "allPeople", value: true });
     ajax
       .get(`users`, {
         params: {
@@ -48,10 +49,13 @@ const actions = {
         error => {
           console.log(error);
         }
-      );
+      )
+      .finally(function() {
+        commit("setPeopleLoaders", { key: "allPeople", value: false });
+      });
   },
   fetchUserStats: ({ commit }) => {
-    commit("setSymptomStatLoaders", { key: "total", value: true });
+    commit("setPeopleLoaders", { key: "highLevelStats", value: true });
     ajax
       .get("users-stat")
       .then(
@@ -64,7 +68,7 @@ const actions = {
         }
       )
       .finally(function() {
-        commit("setSymptomStatLoaders", { key: "total", value: false });
+        commit("setPeopleLoaders", { key: "highLevelStats", value: false });
       });
   }
 };

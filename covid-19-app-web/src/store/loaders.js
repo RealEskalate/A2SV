@@ -35,6 +35,10 @@ export default {
       total: false,
       totalPeople: false,
       peopleList: false
+    },
+    peopleLoaders: {
+      highLevelStats: false,
+      allPeople: false
     }
   },
   getters: {
@@ -55,6 +59,9 @@ export default {
     },
     getSymptomStatLoaders(state) {
       return state.symptomStatLoaders;
+    },
+    getPeopleLoaders(state) {
+      return state.peopleLoaders;
     }
   },
   mutations: {
@@ -84,6 +91,9 @@ export default {
     },
     setSymptomStatLoaders(state, { key, value }) {
       state.symptomStatLoaders[key] = value;
+    },
+    setPeopleLoaders(state, { key, value }) {
+      state.peopleLoaders[key] = value;
     }
   }
 };
