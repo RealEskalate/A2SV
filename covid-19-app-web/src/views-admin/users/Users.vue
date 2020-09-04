@@ -19,11 +19,11 @@
         </v-col>
       </v-row>
     </v-card>
-    <delete-modal :open="deleteDialog" @onConfirmation="deleteUser" />
+    <!-- <delete-modal :open="deleteDialog" @onConfirmation="deleteUser" /> -->
     <v-card
       outlined
       shaped
-      class="mb-10 pa-4 overflow-hidden mt-8 shadow"
+      class="mb-10 pa-4 overflow-hidden mt-8"
       min-height="500px"
     >
       <UsersFilter
@@ -47,14 +47,21 @@
           </p>
         </template>
         <template v-slot:[`item.actions`]="{ item }">
-          <v-btn icon small color="primary">
+          <v-btn
+            @click="showDetail(item._id)"
+            class="v-card--shaped"
+            small
+            color="primary"
+            v-text="'Details'"
+          />
+          <!-- <v-btn icon small color="primary">
             <v-icon class="mr-2" @click="showDetail(item._id)">
               {{ mdiAccountDetails }}
             </v-icon>
-          </v-btn>
-          <v-icon color="#ff6767" @click="deleteDialog = true">
+          </v-btn> -->
+          <!-- <v-icon color="#ff6767" @click="deleteDialog = true">
             {{ mdiDeleteForever }}
-          </v-icon>
+          </v-icon> -->
         </template>
       </v-data-table>
       <DetailSidebar
@@ -87,8 +94,8 @@ export default {
   components: {
     UsersFilter,
     DetailSidebar: () => import("./ProfileDetails"),
-    DetailSidebarSmall: () => import("./ProfileDetailsSmall"),
-    DeleteModal: () => import("@/components/core/DeleteModal.vue")
+    DetailSidebarSmall: () => import("./ProfileDetailsSmall")
+    // DeleteModal: () => import("@/components/core/DeleteModal.vue")
   },
   data() {
     return {

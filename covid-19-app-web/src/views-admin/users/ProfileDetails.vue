@@ -32,7 +32,12 @@
         </v-chip>
       </v-list-item-action>
     </v-list-item>
-
+    <v-progress-linear
+      height="2px"
+      style="margin-top: -8px"
+      indeterminate
+      v-if="loading"
+    />
     <v-list>
       <v-subheader v-text="$t('map.details')" />
       <v-list-item
@@ -142,7 +147,8 @@ export default {
       symptomHistory: null,
       api_token: process.env.VUE_APP_MAPBOX_API,
       map: null,
-      overlay: false
+      overlay: false,
+      loading: false
     };
   },
   methods: {
@@ -225,25 +231,31 @@ export default {
     userId: {
       handler() {
         console.log(this.id);
-        ajax.get(`users-detail/${this.userId}`).then(
-          res => {
-            console.log(res.data);
-            this.basic = res.data.basicInfo;
-            if (res.data.symptomHistory !== null) {
-              this.symptomHistory = res.data.symptomHistory.current_symptoms;
-              this.status = res.data.symptomHistory.status;
-              this.updateMap();
-              console.log(this.symptomHistory);
+        this.loading = true;
+        ajax
+          .get(`users-detail/${this.userId}`)
+          .then(
+            res => {
+              console.log(res.data);
+              this.basic = res.data.basicInfo;
+              if (res.data.symptomHistory !== null) {
+                this.symptomHistory = res.data.symptomHistory.current_symptoms;
+                this.status = res.data.symptomHistory.status;
+                this.updateMap();
+                console.log(this.symptomHistory);
+              }
+              this.testReports = res.data.testReports;
+              if (this.map !== null) {
+                this.loaded(this.map);
+              }
+            },
+            err => {
+              console.log(err);
             }
-            this.testReports = res.data.testReports;
-            if (this.map !== null) {
-              this.loaded(this.map);
-            }
-          },
-          err => {
-            console.log(err);
-          }
-        );
+          )
+          .finally(() => {
+            this.loading = false;
+          });
       }
     }
   },
