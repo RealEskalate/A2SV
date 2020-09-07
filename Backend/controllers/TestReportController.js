@@ -1,5 +1,7 @@
 const { TestReport } = require("../models/TestReportModel.js");
 var mongoose = require("mongoose");
+var UserModels = require("../models/UserModel.js");
+const User = UserModels.User;
 
 // getting all test reports
 exports.get_all_test_reports = async (req, res) => {
@@ -31,6 +33,21 @@ exports.get_all_test_reports = async (req, res) => {
             filter.created_at =  {$lte : date}
         }
     }
+
+
+    if(req.query.username){
+        let re = new RegExp(req.query.username, 'i') 
+        let userId =await User.find({username : { $regex: re }}).select('_id')
+
+        let listOfUserId = [];
+
+        for(var user_id in userId){
+            listOfUserId.push(userId[user_id]._id)
+        }
+        filter.user_id= { $in: listOfUserId };
+    }
+
+
 
     let page = parseInt(req.query.page) || 1;
     let size = parseInt(req.query.size) || 15;

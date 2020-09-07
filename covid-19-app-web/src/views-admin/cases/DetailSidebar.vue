@@ -19,17 +19,8 @@
         </v-btn>
       </v-list-item-action>
       <v-list-item-content>
-        <div v-text="detail.name" />
+        <div v-text="detail.person" />
       </v-list-item-content>
-      <v-list-item-action>
-        <v-chip
-          class="float-right"
-          small
-          :color="relevanceColor(detail.risk) + ' darken-1'"
-          text-color="white"
-          v-text="`${detail.risk} RISK`"
-        />
-      </v-list-item-action>
     </v-list-item>
 
     <v-list>
@@ -46,7 +37,9 @@
           <span>
             {{ $t(feature.name) }}:
             <span
-              v-if="['lastUpdate'].includes(feature.key)"
+              v-if="
+                ['caseSubmissionDate', 'caseUpdateDate'].includes(feature.key)
+              "
               class="grey--text"
               v-text="formatDate(detail[feature.key])"
             />
@@ -54,38 +47,6 @@
           </span>
         </v-list-item-content>
       </v-list-item>
-
-      <template v-for="(feature, index) in detailListFeatures">
-        <v-divider
-          :class="`mt-${index === 0 ? 0 : 3} mb-2`"
-          :key="'divider_' + index"
-        />
-        <v-list-item :key="'title_' + index">
-          <v-list-item-avatar size="20">
-            <v-icon v-text="feature.icon" />
-          </v-list-item-avatar>
-          <v-list-item-content v-text="$t(feature.name)" />
-        </v-list-item>
-        <div
-          :key="feature.name + index"
-          class="grey lighten-5 shadow-in v-card--shaped text-center pa-3 mx-5"
-        >
-          <v-subheader
-            class="mx-auto my-2 justify-center"
-            v-if="!detail[feature.key] || detail[feature.key].length === 0"
-            v-text="$t('auth.foundNothing')"
-          />
-          <v-chip
-            v-else
-            small
-            class="ma-1 v-card--shaped shadow-sm"
-            :key="key"
-            v-for="(value, key) in detail[feature.key]"
-          >
-            <span class="grey--text text--darken-2" v-text="value" />
-          </v-chip>
-        </div>
-      </template>
     </v-list>
   </v-navigation-drawer>
 </template>
@@ -93,11 +54,12 @@
 <script>
 import {
   mdiGenderMaleFemaleVariant,
-  mdiCrosshairsGps,
   mdiForwardburger,
   mdiStateMachine,
   mdiWatch,
-  mdiBandage
+  mdiBabyCarriage,
+  mdiDoctor,
+  mdiIdCard
 } from "@mdi/js";
 import moment from "moment";
 
@@ -118,13 +80,21 @@ export default {
     detailSingleFeatures() {
       return [
         { name: "Gender", key: "gender", icon: mdiGenderMaleFemaleVariant },
+        { name: "Age Group", key: "ageGroup", icon: mdiBabyCarriage },
+        { name: "Case ID", key: "caseId", icon: mdiIdCard },
         { name: "Status", key: "status", icon: mdiStateMachine },
-        { name: "Location", key: "location", icon: mdiCrosshairsGps },
-        { name: "Last Update", key: "lastUpdate", icon: mdiWatch }
+        {
+          name: "Healthcare Official",
+          key: "healthcareOfficial",
+          icon: mdiDoctor
+        },
+        {
+          name: "Case Creation Date",
+          key: "caseSubmissionDate",
+          icon: mdiWatch
+        },
+        { name: "Last Case Update", key: "caseUpdateDate", icon: mdiWatch }
       ];
-    },
-    detailListFeatures() {
-      return [{ name: "Symptoms", key: "allSymptoms", icon: mdiBandage }];
     }
   }
 };

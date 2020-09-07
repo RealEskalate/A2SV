@@ -7,7 +7,7 @@
       class="mb-10 pa-4 overflow-hidden"
       min-height="500px"
     >
-      <SymptomFilter
+      <CaseFilter
         :date_range="filters.date_range"
         v-on:date-change="onDateChange"
         v-on:set-search="searchPerson"
@@ -16,9 +16,9 @@
       <v-data-table
         :headers="headers"
         :options.sync="options"
-        :items="getPeoplesWithSymptoms"
-        :server-items-length="getPeopleCount"
-        :loading="getSymptomStatLoaders.peopleList"
+        :items="getCases"
+        :server-items-length="getTotalCases"
+        :loading="getCaseLoaders.caseList"
         :footer-props="{ 'items-per-page-options': [5, 10, 25, 50] }"
         item-class="table-row"
       >
@@ -56,17 +56,17 @@
 
 <script>
 import HighLevelStatistics from "./HighLevelStatistics";
-import SymptomFilter from "./SymptomFilter";
+import CaseFilter from "./CaseFilter";
 import { mdiFilterVariant } from "@mdi/js";
 import moment from "moment";
 
 import { mapGetters, mapActions } from "vuex";
 
 export default {
-  name: "Symptoms",
+  name: "Cases",
   components: {
     HighLevelStatistics,
-    SymptomFilter,
+    CaseFilter,
     DetailSidebar: () => import("./DetailSidebar"),
     DetailSidebarSmall: () => import("./DetailSidebarSmall")
   },
@@ -76,11 +76,19 @@ export default {
       sidebar: false,
       bottomsheet: false,
       headers: [
-        { text: "Date", align: "start", value: "date", sortable: false },
+        {
+          text: "Case Creation Date",
+          align: "start",
+          value: "date",
+          sortable: false
+        },
         { text: "Status", value: "status", sortable: false },
         { text: "Person", value: "person", sortable: false },
-        { text: "Symptoms", value: "symptoms", sortable: false },
-        { text: "Risk Score", value: "riskScore", sortable: false },
+        {
+          text: "Healthcare Official",
+          value: "healthcareOfficial",
+          sortable: false
+        },
         { text: "Actions", value: "actions", sortable: false }
       ],
       defaultOptions: { page: 1, itemsPerPage: 10 },
@@ -92,14 +100,14 @@ export default {
       },
       awaitingSearch: false,
       detail: {
-        id: "",
-        name: "",
-        risk: "",
-        gender: "",
-        lastUpdate: "",
+        caseUpdateDate: "",
+        caseSubmissionDate: "",
         status: "",
-        location: "",
-        allSymptoms: []
+        caseId: "",
+        person: "",
+        gender: "",
+        ageGroup: "",
+        healthcareOfficial: ""
       }
     };
   },
@@ -123,7 +131,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["fetchPeoplesWithSymptoms"]),
+    ...mapActions(["fetchCases"]),
     formatDate(date) {
       return moment(date).format("MMMM DD, YYYY");
     },
@@ -131,11 +139,11 @@ export default {
       if (pageReset) {
         this.options = this.defaultOptions;
       }
-      this.fetchPeoplesWithSymptoms({
+      this.fetchCases({
         page: this.options.page,
         size: this.options.itemsPerPage,
         status: this.filters.status,
-        username: this.filters.username,
+        // username: this.filters.username,
         start_date: this.filters.date_range[0],
         end_date: this.filters.date_range[1]
       });
@@ -147,7 +155,7 @@ export default {
       this.filters.username = name;
     },
     onStatusChange(current_status) {
-      this.filters.status = current_status.toUpperCase().replace(" ", "_");
+      this.filters.status = current_status;
       this.fetch(true);
     },
     onDateChange(dateRange) {
@@ -168,23 +176,19 @@ export default {
         this.bottomsheet = true;
       }
       this.detail = {
-        id: item.id,
-        name: item.person,
-        risk: item.riskScore,
-        gender: item.gender,
-        lastUpdate: item.date,
+        caseUpdateDate: item.updatedAt,
+        caseSubmissionDate: item.date,
         status: item.status,
-        location: item.location,
-        allSymptoms: item.symptoms
+        caseId: item.id,
+        person: item.person,
+        gender: item.gender,
+        ageGroup: item.ageGroup,
+        healthcareOfficial: item.healthcareOfficial
       };
     }
   },
   computed: {
-    ...mapGetters([
-      "getPeoplesWithSymptoms",
-      "getPeopleCount",
-      "getSymptomStatLoaders"
-    ])
+    ...mapGetters(["getCases", "getTotalCases", "getCaseLoaders"])
   },
   mounted() {
     this.fetch();

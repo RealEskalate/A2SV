@@ -35,7 +35,12 @@
             <v-list-item-content>
               <span>
                 {{ $t(feature.name) }}:
-                <span class="grey--text" v-text="detail[feature.key]" />
+                <span
+                  v-if="['lastUpdate'].includes(feature.key)"
+                  class="grey--text"
+                  v-text="formatDate(detail[feature.key])"
+                />
+                <span v-else class="grey--text" v-text="detail[feature.key]" />
               </span>
             </v-list-item-content>
           </v-list-item>
@@ -86,6 +91,7 @@ import {
   mdiWatch,
   mdiClose
 } from "@mdi/js";
+import moment from "moment";
 
 export default {
   props: ["sheet", "detail", "sidebar"],
@@ -93,6 +99,11 @@ export default {
     return {
       mdiClose
     };
+  },
+  methods: {
+    formatDate(date) {
+      return moment(date).format("MMM DD, YYYY");
+    }
   },
   computed: {
     detailSingleFeatures() {
