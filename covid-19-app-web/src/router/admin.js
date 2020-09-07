@@ -1,3 +1,5 @@
+const Users = () => import("../views-admin/users/Users");
+
 const Dashboard = () => import("../views-admin/dashboard/Dashboard.vue");
 
 const CreateAccount = () => import("../views-admin/auth/CreateAccount.vue");
@@ -66,6 +68,15 @@ export const admin = [
     name: "InviteAdmin",
     path: "invite-admin",
     component: InviteAdmin,
+    meta: {
+      requiresAuth: true,
+      roles: ["ephi_user"]
+    }
+  },
+  {
+    name: "Users",
+    path: "users",
+    component: Users,
     meta: {
       requiresAuth: true,
       roles: ["ephi_user"]
