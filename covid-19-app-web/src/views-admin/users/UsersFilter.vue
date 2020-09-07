@@ -9,10 +9,10 @@
     <v-col cols="12" sm="3">
       <v-select
         class="v-card--shaped"
-        :items="status"
-        v-model="current_status"
-        @input="$emit('status-change', current_status)"
-        label="Status"
+        :items="roles"
+        v-model="role"
+        @input="$emit('role-change', role)"
+        label="Roles"
         outlined
         dense
         hide-details
@@ -20,15 +20,13 @@
     </v-col>
 
     <v-col cols="12" sm="3">
-      <v-select
+      <v-text-field
         class="d-inline-flex v-card--shaped"
-        :items="risk"
-        v-model="current_risk"
-        label="Risk"
+        v-model="region"
+        label="Region"
         outlined
         dense
-        disabled
-        hide-details
+        @input="$emit('set-region', region)"
       />
     </v-col>
     <v-col cols="12" sm="3" style="border-left: #dedede solid 1px">
@@ -38,7 +36,7 @@
         outlined
         :prepend-inner-icon="mdiSearchWeb"
         dense
-        label="Search Person"
+        label="Username"
         @input="$emit('set-search', search)"
         hide-details
       />
@@ -59,14 +57,14 @@ export default {
   data() {
     return {
       mdiSearchWeb,
-      current_status: "",
-      current_risk: "",
+      role: "",
+      region: "",
       search: "",
-      risk: [{ text: "All", value: "" }, "Low", "Medium", "High"],
-      status: [
-        { text: "All", value: "" },
-        "Symptom Submitted",
-        "Symptom Updated"
+      roles: [
+        { text: "All users", value: "" },
+        { text: "EPHI users", value: "ephi_user" },
+        { text: "Health care workers", value: "healthCareWorkers" },
+        { text: "Basic users", value: "basic" }
       ]
     };
   },

@@ -231,7 +231,7 @@ import {
   mdiViewDashboard,
   mdiVirus,
   mdiAccountMultiplePlus,
-  mdiAmbulance,
+  mdiAmbulance
 } from "@mdi/js";
 import { languages } from "../../plugins/i18n";
 

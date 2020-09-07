@@ -26,11 +26,12 @@
       class="mb-10 pa-4 overflow-hidden mt-8 shadow"
       min-height="500px"
     >
-      <SymptomFilter
+      <UsersFilter
         :date_range="filters.date_range"
         @date-change="onDateChange"
         @set-search="searchPerson"
-        @status-change="onStatusChange"
+        @set-region="onSearchRegion"
+        @role-change="onRoleChange"
       />
       <v-data-table
         :headers="headers"
@@ -76,7 +77,7 @@
 </template>
 
 <script>
-import SymptomFilter from "../symptoms/SymptomFilter";
+import UsersFilter from "./UsersFilter";
 import { mdiAccountDetails, mdiDeleteForever, mdiFilterVariant } from "@mdi/js";
 import moment from "moment";
 
@@ -85,7 +86,7 @@ import { mapActions, mapGetters } from "vuex";
 export default {
   name: "Symptoms",
   components: {
-    SymptomFilter,
+    UsersFilter,
     DetailSidebar: () => import("./ProfileDetails"),
     DetailSidebarSmall: () => import("./ProfileDetailsSmall"),
     DeleteModal: () => import("@/components/core/DeleteModal.vue")
@@ -119,9 +120,11 @@ export default {
         { text: "Actions", value: "actions", sortable: false }
       ],
       options: { page: 1, itemsPerPage: 10 },
+      defaultOptions: { page: 1, itemsPerPage: 10 },
       filters: {
-        status: "",
+        region: "",
         username: "",
+        role_type: "",
         date_range: [this.defaultDate(), this.defaultDate("end")]
       },
       awaitingSearch: false
@@ -138,7 +141,7 @@ export default {
       handler() {
         if (!this.awaitingSearch) {
           setTimeout(() => {
-            this.fetch();
+            this.fetch(true);
             this.awaitingSearch = false;
           }, 1000);
         }
@@ -151,12 +154,16 @@ export default {
     deleteUser() {
       this.deleteDialog = false;
     },
-    fetch() {
+    fetch(pageReset = false) {
+      if (pageReset) {
+        this.options = this.defaultOptions;
+      }
       this.fetchAllUsers({
         page: this.options.page,
         size: this.options.itemsPerPage,
-        status: this.filters.status,
+        role_type: this.filters.role_type,
         username: this.filters.username,
+        region: this.filters.region,
         start_date: this.filters.date_range[0],
         end_date: this.filters.date_range[1]
       });
@@ -165,13 +172,18 @@ export default {
     searchPerson(name) {
       this.filters.username = name;
     },
-    onStatusChange(current_status) {
-      this.filters.status = current_status.toUpperCase().replace(" ", "_");
-      this.fetch();
+    onRoleChange(role) {
+      console.log(role);
+      this.filters.role_type = role;
+      this.fetch(true);
     },
     onDateChange(dateRange) {
       this.filters.date_range = dateRange;
-      this.fetch();
+      this.fetch(true);
+    },
+    onSearchRegion(region) {
+      this.filters.region = region;
+      this.fetch(true);
     },
     defaultDate(mode = "start") {
       if (mode === "start")

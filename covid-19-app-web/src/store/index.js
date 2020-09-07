@@ -136,6 +136,6 @@ export default new Vuex.Store({
     privacyPolicy,
     symptoms,
     users,
-    cases,
+    cases
   }
 });

@@ -26,24 +26,24 @@ const mutations = {
 const actions = {
   fetchAllUsers: (
     { commit },
-    { page, size, status, username, start_date, end_date }
+    { page, size, role_type, username, region, start_date, end_date }
   ) => {
     ajax
       .get(`users`, {
         params: {
-          page: page,
-          size: size,
-          status: status,
-          username: username,
-          start_date: start_date,
-          end_date: end_date
+          page,
+          size,
+          role_type,
+          username,
+          region,
+          start_date,
+          end_date
         }
       })
       .then(
         response => {
           commit("setUsers", response.data.data);
           commit("setUsersCount", response.data.data_count);
-          console.log(response.data);
         },
         error => {
           console.log(error);
@@ -56,7 +56,6 @@ const actions = {
       .get("users-stat")
       .then(
         res => {
-          console.log(res.data);
           commit("setHighLevelStats", res.data);
         },
         err => {
