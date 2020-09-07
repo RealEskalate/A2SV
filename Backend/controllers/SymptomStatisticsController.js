@@ -284,7 +284,7 @@ exports.get_logs_by_user_id = async (req, res) => {
         res.status(404).send("Log Not Found");
     } else {
         try {
-            let risk = log.current_symptoms.risk_score;
+            let risk = log.current_symptoms.risk_score || 0;
             let risk_lvl = "Low";
             if (risk <= 0.33) {
                 risk_lvl = "Low";
