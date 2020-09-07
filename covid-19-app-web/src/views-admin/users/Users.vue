@@ -67,9 +67,9 @@
       />
       <DetailSidebarSmall
         class="shadow-lg"
-        :id="userId"
-        :sidebar="sidebar"
+        :userId="userId"
         :sheet="bottomsheet"
+        v-on:close-sidebar="bottomsheet = false"
         v-else
       />
     </v-card>
