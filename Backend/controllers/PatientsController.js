@@ -115,12 +115,15 @@ exports.update_patient = async (req, res) => {
         let patient = await Patient.update({ _id: mongoose.Types.ObjectId(req.params.id) },req.body);
         patient = await Patient.findById(req.params.id);
         // history
-        patient.history.push({
-            start_date:oldData.updated_at,
-            end_date:patient.updated_at,
-            status:oldData.status,
-        })
-        patient.save();
+
+        if( patient.status != oldData.status && oldData.updated_at != patient.updated_at ){
+            patient.history.push({
+                start_date:oldData.updated_at,
+                end_date:patient.updated_at,
+                status:oldData.status,
+            })
+            patient.save();
+        }
         
         return res.status(202).send(patient);
     } catch (err) {
