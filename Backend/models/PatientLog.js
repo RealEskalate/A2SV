@@ -13,7 +13,7 @@ const patientLogSchema = new mongoose.Schema({
     },
     test_status:{
         type: String,
-        enum: ["New","Positive", "Negative","Not Tested","Recovered","Deceased"],
+        enum: ["New","Positive", "Negative","Not Tested","Recovered","Died"],
         default: "New",
         index: true
     },
