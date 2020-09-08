@@ -12,6 +12,7 @@
         v-on:date-change="onDateChange"
         v-on:set-search="searchPerson"
         v-on:status-change="onStatusChange"
+        v-on:set-risk="onRiskChange"
       />
       <v-data-table
         :headers="headers"
@@ -33,6 +34,11 @@
         </template>
         <template v-slot:[`item.date`]="{ item }">
           <span v-text="formatDate(item.date)" />
+        </template>
+        <template v-slot:[`item.riskScore`]="{ item }">
+          <v-badge :color="relevanceColor(item.riskScore)" dot inline left>
+            <span v-text="$t(item.riskScore)"></span>
+          </v-badge>
         </template>
       </v-data-table>
 
@@ -88,6 +94,7 @@ export default {
       filters: {
         status: "",
         username: "",
+        risk: "",
         date_range: [this.defaultDate(), this.defaultDate("end")]
       },
       awaitingSearch: false,
@@ -136,6 +143,7 @@ export default {
         size: this.options.itemsPerPage,
         status: this.filters.status,
         username: this.filters.username,
+        risk_level: this.filters.risk,
         start_date: this.filters.date_range[0],
         end_date: this.filters.date_range[1]
       });
@@ -152,6 +160,10 @@ export default {
     },
     onDateChange(dateRange) {
       this.filters.date_range = dateRange;
+      this.fetch(true);
+    },
+    onRiskChange(risk) {
+      this.filters.risk = risk;
       this.fetch(true);
     },
     defaultDate(mode = "start") {
