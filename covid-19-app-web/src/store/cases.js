@@ -16,7 +16,10 @@ const mutations = {
 };
 
 const actions = {
-  fetchCases: ({ commit }, { page, size, status, start_date, end_date }) => {
+  fetchCases: (
+    { commit },
+    { page, size, status, username, start_date, end_date }
+  ) => {
     commit("setCaseLoaders", { key: "caseList", value: true });
     ajax
       .get(`test-report`, {
@@ -24,6 +27,7 @@ const actions = {
           page: page,
           size: size,
           status: status,
+          username: username,
           start_date: start_date,
           end_date: end_date
         }
@@ -36,27 +40,8 @@ const actions = {
             let row = {
               id: element._id,
               status: element.test_status,
-              date: new Date(element.created_at).toLocaleDateString(undefined, {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-                hour: "numeric",
-                minute: "numeric",
-                second: "numeric",
-                timeZoneName: "short"
-              }),
-              updatedAt: new Date(element.updated_at).toLocaleDateString(
-                undefined,
-                {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                  hour: "numeric",
-                  minute: "numeric",
-                  second: "numeric",
-                  timeZoneName: "short"
-                }
-              ),
+              date: element.created_at,
+              updatedAt: element.updated_at,
               person: element.user_id.username,
               gender: element.user_id.gender,
               ageGroup: element.user_id.age_group,
