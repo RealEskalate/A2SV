@@ -45,6 +45,13 @@ const patientSchema = new mongoose.Schema({
     sms_status: {
         type: Boolean,
     },
+    status:{
+        type: String,
+        enum: ["New","Recovered","Confirmed","Death"],
+        required: true,
+        default: "New"
+    },
+    history:[],
     emergency_contact:{
         first_name: {
             type: String,

@@ -111,8 +111,17 @@ exports.post_patient_data = async (req, res) => {
 // update a patient
 exports.update_patient = async (req, res) => {
     try {
+        let oldData = await Patient.findById(req.params.id);
         let patient = await Patient.update({ _id: mongoose.Types.ObjectId(req.params.id) },req.body);
         patient = await Patient.findById(req.params.id);
+        // history
+        patient.history.push({
+            start_date:oldData.updated_at,
+            end_date:patient.updated_at,
+            status:oldData.status,
+        })
+        patient.save();
+        
         return res.status(202).send(patient);
     } catch (err) {
         return res.status(500).send(err.toString());
