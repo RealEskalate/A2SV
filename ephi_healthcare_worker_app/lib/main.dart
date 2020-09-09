@@ -9,21 +9,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Welcome Page
-import 'pages/welcome.dart';
+import 'pages/welcome_page/welcome.dart';
 
 void main() => runApp(MaterialApp(
       // Sets a font as the default globally
       theme: ThemeData(fontFamily: 'Comfortaa'),
       debugShowCheckedModeBanner: false,
       home: Main(),
-));
+    ));
 
 class Main extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.amber[50],
-        body: WelcomePage(),
+      backgroundColor: Colors.amber[50],
+      body: WelcomePage(),
 //        appBar: AppBar(
 //          title: Text("EPHI Healthcare Workers App"),
 //          centerTitle: true,
