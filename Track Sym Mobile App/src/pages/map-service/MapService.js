@@ -1500,7 +1500,7 @@ export default class MapService extends React.Component {
             id={id + " gridCluster"}
             belowLayerID={id + " singleCluster"}
             filter={["has", "point_count"]}
-            style={style.clusteredPoints}
+            style={highStyles.clusteredPoints}
           />
           <MapboxGL.CircleLayer
             id={id + " singleCluster"}
