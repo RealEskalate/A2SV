@@ -1,10 +1,10 @@
-import '../components/alreadyHaveAnAccountCheck.dart';
-import '../components/roundedInputField.dart';
-import '../components/roundedPasswordField.dart';
+import '../../widgets/alreadyHaveAnAccountCheck.dart';
+import '../../widgets/roundedInputField.dart';
+import '../../widgets/roundedPasswordField.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'createAccount.dart';
+import '../sign_up/createAccount.dart';
 
 class LoginPage extends StatelessWidget {
   @override
@@ -55,7 +55,7 @@ class LoginPage extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) {
-                      return CreateAccountPage();
+                        return CreateAccountPage();
                       }),
                     );
                   }),
