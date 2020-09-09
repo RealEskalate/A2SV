@@ -87,7 +87,7 @@ class CreateAccountPage extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) {
-                          return MyApp();
+                          return Home();
                         },
                       ),
                     );
