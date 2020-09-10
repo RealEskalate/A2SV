@@ -53,12 +53,12 @@ export default {
       mdiArrowDown,
       items: [
         {
-          title: "New confirmed COVID-19 cases",
+          title: "Confirmed COVID-19 cases",
           totalNum: "123, 456",
           increaseRate: -4
         },
         {
-          title: "New citizens with symptoms",
+          title: "Citizens with symptoms",
           totalNum: "123, 456",
           increaseRate: 9
         },

@@ -5,7 +5,8 @@
         <daily-statistics :data="items" class="mb-5" />
       </v-col>
       <v-col
-        class="v-card--shaped pa-6 shadow-in grey lighten-5"
+        style="background-color: #fcfcfc"
+        class="v-card--shaped pa-6 lighten-5"
         md="8"
         cols="12"
       >
