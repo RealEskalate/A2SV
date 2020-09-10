@@ -1,6 +1,6 @@
 <template>
   <v-row>
-    <v-col md="6" cols="12" v-for="(item, index) in items" :key="index">
+    <v-col md="6" cols="12" v-for="(item, index) in getGraphData" :key="index">
       <v-card class="mx-1" shaped outlined style="background: transparent">
         <v-subheader class="card-title" v-text="item.title" />
         <v-sparkline
@@ -17,6 +17,7 @@
           auto-draw
           :show-labels="showLabels"
           :label-size="labelSize"
+          :labels="value"
         />
         <v-card-actions>
           <v-subheader v-text="item.totalNum" />
@@ -46,6 +47,7 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
 const gradients = [
   ["#222"],
   ["#42b3f4"],
@@ -57,6 +59,7 @@ const gradients = [
 import { mdiArrowDown, mdiArrowUp } from "@mdi/js";
 
 export default {
+  props: ["start_date", "end_date"],
   name: "TotalStatistics",
   data() {
     return {
@@ -64,12 +67,12 @@ export default {
       mdiArrowDown,
       items: [
         {
-          title: "New confirmed COVID-19 cases",
+          title: "Confirmed COVID-19 cases",
           totalNum: "123, 456",
           increaseRate: -4
         },
         {
-          title: "New citizens with symptoms",
+          title: "Citizens with symptoms",
           totalNum: "123, 456",
           increaseRate: 9
         },
@@ -78,14 +81,13 @@ export default {
           totalNum: "56",
           increaseRate: -1
         },
-
         {
           title: "Tests administered",
           totalNum: "1,456",
           increaseRate: 1
         }
       ],
-      showLabels: false,
+      showLabels: true,
       lineWidth: 2,
       labelSize: 7,
       radius: 10,
@@ -99,6 +101,18 @@ export default {
       type: "trend",
       autoLineWidth: false
     };
+  },
+  created() {
+    this.queryCitizenSymptoms({
+      start_date: this.start_date,
+      end_date: this.end_date
+    });
+  },
+  methods: {
+    ...mapActions(["queryCitizenSymptoms"])
+  },
+  computed: {
+    ...mapGetters(["getGraphData"])
   }
 };
 </script>

@@ -14,7 +14,10 @@
           @onDateChange="onDateChange"
         />
         <br />
-        <total-statistics />
+        <total-statistics
+          :start_date="date_range[0]"
+          :end_date="date_range[1]"
+        />
       </v-col>
     </v-row>
     <greatest-hit-city class="my-10" />
@@ -26,6 +29,7 @@ import DateRangePicker from "../../components/core/DateRangePicker";
 import DailyStatistics from "./DailyStatistics";
 import TotalStatistics from "./TotalStatistics";
 import GreatestHitCity from "./GreatestHitCity";
+import moment from "moment";
 
 export default {
   name: "Dashboard",
@@ -35,41 +39,45 @@ export default {
     TotalStatistics,
     GreatestHitCity
   },
-  data: () => ({
-    date_range: ["2018-09-15", "2018-09-20"],
+  data() {
+    return {
+      date_range: this.getDateRange(),
 
-    items: [
-      {
-        title: "New confirmed COVID-19 cases",
-        totalNum: "123, 456",
-        increaseRate: -4
-      },
-      {
-        title: "New citizens with symptoms",
-        totalNum: "123, 456",
-        increaseRate: 9
-      },
-      {
-        title: "COVID related deaths",
-        totalNum: "56",
-        increaseRate: -1
-      },
+      items: [
+        {
+          title: "New confirmed COVID-19 cases",
+          totalNum: "123, 456",
+          increaseRate: -4
+        },
+        {
+          title: "New citizens with symptoms",
+          totalNum: "123, 456",
+          increaseRate: 9
+        },
+        {
+          title: "COVID related deaths",
+          totalNum: "56",
+          increaseRate: -1
+        },
 
-      {
-        title: "Tests administered",
-        totalNum: "1,456",
-        increaseRate: 1
-      }
-    ]
-  }),
-  mounted() {
-    var el = document.getElementsByClassName("mapboxgl-ctrl-attrib-inner");
-    alert(el.getAttribute("style"));
-    el.removeAttribute("style");
+        {
+          title: "Tests administered",
+          totalNum: "1,456",
+          increaseRate: 1
+        }
+      ]
+    };
   },
   methods: {
     onDateChange(dateRange) {
       alert(dateRange);
+    },
+    getDateRange() {
+      let start = new Date().setDate(new Date().getDate() - 7);
+      return [
+        moment(start).format("YYYY-MM-DD"),
+        moment(new Date()).format("YYYY-MM-DD")
+      ];
     }
   }
 };

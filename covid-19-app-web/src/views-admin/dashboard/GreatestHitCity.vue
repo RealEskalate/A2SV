@@ -8,7 +8,7 @@
           <v-list-item-group color="primary" v-model="selected_city">
             <template v-for="(city, index) in cities">
               <v-list-item
-                :key="index"
+                :key="city + index"
                 class="py-3 px-5"
                 @click="selectCity(city)"
               >
