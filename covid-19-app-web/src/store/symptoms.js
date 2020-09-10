@@ -67,7 +67,7 @@ const actions = {
   },
   fetchPeoplesWithSymptoms: (
     { commit },
-    { page, size, status, username, start_date, end_date }
+    { page, size, status, username, risk_level, start_date, end_date }
   ) => {
     commit("setSymptomStatLoaders", { key: "peopleList", value: true });
     ajax
@@ -77,6 +77,7 @@ const actions = {
           size: size,
           status: status,
           username: username,
+          risk_level: risk_level,
           start_date: start_date,
           end_date: end_date
         }
@@ -89,23 +90,13 @@ const actions = {
             let row = {
               id: element.user_id._id,
               gender: element.user_id.gender,
-              date: new Date(
-                element.user_id.last_symptom_update
-              ).toLocaleDateString(undefined, {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-                hour: "numeric",
-                minute: "numeric",
-                second: "numeric",
-                timeZoneName: "short"
-              }),
+              date: element.user_id.last_symptom_update,
               status: element.status,
               person: element.user_id.username,
               symptoms: Array(element.current_symptoms.symptoms.length)
                 .fill()
                 .map((_, i) => " " + element.current_symptoms.symptoms[i].name),
-              riskScore: element.current_symptoms.symptoms[0].relevance, //until risk_score can be mapped to "High, Medium, Low"
+              riskScore: element.current_symptoms.risk_score_level,
               location: element.current_symptoms.location.country
             };
             tableData.push(row);

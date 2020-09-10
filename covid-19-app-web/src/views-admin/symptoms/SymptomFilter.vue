@@ -25,9 +25,9 @@
         :items="risk"
         v-model="current_risk"
         label="Risk"
+        @input="$emit('set-risk', current_risk)"
         outlined
         dense
-        disabled
         hide-details
       />
     </v-col>

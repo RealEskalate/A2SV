@@ -10,7 +10,7 @@ class AppDrawer extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
-          Container(color: Colors.lightBlue, child: _createHeader()),
+          Container(color: Colors.white, child: _createHeader()),
           Container(
             // color: Colors.amber[50],
             child: Column(
@@ -57,27 +57,27 @@ class AppDrawer extends StatelessWidget {
       // ),
       child: Stack(
         children: <Widget>[
-          Positioned(
-            top: 110,
-            left: 0,
-            width: 310,
-            height: 40,
-            // Note: without ClipRect, the blur region will be expanded to full
-            // size of the Image instead of custom size
-            child: ClipRect(
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
-                child: Container(
-                  color: Colors.black.withOpacity(0.2),
-                ),
-              ),
-            ),
-          ),
+          // Positioned(
+          //   top: 110,
+          //   left: 0,
+          //   width: 310,
+          //   height: 40,
+          //   // Note: without ClipRect, the blur region will be expanded to full
+          //   // size of the Image instead of custom size
+          //   child: ClipRect(
+          //     child: BackdropFilter(
+          //       filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+          //       child: Container(
+          //         color: Colors.black.withOpacity(0.2),
+          //       ),
+          //     ),
+          //   ),
+          // ),
           Positioned(
               bottom: 12.0,
               left: 16.0,
               child: Text("EPHI Menu",
-                  style: TextStyle(color: Colors.white, fontSize: 30.0))),
+                  style: TextStyle(color: Colors.black, fontSize: 30.0))),
         ],
       ),
     );

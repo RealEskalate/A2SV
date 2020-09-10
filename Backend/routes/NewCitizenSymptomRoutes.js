@@ -7,4 +7,7 @@ router.get(
     newCitizenSymptomController.get_new_citizens_with_symptoms
 );
 
+router.get("/api/test-stat",newCitizenSymptomController.ephi_test_stats);
+router.get("/api/symptoms-count",newCitizenSymptomController.symptoms_count_in_district);
+
 module.exports = router;

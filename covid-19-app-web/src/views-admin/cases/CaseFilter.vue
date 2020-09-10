@@ -28,7 +28,6 @@
         label="Search Person"
         @input="$emit('set-search', search)"
         hide-details
-        disabled
       />
     </v-col>
   </v-row>

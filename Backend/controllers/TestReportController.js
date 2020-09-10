@@ -2,6 +2,7 @@ const { TestReport } = require("../models/TestReportModel.js");
 var mongoose = require("mongoose");
 var UserModels = require("../models/UserModel.js");
 const User = UserModels.User;
+const { PatientLog } = require("../models/PatientLog.js");
 
 // getting all test reports
 exports.get_all_test_reports = async (req, res) => {
@@ -83,6 +84,23 @@ exports.post_test_report = async (req, res) => {
         test_status: req.body.test_status
     });
 
+    //------ saving updating logs --- //
+    let date = new Date();
+    date.setHours(0,0,0,0);
+    
+    let log =await PatientLog.findOne({date:date,test_status:req.body.test_status});
+
+    if(log){
+        log.count+=1;
+        await log.save();
+    }else{
+        await new PatientLog({
+            test_status:req.body.test_status,
+            date: date
+        }).save();
+    }
+    //------ end of saving updating logs --- //
+
     try {
         await report.save();
         return res.send(report);
@@ -96,6 +114,23 @@ exports.post_test_report = async (req, res) => {
 exports.update_test_report = async (req, res) => {
     try {
         const report = await TestReport.findById(req.body.test_id);
+
+        //------ saving updating logs --- //
+        let date = new Date();
+        date.setHours(0,0,0,0);
+        const log = await PatientLog.findOne({date:date,test_status:req.body.test_status});
+        
+        if(log){
+            log.count+=1;
+            log.save();
+        }else{
+            await new PatientLog({
+                test_status:req.body.test_status,
+                date: date
+            }).save();
+        }
+        //------ end of saving updating logs --- //
+
         report.test_status = req.body.test_status
         await report.save();
         

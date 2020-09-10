@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Login Page
-import 'createAccount.dart';
-import 'login.dart';
+import '../sign_up/createAccount.dart';
+import '../sign_in/login.dart';
 
 class WelcomePage extends StatelessWidget {
   @override

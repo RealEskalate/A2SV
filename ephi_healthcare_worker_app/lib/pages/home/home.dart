@@ -1,9 +1,11 @@
-import 'package:ephi_healthcare_worker_app/components/currentPages.dart';
+
+import 'package:ephi_healthcare_worker_app/pages/symptoms/symptom_home.dart';
+import 'package:ephi_healthcare_worker_app/widgets/currentPages.dart';
+import 'package:ephi_healthcare_worker_app/widgets/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 // Drawer Widget
-import 'drawer.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -16,17 +18,26 @@ class _HomeState extends State<Home> {
   int _currentIndex = 0;
   final List<Widget> _children = [
     CurrentWidgets(Colors.blueGrey[100]),
-    CurrentWidgets(Colors.deepOrange[100]),
+    SymptomView(),
     CurrentWidgets(Colors.green[100])
+  ];
+  final List<String> _titles = [
+    "HOME",
+    "SYMPTOMS",
+    "PROFILE"
   ];
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      drawerScrimColor: Colors.black.withOpacity(0.5),
       drawer: AppDrawer(),
       appBar: AppBar(
-        title: Center(child: const Text('EPHI COVID-19 HOME')),
+        backgroundColor: Colors.white,
+      iconTheme: new IconThemeData(color: Colors.black),
+      centerTitle: true,
+        title: Text(_titles[_currentIndex],style: TextStyle(color: Colors.black),),
       ),
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
@@ -39,8 +50,8 @@ class _HomeState extends State<Home> {
             title: new Text('Home'),
           ),
           BottomNavigationBarItem(
-            icon: new Icon(Icons.mail),
-            title: new Text('Messages'),
+            icon: new Icon(Icons.face),
+            title: new Text('Symptoms'),
           ),
           BottomNavigationBarItem(
               icon: Icon(Icons.person), title: Text('Profile'))

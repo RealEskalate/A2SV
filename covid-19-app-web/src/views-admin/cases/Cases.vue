@@ -143,7 +143,7 @@ export default {
         page: this.options.page,
         size: this.options.itemsPerPage,
         status: this.filters.status,
-        // username: this.filters.username,
+        username: this.filters.username,
         start_date: this.filters.date_range[0],
         end_date: this.filters.date_range[1]
       });
