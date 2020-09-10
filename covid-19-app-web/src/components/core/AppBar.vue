@@ -4,7 +4,7 @@
       app
       flat
       class="white py-1"
-      style="border-radius: 0 0 25px 0; height: auto"
+      style="border-radius: 0 0 25px 0; height: auto; background: #fafafa!important "
       :class="{ shadow: raise }"
     >
       <v-btn

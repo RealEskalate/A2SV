@@ -12,6 +12,7 @@ import ethiopia from "./ethiopia";
 import privacyPolicy from "./privacy-policy";
 import symptoms from "./symptoms";
 import users from "./admin/people";
+import dashboard from "./admin/dashboard";
 import cases from "./cases";
 
 import createPersistedState from "vuex-persistedstate";
@@ -136,6 +137,7 @@ export default new Vuex.Store({
     privacyPolicy,
     symptoms,
     users,
-    cases
+    cases,
+    dashboard
   }
 });

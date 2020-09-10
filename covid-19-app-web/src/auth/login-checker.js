@@ -27,7 +27,10 @@ export function checkRole(to, from, next) {
       }
     }
   } else {
-    if (store.getters.getUser.role === "ephi_user")
+    if (
+      store.getters.getUser !== null &&
+      store.getters.getUser.role === "ephi_user"
+    )
       next({
         path: `${store.getters.getLanguagePreference}/admin`
       });
