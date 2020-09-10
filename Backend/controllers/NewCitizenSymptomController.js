@@ -1,7 +1,7 @@
-const NewCitizenSymptoms = require("../models/NewCitizenSymptomsModel");
+const {NewCitizenSymptoms, NewCitizenSymptomsDemo } = require("../models/NewCitizenSymptomsModel");
 const { SymptomUserHistory } = require("../models/SymptomUserHistoryModel");
 const { User } = require("../models/UserModel");
-const { PatientLog } = require("../models/PatientLog.js");
+const { PatientLog, PatientLogDemo } = require("../models/PatientLog.js");
 const { SymptomLog } = require("../models/SymptomLogModel");
 const { DistrictModel } = require("../models/DistrictModel");
 
@@ -33,7 +33,9 @@ exports.get_new_citizens_with_symptoms = async (req, res) => {
     let startDate = new Date(Date.parse(setStartDate(req) + "T21:00:00.000Z"));
     let endDate = new Date(Date.parse(setEndDate(req) + "T21:00:00.000Z"));
 
-    const new_citizens = await NewCitizenSymptoms.find({
+    let newCitizenModel = (req.demo)? NewCitizenSymptomsDemo :  NewCitizenSymptoms;
+
+    const new_citizens = await newCitizenModel.find({
         date: {
             $gte: startDate,
             $lte: endDate,
@@ -90,39 +92,27 @@ exports.prepop = async () => {
 // for new confirmed, death & test administered 
 exports.ephi_test_stats= async(req,res) => {
     
-    let filter = {}
-
-    if(req.query.start_date){
-        filter.date ={$gte :   new Date(req.query.start_date)}
-    }else{
-        let date = new Date()
-        date.setDate(date.getDate()-8)
-        date.setHours(0,0,0,0)
-        filter.date ={$gte :  date }
-    }
-
-    if(req.query.end_date){
-        let date = new Date(req.query.end_date)
-        date.setHours(23,59,59,0)
-        Object.assign(filter.date, {$lte : date});
-    }else{
-        let date = new Date()
-        date.setHours(0,0,0,0)
-        Object.assign(filter.date, {$lte : date});
+    let filter = {
+        date: {
+            $gte: new Date(Date.parse(setStartDate(req) + "T21:00:00.000Z")),
+            $lte: new Date(Date.parse(setEndDate(req) + "T21:00:00.000Z")),
+        }
     }
 
     if(req.query.status){
         filter.test_status = req.query.status
     }
 
+    let patientLogModel = (req.demo)? PatientLogDemo :  PatientLog;
+
     
-    let patientLogs= await PatientLog.find(filter).sort({ "date": 1 });
+    let patientLogs= await PatientLogDemo.find(filter).sort({ "date": 1 });
 
     let result = {}
 
     for(var index in patientLogs){
         let log = patientLogs[index];
-        let date = log.date.toISOString()
+        let date = log.date.toISOString().slice(0,10)
 
         if(date in result){
             result[date]+=log.count;
@@ -136,12 +126,12 @@ exports.ephi_test_stats= async(req,res) => {
 
 
 exports.symptoms_count_in_district= async (req,res) =>{
-    let districts = await DistrictModel.find({}).select('state');
+    let districts = await DistrictModel.find({}).select('name');
     let symptomLogs = await SymptomLog.find({}).select('current_symptoms.location.district');
 
     let districtDict= {}
 
-    districts.forEach( district => districtDict[district._id] = district.state )
+    districts.forEach( district => districtDict[district._id] = district.name )
 
     let symptomsCount = {}
 
