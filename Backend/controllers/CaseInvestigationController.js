@@ -1,4 +1,7 @@
 const { CaseInvestigation } = require("../models/CaseInvestigation.js");
+const mongoose = require("mongoose")
+const _ = require("lodash");
+const { Patient } = require("../models/Patient.js");
 
 // Fetch all case investigations, with filters if any
 exports.getCaseInvestigations = async (req, res) => {
@@ -14,7 +17,7 @@ exports.getCaseInvestigations = async (req, res) => {
     }
 
     const page = parseInt(req.query.page) || 1;
-    const size = parseInt(req.query.size) || 30;
+    const size = parseInt(req.query.size) || 15;
     try {
         const investigations = await CaseInvestigation.find(filter, {}, { skip: page - 1, limit: size * 1 });
         const populated = await CaseInvestigation.populate(investigations, [
@@ -54,7 +57,8 @@ exports.addOrUpdateCaseInvestigation = async (req, res) => {
     try {
         const investigation = await CaseInvestigation.findById(id);
         if (!investigation) {
-            const investigation = new CaseInvestigation(req.body);
+            const investigation = new CaseInvestigation(_.pick(req.body, ["patient_id", "assigned_to", "notes"]));
+            investigation._id = mongoose.Types.ObjectId();
             await investigation.save();
             return res.status(201).send(investigation);
         }
@@ -62,7 +66,7 @@ exports.addOrUpdateCaseInvestigation = async (req, res) => {
         await investigation.save();
         return res.send(investigation)
     } catch (error) {
-        return res.status(500).send(err.toString());
+        return res.status(500).send(error.toString());
     }
 }
 
@@ -77,11 +81,35 @@ exports.deleteCaseInvestigation = async (req, res) => {
         await investigation.remove();
         return res.send(investigation);
     } catch (error) {
-        return res.status(500).send(err.toString());
+        return res.status(500).send(error.toString());
     }
 }
 
+exports.get_patients_by_status = async (req, res) => {
 
+    const { assignee } = req.query;
+    const { status } = req.query;
 
+    const page = parseInt(req.query.page) || 1;
+    const size = parseInt(req.query.size) || 15;
+    try {
+        const selectedPatients = await CaseInvestigation.find({ assigned_to: mongoose.Types.ObjectId(assignee) })
+        const patientIds = []
 
+        for (var i = 0; i < selectedPatients.length; i++) {
+            patientIds.push(selectedPatients[i].patient_id);
+        }
+        const filter = { status: status, _id: { $in: patientIds } };
+        const patients = await Patient.find(filter, {}, { skip: page - 1, limit: size * 1 });
 
+        const result = {
+            data_count: await Patient.countDocuments(filter),
+            page_size: size,
+            current_page: page,
+            data: patients
+        };
+        return res.status(200).send(result);
+    } catch (error) {
+        return res.status(500).send(error.toString());
+    }
+}
