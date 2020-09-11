@@ -2,7 +2,7 @@ const {NewCitizenSymptoms, NewCitizenSymptomsDemo } = require("../models/NewCiti
 const { SymptomUserHistory } = require("../models/SymptomUserHistoryModel");
 const { User } = require("../models/UserModel");
 const { PatientLog, PatientLogDemo } = require("../models/PatientLog.js");
-const { SymptomLog } = require("../models/SymptomLogModel");
+const { SymptomLog,SymptomLogDemo } = require("../models/SymptomLogModel");
 const { DistrictModel } = require("../models/DistrictModel");
 
 const mongoose = require("mongoose");
@@ -33,7 +33,7 @@ exports.get_new_citizens_with_symptoms = async (req, res) => {
     let startDate = new Date(Date.parse(setStartDate(req) + "T21:00:00.000Z"));
     let endDate = new Date(Date.parse(setEndDate(req) + "T21:00:00.000Z"));
 
-    let newCitizenModel = (req.demo)? NewCitizenSymptomsDemo :  NewCitizenSymptoms;
+    let newCitizenModel = (req.query.demo)? NewCitizenSymptomsDemo :  NewCitizenSymptoms;
 
     const new_citizens = await newCitizenModel.find({
         date: {
@@ -103,10 +103,10 @@ exports.ephi_test_stats= async(req,res) => {
         filter.test_status = req.query.status
     }
 
-    let patientLogModel = (req.demo)? PatientLogDemo :  PatientLog;
+    let patientLogModel = (req.query.demo)? PatientLogDemo :  PatientLog;
 
     
-    let patientLogs= await PatientLogDemo.find(filter).sort({ "date": 1 });
+    let patientLogs= await patientLogModel.find(filter).sort({ "date": 1 });
 
     let result = {}
 
@@ -126,8 +126,10 @@ exports.ephi_test_stats= async(req,res) => {
 
 
 exports.symptoms_count_in_district= async (req,res) =>{
+    let SymptomLogModel = (req.query.demo)? SymptomLogDemo : SymptomLog
+
     let districts = await DistrictModel.find({}).select('name');
-    let symptomLogs = await SymptomLog.find({}).select('current_symptoms.location.district');
+    let symptomLogs = await SymptomLogModel.find({}).select('current_symptoms.location.district');
 
     let districtDict= {}
 
@@ -162,3 +164,5 @@ exports.symptoms_count_in_district= async (req,res) =>{
 
     res.send(districtCount)
 }
+
+
