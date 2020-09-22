@@ -1,8 +1,8 @@
-const {NewCitizenSymptoms, NewCitizenSymptomsDemo } = require("../models/NewCitizenSymptomsModel");
+const { NewCitizenSymptoms, NewCitizenSymptomsDemo } = require("../models/NewCitizenSymptomsModel");
 const { SymptomUserHistory } = require("../models/SymptomUserHistoryModel");
 const { User } = require("../models/UserModel");
 const { PatientLog, PatientLogDemo } = require("../models/PatientLog.js");
-const { SymptomLog,SymptomLogDemo } = require("../models/SymptomLogModel");
+const { SymptomLog, SymptomLogDemo } = require("../models/SymptomLogModel");
 const { DistrictModel } = require("../models/DistrictModel");
 
 const mongoose = require("mongoose");
@@ -33,7 +33,7 @@ exports.get_new_citizens_with_symptoms = async (req, res) => {
     let startDate = new Date(Date.parse(setStartDate(req) + "T21:00:00.000Z"));
     let endDate = new Date(Date.parse(setEndDate(req) + "T21:00:00.000Z"));
 
-    let newCitizenModel = (req.query.demo)? NewCitizenSymptomsDemo :  NewCitizenSymptoms;
+    let newCitizenModel = (req.query.demo) ? NewCitizenSymptomsDemo : NewCitizenSymptoms;
 
     const new_citizens = await newCitizenModel.find({
         date: {
@@ -90,8 +90,8 @@ exports.prepop = async () => {
 };
 
 // for new confirmed, death & test administered 
-exports.ephi_test_stats= async(req,res) => {
-    
+exports.ephi_test_stats = async (req, res) => {
+
     let filter = {
         date: {
             $gte: new Date(Date.parse(setStartDate(req) + "T21:00:00.000Z")),
@@ -99,68 +99,84 @@ exports.ephi_test_stats= async(req,res) => {
         }
     }
 
-    if(req.query.status){
-        filter.test_status = req.query.status
-    }
+    let patientLogModel = (req.query.demo) ? PatientLogDemo : PatientLog;
 
-    let patientLogModel = (req.query.demo)? PatientLogDemo :  PatientLog;
+    let patientLogs = await patientLogModel.find(filter).sort({ "date": 1 });
 
-    
-    let patientLogs= await patientLogModel.find(filter).sort({ "date": 1 });
+    let administered = {};
+    let positive = {};
+    let negative = {};
+    let death = {};
 
-    let result = {}
-
-    for(var index in patientLogs){
+    for (var index in patientLogs) {
         let log = patientLogs[index];
-        let date = log.date.toISOString().slice(0,10)
-
-        if(date in result){
-            result[date]+=log.count;
-        }else{
-            result[date]=log.count;
+        let date = log.date.toISOString().slice(0, 10)
+        if (!(date in administered)) {
+            administered[date] = 0;
+        }
+        if (log.test_status == "Positive") {
+            if (date in positive) {
+                positive[date] += log.count;
+            } else {
+                positive[date] += log.count;
+            }
+            administered[date] += log.count;
+        } else if (log.test_status == "Negative") {
+            if (date in negative) {
+                negative[date] += log.count;
+            } else {
+                negative[date] = log.count;
+            }
+            administered[date] += log.count;
+        } else if (log.test_status == "Died") {
+            if (date in death) {
+                death[date] += log.count;
+            } else {
+                death[date] = log.count;
+            }
+            administered[date] += log.count;
         }
     }
-
+    const result = { administered: administered, positive: positive, negative: negative, death: death };
     return res.send(result);
 }
 
 
-exports.symptoms_count_in_district= async (req,res) =>{
-    let SymptomLogModel = (req.query.demo)? SymptomLogDemo : SymptomLog
+exports.symptoms_count_in_district = async (req, res) => {
+    let SymptomLogModel = (req.query.demo) ? SymptomLogDemo : SymptomLog
 
     let districts = await DistrictModel.find({}).select('name');
     let symptomLogs = await SymptomLogModel.find({}).select('current_symptoms.location.district');
 
-    let districtDict= {}
+    let districtDict = {}
 
-    districts.forEach( district => districtDict[district._id] = district.name )
+    districts.forEach(district => districtDict[district._id] = district.name)
 
     let symptomsCount = {}
 
-    symptomLogs.forEach( log =>  
-        {
-            if(districtDict[log.current_symptoms.location.district] in symptomsCount){
-                symptomsCount[ districtDict[log.current_symptoms.location.district] ] +=1
-            }else{
-                symptomsCount[ districtDict[log.current_symptoms.location.district] ] =1
-            }
+    symptomLogs.forEach(log => {
+        if (districtDict[log.current_symptoms.location.district] in symptomsCount) {
+            symptomsCount[districtDict[log.current_symptoms.location.district]] += 1
+        } else {
+            symptomsCount[districtDict[log.current_symptoms.location.district]] = 1
+        }
 
-        })
-        
+    })
+
 
     let districtCount = []
 
-    for(var name in symptomsCount){
-        if(name!="undefined"){
+    for (var name in symptomsCount) {
+        if (name != "undefined") {
             districtCount.push({
                 region: name,
-                count:symptomsCount[name]
+                count: symptomsCount[name]
             })
         }
 
     }
 
-    districtCount.sort((a,b) => a.count - b.count)
+    districtCount.sort((a, b) => a.count - b.count)
 
     res.send(districtCount)
 }
