@@ -1,5 +1,5 @@
-import React from "react";
-import { SearchBar } from "react-native-elements";
+import React from 'react';
+import { SearchBar } from 'react-native-elements';
 import {
   StyleSheet,
   Dimensions,
@@ -9,12 +9,12 @@ import {
   ActivityIndicator,
   Image,
   View,
-} from "react-native";
-import { LineChart, BarChart } from "react-native-chart-kit";
-import { SafeAreaView } from "react-native-safe-area-context";
-import * as criterias from "./Criterias";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import DatePicker from "react-native-datepicker";
+} from 'react-native';
+import { LineChart, BarChart } from 'react-native-chart-kit';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import * as criterias from './Criterias';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import DatePicker from 'react-native-datepicker';
 import {
   Card,
   Modal,
@@ -33,24 +33,24 @@ import {
   Select,
   SelectGroup,
   SelectItem,
-} from "@ui-kitten/components";
-import * as eva from "@eva-design/eva";
-import SearchableDropdown from "react-native-searchable-dropdown";
-import userIDStore from "../../data-management/user-id-data/userIDStore";
-import { TextLoader } from "react-native-indicator";
-import { strings } from "../../localization/localization";
-import languageStore from "../../data-management/language_data/languageStore";
-import { ThemeContext } from "../../../assets/themes/theme-context";
-import AsyncStorage from "@react-native-community/async-storage";
-const CalendarIcon = (props) => <Icon {...props} name="calendar" />;
+} from '@ui-kitten/components';
+import * as eva from '@eva-design/eva';
+import SearchableDropdown from 'react-native-searchable-dropdown';
+import userIDStore from '../../data-management/user-id-data/userIDStore';
+import { TextLoader } from 'react-native-indicator';
+import { strings } from '../../localization/localization';
+import languageStore from '../../data-management/language_data/languageStore';
+import { ThemeContext } from '../../../assets/themes/theme-context';
+import AsyncStorage from '@react-native-community/async-storage';
+const CalendarIcon = (props) => <Icon {...props} name='calendar' />;
 
 class DataAnalytics extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchedCountry: "World",
-      search: "World",
-      currLanguage: "English",
+      searchedCountry: 'World',
+      search: 'World',
+      currLanguage: 'English',
       currLangCode: languageStore.getState(),
       popUpVisible: false,
       Months: [
@@ -76,29 +76,55 @@ class DataAnalytics extends React.Component {
       totalLoading: true,
       testCountDataExist: false,
       kittenStartDate: new Date(),
-      selected_graph_type: "",
+      selected_graph_type: '',
       selected_graph_filter: criterias.confirmed,
-      selected_graph_start_date: "",
-      selected_graph_end_date: new Date().toISOString().split("T")[0],
-      graphTypes: [strings.DailyStatsGraph, strings.TotalStatsGraph, strings.PercentagePerMillion],
-      dateRanges: [strings.LastWeek, strings.LastMonth, strings.LastThreeMonths],
+      selected_graph_start_date: '',
+      selected_graph_end_date: new Date().toISOString().split('T')[0],
+      graphTypes: [
+        strings.DailyStatsGraph,
+        strings.TotalStatsGraph,
+        strings.PercentagePerMillion,
+      ],
+      dateRanges: [
+        strings.LastWeek,
+        strings.LastMonth,
+        strings.LastThreeMonths,
+      ],
       filterParameters: [strings.Confirmed, strings.Recovered, strings.Death],
       selected_graph_type_index: new IndexPath(0),
       selected_date_range_index: new IndexPath(0),
       selected_filter_parameters: new IndexPath(0),
       selected_graph_data_set: [0],
-      selected_graph_labels: [""],
+      selected_graph_labels: [''],
       main_graph_loading: false,
       descriptionVisiblity: false,
-      graph_descriptions:[strings.LoadingGraphDescription,strings.LoadingGraphDescription,strings.LoadingGraphDescription]
+      graph_descriptions: [
+        strings.LoadingGraphDescription,
+        strings.LoadingGraphDescription,
+        strings.LoadingGraphDescription,
+      ],
     };
     languageStore.subscribe(() => {
       strings.setLanguage(languageStore.getState());
       this.setState({ currLangCode: languageStore.getState() });
-      this.setState({graphTypes: [strings.DailyStatsGraph, strings.TotalStatsGraph, strings.PercentagePerMillion],
-        dateRanges: [strings.LastWeek, strings.LastMonth, strings.LastThreeMonths],
-        graph_descriptions:[strings.LoadingGraphDescription,strings.LoadingGraphDescription,strings.LoadingGraphDescription],
-        filterParameters: [strings.Confirmed, strings.Recovered, strings.Death]});
+      this.setState({
+        graphTypes: [
+          strings.DailyStatsGraph,
+          strings.TotalStatsGraph,
+          strings.PercentagePerMillion,
+        ],
+        dateRanges: [
+          strings.LastWeek,
+          strings.LastMonth,
+          strings.LastThreeMonths,
+        ],
+        graph_descriptions: [
+          strings.LoadingGraphDescription,
+          strings.LoadingGraphDescription,
+          strings.LoadingGraphDescription,
+        ],
+        filterParameters: [strings.Confirmed, strings.Recovered, strings.Death],
+      });
       this.componentDidMount();
     });
   }
@@ -106,7 +132,6 @@ class DataAnalytics extends React.Component {
   static contextType = ThemeContext;
 
   filterCountryNames = async () => {
-    this.setState({ searching: true });
     await this.getTotalData()
       .then(this.fetchTotalStats())
       .then(this.fetchDailyNewsCases())
@@ -114,8 +139,8 @@ class DataAnalytics extends React.Component {
       .then(this.fetchPerMillionStats())
       // .then(this.fetchLastSymptomUpdate())
       .then(this.checkIfDataExist(criterias.numberOfTests)) //check if number of test case data exist
-      .catch((error) => {
-        console.log("Concurrency Issue");
+      .catch(() => {
+        console.log('Concurrency Issue');
       });
   };
 
@@ -123,30 +148,30 @@ class DataAnalytics extends React.Component {
     console.log(this.state.selected_daily_start_date);
     await this.setState({ currLangCode: languageStore.getState() });
     switch (this.state.currLangCode) {
-      case "am":
-        await this.setState({ currLanguage: "Amharic" });
+      case 'am':
+        await this.setState({ currLanguage: 'Amharic' });
         break;
-      case "en":
-        await this.setState({ currLanguage: "English" });
+      case 'en':
+        await this.setState({ currLanguage: 'English' });
         break;
-      case "orm":
-        await this.setState({ currLanguage: "Oromo" });
+      case 'orm':
+        await this.setState({ currLanguage: 'Oromo' });
         break;
-      case "tr":
-        await this.setState({ currLanguage: "Turkish" });
+      case 'tr':
+        await this.setState({ currLanguage: 'Turkish' });
         break;
     }
     await this.getTotalData()
       .then(this.fetchDailyNewsCases())
       // .then(this.fetchDailyNewsCases())
-      // .then(this.getCountryList())
+      .then(this.getCountryList())
       // .then(this.fetchPerMillionStats())
       // // .then(this.fetchLastSymptomUpdate())
       // .then(this.checkIfDataExist(criterias.numberOfTests)) //check if number of test case data exist
       .then(this.getDescriptions())
       .then(this.getPermillionDescriptions())
       .catch((error) => {
-        console.log("Concurrency Issue");
+        console.log('Concurrency Issue');
       });
   };
 
@@ -158,25 +183,25 @@ class DataAnalytics extends React.Component {
     var query =
       this.state.selected_graph_start_date.length > 1 &&
       this.state.selected_graph_end_date.length > 1
-        ? "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/statistics?criteria=" +
+        ? 'https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/statistics?criteria=' +
           this.state.selected_graph_filter +
-          "&country=" +
+          '&country=' +
           this.state.searchedCountry +
-          "&start_date=" +
+          '&start_date=' +
           this.state.selected_graph_start_date +
-          "&end_date=" +
+          '&end_date=' +
           this.state.selected_graph_end_date
-        : "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/statistics?criteria=" +
+        : 'https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/statistics?criteria=' +
           this.state.selected_graph_filter +
-          "&country=" +
+          '&country=' +
           this.state.searchedCountry;
     //console.log(query);
     await fetch(query, {
-      method: "GET",
+      method: 'GET',
       headers: {
-        Authorization: "Bearer " + userIDStore.getState().userToken,
-        Accept: "application/json",
-        "Content-Type": "application/json",
+        Authorization: 'Bearer ' + userIDStore.getState().userToken,
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
       },
     })
       .then((response) => response.json())
@@ -203,26 +228,26 @@ class DataAnalytics extends React.Component {
     var query =
       this.state.selected_graph_start_date.length > 1 &&
       this.state.selected_graph_end_date.length > 1
-        ? "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/statistics?criteria=" +
+        ? 'https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/statistics?criteria=' +
           this.state.selected_graph_filter +
-          "&country=" +
+          '&country=' +
           this.state.searchedCountry +
-          "&start_date=" +
+          '&start_date=' +
           this.state.selected_graph_start_date +
-          "&end_date=" +
+          '&end_date=' +
           this.state.selected_graph_end_date +
-          "&daily=true"
-        : "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/statistics?criteria=" +
+          '&daily=true'
+        : 'https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/statistics?criteria=' +
           this.state.selected_graph_filter +
-          "&country=" +
+          '&country=' +
           this.state.searchedCountry +
-          "&daily=true";
+          '&daily=true';
     await fetch(query, {
-      method: "GET",
+      method: 'GET',
       headers: {
-        Authorization: "Bearer " + userIDStore.getState().userToken,
-        Accept: "application/json",
-        "Content-Type": "application/json",
+        Authorization: 'Bearer ' + userIDStore.getState().userToken,
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
       },
     })
       .then((response) => response.json())
@@ -250,27 +275,27 @@ class DataAnalytics extends React.Component {
     var query =
       this.state.selected_graph_start_date.length > 1 &&
       this.state.selected_graph_end_date.length > 1
-        ? "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/statistics?criteria=" +
+        ? 'https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/statistics?criteria=' +
           this.state.selected_graph_filter +
-          "&country=" +
+          '&country=' +
           this.state.searchedCountry +
-          "&start_date=" +
+          '&start_date=' +
           this.state.selected_graph_start_date +
-          "&end_date=" +
+          '&end_date=' +
           this.state.selected_graph_end_date +
-          "&perMillion=true"
-        : "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/statistics?criteria=" +
+          '&perMillion=true'
+        : 'https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/statistics?criteria=' +
           this.state.selected_graph_filter +
-          "&country=" +
+          '&country=' +
           this.state.searchedCountry +
-          "&perMillion=true";
+          '&perMillion=true';
     //console.log(query);
     await fetch(query, {
-      method: "GET",
+      method: 'GET',
       headers: {
-        Authorization: "Bearer " + userIDStore.getState().userToken,
-        Accept: "application/json",
-        "Content-Type": "application/json",
+        Authorization: 'Bearer ' + userIDStore.getState().userToken,
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
       },
     })
       .then((response) => response.json())
@@ -292,18 +317,18 @@ class DataAnalytics extends React.Component {
 
   //check user last symptom update date
   fetchLastSymptomUpdate = async () => {
-    console.log("Just got in");
-    let userID = await AsyncStorage.getItem("userID");
+    console.log('Just got in');
+    let userID = await AsyncStorage.getItem('userID');
     console.log(userID);
     let newThis = this;
     await fetch(
-      "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/users/" + userID,
+      'https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/users/' + userID,
       {
-        method: "GET",
+        method: 'GET',
         headers: {
-          Authorization: "Bearer " + userIDStore.getState().userToken,
-          Accept: "application/json",
-          "Content-Type": "application/json",
+          Authorization: 'Bearer ' + userIDStore.getState().userToken,
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
         },
       }
     )
@@ -312,18 +337,18 @@ class DataAnalytics extends React.Component {
         console.log(json);
         if (json !== undefined && json.length !== 0) {
           let lastSymptomUpdateDate = new Date(
-            json.last_symptom_update.split("T")[0]
+            json.last_symptom_update.split('T')[0]
           );
           let todayDate = new Date();
           let differenceInDays =
             (todayDate.getTime() - lastSymptomUpdateDate.getTime()) /
             (1000 * 3600 * 24);
           console.log(
-            "Difference in days " +
+            'Difference in days ' +
               Number.parseInt(Math.floor(differenceInDays)).toString()
           );
           if (Number.parseInt(Math.floor(differenceInDays)) >= 7) {
-            console.log("Check");
+            console.log('Check');
             newThis.setState({
               popUpVisible: true,
             });
@@ -347,24 +372,24 @@ class DataAnalytics extends React.Component {
     var query =
       this.state.selected_rate_start_date.length > 1 &&
       this.state.selected_rate_end_date.length > 1
-        ? "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/statistics?criteria=" +
+        ? 'https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/statistics?criteria=' +
           this.state.selected_filter_rate +
-          "&country=" +
+          '&country=' +
           this.state.searchedCountry +
-          "&start_date=" +
+          '&start_date=' +
           this.state.selected_rate_start_date +
-          "&end_date=" +
+          '&end_date=' +
           this.state.selected_rate_end_date
-        : "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/statistics?criteria=" +
+        : 'https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/statistics?criteria=' +
           this.state.selected_filter_rate +
-          "&country=" +
+          '&country=' +
           this.state.searchedCountry;
     await fetch(query, {
-      method: "GET",
+      method: 'GET',
       headers: {
-        Authorization: "Bearer " + userIDStore.getState().userToken,
-        Accept: "application/json",
-        "Content-Type": "application/json",
+        Authorization: 'Bearer ' + userIDStore.getState().userToken,
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
       },
     })
       .then((response) => response.json())
@@ -384,10 +409,10 @@ class DataAnalytics extends React.Component {
 
   //Converts date in to appropriate format
   dateConverter(date) {
-    let dateList = date.split("-");
+    let dateList = date.split('-');
     let month = parseInt(dateList[1]);
     let monthInWord = this.state.Months[month - 1];
-    return monthInWord + " " + dateList[2];
+    return monthInWord + ' ' + dateList[2];
   }
 
   //get total numbers of the specified country and populate UI
@@ -397,14 +422,14 @@ class DataAnalytics extends React.Component {
     });
     let newThis = this;
     await fetch(
-      "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/statistics?criteria=All&country=" +
+      'https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/statistics?criteria=All&country=' +
         this.state.searchedCountry,
       {
-        method: "GET",
+        method: 'GET',
         headers: {
-          Authorization: "Bearer " + userIDStore.getState().userToken,
-          Accept: "application/json",
-          "Content-Type": "application/json",
+          Authorization: 'Bearer ' + userIDStore.getState().userToken,
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
         },
       }
     )
@@ -429,13 +454,13 @@ class DataAnalytics extends React.Component {
   getCountryList = async () => {
     let newThis = this;
     await fetch(
-      "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/statistics/countries",
+      'https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/statistics/countries',
       {
-        method: "GET",
+        method: 'GET',
         headers: {
-          Authorization: "Bearer " + userIDStore.getState().userToken,
-          Accept: "application/json",
-          "Content-Type": "application/json",
+          Authorization: 'Bearer ' + userIDStore.getState().userToken,
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
         },
       }
     )
@@ -457,8 +482,8 @@ class DataAnalytics extends React.Component {
 
   //populate daily data
   populateDataPoints = (objList) => {
-    console.log("Data length " + objList.length);
-    this.state.selected_graph_labels = [""]; //reseting all data point labels
+    console.log('Data length ' + objList.length);
+    this.state.selected_graph_labels = ['']; //reseting all data point labels
     this.state.selected_graph_data_set = [0]; //reseting all data point labels
 
     //generating interval
@@ -475,7 +500,7 @@ class DataAnalytics extends React.Component {
       this.state.selected_graph_data_set[indexCounterSet] =
         objList[dataSet_counter].y;
       this.state.selected_graph_labels[indexCounterSet] = this.dateConverter(
-        objList[dataSet_counter].t.split("T")[0]
+        objList[dataSet_counter].t.split('T')[0]
       );
       indexCounterSet += 1;
       dataSet_counter += interval;
@@ -483,13 +508,13 @@ class DataAnalytics extends React.Component {
     this.state.selected_graph_data_set[indexCounterSet] =
       objList[customLength].y;
     this.state.selected_graph_labels[indexCounterSet] = this.dateConverter(
-      objList[customLength].t.split("T")[0]
+      objList[customLength].t.split('T')[0]
     );
   };
 
   //Populates statistics data in to our state
   populate = (objList) => {
-    this.state.graph_label = [""]; //reseting data label
+    this.state.graph_label = ['']; //reseting data label
     this.state.data_set = [0]; // reseting data set
 
     //generating interval
@@ -505,20 +530,20 @@ class DataAnalytics extends React.Component {
     while (dataSet_counter < customLength) {
       this.state.data_set[indexCounterSet] = objList[dataSet_counter].y;
       this.state.graph_label[indexCounterSet] = this.dateConverter(
-        objList[dataSet_counter].t.split("T")[0]
+        objList[dataSet_counter].t.split('T')[0]
       );
       indexCounterSet += 1;
       dataSet_counter += interval;
     }
     this.state.data_set[indexCounterSet] = objList[customLength].y;
     this.state.graph_label[indexCounterSet] = this.dateConverter(
-      objList[customLength].t.split("T")[0]
+      objList[customLength].t.split('T')[0]
     );
   };
 
   //populate daily data
   populateRateData = (objList) => {
-    this.state.rate_label = [""]; //reseting all data point labels
+    this.state.rate_label = ['']; //reseting all data point labels
     this.state.rate_data_set = [0]; //reseting all data point labels
 
     //generating interval
@@ -546,7 +571,7 @@ class DataAnalytics extends React.Component {
     let indexCounter = 0;
     while (graphLebel_counter < objList.length) {
       this.state.rate_label[indexCounter] = this.dateConverter(
-        objList[graphLebel_counter].t.split("T")[0]
+        objList[graphLebel_counter].t.split('T')[0]
       );
       indexCounter += 1;
       if (
@@ -562,7 +587,7 @@ class DataAnalytics extends React.Component {
 
   //populate daily data
   populatePercentageData = (objList) => {
-    this.state.percentage_label = [""]; //reseting all data point labels
+    this.state.percentage_label = ['']; //reseting all data point labels
     this.state.percentage_data_set = [0]; //reseting all data point labels
 
     //generating interval
@@ -579,25 +604,25 @@ class DataAnalytics extends React.Component {
       this.state.percentage_data_set[indexCounterSet] =
         objList[dataSet_counter].y;
       this.state.percentage_label[indexCounterSet] = this.dateConverter(
-        objList[dataSet_counter].t.split("T")[0]
+        objList[dataSet_counter].t.split('T')[0]
       );
       indexCounterSet += 1;
       dataSet_counter += interval;
     }
     this.state.percentage_data_set[indexCounterSet] = objList[customLength].y;
     this.state.percentage_label[indexCounterSet] = this.dateConverter(
-      objList[customLength].t.split("T")[0]
+      objList[customLength].t.split('T')[0]
     );
   };
 
   //Reformat number
   reformatNumber(nStr) {
-    var x = nStr.split(".");
+    var x = nStr.split('.');
     var x1 = x[0];
-    var x2 = x.length > 1 ? "." + x[1] : "";
+    var x2 = x.length > 1 ? '.' + x[1] : '';
     var rgx = /(\d+)(\d{3})/;
     while (rgx.test(x1)) {
-      x1 = x1.replace(rgx, "$1" + "," + "$2");
+      x1 = x1.replace(rgx, '$1' + ',' + '$2');
     }
     return x1 + x2;
   }
@@ -605,7 +630,7 @@ class DataAnalytics extends React.Component {
   //Reformat numbers with large number suffix
   intToString(value) {
     let newValue = value;
-    const suffixes = ["", "K", "M", "B", "T"];
+    const suffixes = ['', 'K', 'M', 'B', 'T'];
     let suffixNum = 0;
     while (newValue >= 1000) {
       newValue /= 1000;
@@ -627,26 +652,26 @@ class DataAnalytics extends React.Component {
     var query =
       this.state.selected_daily_start_date.length > 1 &&
       this.state.selected_daily_end_date.length > 1
-        ? "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/statistics?criteria=" +
+        ? 'https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/statistics?criteria=' +
           filterCriteria +
-          "&country=" +
+          '&country=' +
           this.state.searchedCountry +
-          "&start_date=" +
+          '&start_date=' +
           this.state.selected_daily_start_date +
-          "&end_date=" +
+          '&end_date=' +
           this.state.selected_daily_end_date +
-          "&daily=true"
-        : "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/statistics?criteria=" +
+          '&daily=true'
+        : 'https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/statistics?criteria=' +
           filterCriteria +
-          "&country=" +
+          '&country=' +
           this.state.searchedCountry +
-          "&daily=true";
+          '&daily=true';
     fetch(query, {
-      method: "GET",
+      method: 'GET',
       headers: {
-        Authorization: "Bearer " + userIDStore.getState().userToken,
-        Accept: "application/json",
-        "Content-Type": "application/json",
+        Authorization: 'Bearer ' + userIDStore.getState().userToken,
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
       },
     })
       .then((response) => response.json())
@@ -669,34 +694,42 @@ class DataAnalytics extends React.Component {
     var day = new Date().getDate();
     var month = new Date().getMonth() + 1;
     var year = new Date().getFullYear();
-    return year + "-" + month + "-" + day;
+    return year + '-' + month + '-' + day;
   }
 
   //get minimum date for selection
   getMinimumDate() {
-    return "2019-12-31";
+    return '2019-12-31';
   }
 
-  
-  displayInfoIcon = (styles) => 
-  <Icon {...styles}
-    name={
-      this.state.descriptionVisiblity?"question-mark-circle":"question-mark-circle-outline"} 
-    onPress={() => this.setState({descriptionVisiblity:!this.state.descriptionVisiblity})}/>
-  ;
+  displayInfoIcon = (styles) => (
+    <Icon
+      {...styles}
+      name={
+        this.state.descriptionVisiblity
+          ? 'question-mark-circle'
+          : 'question-mark-circle-outline'
+      }
+      onPress={() =>
+        this.setState({
+          descriptionVisiblity: !this.state.descriptionVisiblity,
+        })
+      }
+    />
+  );
   //fetches description for different age group
   getDescriptions = async () => {
     let newThis = this;
     await fetch(
-      "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/resources/mobile/statistics?language=" +
+      'https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/resources/mobile/statistics?language=' +
         this.state.currLanguage +
-        "&filter=adults",
+        '&filter=adults',
       {
-        method: "GET",
+        method: 'GET',
         headers: {
-          Authorization: "Bearer " + userIDStore.getState().userToken,
-          Accept: "application/json",
-          "Content-Type": "application/json",
+          Authorization: 'Bearer ' + userIDStore.getState().userToken,
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
         },
       }
     )
@@ -704,9 +737,11 @@ class DataAnalytics extends React.Component {
       .then(async (json) => {
         if (json !== undefined && json.length !== 0) {
           await newThis.setState({
-            graph_descriptions:[json[1].descriptions[0]
-            .description,json[0].descriptions[0]
-            .description,newThis.state.graph_descriptions[2]]
+            graph_descriptions: [
+              json[1].descriptions[0].description,
+              json[0].descriptions[0].description,
+              newThis.state.graph_descriptions[2],
+            ],
           });
 
           console.log(this.state.staticsDescription);
@@ -725,14 +760,14 @@ class DataAnalytics extends React.Component {
   getPermillionDescriptions = async () => {
     let newThis = this;
     await fetch(
-      "https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/resources/statistics-description?title=per-million&language=" +
+      'https://a2sv-api-wtupbmwpnq-uc.a.run.app/api/resources/statistics-description?title=per-million&language=' +
         this.state.currLanguage,
       {
-        method: "GET",
+        method: 'GET',
         headers: {
-          Authorization: "Bearer " + userIDStore.getState().userToken,
-          Accept: "application/json",
-          "Content-Type": "application/json",
+          Authorization: 'Bearer ' + userIDStore.getState().userToken,
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
         },
       }
     )
@@ -740,7 +775,11 @@ class DataAnalytics extends React.Component {
       .then(async (json) => {
         if (json !== undefined && json.length !== 0) {
           await newThis.setState({
-            graph_descriptions:[newThis.state.graph_descriptions[0],newThis.state.graph_descriptions[1],json[0].description]
+            graph_descriptions: [
+              newThis.state.graph_descriptions[0],
+              newThis.state.graph_descriptions[1],
+              json[0].description,
+            ],
           });
         } else {
           newThis.getPermillionDescriptions();
@@ -758,7 +797,7 @@ class DataAnalytics extends React.Component {
     console.log(index.row);
     switch (index.row) {
       case 0:
-        console.log("Daily graph type");
+        console.log('Daily graph type');
         await this.setState({
           selected_graph_type_index: index,
           main_graph_loading: true,
@@ -791,7 +830,7 @@ class DataAnalytics extends React.Component {
         await this.setState({
           selected_date_range_index: index,
           main_graph_loading: true,
-          selected_graph_start_date: minDate.toISOString().split("T")[0],
+          selected_graph_start_date: minDate.toISOString().split('T')[0],
         });
         break;
       case 1:
@@ -799,7 +838,7 @@ class DataAnalytics extends React.Component {
         await this.setState({
           selected_date_range_index: index,
           main_graph_loading: true,
-          selected_graph_start_date: minDate.toISOString().split("T")[0],
+          selected_graph_start_date: minDate.toISOString().split('T')[0],
         });
         break;
 
@@ -808,7 +847,7 @@ class DataAnalytics extends React.Component {
         await this.setState({
           selected_date_range_index: index,
           main_graph_loading: true,
-          selected_graph_start_date: minDate.toISOString().split("T")[0],
+          selected_graph_start_date: minDate.toISOString().split('T')[0],
         });
         break;
     }
@@ -863,13 +902,12 @@ class DataAnalytics extends React.Component {
     }
   };
 
-
   handleTextChange = (item, query) =>
     item.name.toLowerCase().includes(query.toLowerCase());
   renderOption = (title) => <SelectItem title={title} />;
 
   render() {
-    const HIEGHT = Dimensions.get("window").height;
+    const HIEGHT = Dimensions.get('window').height;
     const customTheme = this.context;
     return (
       <Layout style={{ flex: 1 }}>
@@ -877,26 +915,23 @@ class DataAnalytics extends React.Component {
           <Modal
             visible={this.state.popUpVisible}
             backdropStyle={styles.backdrop}
-            onBackdropPress={() => this.setState({ popUpVisible: false })}
-          >
+            onBackdropPress={() => this.setState({ popUpVisible: false })}>
             <Card disabled={true} style={{ margin: 10 }}>
               <Text style={{ fontSize: 20, marginBottom: 10 }}>
                 {strings.userReminderToCheck}
               </Text>
               <TouchableOpacity
                 style={{
-                  alignSelf: "center",
+                  alignSelf: 'center',
                   fontSize: 10,
                   height: 13,
-                  backgroundColor: " #ffffff00",
-                  color: "#4da6ff",
-                  borderColor: " #ffffff00",
+                  backgroundColor: ' #ffffff00',
+                  color: '#4da6ff',
+                  borderColor: ' #ffffff00',
                 }}
-                onPress={() => this.setState({ popUpVisible: false })}
-              >
+                onPress={() => this.setState({ popUpVisible: false })}>
                 <Text
-                  style={{ fontSize: 20, marginBottom: 10, color: "#4da6ff" }}
-                >
+                  style={{ fontSize: 20, marginBottom: 10, color: '#4da6ff' }}>
                   {strings.Dismiss}
                 </Text>
               </TouchableOpacity>
@@ -904,7 +939,7 @@ class DataAnalytics extends React.Component {
           </Modal>
         ) : null}
         {/* search area and referesh button */}
-        <Layout style={{ flexDirection: "row", marginLeft: 10 }}>
+        <Layout style={{ flexDirection: 'row', marginLeft: 10 }}>
           <Autocomplete
             style={{
               width: screenWidth - 20,
@@ -933,8 +968,7 @@ class DataAnalytics extends React.Component {
                   this.filterCountryNames();
                 }
               );
-            }}
-          >
+            }}>
             {this.state.countries.map((item, index) => (
               <AutocompleteItem key={index} title={item.name} />
             ))}
@@ -946,42 +980,39 @@ class DataAnalytics extends React.Component {
             <Layout
               style={{
                 flex: 1,
-                alignContent: "center",
-                justifyContent: "center",
+                alignContent: 'center',
+                justifyContent: 'center',
                 margin: 10,
                 // width: Dimensions.get('window').width - 20,
                 // backgroundColor: '#ffffff00',
-              }}
-            >
-              <Text category="h6" style={{ fontWeight: "bold" }}>
+              }}>
+              <Text category='h6' style={{ fontWeight: 'bold' }}>
                 {strings.DailyStats}
               </Text>
             </Layout>
             <Layout
-              level="3"
+              level='3'
               style={{
-                flexDirection: "row",
-                width: Dimensions.get("screen").width - 10,
-                alignContent: "center",
-                alignItems: "center",
-                justifyContent: "space-evenly",
+                flexDirection: 'row',
+                width: Dimensions.get('screen').width - 10,
+                alignContent: 'center',
+                alignItems: 'center',
+                justifyContent: 'space-evenly',
                 marginBottom: 10,
                 borderRadius: 10,
                 paddingVertical: 10,
-              }}
-            >
+              }}>
               <TouchableOpacity
                 disabled={true}
-                style={{ alignItems: "center" }}
-              >
+                style={{ alignItems: 'center' }}>
                 {this.state.totalLoading ? (
                   <ActivityIndicator
-                    size="small"
-                    color="#ffa500"
+                    size='small'
+                    color='#ffa500'
                     style={{ margin: 5 }}
                   />
                 ) : (
-                  <Text style={{ fontSize: 24, color: "#ffa500" }}>
+                  <Text style={{ fontSize: 24, color: '#ffa500' }}>
                     {this.reformatNumber(
                       String(
                         Math.abs(
@@ -1002,16 +1033,15 @@ class DataAnalytics extends React.Component {
 
               <TouchableOpacity
                 disabled={true}
-                style={{ alignItems: "center" }}
-              >
+                style={{ alignItems: 'center' }}>
                 {this.state.totalLoading ? (
                   <ActivityIndicator
-                    size="small"
-                    color="#039be5"
+                    size='small'
+                    color='#039be5'
                     style={{ margin: 5 }}
                   />
                 ) : (
-                  <Text style={{ fontSize: 24, color: "#039be5" }}>
+                  <Text style={{ fontSize: 24, color: '#039be5' }}>
                     {this.reformatNumber(
                       String(
                         Math.abs(
@@ -1031,16 +1061,15 @@ class DataAnalytics extends React.Component {
 
               <TouchableOpacity
                 disabled={true}
-                style={{ alignItems: "center" }}
-              >
+                style={{ alignItems: 'center' }}>
                 {this.state.totalLoading ? (
                   <ActivityIndicator
-                    size="small"
-                    color="red"
+                    size='small'
+                    color='red'
                     style={{ margin: 5 }}
                   />
                 ) : (
-                  <Text style={{ fontSize: 24, color: "red" }}>
+                  <Text style={{ fontSize: 24, color: 'red' }}>
                     {this.reformatNumber(
                       String(
                         Math.abs(
@@ -1061,42 +1090,40 @@ class DataAnalytics extends React.Component {
             <Layout
               style={{
                 flex: 1,
-                alignContent: "center",
-                justifyContent: "center",
+                alignContent: 'center',
+                justifyContent: 'center',
                 margin: 10,
                 // width: Dimensions.get('window').width - 20,
                 // backgroundColor: '#ffffff00',
-              }}
-            >
-              <Text category="h6" style={{ fontWeight: "bold" }}>
+              }}>
+              <Text category='h6' style={{ fontWeight: 'bold' }}>
                 {strings.TotalStats}
               </Text>
             </Layout>
 
             <Layout
-              level="3"
+              level='3'
               style={{
-                flexDirection: "row",
-                width: Dimensions.get("screen").width - 10,
-                alignContent: "center",
-                alignItems: "center",
-                justifyContent: "space-evenly",
+                flexDirection: 'row',
+                width: Dimensions.get('screen').width - 10,
+                alignContent: 'center',
+                alignItems: 'center',
+                justifyContent: 'space-evenly',
                 marginBottom: 10,
                 // backgroundColor: 'white',
 
                 borderRadius: 10,
                 paddingVertical: 10,
-              }}
-            >
-              <View style={{ alignItems: "center", flexWrap: "wrap" }}>
+              }}>
+              <View style={{ alignItems: 'center', flexWrap: 'wrap' }}>
                 {this.state.totalLoading ? (
                   <ActivityIndicator
-                    size="small"
-                    color="#ffa500"
+                    size='small'
+                    color='#ffa500'
                     style={{ margin: 5 }}
                   />
                 ) : (
-                  <Text style={{ fontSize: 24, color: "#ffa500" }}>
+                  <Text style={{ fontSize: 24, color: '#ffa500' }}>
                     {this.reformatNumber(
                       String(
                         this.state.TotalStatisticsData[
@@ -1107,19 +1134,19 @@ class DataAnalytics extends React.Component {
                   </Text>
                 )}
 
-                <Text style={{ maxWidth: 95, textAlign: "center" }}>
+                <Text style={{ maxWidth: 95, textAlign: 'center' }}>
                   {strings.TotalConfirmed}
                 </Text>
               </View>
-              <View style={{ alignItems: "center", flexWrap: "wrap" }}>
+              <View style={{ alignItems: 'center', flexWrap: 'wrap' }}>
                 {this.state.totalLoading ? (
                   <ActivityIndicator
-                    size="small"
-                    color="#039be5"
+                    size='small'
+                    color='#039be5'
                     style={{ margin: 5 }}
                   />
                 ) : (
-                  <Text style={{ fontSize: 24, color: "#039be5" }}>
+                  <Text style={{ fontSize: 24, color: '#039be5' }}>
                     {this.reformatNumber(
                       String(
                         this.state.TotalStatisticsData[
@@ -1133,21 +1160,20 @@ class DataAnalytics extends React.Component {
                 <Text
                   style={{
                     maxWidth: 95,
-                    textAlign: "center",
-                  }}
-                >
+                    textAlign: 'center',
+                  }}>
                   {strings.TotalRecovered}
                 </Text>
               </View>
-              <View style={{ alignItems: "center", flexWrap: "wrap" }}>
+              <View style={{ alignItems: 'center', flexWrap: 'wrap' }}>
                 {this.state.totalLoading ? (
                   <ActivityIndicator
-                    size="small"
-                    color="red"
+                    size='small'
+                    color='red'
                     style={{ margin: 5 }}
                   />
                 ) : (
-                  <Text style={{ fontSize: 24, color: "red" }}>
+                  <Text style={{ fontSize: 24, color: 'red' }}>
                     {this.reformatNumber(
                       String(
                         this.state.TotalStatisticsData[
@@ -1158,52 +1184,50 @@ class DataAnalytics extends React.Component {
                   </Text>
                 )}
 
-                <Text style={{ maxWidth: 95, textAlign: "center" }}>
+                <Text style={{ maxWidth: 95, textAlign: 'center' }}>
                   {strings.TotalDeath}
                 </Text>
               </View>
             </Layout>
-            
+
             <Layout
               style={{
                 flex: 1,
-                alignItems: "center",
-                justifyContent: "center",
+                alignItems: 'center',
+                justifyContent: 'center',
                 marginBottom: 10,
 
                 // backgroundColor: "#eee",
-              }}
-            >
+              }}>
               <Layout
                 style={{
                   flex: 1,
-                  alignContent: "center",
-                  justifyContent: "center",
+                  alignContent: 'center',
+                  justifyContent: 'center',
                   margin: 10,
                   // width: Dimensions.get('window').width - 20,
                   // backgroundColor: '#ffffff00',
-                }}
-              >
-                <Text category="h6" style={{ fontWeight: "bold" }}>
+                }}>
+                <Text category='h6' style={{ fontWeight: 'bold' }}>
                   {strings.GraphicalAnalysis}
                 </Text>
               </Layout>
-              
+
               <Layout
                 style={{
-                  flexDirection: "row",
-                  justifyContent: "space-evenly",
+                  flexDirection: 'row',
+                  justifyContent: 'space-evenly',
                   // marginBottom: 10,
-                  marginTop: 10,
-                }}
-              >
-              <Select
-              accessoryLeft={this.displayInfoIcon}
+                  marginHorizontal: 10,
+                  marginVertical: 5,
+                }}>
+                <Select
+                  accessoryLeft={this.displayInfoIcon}
                   style={{
                     flex: 1,
                     margin: 2,
                   }}
-                  size="medium"
+                  size='medium'
                   placeholder={
                     this.state.graphTypes[
                       this.state.selected_graph_type_index.row
@@ -1215,39 +1239,37 @@ class DataAnalytics extends React.Component {
                     ]
                   }
                   selectedIndex={this.state.selected_graph_type_index}
-                  onSelect={(index) => this.setGraphTypesData(index)}
-                >
+                  onSelect={(index) => this.setGraphTypesData(index)}>
                   {this.state.graphTypes.map(this.renderOption)}
                 </Select>
-               
               </Layout>
-              {
-                this.state.descriptionVisiblity?
-                (                
-                  <Text
-                    appearance="hint"
-                    style={{ fontSize: 16, margin: 5, padding: 5 }}
-                  >
-                    {
-                      this.state.graph_descriptions[this.state.selected_graph_type_index-1]
-                    }
-                  </Text>)
-                :(<></>)
-              }
+              {this.state.descriptionVisiblity ? (
+                <Text
+                  appearance='hint'
+                  style={{ fontSize: 16, margin: 10, padding: 5 }}>
+                  {
+                    this.state.graph_descriptions[
+                      this.state.selected_graph_type_index - 1
+                    ]
+                  }
+                </Text>
+              ) : (
+                <></>
+              )}
               <Layout
                 style={{
-                  flexDirection: "row",
-                  justifyContent: "space-evenly",
+                  flexDirection: 'row',
+                  justifyContent: 'space-evenly',
                   marginBottom: 10,
                   marginTop: 10,
-                }}
-              >
+                }}>
                 <Select
                   style={{
                     flex: 0.8,
-                    margin: 2,
+                    marginHorizontal: 10,
+                    marginVertical: 5,
                   }}
-                  size="small"
+                  size='small'
                   placeholder={
                     this.state.dateRanges[
                       this.state.selected_date_range_index.row
@@ -1259,16 +1281,16 @@ class DataAnalytics extends React.Component {
                     ]
                   }
                   selectedIndex={this.state.selected_date_range_index}
-                  onSelect={(index) => this.setGraphDateRange(index)}
-                >
+                  onSelect={(index) => this.setGraphDateRange(index)}>
                   {this.state.dateRanges.map(this.renderOption)}
                 </Select>
                 <Select
                   style={{
                     flex: 1,
-                    margin: 2,
+                    marginHorizontal: 10,
+                    marginVertical: 5,
                   }}
-                  size="small"
+                  size='small'
                   placeholder={
                     this.state.filterParameters[
                       this.state.selected_filter_parameters.row
@@ -1280,8 +1302,7 @@ class DataAnalytics extends React.Component {
                     ]
                   }
                   selectedIndex={this.state.selected_filter_parameters}
-                  onSelect={(index) => this.setGraphFilterType(index)}
-                >
+                  onSelect={(index) => this.setGraphFilterType(index)}>
                   {this.state.filterParameters.map(this.renderOption)}
                 </Select>
 
@@ -1310,14 +1331,13 @@ class DataAnalytics extends React.Component {
               {this.state.main_graph_loading ? (
                 <Layout
                   style={{
-                    width: Dimensions.get("window").width,
-                    flexDirection: "column",
-                    alignItems: "center",
-                  }}
-                >
+                    width: Dimensions.get('window').width,
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                  }}>
                   <TextLoader
-                    text="Loading graph..."
-                    textStyle={{ color: "#4da6ff" }}
+                    text='Loading graph...'
+                    textStyle={{ color: '#4da6ff' }}
                   />
                 </Layout>
               ) : (
@@ -1334,15 +1354,15 @@ class DataAnalytics extends React.Component {
                   ],
                 }}
                 verticalLabelRotation={60}
-                width={Dimensions.get("window").width} // from react-nativ
+                width={Dimensions.get('window').width} // from react-nativ
                 height={HIEGHT / 2}
                 formatYLabel={(Y) => this.intToString(Number(Y))}
                 fromZero={true}
                 chartConfig={{
-                  backgroundColor: "#0080ff",
-                  backgroundGradientFrom: "#0080ff",
-                  backgroundGradientTo: "#0080ff",
-                  scrollableDotFill: "#ffffff",
+                  backgroundColor: '#0080ff',
+                  backgroundGradientFrom: '#0080ff',
+                  backgroundGradientTo: '#0080ff',
+                  scrollableDotFill: '#ffffff',
                   barPercentage: 0.1,
                   decimalPlaces: 0, // optional, defaults to 2dp
                   color: (opacity = 0) => `rgba(255, 266, 255, ${opacity})`,
@@ -1364,8 +1384,8 @@ class DataAnalytics extends React.Component {
   } // end of render function
 } // end of class StaticsPage
 
-const screenHeight = Dimensions.get("window").height;
-const screenWidth = Dimensions.get("window").width;
+const screenHeight = Dimensions.get('window').height;
+const screenWidth = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
   select: {
@@ -1375,86 +1395,86 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
 
     // backgroundColor: "#eee",
   },
   backdrop_container: {
     minHeight: 0,
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   backdrop: {
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   cards_total: {
-    backgroundColor: "#fc2314",
+    backgroundColor: '#fc2314',
     borderRadius: 20,
     height: screenHeight / 10,
     width: screenWidth / 2 - 30,
     margin: 10,
     marginTop: 15,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   cards_active: {
-    backgroundColor: "#4da6ff",
+    backgroundColor: '#4da6ff',
     borderRadius: 20,
     height: screenHeight / 10,
     width: screenWidth / 2 - 30,
     margin: 10,
     marginTop: 30,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   cards_recovered: {
-    backgroundColor: "#30cc2a",
+    backgroundColor: '#30cc2a',
     borderRadius: 20,
     marginTop: 15,
     height: screenHeight / 10,
     width: screenWidth / 2 - 30,
     margin: 10,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   cards_death: {
-    backgroundColor: "#514443",
+    backgroundColor: '#514443',
     borderRadius: 20,
     height: screenHeight / 10,
     width: screenWidth / 2 - 30,
     margin: 10,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   container_graph: {
     marginTop: 5,
     flex: 1,
   },
   touchable_buttons: {
-    backgroundColor: "#1976d2",
+    backgroundColor: '#1976d2',
     padding: 5,
     marginRight: 5,
     borderRadius: 10,
   },
   touchable_buttons_pressed: {
-    backgroundColor: "#F5F6FA",
+    backgroundColor: '#F5F6FA',
     padding: 5,
     marginRight: 5,
     borderRadius: 10,
   },
   text_style: {
-    color: "white",
+    color: 'white',
     fontSize: 15,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   text_style_pressed: {
-    color: "#1976d2",
+    color: '#1976d2',
     fontSize: 15,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   content: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     paddingHorizontal: 4,
     paddingVertical: 8,
   },
@@ -1462,12 +1482,12 @@ const styles = StyleSheet.create({
     marginHorizontal: 4,
   },
   backdrop: {
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   tabContainer: {
     height: 64,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 
