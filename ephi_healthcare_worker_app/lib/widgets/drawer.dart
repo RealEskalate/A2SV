@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui';
+import '../pages/cases/cases.dart';
 
 class AppDrawer extends StatelessWidget {
   @override
@@ -15,7 +16,10 @@ class AppDrawer extends StatelessWidget {
             // color: Colors.amber[50],
             child: Column(
               children: <Widget>[
-                _createDrawerItem(icon: Icons.airline_seat_flat, text: 'Cases'),
+                _createDrawerItem(
+                    icon: Icons.airline_seat_flat,
+                    text: 'Cases',
+                    context: context),
                 _createDrawerItem(icon: Icons.face, text: 'People'),
                 _createDrawerItem(icon: Icons.person, text: 'Profile'),
                 _createDrawerItem(icon: Icons.settings, text: 'Settings'),
@@ -101,12 +105,23 @@ Widget _createDrawerItem(
     ),
 //    onTap: onTap,
     onTap: () {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => null,
-        ),
-      );
+      switch (text) {
+        case "Cases":
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => CasesList(),
+            ),
+          );
+          break;
+        default:
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => null,
+            ),
+          );
+      }
     },
   );
 }
