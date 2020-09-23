@@ -1,10 +1,51 @@
 <template>
   <v-container>
-    <div class="random">
+    <date-range-picker
+      :date_range="date_range"
+      @onDateChange="onDateChange"
+    />
+    <br />
+    <div class="random" v-if="!getDashboardLoaders.graphInput">
       <trend-chart
-        :datasets="datasets"
-        :grid="grid"
-        :labels="labels"
+        :datasets="[
+          {
+            data: getGraphData[0],
+            smooth: true,
+            showPoints: false,
+            fill: true,
+            className: 'curve1'
+          },
+          {
+            data: getGraphData[1],
+            smooth: true,
+            showPoints: false,
+            fill: true,
+            className: 'curve2'
+          },
+          {
+            data: getGraphData[2],
+            smooth: true,
+            showPoints: false,
+            fill: true,
+            className: 'curve3'
+          },
+          {
+            data: getGraphData[3],
+            smooth: true,
+            showPoints: false,
+            fill: true,
+            className: 'curve4'
+          }
+        ]"
+        :grid="{
+          verticalLines: false,
+          horizontalLines: false
+        }"
+        :labels="{
+          xLabels: getXLables,
+          yLabels: 5,
+          yLabelsTextFormatter: val => Math.round(val)
+        }"
         :min="0"
         :interactive="true"
         @mouse-move="onMouseMove"
@@ -18,7 +59,7 @@
         :class="{ 'is-active': tooltipData }"
       >
         <div class="tooltip-container" v-if="tooltipData">
-          <strong>{{ labels.xLabels[tooltipData.index] }}</strong>
+          <strong>{{ getXLables[tooltipData.index] }}</strong>
           <div class="tooltip-data">
             <div class="tooltip-data-item tooltip-data-item--1">
               {{ tooltipData.data[0] }}
@@ -29,6 +70,9 @@
             <div class="tooltip-data-item tooltip-data-item--3">
               {{ tooltipData.data[2] }}
             </div>
+            <div class="tooltip-data-item tooltip-data-item--4">
+              {{ tooltipData.data[3] }}
+            </div>
           </div>
         </div>
       </div>
@@ -37,9 +81,9 @@
       <v-col
         v-for="legend in legends"
         :key="legend.color"
-        col="6"
-        md="4"
-        sm="4"
+        col="12"
+        md="3"
+        sm="3"
       >
         <div
           class="d-inline-block mr-2 red"
@@ -59,53 +103,42 @@ import { createPopper } from "@popperjs/core/lib/popper-lite.js";
 import TrendChart from "vue-trend-chart";
 import preventOverflow from "@popperjs/core/lib/modifiers/preventOverflow.js";
 import flip from "@popperjs/core/lib/modifiers/flip.js";
+import DateRangePicker from "../../components/core/DateRangePicker";
+
+import { mapGetters, mapActions } from "vuex";
 
 export default {
-  name: "Graph Statistics",
+  name: "GraphStatistics",
   components: {
-    TrendChart
+    TrendChart,
+    DateRangePicker
   },
   data() {
     return {
-      datasets: [
-        {
-          data: [512, 524, 619, 680, 450, 398, 542],
-          smooth: true,
-          showPoints: false,
-          fill: true,
-          className: "curve1"
-        },
-        {
-          data: [150, 199, 210, 413, 212, 422, 559],
-          smooth: true,
-          fill: true,
-          showPoints: false,
-          className: "curve2"
-        },
-        {
-          data: [50, 45, 21, 50, 12, 25, 60],
-          smooth: true,
-          fill: true,
-          showPoints: false,
-          className: "curve3"
-        }
-      ],
-      labels: {
-        xLabels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-        yLabels: 5,
-        yLabelsTextFormatter: val => Math.round(val * 100) / 100
-      },
+      date_range: ["2020-03-17", "2020-03-23"],
       tooltipData: null,
       popper: null,
       popperIsActive: false,
       legends: [
-        { title: "Confirmed COVID cases", color: "#fbac91" },
-        { title: "Citizen with symptoms", color: "#00bfff" },
-        { title: "COVID related deaths", color: "#9126ff" }
+        { title: "Test Administered", color: "#00bfff" },
+        { title: "Confirmed Cases", color: "#FFD54F" },
+        { title: "Deaths", color: "#F06292" },
+        { title: "Recovered", color: "#DCE775" }
       ]
     };
   },
   methods: {
+    ...mapActions(["fetchGraphData"]),
+    fetch() {
+      this.fetchGraphData({
+        start_date: this.date_range[0],
+        end_date: this.date_range[1]
+      });
+    },
+    onDateChange(dateRange) {
+      this.date_range = dateRange;
+      this.fetch();
+    },
     initPopper() {
       const chart = document.querySelector(".random-chart");
       const ref = chart.querySelector(".active-line");
@@ -121,7 +154,11 @@ export default {
       this.tooltipData = params || null;
     }
   },
+  computed: {
+    ...mapGetters(["getGraphData", "getXLables", "getDashboardLoaders"])
+  },
   mounted() {
+    this.fetch();
     this.initPopper();
   }
 };
@@ -153,39 +190,51 @@ export default {
   stroke-width: 5;
 }
 .random .curve1 .stroke {
-  stroke: #fbac91;
+  stroke: #00bfff;
   stroke-width: 2;
 }
 .random .curve1 .fill {
-  fill: #fbac91;
+  fill: #00bfff;
   opacity: 0.02;
 }
 .random .curve1 .point {
-  fill: #fbac91;
-  stroke: #fbac91;
+  fill: #00bfff;
+  stroke: #00bfff;
 }
 .random .curve2 .stroke {
-  stroke: #9126ff;
+  stroke: #FFD54F;
   stroke-width: 2;
 }
 .random .curve2 .point {
-  fill: #9126ff;
-  stroke: #9126ff;
+  fill: #FFD54F;
+  stroke: #FFD54F;
 }
 .random .curve2 .fill {
-  fill: #9126ff;
+  fill: #FFD54F;
   opacity: 0.05;
 }
 .random .curve3 .stroke {
-  stroke: #00bfff;
+  stroke: #F06292;
   stroke-width: 2;
 }
 .random .curve3 .point {
-  fill: #00bfff;
-  stroke: #00bfff;
+  fill: #F06292;
+  stroke: #F06292;
 }
 .random .curve3 .fill {
-  fill: #00bfff;
+  fill: #F06292;
+  opacity: 0.09;
+}
+.random .curve4 .stroke {
+  stroke: #DCE775;
+  stroke-width: 2;
+}
+.random .curve4 .point {
+  fill: #DCE775;
+  stroke: #DCE775;
+}
+.random .curve4 .fill {
+  fill: #DCE775;
   opacity: 0.09;
 }
 .random .tooltip {
@@ -215,12 +264,15 @@ export default {
   margin-right: 5px;
 }
 .random .tooltip-data-item--1:before {
-  background: #fbac91;
+  background: #00bfff;
 }
 .random .tooltip-data-item--2:before {
-  background: #9126ff;
+  background: #FFD54F;
 }
 .random .tooltip-data-item--3:before {
-  background: #00bfff;
+  background: #F06292;
+}
+.random .tooltip-data-item--4:before {
+  background: #DCE775;
 }
 </style>
