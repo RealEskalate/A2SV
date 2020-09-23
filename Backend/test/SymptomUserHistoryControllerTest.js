@@ -88,8 +88,9 @@ describe("Symptom User History API", () => {
       .post("/api/symptomuser/multiple/")
       .set("Authorization", "Bearer " + tokens)
       .send({
-        _id: mongoose.Types.ObjectId(),
-        symptoms: [symptom2._id],
+          _id: mongoose.Types.ObjectId(),
+          symptoms: [symptom2._id],
+          source: "MOBILE",
       });
     save_symptoms = await chai
       .request(server)
@@ -98,22 +99,25 @@ describe("Symptom User History API", () => {
       .send({
         _id: mongoose.Types.ObjectId(),
         symptoms: [symptom._id],
+        source: "WEB"
       });
     save_symptoms = await chai
       .request(server)
       .post("/api/symptomuser/multiple/")
       .set("Authorization", "Bearer " + tokens)
       .send({
-        _id: mongoose.Types.ObjectId(),
-        symptoms: [symptom2._id],
+          _id: mongoose.Types.ObjectId(),
+          symptoms: [symptom2._id],
+          source: "MOBILE",
       });
     save_symptoms = await chai
       .request(server)
       .post("/api/symptomuser/multiple/")
       .set("Authorization", "Bearer " + tokens)
       .send({
-        _id: mongoose.Types.ObjectId(),
-        symptoms: [symptom._id],
+          _id: mongoose.Types.ObjectId(),
+          symptoms: [symptom._id],
+          source: "WEB",
       });
     let response = await chai
       .request(server)

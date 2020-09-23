@@ -55,7 +55,7 @@ exports.registerLog = async (user_id, symptoms, current_date, source) => {
 
 exports.setLogLocation = async(location_user) => {
     let symptom_log = await SymptomLog.findOne({user_id: location_user.user_id});
-    if(symptom_log.status != "SYMPTOMS_REMOVED"){
+    if( symptom_log!=null && symptom_log.status != "SYMPTOMS_REMOVED"){
         let user = await User.findById(location_user.user_id);
         let location = {
             country : user.current_country,
