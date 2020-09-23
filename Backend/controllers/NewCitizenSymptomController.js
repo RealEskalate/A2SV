@@ -4,6 +4,7 @@ const { User } = require("../models/UserModel");
 const { PatientLog, PatientLogDemo } = require("../models/PatientLog.js");
 const { SymptomLog, SymptomLogDemo } = require("../models/SymptomLogModel");
 const { DistrictModel } = require("../models/DistrictModel");
+const _ = require("lodash");
 
 const mongoose = require("mongoose");
 
@@ -100,45 +101,62 @@ exports.ephi_test_stats = async (req, res) => {
     }
 
     let patientLogModel = (req.query.demo) ? PatientLogDemo : PatientLog;
-
     let patientLogs = await patientLogModel.find(filter).sort({ "date": 1 });
-
-    let administered = {};
-    let positive = {};
-    let negative = {};
-    let death = {};
+    let result = {};
 
     for (var index in patientLogs) {
         let log = patientLogs[index];
-        let date = log.date.toISOString().slice(0, 10)
-        if (!(date in administered)) {
-            administered[date] = 0;
+        let date = log.date.toISOString().slice(0, 10);
+
+        // Populating 0s for the web graph to render
+        if (!(date in result)) {
+            result[date] = {
+                positive: 0,
+                negative: 0,
+                death: 0,
+                recovered: 0,
+                administered: 0
+            };
         }
         if (log.test_status == "Positive") {
-            if (date in positive) {
-                positive[date] += log.count;
-            } else {
-                positive[date] += log.count;
-            }
-            administered[date] += log.count;
+            result[date].positive += log.count;
+            result[date].administered += log.count;
         } else if (log.test_status == "Negative") {
-            if (date in negative) {
-                negative[date] += log.count;
-            } else {
-                negative[date] = log.count;
-            }
-            administered[date] += log.count;
+            result[date].negative += log.count;
+            result[date].administered += log.count;
+        } else if (log.test_status == "Recovered") {
+            result[date].recovered += log.count;
         } else if (log.test_status == "Died") {
-            if (date in death) {
-                death[date] += log.count;
-            } else {
-                death[date] = log.count;
-            }
-            administered[date] += log.count;
+            result[date].death += log.count;
+            result[date].administered += log.count;
         }
     }
-    const result = { administered: administered, positive: positive, negative: negative, death: death };
-    return res.send(result);
+    // Populating if a date is skipped - again for the sake of the web graph
+    const endDate = new Date(req.query.end_date);
+    const nextDate = new Date(req.query.start_date);
+    while (nextDate <= endDate) {
+        const dateKey = "" + nextDate.toISOString().slice(0, 10);
+        if (!(dateKey in result)) {
+            result[dateKey] = {
+                positive: 0,
+                negative: 0,
+                death: 0,
+                recovered: 0,
+                administered: 0
+            };
+        }
+        nextDate.setDate(nextDate.getDate() + 1);
+    }
+
+    // Sorting the dates
+    const sorted = {};
+    const keys = Object.keys(result);
+    keys.sort();
+    keys.forEach(function (item, index) {
+        sorted[item] = result[item];
+    });
+
+    return res.send(sorted);
 }
 
 
