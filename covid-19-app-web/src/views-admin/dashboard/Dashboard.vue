@@ -10,15 +10,7 @@
         md="8"
         cols="12"
       >
-        <date-range-picker
-          :date_range="date_range"
-          @onDateChange="onDateChange"
-        />
-        <br />
-        <total-statistics
-          :start_date="date_range[0]"
-          :end_date="date_range[1]"
-        />
+        <total-statistics />
       </v-col>
     </v-row>
     <greatest-hit-city class="my-10" />
@@ -26,24 +18,19 @@
 </template>
 
 <script>
-import DateRangePicker from "../../components/core/DateRangePicker";
 import DailyStatistics from "./DailyStatistics";
 import TotalStatistics from "./TotalStatistics";
 import GreatestHitCity from "./GreatestHitCity";
-import moment from "moment";
 
 export default {
   name: "Dashboard",
   components: {
-    DateRangePicker,
     DailyStatistics,
     TotalStatistics,
     GreatestHitCity
   },
   data() {
     return {
-      date_range: this.getDateRange(),
-
       items: [
         {
           title: "New confirmed COVID-19 cases",
@@ -70,16 +57,7 @@ export default {
     };
   },
   methods: {
-    onDateChange(dateRange) {
-      alert(dateRange);
-    },
-    getDateRange() {
-      let start = new Date().setDate(new Date().getDate() - 7);
-      return [
-        moment(start).format("YYYY-MM-DD"),
-        moment(new Date()).format("YYYY-MM-DD")
-      ];
-    }
+    
   }
 };
 </script>

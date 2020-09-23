@@ -1,36 +1,57 @@
 import ajax from "../../auth/ajax";
+import moment from "moment";
 
 const state = {
-  graphData: [[], [], [], []]
+  graphData: [[], [], [], []],
+  xLables: []
 };
 
 const getters = {
-  getGraphData: state => state.graphData
+  getGraphData: state => state.graphData,
+  getXLables: state => state.xLables
 };
 
 const mutations = {
-  setCitizenSymptoms: (state, payload) => (state.graphData[1] = payload)
+  setGraphData: (state, payload) => (state.graphData = payload),
+  setXLables: (state, payload) => (state.xLables = payload)
 };
 
 const actions = {
-  queryDeaths: ({ commit }, { start_date, end_date }) => {
+  fetchGraphData: ({ commit }, { start_date, end_date }) => {
+    commit("setDashboardLoaders", { key: "graphInput", value: true });
     ajax
-      .get(`test-stat?status=Died`, {
+      .get(`test-stat`, {
         params: {
-          start_date,
-          end_date,
-          status: "Died"
+          start_date: start_date,
+          end_date: end_date,
+          demo: true
         }
       })
       .then(
         response => {
           console.log(response);
-          commit("setDeaths", response.data.data);
+          const data = response.data;
+          let graphData =  [[], [], [], []];
+          let xLables = [];
+          for (let key in data) {
+            xLables.push(moment(key).format("MM/DD"));
+            graphData[0].push(data[key].administered);
+            graphData[1].push(data[key].positive);
+            graphData[2].push(data[key].death);
+            graphData[3].push(data[key].recovered);
+          }
+          console.log(graphData);
+          console.log(xLables);
+          commit("setGraphData", graphData);
+          commit("setXLables", xLables);
         },
         error => {
           console.log(error);
         }
-      );
+      )
+      .finally(function() {
+        commit("setDashboardLoaders", { key: "graphInput", value: false });
+      });
   },
   queryCitizenSymptoms: ({ commit }, { start_date, end_date }) => {
     ajax
