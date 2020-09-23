@@ -294,9 +294,31 @@ describe("Location Users API", () => {
     let user_location;
     let user;
     let tokens;
+    let symptom_user1;
+    let symptom_user2;
+    let symptom1;
+    let symptom2;
     let district;
     beforeEach(async () => {
+      symptom1 = new Symptom({
+        _id: mongoose.Types.ObjectId(),
+        name: "Headaches",
+        relevance: "LOW",
+        description: "Can be a sharp, throbbing or dull feeling across the head.",
+        position: 11,
+      });
+      await symptom1.save();
 
+      symptom2 = new Symptom({
+        _id: mongoose.Types.ObjectId(),
+        name: "Sneezing",
+        relevance: "LOW",
+        description: "It is a powerful, involuntary expulsion of air.",
+        position: 10,
+      });
+      await symptom2.save();
+
+      
       district = new DistrictModel({
         _id: mongoose.Types.ObjectId(),
         name: "Bole",
@@ -323,6 +345,20 @@ describe("Location Users API", () => {
       } catch (err) {
         console.log(err.toString());
       }
+      symptom_user1 = new SymptomUser({
+        _id: mongoose.Types.ObjectId(),
+        user_id: user._id,
+        symptom_id: symptom1._id,
+      });
+      await symptom_user1.save();
+
+      symptom_user2 = new SymptomUser({
+        _id: mongoose.Types.ObjectId(),
+        user_id: user._id,
+        symptom_id: symptom2._id,
+      });
+      await symptom_user2.save();
+
       user_location = new LocationUser({
         user_id: user._id,
         location: {
@@ -349,7 +385,6 @@ describe("Location Users API", () => {
           user_id: user._id,
           TTL: 10000,
         });
-      console.log(response.error);
 
       expect(response).to.have.status(200);
       expect(response.body).to.be.a("object");

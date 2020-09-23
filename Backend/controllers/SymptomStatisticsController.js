@@ -21,7 +21,7 @@ exports.get_most_common = async (req, res) => {
         });
         let locationUsers = await LocationUser.find({
             "location.district": district._id,
-        }).distinct("user_id");
+        }).distinct('user_id')
         filter.user_id = { $in: locationUsers };
     } else if (req.query.region) {
         let districts = await DistrictModel.find({
@@ -39,7 +39,6 @@ exports.get_most_common = async (req, res) => {
     }
 
     let symptomUsers = await SymptomUser.find(filter);
-
     for (var i = 0; i < symptomUsers.length; i++) {
         if (symptomCounts[symptomUsers[i].symptom_id]) {
             symptomCounts[symptomUsers[i].symptom_id] += 1;
@@ -53,13 +52,16 @@ exports.get_most_common = async (req, res) => {
     let commonSymptoms = await Promise.all(
         sorted.map(async (item) => await Symptom.findById(item))
     );
-    commonSymptoms = commonSymptoms.map((symptom) => {
-        return {
-            count: symptomCounts[symptom._id],
-            symptom: symptom,
-        };
-    });
-
+    commonSymptoms = commonSymptoms
+        .filter((symptom) => {
+            return symptom != null;
+        })
+        .map((symptom) => {
+            return {
+                count: symptomCounts[symptom._id],
+                symptom: symptom,
+            };
+        });
     // translation start
     let language = null;
     if (req.query.language) {
