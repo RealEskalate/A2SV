@@ -3,6 +3,7 @@ import '../../widgets/roundedInputField.dart';
 import '../../widgets/roundedPasswordField.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../home/home.dart';
 
 import '../sign_up/createAccount.dart';
 
@@ -69,14 +70,14 @@ class LoginPage extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(40)),
                   onPressed: () {
-//                    Navigator.push(
-//                      context,
-//                      MaterialPageRoute(
-//                        builder: (context) {
-//                          return CreateAccountScreen();
-//                        },
-//                      ),
-//                    );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return Home();
+                        },
+                      ),
+                    );
                   },
                   child: Text('SIGN IN',
                       textAlign: TextAlign.center,

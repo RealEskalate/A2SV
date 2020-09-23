@@ -97,9 +97,9 @@ describe("Symptom Statistics API", function() {
                     coordinates: [38.796897, 8.985974],
                     district: district._id
                 },
-                TTL: 10000,
+                TTL: 1000000,
             });
-            await user_location.save();   
+            await user_location.save();
         });
     
         afterEach(async () => {
