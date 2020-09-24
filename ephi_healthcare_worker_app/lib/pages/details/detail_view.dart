@@ -1,5 +1,6 @@
 // detail view page for cases and symptoms from symptom view page
 //cases list page
+import 'package:ephi_healthcare_worker_app/pages/symptoms/symptom_history.dart';
 import 'package:flutter/material.dart';
 import '../../widgets/caseWidget.dart';
 import '../../models/case.dart';
@@ -161,7 +162,7 @@ class DetailViewState extends State<DetailView> {
                   onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (_) => DetailView(),
+                      builder: (_) => SymptomHistory(),
                     ),
                   ),
                   title: Text(title,
