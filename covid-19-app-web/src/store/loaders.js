@@ -40,7 +40,8 @@ export default {
       caseList: false
     },
     dashboardLoaders: {
-      graphInput: false
+      graphInput: false,
+      daily: false
     }
   },
   getters: {
