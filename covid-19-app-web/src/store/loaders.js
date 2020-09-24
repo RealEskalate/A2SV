@@ -38,6 +38,9 @@ export default {
     },
     caseLoaders: {
       caseList: false
+    },
+    dashboardLoaders: {
+      graphInput: false
     }
   },
   getters: {
@@ -61,6 +64,9 @@ export default {
     },
     getCaseLoaders(state) {
       return state.caseLoaders;
+    },
+    getDashboardLoaders(state) {
+      return state.dashboardLoaders;
     }
   },
   mutations: {
@@ -93,6 +99,9 @@ export default {
     },
     setCaseLoaders(state, { key, value }) {
       state.caseLoaders[key] = value;
+    },
+    setDashboardLoaders(state, { key, value }) {
+      state.dashboardLoaders[key] = value;
     }
   }
 };
