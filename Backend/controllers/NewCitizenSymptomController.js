@@ -95,7 +95,7 @@ exports.ephi_test_stats = async (req, res) => {
 
     let filter = {
         date: {
-            $gte: new Date(Date.parse(setStartDate(req) + "T21:00:00.000Z")),
+            $gte: new Date(Date.parse(setStartDate(req))),
             $lte: new Date(Date.parse(setEndDate(req) + "T21:00:00.000Z")),
         }
     }
