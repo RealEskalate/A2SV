@@ -1,9 +1,6 @@
 <template>
   <v-container>
-    <date-range-picker
-      :date_range="date_range"
-      @onDateChange="onDateChange"
-    />
+    <date-range-picker :date_range="date_range" @onDateChange="onDateChange" />
     <br />
     <div class="random" v-if="!getDashboardLoaders.graphInput">
       <trend-chart
@@ -202,39 +199,39 @@ export default {
   stroke: #00bfff;
 }
 .random .curve2 .stroke {
-  stroke: #FFD54F;
+  stroke: #ffd54f;
   stroke-width: 2;
 }
 .random .curve2 .point {
-  fill: #FFD54F;
-  stroke: #FFD54F;
+  fill: #ffd54f;
+  stroke: #ffd54f;
 }
 .random .curve2 .fill {
-  fill: #FFD54F;
+  fill: #ffd54f;
   opacity: 0.05;
 }
 .random .curve3 .stroke {
-  stroke: #F06292;
+  stroke: #f06292;
   stroke-width: 2;
 }
 .random .curve3 .point {
-  fill: #F06292;
-  stroke: #F06292;
+  fill: #f06292;
+  stroke: #f06292;
 }
 .random .curve3 .fill {
-  fill: #F06292;
+  fill: #f06292;
   opacity: 0.09;
 }
 .random .curve4 .stroke {
-  stroke: #DCE775;
+  stroke: #dce775;
   stroke-width: 2;
 }
 .random .curve4 .point {
-  fill: #DCE775;
-  stroke: #DCE775;
+  fill: #dce775;
+  stroke: #dce775;
 }
 .random .curve4 .fill {
-  fill: #DCE775;
+  fill: #dce775;
   opacity: 0.09;
 }
 .random .tooltip {
@@ -267,12 +264,12 @@ export default {
   background: #00bfff;
 }
 .random .tooltip-data-item--2:before {
-  background: #FFD54F;
+  background: #ffd54f;
 }
 .random .tooltip-data-item--3:before {
-  background: #F06292;
+  background: #f06292;
 }
 .random .tooltip-data-item--4:before {
-  background: #DCE775;
+  background: #dce775;
 }
 </style>

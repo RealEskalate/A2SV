@@ -2,7 +2,7 @@
   <v-card shaped outlined>
     <v-subheader v-text="'Today'" />
     <v-list dense disabled>
-      <template v-for="(item, index) in items">
+      <template v-for="(item, index) in getDailyData">
         <v-list-item :key="item.title">
           <template>
             <v-list-item-content>
@@ -12,23 +12,19 @@
             <v-list-item-action>
               <v-list-item-action-text
                 class="font-weight-bold"
-                v-text="item.totalNum"
+                v-text="numberWithCommas(item.totalNum)"
               />
-              <!--                      <p>{{ item.totalNum }}</p>-->
               <v-list-item-subtitle
-                :class="item.increaseRate > 0 ? 'red--text' : 'green--text'"
+                :class="`${rateConversion(item.increaseRate)[0]}--text`"
               >
                 <v-icon
                   small
-                  v-if="item.increaseRate > 0"
-                  class="red--text"
-                  v-text="mdiArrowUp"
-                />
-                <v-icon
-                  small
-                  v-else
-                  class="green--text font-weight-bold"
-                  v-text="mdiArrowDown"
+                  :class="
+                    `${
+                      rateConversion(item.increaseRate)[0]
+                    }--text font-weight-bold`
+                  "
+                  v-text="rateConversion(item.increaseRate)[1]"
                 />
                 {{ item.increaseRate + "%" }}
               </v-list-item-subtitle>
@@ -36,7 +32,7 @@
           </template>
         </v-list-item>
 
-        <v-divider v-if="index + 1 < items.length" :key="index" />
+        <v-divider v-if="index + 1 < getDailyData.length" :key="index" />
       </template>
     </v-list>
   </v-card>
@@ -44,37 +40,23 @@
 
 <script>
 import { mdiArrowDown, mdiArrowUp } from "@mdi/js";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "TodayStatistics",
-  data() {
-    return {
-      mdiArrowUp,
-      mdiArrowDown,
-      items: [
-        {
-          title: "Confirmed COVID-19 cases",
-          totalNum: "123, 456",
-          increaseRate: -4
-        },
-        {
-          title: "Citizens with symptoms",
-          totalNum: "123, 456",
-          increaseRate: 9
-        },
-        {
-          title: "COVID related deaths",
-          totalNum: "56",
-          increaseRate: -1
-        },
-
-        {
-          title: "Tests administered",
-          totalNum: "1,456",
-          increaseRate: 1
-        }
-      ]
-    };
+  created() {
+    this.fetchDailyData();
+  },
+  methods: {
+    ...mapActions(["fetchDailyData"]),
+    rateConversion(rate) {
+      if (rate > 0) return ["green", mdiArrowDown];
+      else if (rate < 0) return ["red", mdiArrowUp];
+      else return ["grey", ""];
+    }
+  },
+  computed: {
+    ...mapGetters(["getDailyData"])
   }
 };
 </script>

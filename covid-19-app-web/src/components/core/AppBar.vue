@@ -19,21 +19,14 @@
       <!--        v-if="$vuetify.breakpoint.mdAndUp"-->
       <!--        @click.stop="drawer = !drawer"-->
       <!--      />-->
-      <v-btn
-        text
-        data-v-step="0"
-        class="d-flex align-center pa-3"
-        @click="$router.push({ name: 'Home' })"
-      >
-        <v-img
-          alt="TrackSym"
-          class="shrink"
-          contain
-          src="/img/brand/blue.png"
-          style="transition: width 0.2s ease"
-          :width="brandWidth"
-        />
-      </v-btn>
+      <v-img
+        alt="TrackSym"
+        class="shrink mx-1"
+        contain
+        src="/img/brand/blue.png"
+        style="transition: width 0.2s ease"
+        :width="brandWidth"
+      />
 
       <v-spacer />
       <!--      <v-btn-->
@@ -123,7 +116,7 @@
         alt="TrackSym"
         class="shrink my-5 mx-auto"
         contain
-        :width="135"
+        :width="160"
         src="/img/brand/blue.png"
       />
 
