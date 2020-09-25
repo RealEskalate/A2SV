@@ -1,172 +1,23 @@
 <template>
-  <v-card outlined shaped class="overflow-hidden">
-    <v-btn
-      fab
-      color="white"
-      depressed
-      v-show="!sidebar"
-      @click="sidebar = true"
-      class="shadow-sm v-card--outlined v-card--shaped"
-      style="position: absolute; left: 0; top: 0; z-index: 2"
-    >
-      <v-icon v-text="mdiForwardburger" />
-    </v-btn>
-    <v-navigation-drawer
-      width="350"
-      v-model="sidebar"
-      class="shadow-sm pb-9"
-      style="z-index: 3; position: absolute;"
-    >
-      <v-list-item class="my-2 shadow-sm p-sticky">
-        <v-list-item-content>
-          <v-autocomplete
-            dense
-            outlined
-            class="v-card--shaped"
-            append-icon=""
-            v-model="selectedCity"
-            :items="loadedCities"
-            :loading="symTrackLoaders.cities"
-            :search-input.sync="keyword"
-            :no-data-text="$t('auth.foundNothing')"
-            hide-no-data
-            hide-selected
-            hide-details
-            :item-text="autoCompleteValue"
-            :item-value="autoCompleteValue"
-            :label="$t('map.searchCity')"
-            :placeholder="$t('map.startTyping')"
-            return-object
-          />
-        </v-list-item-content>
-        <v-list-item-action>
-          <v-btn class="v-card--shaped" large @click="sidebar = false" icon>
-            <v-icon v-text="mdiBackburger" />
-          </v-btn>
-        </v-list-item-action>
-      </v-list-item>
-
-      <v-progress-linear
-        height="2px"
-        style="margin-top: -8px"
-        indeterminate
-        v-if="symTrackLoaders.userSymptoms"
-      />
-      <v-subheader
-        class="my-5 justify-center"
-        v-else-if="!selectedInfo"
-        v-text="$t('map.nothingSelected')"
-      />
-      <v-list v-else>
-        <v-subheader v-text="$t('map.details')" />
-        <v-list-item
-          :key="index"
-          v-for="(feature, index) in detailSingleFeatures"
-        >
-          <v-list-item-avatar size="20">
-            <v-icon v-text="feature.icon" />
-          </v-list-item-avatar>
-
-          <v-list-item-content>
-            <span>
-              {{ $t(feature.name) }}:
-              <span
-                v-if="feature.key === 'location'"
-                class="grey--text"
-                v-text="
-                  `[ ${selectedInfo.location.coordinates[1].toFixed(3)},
-                  ${selectedInfo.location.coordinates[0].toFixed(3)}]`
-                "
-              />
-              <span
-                v-else-if="feature.key === 'probability'"
-                class="grey--text"
-                v-text="(selectedInfo.probability * 100).toFixed(2) + ' %'"
-              />
-              <span
-                v-else
-                class="grey--text"
-                v-text="selectedInfo[feature.key]"
-              />
-            </span>
-          </v-list-item-content>
-        </v-list-item>
-
-        <template v-for="(feature, index) in detailListFeatures">
-          <v-divider
-            :class="`mt-${index === 0 ? 0 : 3} mb-2`"
-            :key="'divider_' + index"
-          />
-          <v-list-item :key="'title_' + index">
-            <v-list-item-avatar size="20">
-              <v-icon v-text="feature.icon" />
-            </v-list-item-avatar>
-            <v-list-item-content v-text="$t(feature.name)" />
-          </v-list-item>
-          <div
-            :key="feature.name + index"
-            class="grey lighten-5 shadow-in v-card--shaped text-center pa-3 mx-5"
-          >
-            <v-subheader
-              class="mx-auto my-2 justify-center"
-              v-if="
-                !selectedInfo[feature.key] ||
-                  selectedInfo[feature.key].length === 0
-              "
-              v-text="$t('auth.foundNothing')"
-            />
-            <v-chip
-              v-else
-              small
-              class="ma-1 v-card--shaped shadow-sm"
-              :key="key"
-              v-for="(value, key) in selectedInfo[feature.key]"
-            >
-              <span v-if="!selectedInfo.user_id" v-text="key + ' : '" />
-              <span class="grey--text text--darken-2" v-text="value" />
-            </v-chip>
-          </div>
-        </template>
-      </v-list>
-    </v-navigation-drawer>
-
-    <v-progress-linear
-      style="position: absolute; z-index: 1"
-      v-if="symTrackLoaders.map"
-      height="2"
-      striped
-      indeterminate
-      color="primary"
-    />
-    <mapbox
-      :access-token="api_token"
-      :map-options="{
-        style: 'mapbox://styles/mapbox/light-v10',
-        center: [38.811684, 9.015326],
-        zoom: 13
-      }"
-      :geolocate-control="{
-        show: true,
-        position: 'bottom-right'
-      }"
-      @map-load="loaded"
-      @map-zoomend="changed"
-      @map-moveend="changed"
-    />
-  </v-card>
+  <mapbox
+    :access-token="api_token"
+    :map-options="{
+      style: 'mapbox://styles/mapbox/light-v10',
+      center: [38.811684, 9.015326],
+      zoom: 13
+    }"
+    :geolocate-control="{
+      show: true,
+      position: 'bottom-right'
+    }"
+    @map-load="loaded"
+    @map-zoomend="changed"
+    @map-moveend="changed"
+  />
 </template>
 
 <script>
 import store from "@/store";
-import {
-  mdiBackburger,
-  mdiForwardburger,
-  mdiBandage,
-  mdiCrosshairsGps,
-  mdiBabyCarriage,
-  mdiPercent,
-  mdiGenderMaleFemaleVariant
-} from "@mdi/js";
 import Mapbox from "mapbox-gl-vue";
 import Supercluster from "supercluster";
 
@@ -179,15 +30,18 @@ export default {
     setInterval(this.fetchLocationsSymptoms, 5 * 60 * 1000);
   },
 
+  props: {
+    selectedCity: {
+      type: Object,
+      default() {
+        return null;
+      }
+    }
+  },
+
   data: function() {
     return {
-      mdiBackburger,
-      mdiForwardburger,
       api_token: process.env.VUE_APP_MAPBOX_API,
-
-      sidebar: false,
-      keyword: null,
-      selectedCity: null,
       selectedInfo: null,
 
       pointInfos: {},
@@ -244,10 +98,11 @@ export default {
   },
 
   watch: {
-    keyword(newValue) {
-      if (newValue && newValue.length >= 2) {
-        store.dispatch("setCities", { keyword: newValue, limit: 10 });
-      }
+    selectedCity(newValue) {
+      this.map.flyTo({
+        center: [newValue.longitude, newValue.latitude],
+        essential: true
+      });
     },
     loadedData(newValue) {
       const small_cluster = new Supercluster({ radius: 40, maxZoom: 14 });
@@ -291,12 +146,7 @@ export default {
       this.selectedInfo.gender = this.$t("auth." + newValue[0].toLowerCase());
       this.selectedInfo.age_group = newValue[1];
       this.selectedInfo.value = newValue[2];
-    },
-    selectedCity(newValue) {
-      this.map.flyTo({
-        center: [newValue.longitude, newValue.latitude],
-        essential: true
-      });
+      this.$emit("updateSelectedInfo", this.selectedInfo);
     }
   },
 
@@ -314,56 +164,10 @@ export default {
       });
       return [gender, age_group, res];
     },
-    loadedCities: () => store.getters.getCities,
-    symTrackLoaders: () => store.getters.getSymTrackLoaders,
-    detailSingleFeatures() {
-      if (!this.selectedInfo) return [];
-      let gridDetailFeatures = [
-        { name: "map.location", key: "location", icon: mdiCrosshairsGps }
-      ];
-      let userDetailFeatures = [
-        { name: "map.location", key: "location", icon: mdiCrosshairsGps },
-        {
-          name: "auth.gender",
-          key: "gender",
-          icon: mdiGenderMaleFemaleVariant
-        },
-        { name: "auth.ageGroup", key: "age_group", icon: mdiBabyCarriage },
-        {
-          name: "auth.sicknessProbability",
-          key: "probability",
-          icon: mdiPercent
-        }
-      ];
-
-      return this.selectedInfo.user_id
-        ? userDetailFeatures
-        : gridDetailFeatures;
-    },
-    detailListFeatures() {
-      if (!this.selectedInfo) return [];
-      let gridDetailFeatures = [
-        {
-          name: "auth.gender",
-          key: "genders",
-          icon: mdiGenderMaleFemaleVariant
-        },
-        { name: "auth.ageGroup", key: "ages", icon: mdiBabyCarriage },
-        { name: "map.symptoms", key: "value", icon: mdiBandage }
-      ];
-      let userDetailFeatures = [
-        { name: "map.symptoms", key: "value", icon: mdiBandage }
-      ];
-
-      return this.selectedInfo.user_id
-        ? userDetailFeatures
-        : gridDetailFeatures;
-    }
+    loadedCities: () => store.getters.getCities
   },
 
   methods: {
-    autoCompleteValue: item => item.city + ", " + item.country,
-
     symptomsToGeoJson(symptoms) {
       const symptomCollections = {
         smallSymptomCollection: {
@@ -487,6 +291,7 @@ export default {
         });
         this.selectedInfo = this.pointInfos[id];
       }
+      this.$emit("updateSelectedInfo", this.selectedInfo);
     },
 
     updateClusters() {
