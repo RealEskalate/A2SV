@@ -5,6 +5,8 @@ import 'package:ephi_healthcare_worker_app/widgets/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
+import 'homePage.dart';
+
 // Drawer Widget
 class Home extends StatefulWidget {
   @override
@@ -16,7 +18,8 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int _currentIndex = 0;
   final List<Widget> _children = [
-    CurrentWidgets(Colors.blueGrey[100]),
+    // CurrentWidgets(Colors.blueGrey[100]),
+    HomePage(),
     SymptomView(),
     CurrentWidgets(Colors.green[100])
   ];
