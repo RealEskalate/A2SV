@@ -1,4 +1,4 @@
-
+import 'package:ephi_healthcare_worker_app/pages/people/people_home.dart';
 import 'package:ephi_healthcare_worker_app/pages/symptoms/symptom_home.dart';
 import 'package:ephi_healthcare_worker_app/widgets/currentPages.dart';
 import 'package:ephi_healthcare_worker_app/widgets/drawer.dart';
@@ -17,27 +17,26 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int _currentIndex = 0;
   final List<Widget> _children = [
-    CurrentWidgets(Colors.blueGrey[100]),
+    PeoplePage(),
     SymptomView(),
     CurrentWidgets(Colors.green[100])
   ];
-  final List<String> _titles = [
-    "HOME",
-    "SYMPTOMS",
-    "PROFILE"
-  ];
+  final List<String> _titles = ["HOME", "SYMPTOMS", "PROFILE"];
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    // Size size = MediaQuery.of(context).size;
     return Scaffold(
       drawerScrimColor: Colors.black.withOpacity(0.5),
       drawer: AppDrawer(),
       appBar: AppBar(
         backgroundColor: Colors.white,
-      iconTheme: new IconThemeData(color: Colors.black),
-      centerTitle: true,
-        title: Text(_titles[_currentIndex],style: TextStyle(color: Colors.black),),
+        iconTheme: new IconThemeData(color: Colors.black),
+        centerTitle: true,
+        title: Text(
+          _titles[_currentIndex],
+          style: TextStyle(color: Colors.black),
+        ),
       ),
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
