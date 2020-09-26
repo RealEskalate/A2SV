@@ -27,7 +27,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    // Size size = MediaQuery.of(context).size;
     return Scaffold(
       drawerScrimColor: Colors.black.withOpacity(0.2),
       // drawerScrimColor: Colors.transparent,
