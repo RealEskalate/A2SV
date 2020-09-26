@@ -2,22 +2,18 @@
   <v-card shaped outlined class="overflow-hidden">
     <v-row>
       <v-col md="4" cols="12" class="pr-md-0">
-        <v-subheader v-text="'Cities with most Covid-19 Cases'" />
+        <v-subheader v-text="'Regions with most Symptoms'" />
 
         <v-list dense>
-          <v-list-item-group color="primary" v-model="selected_city">
+          <v-list-item-group color="primary" v-model="selected_city" mandatory>
             <template v-for="(city, index) in cities">
-              <v-list-item
-                :key="city + index"
-                class="py-3 px-5"
-                @click="selectCity(city)"
-              >
+              <v-list-item :key="city + index" class="py-3 px-5">
                 <template>
                   <v-list-item-content>
                     <v-list-item-title v-text="city.name" class="text-wrap" />
                     <v-list-item-subtitle
                       class="text-wrap"
-                      v-text="`${city.location[0]}, ${city.location[1]}`"
+                      v-text="`${city.latitude}, ${city.longitude}`"
                     />
                   </v-list-item-content>
                   <v-list-item-action>
@@ -34,29 +30,20 @@
           </v-list-item-group>
         </v-list>
       </v-col>
-      <v-col md="8" cols="12" class="py-0 pl-md-0">
-        <mapbox
-          class="shadow-sm"
-          style="height: 50vh"
-          :access-token="api_token"
-          :map-options="{
-            style: 'mapbox://styles/mapbox/light-v10',
-            center: [38.811684, 9.015326],
-            zoom: 13
-          }"
-        />
+      <v-col md="8" cols="12" class="py-0 pl-md-0" style="height: 50vh">
+        <sym-track :selected-city="cities[selected_city]" />
       </v-col>
     </v-row>
   </v-card>
 </template>
 
 <script>
-import Mapbox from "mapbox-gl-vue";
+import SymTrack from "../../views/HeatMap/Maps/SymTrack";
 
 export default {
   name: "GreatestHitCity",
   components: {
-    Mapbox
+    SymTrack
   },
   data() {
     return {
@@ -66,37 +53,29 @@ export default {
         {
           name: "Addis Ababa",
           cases: 123456,
-          location: [38.8, 9.5]
+          longitude: 38.7578,
+          latitude: 9.0333
+        },
+        {
+          name: "Nazrēt",
+          cases: 12456,
+          longitude: 39.27,
+          latitude: 8.55
         },
         {
           name: "Dire Dawa",
-          cases: 12456,
-          location: [38.8, 9.5]
+          cases: 3532,
+          longitude: 41.86,
+          latitude: 9.59
         },
         {
           name: "Hawassa",
-          cases: 3532,
-          location: [38.8, 9.5]
+          cases: 532,
+          longitude: 38.4955,
+          latitude: 7.0504
         }
       ]
     };
-  },
-  methods: {
-    selectCity(city) {
-      // TODO Pan the map to that city
-      console.log("This city selected", city.name);
-    }
   }
 };
 </script>
-
-<style>
-#map {
-  width: 100%;
-  height: 100%;
-}
-</style>
-
-<style>
-@import url("https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.css");
-</style>

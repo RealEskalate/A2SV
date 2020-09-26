@@ -92,7 +92,9 @@ exports.post_location_user = async (req, res) => {
     );
 
     check.TTL = Number(TTL);
-    check.probability = probability;
+    if (!isNaN(probability)) {
+      check.probability = probability;
+    }
     // Identify district and save info
     const district = await DistrictModel.findOne({
       boundaries: {
@@ -116,6 +118,7 @@ exports.post_location_user = async (req, res) => {
 
     return res.send(check);
   } catch (err) {
+    console.log(err)
     return res.status(404).send("Location User could not be posted");
   }
 };

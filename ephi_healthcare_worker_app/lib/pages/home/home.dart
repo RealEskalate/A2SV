@@ -1,12 +1,13 @@
-import 'package:ephi_healthcare_worker_app/pages/people/people_home.dart';
 import 'package:ephi_healthcare_worker_app/pages/symptoms/symptom_home.dart';
+import 'package:ephi_healthcare_worker_app/widgets/blurredDrawer.dart';
 import 'package:ephi_healthcare_worker_app/widgets/currentPages.dart';
 import 'package:ephi_healthcare_worker_app/widgets/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-// Drawer Widget
+import 'homePage.dart';
 
+// Drawer Widget
 class Home extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -17,18 +18,20 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int _currentIndex = 0;
   final List<Widget> _children = [
-    PeoplePage(),
+    // CurrentWidgets(Colors.blueGrey[100]),
+    HomePage(),
     SymptomView(),
     CurrentWidgets(Colors.green[100])
   ];
-  final List<String> _titles = ["HOME", "SYMPTOMS", "PROFILE"];
+  final List<String> _titles = ["EPHI Covid Home", "SYMPTOMS", "PROFILE"];
 
   @override
   Widget build(BuildContext context) {
     // Size size = MediaQuery.of(context).size;
     return Scaffold(
-      drawerScrimColor: Colors.black.withOpacity(0.5),
-      drawer: AppDrawer(),
+      drawerScrimColor: Colors.black.withOpacity(0.2),
+      // drawerScrimColor: Colors.transparent,
+      drawer: BlurredDrawer(),
       appBar: AppBar(
         backgroundColor: Colors.white,
         iconTheme: new IconThemeData(color: Colors.black),
