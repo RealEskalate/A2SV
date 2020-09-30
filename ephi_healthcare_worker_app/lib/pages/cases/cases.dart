@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import '../../widgets/caseWidget.dart';
 import '../../models/case.dart';
+import '../../widgets/hexColorGenerator.dart';
 
 class CasesList extends StatefulWidget {
   CasesList({this.scrollController});
@@ -66,18 +67,28 @@ class CasesListState extends State<CasesList> {
         },
         child: SafeArea(
             child: Scaffold(
-                appBar: AppBar(
-                  backgroundColor: new Color(0xfff8faf8),
-                  elevation: 1,
-                  title: Text(
-                    'Cases',
-                    style: TextStyle(color: Colors.black),
-                  ),
-                  iconTheme: IconThemeData(color: Colors.black),
-                  centerTitle: false,
-                ),
+                // appBar: AppBar(
+                //   elevation: 1,
+                //   backgroundColor: Colors.white,
+                //   title: Center(
+                //     child: Text(
+                //       "Cases",
+                //       style: TextStyle(
+                //         color: Colors.grey,
+                //       ),
+                //     ),
+                //   ),
+                //   leading: IconButton(
+                //     icon: Icon(Icons.arrow_back),
+                //     iconSize: 30.0,
+                //     color: Colors.grey,
+                //     onPressed: () {
+                //       Navigator.pop(context);
+                //     },
+                //   ),
+                // ),
                 body: Container(
-                    decoration: BoxDecoration(color: HexColor("#f2f7ff")),
+                    decoration: BoxDecoration(color: HexColor("#F5F9FF")),
                     margin: EdgeInsets.symmetric(horizontal: 5),
                     child: Column(
                       children: <Widget>[
@@ -95,13 +106,6 @@ class CasesListState extends State<CasesList> {
             onRefresh: refresh,
             child: ListView(
               children: <Widget>[
-                Container(
-                    child: Text("Good Morning Dr. Daniel,",
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: HexColor("#0a6dc9"),
-                        ))),
-                SizedBox(height: 15),
                 Container(
                   height: 120,
                   child: Row(children: <Widget>[
@@ -226,16 +230,4 @@ class CasesListState extends State<CasesList> {
               ],
             )));
   }
-}
-
-class HexColor extends Color {
-  static int _getColorFromHex(String hexColor) {
-    hexColor = hexColor.toUpperCase().replaceAll("#", "");
-    if (hexColor.length == 6) {
-      hexColor = "FF" + hexColor;
-    }
-    return int.parse(hexColor, radix: 16);
-  }
-
-  HexColor(final String hexColor) : super(_getColorFromHex(hexColor));
 }

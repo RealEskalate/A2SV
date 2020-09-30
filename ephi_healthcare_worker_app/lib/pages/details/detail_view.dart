@@ -2,8 +2,8 @@
 //cases list page
 import 'package:ephi_healthcare_worker_app/pages/symptoms/symptom_history.dart';
 import 'package:flutter/material.dart';
-import '../../widgets/caseWidget.dart';
-import '../../models/case.dart';
+import '../symptoms/symptom_history.dart';
+import '../symptoms/current_symptoms.dart';
 
 class DetailView extends StatefulWidget {
   DetailView({this.scrollController});
@@ -31,18 +31,28 @@ class DetailViewState extends State<DetailView> {
         child: SafeArea(
             child: Scaffold(
                 appBar: AppBar(
-                  backgroundColor: new Color(0xfff8faf8),
                   elevation: 1,
-                  title: Text(
-                    'Detail View',
-                    style: TextStyle(color: Colors.black),
+                  backgroundColor: Colors.white,
+                  title: Center(
+                    child: Text(
+                      "Detail View",
+                      style: TextStyle(
+                        color: Colors.grey,
+                      ),
+                    ),
                   ),
-                  iconTheme: IconThemeData(color: Colors.black),
-                  centerTitle: false,
+                  leading: IconButton(
+                    icon: Icon(Icons.arrow_back),
+                    iconSize: 30.0,
+                    color: Colors.grey,
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
                 ),
                 body: Container(
                     decoration: BoxDecoration(
-                      color: HexColor("#f2f7ff"),
+                      color: HexColor("#F5F9FF"),
                     ),
                     margin: EdgeInsets.symmetric(horizontal: 5),
                     child: Column(
@@ -159,12 +169,24 @@ class DetailViewState extends State<DetailView> {
             child: Container(
                 margin: EdgeInsets.all(3),
                 child: ListTile(
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => SymptomHistory(),
-                    ),
-                  ),
+                  onTap: () {
+                    switch (title) {
+                      case "Current Symptoms":
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => CurrentSymptoms(),
+                            ));
+                        break;
+                      case "Symptom History":
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => SymptomHistory(),
+                            ));
+                        break;
+                    }
+                  },
                   title: Text(title,
                       style: TextStyle(
                         fontSize: 16,
