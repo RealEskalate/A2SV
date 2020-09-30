@@ -31,7 +31,8 @@ class _SymptomHistoryState extends State<SymptomHistory> {
           onPressed: () {
             // _controller.animateToSelection();
 
-            _controller.animateToDate(DateTime.now());
+            _controller
+                .animateToDate(DateTime.now().subtract(Duration(days: 14)));
           },
         ),
         appBar: AppBar(
