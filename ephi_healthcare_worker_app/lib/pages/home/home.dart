@@ -1,6 +1,8 @@
-import 'package:ephi_healthcare_worker_app/pages/symptoms/symptom_home.dart';
-import 'package:ephi_healthcare_worker_app/widgets/blurredDrawer.dart';
-import 'package:ephi_healthcare_worker_app/widgets/currentPages.dart';
+import '../symptoms/symptom_home.dart';
+import '../../widgets/blurredDrawer.dart';
+import '../../widgets/currentPages.dart';
+import '../cases/cases.dart';
+import '../people/people_home.dart';
 import 'package:ephi_healthcare_worker_app/widgets/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -20,10 +22,11 @@ class _HomeState extends State<Home> {
   final List<Widget> _children = [
     // CurrentWidgets(Colors.blueGrey[100]),
     HomePage(),
+    CasesList(),
     SymptomView(),
-    CurrentWidgets(Colors.green[100])
+    PatientsHome()
   ];
-  final List<String> _titles = ["EPHI Covid Home", "SYMPTOMS", "PROFILE"];
+  final List<String> _titles = ["Home", "Cases", "Symptoms", "Patients"];
 
   @override
   Widget build(BuildContext context) {
@@ -33,30 +36,57 @@ class _HomeState extends State<Home> {
       // drawerScrimColor: Colors.transparent,
       drawer: BlurredDrawer(),
       appBar: AppBar(
+        elevation: 1,
         backgroundColor: Colors.white,
         iconTheme: new IconThemeData(color: Colors.black),
-        centerTitle: true,
-        title: Text(
-          _titles[_currentIndex],
-          style: TextStyle(color: Colors.black),
+        title: Center(
+          child: Text(
+            _titles[_currentIndex],
+            style: TextStyle(
+              color: Colors.grey,
+            ),
+          ),
         ),
       ),
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         onTap: onTabTapped,
+        type: BottomNavigationBarType.shifting,
         // this will be set when a new tab is tapped
+        unselectedItemColor: Colors.grey,
+        selectedItemColor: HexColor("#0a6dc9"),
         currentIndex: _currentIndex,
         items: [
           BottomNavigationBarItem(
-            icon: new Icon(Icons.home),
-            title: new Text('Home'),
+            icon: new Icon(
+              Icons.home,
+            ),
+            title: new Text(
+              'Home',
+              style: TextStyle(),
+            ),
           ),
           BottomNavigationBarItem(
-            icon: new Icon(Icons.face),
-            title: new Text('Symptoms'),
+            icon: new Icon(
+              Icons.library_books,
+            ),
+            title: new Text(
+              'Cases',
+              style: TextStyle(),
+            ),
           ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.person), title: Text('Profile'))
+              icon: Icon(Icons.add_alert),
+              title: Text(
+                'Symptoms',
+                style: TextStyle(),
+              )),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.people),
+              title: Text(
+                'Patients',
+                style: TextStyle(),
+              ))
         ],
       ),
     );

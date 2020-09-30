@@ -25,7 +25,16 @@ class LoginPage extends StatelessWidget {
           padding: EdgeInsets.all(30.0),
           child: Column(
             children: <Widget>[
-              SizedBox(height: size.height * 0.03),
+              SizedBox(height: size.height * 0.05),
+              Center(
+                  child: Material(
+                // with Material
+                child: Image.asset('assets/images/ephi.png',
+                    width: 330, height: 80),
+
+                clipBehavior: Clip.antiAlias,
+              )),
+              SizedBox(height: size.height * 0.1),
               Text('Sign In To Your Account',
                   textAlign: TextAlign.center,
                   style: TextStyle(
@@ -64,7 +73,7 @@ class LoginPage extends StatelessWidget {
               SizedBox(height: size.height * 0.05),
               ButtonTheme(
                 minWidth: size.width * 0.8,
-                height: size.width * 0.15,
+                height: size.width * 0.13,
                 child: RaisedButton(
                   color: Colors.lightBlue,
                   shape: RoundedRectangleBorder(

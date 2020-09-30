@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../../widgets/roundedInputField.dart';
+import '../home/home.dart';
 
-class LoginPage extends StatelessWidget {
+class ConfirmationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Provides us total height and width of our screen
@@ -19,9 +21,17 @@ class LoginPage extends StatelessWidget {
           padding: EdgeInsets.all(30.0),
           child: Column(
             children: <Widget>[
-              SizedBox(height: size.height * 0.03),
-              Text(
-                  'Enter Confirmation Code Sent To Your Email',
+              SizedBox(height: size.height * 0.05),
+              Center(
+                  child: Material(
+                // with Material
+                child: Image.asset('assets/images/ephi.png',
+                    width: 330, height: 80),
+
+                clipBehavior: Clip.antiAlias,
+              )),
+              SizedBox(height: size.height * 0.1),
+              Text('Enter Confirmation Code Sent To Your Email',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     shadows: <Shadow>[
@@ -32,32 +42,34 @@ class LoginPage extends StatelessWidget {
                       ),
                     ],
 //                    color: Colors.lightBlue,
-                    color: Colors.lightBlue,
+                    color: Colors.lightGreenAccent[700],
                     fontSize: 20.0,
                   )),
               SizedBox(height: size.height * 0.05),
-
-
-
+              RoundedInputField(
+                signIn: false,
+                hintText: "Confirmation Code",
+                onChanged: (value) {},
+              ),
               SizedBox(height: size.height * 0.05),
               ButtonTheme(
                 minWidth: size.width * 0.8,
-                height: size.width * 0.15,
+                height: size.width * 0.13,
                 child: RaisedButton(
-                  color: Colors.lightBlue,
+                  color: Colors.lightGreenAccent[700],
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(40)),
                   onPressed: () {
-//                    Navigator.push(
-//                      context,
-//                      MaterialPageRoute(
-//                        builder: (context) {
-//                          return CreateAccountScreen();
-//                        },
-//                      ),
-//                    );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return Home();
+                        },
+                      ),
+                    );
                   },
-                  child: Text('CONFIRMATION',
+                  child: Text('Confirm',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.white,

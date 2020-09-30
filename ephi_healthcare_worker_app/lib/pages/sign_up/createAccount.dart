@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import '../../widgets/roundedPasswordField.dart';
 import '../../widgets/roundedInputField.dart';
 import '../sign_in/login.dart';
+import 'confirmation.dart';
 import '../home/home.dart';
 //import 'package:email_validator/email_validator.dart';
 
@@ -28,8 +29,17 @@ class CreateAccountPage extends StatelessWidget {
           padding: EdgeInsets.all(30.0),
           child: Column(
             children: <Widget>[
-              SizedBox(height: size.height * 0.03),
-              Text('Create Healtcare Worker Account',
+              SizedBox(height: size.height * 0.05),
+              Center(
+                  child: Material(
+                // with Material
+                child: Image.asset('assets/images/ephi.png',
+                    width: 330, height: 80),
+
+                clipBehavior: Clip.antiAlias,
+              )),
+              SizedBox(height: size.height * 0.1),
+              Text('Create Account',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     shadows: <Shadow>[
@@ -46,7 +56,7 @@ class CreateAccountPage extends StatelessWidget {
               SizedBox(height: size.height * 0.05),
               RoundedInputField(
                 signIn: false,
-                hintText: "Healthcare Worker Full Name",
+                hintText: "Full Name",
                 onChanged: (value) {},
               ),
               SizedBox(height: size.height * 0.02),
@@ -77,7 +87,7 @@ class CreateAccountPage extends StatelessWidget {
               //     press: () {}),
               ButtonTheme(
                 minWidth: size.width * 0.8,
-                height: size.width * 0.15,
+                height: size.width * 0.13,
                 child: RaisedButton(
                   color: Colors.lightGreenAccent[700],
                   shape: RoundedRectangleBorder(
@@ -87,7 +97,7 @@ class CreateAccountPage extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) {
-                          return Home();
+                          return ConfirmationPage();
                         },
                       ),
                     );

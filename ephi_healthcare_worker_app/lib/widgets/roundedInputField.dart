@@ -11,7 +11,9 @@ class RoundedInputField extends StatelessWidget {
     Key key,
     this.hintText,
     this.icon = Icons.person,
-    this.onChanged, this.color, this.signIn = true,
+    this.onChanged,
+    this.color,
+    this.signIn = true,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {

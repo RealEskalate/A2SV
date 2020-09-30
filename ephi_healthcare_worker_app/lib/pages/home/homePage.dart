@@ -1,4 +1,6 @@
-import 'package:ephi_healthcare_worker_app/widgets/cardWidget.dart';
+import '../../widgets/cardWidget.dart';
+import '../../widgets/hexColorGenerator.dart';
+import '../../widgets/graph.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -11,29 +13,19 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Container(
-      color: new Color(0xfff0f4ff), // 0xff ... color hex code
+      decoration:
+          BoxDecoration(color: HexColor("#F5F9FF")), // 0xff ... color hex code
       child: Container(
         padding: EdgeInsets.fromLTRB(0.0, size.height * 0.035, 0.0, 0.0),
-        child: Column(
-          // mainAxisAlignment: MainAxisAlignment.spaceAround,
+        child: ListView(
           children: <Widget>[
             Container(
-              padding: EdgeInsets.fromLTRB(0.0, 0.0, 20.0, 0.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Text("Your Covid Trends",
-                      style: TextStyle(
-                        color: Colors.lightBlue[800],
-                        fontSize: 22.0,
-                      )),
-                  Text("Latest Update: 13 March",
-                      style: TextStyle(
-                        color: Colors.lightBlue[800],
-                        fontSize: 8.0,
-                      )),
-                ],
-              ),
+              margin: EdgeInsets.symmetric(horizontal: 20),
+              child: Text("Your Covid Trends",
+                  style: TextStyle(
+                    color: HexColor("#0a6dc9"),
+                    fontSize: 18.0,
+                  )),
             ),
             SizedBox(height: size.height * 0.02),
             Row(
@@ -52,7 +44,7 @@ class _HomePageState extends State<HomePage> {
                     press: null),
                 CardWidget(
                     sizeHeight: 0.15,
-                    sizeWidth: 0.2,
+                    sizeWidth: 0.25,
                     color: Colors.green,
                     iconPath: "assets/images/recovered.png",
                     value: "172",
@@ -62,7 +54,7 @@ class _HomePageState extends State<HomePage> {
                     press: null),
                 CardWidget(
                     sizeHeight: 0.15,
-                    sizeWidth: 0.2,
+                    sizeWidth: 0.25,
                     color: Colors.red[300],
                     iconPath: "assets/images/deceased.png",
                     value: "335",
@@ -78,7 +70,7 @@ class _HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 CardWidget(
-                    sizeHeight: 0.15,
+                    sizeHeight: 0.2,
                     sizeWidth: 0.35,
                     color: Colors.orange[800],
                     iconPath: "assets/images/cases.png",
@@ -88,7 +80,7 @@ class _HomePageState extends State<HomePage> {
                     title: "this.title",
                     press: null),
                 CardWidget(
-                    sizeHeight: 0.15,
+                    sizeHeight: 0.2,
                     sizeWidth: 0.35,
                     color: Colors.purple,
                     iconPath: "assets/images/symptoms.png",
@@ -99,7 +91,19 @@ class _HomePageState extends State<HomePage> {
                     press: null),
               ],
             ),
-
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              child: Text("Your patients' recovery so far",
+                  style: TextStyle(
+                    color: HexColor("#0a6dc9"),
+                    fontSize: 18.0,
+                  )),
+            ),
+            Container(
+                margin: EdgeInsets.symmetric(horizontal: 20),
+                height: 250,
+                child: TimeSeriesBar.withRandomData()),
+            SizedBox(height: 20)
           ],
         ),
       ),

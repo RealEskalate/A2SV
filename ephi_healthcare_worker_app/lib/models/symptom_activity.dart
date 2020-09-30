@@ -8,7 +8,7 @@ class SymptomActivity {
 
   SymptomActivity({
     this.acticityDate = "06-11-2020",
-    this.activityType = "recovered",
-    this.person ="Abel",
+    this.activityType = "Recovered",
+    this.person = "Abel",
   });
 }

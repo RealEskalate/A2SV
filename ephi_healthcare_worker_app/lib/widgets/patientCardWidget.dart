@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import '../models/case.dart';
 import '../pages/details/detail_view.dart';
+import '../pages/people/person_detail.dart';
 
-class CaseWidget extends StatefulWidget {
+class PatientCard extends StatefulWidget {
   Case patient_case;
 
-  CaseWidget({@required this.patient_case});
+  PatientCard({@required this.patient_case});
   @override
-  _CaseWidgetState createState() =>
-      _CaseWidgetState(patient_case: this.patient_case);
+  _PatientCardState createState() =>
+      _PatientCardState(patient_case: this.patient_case);
 }
 
-class _CaseWidgetState extends State<CaseWidget> {
-  _CaseWidgetState({this.patient_case});
+class _PatientCardState extends State<PatientCard> {
+  _PatientCardState({this.patient_case});
   //Reply sampleReply;
   Case patient_case;
 
@@ -40,7 +41,7 @@ class _CaseWidgetState extends State<CaseWidget> {
                   onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (_) => DetailView(),
+                      builder: (_) => PatientDetailView(),
                     ),
                   ),
                   leading: CircleAvatar(
@@ -63,16 +64,26 @@ class _CaseWidgetState extends State<CaseWidget> {
                     ],
                   ),
                   dense: false,
-                  subtitle: Text(patient_case.activeSymptoms),
-                  isThreeLine: true,
-                  trailing: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(patient_case.createdAt),
-                      SizedBox(height: 5),
-                      Text(patient_case.creationTime)
-                    ],
-                  ),
+                  trailing: InkWell(
+                      onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => PatientDetailView(),
+                            ),
+                          ),
+                      child: Icon(Icons.arrow_forward_ios)),
                 ))));
   }
+}
+
+class HexColor extends Color {
+  static int _getColorFromHex(String hexColor) {
+    hexColor = hexColor.toUpperCase().replaceAll("#", "");
+    if (hexColor.length == 6) {
+      hexColor = "FF" + hexColor;
+    }
+    return int.parse(hexColor, radix: 16);
+  }
+
+  HexColor(final String hexColor) : super(_getColorFromHex(hexColor));
 }
