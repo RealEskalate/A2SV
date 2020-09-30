@@ -147,15 +147,14 @@ class DetailViewState extends State<DetailView> {
                       ],
                     )),
                 SizedBox(height: 10),
-                Expanded(
-                    child: Container(
-                        child: Column(
+                Container(
+                    child: Column(
                   children: <Widget>[
                     cardWidgetBuilder(context, "Current Symptoms"),
                     SizedBox(height: 10),
                     cardWidgetBuilder(context, "Symptom History")
                   ],
-                ))),
+                )),
                 SizedBox(height: 20.2),
               ],
             )));
@@ -163,6 +162,7 @@ class DetailViewState extends State<DetailView> {
 
   cardWidgetBuilder(BuildContext context, String title) {
     return Container(
+        height: 70,
         margin: EdgeInsets.only(bottom: 5),
         child: Card(
             elevation: 2.0,
