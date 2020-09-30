@@ -54,7 +54,7 @@ class _HomePageState extends State<HomePage> {
                     press: null),
                 CardWidget(
                     sizeHeight: 0.15,
-                    sizeWidth: 0.2,
+                    sizeWidth: 0.25,
                     color: Colors.red[300],
                     iconPath: "assets/images/deceased.png",
                     value: "335",
@@ -70,7 +70,7 @@ class _HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 CardWidget(
-                    sizeHeight: 0.15,
+                    sizeHeight: 0.2,
                     sizeWidth: 0.35,
                     color: Colors.orange[800],
                     iconPath: "assets/images/cases.png",
@@ -80,7 +80,7 @@ class _HomePageState extends State<HomePage> {
                     title: "this.title",
                     press: null),
                 CardWidget(
-                    sizeHeight: 0.15,
+                    sizeHeight: 0.2,
                     sizeWidth: 0.35,
                     color: Colors.purple,
                     iconPath: "assets/images/symptoms.png",
