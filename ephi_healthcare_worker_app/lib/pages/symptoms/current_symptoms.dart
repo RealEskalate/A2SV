@@ -1,5 +1,6 @@
-// page for current symptoms of person
+// test result history of a person page
 import 'package:flutter/material.dart';
+import '../../widgets/hexColorGenerator.dart';
 
 class CurrentSymptomsAppBar extends StatefulWidget {
   @override
@@ -23,24 +24,6 @@ class _CurrentSymptomsAppBarState extends State<CurrentSymptomsAppBar> {
   }
 }
 
-// Dummy data model
-class Person {
-  int id;
-  String name;
-
-  Person(this.id, this.name);
-
-  static List<Person> getPersons() {
-    return <Person>[
-      Person(1, 'Name and 1'),
-      Person(2, 'Name and 2'),
-      Person(3, 'Name and 3'),
-      Person(4, 'Name and 4'),
-      Person(5, 'Name and 5'),
-    ];
-  }
-}
-
 class CurrentSymptoms extends StatefulWidget {
   @override
   _CurrentSymptomsState createState() => _CurrentSymptomsState();
@@ -48,102 +31,95 @@ class CurrentSymptoms extends StatefulWidget {
 
 class _CurrentSymptomsState extends State<CurrentSymptoms> {
   //
-  List<Person> _person = Person.getPersons();
-  List<DropdownMenuItem<Person>> _dropdownMenuItems;
-  Person _selectedPerson;
 
-  List dates_of_registered_symptom_list = [
+  List dates_of_result_list = [
     "06/08/2020",
-    "06/08/2020",
-    "06/08/2020",
-    "06/08/2020",
-    "06/08/2020",
-    "06/08/2020",
+    "07/08/2020",
+    "08/08/2020",
+    "09/08/2020",
+    "10/08/2020",
+    "11/08/2020",
   ];
-  List symptoms_list = [
-    "Positive",
-    "Positive",
-    "Positive",
-    "Positive",
-    "Positive",
-    "Positive"
+  List results_list = [
+    "High Fever",
+    "Ansomia",
+    "Dry Cough",
+    "Heavy Sweat",
+    "Fatigue",
+    "Heavy Breathing"
   ];
-  List symptoms_list2 = [
-    "Positive",
-    "Positive",
-    "Positive",
-    "Positive",
-    "Positive",
-    "Positive"
-  ];
-
-  @override
-  void initState() {
-    _dropdownMenuItems = buildDropdownMenuItems(_person);
-    _selectedPerson = _dropdownMenuItems[0].value;
-    super.initState();
-  }
-
-  List<DropdownMenuItem<Person>> buildDropdownMenuItems(List persons) {
-    List<DropdownMenuItem<Person>> items = List();
-    for (Person person in persons) {
-      items.add(DropdownMenuItem(
-        value: person,
-        child: Text(person.name),
-      ));
-    }
-    return items;
-  }
-
-  onChangeDropDownItem(Person selectedPerson) {
-    setState(() {
-      _selectedPerson = selectedPerson;
-      symptoms_list = [
-        "Fever2",
-        "dry cough2",
-        "anomia2",
-        "Fever2",
-        "dry cough2",
-        "anomia2"
-      ];
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
-      body: Column(
-        children: <Widget>[
-          Center(
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
-              margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
-              child: Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    DropdownButton(
-                      value: _selectedPerson,
-                      items: _dropdownMenuItems,
-                      onChanged: onChangeDropDownItem,
-                    ),
-                    RaisedButton(
-                      onPressed: () {},
-                      child: Text('Next Service'),
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 10.0, vertical: 10.0),
-                    )
-                  ],
-                ),
-              ),
+      appBar: AppBar(
+        elevation: 1,
+        backgroundColor: Colors.white,
+        title: Center(
+          child: Text(
+            "Current Symptoms",
+            style: TextStyle(
+              color: Colors.grey,
             ),
           ),
-          Center(
-            child: ListView.builder(
+        ),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          iconSize: 30.0,
+          color: Colors.grey,
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
+      body: Container(
+          height: size.height,
+          decoration: BoxDecoration(
+            color: HexColor("#F5F9FF"),
+          ),
+          child: ListView(children: <Widget>[
+            Container(
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                color: Colors.transparent,
+              ),
+              padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Container(
+                        alignment: Alignment.center,
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 10.0, vertical: 10.0),
+                        child: Text("Registry Date",
+                            style: TextStyle(color: Colors.black)),
+                      ),
+                      SizedBox(
+                        width: 5.0,
+                      ),
+                    ],
+                  ),
+                  Container(
+                    alignment: Alignment.center,
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+                    child:
+                        Text("Symptom", style: TextStyle(color: Colors.black)),
+                  ),
+                ],
+              ),
+            ),
+            ListView.builder(
               itemCount: 6,
+              scrollDirection: Axis.vertical,
+              primary: false,
               shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
               itemBuilder: (BuildContext context, int index) => Container(
                 width: MediaQuery.of(context).size.width,
                 padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
@@ -167,8 +143,7 @@ class _CurrentSymptomsState extends State<CurrentSymptoms> {
                               alignment: Alignment.center,
                               padding: EdgeInsets.symmetric(
                                   horizontal: 10.0, vertical: 10.0),
-                              child: Text(
-                                  dates_of_registered_symptom_list[index],
+                              child: Text(dates_of_result_list[index],
                                   style: TextStyle(color: Colors.black)),
                             ),
                             SizedBox(
@@ -180,7 +155,7 @@ class _CurrentSymptomsState extends State<CurrentSymptoms> {
                           alignment: Alignment.center,
                           padding: EdgeInsets.symmetric(
                               horizontal: 10.0, vertical: 10.0),
-                          child: Text(symptoms_list[index],
+                          child: Text(results_list[index],
                               style: TextStyle(color: Colors.black)),
                         ),
                       ],
@@ -189,9 +164,7 @@ class _CurrentSymptomsState extends State<CurrentSymptoms> {
                 ),
               ),
             ),
-          ),
-        ],
-      ),
+          ])),
     );
   }
 }
